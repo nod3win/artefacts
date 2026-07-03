@@ -1,0 +1,98 @@
+% =====================================================================
+%  FICHE 8 — THÈME 3 — NIVEAU FACILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 3 : Calorimétrie}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile — corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=excol,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 3 — Calorimétrie}\\[1pt]{\small Niveau \textsc{Facile} — corrigé détaillé}};
+\end{tikzpicture}
+\end{center}
+
+\begin{correction}[chaleur sensible]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\Delta T = 80 - 20 = \rep{\SI{60}{\kelvin}}$ (ou \SI{60}{\celsius}).
+  \item $Q = m\,c\,\Delta T = 0{,}50 \times 4{,}185 \times 60 = \rep{\SI{125.55}{\kilo\joule}}$.
+  \item L'eau \emph{se réchauffe} : elle \rep{reçoit} de la chaleur, donc $Q>0$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[chaleur latente]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Fusion : $Q = m\,L_{\text{fus}} = 0{,}20 \times 334 = \rep{\SI{66.8}{\kilo\joule}}$.
+  \item Vaporisation : $Q = m\,L_{\text{vap}} = 0{,}20 \times 2257 = \rep{\SI{451.4}{\kilo\joule}}$.
+  \item La \rep{vaporisation} demande bien plus d'énergie : $\dfrac{2257}{334}\approx \rep{6{,}8}$ fois plus.
+        (Vaporiser exige de séparer complètement les molécules, pas seulement de « décrocher » le réseau cristallin.)
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[sensible ou latente ?]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Échauffement du liquide : \rep{$Q=mc\Delta T$}, $T$ \emph{varie}.
+  \item Fusion : \rep{$Q=mL$}, $T$ \emph{constante} (\SI{0}{\celsius}).
+  \item Échauffement de la vapeur : \rep{$Q=mc\Delta T$}, $T$ \emph{varie}.
+  \item Vaporisation : \rep{$Q=mL$}, $T$ \emph{constante} (\SI{100}{\celsius}).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[signe de la chaleur]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Se réchauffe : $\Delta T>0$, donc \rep{$Q>0$} (chaleur reçue).
+  \item Se refroidit : $\Delta T<0$, donc \rep{$Q<0$} (chaleur cédée).
+  \item $Q_{\text{fer}} = 0{,}10 \times 0{,}45 \times (30-90) = 0{,}10 \times 0{,}45 \times (-60) =
+        \rep{\SI{-2.7}{\kilo\joule}}$. $Q<0$ : le fer \rep{cède} de la chaleur (il refroidit).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[la vigilance des unités]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\SI{3.5}{\kilo\joule} = \rep{\SI{3500}{\joule}}$.
+  \item $Q = 0{,}10 \times 4{,}185 \times 10 = \rep{\SI{4.185}{\kilo\joule}} = \rep{\SI{4185}{\joule}}$.
+  \item Il a oublié le facteur \rep{$1000$} entre \si{\kilo\joule} et \si{\joule} : $c$ étant en
+        \si{\kilo\joule\per\kelvin\per\kilogram}, le résultat sort en \si{\kilo\joule}, soit
+        $\SI{4.185}{\kilo\joule}=\SI{4185}{\joule}$ (et non \SI{4.185}{\joule}).
+\end{enumerate}
+\end{correction}
+
+\end{document}

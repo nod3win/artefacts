@@ -1,0 +1,1136 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 2
+%  Notions de nomenclature chimique (composés inorganiques)
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Chimie ----------
+\usepackage[version=4]{mhchem}   % formules chimiques : \ce{...}
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (charte « Chimie » : mauve / prune du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,161}      % mauve (couleur Chimie du livre)
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — règles
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « chimie » réutilisées dans les figures
+\definecolor{metalcol}{RGB}{198,150,40}     % métaux (doré)
+\definecolor{nonmetcol}{RGB}{0,140,150}     % non-métaux (turquoise)
+\definecolor{oxycol}{RGB}{210,55,45}        % oxygène (rouge)
+\definecolor{hydcol}{RGB}{60,120,210}       % hydrogène (bleu)
+\definecolor{catcol}{RGB}{200,70,120}       % cations (rose-rouge)
+\definecolor{ancol}{RGB}{40,110,190}        % anions (bleu)
+\definecolor{saltcol}{RGB}{120,90,160}      % sels (mauve)
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Règle / Propriété (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{regle}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Règle}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Notions de nomenclature chimique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.7cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Notions de nomenclature}\\[5pt]
+   {\Huge\bfseries chimique}\\[6pt]
+   {\large (composés inorganiques)}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,2}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : un cation + un anion -> un sel ---
+\begin{tikzpicture}[scale=1.0]
+  % cation
+  \node[circle,draw=catcol,fill=catcol!12,line width=1.2pt,minimum size=1.7cm] (cat) at (-4,0) {$\ce{Na+}$};
+  \node[catcol,font=\footnotesize,below=1pt of cat] {cation};
+  % anion
+  \node[circle,draw=ancol,fill=ancol!12,line width=1.2pt,minimum size=1.9cm] (an) at (0,0) {$\ce{SO4^2-}$};
+  \node[ancol,font=\footnotesize,below=1pt of an] {anion};
+  % plus
+  \node at (-2,0) {\Large $+$};
+  % arrow
+  \draw[->,>=Stealth,line width=1.4pt,primary] (1.4,0) -- (2.7,0);
+  % salt
+  \node[rectangle,rounded corners=4pt,draw=saltcol,fill=saltcol!12,line width=1.2pt,
+        minimum height=1.7cm,minimum width=2.2cm] (sel) at (4.3,0) {$\ce{Na2SO4}$};
+  \node[saltcol,font=\footnotesize,below=1pt of sel] {sel (sulfate de sodium)};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15.2cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant(e) sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item distinguer \textbf{métaux} et \textbf{non-métaux}, \textbf{cations} et \textbf{anions}, et manier la notion de \textbf{valence} ;
+  \item déterminer le \textbf{nombre d'oxydation} d'un élément dans un composé ;
+  \item écrire une formule brute à partir d'un nom grâce à la \textbf{neutralité électrique} (croisement des valences) ;
+  \item nommer et reconnaître les six grandes familles : \textbf{oxydes métalliques}, \textbf{oxydes non métalliques}, \textbf{hydroxydes}, \textbf{acides}, \textbf{sels neutres} et \textbf{sels acides} ;
+  \item maîtriser les \textbf{préfixes multiplicateurs} (mono-, di-, \ldots, sesqui-) et les couples de suffixes \textbf{-eux/-ite} et \textbf{-ique/-ate} ;
+  \item lire correctement les \textbf{coefficients} et les \textbf{hydrates} (\ce{2 Na2CO3}, \ce{CaCO3 * 2 H2O}).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 2 de chimie du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : le langage de la chimie}
+% =====================================================================
+La \textbf{nomenclature} chimique est l'ensemble des règles qui permettent de passer, sans ambiguïté,
+du \emph{nom} d'une substance à sa \emph{formule}, et réciproquement. C'est le « dictionnaire » de la
+chimie : il assure qu'à chaque nom corresponde une seule formule, et qu'à chaque formule corresponde un
+seul nom. Cette fiche traite uniquement des \textbf{composés inorganiques} (dits aussi \emph{minéraux}),
+c'est-à-dire essentiellement tous les composés \emph{ne reposant pas} sur un squelette d'atomes de
+carbone enchaînés (qui relèvent, eux, de la chimie organique).
+
+\begin{definition}[élément et symbole chimique]
+Un \textbf{élément chimique} est une espèce d'atomes caractérisée par son numéro atomique $Z$ (le nombre
+de protons de son noyau). On le désigne par un \textbf{symbole} : une ou deux lettres, la première
+toujours en majuscule (par ex.\ \ce{H}, \ce{O}, \ce{Na}, \ce{Cl}, \ce{Fe}). Certains symboles viennent
+du latin : \ce{Na} (\emph{natrium}, sodium), \ce{K} (\emph{kalium}, potassium), \ce{Fe} (\emph{ferrum},
+fer), \ce{Ag} (\emph{argentum}, argent), \ce{Sn} (\emph{stannum}, étain), \ce{Pb} (\emph{plumbum}, plomb).
+\end{definition}
+
+\subsection{Métaux et non-métaux}
+
+La première chose à faire devant un composé est de \textbf{classer ses éléments} en métaux et
+non-métaux : c'est ce classement qui déclenchera la bonne règle de nomenclature.
+
+\begin{definition}[métal et non-métal]
+Un \textbf{métal} est un élément qui a tendance à \emph{céder} des électrons : il forme donc des
+\textbf{cations} (ions positifs). On les trouve à gauche et au centre du tableau périodique
+(\ce{Na}, \ce{Ca}, \ce{Al}, \ce{Fe}, \ce{Cu}, \ce{Zn}, \ce{Ag}\ldots). \\
+Un \textbf{non-métal} a tendance à \emph{capter} des électrons : il forme des \textbf{anions} (ions
+négatifs) ou se lie par des liaisons covalentes. On les trouve à droite du tableau (\ce{O}, \ce{Cl},
+\ce{S}, \ce{N}, \ce{C}, \ce{F}, \ce{Br}\ldots).
+\end{definition}
+
+\begin{center}
+\rowcolors{2}{primary!5}{white}
+\begin{tabular}{lll}
+\rowcolor{primary!20}
+\textbf{Famille} & \textbf{Tendance} & \textbf{Exemples d'éléments} \\
+\midrule
+Métaux & cèdent des $\ce{e-}$ $\to$ cations $\oplus$ & \ce{Na}, \ce{K}, \ce{Ca}, \ce{Mg}, \ce{Al}, \ce{Fe}, \ce{Cu}, \ce{Zn}, \ce{Ag}, \ce{Pb}, \ce{Sn} \\
+Non-métaux & captent des $\ce{e-}$ $\to$ anions $\ominus$ & \ce{O}, \ce{H}, \ce{N}, \ce{C}, \ce{S}, \ce{P}, \ce{F}, \ce{Cl}, \ce{Br}, \ce{I} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Ions, cations et anions}
+
+\begin{definition}[ion, cation, anion]
+Un \textbf{ion} est un atome (ion \emph{monoatomique}) ou un groupe d'atomes (ion \emph{polyatomique})
+porteur d'une charge électrique globale non nulle.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item un \textbf{cation} porte une charge \emph{positive} (il a \emph{perdu} des électrons) :
+        \ce{Na+}, \ce{Ca^2+}, \ce{Al^3+}, \ce{Fe^2+}, \ce{NH4+} ;
+  \item un \textbf{anion} porte une charge \emph{négative} (il a \emph{gagné} des électrons) :
+        \ce{Cl-}, \ce{O^2-}, \ce{S^2-}, \ce{SO4^2-}, \ce{NO3-}.
+\end{itemize}
+\end{definition}
+
+\begin{remarque}[cations polyatomiques]
+La plupart des cations courants sont des \emph{métaux} monoatomiques. Le contre-exemple majeur à connaître
+est l'\textbf{ion ammonium} \ce{NH4+} : c'est un cation \emph{polyatomique} qui, dans toutes les règles de
+nomenclature, joue exactement le rôle d'un métal de valence 1 (comme \ce{Na+} ou \ce{K+}).
+\end{remarque}
+
+\subsection{La valence et le nombre d'oxydation}
+
+\begin{definition}[valence]
+La \textbf{valence} d'un ion est la \emph{valeur absolue de sa charge}. Elle indique combien de liaisons
+(ou de charges opposées) l'ion peut « accrocher ». Ainsi \ce{Na+} et \ce{Cl-} sont de valence 1,
+\ce{Ca^2+} et \ce{SO4^2-} de valence 2, \ce{Al^3+} et \ce{PO4^3-} de valence 3.
+\end{definition}
+
+\begin{definition}[nombre (degré, étage) d'oxydation]
+Le \textbf{nombre d'oxydation} (n.o., noté en chiffres romains, par ex.\ $+\mathrm{II}$, $-\mathrm{II}$)
+d'un élément dans un composé est la charge \emph{fictive} qu'il porterait si l'on attribuait tous les
+électrons de chaque liaison à l'atome le plus électronégatif. Pour les ions monoatomiques, le n.o.\ est
+égal à la charge réelle ; il sert surtout à préciser l'état d'un métal à valences multiples (le fer
+\ce{Fe} existe en \ce{Fe^2+} et \ce{Fe^3+}).
+\end{definition}
+
+\begin{regle}[détermination du nombre d'oxydation]
+On applique, dans l'ordre, les conventions suivantes :
+\begin{enumerate}[label=(\arabic*),leftmargin=2.0em,topsep=2pt,itemsep=1pt]
+  \item un \textbf{corps simple} (élément non combiné, \ce{O2}, \ce{Fe}, \ce{Cl2}) a un n.o.\ \textbf{nul} ;
+  \item un \textbf{ion monoatomique} a un n.o.\ \textbf{égal à sa charge} (\ce{Cl-} : $-\mathrm{I}$, \ce{Ca^2+} : $+\mathrm{II}$) ;
+  \item l'\textbf{oxygène} vaut $-\mathrm{II}$ (sauf peroxydes $-\mathrm{I}$ et fluorures d'oxygène) ;
+  \item l'\textbf{hydrogène} vaut $+\mathrm{I}$ (sauf hydrures métalliques : $-\mathrm{I}$) ;
+  \item les métaux \textbf{alcalins} (\ce{Na}, \ce{K}\ldots) valent $+\mathrm{I}$, les \textbf{alcalino-terreux} (\ce{Ca}, \ce{Mg}\ldots) $+\mathrm{II}$, le fluor $-\mathrm{I}$ ;
+  \item la \textbf{somme} des nombres d'oxydation est égale à la \emph{charge globale} de l'espèce (0 pour une molécule neutre).
+\end{enumerate}
+\end{regle}
+
+\begin{exemple}[étage d'oxydation du cuivre dans \ce{Cu2O}]
+\textbf{Question.} Quel est l'étage d'oxydation du cuivre dans l'oxyde \ce{Cu2O} ? Combien d'électrons
+possède alors un atome de cuivre dans ce composé ? (donnée : $\ce{^{63,54}_{29}Cu}$, $\ce{^{15,99}_{8}O}$).
+
+\smallskip
+\textbf{Mise en équation.} La molécule \ce{Cu2O} est \emph{neutre}, donc la somme des nombres d'oxydation
+est nulle. L'oxygène vaut $-\mathrm{II}$ (règle 3). Notons $x$ le n.o.\ du cuivre. Il y a \emph{deux}
+atomes de cuivre et \emph{un} d'oxygène :
+\[ 2\,x + (-\mathrm{II}) = 0 \quad\Longrightarrow\quad 2x = +\mathrm{II} \quad\Longrightarrow\quad \boxed{x = +\mathrm{I}}. \]
+Le cuivre est donc au degré $+\mathrm{I}$ : il s'agit du cuivre(I), et \ce{Cu2O} se nomme
+\textbf{oxyde de cuivre(I)} (ou oxyde cuivreux).
+
+\smallskip
+\textbf{Nombre d'électrons.} Le cuivre neutre possède $Z = 29$ électrons (= nombre de protons). Au degré
+$+\mathrm{I}$, l'atome a \emph{cédé un} électron : il en reste donc
+\[ 29 - 1 = \boxed{28\ \text{électrons}}. \]
+À titre de comparaison, l'oxygène au degré $-\mathrm{II}$ a \emph{gagné deux} électrons et en possède
+$8 + 2 = 10$. Notez bien : le nombre d'oxydation du cuivre, qui est un \emph{métal}, ne peut jamais être
+négatif à l'état naturel ; on écarte donc d'office toute réponse du type « cuivre $-\mathrm{I}$ ».
+\end{exemple}
+
+\subsection{Les ions polyatomiques à connaître absolument}
+
+Tout l'art de la nomenclature inorganique repose sur une poignée d'ions polyatomiques qu'il faut savoir
+\emph{par c\oe ur}, avec leur \textbf{formule} et leur \textbf{valence} (valeur absolue de la charge).
+Le tableau suivant les regroupe par valence, comme dans la fiche.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{>{\centering\arraybackslash}p{4.6cm} >{\centering\arraybackslash}p{4.6cm} >{\centering\arraybackslash}p{4.6cm}}
+\rowcolor{primary!20}
+\textbf{Valence 1} & \textbf{Valence 2} & \textbf{Valence 3} \\
+\arrayrulecolor{primary!40}\hline
+ammonium \ce{NH4+} & sulfate \ce{SO4^2-} & phosphate \ce{PO4^3-} \\
+nitrate \ce{NO3-} & sulfite \ce{SO3^2-} & \\
+nitrite \ce{NO2-} & carbonate \ce{CO3^2-} & \\
+acétate \ce{CH3COO-} & dichromate \ce{Cr2O7^2-} & \\
+permanganate \ce{MnO4-} & chromate \ce{CrO4^2-} & \\
+perchlorate \ce{ClO4-} & thiosulfate \ce{S2O3^2-} & \\
+\arrayrulecolor{black}
+\end{tabular}
+\end{center}
+
+\begin{remarque}[le seul cation du tableau]
+Dans cette liste, un seul ion est un \textbf{cation} (\ce{NH4+}, ammonium) ; tous les autres sont des
+\textbf{anions}. Bien lire le signe de la charge est donc essentiel. Une liste enrichie (bromate,
+chlorate, hydrogénocarbonate\ldots) est donnée à la fin du cours, dans la table de synthèse.
+\end{remarque}
+
+\subsection{La règle d'or : la neutralité électrique}
+
+Toute substance pure (non ionisée) est \textbf{électriquement neutre} : la somme des charges positives
+égale la somme des charges négatives. C'est cette contrainte qui fixe les \emph{indices} (les petits
+chiffres) d'une formule brute.
+
+\begin{regle}[neutralité et croisement des valences (« chassé-croisé »)]
+Pour un composé formé d'un cation \ce{C^{$a$+}} (valence $a$) et d'un anion \ce{A^{$b$-}} (valence $b$),
+la formule neutre s'obtient en \textbf{croisant les valences} : la valence de l'un devient l'indice de
+l'autre.
+\[ \boxed{\ \ce{C^{$a$+}} + \ce{A^{$b$-}} \;\longrightarrow\; \ce{C_{$b$}A_{$a$}}\ } \]
+On \emph{simplifie} ensuite les indices par leur diviseur commun, et l'on met entre \emph{parenthèses}
+tout ion polyatomique affecté d'un indice $\geq 2$.
+\end{regle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % cation
+  \node[font=\large] (C) at (0,0) {\textcolor{catcol}{$\ce{Al^3+}$}};
+  \node[catcol,font=\scriptsize,above=0pt of C] {valence 3};
+  % anion
+  \node[font=\large] (A) at (4,0) {\textcolor{ancol}{$\ce{SO3^2-}$}};
+  \node[ancol,font=\scriptsize,above=0pt of A] {valence 2};
+  % croisement
+  \draw[->,>=Stealth,catcol,line width=1pt] (0.55,-0.25) to[bend right=18] (3.7,-0.55);
+  \draw[->,>=Stealth,ancol,line width=1pt]  (3.55,-0.25) to[bend left=18] (0.4,-0.55);
+  \node[catcol,font=\scriptsize] at (2.0,-0.95) {3 devient l'indice de l'anion};
+  \node[ancol,font=\scriptsize] at (2.0,0.95) {2 devient l'indice du cation};
+  % résultat
+  \draw[->,>=Stealth,primary,line width=1.3pt] (5.0,0) -- (6.3,0);
+  \node[font=\large] (S) at (7.7,0) {\textcolor{saltcol}{$\ce{Al2(SO3)3}$}};
+  \node[saltcol,font=\scriptsize,below=1pt of S] {sulfite d'aluminium};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[formule du sulfite d'aluminium]
+\textbf{Question.} Quelle est la formule brute d'un composé pur formé d'un ion d'aluminium et d'un ion
+sulfite ?
+
+\smallskip
+\textbf{Étape 1 — identifier les ions et leur valence.} L'aluminium donne le cation \ce{Al^3+}
+(valence 3) ; l'ion sulfite est \ce{SO3^2-} (valence 2, voir le tableau ci-dessus).
+
+\textbf{Étape 2 — croiser les valences.} La valence de l'anion (2) devient l'indice du cation, et la
+valence du cation (3) devient l'indice de l'anion :
+\[ \ce{Al^3+} + \ce{SO3^2-} \;\longrightarrow\; \ce{Al2(SO3)3}. \]
+On encadre \ce{SO3} de parenthèses car il est polyatomique et affecté de l'indice 3.
+
+\textbf{Étape 3 — vérifier la neutralité.} Charge positive : $2 \times (+3) = +6$. Charge négative :
+$3 \times (-2) = -6$. La somme est nulle : la formule \ce{Al2(SO3)3} est correcte. On écarte au passage
+les écritures fausses \ce{Al(SO3)3}, \ce{Al2(SO4)3} (mauvais anion : sulf\emph{ate} et non sulf\emph{ite})
+ou \ce{AlSO4}.
+\end{exemple}
+
+% =====================================================================
+\section{Vue d'ensemble : l'arbre de la nomenclature}
+% =====================================================================
+La nomenclature d'une substance inorganique \textbf{dépend des éléments qu'elle contient}. L'organigramme
+ci-dessous résume les six chemins possibles : selon la nature des constituants, on aboutit à un oxyde
+(métallique ou non), un hydroxyde, un acide ou un sel. Chaque branche est détaillée dans la suite du cours.
+
+\begin{center}
+\begin{tikzpicture}[
+   font=\footnotesize,
+   node distance=4mm,
+   root/.style={rectangle,rounded corners=3pt,draw=primarydark,fill=primary!12,line width=1pt,
+                align=center,inner sep=4pt,text width=2.9cm},
+   fam/.style={rectangle,rounded corners=3pt,draw=primary,fill=primary!6,line width=0.9pt,
+               align=left,inner sep=4pt,text width=4.7cm},
+   lien/.style={->,>=Stealth,primary,line width=0.9pt},
+  ]
+  % racine
+  \node[root] (R) {\textbf{Substance\\inorganique}\\[2pt]\scriptsize dépend des éléments\\ qu'elle contient};
+
+  % familles à droite
+  \node[fam,right=2.0cm of R,yshift=4.6cm] (oxm)
+     {\textbf{\textcolor{metalcol}{Oxydes métalliques}} \;\ce{MO}\\
+      \emph{oxyde de [métal] (valence)}\\
+      ex.\ \ce{CaO}, \ce{FeO}, \ce{Ag2O}};
+  \node[fam,below=4mm of oxm] (oxn)
+     {\textbf{\textcolor{nonmetcol}{Oxydes non métalliques}} \;\ce{XO}\\
+      \emph{[préfixe]oxyde de [X]}\\
+      ex.\ \ce{CO}, \ce{NO2}, \ce{P2O3}};
+  \node[fam,below=4mm of oxn] (hyd)
+     {\textbf{\textcolor{thmcol}{Hydroxydes (bases)}} \;\ce{M(OH)}\\
+      \emph{hydroxyde de [métal] (valence)}\\
+      ex.\ \ce{Ca(OH)2}, \ce{Al(OH)3}};
+  \node[fam,below=4mm of hyd] (aci)
+     {\textbf{\textcolor{oxycol}{Acides}} \;\ce{HX} / \ce{HXO}\\
+      \emph{[nom de l'anion] + d'hydrogène}\\
+      ex.\ \ce{HCl}, \ce{H2SO4}, \ce{HClO4}};
+  \node[fam,below=4mm of aci] (sel)
+     {\textbf{\textcolor{saltcol}{Sels}} \;\ce{MX} / \ce{MXO} / \ce{MHXO}\\
+      \emph{[anion] + de + [cation]}\\
+      ex.\ \ce{NaCl}, \ce{K2SO4}, \ce{NaHCO3}};
+
+  % liens
+  \draw[lien] (R.east) to[out=20,in=180] (oxm.west);
+  \draw[lien] (R.east) to[out=10,in=180] (oxn.west);
+  \draw[lien] (R.east) to[out=0,in=180]  (hyd.west);
+  \draw[lien] (R.east) to[out=-10,in=180] (aci.west);
+  \draw[lien] (R.east) to[out=-20,in=180] (sel.west);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\rowcolors{2}{primary!5}{white}
+\begin{tabular}{lll}
+\rowcolor{primary!20}
+\textbf{Famille} & \textbf{Type d'éléments} & \textbf{Schéma de formule} \\
+\midrule
+Oxyde métallique     & métal + oxygène                 & \ce{M_xO_y} \\
+Oxyde non métallique & non-métal + oxygène             & \ce{X_xO_y} \\
+Hydroxyde (base)     & métal + groupe \ce{OH}          & \ce{M(OH)_n} \\
+Acide                & hydrogène + (non-métal $\pm$ O) & \ce{H_nX} ou \ce{H_nXO_m} \\
+Sel neutre           & métal (ou \ce{NH4+}) + anion    & \ce{M_xA_y} \\
+Sel acide            & métal + \ce{H} + anion oxygéné  & \ce{M_x H_z XO_m} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\section{Les oxydes}
+% =====================================================================
+\begin{definition}[oxyde]
+Un \textbf{oxyde} est un composé \emph{binaire} (deux éléments) dont l'un est l'\textbf{oxygène}, presque
+toujours au nombre d'oxydation $-\mathrm{II}$. Selon que l'autre élément est un métal ou un non-métal, on
+distingue les \emph{oxydes métalliques} (souvent des solides ioniques, basiques) et les \emph{oxydes non
+métalliques} (souvent des gaz moléculaires, acides). La règle de nomenclature diffère selon le cas.
+\end{definition}
+
+\subsection{Les oxydes métalliques}
+
+\begin{regle}[nommer un oxyde métallique]
+On lit la formule \ce{M_xO_y} ainsi :
+\[ \textbf{« oxyde de [nom du métal] (valence du métal en chiffres romains, si nécessaire) »}. \]
+La \emph{valence n'est précisée} que si le métal peut en prendre plusieurs (\ce{Fe}, \ce{Cu}, \ce{Sn},
+\ce{Pb}, \ce{Hg}\ldots). Pour un métal à valence unique (\ce{Na}, \ce{Ca}, \ce{Al}, \ce{Zn}, \ce{Ag}),
+on ne l'indique pas.
+\end{regle}
+
+\begin{exemple}[lecture de trois oxydes métalliques]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \ce{CaO} : le calcium n'a qu'une valence (II) ; on dit simplement \textbf{oxyde de calcium}.
+  \item \ce{FeO} : ici l'oxygène est $-\mathrm{II}$ et la molécule est neutre, donc le fer est $+\mathrm{II}$ ;
+        on \emph{doit} préciser : \textbf{oxyde de fer(II)} (ou oxyde ferreux).
+  \item \ce{Ag2O} : l'argent est monovalent (\ce{Ag+}) ; deux \ce{Ag+} compensent un \ce{O^2-} ;
+        on dit \textbf{oxyde d'argent} (pas de valence à préciser).
+\end{itemize}
+\end{exemple}
+
+\begin{exemple}[écrire « oxyde ferrique » ou « oxyde de fer(III) »]
+\textbf{Question.} Quelle est la formule de l'oxyde de fer(III) (encore appelé oxyde ferrique) ?
+
+\smallskip
+Le fer(III) est le cation \ce{Fe^3+} (valence 3) ; l'ion oxyde est \ce{O^2-} (valence 2). On croise les
+valences : la valence de l'anion (2) devient l'indice du fer, celle du cation (3) devient l'indice de
+l'oxygène :
+\[ \ce{Fe^3+} + \ce{O^2-} \;\longrightarrow\; \ce{Fe2O3}. \]
+\textbf{Vérification :} charge $+$ : $2\times(+3)=+6$ ; charge $-$ : $3\times(-2)=-6$ ; total nul. Donc
+\[ \boxed{\text{oxyde de fer(III)} = \ce{Fe2O3}}. \]
+À comparer avec l'oxyde de fer(II) \ce{FeO} : c'est le \emph{même} couple d'éléments, mais le degré
+d'oxydation du fer (II ou III) change l'indice et donc la formule. D'où l'importance d'indiquer la valence.
+\end{exemple}
+
+\begin{remarque}[anciens suffixes -eux / -ique pour les métaux]
+Pour les métaux à deux valences, une vieille nomenclature (encore fréquente) emploie le suffixe
+\textbf{-eux} pour la \emph{plus basse} et \textbf{-ique} pour la \emph{plus haute} : fer\emph{reux}
+\ce{Fe^2+} / fer\emph{rique} \ce{Fe^3+}, cuiv\emph{reux} \ce{Cu+} / cuiv\emph{rique} \ce{Cu^2+}. La
+nomenclature moderne (de Stock), avec la valence en chiffres romains, est plus claire : fer(II)/fer(III).
+\end{remarque}
+
+\subsection{Les oxydes non métalliques}
+
+Lorsque l'oxygène se combine à un \emph{non-métal}, le composé est souvent moléculaire et le même couple
+d'éléments peut former \emph{plusieurs} oxydes (\ce{CO} et \ce{CO2} ; \ce{NO}, \ce{NO2}, \ce{N2O3},
+\ce{N2O5}\ldots). On ne peut donc plus se contenter de « oxyde de\ldots » : il faut indiquer
+\emph{combien} d'atomes de chaque sorte sont présents, à l'aide d'un \textbf{préfixe multiplicateur}.
+
+\begin{regle}[nommer un oxyde non métallique]
+On lit la formule en plaçant devant le mot « oxyde » un préfixe qui traduit le \textbf{rapport}
+$\dfrac{\text{nombre d'atomes d'oxygène}}{\text{nombre d'atomes de l'autre élément } X}$ :
+\[ \textbf{« [préfixe](O/X)\,oxyde de [nom de X] »}. \]
+\end{regle}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{nonmetcol!8}{white}
+\begin{tabular}{cl@{\qquad}cl}
+\rowcolor{nonmetcol!22}
+\textbf{Rapport O/X} & \textbf{Préfixe} & \textbf{Rapport O/X} & \textbf{Préfixe} \\
+\midrule
+1/2 & hémi    & 5/1 & pent \\
+1/1 & mono    & 6/1 & hexa \\
+2/1 & di      & 7/1 & hept \\
+3/1 & tri     & 5/2 & hémipent \\
+4/1 & tétra   & 3/2 & sesqui (hémitri) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remarque}[comment lire le tableau des préfixes]
+Quand la formule contient \emph{un seul} atome de l'élément $X$ (formule \ce{XO_n}), le préfixe est tout
+simplement le \emph{nombre d'atomes d'oxygène} : \ce{CO} (mono\emph{oxyde} = monoxyde), \ce{NO2}
+(di-oxyde = dioxyde), \ce{SO3} (tri-oxyde = trioxyde). \\
+Quand la formule contient \emph{deux} atomes de $X$ (formule \ce{X2O_n}), le rapport O/X vaut $n/2$ et l'on
+utilise les préfixes « fractionnaires » : \ce{X2O} (hémioxyde, $1/2$), \ce{X2O3} (sesquioxyde, $3/2$),
+\ce{X2O5} (hémipentoxyde, $5/2$), \ce{X2O7} (hémiheptoxyde, $7/2$).
+\end{remarque}
+
+\begin{exemple}[quatre oxydes non métalliques de la fiche]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \ce{CO} : O/C $= 1/1 \Rightarrow$ \emph{mono} $\Rightarrow$ \textbf{monoxyde de carbone}.
+  \item \ce{NO2} : O/N $= 2/1 \Rightarrow$ \emph{di} $\Rightarrow$ \textbf{dioxyde d'azote}.
+  \item \ce{P2O3} : O/P $= 3/2 \Rightarrow$ \emph{sesqui} $\Rightarrow$ \textbf{sesquioxyde de phosphore}.
+  \item \ce{Cl2O5} : O/Cl $= 5/2 \Rightarrow$ \emph{hémipent} $\Rightarrow$ \textbf{hémipentoxyde de chlore}.
+\end{itemize}
+\end{exemple}
+
+\begin{exemple}[nommer \ce{Cl2O5} et les autres oxydes de chlore]
+\textbf{Question.} Quel est le nom correct du composé \ce{Cl2O5} ?
+
+\smallskip
+\textbf{Étape 1 — nature des éléments.} Le chlore est un \emph{non-métal} : on utilise donc les préfixes
+multiplicateurs (et non « oxyde de chlore » tout court).
+
+\textbf{Étape 2 — calculer le rapport O/X.} Il y a 5 atomes d'oxygène pour 2 atomes de chlore :
+\[ \frac{\text{O}}{\text{Cl}} = \frac{5}{2}. \]
+Dans le tableau, le rapport $5/2$ correspond au préfixe \textbf{hémipent}. D'où :
+\[ \boxed{\ce{Cl2O5} = \text{hémipentoxyde de chlore}}. \]
+
+\textbf{Pour comparer} (mêmes éléments, rapports différents) :
+\[ \underbrace{\ce{Cl2O3}}_{3/2\ \to\ \text{sesqui}}\!\!\!\text{ : sesquioxyde de chlore}, \qquad
+   \underbrace{\ce{Cl2O7}}_{7/2\ \to\ \text{hémihept}}\!\!\!\text{ : hémiheptoxyde de chlore}. \]
+On écarte ainsi les pièges « sesquipentoxyde » ou « heptoxyde de chlore » : seul le rapport O/X compte.
+\end{exemple}
+
+\begin{exemple}[écrire « sesquioxyde d'azote »]
+\textbf{Question.} Quelle est la formule du sesquioxyde d'azote ?
+
+\smallskip
+Le préfixe \emph{sesqui} signifie un rapport O/X $= 3/2$. Il y a donc 3 atomes d'oxygène pour 2 atomes
+d'azote :
+\[ \boxed{\text{sesquioxyde d'azote} = \ce{N2O3}}. \]
+Vérifions la cohérence par les nombres d'oxydation : O vaut $-\mathrm{II}$, soit $3\times(-2)=-6$ pour les
+trois oxygènes ; pour que la molécule soit neutre, les deux azotes doivent totaliser $+6$, soit
+$+\mathrm{III}$ chacun. L'azote(III) est bien le degré attendu pour \ce{N2O3}.
+\end{exemple}
+
+% =====================================================================
+\section{Les hydroxydes (les bases)}
+% =====================================================================
+\begin{definition}[hydroxyde]
+Un \textbf{hydroxyde} est un composé formé d'un \textbf{cation métallique} et de l'\textbf{ion hydroxyde}
+\ce{OH-} (de valence 1). Ce sont les \emph{bases} typiques de la chimie minérale (elles libèrent \ce{OH-}
+en solution). Leur formule générale est \ce{M(OH)_n}, où $n$ égale la valence du métal.
+\end{definition}
+
+\begin{regle}[nommer / écrire un hydroxyde]
+On lit \ce{M(OH)_n} comme : \textbf{« hydroxyde de [nom du métal] (valence si nécessaire) »}. \\
+Réciproquement, on écrit la formule en croisant la valence du métal avec celle de \ce{OH-} ($=1$) : le
+nombre de groupes \ce{OH} égale simplement la valence du métal. On met \ce{OH} entre parenthèses dès que
+$n \geq 2$.
+\end{regle}
+
+\begin{exemple}[trois hydroxydes]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \ce{Ca(OH)2} : calcium \ce{Ca^2+} (valence 2) $\Rightarrow$ deux \ce{OH-} $\Rightarrow$
+        \textbf{hydroxyde de calcium}.
+  \item \ce{Al(OH)3} : aluminium \ce{Al^3+} (valence 3) $\Rightarrow$ trois \ce{OH-} $\Rightarrow$
+        \textbf{hydroxyde d'aluminium}.
+  \item \ce{Fe(OH)2} : le fer est ici $+\mathrm{II}$ (deux \ce{OH-} de charge $-1$) $\Rightarrow$
+        \textbf{hydroxyde de fer(II)}. Avec trois \ce{OH-}, on aurait \ce{Fe(OH)3}, hydroxyde de fer(III).
+\end{itemize}
+\end{exemple}
+
+\begin{exemple}[déterminer un hydroxyde à partir de sa composition massique]
+\textbf{Question.} Un composé de formule \ce{M_x(OH)_y} contient, en masse, $57{,}5\,\%$ de l'élément
+métallique \ce{M}, dont la masse molaire vaut \SI{23}{\gram\per\mole}. Quels sont \ce{M}, $x$ et $y$ ?
+
+\smallskip
+\textbf{Étape 1 — identifier le métal.} Une masse molaire de \SI{23}{\gram\per\mole} correspond au
+\textbf{sodium} \ce{Na} ($M_{\ce{Na}} = \SI{23}{\gram\per\mole}$). Le sodium est un alcalin : il est
+\emph{monovalent} (\ce{Na+}), donc on s'attend à $x = 1$ et $y = 1$, c'est-à-dire \ce{NaOH}.
+
+\textbf{Étape 2 — vérifier par le pourcentage massique.} La masse molaire du groupe hydroxyde est
+$M_{\ce{OH}} = 16 + 1 = \SI{17}{\gram\per\mole}$. Pour \ce{NaOH} :
+\[ M_{\ce{NaOH}} = 23 + 17 = \SI{40}{\gram\per\mole}. \]
+La fraction massique de sodium est alors :
+\[ \frac{M_{\ce{Na}}}{M_{\ce{NaOH}}} = \frac{23}{40} = 0{,}575 = 57{,}5\,\%. \]
+C'est exactement la valeur de l'énoncé. On conclut :
+\[ \boxed{\ce{M} = \ce{Na},\quad x = 1,\quad y = 1 \;\Rightarrow\; \ce{NaOH}\ \text{(hydroxyde de sodium)}}. \]
+Cet exemple montre comment la nomenclature se combine avec le calcul de masse molaire (Fiche 4) pour
+\emph{retrouver} une formule à partir d'une simple donnée expérimentale.
+\end{exemple}
+
+% =====================================================================
+\section{Les acides}
+% =====================================================================
+\begin{definition}[acide (au sens de la nomenclature)]
+Dans cette fiche, un \textbf{acide} est un composé dont la formule \emph{commence par l'hydrogène}
+\ce{H} (placé en tête), cet hydrogène étant susceptible d'être libéré sous forme \ce{H+}. On distingue :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item les \textbf{hydracides}, binaires, sans oxygène : \ce{H_nX} (ex.\ \ce{HCl}, \ce{H2S}) ;
+  \item les \textbf{oxacides} (ou oxoacides), ternaires, contenant de l'oxygène : \ce{H_nXO_m}
+        (ex.\ \ce{H2SO4}, \ce{HNO3}).
+\end{itemize}
+\end{definition}
+
+\subsection{Les hydracides (acides binaires \ce{H_nX})}
+
+\begin{regle}[nommer un hydracide]
+Un hydracide se nomme \textbf{« [racine du non-métal]-ure d'hydrogène »}, exactement comme l'anion
+correspondant suivi de « d'hydrogène ». L'indice $n$ d'hydrogène égale la valence de l'anion \ce{X}.
+\end{regle}
+
+\begin{exemple}[hydracides usuels]
+\begin{center}
+\rowcolors{2}{oxycol!6}{white}
+\begin{tabular}{lll}
+\rowcolor{oxycol!18}
+\textbf{Formule} & \textbf{Nom (systématique)} & \textbf{Anion associé} \\
+\midrule
+\ce{HCl}  & chlorure d'hydrogène  & \ce{Cl-} (chlorure) \\
+\ce{HBr}  & bromure d'hydrogène   & \ce{Br-} (bromure) \\
+\ce{HF}   & fluorure d'hydrogène  & \ce{F-} (fluorure) \\
+\ce{HI}   & iodure d'hydrogène    & \ce{I-} (iodure) \\
+\ce{H2S}  & sulfure d'hydrogène   & \ce{S^2-} (sulfure) \\
+\ce{H2Se} & séléniure d'hydrogène & \ce{Se^2-} (séléniure) \\
+\ce{HCN}  & cyanure d'hydrogène   & \ce{CN-} (cyanure) \\
+\bottomrule
+\end{tabular}
+\end{center}
+Remarquez la valence : \ce{S^2-} étant divalent, il faut \emph{deux} \ce{H} (\ce{H2S}) pour la neutralité,
+alors que \ce{Cl-} monovalent ne prend qu'un \ce{H} (\ce{HCl}).
+\end{exemple}
+
+\begin{remarque}[noms « usuels » des hydracides en solution]
+Dissous dans l'eau, ces gaz prennent un nom traditionnel : \ce{HCl} en solution est l'\emph{acide
+chlorhydrique}, \ce{H2S} l'\emph{acide sulfhydrique}, etc. Le nom « chlorure d'hydrogène » désigne plutôt
+le gaz pur ; les deux appellations renvoient à la même formule.
+\end{remarque}
+
+\subsection{Les oxacides (acides ternaires \ce{H_nXO_m})}
+
+\begin{regle}[nommer un oxacide]
+La fiche retient la lecture systématique \textbf{« [nom de l'anion] + d'hydrogène »} : on identifie
+l'anion oxygéné, puis on ajoute « d'hydrogène ». L'indice d'hydrogène égale la valence de l'anion.
+\end{regle}
+
+\begin{exemple}[deux oxacides lus « à la fiche »]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \ce{HClO4} : l'anion est \ce{ClO4-} (perchlorate, valence 1) $\Rightarrow$
+        \textbf{perchlorate d'hydrogène}.
+  \item \ce{H2SO3} : l'anion est \ce{SO3^2-} (sulfite, valence 2) $\Rightarrow$ deux \ce{H} $\Rightarrow$
+        \textbf{sulfite d'hydrogène}.
+\end{itemize}
+\end{exemple}
+
+\subsubsection{La nomenclature traditionnelle : hypo-/-eux/-ique/per-}
+
+À côté de la lecture « [anion] + d'hydrogène », il existe une nomenclature traditionnelle (très
+répandue, et utilisée dans les tableaux du livre) fondée sur le \textbf{nombre d'oxydation du non-métal}
+central. Pour une famille d'oxacides du même élément, on classe par n.o.\ croissant :
+
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[font=\small,scale=1.0]
+  % axe
+  \draw[->,>=Stealth,primarydark,line width=1pt] (-0.6,0) -- (12.7,0);
+  \node[primarydark,right,font=\footnotesize] at (10.9,-0.42) {n.o.\ du chlore croissant};
+  % niveaux
+  \foreach \x/\lvl/\acide/\formA/\anion/\formAn in {
+     0.9/+I/{acide hypochlor\emph{eux}}/\ce{HClO}/{hypochlor\emph{ite}}/\ce{ClO-},
+     4.1/+III/{acide chlor\emph{eux}}/\ce{HClO2}/{chlor\emph{ite}}/\ce{ClO2-},
+     7.3/+V/{acide chlor\emph{ique}}/\ce{HClO3}/{chlor\emph{ate}}/\ce{ClO3-},
+     10.5/+VII/{acide perchlor\emph{ique}}/\ce{HClO4}/{perchlor\emph{ate}}/\ce{ClO4-}}{
+     \draw[primary,line width=0.8pt] (\x,0.13) -- (\x,-0.13);
+     \node[primarydark,font=\scriptsize] at (\x,0.42) {$\lvl$};
+     \node[oxycol,font=\scriptsize,align=center] at (\x,1.25) {\acide\\[2pt]$\formA$};
+     \node[ancol,font=\scriptsize,align=center] at (\x,-1.05) {\anion\\[2pt]$\formAn$};
+  }
+  \node[oxycol,left,font=\scriptsize] at (-0.6,1.25) {acide :};
+  \node[ancol,left,font=\scriptsize] at (-0.6,-1.05) {anion :};
+\end{tikzpicture}}
+\end{center}
+
+\begin{regle}[les quatre étages des oxacides et leurs anions]
+Du moins au plus riche en oxygène :
+\[ \text{hypo}\ldots\text{eux} \;<\; \ldots\text{eux} \;<\; \ldots\text{ique} \;<\; \text{per}\ldots\text{ique}
+   \qquad(\text{côté acide}). \]
+À chaque acide correspond un anion (l'acide ayant perdu ses \ce{H+}), selon la \textbf{règle des suffixes} :
+\[ \boxed{\;\text{acide en }\textbf{-eux} \;\Rightarrow\; \text{anion en }\textbf{-ite} \qquad\qquad
+          \text{acide en }\textbf{-ique} \;\Rightarrow\; \text{anion en }\textbf{-ate}\;} \]
+et les préfixes \textbf{hypo-} et \textbf{per-} se conservent (hypochlor\emph{eux} $\to$ hypochlor\emph{ite},
+per\-chlor\emph{ique} $\to$ perchlor\emph{ate}).
+\end{regle}
+
+\begin{remarque}[moyen mnémotechnique]
+Pour retenir le lien suffixe acide $\to$ suffixe anion :
+« \textbf{-IQUE} donne \textbf{-ATE} » et « \textbf{-EUX} donne \textbf{-ITE} ». Autrement dit, l'acide
+\emph{sulfur-ique} \ce{H2SO4} donne le \emph{sulf-ate} \ce{SO4^2-}, tandis que l'acide \emph{sulfur-eux}
+\ce{H2SO3} donne le \emph{sulf-ite} \ce{SO3^2-}.
+\end{remarque}
+
+\begin{exemple}[familles d'oxacides courants]
+\begin{center}
+\rowcolors{2}{oxycol!6}{white}
+\begin{tabular}{llll}
+\rowcolor{oxycol!18}
+\textbf{Acide} & \textbf{Formule} & \textbf{Anion} & \textbf{Formule de l'anion} \\
+\midrule
+acide nitreux      & \ce{HNO2}  & nitrite      & \ce{NO2-} \\
+acide nitrique     & \ce{HNO3}  & nitrate      & \ce{NO3-} \\
+acide sulfureux    & \ce{H2SO3} & sulfite      & \ce{SO3^2-} \\
+acide sulfurique   & \ce{H2SO4} & sulfate      & \ce{SO4^2-} \\
+acide carbonique   & \ce{H2CO3} & carbonate    & \ce{CO3^2-} \\
+acide phosphorique & \ce{H3PO4} & phosphate    & \ce{PO4^3-} \\
+acide hypochloreux & \ce{HClO}  & hypochlorite & \ce{ClO-} \\
+acide perchlorique & \ce{HClO4} & perchlorate  & \ce{ClO4-} \\
+\bottomrule
+\end{tabular}
+\end{center}
+La même échelle hypo-/-eux/-ique/per- s'applique au brome (\ce{HBrO}, \ce{HBrO2}, \ce{HBrO3}, \ce{HBrO4})
+et à l'iode.
+\end{exemple}
+
+\begin{exemple}[l'ion phosphite et la famille des phosphates protonés]
+\textbf{Question.} Quelle est la formule exacte de l'ion phosphite ? Comment se relie-t-il aux phosphates
+partiellement protonés ?
+
+\smallskip
+\textbf{Les anions de l'acide phosphorique \ce{H3PO4}.} Cet acide possède \emph{trois} \ce{H} acides
+(il est \textbf{triprotique}). En perdant ses protons un à un, il donne une cascade d'anions :
+\[ \ce{H3PO4} \;\to\; \underbrace{\ce{H2PO4-}}_{\text{dihydrogénophosphate}} \;\to\;
+   \underbrace{\ce{HPO4^2-}}_{\text{monohydrogénophosphate}} \;\to\;
+   \underbrace{\ce{PO4^3-}}_{\text{phosphate}}. \]
+
+\textbf{L'ion phosphite.} Attention au piège : l'ion \textbf{phosphite} n'est pas « \ce{PO3^3-} » mais
+\[ \boxed{\text{ion phosphite} = \ce{HPO3^2-}}. \]
+La raison est subtile : l'acide \emph{phosphoreux} \ce{H3PO3} n'a en réalité que \emph{deux} \ce{H}
+acides (il est \textbf{diprotique}, deux $\mathrm{p}K_a$), car son troisième hydrogène est lié directement
+à l'atome de phosphore et ne se dissocie pas. En enlevant ses deux \ce{H} acides, \ce{H3PO3} donne donc
+\ce{HPO3^2-}. On a aussi l'ion intermédiaire \ce{H2PO3-} (hydrogénophosphite).
+
+\smallskip
+\textbf{À ne pas confondre :} \ce{H3PO3} et \ce{H3PO4} sont des \emph{molécules neutres} (des acides), pas
+des ions — respectivement \emph{phosphite d'hydrogène} (acide phosphoreux) et \emph{phosphate d'hydrogène}
+(acide phosphorique). Le nombre de \ce{H} \emph{acides} (2 ou 3) gouverne la charge de l'anion final.
+\end{exemple}
+
+% =====================================================================
+\section{Les sels}
+% =====================================================================
+\begin{definition}[sel]
+Un \textbf{sel} résulte (formellement) du remplacement des \ce{H+} d'un acide par un \textbf{cation
+métallique} (ou par \ce{NH4+}). Il associe donc un cation et un anion en une formule \emph{neutre}. Quand
+\emph{tous} les \ce{H} ont été remplacés, le sel est \textbf{neutre} ; s'il reste un (ou des) \ce{H}, le
+sel est dit \textbf{acide}.
+\end{definition}
+
+\subsection{Les sels neutres (binaires \ce{MX} et ternaires \ce{MXO})}
+
+\begin{regle}[nommer / écrire un sel neutre]
+On nomme un sel en énonçant d'abord l'\textbf{anion}, puis le \textbf{cation} :
+\[ \textbf{« [nom de l'anion] + de + [nom du cation] (valence du cation si nécessaire) »}. \]
+Pour écrire la formule, on \textbf{croise les valences} du cation et de l'anion (puis on simplifie, et on
+met l'anion polyatomique entre parenthèses si son indice $\geq 2$).
+\end{regle}
+
+\begin{exemple}[quatre sels neutres de la fiche]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \ce{NaCl} : anion \ce{Cl-} (chlorure) + cation \ce{Na+} $\Rightarrow$ \textbf{chlorure de sodium}.
+  \item \ce{Na2S} : anion \ce{S^2-} (sulfure, valence 2) + \ce{Na+} (valence 1) $\Rightarrow$ deux \ce{Na+}
+        $\Rightarrow$ \textbf{sulfure de sodium}.
+  \item \ce{NaClO} : anion \ce{ClO-} (hypochlorite) + \ce{Na+} $\Rightarrow$ \textbf{hypochlorite de sodium}
+        (l'eau de Javel !).
+  \item \ce{K2SO4} : anion \ce{SO4^2-} (sulfate, valence 2) + \ce{K+} (valence 1) $\Rightarrow$ deux \ce{K+}
+        $\Rightarrow$ \textbf{sulfate de potassium}.
+\end{itemize}
+\end{exemple}
+
+\begin{exemple}[écrire le nitrate d'étain(IV)]
+\textbf{Question.} Quelle est la formule chimique correcte du nitrate d'étain(IV) ?
+
+\smallskip
+\textbf{Étape 1 — le cation.} Le symbole de l'étain est \ce{Sn}. La mention « (IV) » indique le degré
+d'oxydation $+\mathrm{IV}$, donc le cation \ce{Sn^4+} (valence 4).
+
+\textbf{Étape 2 — l'anion.} L'ion nitrate est \ce{NO3-} (valence 1) — à ne pas confondre avec l'ion
+nitr\emph{ite} \ce{NO2-}.
+
+\textbf{Étape 3 — croiser les valences.} La valence de l'anion (1) reste l'indice du cation ; la valence
+du cation (4) devient l'indice de l'anion :
+\[ \ce{Sn^4+} + \ce{NO3-} \;\longrightarrow\; \ce{Sn(NO3)4}. \]
+On met \ce{NO3} entre parenthèses car il est polyatomique et présent 4 fois.
+
+\textbf{Vérification.} Charge $+$ : $+4$ ; charge $-$ : $4 \times (-1) = -4$ ; total nul.
+\[ \boxed{\text{nitrate d'étain(IV)} = \ce{Sn(NO3)4}}. \]
+On écarte les pièges : \ce{Sr(NO3)2} et \ce{Sr(NO3)4} utilisent le strontium \ce{Sr} (et non l'étain \ce{Sn}),
+et \ce{Sn(NO3)2} correspondrait à l'étain(II), pas à l'étain(IV).
+\end{exemple}
+
+\begin{exemple}[écrire le thiosulfate d'ammonium]
+\textbf{Question.} Quelle est la formule du thiosulfate d'ammonium ?
+
+\smallskip
+\textbf{Le cation} est l'ammonium \ce{NH4+} (valence 1) — rappelons que l'ammoniac, lui, est la molécule
+neutre \ce{NH3}. \textbf{L'anion} est le thiosulfate \ce{S2O3^2-} (valence 2). On croise les valences :
+la valence de l'anion (2) devient l'indice du cation, celle du cation (1) reste l'indice de l'anion :
+\[ \ce{NH4+} + \ce{S2O3^2-} \;\longrightarrow\; \ce{(NH4)2S2O3}. \]
+On met \ce{NH4} entre parenthèses car il est polyatomique et présent 2 fois.
+\[ \boxed{\text{thiosulfate d'ammonium} = \ce{(NH4)2S2O3}}. \]
+\textbf{Vérification :} charge $+$ : $2\times(+1)=+2$ ; charge $-$ : $-2$ ; total nul. On distingue bien
+\ce{(NH4)2S2O3} (thiosulfate, \ce{S2O3^2-}) de \ce{(NH4)2SO3} (sulfite, \ce{SO3^2-}) : le thiosulfate
+contient \emph{un atome de soufre supplémentaire} à la place d'un oxygène.
+\end{exemple}
+
+\subsection{Les sels acides (quaternaires \ce{MHXO})}
+
+Quand l'acide de départ est \textbf{polyprotique} (\ce{H2CO3}, \ce{H2SO3}, \ce{H3PO4}\ldots), on peut ne
+remplacer qu'\emph{une partie} de ses \ce{H} par le métal. Le sel obtenu conserve un (ou plusieurs) \ce{H} :
+c'est un \textbf{sel acide}.
+
+\begin{regle}[nommer un sel acide]
+On préfixe le nom de l'anion par \textbf{« (mono/di)hydrogéno »} pour signaler le(s) \ce{H} restant(s) :
+\[ \textbf{« (di)(mono)hydrogéno-[racine]-ite/-ate + de + [cation] »}. \]
+\end{regle}
+
+\begin{exemple}[trois sels acides de la fiche]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \ce{Na2HPO4} : l'anion \ce{HPO4^2-} garde un \ce{H} $\Rightarrow$
+        \textbf{monohydrogénophosphate de sodium}.
+  \item \ce{NaHSO3} : l'anion \ce{HSO3-} garde un \ce{H} $\Rightarrow$ \textbf{hydrogénosulfite de sodium}.
+  \item \ce{Ca(HCO3)2} : l'anion \ce{HCO3-} (hydrogénocarbonate) garde un \ce{H}, et le calcium est divalent
+        $\Rightarrow$ deux \ce{HCO3-} $\Rightarrow$ \textbf{hydrogénocarbonate de calcium}.
+\end{itemize}
+\end{exemple}
+
+\begin{remarque}[« bi- » : un vieux préfixe pour les sels acides]
+On rencontre encore « bicarbonate » pour \ce{HCO3-} (hydrogénocarbonate) et « bisulfate » pour \ce{HSO4-}
+(hydrogénosulfate). De même, « bichromate de potassium » \ce{K2Cr2O7} est l'ancien nom du
+\emph{dichromate} de potassium. Ces appellations sont tolérées mais la forme « hydrogéno\ldots » (ou
+« di\ldots ») est préférable.
+\end{remarque}
+
+% =====================================================================
+\section{Compléments : hydrures, hydrates et coefficients}
+% =====================================================================
+\subsection{Les hydrures}
+
+\begin{definition}[hydrure]
+Un \textbf{hydrure} (métallique) est un composé binaire métal--hydrogène dans lequel l'hydrogène porte
+le nombre d'oxydation $-\mathrm{I}$ (cas particulier de la règle 4) : il joue le rôle d'un anion \ce{H-}.
+On le nomme \textbf{« hydrure de [métal] »}.
+\end{definition}
+
+\begin{exemple}[hydrures de lithium et de sodium]
+Le lithium et le sodium sont monovalents (\ce{Li+}, \ce{Na+}), et l'ion hydrure \ce{H-} est monovalent :
+\[ \text{hydrure de lithium} = \ce{LiH}, \qquad \text{hydrure de sodium} = \ce{NaH}. \]
+On écarte les fausses formules \ce{LiH2}, \ce{HeLi} ou \ce{LiHe} : l'hélium \ce{He} est un gaz noble qui ne
+forme pas de composé, et le lithium ne porte qu'une seule charge positive.
+\end{exemple}
+
+\subsection{Les hydrates et la lecture des coefficients}
+
+\begin{definition}[hydrate]
+Un \textbf{hydrate} est un solide cristallin qui incorpore un nombre défini de molécules d'eau dans sa
+structure. On l'écrit \ce{sel * n H2O}, où $n$ est le nombre de molécules d'eau associées à chaque motif
+du sel. Le composé correspondant sans eau est dit \textbf{anhydre}.
+\end{definition}
+
+\begin{exemple}[\ce{CaCO3 * 2 H2O} : un composé dihydraté]
+\textbf{Question.} Que signifie \ce{CaCO3 * 2 H2O} ?
+
+\smallskip
+L'unité de base est le carbonate de calcium anhydre \ce{CaCO3}. La notation \ce{* 2 H2O} indique que
+\emph{deux} molécules d'eau sont associées à chaque motif \ce{CaCO3} dans le cristal : c'est un
+\textbf{composé dihydraté}. La formule \emph{ne contient pas} « 3 molécules » ni « 9 atomes » : elle
+décrit un seul motif \ce{CaCO3} accompagné de $n = 2$ molécules d'eau.
+
+\smallskip
+\textbf{Illustration classique :} le sulfate de cuivre. Anhydre (\ce{CuSO4}), c'est une poudre
+\emph{blanche} ; hydraté (\ce{CuSO4 * 5 H2O}), il forme de beaux cristaux \emph{bleus}. L'eau de
+cristallisation change donc jusqu'à la couleur du solide.
+\end{exemple}
+
+\begin{exemple}[\ce{2 Na2CO3} : lire un coefficient stœchiométrique]
+\textbf{Question.} Que signifie l'écriture « \ce{2 Na2CO3} » ?
+
+\smallskip
+Il faut distinguer le \textbf{coefficient} (le grand chiffre devant la formule) des \textbf{indices}
+(les petits chiffres à l'intérieur de la formule) :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item le coefficient « 2 » multiplie \emph{toute} la formule : il y a donc \textbf{2 molécules}
+        (2 motifs) de carbonate de sodium ;
+  \item les indices, eux, décrivent \emph{une} molécule \ce{Na2CO3} : 2 atomes de \ce{Na}, 1 de \ce{C},
+        3 de \ce{O}.
+\end{itemize}
+Ainsi « \ce{2 Na2CO3} » représente \textbf{2 molécules} de carbonate de sodium, soit au total
+$2\times(2+1+3) = 12$ atomes. La bonne lecture est donc « 2 molécules », et non « 4 molécules » ni
+« 8 atomes ».
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse et tableaux de référence}
+% =====================================================================
+\subsection{La méthode générale en quatre étapes}
+
+\begin{methode}[passer d'un nom à une formule (et inversement)]
+\textbf{Du nom vers la formule :}
+\begin{enumerate}[label=\arabic*.,leftmargin=2.0em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Reconnaître la famille} (oxyde, hydroxyde, acide, sel\ldots) d'après le nom et les éléments.
+  \item \textbf{Identifier les ions} (cation et anion) et \textbf{leur valence} (table de référence).
+  \item \textbf{Croiser les valences} pour obtenir les indices ; \emph{simplifier} ; mettre les ions
+        polyatomiques d'indice $\geq 2$ entre parenthèses.
+  \item \textbf{Vérifier la neutralité} : somme des charges $+$ = somme des charges $-$.
+\end{enumerate}
+\textbf{De la formule vers le nom :} on repère l'anion (et sa valence via le nombre d'oxydation), on choisit
+le bon suffixe (-ure, -ite, -ate) et le bon préfixe (hypo-/per-, mono-/di-\ldots), puis on précise la
+valence du cation si elle peut varier.
+\end{methode}
+
+\subsection{Table de référence des anions (par valence)}
+
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{ancol!7}{white}
+\begin{tabular}{ll@{\qquad}ll}
+\rowcolor{ancol!20}
+\textbf{Anion (valence 1)} & \textbf{Formule} & \textbf{Anion} & \textbf{Formule} \\
+\midrule
+hydroxyde        & \ce{OH-}   & hypochlorite   & \ce{ClO-} \\
+chlorure         & \ce{Cl-}   & chlorite       & \ce{ClO2-} \\
+bromure          & \ce{Br-}   & chlorate       & \ce{ClO3-} \\
+iodure           & \ce{I-}    & perchlorate    & \ce{ClO4-} \\
+fluorure         & \ce{F-}    & hypobromite    & \ce{BrO-} \\
+cyanure          & \ce{CN-}   & bromate        & \ce{BrO3-} \\
+nitrite          & \ce{NO2-}  & perbromate     & \ce{BrO4-} \\
+nitrate          & \ce{NO3-}  & iodate         & \ce{IO3-} \\
+acétate          & \ce{CH3COO-} & permanganate & \ce{MnO4-} \\
+hydrogénocarbonate & \ce{HCO3-} & hydrogénosulfate & \ce{HSO4-} \\
+hydrogénosulfite & \ce{HSO3-} & dihydrogénophosphate & \ce{H2PO4-} \\
+ammonium \textbf{(cation !)} & \ce{NH4+} & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{ancol!7}{white}
+\begin{tabular}{ll@{\qquad}ll}
+\rowcolor{ancol!20}
+\textbf{Anion (valence 2)} & \textbf{Formule} & \textbf{Anion} & \textbf{Formule} \\
+\midrule
+oxyde      & \ce{O^2-}   & chromate   & \ce{CrO4^2-} \\
+sulfure    & \ce{S^2-}   & dichromate & \ce{Cr2O7^2-} \\
+sulfite    & \ce{SO3^2-} & manganate  & \ce{MnO4^2-} \\
+sulfate    & \ce{SO4^2-} & silicate   & \ce{SiO3^2-} \\
+carbonate  & \ce{CO3^2-} & thiosulfate & \ce{S2O3^2-} \\
+monohydrogénophosphate & \ce{HPO4^2-} & phosphite & \ce{HPO3^2-} \\
+\bottomrule
+\end{tabular}
+\hspace{0.6cm}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{ancol!7}{white}
+\begin{tabular}{ll}
+\rowcolor{ancol!20}
+\textbf{Anion (val.\ 3)} & \textbf{Formule} \\
+\midrule
+phosphate & \ce{PO4^3-} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Banque d'exemples : noms et formules}
+
+Pour terminer, voici un large échantillon de correspondances nom $\leftrightarrow$ formule, couvrant les
+six familles. Il sert de table de révision : cachez une colonne et retrouvez l'autre.
+
+\begin{multicols}{2}
+\footnotesize
+\setlist[itemize]{leftmargin=1.2em,topsep=1pt,itemsep=0.5pt}
+\textbf{\textcolor{metalcol}{Oxydes métalliques}}
+\begin{itemize}
+  \item oxyde de calcium : \ce{CaO}
+  \item oxyde de magnésium : \ce{MgO}
+  \item oxyde de zinc : \ce{ZnO}
+  \item oxyde d'argent : \ce{Ag2O}
+  \item oxyde de potassium : \ce{K2O}
+  \item oxyde de cuivre(I) : \ce{Cu2O}
+  \item oxyde de fer(II) : \ce{FeO}
+  \item oxyde de fer(III) (ferrique) : \ce{Fe2O3}
+  \item oxyde de mercure(II) : \ce{HgO}
+\end{itemize}
+
+\textbf{\textcolor{nonmetcol}{Oxydes non métalliques}}
+\begin{itemize}
+  \item monoxyde d'azote : \ce{NO}
+  \item dioxyde d'azote : \ce{NO2}
+  \item dioxyde d'iode : \ce{IO2}
+  \item trioxyde de soufre : \ce{SO3}
+  \item trioxyde de brome : \ce{BrO3}
+  \item sesquioxyde d'azote : \ce{N2O3}
+  \item hémipentoxyde d'azote : \ce{N2O5}
+  \item hémipentoxyde de phosphore : \ce{P2O5}
+  \item hémiheptoxyde de chlore : \ce{Cl2O7}
+\end{itemize}
+
+\textbf{\textcolor{thmcol}{Hydroxydes}}
+\begin{itemize}
+  \item hydroxyde de sodium : \ce{NaOH}
+  \item hydroxyde de calcium : \ce{Ca(OH)2}
+  \item hydroxyde d'aluminium : \ce{Al(OH)3}
+  \item hydroxyde de fer(II) : \ce{Fe(OH)2}
+\end{itemize}
+
+\textbf{\textcolor{oxycol}{Acides}}
+\begin{itemize}
+  \item chlorure d'hydrogène : \ce{HCl}
+  \item bromure d'hydrogène : \ce{HBr}
+  \item sulfure d'hydrogène : \ce{H2S}
+  \item séléniure d'hydrogène : \ce{H2Se}
+  \item cyanure d'hydrogène : \ce{HCN}
+  \item acide nitrique : \ce{HNO3}
+  \item acide sulfurique : \ce{H2SO4}
+  \item acide carbonique : \ce{H2CO3}
+  \item acide phosphorique : \ce{H3PO4}
+  \item acide perchlorique : \ce{HClO4}
+\end{itemize}
+
+\textbf{\textcolor{saltcol}{Sels neutres}}
+\begin{itemize}
+  \item chlorure de sodium : \ce{NaCl}
+  \item sulfure de sodium : \ce{Na2S}
+  \item sulfate de potassium : \ce{K2SO4}
+  \item hypochlorite de sodium : \ce{NaClO}
+  \item nitrate d'ammonium : \ce{NH4NO3}
+  \item nitrate de fer(III) : \ce{Fe(NO3)3}
+  \item nitrite de fer(II) : \ce{Fe(NO2)2}
+  \item phosphate de fer(III) : \ce{FePO4}
+  \item carbonate de fer(II) : \ce{FeCO3}
+  \item perchlorate de magnésium : \ce{Mg(ClO4)2}
+  \item permanganate de calcium : \ce{Ca(MnO4)2}
+  \item acétate de cuivre(II) : \ce{Cu(CH3COO)2}
+  \item thiosulfate d'ammonium : \ce{(NH4)2S2O3}
+\end{itemize}
+
+\textbf{\textcolor{saltcol}{Sels acides}}
+\begin{itemize}
+  \item hydrogénocarbonate de calcium : \ce{Ca(HCO3)2}
+  \item hydrogénosulfite de sodium : \ce{NaHSO3}
+  \item monohydrogénophosphate de sodium : \ce{Na2HPO4}
+  \item dihydrogénophosphate de potassium : \ce{KH2PO4}
+  \item hydrogénosulfate d'ammonium : \ce{NH4HSO4}
+  \item bichromate (dichromate) de potassium : \ce{K2Cr2O7}
+\end{itemize}
+
+\textbf{Hydrures}
+\begin{itemize}
+  \item hydrure de lithium : \ce{LiH}
+  \item hydrure de sodium : \ce{NaH}
+\end{itemize}
+\end{multicols}
+
+\vspace{0.3cm}
+\begin{tcolorbox}[boxbase,colback=primary!6,colframe=primary,
+   title={\textsc{L'essentiel à retenir}}]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Tout part de la neutralité électrique} : on croise les valences du cation et de l'anion,
+        on simplifie, on met entre parenthèses les ions polyatomiques d'indice $\geq 2$.
+  \item \textbf{La famille se lit sur les éléments :} oxyde (+\,O), hydroxyde (+\,\ce{OH}),
+        acide (\ce{H} en tête), sel (cation + anion).
+  \item \textbf{Oxydes non métalliques :} préfixe = rapport O/X (mono, di, tri\ldots, sesqui, hémipent).
+  \item \textbf{Oxacides :} échelle hypo-/-eux/-ique/per- selon le n.o. ; et surtout
+        \textbf{-eux $\to$ -ite}, \textbf{-ique $\to$ -ate} pour passer à l'anion.
+  \item \textbf{Ne jamais confondre :} nitrite \ce{NO2-} / nitrate \ce{NO3-} ; sulfite \ce{SO3^2-} /
+        sulfate \ce{SO4^2-} ; thiosulfate \ce{S2O3^2-} / sulfate ; ammonium \ce{NH4+} (cation) / ammoniac
+        \ce{NH3} (neutre).
+  \item \textbf{Coefficient $\neq$ indice}, et \ce{* n H2O} = eau de cristallisation (hydrate).
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

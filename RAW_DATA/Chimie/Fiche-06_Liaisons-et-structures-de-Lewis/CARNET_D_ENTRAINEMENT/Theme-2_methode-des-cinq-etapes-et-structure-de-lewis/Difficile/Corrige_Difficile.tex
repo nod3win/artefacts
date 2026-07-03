@@ -1,0 +1,166 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 2
+%  Niveau DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corcol}{RGB}{0,114,178}
+\definecolor{astucecol}{RGB}{198,93,9}
+\definecolor{atomO}{RGB}{220,55,45}
+\definecolor{lonepair}{RGB}{120,94,200}
+\definecolor{bondcol}{RGB}{60,60,70}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
+   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
+   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% -------- macros des quatre grandeurs --------
+\newcommand{\nmax}{n_{\max}(e^-)}
+\newcommand{\nv}{n_{v}(e^-)}
+\newcommand{\nl}{n_{\ell}(e^-)}
+\newcommand{\nnl}{n_{n\ell}(e^-)}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 2} — Méthode des 5 étapes et structure de Lewis}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile · Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 2 — Corrigé du niveau Difficile}
+\end{center}
+\medskip
+
+\begin{cor}[l'ion carbonate \ce{CO3^2-}, pas à pas]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item \rep l'atome central est le \textbf{carbone} \ce{C}, moins électronégatif que l'oxygène
+        (et présent en un seul exemplaire).
+  \item Tous les atomes visent l'octet : $a=4$ (un \ce{C}, trois \ce{O}), $b=0$.
+        $\;\nmax = 8\times 4 + 0 = \mathbf{32}$.
+  \item Charge $q=-2$, donc $-q = +2$ : on \emph{ajoute} $2$ électrons.
+        \[ \nv = \underbrace{4}_{\ce{C}} + \underbrace{3\times 6}_{3\,\ce{O}} + \underbrace{2}_{-q}
+           = 4 + 18 + 2 = \mathbf{24}. \]
+  \item $\nl = 32 - 24 = 8 \Rightarrow 8/2 = \mathbf{4}$ liaisons. Le carbone n'étant lié qu'à
+        \textbf{trois} oxygènes, on a $3$ liaisons \ce{C-O} dont \textbf{une double} ($2$ simples
+        $+\,1$ double $= 4$).
+  \item $\nnl = 24 - 8 = 16 \Rightarrow 16/2 = \mathbf{8}$ doublets non liants, répartis sur les
+        trois oxygènes. \emph{Vérification octet de \ce{C}} : $4$ liaisons $= 8\,e^-$. \checkmark
+        \\ \rep \ce{C} central, $3$ liaisons \ce{C-O} (une double), $8$ doublets libres sur les
+        \ce{O}. L'oxygène doublement lié porte $2$ doublets libres ; chaque oxygène simplement lié
+        en porte $3$ et une charge formelle $-1$ (total $-2$).
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[l'ion perchlorate \ce{ClO4^-}, pas à pas]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item \rep l'atome central est le \textbf{chlore} \ce{Cl} (unique, et moins électronégatif que
+        \ce{O}).
+  \item $a=5$ (un \ce{Cl}, quatre \ce{O}), $b=0$ : $\;\nmax = 8\times 5 = \mathbf{40}$.
+  \item Charge $q=-1$, donc $-q=+1$ :
+        \[ \nv = \underbrace{7}_{\ce{Cl}} + \underbrace{4\times 6}_{4\,\ce{O}} + \underbrace{1}_{-q}
+           = 7 + 24 + 1 = \mathbf{32}. \]
+  \item $\nl = 40 - 32 = 8 \Rightarrow 8/2 = \mathbf{4}$ liaisons \ce{Cl-O}. Le chlore est lié à
+        \textbf{quatre} oxygènes : les $4$ liaisons sont donc \textbf{simples}.
+  \item $\nnl = 32 - 8 = 24 \Rightarrow 24/2 = \mathbf{12}$ doublets non liants, soit $3$ par
+        oxygène. \emph{Autour du \ce{Cl}} : $4$ liaisons simples $= 8\,e^-$, l'octet est
+        respecté.\\
+        \rep $4$ liaisons \ce{Cl-O} simples, $12$ doublets libres ($3$ par \ce{O}) ; le chlore
+        s'entoure de $8$ électrons.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[le nitrite d'hydrogène \ce{HNO2}]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Molécule neutre ($q=0$) :
+        \[ \nv = \underbrace{1}_{\ce{H}} + \underbrace{5}_{\ce{N}} + \underbrace{2\times 6}_{2\,\ce{O}}
+           = 1 + 5 + 12 = \mathbf{18}. \]
+        \rep le nombre total d'électrons de valence vaut \textbf{18} (réponse de l'annale).
+  \item Atomes visant l'octet : \ce{N} et les deux \ce{O} $\Rightarrow a=3$ ; un seul \ce{H}
+        vise le duet $\Rightarrow b=1$. $\;\nmax = 8\times 3 + 2\times 1 = 24 + 2 = \mathbf{26}$.
+  \item $\nl = 26 - 18 = 8 \Rightarrow 8/2 = \mathbf{4}$ liaisons. Elles se répartissent selon le
+        squelette \ce{H-O-N=O} : $1$ liaison \ce{H-O}, $1$ liaison \ce{O-N} et $1$ double liaison
+        \ce{N=O} (soit $1 + 1 + 2 = 4$ doublets liants). \checkmark
+  \item $\nnl = 18 - 8 = 10 \Rightarrow 10/2 = \mathbf{5}$ doublets non liants.
+  \item \emph{Vérification} : l'oxygène central (\ce{-O-}) porte $2$ doublets libres
+        ($2 + 2\times 2 = 6+2 = 8\,e^-$, octet) ; l'azote porte $1$ doublet libre
+        ($3$ liaisons $+\,1$ doublet $= 8\,e^-$, octet) ; l'oxygène terminal (\ce{=O}) porte
+        $2$ doublets libres (double liaison $+\,2$ doublets $= 8\,e^-$, octet) ; le \ce{H} voit
+        $2\,e^-$ (duet). Total : $2 + 1 + 2 = 5$ doublets libres. \checkmark
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (H) at (-3.2,0);
+  \coordinate (O1) at (-1.9,0);
+  \coordinate (N) at (-0.4,0);
+  \coordinate (O2) at (1.1,0.55);
+  \draw[bondcol,line width=1.3pt] ($(H)+(0.25,0)$)--($(O1)+(-0.35,0)$);
+  \draw[bondcol,line width=1.3pt] ($(O1)+(0.35,0)$)--($(N)+(-0.3,0)$);
+  \draw[bondcol,line width=1.3pt] ($(N)+(0.2,0.14)$)--($(O2)+(-0.28,-0.08)$);
+  \draw[bondcol,line width=1.3pt] ($(N)+(0.32,0.02)$)--($(O2)+(-0.16,-0.2)$);
+  \node[font=\large\bfseries] at (H) {H};
+  \node[font=\large\bfseries,color=atomO] at (O1) {O};
+  \node[font=\large\bfseries] at (N) {N};
+  \node[font=\large\bfseries,color=atomO] at (O2) {O};
+  \fill[lonepair] ($(O1)+(75:0.5)$) circle (2.1pt); \fill[lonepair] ($(O1)+(105:0.5)$) circle (2.1pt);
+  \fill[lonepair] ($(O1)+(255:0.5)$) circle (2.1pt); \fill[lonepair] ($(O1)+(285:0.5)$) circle (2.1pt);
+  \fill[lonepair] ($(N)+(255:0.5)$) circle (2.1pt); \fill[lonepair] ($(N)+(285:0.5)$) circle (2.1pt);
+  \fill[lonepair] ($(O2)+(35:0.5)$) circle (2.1pt); \fill[lonepair] ($(O2)+(75:0.5)$) circle (2.1pt);
+  \fill[lonepair] ($(O2)+(-15:0.5)$) circle (2.1pt); \fill[lonepair] ($(O2)+(-55:0.5)$) circle (2.1pt);
+\end{tikzpicture}
+\end{center}
+\end{cor}
+
+\begin{cor}[compter $\nv$ d'espèces polyatomiques]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item \textbf{Sulfite d'ammonium} \ce{(NH4)2SO3}. Atomes : $2\,\ce{N}$, $8\,\ce{H}$,
+        $1\,\ce{S}$, $3\,\ce{O}$.
+        \[ \nv = 2\times 5 + 8\times 1 + 6 + 3\times 6 = 10 + 8 + 6 + 18 = \mathbf{42}. \]
+  \item \rep on n'applique aucune correction $-q$ car le \textbf{composé global est neutre}
+        ($q=0$) : le cation \ce{NH4+} et l'anion \ce{SO3^2-} se compensent exactement
+        ($2\times(+1) + (-2) = 0$). La correction de charge ne s'applique qu'à un \emph{ion}
+        isolé, jamais à un sel électriquement neutre.
+  \item \textbf{Nitrate d'ammonium} \ce{NH4NO3}. Atomes : $2\,\ce{N}$, $4\,\ce{H}$, $3\,\ce{O}$.
+        \[ \nv = 2\times 5 + 4\times 1 + 3\times 6 = 10 + 4 + 18 = \mathbf{32}. \]
+\end{enumerate}
+\end{cor}
+
+\begin{astucebox}[ion isolé ou sel neutre ?]
+Le terme $-q$ ne concerne que l'\textbf{édifice dont on écrit la charge}. Pour un ion seul
+(\ce{CO3^2-}, \ce{ClO4^-}, \ce{NH4+}\dots), on corrige. Pour un sel écrit en entier
+(\ce{(NH4)2SO3}, \ce{NH4NO3}\dots), l'ensemble est neutre : on additionne simplement les valences
+de \emph{tous} les atomes, sans rien corriger.
+\end{astucebox}
+
+\end{document}

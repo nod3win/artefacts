@@ -1,0 +1,97 @@
+% =====================================================================
+%  THÈME 2 — Notation scientifique & unités — CORRIGÉ — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Difficile · Thème 2}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
+  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,
+  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Corrigé — Niveau Difficile}\\[1pt]
+{\color{primary} Thème 2 : notation scientifique \& changements d'unité}
+\end{center}
+\vspace{2mm}
+
+\begin{cor}[Chaîne de conversions à précision constante]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $m=\num{4,50e2}\,\si{\milli\gram}$ : mantisse $\num{4,50}$ $\Rightarrow \mathbf{3}$~CS. En décimal :
+        $m=\qty{450}{\milli\gram}$.
+  \item $m=\qty{0,450}{\gram}=\qty{0,000450}{\kilo\gram}$.
+  \item Forme scientifique : $\boxed{m=\num{4,50e-4}\,\si{\kilo\gram}}$.
+  \item À chaque étape : $\num{4,50e2}$~mg, $\num{4,50e-1}$~g, $\num{4,50e-4}$~kg — toujours
+        $3$~CS. C'est le \textbf{théorème du déplacement de la virgule} : on ne change que l'ordre de
+        grandeur, pas la précision.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Un nombre exact dans une préparation]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item « $3$ » est \textbf{exact} (comptage de fioles) : infinité de CS. « $\num{25,0}$ » est
+        \textbf{mesuré} : $3$~CS.
+  \item $V_{\text{tot}} = 3\times\qty{25,0}{\milli\litre}=\qty{75,0}{\milli\litre}$.
+  \item Le résultat doit comporter $\mathbf{3}$~CS : c'est $\qty{25,0}{\milli\litre}$ (seule donnée
+        mesurée) qui fixe la limite.
+  \item Le « $3$ » étant exact (infinité de CS), il n'est jamais le maillon faible : il ne peut donc
+        pas réduire le nombre de CS du résultat.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Très grand, très petit, et notation d'ingénieur]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $[\ce{H3O+}]=\num{0,00000032}\,\si{\mol\per\litre}=\num{3,2e-7}\,\si{\mol\per\litre}$ (virgule
+        avancée de $7$ rangs).
+  \item $\num{8500000}=\num{8,5e6}$ ($2$~CS : on ne garde que le $8$ et le $5$).
+  \item Notation d'ingénieur : on choisit l'exposant $-3$ (multiple de $3$ le plus proche) :
+        \[ V=\num{2,096e-2}\,\si{\litre}=\num{20,96e-3}\,\si{\litre}=\qty{20,96}{\milli\litre}, \]
+        car $\num{e-3}\,\si{\litre}=\qty{1}{\milli\litre}$.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Raisonner par conversions : le mercure]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\qty{13,55}{\kilo\gram}=\qty{13550}{\gram}$. Le volume occupé est
+        \[ V=\frac{m}{\rho}=\frac{\qty{13550}{\gram}}{\qty{13,55}{\gram\per\centi\metre\cubed}}
+           =\qty{1000}{\centi\metre\cubed}=\qty{1000}{\milli\litre}=\qty{1}{\litre}. \]
+        \textbf{Affirmation A vraie.}
+  \item $\qty{1}{\centi\metre\cubed}$ de mercure a pour masse $\rho\times V=\qty{13,55}{\gram}$.
+        Or $\qty{13,55}{\centi\litre}$ d'eau $=\qty{135,5}{\milli\litre}=\qty{135,5}{\centi\metre\cubed}$,
+        de masse $\qty{1,00}{\gram\per\centi\metre\cubed}\times\qty{135,5}{\centi\metre\cubed}=\qty{135,5}{\gram}$.
+        Comme $\qty{135,5}{\gram}\neq\qty{13,55}{\gram}$ (facteur $10$), \textbf{l'affirmation B est fausse}.
+        Le piège vient de la conversion $\si{\centi\litre}\rightarrow\si{\centi\metre\cubed}$
+        ($\qty{1}{\centi\litre}=\qty{10}{\centi\metre\cubed}$).
+\end{enumerate}
+\end{cor}
+
+\end{document}

@@ -1,0 +1,201 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 4 — L'effet d'ion commun}%
+{Tuto — quand un ion est déjà là}%
+{Dissoudre un sel dans une solution contenant déjà l'un de ses ions}
+
+\noindent Jusqu'ici on dissolvait les sels dans l'\textbf{eau pure}. Mais souvent, la solution
+\emph{contient déjà} l'un des ions du sel (apporté par un autre sel très soluble). C'est l'\textbf{effet
+d'ion commun} : la présence de cet ion \textbf{diminue la solubilité} du sel peu soluble.
+
+\section*{1. L'idée : Le Chatelier}
+\begin{theoreme}[effet d'ion commun]
+Si l'on dissout un sel peu soluble dans une solution qui contient déjà l'un de ses ions, sa
+\textbf{solubilité diminue}. En effet, l'équilibre de dissolution
+\[ \ce{MX_{n}(s) <=> M^{n+}(aq) + n X-(aq)} \]
+se déplace (Le Chatelier) dans le sens qui \emph{consomme} l'ion ajouté, c'est-à-dire vers la
+\textbf{formation du solide}.
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  % avant
+  \node[font=\small\bfseries,primarydark] at (0,2.9) {\ce{AgCl} dans l'eau pure};
+  \draw[thick] (-1.9,0) rectangle (1.9,2.4);
+  \fill[eaucol!20] (-1.9,0) rectangle (1.9,2.4);
+  \foreach \x/\y in {-1.3/1.8,-0.5/1.2,0.7/1.9,1.4/0.9}{\node[cat,scale=0.6] at (\x,\y){$+$};}
+  \foreach \x/\y in {-0.9/0.9,0.3/2.0,1.0/1.5,1.6/1.8}{\node[an,scale=0.6] at (\x,\y){$-$};}
+  \foreach \x in {-1.3,-0.6,0.1,0.8,1.4}{\node[crx,scale=0.55] at (\x,0.25){};}
+  \node[font=\scriptsize] at (0,-0.4){$s_0=\sqrt{\Kps}\approx\qty{1{,}3e-5}{\molar}$};
+  % flèche
+  \draw[->,>=Stealth,primary,line width=1.2pt] (2.2,1.2) -- (3.6,1.2)
+     node[midway,above,primary,font=\scriptsize,align=center]{ajout de\\\ce{Cl-} (via \ce{NaCl})};
+  % après
+  \node[font=\small\bfseries,primarydark] at (6.0,2.9) {\ce{AgCl} + excès de \ce{Cl-}};
+  \draw[thick] (4.1,0) rectangle (7.9,2.4);
+  \fill[eaucol!20] (4.1,0) rectangle (7.9,2.4);
+  \foreach \x/\y in {4.5/1.8,4.8/1.1,5.3/2.0,5.7/1.3,6.1/1.9,6.6/1.1,7.0/1.8,7.4/1.4,4.7/0.9,6.3/0.8}{\node[an,scale=0.55] at (\x,\y){$-$};}
+  \foreach \x/\y in {5.0/1.7,6.9/1.5}{\node[cat,scale=0.55] at (\x,\y){$+$};}
+  \foreach \x in {4.5,5.1,5.7,6.3,6.9,7.5}{\node[crx,scale=0.55] at (\x,0.25){};}
+  \node[font=\scriptsize] at (6.0,-0.4){$s'\ll s_0$ (solubilité \textbf{réduite})};
+\end{tikzpicture}
+\end{center}
+
+\section*{2. La formule à appliquer}
+\begin{formule}[solubilité en présence d'un ion commun]
+Si l'on dissout $\mathrm{MX}_n$ dans une solution où l'anion $\mathrm{X}^-$ est déjà présent à la
+concentration $C$ (grande, $C\gg s'$), alors, l'anion étant quasi entièrement apporté par la solution :
+\[ \Kps=[\mathrm{M}^{n+}][\mathrm{X}^-]^{n}\approx s'\times C^{\,n}
+   \quad\Longrightarrow\quad \boxed{\ s'=\dfrac{\Kps}{C^{\,n}}\ } \]
+\end{formule}
+\begin{ou}
+  \item $s'$ : nouvelle solubilité du sel (en \si{\mole\per\litre}), plus petite que $s_0$ ;
+  \item $C$ : concentration (imposée, grande) de l'ion commun ;
+  \item $n$ : nombre d'ions $\mathrm{X}^-$ par unité de sel.
+\end{ou}
+
+\begin{exemple}[\ce{AgCl} : ajout de \ce{Cl-}]
+$\Kps(\ce{AgCl})=\num{1{,}8e-10}$. Dans l'eau pure : $s_0=\sqrt{\Kps}\approx\qty{1{,}3e-5}{\molar}$.
+On impose $[\ce{Cl-}]=\qty{0{,}10}{\molar}$ (ion commun) :
+\[ s'=[\ce{Ag+}]=\dfrac{\Kps}{[\ce{Cl-}]}=\dfrac{\num{1{,}8e-10}}{0{,}10}=\qty{1{,}8e-9}{\molar}. \]
+La solubilité a été divisée par $\sim 7000$ ! La quasi-totalité de l'argent est « chassée » vers le
+solide \ce{AgCl}.
+\end{exemple}
+
+\begin{attention}[l'ion commun ne change PAS le $\Kps$]
+$\Kps$ est une \textbf{constante} à $T$ fixée : il ne bouge pas. L'égalité
+$\Kps=[\ce{Ag+}][\ce{Cl-}]$ reste vraie ; mais comme on \emph{impose} $[\ce{Cl-}]$ grand, c'est
+$[\ce{Ag+}]$ (donc $s$) qui doit \textbf{chuter} pour conserver le produit.
+\end{attention}
+
+\end{document}

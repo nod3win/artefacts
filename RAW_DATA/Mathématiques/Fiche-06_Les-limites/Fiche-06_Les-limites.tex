@@ -1,0 +1,1124 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 6
+%  Les limites
+%  Document généré en LaTeX avec figures TikZ/pgfplots tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (couleur « Mathématiques » du livre : corail)
+% =====================================================================
+\definecolor{primary}{RGB}{223,87,99}       % corail (couleur du livre)
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{defcol}{RGB}{0,114,178}         % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}         % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}      % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}     % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}        % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}           % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}        % gris — méthode
+\definecolor{curvecol}{RGB}{40,80,190}       % bleu courbe
+\definecolor{curvecolB}{RGB}{210,60,40}      % rouge courbe (opposée)
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode (« comment faire ») ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  courbe/.style={line width=1.1pt,curvecol},
+  courbeB/.style={line width=1.1pt,curvecolB},
+  asy/.style={dashed,black!55,line width=0.8pt},
+  proj/.style={dashed,black!55,line width=0.6pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+  ptouvert/.style={circle,draw,fill=white,inner sep=1.1pt,line width=0.7pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\limx}[1]{\lim_{x\to #1}}
+\DeclareMathOperator{\Dfr}{D_f}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.5cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Les limites}\\[6pt]
+   {\large\bfseries Notations, propriétés, formes indéterminées et calcul}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,6}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : l'hyperbole y = 2/x et ses asymptotes ---
+\begin{tikzpicture}[scale=1.0]
+  \draw[axe] (-4.2,0) -- (4.4,0) node[right]{$x$};
+  \draw[axe] (0,-3.4) -- (0,3.6) node[above]{$y$};
+  \node[below left] at (0,0){$0$};
+  % branches de y = 2/x
+  \draw[courbe,domain=0.6:4,smooth,variable=\x,samples=80] plot ({\x},{2/\x});
+  \draw[courbe,domain=-4:-0.6,smooth,variable=\x,samples=80] plot ({\x},{2/\x});
+  % asymptote horizontale (axe Ox) mise en valeur
+  \draw[asy,primary] (-4.2,0) -- (4.4,0);
+  \node[primary,font=\small,above right] at (3.2,0) {$y=0$ : asymptote horizontale};
+  \node[primary,font=\small,above right] at (0.15,3.0) {$x=0$ : asymptote verticale};
+  \node[curvecol,font=\small] at (2.6,1.65) {$f(x)=\dfrac{2}{x}$};
+  % flèches limites
+  \draw[->,>=Stealth,primarydark,thick] (0.35,2.9) .. controls (0.1,2.0) .. (0.18,1.2);
+  \draw[->,>=Stealth,primarydark,thick] (3.6,0.55) -- (4.0,0.18);
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item comprendre l'\emph{idée intuitive} d'une limite et lire les notations $\displaystyle\lim_{x\to x_0}$, $\displaystyle\lim_{x\to\pm\infty}$, $\lim_{x\to x_0^{\pm}}$ ;
+  \item distinguer \emph{limite finie} et \emph{limite infinie}, en un point et à l'infini, et les relier aux \emph{asymptotes} ;
+  \item appliquer les \emph{propriétés} des limites (somme, produit, quotient) et repérer les \textbf{formes indéterminées} ;
+  \item relier la limite à la \emph{continuité} d'une fonction en un point ;
+  \item \textbf{lever une indétermination} : polynômes, fonctions rationnelles, radicaux (binôme conjugué) et \emph{règle de l'Hospital}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.6cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 6 du livre — figures originales tracées en TikZ/pgfplots.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Idée intuitive : que signifie « tendre vers » ?}
+% =====================================================================
+Avant toute formule, comprenons l'\textbf{idée} qui se cache derrière le mot \emph{limite}.
+Étudier la limite d'une fonction $f$, c'est répondre à la question :
+
+\begin{center}
+\itshape « Vers quelle valeur se rapproche $f(x)$ lorsque $x$ se rapproche d'une valeur visée
+(un nombre $x_0$, ou bien $+\infty$, ou $-\infty$) ? »
+\end{center}
+
+Le point clé est qu'on ne demande \emph{pas} forcément la valeur de $f$ \emph{au} point visé : on
+demande le comportement de $f$ \emph{au voisinage} de ce point, c'est-à-dire pour des $x$
+\emph{de plus en plus proches} sans nécessairement l'atteindre.
+
+\begin{definition}[voisinage et « tendre vers »]
+Dire que «~$x$ \textbf{tend vers} $x_0$~», noté $x\to x_0$, signifie que $x$ prend des valeurs
+\emph{de plus en plus proches} de $x_0$ (sans être obligatoirement égal à $x_0$).
+On note alors $\displaystyle\lim_{x\to x_0} f(x)$ la valeur dont $f(x)$ se rapproche.
+\end{definition}
+
+\noindent\textbf{Approche numérique (par un tableau de valeurs).}
+Prenons $f(x)=\dfrac{x+2}{3}$ et regardons ce qui se passe quand $x$ se rapproche de $0$,
+tantôt par la gauche ($x<0$), tantôt par la droite ($x>0$).
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c|ccc|c|ccc}
+\toprule
+$x$ & $-0{,}1$ & $-0{,}01$ & $-0{,}001$ & $\mathbf{0}$ & $0{,}001$ & $0{,}01$ & $0{,}1$\\
+\midrule
+$f(x)=\dfrac{x+2}{3}$ & $0{,}6\overline{3}$ & $0{,}663$ & $0{,}666$ & $\mathbf{0{,}6\overline{6}}$ & $0{,}667$ & $0{,}670$ & $0{,}7$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Que $x$ approche $0$ par la gauche ou par la droite, $f(x)$ se rapproche du \emph{même} nombre
+$\dfrac{2}{3}\approx 0{,}6\overline{6}$. On écrit donc $\displaystyle\lim_{x\to 0}\dfrac{x+2}{3}=\dfrac{2}{3}$.
+
+\begin{remarque}
+La limite décrit une \emph{tendance}, pas une valeur isolée. On verra (section 3) que la valeur
+de $f$ au point, lorsqu'elle existe, peut coïncider avec la limite (\emph{continuité}) ou en
+différer. Tout l'art du calcul de limites consiste à déterminer cette tendance, même là où la
+fonction n'est pas définie.
+\end{remarque}
+
+% =====================================================================
+\section{Vocabulaire, propriétés et notations}
+% =====================================================================
+Dans toute cette section, $f$ désigne une fonction, $x_0$ et $\ell$ deux nombres réels, et
+$D_f$ le \textbf{domaine de définition} de $f$ (l'ensemble des $x$ pour lesquels $f(x)$ existe).
+
+\subsection{Limite finie en un point}
+
+\begin{definition}[limite finie en un point]
+Lorsque $f$ admet une limite $\ell$ en $x_0$, on note
+\[ \lim_{x\to x_0} f(x)=\ell, \]
+et on dit que «~$f(x)$ \textbf{tend vers} $\ell$ quand $x$ tend vers $x_0$~».
+Autrement dit : on peut rendre $f(x)$ aussi proche que l'on veut de $\ell$ pourvu que $x$ soit
+suffisamment proche de $x_0$.
+\end{definition}
+
+\begin{formule}[notation de la limite finie en un point]
+\[ \boxed{\ \lim_{x\to x_0} f(x)=\ell\ } \]
+\begin{ou}
+  \item $x$ : la variable, qui \emph{se déplace} vers $x_0$ ;
+  \item $x_0$ : le \textbf{point visé} (un nombre réel), valeur dont $x$ se rapproche ;
+  \item $f(x)$ : la valeur de la fonction au point $x$ ;
+  \item $\ell$ : la \textbf{limite}, un nombre réel ($\ell\in\R$) — la valeur \emph{cible} de $f(x)$.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Lecture de la formule.} Le symbole «~$x\to x_0$~» placé \emph{sous} le mot $\lim$
+indique le mouvement de la variable ; le membre de droite, $\ell$, est le résultat (un nombre).
+Ici, ni $x_0$ ni $\ell$ ne portent d'unité physique : ce sont des \emph{nombres réels}, car on
+travaille sur des fonctions numériques.
+
+\begin{exemple}[limite finie $\displaystyle\lim_{x\to 0}\frac{x+2}{3}=\frac{2}{3}$]
+La fonction $f(x)=\dfrac{x+2}{3}$ est une fonction \emph{affine} (une droite). Elle est définie
+partout ($D_f=\R$), donc pour calculer sa limite en $0$ il suffit de \textbf{remplacer $x$ par $0$} :
+\[ \lim_{x\to 0}\frac{x+2}{3}=\frac{0+2}{3}=\frac{2}{3}. \]
+Graphiquement, lorsque le point d'abscisse $x$ glisse sur la droite vers l'abscisse $0$, son
+ordonnée $f(x)$ glisse vers la valeur $\tfrac{2}{3}$.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=6.4cm,axis lines=middle,
+   xlabel={$x$},ylabel={$y$},
+   xmin=-3.2,xmax=3.6,ymin=-0.8,ymax=2,
+   xtick={-3,-2,-1,1,2,3},ytick={1},
+   every axis x label/.style={at={(ticklabel* cs:1)},anchor=west},
+   every axis y label/.style={at={(ticklabel* cs:1)},anchor=south}]
+  \addplot[courbe,domain=-3:3.4]{(x+2)/3};
+  \node[curvecol,anchor=west] at (axis cs:1.6,1.45){$f(x)=\dfrac{x+2}{3}$};
+  % point limite
+  \addplot[only marks,mark=*,mark options={fill=primary,scale=0.9}] coordinates {(0,0.6667)};
+  \draw[proj,primary] (axis cs:0,0.6667) -- (axis cs:0,0)
+       node[below,black]{$x_0=0$};
+  \draw[proj,primary] (axis cs:0,0.6667) -- (axis cs:-3.2,0.6667)
+       node[left,black]{$\ell=\tfrac23$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[propriétés des limites finies — opérations]
+Si $\displaystyle\lim_{x\to x_0} f(x)=\ell$ et $\displaystyle\lim_{x\to x_0} g(x)=\ell'\neq 0$, et si $k$ est un nombre réel, alors :
+\[
+\lim_{x\to x_0}\bigl[f(x)+g(x)\bigr]=\ell+\ell',\qquad
+\lim_{x\to x_0}\bigl[f(x)-g(x)\bigr]=\ell-\ell',
+\]
+\[
+\lim_{x\to x_0}\bigl[k\,f(x)\bigr]=k\,\ell,\qquad
+\lim_{x\to x_0}\bigl[f(x)\times g(x)\bigr]=\ell\times\ell',\qquad
+\lim_{x\to x_0}\frac{f(x)}{g(x)}=\frac{\ell}{\ell'}.
+\]
+\end{theoreme}
+
+\begin{ou}
+  \item $\ell,\ell'$ : les limites respectives de $f$ et $g$ en $x_0$ (nombres réels) ;
+  \item $k$ : une constante réelle (un coefficient multiplicatif) ;
+  \item la condition $\ell'\neq 0$ est \emph{indispensable} pour le quotient : diviser par une limite nulle conduit à un cas particulier (souvent une limite infinie ou une forme indéterminée, voir \S\,4).
+\end{ou}
+
+\noindent\textbf{En clair.} Tant qu'aucune limite n'est infinie et qu'on ne divise pas par $0$, la
+limite se «~distribue~» sur les opérations : la limite d'une somme est la somme des limites, la
+limite d'un produit le produit des limites, etc. C'est ce qui autorise, pour les fonctions
+usuelles définies en $x_0$, le calcul direct par \emph{remplacement} de $x$ par $x_0$.
+
+\begin{exemple}[calcul direct par les propriétés]
+Soit $h(x)=2x^2-5x+1$. Comme somme et produit de fonctions de limites connues, on a en $x_0=3$ :
+\[ \lim_{x\to 3}(2x^2-5x+1)=2\times 3^2-5\times 3+1=18-15+1=4. \]
+\end{exemple}
+
+\subsection{Limite finie à l'infini}
+
+On peut aussi faire tendre la variable vers $+\infty$ ou $-\infty$ : on observe alors le
+comportement de $f$ « tout au bout » de l'axe des abscisses.
+
+\begin{definition}[limite finie à l'infini]
+\[ \lim_{x\to +\infty} f(x)=\ell\ :\ f(x)\text{ tend vers }\ell\text{ lorsque }x\text{ tend vers }+\infty, \]
+\[ \lim_{x\to -\infty} f(x)=\ell\ :\ f(x)\text{ tend vers }\ell\text{ lorsque }x\text{ tend vers }-\infty. \]
+Le nombre $\ell$ est encore un réel ; seul le « point visé » est devenu infini.
+\end{definition}
+
+\begin{remarque}[interprétation géométrique : asymptote horizontale]
+Si $\displaystyle\lim_{x\to+\infty} f(x)=\ell$ (ou de même en $-\infty$), la courbe de $f$ se
+rapproche indéfiniment de la droite horizontale d'équation $y=\ell$ : cette droite est une
+\textbf{asymptote horizontale} à la courbe.
+\end{remarque}
+
+\begin{exemple}[$\displaystyle\lim_{x\to+\infty}\frac2x=0$ et $\displaystyle\lim_{x\to-\infty}\frac2x=0$]
+Prenons $f(x)=\dfrac{2}{x}$. Plus $x$ devient grand, plus on divise $2$ par un grand nombre, donc
+plus le résultat est petit :
+\[ f(10)=0{,}2,\quad f(100)=0{,}02,\quad f(1000)=0{,}002,\ \dots\ \longrightarrow 0. \]
+De même quand $x\to-\infty$, $f(x)$ se rapproche de $0$ par valeurs négatives. La droite $y=0$
+(l'axe des abscisses) est donc une asymptote horizontale, à droite \emph{et} à gauche.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=11cm,height=6.4cm,axis lines=middle,
+   xlabel={$x$},ylabel={$y$},
+   xmin=-6.4,xmax=6.6,ymin=-3.4,ymax=3.6,
+   xtick={-5,...,5},ytick={-3,-2,-1,1,2,3},
+   tick label style={font=\scriptsize},
+   every axis x label/.style={at={(ticklabel* cs:1)},anchor=west},
+   every axis y label/.style={at={(ticklabel* cs:1)},anchor=south}]
+  \addplot[courbe,domain=0.6:6.4,samples=120]{2/x};
+  \addplot[courbe,domain=-6.4:-0.6,samples=120]{2/x};
+  \node[curvecol] at (axis cs:3.4,1.3){$f(x)=\dfrac2x$};
+  \node[primary,font=\scriptsize,anchor=south west] at (axis cs:3.2,0.1)
+       {$\displaystyle\lim_{x\to+\infty}\tfrac2x=0$};
+  \node[primary,font=\scriptsize,anchor=north east] at (axis cs:-3.0,-0.1)
+       {$\displaystyle\lim_{x\to-\infty}\tfrac2x=0$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Limite à droite et limite à gauche}
+
+Parfois, le comportement de $f$ n'est pas le même selon que $x$ s'approche de $x_0$
+\emph{par la droite} ($x>x_0$) ou \emph{par la gauche} ($x<x_0$). On distingue alors deux limites.
+
+\begin{definition}[limite à droite, limite à gauche]
+\textbf{Limite à droite} de $x_0$ :
+\[ \lim_{x\to x_0^{+}} f(x)=\ell\qquad\Bigl(\text{aussi notée }\lim_{\substack{x\to x_0\\ x>x_0}} f(x)=\ell\Bigr), \]
+on dit que $f(x)$ tend vers $\ell$ lorsque $x$ tend vers $x_0$ \emph{par valeurs supérieures} et
+proches de $x_0$.
+
+\textbf{Limite à gauche} de $x_0$ :
+\[ \lim_{x\to x_0^{-}} f(x)=\ell\qquad\Bigl(\text{aussi notée }\lim_{\substack{x\to x_0\\ x<x_0}} f(x)=\ell\Bigr), \]
+on dit que $f(x)$ tend vers $\ell$ lorsque $x$ tend vers $x_0$ \emph{par valeurs inférieures} et
+proches de $x_0$. Ces limites « latérales » peuvent valoir un réel, ou $+\infty$, ou $-\infty$.
+\end{definition}
+
+\begin{ou}
+  \item l'exposant $^{+}$ (lu « $x_0$ plus ») signifie « par la droite », donc $x>x_0$ ;
+  \item l'exposant $^{-}$ (lu « $x_0$ moins ») signifie « par la gauche », donc $x<x_0$ ;
+  \item $\ell$ peut être un réel ou un infini : c'est le côté qui change, pas forcément le résultat.
+\end{ou}
+
+\begin{exemple}[limites latérales de $\displaystyle\frac2x$ en $0$]
+La fonction $f(x)=\dfrac2x$ n'est pas définie en $0$, mais on étudie son comportement de part et d'autre :
+\[ \lim_{x\to 0^{+}}\frac2x=+\infty\qquad\text{et}\qquad \lim_{x\to 0^{-}}\frac2x=-\infty. \]
+\textbf{Pourquoi ?} À droite de $0$, $x$ est un \emph{petit nombre positif} : $2$ divisé par un
+tout petit positif donne un très grand positif ($\frac{2}{0{,}001}=2000$). À gauche, $x$ est un
+\emph{petit nombre négatif} : $\frac{2}{-0{,}001}=-2000$, très grand négatif. Les deux limites
+latérales étant différentes ($+\infty\neq-\infty$), $f$ \textbf{n'a pas de limite (globale)} en $0$.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=7cm,axis lines=middle,
+   xlabel={$x$},ylabel={$y$},
+   xmin=-4.3,xmax=4.4,ymin=-6.4,ymax=6.6,
+   xtick={-3,-2,-1,1,2,3},ytick={-4,-2,2,4},
+   tick label style={font=\scriptsize},
+   every axis x label/.style={at={(ticklabel* cs:1)},anchor=west},
+   every axis y label/.style={at={(ticklabel* cs:1)},anchor=south}]
+  \addplot[courbe,domain=0.32:4.2,samples=140]{2/x};
+  \addplot[courbe,domain=-4.2:-0.32,samples=140]{2/x};
+  \draw[asy] (axis cs:0,-6.4)--(axis cs:0,6.6);
+  \node[curvecol] at (axis cs:2.7,2.4){$f(x)=\dfrac2x$};
+  \node[primary,font=\scriptsize,anchor=west] at (axis cs:0.25,5.3)
+       {$\displaystyle\lim_{x\to0^{+}}\tfrac2x=+\infty$};
+  \node[primary,font=\scriptsize,anchor=east] at (axis cs:-0.25,-5.3)
+       {$\displaystyle\lim_{x\to0^{-}}\tfrac2x=-\infty$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}[la règle « $\dfrac{a}{0^{\pm}}$ » — à retenir absolument]
+Lorsqu'on divise un nombre $a\neq 0$ par une quantité qui \emph{tend vers $0$}, le résultat tend
+vers l'infini. Le \emph{signe} de cet infini dépend du signe de $a$ et du côté ($0^+$ ou $0^-$) :
+\[ \frac{a}{0^{+}}\to +\infty\ \ \text{si }a>0,\qquad \frac{a}{0^{+}}\to -\infty\ \ \text{si }a<0; \]
+\[ \frac{a}{0^{-}}\to -\infty\ \ \text{si }a>0,\qquad \frac{a}{0^{-}}\to +\infty\ \ \text{si }a<0. \]
+\textbf{Moyen mnémotechnique :} le signe du résultat est celui de la \emph{règle des signes}
+appliquée à $a$ et au signe du « $0$ » (un $0^+$ compte comme « $+$ », un $0^-$ comme « $-$ »).
+\end{remarque}
+
+\subsection{Limite infinie à l'infini}
+
+\begin{definition}[limite infinie à l'infini]
+La notation
+\[ \lim_{x\to +\infty} f(x)=+\infty \]
+veut dire que $f(x)$ tend vers $+\infty$ (devient aussi grand qu'on veut) quand $x$ tend vers
+$+\infty$. De plus, si $\displaystyle\lim_{x\to -\infty} f(x)=+\infty$, alors
+$\displaystyle\lim_{x\to -\infty} \bigl[-f(x)\bigr]=-\infty$ : l'opposé de $f(x)$ tend vers
+$-\infty$ quand $x$ tend vers $-\infty$.
+\end{definition}
+
+\begin{exemple}[exponentielle et polynômes]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item $\displaystyle\lim_{x\to+\infty} e^{x}=+\infty$ : l'exponentielle « explose » vers le haut.
+  \item $\displaystyle\lim_{x\to+\infty}(x^3+x^2)=+\infty$ \ et \ $\displaystyle\lim_{x\to-\infty}(x^3+x^2)=-\infty$.
+  \item Pour son opposé $-x^3-x^2$ : $\displaystyle\lim_{x\to-\infty}(-x^3-x^2)=+\infty$ \ et \ $\displaystyle\lim_{x\to+\infty}(-x^3-x^2)=-\infty$.
+\end{itemize}
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+% --- exponentielle ---
+\begin{axis}[name=ex,width=7.2cm,height=6cm,axis lines=middle,
+   xlabel={$x$},ylabel={$y$},title={\small$f(x)=e^{x}$},
+   xmin=-3.3,xmax=2.3,ymin=-0.8,ymax=7,
+   xtick={-3,-2,-1,1,2},ytick={1,2,4,6},
+   tick label style={font=\scriptsize}]
+  \addplot[courbe,domain=-3.2:1.95,samples=80]{exp(x)};
+  \node[primary,font=\scriptsize,anchor=west] at (axis cs:-1.2,5.6)
+       {$\displaystyle\lim_{x\to+\infty}e^x=+\infty$};
+\end{axis}
+% --- cubique et son opposé ---
+\begin{axis}[name=cub,at={(ex.right of east)},anchor=left of west,xshift=1cm,
+   width=7.2cm,height=6cm,axis lines=middle,
+   xlabel={$x$},ylabel={$y$},title={\small$x^3+x^2$ et $-x^3-x^2$},
+   xmin=-2.4,xmax=2.4,ymin=-5,ymax=5,
+   xtick={-2,-1,1,2},ytick={-4,-2,2,4},
+   tick label style={font=\scriptsize}]
+  \addplot[courbe,domain=-2.2:1.7,samples=80]{x^3+x^2};
+  \addplot[courbeB,domain=-1.7:2.2,samples=80]{-x^3-x^2};
+  \node[curvecol,font=\scriptsize,anchor=south west] at (axis cs:0.4,2.6){$x^3+x^2$};
+  \node[curvecolB,font=\scriptsize,anchor=north west] at (axis cs:0.4,-2.6){$-x^3-x^2$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[propriétés des limites infinies]
+Si $\displaystyle\lim_{x\to+\infty} f(x)=+\infty$, $\displaystyle\lim_{x\to+\infty} g(x)=+\infty$
+et $n$ un entier naturel non nul, alors :
+\[
+\lim_{x\to+\infty}\bigl(f(x)\bigr)^{n}=+\infty,\qquad
+\lim_{x\to+\infty}\bigl(-f(x)\bigr)^{2n}=+\infty,\qquad
+\lim_{x\to+\infty}\bigl(-f(x)\bigr)^{2n+1}=-\infty,
+\]
+\[
+\lim_{x\to+\infty}\bigl[f(x)+g(x)\bigr]=+\infty,\qquad
+\lim_{x\to+\infty}\bigl[-f(x)-g(x)\bigr]=-\infty.
+\]
+En revanche, les opérations suivantes \emph{ne se concluent pas} directement :
+\[
+\lim_{x\to+\infty}\bigl[f(x)-g(x)\bigr]=+\infty-\infty\ \Rightarrow\ \textbf{forme indéterminée (FI)},
+\]
+\[
+\lim_{x\to+\infty}\frac{f(x)}{g(x)}=\frac{+\infty}{+\infty}\ \Rightarrow\ \textbf{forme indéterminée (FI)}.
+\]
+\end{theoreme}
+
+\begin{ou}
+  \item $n$ : un entier naturel non nul ($n\in\mathbb{N}^{*}$) — il fixe la parité de l'exposant ;
+  \item un exposant \emph{pair} ($2n$) transforme un négatif en positif : $(-\infty)^{\text{pair}}=+\infty$ ;
+  \item un exposant \emph{impair} ($2n+1$) conserve le signe : $(-\infty)^{\text{impair}}=-\infty$ ;
+  \item les deux dernières lignes ($\infty-\infty$ et $\tfrac{\infty}{\infty}$) annoncent les \emph{formes indéterminées} de la section suivante.
+\end{ou}
+
+% =====================================================================
+\section{Lien entre limite et continuité en un point}
+% =====================================================================
+La notion de limite permet de définir proprement ce qu'est une fonction \emph{continue} : une
+fonction « sans saut ni trou », dont on peut tracer la courbe sans lever le crayon. Trois
+situations se présentent, selon que le point $x_0$ appartient ou non au domaine $D_f$, et selon
+l'égalité (ou non) des limites latérales.
+
+\subsection{Cas 1 — la fonction possède une limite en \texorpdfstring{$x_0$}{x0}}
+
+\begin{theoreme}[existence d'une limite en un point]
+Pour un point $x_0$ tel que $x_0\notin D_f$ (la fonction n'est pas définie en $x_0$),
+\emph{si la limite à gauche est égale à la limite à droite}, alors $f$ possède une limite en $x_0$ :
+\[ \lim_{x\to x_0^{-}} f(x)=\lim_{x\to x_0^{+}} f(x)\ \Longrightarrow\ f\text{ possède une limite en }x_0. \]
+\end{theoreme}
+
+\noindent Ici la courbe « pointe » vers une valeur précise, mais comme $x_0\notin D_f$ ce point
+est représenté par un \emph{rond ouvert} (un trou) : la limite existe sans que $f(x_0)$ existe.
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[axe] (-0.4,0) -- (6.2,0) node[right]{$x$};
+  \draw[axe] (0,-0.4) -- (0,3.6) node[above]{$y$};
+  \node[below left] at (0,0){$0$};
+  % courbe lisse type vague avec un creux
+  \draw[courbe,smooth,samples=120,domain=0.4:5.6]
+        plot ({\x},{1.6+0.9*cos(deg(1.15*(\x-1.2)))});
+  % point x0
+  \node[ptouvert] at (3.5,{1.6+0.9*cos(deg(1.15*(3.5-1.2)))}) {};
+  \draw[proj] (3.5,{1.6+0.9*cos(deg(1.15*(3.5-1.2)))}) -- (3.5,0) node[below]{$x_0$};
+  \node[anchor=west,align=left,font=\small] at (0.3,3.2)
+     {$\displaystyle\lim_{x\to x_0^{-}} f(x)=\lim_{x\to x_0^{+}} f(x)\ \Rightarrow\ f$ possède une limite en $x_0$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Cas 2 — la fonction est continue en \texorpdfstring{$x_0$}{x0}}
+
+\begin{definition}[continuité en un point]
+Pour un point $x_0$ tel que $x_0\in D_f$, si la limite à gauche est égale à la limite à droite
+en $x_0$, \emph{et} si cette valeur commune est égale à $f(x_0)$, on dit que $f$ est
+\textbf{continue} en $x_0$ :
+\[ \boxed{\ \lim_{x\to x_0^{-}} f(x)=\lim_{x\to x_0^{+}} f(x)=f(x_0)\ }\ \Longrightarrow\ f\text{ est continue en }x_0. \]
+\end{definition}
+
+\begin{ou}
+  \item $\displaystyle\lim_{x\to x_0^{-}} f(x)$, $\displaystyle\lim_{x\to x_0^{+}} f(x)$ : les deux limites latérales, qui doivent être \emph{égales entre elles} ;
+  \item $f(x_0)$ : la valeur \emph{effective} de la fonction au point (elle doit exister, donc $x_0\in D_f$) ;
+  \item la triple égalité résume les trois conditions de la continuité : limite à gauche $=$ limite à droite $=$ valeur en $x_0$.
+\end{ou}
+
+\noindent Cette fois, le point est « plein » : la courbe passe \emph{exactement} par
+$\bigl(x_0,\ f(x_0)\bigr)$, sans saut ni trou.
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[axe] (-0.4,0) -- (6.2,0) node[right]{$x$};
+  \draw[axe] (0,-0.4) -- (0,3.6) node[above]{$y$};
+  \node[below left] at (0,0){$0$};
+  \draw[courbe,smooth,samples=120,domain=0.4:5.6]
+        plot ({\x},{1.6+0.9*cos(deg(1.15*(\x-1.2)))});
+  \pgfmathsetmacro\yz{1.6+0.9*cos(deg(1.15*(3.5-1.2)))}
+  \node[pt,fill=primary] at (3.5,\yz) {};
+  \draw[proj] (3.5,\yz) -- (3.5,0) node[below]{$x_0$};
+  \draw[proj] (3.5,\yz) -- (0,\yz) node[left]{$f(x_0)$};
+  \node[anchor=west,align=left,font=\small] at (0.3,3.2)
+     {$\displaystyle\lim_{x\to x_0^{-}} f=\lim_{x\to x_0^{+}} f=f(x_0)\ \Rightarrow\ f$ continue en $x_0$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Cas 3 — la fonction est continue à droite de \texorpdfstring{$x_0$}{x0}}
+
+\begin{definition}[continuité à droite]
+Pour un point $x_0$ tel que $x_0\in D_f$, si la limite à droite en $x_0$ est égale à $f(x_0)$,
+on dit que $f$ est \textbf{continue à droite} de $x_0$ :
+\[ \lim_{x\to x_0^{+}} f(x)=f(x_0)\ \Longrightarrow\ f\text{ est continue à droite en }x_0. \]
+(De même, $\displaystyle\lim_{x\to x_0^{-}} f(x)=f(x_0)$ donnerait la continuité \emph{à gauche}.)
+Lorsque seule l'une des deux limites latérales colle à $f(x_0)$, la courbe présente un
+\emph{saut} : continue d'un côté, discontinue de l'autre.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[axe] (-0.4,0) -- (6.2,0) node[right]{$x$};
+  \draw[axe] (0,-0.4) -- (0,3.6) node[above]{$y$};
+  \node[below left] at (0,0){$0$};
+  % branche gauche (arrive en bas)
+  \draw[courbe,smooth,samples=80,domain=0.4:3.5]
+        plot ({\x},{0.9+0.5*cos(deg(1.3*(\x-0.4)))});
+  % branche droite (part plus haut)
+  \draw[courbe,smooth,samples=80,domain=3.5:5.6]
+        plot ({\x},{2.6+0.5*cos(deg(1.3*(\x-3.5)))});
+  \pgfmathsetmacro\ydroite{2.6+0.5*cos(deg(1.3*(3.5-3.5)))}
+  \pgfmathsetmacro\ygauche{0.9+0.5*cos(deg(1.3*(3.5-0.4)))}
+  \node[pt,fill=primary] at (3.5,\ydroite) {};   % continue à droite : point plein
+  \node[ptouvert] at (3.5,\ygauche) {};          % saut à gauche : rond ouvert
+  \draw[proj] (3.5,\ydroite) -- (3.5,0) node[below]{$x_0$};
+  \draw[proj] (3.5,\ydroite) -- (0,\ydroite) node[left]{$f(x_0)$};
+  \node[anchor=west,align=left,font=\small] at (0.3,3.3)
+     {$\displaystyle\lim_{x\to x_0^{+}} f(x)=f(x_0)\ \Rightarrow\ f$ continue à droite en $x_0$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}
+La plupart des fonctions usuelles (polynômes, fonctions rationnelles sur leur domaine,
+$\sin$, $\cos$, $\exp$, $\ln$, $\sqrt{\cdot}$\,\dots) sont \emph{continues} sur leur domaine de
+définition. Pour elles, calculer une limite en un point $x_0$ \emph{du domaine} revient simplement
+à \textbf{remplacer $x$ par $x_0$}. Les difficultés (et les indéterminations) n'apparaissent
+qu'aux points exclus du domaine ou « à l'infini ».
+\end{remarque}
+
+% =====================================================================
+\section{Les formes indéterminées (FI)}
+% =====================================================================
+
+\begin{definition}[forme indéterminée]
+La \textbf{forme indéterminée} d'une limite indique qu'\emph{aucun théorème général ne permet de
+conclure directement} à l'existence (ou à la valeur) de la limite. Dans ce cas, il faut
+\textbf{lever} la forme indéterminée par une transformation algébrique adaptée — les techniques
+usuelles font l'objet de la section~\ref{sec:calcul}.
+\end{definition}
+
+\begin{theoreme}[les quatre familles de formes indéterminées]
+Soit $a$ un nombre réel, ou $+\infty$, ou $-\infty$. Les formes indéterminées sont :
+\[
+\textbf{En addition : }\ \lim_{x\to a}\bigl[f(x)+g(x)\bigr]=(+\infty)+(-\infty)\ \text{ ou }\ (-\infty)+(+\infty)\quad\bigl[\,\text{« }\infty-\infty\text{ »}\,\bigr]
+\]
+\[
+\textbf{En multiplication : }\ \lim_{x\to a}\bigl[f(x)\times g(x)\bigr]=0\times(\pm\infty)\quad\bigl[\,\text{« }0\times\infty\text{ »}\,\bigr]
+\]
+\[
+\textbf{En division : }\ \lim_{x\to a}\frac{f(x)}{g(x)}=\frac{\pm\infty}{\pm\infty},\ \ \frac{0}{0},\ \ \frac{0}{\pm\infty}\ (\text{simplifiable}),\ \ \frac{\pm\infty}{0}\ (\text{simplifiable}).
+\]
+Les deux indéterminations \emph{vraiment} problématiques en division sont $\dfrac{\infty}{\infty}$ et $\dfrac{0}{0}$.
+\end{theoreme}
+
+\begin{attention}[ne pas confondre « indéterminé » et « impossible »]
+Une forme indéterminée n'est \emph{pas} une absence de limite : elle signale seulement que
+l'écriture brute ($\infty-\infty$, $\tfrac00$\dots) ne suffit pas pour conclure. Après
+transformation, la limite peut très bien valoir $0$, un réel quelconque, $+\infty$, $-\infty$, ou
+ne pas exister. À l'inverse, $\dfrac{a}{0^{\pm}}$ (avec $a\neq 0$) \emph{n'est pas} une forme
+indéterminée : on conclut directement à $\pm\infty$ par la règle des signes (\S\,2.3).
+\end{attention}
+
+\begin{remarque}[d'où vient l'indétermination ?]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item «~$\infty-\infty$~» : deux quantités tendent vers l'infini ; tout dépend de \emph{laquelle gagne} et de quel \emph{écart} les sépare.
+  \item «~$0\times\infty$~» : un facteur tire vers $0$, l'autre vers l'infini ; le résultat dépend de leur \emph{vitesse} relative.
+  \item «~$\tfrac{\infty}{\infty}$~» et «~$\tfrac{0}{0}$~» : numérateur et dénominateur jouent l'un contre l'autre ; il faut comparer leurs \emph{ordres de grandeur}.
+\end{itemize}
+\end{remarque}
+
+% =====================================================================
+\section{Calcul des limites — techniques (« comment faire »)}
+\label{sec:calcul}
+% =====================================================================
+On présente ici, technique par technique, comment déterminer la limite de différentes familles de
+fonctions, en levant au besoin les formes indéterminées. Chaque méthode est suivie d'exemples
+détaillés \emph{à fond}.
+
+\subsection{Technique 1 — fonctions polynômes}
+
+\begin{theoreme}[limite d'un polynôme à l'infini]
+\textbf{À l'infini, la limite d'une fonction polynôme est celle de son terme de plus haut degré.}
+Si $P(x)=a_n x^n+a_{n-1}x^{n-1}+\dots+a_1 x+a_0$ avec $a_n\neq 0$, alors
+\[ \boxed{\ \lim_{x\to\pm\infty} P(x)=\lim_{x\to\pm\infty} a_n x^{n}\ } \]
+\end{theoreme}
+
+\begin{ou}
+  \item $a_n$ : le \textbf{coefficient dominant} (celui du terme de plus haut degré), un réel non nul ;
+  \item $n$ : le \textbf{degré} du polynôme (le plus grand exposant) ;
+  \item les termes de degré inférieur deviennent \emph{négligeables} devant $a_n x^n$ quand $|x|$ devient très grand.
+\end{ou}
+
+\begin{methode}[limite d'un polynôme en $\pm\infty$]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Repérer le \textbf{terme de plus haut degré} $a_n x^n$ (on ignore tous les autres).
+  \item Calculer $\displaystyle\lim_{x\to\pm\infty} a_n x^n$ en combinant : le signe de $a_n$, la parité de $n$ et le côté ($+\infty$ ou $-\infty$).
+  \item \emph{Justification :} on met $x^n$ en facteur, $P(x)=a_n x^n\Bigl(1+\tfrac{a_{n-1}}{a_n x}+\dots+\tfrac{a_0}{a_n x^n}\Bigr)$ ; la parenthèse tend vers $1$ car chaque terme $\tfrac{\cdot}{x^k}\to 0$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\displaystyle\lim_{x\to+\infty}\bigl(x^4+3x^3-2x+5\bigr)$ — la justification complète]
+Soit $f(x)=x^4+3x^3-2x+5$. Pour $x\neq 0$, on met $x^4$ (terme dominant) en facteur :
+\[ f(x)=x^4\Bigl(1+\frac{3}{x}-\frac{2}{x^3}+\frac{5}{x^4}\Bigr). \]
+Le facteur entre parenthèses tend vers $1$ quand $x\to\infty$, car $\dfrac3x$, $-\dfrac{2}{x^3}$ et
+$\dfrac{5}{x^4}$ tendent tous vers $0$. D'où
+\[ \lim_{x\to+\infty}\bigl(x^4+3x^3-2x+5\bigr)=\lim_{x\to+\infty} x^4=+\infty. \]
+\end{exemple}
+
+\begin{exemple}[un polynôme à coefficient dominant négatif]
+Soit à calculer $\displaystyle\lim_{x\to+\infty}\bigl(-x^4+3x^3-2x+5\bigr)$. Le terme dominant est $-x^4$ :
+\[ \lim_{x\to+\infty}\bigl(-x^4+3x^3-2x+5\bigr)=\lim_{x\to+\infty}(-x^4)=-\bigl(\!+\infty\bigr)=-\infty. \]
+De même, $\displaystyle\lim_{x\to-\infty}\Bigl(-\frac13 x^5-3x+2\Bigr)=\lim_{x\to-\infty}\Bigl(-\frac13 x^5\Bigr)=-\frac13\times(-\infty)=+\infty$,
+car $x^5\to-\infty$ (exposant impair) et le coefficient $-\tfrac13$ change le signe.
+\end{exemple}
+
+\begin{attention}[parité de l'exposant en $-\infty$]
+$\displaystyle\lim_{x\to-\infty} x^4=+\infty$ \emph{car l'exposant est pair} ; mais
+$\displaystyle\lim_{x\to-\infty} x^5=-\infty$ car l'exposant est impair. On retiendra :
+$(-\infty)^{\text{pair}}=+\infty$ et $(-\infty)^{\text{impair}}=-\infty$ (voir \S\,2.5).
+\end{attention}
+
+\subsection{Technique 2 — fonctions rationnelles (quotient de polynômes)}
+
+\begin{theoreme}[limite d'une fonction rationnelle à l'infini]
+\textbf{À l'infini, la limite d'une fonction rationnelle $\dfrac{P(x)}{Q(x)}$ est celle du rapport
+de ses termes de plus haut degré.}
+\[ \boxed{\ \lim_{x\to\pm\infty}\frac{a_n x^n+\dots}{b_m x^m+\dots}=\lim_{x\to\pm\infty}\frac{a_n x^n}{b_m x^m}\ } \]
+\end{theoreme}
+
+\begin{ou}
+  \item $a_n x^n$ : terme de plus haut degré du \emph{numérateur} ($n=\deg P$) ;
+  \item $b_m x^m$ : terme de plus haut degré du \emph{dénominateur} ($m=\deg Q$) ;
+  \item après simplification, on est ramené à $\dfrac{a_n}{b_m}\,x^{\,n-m}$, dont la limite se lit selon le signe de $n-m$.
+\end{ou}
+
+\begin{methode}[limite d'une fonction rationnelle en $\pm\infty$]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Garder \textbf{seulement} le terme dominant en haut et en bas : $\dfrac{a_n x^n}{b_m x^m}$.
+  \item Simplifier en $\dfrac{a_n}{b_m}\,x^{\,n-m}$ puis conclure selon le \emph{degré relatif} :
+  \begin{itemize}[leftmargin=1.4em,topsep=1pt]
+     \item si $n>m$ : limite \emph{infinie} (signe donné par $\tfrac{a_n}{b_m}$ et la parité de $n-m$) ;
+     \item si $n=m$ : limite \emph{finie} égale à $\dfrac{a_n}{b_m}$ (asymptote horizontale) ;
+     \item si $n<m$ : limite \emph{nulle} ($0$).
+  \end{itemize}
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[type 1 : $n=m$ (degrés égaux) $\to$ limite finie]
+Calculons $\displaystyle\lim_{x\to+\infty}\frac{x^4+3x^3-2x+5}{3x^4+1}$. En mettant $x^4$ en facteur :
+\[ \frac{x^4+3x^3-2x+5}{3x^4+1}
+   =\frac{x^4\Bigl(1+\frac3x-\frac{2}{x^3}+\frac{5}{x^4}\Bigr)}{3x^4\Bigl(1+\frac{1}{3x^4}\Bigr)}. \]
+Pour $x\neq 0$, $\dfrac{x^4}{3x^4}=\dfrac13$, et les deux parenthèses tendent vers $1$. D'où
+\[ \lim_{x\to+\infty}\frac{x^4+3x^3-2x+5}{3x^4+1}=\lim_{x\to+\infty}\frac{x^4}{3x^4}=\frac13. \]
+Le résultat est le \emph{même} en $-\infty$. La droite $y=\tfrac13$ est asymptote horizontale.
+\end{exemple}
+
+\begin{exemple}[type 1 : $n>m$ et $n<m$]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=4pt]
+  \item $\displaystyle\lim_{x\to+\infty}\frac{x^4+3x^3-2x+5}{-3x^2+1}
+        =\lim_{x\to+\infty}\frac{x^4}{-3x^2}=\lim_{x\to+\infty}\frac{x^2}{-3}=(-)\times(+\infty)=-\infty$
+        \quad (ici $n=4>m=2$).
+  \item $\displaystyle\lim_{x\to-\infty}\frac{x^4+3x^3-2x+5}{-3x^5+1}
+        =\lim_{x\to-\infty}\frac{x^4}{-3x^5}=\lim_{x\to-\infty}\frac{1}{-3x}=0$
+        \quad (ici $n=4<m=5$, donc limite nulle).
+  \item $\displaystyle\lim_{x\to-\infty}\frac{x^6+3x^3-2x+5}{3x^5+1}
+        =\lim_{x\to-\infty}\frac{x^6}{3x^5}=\lim_{x\to-\infty}\frac{x}{3}=-\infty$
+        \quad ($n=6>m=5$).
+\end{itemize}
+\end{exemple}
+
+\subsubsection{Type 2 — limite en un point exclu du domaine (tableau de signes)}
+
+Quand on cherche une limite en un point $x_0$ \emph{tel que} $x_0\notin D_f$ (le dénominateur
+s'annule), le calcul direct donne souvent «~$\dfrac{a}{0}$~». On lève alors l'ambiguïté de signe à
+l'aide d'un \textbf{tableau de signes} du dénominateur, et on applique la règle $\dfrac{a}{0^{\pm}}$.
+
+\begin{methode}[limite rationnelle en un point qui annule le dénominateur]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Calculer la limite du \emph{numérateur} en $x_0$ (s'il ne s'annule pas, on obtient un nombre $a\neq 0$).
+  \item Dresser le \textbf{tableau de signes} du \emph{dénominateur} autour de $x_0$ pour savoir s'il tend vers $0^{+}$ ou $0^{-}$ à droite et à gauche.
+  \item Appliquer $\dfrac{a}{0^{+}}$ ou $\dfrac{a}{0^{-}}$ selon le côté, par la règle des signes ;
+        si les deux côtés diffèrent, $f$ n'a \emph{pas} de limite (globale) en $x_0$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\displaystyle\lim_{x\to 1}\frac{-2x+5}{1-x}$ — étude des deux côtés]
+Soit $f(x)=\dfrac{-2x+5}{1-x}$, de domaine $D_f=\R\setminus\{1\}$.
+\emph{En $1$, le numérateur} $-2x+5$ est continu et tend vers $-2(1)+5=3$ (un nombre $\neq 0$).
+\emph{En $1$, le dénominateur} $1-x$ s'annule ; il est positif sur $\left]-\infty,1\right[$ et
+négatif sur $\left]1,+\infty\right[$ :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccccc}
+\toprule
+$x$ & $-\infty$ & & $1$ & & $+\infty$\\
+\midrule
+$1-x$ & & $+\ \ +\ \ +$ & $0$ & $-\ \ -\ \ -$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Donc : si $x\to 1^{+}$ alors $1-x\to 0^{-}$ ; si $x\to 1^{-}$ alors $1-x\to 0^{+}$. On en déduit
+\[ \lim_{x\to 1^{+}}\frac{-2x+5}{1-x}=\frac{3}{0^{-}}=-\infty,\qquad
+   \lim_{x\to 1^{-}}\frac{-2x+5}{1-x}=\frac{3}{0^{+}}=+\infty. \]
+Les deux limites latérales étant opposées, \textbf{la fonction $\dfrac{-2x+5}{1-x}$ n'a pas de
+limite au point $x=1$} (la droite $x=1$ est une asymptote verticale).
+\end{exemple}
+
+\begin{exemple}[$\displaystyle\lim_{x\to -1}\frac{-2x+5}{1+x}$ — même mécanique]
+Ici $D_f=\R\setminus\{-1\}$. Le numérateur tend vers $-2(-1)+5=7\neq 0$. Le dénominateur $1+x$
+est négatif sur $\left]-\infty,-1\right[$ et positif sur $\left]-1,+\infty\right[$ :
+\[ \lim_{x\to -1^{+}}\frac{-2x+5}{1+x}=\frac{7}{0^{+}}=+\infty,\qquad
+   \lim_{x\to -1^{-}}\frac{-2x+5}{1+x}=\frac{7}{0^{-}}=-\infty. \]
+\end{exemple}
+
+\subsection{Technique 3 — fonctions comportant des radicaux}
+
+La méthode de la \emph{mise en facteur du terme dominant} (technique 2) reste valable sous une
+racine : on factorise par le terme de plus haut degré, qu'on sort de la racine en se rappelant que
+$\sqrt{x^2}=|x|$.
+
+\begin{formule}[sortir un carré d'une racine]
+\[ \boxed{\ \sqrt{x^{2}}=|x|\ }\qquad\text{avec}\qquad |x|=\begin{cases} x & \text{si }x\geq 0,\\[2pt] -x & \text{si }x<0.\end{cases} \]
+\begin{ou}
+  \item $|x|$ : la \textbf{valeur absolue} de $x$ (sa « distance à $0$ », toujours positive) ;
+  \item le signe se règle selon le côté : en $+\infty$ on a $x>0$ donc $|x|=x$ ; en $-\infty$ on a $x<0$ donc $|x|=-x$.
+\end{ou}
+\end{formule}
+
+\begin{methode}[radical : mise en facteur du terme dominant]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Sous la racine, mettre en facteur le terme de plus haut degré (ex.\ $x^2$).
+  \item Le sortir de la racine : $\sqrt{x^2\cdot(\dots)}=|x|\,\sqrt{\dots}$, puis remplacer $|x|$ par $x$ (en $+\infty$) ou $-x$ (en $-\infty$).
+  \item La parenthèse sous la racine tend vers $1$ ; conclure.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\displaystyle\lim_{x\to+\infty}\sqrt{x^4+3x^3-2x+5}$]
+On factorise par $x^4$ sous la racine :
+\[ \sqrt{x^4+3x^3-2x+5}=\sqrt{x^4\Bigl(1+\tfrac3x-\tfrac{2}{x^3}+\tfrac{5}{x^4}\Bigr)}
+   =x^{2}\sqrt{1+\tfrac3x-\tfrac{2}{x^3}+\tfrac{5}{x^4}}, \]
+car $\sqrt{x^4}=x^2\ (\geq 0)$. La racine tend vers $\sqrt1=1$, donc
+$\displaystyle\lim_{x\to+\infty}\sqrt{x^4+3x^3-2x+5}=\lim_{x\to+\infty} x^2=+\infty.$
+\end{exemple}
+
+\begin{exemple}[le rôle de $|x|$ : $\displaystyle\lim_{x\to\pm\infty}\sqrt{x^2-2x+5}$]
+La fonction $f(x)=\sqrt{x^2-2x+5}$ est définie sur $\R$ tout entier (car $x^2-2x+5>0$ pour tout
+réel : son discriminant $\Delta=4-20<0$). On factorise par $x^2$ :
+\[ \sqrt{x^2-2x+5}=|x|\,\sqrt{1-\tfrac2x+\tfrac{5}{x^2}}\ \xrightarrow[x\to\pm\infty]{}\ |x|. \]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item En $+\infty$ : $|x|=x$, donc $\displaystyle\lim_{x\to+\infty}\sqrt{x^2-2x+5}=\lim_{x\to+\infty} x=+\infty$.
+  \item En $-\infty$ : $|x|=-x$, donc $\displaystyle\lim_{x\to-\infty}\sqrt{x^2-2x+5}=\lim_{x\to-\infty}(-x)=+\infty$.
+\end{itemize}
+\end{exemple}
+
+\subsubsection{La technique du « binôme conjugué »}
+
+Lorsqu'une différence de racines donne une forme indéterminée ($\infty-\infty$ ou $\tfrac00$), on
+multiplie haut et bas par l'\textbf{expression conjuguée}, ce qui fait disparaître les racines
+grâce à l'identité $(\sqrt{A}-\sqrt{B})(\sqrt{A}+\sqrt{B})=A-B$.
+
+\begin{formule}[multiplication par le conjugué]
+\[ \boxed{\ \bigl(\sqrt{A}-\sqrt{B}\bigr)\bigl(\sqrt{A}+\sqrt{B}\bigr)=A-B\ } \]
+\begin{ou}
+  \item $\sqrt{A}+\sqrt{B}$ : le \textbf{conjugué} de $\sqrt{A}-\sqrt{B}$ (on change le signe central) ;
+  \item le produit élimine les racines : il ne reste que $A-B$ au numérateur, souvent simplifiable.
+\end{ou}
+\end{formule}
+
+\begin{methode}[lever une indétermination par le conjugué]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Multiplier le numérateur \emph{et} le dénominateur par l'expression conjuguée de la partie problématique.
+  \item Développer le numérateur avec $(\sqrt A-\sqrt B)(\sqrt A+\sqrt B)=A-B$ : les racines disparaissent.
+  \item Simplifier, puis calculer la limite de l'expression obtenue (souvent rationnelle ou avec une racine au dénominateur).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\displaystyle\lim_{x\to+\infty}\bigl(\sqrt{x+2}-\sqrt{x-2}\bigr)$ — indétermination $\infty-\infty$]
+$f(x)=\sqrt{x+2}-\sqrt{x-2}$ est définie sur $[2,+\infty[$. La limite directe donne
+$\infty-\infty$ (FI). On multiplie par le conjugué $\sqrt{x+2}+\sqrt{x-2}$ :
+\begin{align*}
+\sqrt{x+2}-\sqrt{x-2}
+   &=\frac{\bigl(\sqrt{x+2}-\sqrt{x-2}\bigr)\bigl(\sqrt{x+2}+\sqrt{x-2}\bigr)}{\sqrt{x+2}+\sqrt{x-2}}\\[4pt]
+   &=\frac{(x+2)-(x-2)}{\sqrt{x+2}+\sqrt{x-2}}=\frac{4}{\sqrt{x+2}+\sqrt{x-2}}.
+\end{align*}
+Quand $x\to+\infty$, le dénominateur tend vers $+\infty$, donc
+\[ \lim_{x\to+\infty}\bigl(\sqrt{x+2}-\sqrt{x-2}\bigr)=\frac{4}{+\infty}=0. \]
+\end{exemple}
+
+\begin{exemple}[$\displaystyle\lim_{x\to 1}\frac{\sqrt{x+1}-\sqrt2}{x-1}$ — indétermination $\tfrac00$]
+$f(x)=\dfrac{\sqrt{x+1}-\sqrt2}{x-1}$ est définie sur $[-1,1[\,\cup\,]1,+\infty[$. En $1$ :
+numérateur $\to\sqrt2-\sqrt2=0$ et dénominateur $\to 0$, donc FI $\tfrac00$. On multiplie par le
+conjugué du \emph{numérateur} :
+\begin{align*}
+\frac{\sqrt{x+1}-\sqrt2}{x-1}
+ &=\frac{\bigl(\sqrt{x+1}-\sqrt2\bigr)\bigl(\sqrt{x+1}+\sqrt2\bigr)}{(x-1)\bigl(\sqrt{x+1}+\sqrt2\bigr)}
+ =\frac{(x+1)-2}{(x-1)\bigl(\sqrt{x+1}+\sqrt2\bigr)}\\[4pt]
+ &=\frac{x-1}{(x-1)\bigl(\sqrt{x+1}+\sqrt2\bigr)}
+ =\frac{1}{\sqrt{x+1}+\sqrt2}.
+\end{align*}
+Le facteur $(x-1)$ se simplifie : l'indétermination est levée. Il reste
+\[ \lim_{x\to 1}\frac{\sqrt{x+1}-\sqrt2}{x-1}=\frac{1}{\sqrt{2}+\sqrt2}=\frac{1}{2\sqrt2}=\frac{\sqrt2}{4}. \]
+\end{exemple}
+
+\begin{exemple}[double conjugué : $\displaystyle\lim_{x\to 2}\frac{\sqrt{x+2}-2}{\sqrt{3-x}-1}$ — FI $\tfrac00$]
+Conditions d'existence : $x+2\geq 0$, $3-x\geq 0$ et $\sqrt{3-x}\neq 1$ (soit $x\neq 2$) ; donc
+$D_f=[-2,3]\setminus\{2\}$. En $2$, la forme est $\tfrac00$. On multiplie haut et bas par les
+\emph{deux} conjugués, $\bigl(\sqrt{3-x}+1\bigr)$ et $\bigl(\sqrt{x+2}+2\bigr)$ :
+\begin{align*}
+\frac{\sqrt{x+2}-2}{\sqrt{3-x}-1}
+ &=\frac{\bigl(\sqrt{x+2}-2\bigr)\bigl(\sqrt{3-x}+1\bigr)\bigl(\sqrt{x+2}+2\bigr)}
+        {\bigl(\sqrt{3-x}-1\bigr)\bigl(\sqrt{3-x}+1\bigr)\bigl(\sqrt{x+2}+2\bigr)}\\[4pt]
+ &=\frac{(x+2-4)\bigl(\sqrt{3-x}+1\bigr)}{(3-x-1)\bigl(\sqrt{x+2}+2\bigr)}
+  =\frac{(x-2)\bigl(\sqrt{3-x}+1\bigr)}{(2-x)\bigl(\sqrt{x+2}+2\bigr)}
+  =-\frac{\sqrt{3-x}+1}{\sqrt{x+2}+2},
+\end{align*}
+car $\dfrac{x-2}{2-x}=-1$. On obtient enfin
+\[ \lim_{x\to 2}\frac{\sqrt{x+2}-2}{\sqrt{3-x}-1}
+   =-\frac{\sqrt{3-2}+1}{\sqrt{2+2}+2}=-\frac{1+1}{2+2}=-\frac12. \]
+\end{exemple}
+
+\subsection{Technique 4 — la règle de l'Hospital}
+
+\begin{theoreme}[règle de l'Hospital]
+Dans le cas d'une indétermination $\dfrac00$ ou $\dfrac{\infty}{\infty}$, et lorsque $f$ et $g$
+sont dérivables au voisinage de $a$ avec le quotient défini, on a
+\[ \boxed{\ \lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}\ } \]
+$a$ pouvant être un réel, $+\infty$ ou $-\infty$.
+\end{theoreme}
+
+\begin{ou}
+  \item $f'(x)$, $g'(x)$ : les \textbf{dérivées} respectives du numérateur et du dénominateur ;
+  \item l'égalité ne vaut que si la forme est bien $\tfrac00$ ou $\tfrac{\infty}{\infty}$ \emph{et} si la nouvelle limite $\lim \tfrac{f'}{g'}$ existe ;
+  \item on dérive le numérateur \emph{et} le dénominateur \textbf{séparément} (ce n'est PAS la dérivée du quotient).
+\end{ou}
+
+\begin{attention}[ne dérivez pas le quotient comme un tout !]
+La règle de l'Hospital remplace $\dfrac fg$ par $\dfrac{f'}{g'}$, et \textbf{non} par la dérivée
+$\Bigl(\dfrac fg\Bigr)'$. Elle ne s'applique qu'aux indéterminations $\tfrac00$ et
+$\tfrac{\infty}{\infty}$ : l'utiliser sur une forme déjà déterminée donne des résultats faux.
+\end{attention}
+
+\begin{remarque}
+S'il le faut, la règle peut être \textbf{appliquée plusieurs fois} de suite, tant que l'on retombe
+sur une indétermination $\tfrac00$ ou $\tfrac{\infty}{\infty}$.
+\end{remarque}
+
+\begin{exemple}[limites trigonométriques et logarithmiques de référence]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=6pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}=\frac00\ \text{(FI)}\ \xrightarrow{\text{Hospital}}\ \lim_{x\to0}\frac{(\sin x)'}{(x)'}=\lim_{x\to 0}\frac{\cos x}{1}=\frac{\cos 0}{1}=1.$
+  \item $\displaystyle\lim_{x\to 1}\frac{\ln x}{x-1}=\frac00\ \text{(FI)}\ \xrightarrow{\text{Hospital}}\ \lim_{x\to1}\frac{(\ln x)'}{(x-1)'}=\lim_{x\to 1}\frac{1/x}{1}=1.$
+\end{itemize}
+On remarque d'ailleurs que $\displaystyle\lim_{x\to 1}\frac{\ln x}{x-1}$ représente le \emph{nombre
+dérivé} en $1$ de la fonction $f(x)=\ln x$ : $f'(1)=\displaystyle\lim_{x\to1}\frac{\ln x-\ln 1}{x-1}=\frac11=1$, puisque $f'(x)=\dfrac1x$.
+\end{exemple}
+
+\begin{exemple}[$\displaystyle\lim_{x\to\frac{\pi}{2}}\frac{\cos x}{x-\frac{\pi}{2}}$ — une limite, deux lectures]
+La forme est $\dfrac{\cos(\pi/2)}{0}=\dfrac00$ (FI). Par l'Hospital :
+\[ \lim_{x\to\frac{\pi}{2}}\frac{\cos x}{x-\frac{\pi}{2}}=\lim_{x\to\frac{\pi}{2}}\frac{-\sin x}{1}=-\sin\frac{\pi}{2}=-1. \]
+\textbf{Autre lecture :} cette limite est exactement le nombre dérivé de $f(x)=\cos x$ en
+$\frac{\pi}{2}$, soit $f'\!\left(\frac{\pi}{2}\right)=-\sin\frac{\pi}{2}=-1$. Les deux points de vue
+coïncident, ce qui éclaire le sens profond de la règle.
+\end{exemple}
+
+\begin{exemple}[$\displaystyle\lim_{x\to 0} x\ln x$ — transformer $0\times\infty$ en $\tfrac{\infty}{\infty}$]
+La forme brute est $0\times(-\infty)$ (FI). On la réécrit en quotient en passant $x$ au
+dénominateur sous la forme $\dfrac1x$ :
+\[ x\ln x=\frac{\ln x}{1/x}\ \Rightarrow\ \lim_{x\to 0}\frac{\ln x}{1/x}
+   \xrightarrow{\text{Hospital}}\ \lim_{x\to 0}\frac{1/x}{-1/x^2}=\lim_{x\to 0}(-x)=0. \]
+Astuce générale : une indétermination $0\times\infty$ se ramène toujours à $\tfrac00$ ou
+$\tfrac{\infty}{\infty}$ en mettant l'un des facteurs au dénominateur (sous forme d'inverse).
+\end{exemple}
+
+\begin{exemple}[exponentielle : trois quotients]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=6pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{e^{x}-1}{x}=\frac00\ \xrightarrow{\text{Hospital}}\ \lim_{x\to 0}\frac{e^{x}}{1}=e^{0}=1.$
+  \item $\displaystyle\lim_{x\to+\infty}\frac{e^{x}-1}{x}=\frac{\infty}{\infty}\ \xrightarrow{\text{Hospital}}\ \lim_{x\to+\infty}\frac{e^{x}}{1}=+\infty$ (l'exponentielle l'emporte sur $x$).
+  \item $\displaystyle\lim_{x\to+\infty}\frac{x^{2}+1}{e^{2x}+1}=\frac{\infty}{\infty}\ \xrightarrow{\text{Hospital}}\ \lim_{x\to+\infty}\frac{2x}{2e^{2x}}=\frac{\infty}{\infty}\ \xrightarrow{\text{Hospital (2\textsuperscript{e} fois)}}\ \lim_{x\to+\infty}\frac{2}{4e^{2x}}=0.$
+\end{itemize}
+Le dernier exemple illustre l'application \emph{répétée} de la règle (deux dérivations successives).
+\end{exemple}
+
+\subsection{Limites trigonométriques remarquables}
+
+Les deux limites suivantes reviennent constamment ; on les obtient par l'Hospital (ou par
+encadrement) et on les mémorise comme des \emph{résultats de référence}.
+
+\begin{formule}[limites trigonométriques de base en $0$]
+\[ \boxed{\ \lim_{x\to 0}\frac{\sin x}{x}=1\ }\qquad\qquad \boxed{\ \lim_{x\to 0}\frac{\tan x}{x}=1\ } \]
+\begin{ou}
+  \item ces limites valent $1$ \emph{uniquement} lorsque l'angle $x$ est exprimé en \textbf{radians} ;
+  \item elles traduisent qu'au voisinage de $0$, $\sin x\approx x$ et $\tan x\approx x$ (approximation des « petits angles »).
+\end{ou}
+\end{formule}
+
+\begin{exemple}[combiner les limites remarquables : $\displaystyle\lim_{x\to 0}\frac{\sin 2x}{3x}$]
+On fait apparaître la forme $\dfrac{\sin(\square)}{\square}$ en multipliant et divisant par $2x$ :
+\[ \frac{\sin 2x}{3x}=\frac{\sin 2x}{2x}\times\frac{2x}{3x}=\underbrace{\frac{\sin 2x}{2x}}_{\to\,1}\times\frac{2}{3}\ \xrightarrow[x\to 0]{}\ 1\times\frac23=\frac23. \]
+\end{exemple}
+
+\begin{exemple}[$\displaystyle\lim_{x\to 0}\frac{\sin 2x}{\tan x}$]
+On décompose en deux quotients de référence :
+\[ \frac{\sin 2x}{\tan x}=\frac{\sin 2x}{2x}\times\frac{x}{\tan x}\times\frac{2x}{x}
+   =\underbrace{\frac{\sin 2x}{2x}}_{\to 1}\times\underbrace{\frac{x}{\tan x}}_{\to 1}\times 2\ \xrightarrow[x\to 0]{}\ 1\times1\times2=2. \]
+\end{exemple}
+
+% =====================================================================
+\section{Limites et asymptotes : la synthèse géométrique}
+% =====================================================================
+Les limites permettent de \emph{prévoir l'allure} d'une courbe loin de l'origine ou près de ses
+points interdits. C'est le lien entre calcul et dessin.
+
+\begin{theoreme}[limites $\Leftrightarrow$ asymptotes]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Asymptote horizontale :} si $\displaystyle\lim_{x\to\pm\infty} f(x)=\ell$ (réel), la droite $y=\ell$ est asymptote horizontale.
+  \item \textbf{Asymptote verticale :} si $\displaystyle\lim_{x\to x_0^{\pm}} f(x)=\pm\infty$, la droite $x=x_0$ est asymptote verticale.
+  \item \textbf{Branche infinie :} si $\displaystyle\lim_{x\to\pm\infty} f(x)=\pm\infty$, la courbe « part » vers l'infini (éventuellement le long d'une asymptote oblique).
+\end{itemize}
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=12cm,height=6.6cm,axis lines=middle,
+   xlabel={$x$},ylabel={$y$},
+   xmin=-5.5,xmax=5.6,ymin=-4.2,ymax=4.4,
+   xtick={-4,-2,2,4},ytick={-3,-1,1,3},
+   tick label style={font=\scriptsize},
+   every axis x label/.style={at={(ticklabel* cs:1)},anchor=west},
+   every axis y label/.style={at={(ticklabel* cs:1)},anchor=south}]
+  % f(x) = 1 + 2/(x-1) : asymptote horizontale y=1, verticale x=1
+  \addplot[courbe,domain=1.25:5.4,samples=160]{1+2/(x-1)};
+  \addplot[courbe,domain=-5.4:0.72,samples=160]{1+2/(x-1)};
+  \draw[asy,primary] (axis cs:-5.5,1)--(axis cs:5.6,1);
+  \draw[asy,primary] (axis cs:1,-4.2)--(axis cs:1,4.4);
+  \node[primary,font=\scriptsize,anchor=south west] at (axis cs:-5.3,1.05){$y=1$ (asymptote horizontale)};
+  \node[primary,font=\scriptsize,anchor=west,rotate=90] at (axis cs:1.08,-3.9){$x=1$ (asymptote verticale)};
+  \node[curvecol,font=\small] at (axis cs:3.6,2.2){$f(x)=1+\dfrac{2}{x-1}$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent Sur cette courbe, on lit d'un coup d'œil :
+$\displaystyle\lim_{x\to\pm\infty} f(x)=1$ (la courbe colle à $y=1$),
+$\displaystyle\lim_{x\to 1^{+}} f(x)=+\infty$ et $\displaystyle\lim_{x\to 1^{-}} f(x)=-\infty$
+(la courbe file le long de $x=1$). Le calcul des limites \emph{et} la lecture graphique se
+confirment mutuellement.
+
+% =====================================================================
+\section{Synthèse et formulaire}
+% =====================================================================
+
+\subsection{Carte des techniques : « quelle méthode pour quelle forme ? »}
+
+\begin{center}
+\begin{tikzpicture}[node distance=6mm,every node/.style={font=\small},
+   bloc/.style={rectangle,rounded corners=3pt,draw,align=center,inner sep=4pt,minimum height=0.85cm}]
+  \node[bloc,fill=primary!12,draw=primary,text width=4cm] (start)
+        {Limite à calculer\\ \footnotesize(remplacer $x$ par la cible)};
+  \node[bloc,fill=excol!12,draw=excol,below=of start,text width=5.4cm] (ok)
+        {\textbf{Forme déterminée} : on conclut\\ \footnotesize(réel, $\pm\infty$, ou $\tfrac{a}{0^{\pm}}\to\pm\infty$)};
+  \node[bloc,fill=attncol!12,draw=attncol,right=2.4cm of ok,text width=4.2cm] (fi)
+        {\textbf{Forme indéterminée}\\ \footnotesize$\infty-\infty,\ 0\times\infty,\ \tfrac{\infty}{\infty},\ \tfrac00$};
+  \node[bloc,fill=defcol!10,draw=defcol,below=of fi,text width=6.6cm,xshift=-1.2cm] (tech)
+        {\textbf{Lever l'indétermination :}\\
+         \footnotesize polynôme/rationnelle $\to$ terme dominant \ ;\ radicaux $\to$ conjugué \ ;\ $\tfrac00$ ou $\tfrac{\infty}{\infty}$ $\to$ l'Hospital};
+  \draw[->,>=Stealth,thick,black!70] (start) -- (ok);
+  \draw[->,>=Stealth,thick,black!70] (start.east) -| (fi.north);
+  \draw[->,>=Stealth,thick,black!70] (fi) -- (tech);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Tableau des opérations sur les limites}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{>{\centering\arraybackslash}m{2.7cm}|>{\centering\arraybackslash}m{3.2cm}|>{\centering\arraybackslash}m{3.2cm}|>{\centering\arraybackslash}m{3.4cm}}
+\toprule
+\rowcolor{primary!18}
+\textbf{Opération} & $\boldsymbol{\ell+\ell'}$ \textbf{(somme)} & $\boldsymbol{\ell\times\ell'}$ \textbf{(produit)} & $\boldsymbol{\ell/\ell'}$ \textbf{(quotient)}\\
+\midrule
+deux réels & $\ell+\ell'$ & $\ell\times\ell'$ & $\ell/\ell'$ si $\ell'\neq 0$\\
+$\ell$ réel, $\ell'=+\infty$ & $+\infty$ & $\pm\infty$ (signe de $\ell$) & $0$\\
+$+\infty$ et $+\infty$ & $+\infty$ & $+\infty$ & \textbf{FI} $\tfrac{\infty}{\infty}$\\
+$+\infty$ et $-\infty$ & \textbf{FI} $\infty-\infty$ & $-\infty$ & \textbf{FI} $\tfrac{\infty}{\infty}$\\
+$0$ et $\pm\infty$ & $\pm\infty$ & \textbf{FI} $0\times\infty$ & $0$ ou \textbf{FI} selon le sens\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Formulaire essentiel}
+
+\begin{multicols}{2}
+\noindent\textbf{Comportement à l'infini}
+\[ \lim_{x\to\pm\infty} P(x)=\lim_{x\to\pm\infty} a_n x^n \]
+\[ \lim_{x\to\pm\infty}\frac{a_n x^n+\dots}{b_m x^m+\dots}=\lim_{x\to\pm\infty}\frac{a_n x^n}{b_m x^m} \]
+\textbf{Règle des « zéros au dénominateur »}
+\[ \frac{a}{0^{+}}\to\pm\infty,\qquad \frac{a}{0^{-}}\to\mp\infty\quad(a\neq0) \]
+
+\columnbreak
+\noindent\textbf{Limites de référence}
+\[ \lim_{x\to 0}\frac{\sin x}{x}=1,\qquad \lim_{x\to 0}\frac{\tan x}{x}=1 \]
+\[ \lim_{x\to 0}\frac{e^{x}-1}{x}=1,\qquad \lim_{x\to 1}\frac{\ln x}{x-1}=1 \]
+\textbf{Conjugué \& l'Hospital}
+\[ (\sqrt A-\sqrt B)(\sqrt A+\sqrt B)=A-B \]
+\[ \lim\frac fg \overset{\tfrac00,\,\tfrac{\infty}{\infty}}{=}\lim\frac{f'}{g'} \]
+\end{multicols}
+
+\vfill
+\begin{center}
+\textcolor{primary}{\rule{0.5\textwidth}{1pt}}\\[4pt]
+{\small\color{black!60}Fin de la Fiche 6 — Les limites.}
+\end{center}
+
+\end{document}

@@ -1,0 +1,951 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 1
+%  Les chiffres significatifs
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités & chimie ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}   % formules chimiques : \ce{NaCl}, \ce{NO2}...
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (mauve = couleur de la section Chimie du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{150,98,162}      % mauve (couleur du livre — Chimie)
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{reglecol}{RGB}{150,98,162}     % mauve — règles
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+\definecolor{sigcol}{RGB}{0,90,200}         % bleu  — chiffres significatifs
+\definecolor{nosigcol}{RGB}{210,30,40}      % rouge — chiffres non significatifs
+\definecolor{certaincol}{RGB}{0,135,90}     % vert  — chiffres certains
+\definecolor{doutecol}{RGB}{198,93,9}       % orange — chiffre incertain
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Règle (numérotée) — spécifique aux chiffres significatifs ----
+\newtcolorbox[auto counter,number within=section]{regle}[1][]{%
+  boxbase,colback=reglecol!7,colframe=reglecol,
+  title={\textsc{Règle}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Les chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.5cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Les chiffres significatifs}\\[6pt]
+   {\large\bfseries Mesure, précision et incertitude en chimie}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,1}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : le nombre 0,0035070 décortiqué ---
+\begin{tikzpicture}[scale=1.0]
+  \node[font=\Large] (n) {$m=0,\textcolor{nosigcol}{\mathbf{00}}\textcolor{sigcol}{\mathbf{35070}}\ \si{kg}$};
+  % accolade chiffres non significatifs (les deux zéros de tête)
+  \draw[nosigcol,thick] (-1.62,0.35) -- (-1.62,0.62) -- (-1.18,0.62) -- (-1.18,0.35);
+  \node[nosigcol,above,font=\scriptsize] at (-1.40,0.62) {zéros \emph{non} significatifs};
+  % accolade chiffres significatifs
+  \draw[sigcol,thick] (-0.95,-0.35) -- (-0.95,-0.62) -- (0.55,-0.62) -- (0.55,-0.35);
+  \node[sigcol,below,font=\scriptsize] at (-0.20,-0.62) {5 chiffres significatifs};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item comprendre pourquoi toute \emph{mesure} en chimie est entachée d'une \emph{incertitude} ;
+  \item définir un \textbf{chiffre significatif} et distinguer chiffres \emph{certains} et chiffre \emph{incertain} ;
+  \item appliquer les \textbf{règles de comptage} des \CS\ (cas délicat des zéros) ;
+  \item maîtriser la \textbf{notation scientifique} et l'opération d'\textbf{arrondi} ;
+  \item donner le bon nombre de \CS\ au résultat d'une \textbf{addition}, d'une \textbf{multiplication} et d'un \textbf{logarithme} (pH) ;
+  \item distinguer \textbf{justesse} et \textbf{fidélité}, et exprimer une \textbf{incertitude} absolue et relative.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.6cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 1 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Mesurer en chimie : grandeurs, nombres et incertitude}
+% =====================================================================
+La chimie est une science \textbf{quantitative} : peser un échantillon, lire un volume sur une
+burette, relever une température, mesurer un pH\dots\ tout repose sur des \emph{mesures}. Or aucune
+mesure n'est parfaite : tout instrument possède une \textbf{limite de précision}. Les
+\textbf{\CS} sont l'outil qui permet d'écrire un nombre de façon à ce qu'il \emph{dise la vérité sur
+sa propre précision} — ni plus, ni moins.
+
+\begin{definition}[grandeur, valeur et unité]
+Une \textbf{grandeur} est une propriété mesurable (une masse, un volume, une concentration). Le
+résultat d'une mesure s'écrit toujours sous la forme d'un \textbf{nombre} suivi d'une \textbf{unité} :
+\[ \underbrace{m}_{\text{grandeur}} \;=\; \underbrace{13{,}02}_{\text{nombre}}\ \underbrace{\si{\gram}}_{\text{unité}}. \]
+Le nombre seul n'a aucun sens physique : \og $13{,}02$\fg{} ne veut rien dire, mais
+\og $\qty{13{,}02}{\gram}$\fg{} désigne une masse précise.
+\end{definition}
+
+\begin{definition}[nombre mesuré et nombre exact]
+On distingue deux natures de nombres :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item un \textbf{nombre mesuré} provient d'un instrument : il est toujours \emph{approché}, car
+        l'instrument a une précision finie (ex.\ : $\qty{20{,}96}{\milli\litre}$ lu sur une burette) ;
+  \item un \textbf{nombre exact} provient d'un comptage ou d'une définition : il est \emph{parfaitement}
+        connu (ex.\ : il y a \emph{exactement} $2$ atomes d'hydrogène dans \ce{H2O}, ou
+        \emph{exactement} $\qty{1000}{\gram}$ dans $\qty{1}{\kilo\gram}$ par définition).
+\end{itemize}
+\end{definition}
+
+\begin{remarque}
+La règle des \CS\ ne s'applique qu'aux \emph{nombres mesurés}. Un nombre exact est considéré comme
+ayant une \emph{infinité} de \CS\ : il ne limite donc jamais la précision d'un calcul (on y revient
+au \S\ref{sec:exacts}).
+\end{remarque}
+
+\subsection{L'exemple de la burette}
+
+Le contexte le plus parlant est la lecture d'un volume sur une \textbf{burette} graduée, instrument
+de base du laboratoire de chimie (titrages).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % corps de la burette
+  \draw[thick,rounded corners=2pt] (0,0) rectangle (1.1,6);
+  \draw[thick] (0.45,0) -- (0.45,-0.7);          % robinet/pointe
+  \draw[thick] (0.65,0) -- (0.65,-0.7);
+  \fill[primary!20] (0,0) rectangle (1.1,2.55);  % liquide
+  % graduations principales 20 et 21
+  \foreach \y/\lab in {1.2/21,4.8/20}{
+     \draw[thick] (1.1,\y) -- (1.5,\y);
+     \node[right,font=\small] at (1.5,\y) {\lab};}
+  % sous-graduations (1/10 de mL)
+  \foreach \y in {1.56,1.92,2.28,2.64,3.0,3.36,3.72,4.08,4.44}{
+     \draw (1.1,\y) -- (1.35,\y);}
+  % ménisque
+  \draw[primary,thick] (0,2.55) .. controls (0.4,2.4) and (0.7,2.4) .. (1.1,2.55);
+  \draw[->,>=Stealth,nosigcol,thick] (3.0,2.55) -- (1.2,2.55);
+  \node[right,nosigcol,font=\small] at (3.0,2.55) {ménisque $\approx \qty{20{,}96}{\milli\litre}$};
+  % zone d'incertitude
+  \draw[densely dashed,doutecol] (-0.3,2.16) -- (1.1,2.16);
+  \draw[densely dashed,doutecol] (-0.3,2.94) -- (1.1,2.94);
+  \node[left,doutecol,font=\scriptsize,align=right] at (-0.35,2.55)
+       {entre\\ \num{20,9} et \num{21,0}};
+\end{tikzpicture}
+\end{center}
+
+\noindent Si la plus petite graduation vaut $\qty{0{,}1}{\milli\litre}$, on voit que le ménisque
+se situe \emph{entre} $\qty{20{,}9}{}$ et $\qty{21{,}0}{\milli\litre}$. À l'\oe il nu, on
+\emph{estime} la position à $\qty{20{,}96}{\milli\litre}$.
+
+\begin{itemize}[leftmargin=1.6em,topsep=3pt]
+  \item Les chiffres \textbf{2}, \textbf{0} et \textbf{9} sont \textcolor{certaincol}{\textbf{certains}} :
+        la graduation nous les garantit.
+  \item Le dernier chiffre \textbf{6} est \textcolor{doutecol}{\textbf{incertain}} (estimé) : un autre
+        observateur aurait pu lire $5$ ou $7$. Il n'y a pas de graduation au centième de \si{\milli\litre}.
+\end{itemize}
+
+\begin{theoreme}[plus de \CS\ $\Rightarrow$ plus de précision]
+En général, \emph{plus une mesure comporte de \CS, plus elle est précise}. Le nombre de \CS\ est une
+\og carte d'identité\fg{} de la qualité de la mesure : il indique jusqu'où l'instrument est fiable.
+Le volume $V=\qty{20{,}96}{\milli\litre}$ comporte \textbf{quatre} \CS.
+\end{theoreme}
+
+% =====================================================================
+\section{La notion de chiffre significatif}
+% =====================================================================
+
+\begin{definition}[chiffre significatif]
+Les \textbf{\CS} d'un nombre mesuré sont \emph{tous les chiffres connus avec certitude}, \emph{plus le
+premier chiffre incertain} (le dernier écrit, celui qui est estimé). Ce sont les chiffres qui
+\emph{portent une information sur la mesure}.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  \node[font=\Large] (n) at (0,0) {$V = \textcolor{certaincol}{20{,}9}\textcolor{doutecol}{6}\ \si{\milli\litre}$};
+  \draw[certaincol,thick,->,>=Stealth] (-0.85,-0.55) -- (-0.85,-0.15);
+  \node[certaincol,below,align=center,font=\scriptsize] at (-0.85,-0.55)
+       {3 chiffres \textbf{certains}\\ (lus sur la graduation)};
+  \draw[doutecol,thick,->,>=Stealth] (0.55,0.55) -- (0.55,0.18);
+  \node[doutecol,above,align=center,font=\scriptsize] at (0.55,0.55)
+       {1 chiffre \textbf{incertain}\\ (estimé à l'\oe il)};
+  \node[primarydark,right,font=\footnotesize] at (1.9,0)
+       {$\Rightarrow\ 3+1 = \mathbf{4}$ chiffres significatifs};
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[les chiffres non nuls sont toujours significatifs]
+\textbf{Tout chiffre non nul} ($1,2,3,4,5,6,7,8,9$) est \emph{toujours} significatif, quelle que soit
+sa position dans le nombre. La seule difficulté de comptage concerne le chiffre \textbf{0} (\S\ref{sec:zeros}).
+\end{theoreme}
+
+\begin{exemple}[comptage immédiat]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item $\num{837}$ : trois chiffres non nuls $\Rightarrow$ \textbf{3} \CS.
+  \item $\num{42,5}$ : trois chiffres non nuls $\Rightarrow$ \textbf{3} \CS.
+  \item $\num{6,1234}$ : cinq chiffres non nuls $\Rightarrow$ \textbf{5} \CS.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[chiffre significatif $\neq$ nombre de décimales]
+Ne confondez pas \emph{\CS} et \emph{décimales} (chiffres après la virgule). $\num{42,5}$ a une seule
+décimale mais \emph{trois} \CS ; $\num{0,007}$ a trois décimales mais un \emph{seul} \cs. Le nombre de
+\CS\ se compte à partir du \textbf{premier chiffre non nul}, en lisant de gauche à droite.
+\end{attention}
+
+% =====================================================================
+\section{Compter les chiffres significatifs : le cas des zéros}
+\label{sec:zeros}
+% =====================================================================
+Le chiffre $0$ joue deux rôles très différents : tantôt il \emph{cale} la virgule (il ne fait que
+positionner l'ordre de grandeur), tantôt il \emph{résulte d'une mesure} (il porte alors une
+information). Trois règles règlent tous les cas.
+
+\begin{regle}[zéros de tête — \emph{jamais} significatifs]
+Les zéros situés \textbf{à gauche} du premier chiffre non nul ne sont \emph{jamais} significatifs :
+ils ne servent qu'à placer la virgule (l'ordre de grandeur). On les appelle \emph{zéros de cadrage}.
+\end{regle}
+
+\begin{regle}[zéros intercalés — \emph{toujours} significatifs]
+Les zéros situés \textbf{entre} deux chiffres non nuls (zéros \emph{captifs}) sont \emph{toujours}
+significatifs.
+\end{regle}
+
+\begin{regle}[zéros de queue après la virgule — \emph{toujours} significatifs]
+Les zéros situés \textbf{à droite}, \emph{après la virgule} (et après le dernier chiffre non nul),
+sont \emph{toujours} significatifs : on ne les écrirait pas s'ils n'étaient pas le fruit d'une mesure.
+\end{regle}
+
+\subsection{La figure-clé : $m = \mathbf{0{,}0035070}$ kg}
+
+L'exemple suivant, tiré du livre, contient \emph{tous} les cas de figure à la fois.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \node[font=\LARGE] (n) {$m\;=\;0,00\textcolor{nosigcol}{\mathbf{3}}\textcolor{nosigcol}{\mathbf{5}}%
+        \textcolor{sigcol}{\mathbf{0}}\textcolor{nosigcol}{\mathbf{7}}\textcolor{sigcol}{\mathbf{0}}\ \si{kg}$};
+\end{tikzpicture}
+
+\medskip
+\begin{tikzpicture}[font=\small]
+  \node[font=\LARGE] (n) at (0,0)
+     {$0,\textcolor{nosigcol}{00}\,\textbf{3}\,\textbf{5}\,\textcolor{sigcol}{\textbf 0}\,\textbf{7}\,\textcolor{sigcol}{\textbf 0}$};
+  % zéros non significatifs (tête)
+  \draw[nosigcol,thick,->,>=Stealth] (-1.05,0.75) -- (-1.05,0.25);
+  \node[nosigcol,above,align=center,font=\scriptsize] at (-1.05,0.75)
+       {les \textbf{zéros de tête}\\ ne sont \emph{pas} significatifs};
+  % zéros significatifs (queue / captif)
+  \draw[sigcol,thick,->,>=Stealth] (0.30,-0.78) -- (0.30,-0.25);
+  \draw[sigcol,thick,->,>=Stealth] (1.18,-0.78) -- (1.18,-0.25);
+  \node[sigcol,below,align=center,font=\scriptsize] at (0.74,-0.85)
+       {ces \textbf{zéros} (captif et de queue)\\ \emph{sont} significatifs};
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Lecture chiffre par chiffre} (de gauche à droite) :
+\begin{itemize}[leftmargin=1.6em,topsep=3pt,itemsep=2pt]
+  \item $\textcolor{nosigcol}{0,00}$ : trois zéros de tête $\rightarrow$ \emph{cadrage}, \textbf{non} significatifs ;
+  \item $\mathbf{3}$, $\mathbf{5}$ : non nuls $\rightarrow$ significatifs ;
+  \item $\textcolor{sigcol}{\mathbf{0}}$ : zéro \emph{captif} (entre le $5$ et le $7$) $\rightarrow$ significatif ;
+  \item $\mathbf{7}$ : non nul $\rightarrow$ significatif ;
+  \item $\textcolor{sigcol}{\mathbf{0}}$ : zéro \emph{de queue} après la virgule $\rightarrow$ significatif.
+\end{itemize}
+\noindent Bilan : $3,\,5,\,0,\,7,\,0$ sont significatifs, soit $\boxed{\mathbf 5}$ \CS.
+
+\begin{theoreme}[le déplacement de la virgule ne change rien]
+\label{thm:virgule}
+Le \textbf{déplacement de la virgule} (donc le changement d'unité ou la notation scientifique)
+n'a \emph{aucun} impact sur la précision : il ne modifie jamais le nombre de \CS. Seuls changent les
+\emph{zéros de cadrage}, qui ne comptent pas.
+\end{theoreme}
+
+\begin{exemple}[un même volume, quatre \CS\ dans toutes les unités]
+Le volume $V=\qty{20{,}96}{\milli\litre}$ possède $4$ \CS. Écrivons-le autrement :
+\[ V=\underbrace{\num{20,96}}_{4\ \text{CS}}\ \si{\milli\litre}
+    =\underbrace{\num{0,02096}}_{4\ \text{CS}}\ \si{\litre}
+    =\underbrace{\num{2,096e-2}}_{4\ \text{CS}}\ \si{\litre}. \]
+Dans $\num{0,02096}\,\si{\litre}$, les deux zéros de tête ($0{,}0$) ne sont \textbf{pas} significatifs ;
+ils disparaissent en notation scientifique $\num{2,096e-2}$. Le nombre de \CS\ reste $4$ partout :
+la \emph{précision} de la mesure n'a pas changé, seule l'écriture a changé.
+\end{exemple}
+
+\subsection{Le piège des zéros de queue sans virgule}
+
+Un cas reste \emph{ambigu} : les zéros de queue d'un nombre \textbf{entier} (sans virgule).
+
+\begin{attention}[combien de \CS\ dans \og $\num{100}$\fg{} ?]
+Écrit tel quel, $\num{100}$ est \emph{ambigu} : on ne sait pas si les zéros résultent d'une mesure
+ou d'un simple cadrage. Le nombre peut avoir $1$, $2$ ou $3$ \CS. La \textbf{notation scientifique}
+lève toute ambiguïté :
+\begin{center}\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c c}
+\toprule
+\textbf{Écriture} & \textbf{Nombre de \CS} & \textbf{Signification}\\
+\midrule
+$\num{1e2}$    & $1$ & mesure au $\pm\,\num{100}$ près\\
+$\num{1,0e2}$  & $2$ & mesure à $\pm\,\num{10}$ près\\
+$\num{1,00e2}$ & $3$ & mesure à $\pm\,\num{1}$ près\\
+\bottomrule
+\end{tabular}
+\end{center}
+C'est pourquoi, en chimie, on privilégie systématiquement la notation scientifique dès qu'un doute
+est possible.
+\end{attention}
+
+\begin{exemple}[reconnaître les zéros significatifs]
+\begin{center}\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{>{\centering\arraybackslash}m{2.6cm} c >{\raggedright\arraybackslash}m{7.4cm}}
+\toprule
+\textbf{Nombre} & \textbf{\CS} & \textbf{Justification}\\
+\midrule
+$\num{15,200}$    & $5$ & les deux zéros de queue (après virgule) sont significatifs\\
+$\num{0,0100}$    & $3$ & zéros de tête non sig.\ ; les deux zéros de queue le sont\\
+$\num{0,0035070}$ & $5$ & zéros de tête non sig.\ ; le captif et celui de queue le sont\\
+$\num{2030}$      & $3$ (ambigu) & le zéro captif est sig.\ ; le zéro de queue est ambigu\\
+$\num{4,00e3}$    & $3$ & notation scientifique : tout ce qui est écrit est significatif\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{exemple}
+
+% =====================================================================
+\section{Nombres exacts : une infinité de chiffres significatifs}
+\label{sec:exacts}
+% =====================================================================
+Certains nombres ne proviennent d'aucune mesure : ils sont \emph{exacts} et ne limitent donc jamais
+la précision.
+
+\begin{definition}[nombre exact]
+Un \textbf{nombre exact} est connu sans aucune incertitude. Deux origines :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item un \textbf{comptage} d'objets discrets : $3$ béchers, $2$ atomes de \ce{H} dans \ce{H2O},
+        $6$ faces d'un dé ;
+  \item une \textbf{définition} ou une relation conventionnelle : $\qty{1}{\kilo\gram}=\qty{1000}{\gram}$
+        \emph{exactement}, $\qty{1}{\hour}=\qty{3600}{\second}$ \emph{exactement}, le facteur $2$ dans
+        un périmètre $P=2\pi r$.
+\end{itemize}
+On lui attribue une \textbf{infinité} de \CS ; il n'intervient donc jamais dans la limitation du
+résultat.
+\end{definition}
+
+\begin{exemple}[un facteur de conversion ne dégrade pas la précision]
+On convertit une masse $m=\qty{13{,}02}{\gram}$ (4 \CS) en kilogrammes. Le facteur
+$\qty{1}{\kilo\gram}=\qty{1000}{\gram}$ est \emph{exact} :
+\[ m=\frac{\num{13,02}}{\num{1000}}\ \si{\kilo\gram}=\qty{0,01302}{\kilo\gram}. \]
+Le résultat conserve ses $4$ \CS : le $\num{1000}$ exact n'a rien limité. C'est la propriété du
+théorème \ref{thm:virgule} : on n'a fait que déplacer la virgule.
+\end{exemple}
+
+\begin{remarque}
+Les constantes mathématiques comme $\pi$ ou $\sqrt{2}$ sont, elles aussi, connues avec autant de
+décimales qu'on veut : on les prend avec \emph{au moins} autant de \CS\ que la donnée la plus précise,
+pour ne pas être le maillon faible du calcul.
+\end{remarque}
+
+% =====================================================================
+\section{La notation scientifique}
+% =====================================================================
+La notation scientifique est l'écriture \emph{reine} de la chimie : elle gère les très grands nombres
+(constante d'Avogadro $\approx \qty{6,022e23}{\per\mole}$) comme les très petits
+(concentration en ions \ce{H+} d'une solution neutre $=\qty{1,0e-7}{\mol\per\litre}$), tout en
+affichant sans ambiguïté le nombre de \CS.
+
+\begin{definition}[notation scientifique]
+Un nombre est en \textbf{notation scientifique} lorsqu'il s'écrit
+\[ \boxed{\;a\times 10^{\,n}\;}\qquad\text{avec}\quad 1\le |a| < 10\ \text{et}\ n\in\mathbb{Z}. \]
+\begin{ou}
+  \item $a$ : la \textbf{mantisse}, un nombre dont la partie entière est \emph{un seul} chiffre non nul ; elle porte \emph{tous} les \CS ;
+  \item $10^{\,n}$ : la \textbf{puissance de dix}, qui fixe l'\emph{ordre de grandeur} (n'apporte aucun \cs) ;
+  \item $n$ : un entier relatif (positif pour les grands nombres, négatif pour les petits).
+\end{ou}
+\end{definition}
+
+\begin{methode}[mettre un nombre en notation scientifique]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item placer la virgule \emph{juste après le premier chiffre non nul} ;
+  \item compter de combien de rangs la virgule a été déplacée : c'est $|n|$ ;
+  \item $n>0$ si le nombre de départ était \og grand\fg{} ($\ge 10$), $n<0$ s'il était \og petit\fg{} ($<1$) ;
+  \item ne garder dans la mantisse que les \CS\ (on supprime les zéros de cadrage).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[aller-retour avec la notation scientifique]
+\begin{align*}
+ \num{20960}      &= \num{2,0960e4} &&(\text{virgule reculée de 4 rangs})\\
+ \num{0,02096}    &= \num{2,096e-2} &&(\text{virgule avancée de 2 rangs})\\
+ \num{6,022e23}   &= \num{602200000000000000000000} &&(\text{constante d'Avogadro})\\
+ \num{1,0e-7}     &= \num{0,00000010} &&(\ce{[H+]} \text{d'une solution neutre})
+\end{align*}
+\end{exemple}
+
+\begin{exemple}[une même pesée à 4 \CS\ dans cinq unités]
+Une balance affiche $m=\qty{13{,}02}{\gram}$ ($4$ \CS). La même masse s'écrit, sans jamais perdre
+ni gagner de \cs\ (théorème \ref{thm:virgule}) :
+\begin{center}\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l l c}
+\toprule
+\textbf{Unité} & \textbf{Valeur} & \textbf{\CS}\\
+\midrule
+gramme       & $\qty{13{,}02}{\gram}$            & $4$\\
+milligramme  & $\num{1,302e4}\ \si{\milli\gram}$ \;=\; $\qty{13020}{\milli\gram}$ & $4$\\
+kilogramme   & $\qty{0,01302}{\kilo\gram}$       & $4$\\
+tonne        & $\qty{0,00001302}{\tonne}$ \;=\; $\num{1,302e-5}\ \si{\tonne}$ & $4$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Interprétation.} Écrire $\qty{13{,}02}{\gram}$ est, par convention, une façon abrégée de dire
+\[ m = \qty{13{,}02\pm0{,}01}{\gram}, \]
+c'est-à-dire que la vraie valeur est comprise entre $\qty{13{,}01}{}$ et $\qty{13{,}03}{\gram}$.
+Le dernier chiffre écrit (le $2$) est le chiffre \emph{incertain}.
+\end{exemple}
+
+\begin{exemple}[la même pesée annoncée à 3 \CS]
+Si la balance n'est précise qu'au dixième de gramme, la pesée vaut $\qty{13{,}0}{\gram}$ ($3$ \CS,
+le zéro de queue étant significatif !). Dans les autres unités :
+\[ \qty{13{,}0}{\gram}=\num{1,30e4}\ \si{\milli\gram}=\qty{0,0130}{\kilo\gram}
+   =\qty{0,0000130}{\tonne}=\num{1,30e-5}\ \si{\tonne}. \]
+On \emph{n'écrit pas} $\qty{13}{\gram}$ : cela ne ferait que $2$ \CS\ et \emph{perdrait} l'information
+\og précis au dixième\fg{}. Le zéro de queue est ici porteur d'information.
+\end{exemple}
+
+\begin{remarque}[notation \emph{ingénieur}]
+Variante de la notation scientifique où l'exposant $n$ est un \emph{multiple de 3}, ce qui colle aux
+préfixes du Système International (kilo $10^3$, milli $10^{-3}$, micro $10^{-6}$, nano $10^{-9}$\dots).
+Exemple : $\num{2,096e-2}\,\si{\litre}=\num{20,96e-3}\,\si{\litre}=\qty{20,96}{\milli\litre}$.
+\end{remarque}
+
+% =====================================================================
+\section{Arrondir un résultat}
+% =====================================================================
+Réduire un nombre au bon nombre de \CS\ exige de savoir \textbf{arrondir} proprement.
+
+\begin{regle}[arrondi au rang voulu]
+Pour arrondir, on regarde le \textbf{premier chiffre supprimé} (celui juste à droite du dernier
+chiffre conservé) :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item s'il vaut $0,1,2,3,4$ : on \textbf{arrondit par défaut} (on ne change pas le dernier chiffre gardé) ;
+  \item s'il vaut $5,6,7,8,9$ : on \textbf{arrondit par excès} (on ajoute $1$ au dernier chiffre gardé).
+\end{itemize}
+\end{regle}
+
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  \draw[->,>=Stealth,thick,black!70] (0,0) -- (10.4,0);
+  \foreach \x/\d in {0/0,1.15/1,2.3/2,3.45/3,4.6/4,5.75/5,6.9/6,8.05/7,9.2/8,10.35/9}{
+     \draw (\x,0.12) -- (\x,-0.12);
+     \node[below,font=\footnotesize] at (\x,-0.14) {\d};}
+  % zone défaut
+  \draw[excol,line width=2pt] (0,0.32) -- (4.6,0.32);
+  \node[excol,above,font=\footnotesize] at (2.3,0.34) {arrondi \textbf{par défaut} (0–4)};
+  % zone excès
+  \draw[attncol,line width=2pt] (5.75,0.32) -- (10.35,0.32);
+  \node[attncol,above,font=\footnotesize] at (8.05,0.34) {arrondi \textbf{par excès} (5–9)};
+  \draw[densely dashed,black!50] (5.175,-0.55) -- (5.175,0.7);
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[arrondir à un nombre de \CS\ donné]
+\begin{center}\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{c c c c}
+\toprule
+\textbf{Nombre} & \textbf{À \dots \CS} & \textbf{Chiffre supprimé} & \textbf{Arrondi}\\
+\midrule
+$\num{3,148}$  & $3$ & $8\ (\ge5)$ & $\num{3,15}$ (par excès)\\
+$\num{3,142}$  & $3$ & $2\ (<5)$   & $\num{3,14}$ (par défaut)\\
+$\num{0,06237}$ & $2$ & $3\ (<5)$  & $\num{0,062}$\\
+$\num{124,7}$  & $3$ & $7\ (\ge5)$ & $\num{125}$\\
+$\num{2,996}$  & $3$ & $6\ (\ge5)$ & $\num{3,00}$ (retenue en cascade)\\
+\bottomrule
+\end{tabular}
+\end{center}
+La dernière ligne illustre une \textbf{retenue} : $\num{2,996}\to\num{3,00}$. Garder le \og $00$\fg{}
+est obligatoire pour conserver $3$ \CS.
+\end{exemple}
+
+\begin{exemple}[le volume d'un cube — un calcul, puis un arrondi]
+On veut le volume d'un cube d'arête $a=\qty{2{,}5}{\centi\metre}$, exprimé \emph{à 4 \CS}.
+\[ V=a^3=\num{2,5}\times\num{2,5}\times\num{2,5}=\qty{15,625}{\centi\metre\cubed}. \]
+Pour l'écrire à $4$ \CS, on supprime le chiffre $5$ (rang des millièmes) : comme $5\ge5$, on arrondit
+\emph{par excès} :
+\[ \boxed{V \approx \qty{15{,}63}{\centi\metre\cubed}}. \]
+\begin{remarque}
+Stricto sensu, l'arête $\num{2,5}$ n'ayant que $2$ \CS, la \emph{règle de multiplication}
+(\S\ref{sec:opmult}) imposerait un résultat à $2$ \CS, soit $\qty{16}{\centi\metre\cubed}$. L'énoncé
+demandant explicitement $4$ \CS, on se contente ici d'un exercice d'\emph{arrondi}. Retenez bien la
+différence entre \og arrondir à $n$ \CS\fg{} (mécanique) et \og donner le bon nombre de \CS\fg{}
+(qui dépend des données, cf.\ section suivante).
+\end{remarque}
+\end{exemple}
+
+\begin{attention}[n'arrondir qu'à la \emph{fin}]
+Dans un calcul à plusieurs étapes, on \textbf{garde des chiffres supplémentaires} (chiffres
+\emph{de garde}) à chaque étape intermédiaire et on n'arrondit qu'au \textbf{résultat final}. Arrondir
+trop tôt propage et amplifie l'erreur (\og erreur d'arrondi cumulée\fg{}).
+\end{attention}
+
+% =====================================================================
+\section{Les opérations avec chiffres significatifs}
+% =====================================================================
+Le résultat d'un calcul ne peut pas être \emph{plus précis} que les mesures dont il est issu. Deux
+règles distinctes s'appliquent : l'une pour l'addition/soustraction, l'autre pour la
+multiplication/division.
+
+\subsection{Addition et soustraction : on compte les \emph{décimales}}
+
+\begin{regle}[addition / soustraction]
+Le résultat d'une \textbf{addition} ou d'une \textbf{soustraction} s'arrondit au \emph{même nombre de
+décimales} (chiffres après la virgule) que la donnée qui en a le \textbf{moins}.
+\end{regle}
+
+\noindent\textbf{Pourquoi les décimales et non les \CS ?} Parce qu'une somme se fait \emph{rang par
+rang} : le rang le moins bien connu d'un des termes contamine ce même rang dans le résultat. C'est la
+position de la dernière décimale fiable qui compte, pas le nombre total de chiffres.
+
+\begin{exemple}[addition de trois volumes]
+On additionne trois volumes lus sur des instruments de précisions différentes :
+\[
+\begin{array}{r@{}l}
+  123{,}&25\quad(\text{2 décimales})\\
+   46{,}&0\phantom{0}\quad(\text{\textbf{1} décimale} \leftarrow \text{le moins précis})\\
+   86{,}&257\quad(\text{3 décimales})\\
+  \hline
+  255{,}&507
+\end{array}
+\]
+La donnée la moins précise ($\num{46,0}$) n'a qu'\textbf{une} décimale ; on arrondit donc le résultat
+à une décimale :
+\[ \boxed{\num{123,25}+\num{46,0}+\num{86,257} \approx \num{255,5}}. \]
+Inutile d'écrire $\num{255,507}$ : les chiffres $0$ et $7$ sont illusoires, car $\num{46,0}$ ignore
+déjà tout ce qui se passe au-delà du dixième.
+\end{exemple}
+
+\begin{exemple}[soustraction — perte de \CS]
+\[ \num{8,11} - \num{8,0} = \num{0,11}\ \xrightarrow{\text{1 décimale}}\ \num{0,1}. \]
+Les deux nombres avaient $3$ et $2$ \CS, mais la différence n'en a plus qu'\textbf{un} ! La
+soustraction de deux nombres voisins est une \emph{catastrophe} pour la précision (\og perte de
+chiffres significatifs\fg{}) : à éviter dès qu'on le peut en chimie analytique.
+\end{exemple}
+
+\subsection{Multiplication et division : on compte les \CS}
+\label{sec:opmult}
+
+\begin{regle}[multiplication / division]
+Le résultat d'une \textbf{multiplication} ou d'une \textbf{division} s'arrondit au \emph{même nombre de
+\CS} que la donnée qui en a le \textbf{moins}.
+\end{regle}
+
+\begin{exemple}[concentration massique de \ce{NO2} dans l'air]
+Une chimiste trouve $\qty{0,0361}{\milli\gram}$ de dioxyde d'azote \ce{NO2} dans un échantillon de
+$\qty{12,0}{\litre}$ d'air. On cherche la concentration $[\ce{NO2}]$ en \si{\gram\per\cubic\metre}.
+\[ [\ce{NO2}]=\frac{m}{V}=\frac{\qty{0,0361}{\milli\gram}}{\qty{12,0}{\litre}}
+   =\frac{\num{0,0361e-3}\ \si{\gram}}{\num{12,0e-3}\ \si{\cubic\metre}}. \]
+\textbf{Étape 1 — le calcul brut :}
+\[ [\ce{NO2}]=\frac{\num{0,0361e-3}}{\num{12,0e-3}}\ \si{\gram\per\cubic\metre}
+   =\num{0,00300833}\ \si{\gram\per\cubic\metre}=\num{3,00833e-3}\ \si{\gram\per\cubic\metre}. \]
+\textbf{Étape 2 — combien de \CS ?} La donnée la moins riche est $\qty{12,0}{\litre}$, avec $3$ \CS
+(autant que $\num{0,0361}$). On arrondit donc à $3$ \CS :
+\[ \boxed{[\ce{NO2}]\approx\num{3,01e-3}\ \si{\gram\per\cubic\metre}}. \]
+\textbf{Note d'unité.} On a utilisé $\qty{1}{\milli\gram}=\num{e-3}\,\si{\gram}$ et
+$\qty{1}{\litre}=\num{e-3}\,\si{\cubic\metre}$ (facteurs \emph{exacts}). La concentration d'un gaz
+dans l'air s'exprime couramment en \si{\gram\per\cubic\metre}.
+\end{exemple}
+
+\begin{exemple}[énergie de combustion par kilogramme]
+La combustion de $\qty{1}{\gram}$ d'essence libère $\num{4,307e4}\ \si{\joule}$ ($4$ \CS). Quelle est
+l'énergie libérée \emph{par kilogramme}, à $3$ \CS ?
+
+Comme $\qty{1}{\gram}=\num{e-3}\,\si{\kilo\gram}$ (facteur exact) :
+\[ \frac{\num{4,307e4}\ \si{\joule}}{\qty{1}{\gram}}
+   =\frac{\num{4,307e4}\ \si{\joule}}{\num{e-3}\ \si{\kilo\gram}}
+   =\num{4,307e7}\ \si{\joule\per\kilo\gram}. \]
+Arrondi à $3$ \CS\ (chiffre supprimé $7\ge5$, par excès) :
+\[ \boxed{\approx\num{4,31e7}\ \si{\joule\per\kilo\gram}}. \]
+\end{exemple}
+
+\begin{exemple}[solubilité — une règle de trois]
+On peut dissoudre au maximum $\qty{36}{\gram}$ de chlorure de sodium \ce{NaCl} dans $\qty{100}{\gram}$
+d'eau à $\qty{25}{\celsius}$. Quelle masse maximale de \ce{NaCl} se dissout dans $\qty{93,233}{\gram}$
+d'eau à la même température ? (résultat en \si{\kilo\gram}, à $4$ \CS).
+
+\textbf{Règle de trois.}
+\[
+\begin{array}{r c l}
+ \qty{36}{\gram}\ \text{de \ce{NaCl}} &\longleftrightarrow& \qty{100}{\gram}\ \text{d'eau}\\[2pt]
+ x\ \text{g de \ce{NaCl}}             &\longleftrightarrow& \qty{93,233}{\gram}\ \text{d'eau}
+\end{array}
+\qquad\Longrightarrow\qquad
+x=\frac{\num{36}\times\num{93,233}}{\num{100}}.
+\]
+\textbf{Calcul brut :}
+\[ x=\frac{\num{36}\times\num{93,233}}{\num{100}}=\frac{\num{3356,388}}{\num{100}}=\qty{33,56388}{\gram}. \]
+En kilogrammes et à $4$ \CS :
+\[ \boxed{x\approx\qty{0,03356}{\kilo\gram}=\num{3,356e-2}\ \si{\kilo\gram}}. \]
+\begin{remarque}
+L'énoncé impose $4$ \CS, on s'y plie. En toute rigueur cependant, $\qty{36}{\gram}$ n'a que $2$ \CS :
+la règle de multiplication limiterait alors le résultat à $2$ \CS\ ($\approx\qty{34}{\gram}$). Cet
+écart illustre l'importance d'écrire les données avec leur \emph{vraie} précision
+($\qty{36{,}00}{\gram}$ si elle est connue à $4$ \CS).
+\end{remarque}
+\end{exemple}
+
+\subsection{Calculs en chaîne et cas mixtes}
+
+\begin{methode}[un calcul mêlant $+$ et $\times$]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item effectuer le calcul \emph{en entier} sans arrondir, en gardant des chiffres de garde ;
+  \item appliquer la règle adaptée à \emph{chaque} type d'opération, dans l'ordre des étapes ;
+  \item arrondir \emph{une seule fois}, à la fin, au nombre de \CS\ (ou de décimales) imposé par
+        l'étape limitante.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[masse molaire et nombre de moles]
+La masse molaire de l'eau se calcule à partir de masses molaires atomiques
+$M(\ce{H})=\qty{1,008}{\gram\per\mole}$ et $M(\ce{O})=\qty{16,00}{\gram\per\mole}$. Les indices ($2$ et
+$1$) sont des nombres \emph{exacts} (comptage d'atomes) :
+\[ M(\ce{H2O}) = 2\times\num{1,008} + \num{16,00}
+   = \num{2,016} + \num{16,00} = \qty{18,016}{\gram\per\mole}. \]
+C'est une \emph{addition} : on garde le nombre de décimales du moins précis ($\num{16,00}$, deux
+décimales) $\Rightarrow M(\ce{H2O})\approx\qty{18,02}{\gram\per\mole}$.
+
+\medskip
+Combien de moles dans $m=\qty{9,00}{\gram}$ d'eau ? On \emph{divise} :
+\[ n=\frac{m}{M}=\frac{\qty{9,00}{\gram}}{\qty{18,02}{\gram\per\mole}}=\num{0,4994}\ldots\ \si{\mole}. \]
+Donnée la moins riche : $\qty{9,00}{\gram}$ ($3$ \CS) $\Rightarrow$
+$\boxed{n\approx\qty{0,499}{\mole}}$.
+\end{exemple}
+
+\subsection{Logarithmes et pH : un cas propre à la chimie}
+
+Le \textbf{pH} est défini par un logarithme décimal ; la règle des \CS\ y prend une forme
+particulière, indispensable en chimie des solutions.
+
+\begin{formule}[définition du pH]
+\[ \boxed{\;\mathrm{pH}=-\log_{10}\bigl([\ce{H3O+}]\bigr)\;} \]
+\begin{ou}
+  \item $\mathrm{pH}$ : grandeur \emph{sans unité} caractérisant l'acidité d'une solution ;
+  \item $[\ce{H3O+}]$ : concentration en ions oxonium, en \si{\mol\per\litre} ;
+  \item $\log_{10}$ : logarithme décimal (fonction réciproque de $10^{x}$).
+\end{ou}
+\end{formule}
+
+\begin{regle}[\CS\ d'un logarithme]
+Dans un $\log$, seuls les chiffres \emph{après la virgule} (la \og mantisse\fg{} décimale) sont
+significatifs ; la \emph{partie entière} ne fait que rappeler la puissance de dix. Donc :
+\[ \text{nombre de \emph{décimales} du pH} \;=\; \text{nombre de \CS\ de } [\ce{H3O+}]. \]
+\end{regle}
+
+\begin{exemple}[calculer un pH avec le bon nombre de décimales]
+Soit $[\ce{H3O+}]=\num{2,5e-4}\ \si{\mol\per\litre}$ : la concentration a \textbf{2} \CS.
+\[ \mathrm{pH}=-\log(\num{2,5e-4})=-(\log\num{2,5}+\log\num{e-4})
+   =-(0{,}39794\ldots-4)=3{,}60205\ldots \]
+La concentration ayant $2$ \CS, on garde \textbf{2 décimales} :
+\[ \boxed{\mathrm{pH}\approx 3{,}60}. \]
+Les deux décimales $\og 60\fg{}$ sont les \emph{seuls} chiffres significatifs ; le $\og 3\fg{}$ ne fait
+que situer l'ordre de grandeur ($10^{-4}$).
+\end{exemple}
+
+\begin{exemple}[sens inverse : de pH à concentration]
+Une solution a un $\mathrm{pH}=2{,}00$ (2 décimales). On remonte à la concentration :
+\[ [\ce{H3O+}]=10^{-\mathrm{pH}}=10^{-2,00}=\num{1,0e-2}\ \si{\mol\per\litre}. \]
+Les $2$ décimales du pH donnent $2$ \CS\ à la concentration : on écrit $\num{1,0e-2}$ et non
+$\num{1e-2}$.
+\end{exemple}
+
+% =====================================================================
+\section{Justesse, fidélité et incertitude}
+% =====================================================================
+Les \CS\ traduisent la \emph{précision} d'écriture d'un nombre. Mais une mesure peut être
+\emph{précise} sans être \emph{correcte}. Deux notions complémentaires permettent de qualifier la
+qualité d'une mesure.
+
+\begin{definition}[justesse et fidélité]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item la \textbf{justesse} (en anglais \emph{accuracy}) : proximité de la mesure à la \emph{vraie}
+        valeur. Une mesure juste n'est pas \og biaisée\fg{} ;
+  \item la \textbf{fidélité} (en anglais \emph{precision}) : proximité des mesures \emph{entre elles}
+        quand on répète l'expérience. Une mesure fidèle est \og reproductible\fg{}.
+\end{itemize}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8,
+   cible/.style={fill=primary},
+   anneaux/.pic={
+     \fill[red!12] (0,0) circle (1.5);
+     \fill[white]  (0,0) circle (1.0);
+     \fill[red!12] (0,0) circle (0.5);
+     \draw[black!60] (0,0) circle (1.5);
+     \draw[black!60] (0,0) circle (1.0);
+     \draw[black!60] (0,0) circle (0.5);
+     \fill[black!70] (0,0) circle (0.06);}]
+  % --- 1 : juste & fidèle (points groupés au centre) ---
+  \begin{scope}[xshift=0cm]
+     \pic{anneaux};
+     \fill[cible] (0,0) circle (0.09);
+     \fill[cible] (0.18,0.12) circle (0.09);
+     \fill[cible] (-0.12,0.16) circle (0.09);
+     \fill[cible] (0.1,-0.15) circle (0.09);
+     \node[below,align=center,font=\footnotesize] at (0,-1.95) {juste\\ \& fidèle};
+  \end{scope}
+  % --- 2 : fidèle mais non juste (points groupés, décentrés) ---
+  \begin{scope}[xshift=4.2cm]
+     \pic{anneaux};
+     \fill[cible] (1.0,0.9) circle (0.09);
+     \fill[cible] (1.18,1.05) circle (0.09);
+     \fill[cible] (0.86,1.0) circle (0.09);
+     \fill[cible] (1.05,0.78) circle (0.09);
+     \node[below,align=center,font=\footnotesize] at (0,-1.95) {fidèle\\ mais non juste};
+  \end{scope}
+  % --- 3 : juste mais non fidèle (points dispersés, centrés en moyenne) ---
+  \begin{scope}[xshift=8.4cm]
+     \pic{anneaux};
+     \fill[cible] (-0.9,0.3) circle (0.09);
+     \fill[cible] (0.8,-0.6) circle (0.09);
+     \fill[cible] (0.2,1.0) circle (0.09);
+     \fill[cible] (-0.4,-0.9) circle (0.09);
+     \node[below,align=center,font=\footnotesize] at (0,-1.95) {juste\\ mais non fidèle};
+  \end{scope}
+  % --- 4 : ni juste ni fidèle (dispersés et décentrés) ---
+  \begin{scope}[xshift=12.6cm]
+     \pic{anneaux};
+     \fill[cible] (0.9,1.0) circle (0.09);
+     \fill[cible] (1.3,0.6) circle (0.09);
+     \fill[cible] (-1.1,-0.4) circle (0.09);
+     \fill[cible] (0.4,-1.2) circle (0.09);
+     \node[below,align=center,font=\footnotesize] at (0,-1.95) {ni juste\\ ni fidèle};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\noindent Le \og centre de la cible\fg{} représente la vraie valeur ; chaque point est une mesure
+répétée. \textbf{Fidélité} = points serrés ; \textbf{justesse} = points centrés.
+
+\begin{remarque}
+Le nombre de \CS\ est une indication de \textbf{fidélité} (jusqu'où on sait répéter la lecture), pas de
+\textbf{justesse}. Une balance déréglée peut afficher $\qty{13{,}02}{\gram}$ ($4$ \CS, très \og précis\fg)
+tout en étant \emph{fausse} de $\qty{2}{\gram}$. Les \CS\ ne corrigent jamais un biais.
+\end{remarque}
+
+\subsection{Incertitude absolue et relative}
+
+\begin{definition}[incertitude absolue]
+L'\textbf{incertitude absolue} $\Delta x$ est l'\og épaisseur de doute\fg{} sur la mesure ; le résultat
+s'écrit $x=x_{\text{mes}}\pm\Delta x$, avec $\Delta x$ dans la même unité que $x$. Par convention, le
+dernier \cs\ écrit fixe l'ordre de l'incertitude.
+\end{definition}
+
+\begin{exemple}
+$m=\qty{13{,}02}{\gram}$ sous-entend $\Delta m=\qty{0,01}{\gram}$, donc
+$m=\qty{13{,}02\pm0{,}01}{\gram}$ : la vraie masse est entre $\qty{13{,}01}{}$ et $\qty{13{,}03}{\gram}$.
+\end{exemple}
+
+\begin{formule}[incertitude relative]
+\[ \boxed{\;\dfrac{\Delta x}{x}\;}\qquad\text{(sans unité, souvent en \%)} \]
+\begin{ou}
+  \item $\Delta x$ : incertitude absolue, même unité que $x$ ;
+  \item $x$ : valeur mesurée ;
+  \item $\dfrac{\Delta x}{x}$ : poids \emph{relatif} du doute, qui permet de comparer la qualité de
+        mesures de grandeurs différentes.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[précision relative d'une pesée]
+Pour $m=\qty{13{,}02\pm0{,}01}{\gram}$ :
+\[ \frac{\Delta m}{m}=\frac{\num{0,01}}{\num{13,02}}=\num{7,68e-4}\approx \qty{0,077}{\percent}. \]
+Une incertitude relative de l'ordre de $\qty{0,1}{\percent}$ correspond bien à une mesure à $4$ \CS :
+\emph{plus il y a de \CS, plus l'incertitude relative est faible}. À l'inverse, une mesure à $2$ \CS\
+a typiquement une incertitude relative de l'ordre de $1\%$.
+\end{exemple}
+
+\begin{theoreme}[lien \CS\ $\leftrightarrow$ incertitude relative]
+À $n$ \CS, l'incertitude relative est de l'ordre de $10^{-(n-1)}$ :
+\[ 2\ \text{CS}\sim 1\%,\qquad 3\ \text{CS}\sim 0{,}1\%,\qquad 4\ \text{CS}\sim 0{,}01\%. \]
+Le nombre de \CS\ est donc une \emph{lecture directe} de la précision relative d'une mesure.
+\end{theoreme}
+
+% =====================================================================
+\section{Synthèse}
+% =====================================================================
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,
+   title={\textsc{Mémo — compter les chiffres significatifs}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Tout chiffre non nul} compte \emph{toujours}.
+  \item \textbf{Zéros de tête} (à gauche du 1\textsuperscript{er} non nul) : \emph{jamais} significatifs.
+  \item \textbf{Zéros captifs} (entre deux non nuls) : \emph{toujours} significatifs.
+  \item \textbf{Zéros de queue après la virgule} : \emph{toujours} significatifs.
+  \item \textbf{Zéros de queue d'un entier} (sans virgule) : \emph{ambigus} $\to$ notation scientifique.
+  \item \textbf{Nombres exacts} (comptage, conversions) : \emph{infinité} de \CS, ne limitent rien.
+  \item \textbf{Le déplacement de la virgule} (changement d'unité) ne change \emph{jamais} le nombre de \CS.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=formulacol!6,colframe=formulacol,
+   title={\textsc{Mémo — opérations}}]
+\begin{center}\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.7cm} >{\raggedright\arraybackslash}p{3.5cm} >{\raggedright\arraybackslash}p{6.3cm}@{}}
+\toprule
+\textbf{Opération} & \textbf{On compte\dots} & \textbf{Le résultat a\dots}\\
+\midrule
+Addition / soustraction & les \emph{décimales} & le minimum de décimales des données\\
+Multiplication / division & les \emph{\CS} & le minimum de \CS\ des données\\
+Logarithme ($\mathrm{pH}$) & les \CS\ de l'argument & autant de \emph{décimales} qu'il y a de \CS\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Toujours :} calculer sans arrondir, puis arrondir \emph{une seule fois} à la fin.
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=defcol!5,colframe=defcol,
+   title={\textsc{Mémo — vocabulaire à ne pas confondre}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Chiffre certain} vs \textbf{chiffre incertain} (le dernier écrit, estimé).
+  \item \textbf{Chiffre significatif} vs \textbf{décimale} : on ne compte pas la même chose.
+  \item \textbf{Justesse} (proche du vrai) vs \textbf{fidélité} (mesures groupées).
+  \item \textbf{Incertitude absolue} $\Delta x$ (en unités) vs \textbf{relative} $\Delta x/x$ (en \%).
+\end{itemize}
+\end{tcolorbox}
+
+\vfill
+\begin{center}
+\textcolor{primary}{\rule{0.5\textwidth}{1pt}}\\[4pt]
+{\small\color{black!60}Fin de la Fiche 1 — Les chiffres significatifs.}
+\end{center}
+
+\end{document}

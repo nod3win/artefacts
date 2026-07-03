@@ -1,0 +1,96 @@
+% =====================================================================
+%  FICHE 8 — THÈME 4 — NIVEAU DIFFICILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\dS}{\Delta S}
+\newcommand{\dH}{\Delta H}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 4 : Entropie et deuxième principe}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile — corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=excol,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 4 — Entropie et deuxième principe}\\[1pt]{\small Niveau \textsc{Difficile} — corrigé détaillé}};
+\end{tikzpicture}
+\end{center}
+
+\begin{correction}[comparer l'ampleur du désordre]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item (i) apparition de gaz : $\dS>0$ ; (ii) $2\to1$ mol de gaz : $\dS<0$ ;
+        (iii) solide $\to$ gaz : $\dS>0$ ; (iv) gaz $\to$ solide : $\dS<0$ ;
+        (v) dissolution : $\dS>0$.
+  \item La plus grande \emph{augmentation} est \rep{(iii)} : passer d'un solide très ordonné directement
+        à un gaz est le saut de désordre le plus important (bien plus qu'ajouter une mole de gaz ou
+        disperser des ions).
+  \item La plus grande \emph{diminution} est \rep{(iv)} : condenser un gaz en solide ordonné détruit le
+        maximum de désordre (davantage que perdre une mole de gaz en (ii)).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[la poche de froid : endothermique mais spontanée]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item La poche \emph{refroidit} : la dissolution \textbf{absorbe} de la chaleur au milieu, elle est
+        \rep{endothermique}, donc \rep{$\dH>0$}.
+  \item Un solide ordonné se disperse en ions dans l'eau : le désordre augmente, \rep{$\dS_{\text{système}}>0$}.
+  \item Le sens spontané est celui pour lequel $\dS_{\text{univers}}>0$. Ici, la forte augmentation de
+        désordre du système ($\dS_{\text{système}}>0$) l'emporte : \rep{$\dS_{\text{univers}}>0$}, la
+        dissolution est donc spontanée \emph{bien qu'elle absorbe de l'énergie}.
+  \item En ne regardant que l'énergie, on prédirait \emph{à tort} que la réaction ne se produit pas
+        (puisqu'elle « coûte » de la chaleur). \rep{Le sens d'évolution n'est pas dicté par la seule
+        énergie} : le désordre (l'entropie) est un moteur à part entière.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[sublimation de la neige carbonique et principes]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Solide $\to$ gaz : \rep{$\dS_{\text{système}}>0$} (fort).
+  \item La sublimation est spontanée à température ambiante, donc \rep{$\dS_{\text{univers}}>0$}.
+  \item Le $\ce{CO2}$ \emph{solide} est un réseau cristallin ordonné (molécules quasi immobiles) ; le
+        $\ce{CO2}$ \emph{gazeux} est très désordonné (molécules libres, dispersées) : son entropie est
+        \rep{bien plus grande}.
+  \item Troisième principe : à $T=\SI{0}{\kelvin}$, l'entropie du cristal parfait est
+        \rep{$S=\SI{0}{\joule\per\mol\per\kelvin}$}. Ce « zéro » commun donne aux entropies une
+        \rep{valeur absolue}, alors que pour l'enthalpie on ne mesure que des \emph{variations} $\dH$
+        (pas de $H$ absolu).
+\end{enumerate}
+\end{correction}
+
+\end{document}

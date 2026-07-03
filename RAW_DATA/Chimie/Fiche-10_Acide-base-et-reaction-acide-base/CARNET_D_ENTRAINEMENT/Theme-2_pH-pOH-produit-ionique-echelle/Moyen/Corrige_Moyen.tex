@@ -1,0 +1,103 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{acidecol}{RGB}{205,60,45}
+\definecolor{basecol}{RGB}{40,110,200}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{corrbox}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{astuce}{boxbase,colback=attncol!6,colframe=attncol,sharp corners}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 10} — Thème 2 : pH, pOH, $K_e$}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- Corrigé Moyen}
+\end{center}
+
+\begin{corrbox}[compléter la ligne complète d'une solution]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\mathrm{pH} = -\log(2{,}0\times10^{-3}) = 3 - \log 2 \approx 3 - 0{,}30 = \mathbf{2{,}70}$.
+  \item $\mathrm{pOH} = 14 - 2{,}70 = \mathbf{11{,}30}$.
+  \item $[\ce{OH-}] = 10^{-11{,}30} \approx 5{,}0\times10^{-12}\ \si{mol.L^{-1}}$ (ou directement
+        $K_e/[\ce{H3O+}] = 10^{-14}/(2{,}0\times10^{-3}) = 5{,}0\times10^{-12}$).
+\end{enumerate}
+Comme $\mathrm{pH}=2{,}70<7$, la solution est \textcolor{acidecol}{\textbf{acide}}.
+\end{corrbox}
+
+\begin{corrbox}[le sang et le facteur 10]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=2pt]
+  \item L'écart de pH vaut $8{,}4-7{,}4 = 1$ unité, soit un facteur \textbf{10} sur $[\ce{H3O+}]$. Le sang
+        (pH plus bas) est le plus concentré en \ce{H3O+}.
+  \item $\dfrac{[\ce{H3O+}]_{\text{sang}}}{[\ce{H3O+}]_{\text{sol.}}}
+        = \dfrac{10^{-7{,}4}}{10^{-8{,}4}} = 10^{-7{,}4-(-8{,}4)} = 10^{1} = \mathbf{10}$.
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[l'estomac mille fois plus acide]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\Delta\mathrm{pH} = 6 - 3 = 3$ unités.
+  \item $[\ce{H3O+}]$ divisée par $10^{3} = \mathbf{1000}$ (le pH monte $\Rightarrow$ $[\ce{H3O+}]$ baisse).
+  \item Le milieu est devenu \textbf{moins acide}, exactement \textbf{1000 fois moins} concentré en \ce{H3O+}.
+        (Inversement, passer de pH 6 à pH 3 rendrait la solution 1000 fois plus acide.)
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[{$[\ce{H3O+}]$ monte, $[\ce{OH-}]$ descend}]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=2pt]
+  \item Comme $K_e=[\ce{H3O+}][\ce{OH-}]$ est constant à $T$ fixée, si $[\ce{H3O+}]$ augmente alors
+        $[\ce{OH-}]$ doit \textbf{diminuer} pour que le produit reste égal à $10^{-14}$.
+  \item $[\ce{OH-}] = \dfrac{10^{-14}}{10^{-3}} = 10^{-11}\ \si{mol.L^{-1}}$ (elle a bien chuté depuis
+        $10^{-7}$).
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[quand la température change le neutre]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=2pt]
+  \item $[\ce{H3O+}] = \sqrt{K_e} = \sqrt{4\times10^{-14}} = 2\times10^{-7}\ \si{mol.L^{-1}}$.
+  \item $\mathrm{pH}_{\text{neutre}} = -\log(2\times10^{-7}) = 7 - \log 2 \approx 7 - 0{,}30 = \mathbf{6{,}70}$.
+  \item À cette température, le neutre est à $6{,}70$. Une solution à $\mathrm{pH}=7$ a un pH \emph{supérieur}
+        au neutre : elle est donc \textbf{légèrement basique}. Cela illustre que « basique $\Leftrightarrow
+        \mathrm{pH}>7$ » n'est vrai qu'à \SI{25}{\celsius}.
+\end{enumerate}
+\end{corrbox}
+
+\begin{astuce}
+\textbf{Le réflexe « facteur 10 ».} Chaque fois qu'un énoncé demande « combien de fois plus/moins acide »,
+ne calculez pas les concentrations : prenez simplement $10^{\Delta\mathrm{pH}}$.
+\end{astuce}
+
+\end{document}

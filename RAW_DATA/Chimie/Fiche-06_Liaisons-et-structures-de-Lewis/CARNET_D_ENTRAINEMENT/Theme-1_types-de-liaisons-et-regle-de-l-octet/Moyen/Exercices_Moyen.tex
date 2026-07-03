@@ -1,0 +1,96 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 1
+%  Niveau MOYEN — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!5,colframe=primary,
+   title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 1} — Types de liaisons et octet}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Niveau Moyen}\\[2pt]
+{\small\itshape Chaque question isole une seule mécanique. Justifiez toujours brièvement.}
+\end{center}
+\medskip
+
+\begin{exo}[covalent ou ionique ?]
+Pour chaque composé, dire si la liaison mise en jeu est plutôt \textbf{ionique} ou
+\textbf{covalente}, et justifier en une ligne (nature des atomes : métal + non-métal, ou deux
+non-métaux) :
+\[ \ce{KBr}, \qquad \ce{CO2}, \qquad \ce{CaO}, \qquad \ce{Cl2}, \qquad \ce{HCl}, \qquad \ce{MgF2}. \]
+\end{exo}
+
+\begin{exo}[repérer le donneur d'une liaison dative]
+L'ion hydronium se forme selon \ce{H2O + H+ -> H3O+}.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item Quel atome apporte le doublet de la nouvelle liaison (le \emph{donneur}) ? Quel est
+        l'\emph{accepteur} ?
+  \item L'oxygène de l'eau porte 2 doublets non liants. Combien lui en reste-t-il dans \ce{H3O+} ?
+  \item Quel type de liaison est cette nouvelle liaison \ce{O-H} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[repérer les exceptions à l'octet]
+Parmi les composés \ce{IF5}, \;\ce{C2H4}, \;\ce{SiF4}, \;\ce{BF3}, indiquer ceux qui
+\textbf{n'obéissent pas} à la règle de l'octet. Pour chacun d'eux, préciser s'il s'agit d'un
+\textbf{octet étendu} (plus de 8 électrons) ou d'un \textbf{octet incomplet} (moins de 8).
+\end{exo}
+
+\begin{exo}[peut-il dépasser l'octet ?]
+Pour chaque atome \textbf{central} souligné, répondre par oui ou non à la question « peut-il
+s'entourer de plus de 8 électrons ? » et justifier par sa \textbf{période} :
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item \underline{\ce{N}} dans \ce{NF3} ;
+  \item \underline{\ce{P}} dans \ce{PF5} ;
+  \item \underline{\ce{S}} dans \ce{SF6} ;
+  \item \underline{\ce{Cl}} dans l'ion \ce{ClO4-}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[compter autour de l'atome central]
+Dans chaque cas, l'atome central forme uniquement des liaisons simples et ne porte aucun doublet
+non liant. Indiquer le nombre d'électrons qui l'entourent, puis conclure : octet
+\textbf{respecté}, \textbf{dépassé} ou \textbf{incomplet} ?
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item \ce{BF3} : le bore forme 3 liaisons ;
+  \item \ce{CH4} : le carbone forme 4 liaisons ;
+  \item \ce{PCl5} : le phosphore forme 5 liaisons.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,88 @@
+% =====================================================================
+%  FICHE 11 — THEME 1 — Exercices MOYEN — Le nombre d'oxydation
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+
+\newcounter{exo}
+\newtcolorbox{exo}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=primary!4,
+  colframe=primary,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Exercice~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Le nombre d'oxydation}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Niveau Moyen}\\[2pt]
+{\small\itshape Calcul du \NO\ dans des ions polyatomiques et des oxoanions. Pose toujours l'équation $\sum\NO=$ charge.}\\[-4pt]
+{\color{primary}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{exo}[le chrome dans deux espèces]
+Calcule le nombre d'oxydation du chrome :
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item dans le dichromate de potassium \ce{K2Cr2O7} (molécule neutre) ;
+  \item dans l'ion chromate \ce{CrO4^{2-}}.
+\end{enumerate}
+Le chrome a-t-il le même nombre d'oxydation dans ces deux espèces ?
+\end{exo}
+
+\begin{exo}[le manganèse dans toute sa gamme]
+Le manganèse est un élément « caméléon » du redox. Détermine son nombre d'oxydation dans :
+\[
+\ce{MnO4^-},\qquad \ce{Mn^{2+}},\qquad \ce{MnO2},\qquad \ce{Mn(s)},\qquad \ce{KMnO4}.
+\]
+Range ensuite ces cinq espèces par \NO(\ce{Mn}) croissant.
+\end{exo}
+
+\begin{exo}[l'azote sous plusieurs formes]
+Détermine le nombre d'oxydation de l'azote dans :
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item l'hydrazine \ce{N2H4} (molécule neutre) ;
+  \item l'ion nitrate \ce{NO3^-} ;
+  \item l'ion ammonium \ce{NH4+}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le soufre dans les oxoanions]
+Détermine le nombre d'oxydation (moyen) du soufre dans les trois anions suivants :
+\[
+\ce{SO4^{2-}},\qquad \ce{SO3^{2-}},\qquad \ce{S2O3^{2-}}\ (\text{thiosulfate}).
+\]
+\end{exo}
+
+\begin{exo}[une somme de deux nombres d'oxydation]
+On considère le carbone dans deux composés bien connus : le méthane \ce{CH4} et le dioxyde de carbone
+\ce{CO2}.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item Calcule $\NO(\ce{C})$ dans \ce{CH4}, puis dans \ce{CO2}.
+  \item Quelle est la valeur de la \textbf{somme} de ces deux nombres d'oxydation ?
+  \item En passant de \ce{CH4} à \ce{CO2}, le carbone est-il oxydé ou réduit ? (Justifie par la variation du \NO.)
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,88 @@
+% =====================================================================
+%  THÈME 5 — Rendement et bilan complet
+%  Niveau FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{corrcol}{RGB}{176,110,20}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 5 : Rendement}}
+\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement}\\[1pt]
+{\large\color{corrcol}\textbf{Corrigé — Niveau Facile}}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{cor}[rendement à partir de moles]
+\[
+R=\frac{n_{\text{réel}}}{n_{\text{théorique}}}\times100=\frac{0{,}080}{0{,}100}\times100=\boxed{\SI{80}{\percent}}.
+\]
+\end{cor}
+
+\begin{cor}[rendement à partir de masses]
+Comme $R=\dfrac{m_{\text{réel}}}{m_{\text{théorique}}}\times100$ (la masse molaire se simplifie) :
+\[
+R=\frac{36}{45}\times100=\boxed{\SI{80}{\percent}}.
+\]
+\end{cor}
+
+\begin{cor}[quantité réelle à partir du rendement]
+\[
+n_{\text{réel}}=\frac{R}{100}\times n_{\text{théorique}}=\frac{75}{100}\times2{,}0=\boxed{\SI{1,5}{\mole}}.
+\]
+\end{cor}
+
+\begin{cor}[masse réelle à partir du rendement]
+\[
+m_{\text{réel}}=\frac{R}{100}\times m_{\text{théorique}}=\frac{60}{100}\times50=\boxed{\SI{30}{\gram}}.
+\]
+\end{cor}
+
+\begin{cor}[vrai ou faux ? notion de rendement]
+\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Faux.} Par définition $n_{\text{réel}}\le n_{\text{théorique}}$, donc $R\le\SI{100}{\percent}$.
+        On ne peut pas obtenir plus que le maximum stœchiométrique.
+  \item \textbf{Faux.} L'excès permet seulement de consommer tout le limitant ; il n'agit pas sur les
+        pertes ni les réactions secondaires. Le rendement peut rester faible.
+  \item \textbf{Vrai.} $n_{\text{réel}}$ est une mesure expérimentale ; l'écart au théorique traduit
+        les imperfections réelles de la réaction.
+\end{enumerate}
+\end{cor}
+
+\end{document}

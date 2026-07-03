@@ -1,0 +1,108 @@
+% =====================================================================
+%  FICHE 8 — THÈME 5 — NIVEAU MOYEN — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+\newcommand{\oui}{\textcolor{excol}{\textbf{Oui}}}
+\newcommand{\non}{\textcolor{attncol}{\textbf{Non}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 5 : Équilibre chimique et Le Chatelier}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen — corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=excol,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 5 — Équilibre chimique et Le Chatelier}\\[1pt]{\small Niveau \textsc{Moyen} — corrigé détaillé}};
+\end{tikzpicture}
+\end{center}
+
+\begin{correction}[calculer $K$ à partir des concentrations]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $K = \dfrac{[\ce{PCl3}]\,[\ce{Cl2}]}{[\ce{PCl5}]}$ (chaque coefficient vaut $1$).
+  \item $K = \dfrac{1{,}40 \times 0{,}50}{0{,}40} = \dfrac{0{,}70}{0{,}40} = \rep{1{,}75}$.
+  \item $K = 1{,}75 > 1$ : l'équilibre est \emph{légèrement} déplacé vers les \rep{produits}.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[équilibre hétérogène en phase gazeuse]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Les solides $\ce{FeO}$ et $\ce{Fe}$ n'apparaissent pas : $K = \dfrac{p_{\ce{CO2}}}{p_{\ce{CO}}} = 0{,}4$.
+  \item Chaque molécule de $\ce{CO}$ consommée forme une molécule de $\ce{CO2}$ : le nombre total de moles
+        de gaz est conservé, donc $p_{\ce{CO}} + p_{\ce{CO2}} = \SI{1}{atm}$.
+  \item Avec $p_{\ce{CO2}}=x$ et $p_{\ce{CO}}=1-x$ :
+        \[ \frac{x}{1-x} = 0{,}4 \;\Rightarrow\; x = 0{,}4(1-x) \;\Rightarrow\; 1{,}4\,x = 0{,}4 \;\Rightarrow\;
+           x = \frac{0{,}4}{1{,}4} = \textcolor{primarydark}{\boldsymbol{\tfrac{2}{7}}\ \si{atm}} \approx \SI{0.29}{atm}. \]
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[réécrire l'équation change $K$]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Réaction inverse : $K' = \dfrac{1}{K} = \dfrac{1}{2} = \rep{0{,}5}$.
+  \item Coefficients $\times 3$ : $K' = K^3 = 2^3 = \rep{8}$.
+  \item Coefficients $\times \tfrac12$ : $K' = K^{1/2} = \sqrt{2} \approx \rep{1{,}41}$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[procédé de contact — améliorer le rendement]
+Réaction exothermique ; gauche $=3$ mol de gaz, droite $=2$ mol.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Ajout d'$\ce{O2}$ (réactif) : consommé $\to$ droite. \oui
+  \item Abaisser $T$ : la réaction est exothermique, baisser $T$ déplace vers les produits. \oui
+  \item Augmenter $p$ : vers le côté à moins de gaz ($2<3$), soit la droite. \oui
+  \item Catalyseur : n'agit que sur la cinétique, pas sur le rendement. \non
+  \item Argon à volume constant : ne change pas les pressions partielles. \non
+\end{enumerate}
+\emph{Compromis industriel :} baisser $T$ améliore le rendement mais ralentit la réaction ; en pratique on
+choisit une $T$ modérée \emph{plus} un catalyseur.
+\end{correction}
+
+\begin{correction}[décomposition endothermique en récipient fermé]
+Endothermique ; gauche $=0$ mol de gaz, droite $=1$ mol ($\ce{CO2}$).
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item (i) $T\nearrow$ : sens endothermique $\to$ droite. \oui \quad
+        (ii) ouvrir : $[\ce{CO2}]\searrow$, le système en reforme $\to$ droite. \oui \quad
+        (iii) ajouter $\ce{BaCO3}(s)$ : solide pur, aucun effet. \non \\
+        (iv) $p\nearrow$ : vers le côté à moins de gaz (la gauche, $0$ mol) $\to$ gauche. \non \quad
+        (v) ajouter $\ce{CO2}$ (produit) $\to$ gauche. \non
+  \item Réaction endothermique : augmenter $T$ \rep{augmente} $K$.
+\end{enumerate}
+\end{correction}
+
+\end{document}

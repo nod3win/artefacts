@@ -1,0 +1,1355 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 9
+%  Solubilité et produit de solubilité
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières)
+%               ou  latexmk -pdf Cours_Fiche-09_Solubilite-et-produit-de-solubilite.tex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités & chimie ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+% unité usuelle de concentration molaire (la mole par litre)
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}   % formules chimiques : \ce{AgCl}, \ce{Fe(OH)3}...
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (mauve = couleur de la section Chimie du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{150,98,162}      % mauve (couleur du livre — Chimie)
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+% --- couleurs spécifiques « solubilité » ---
+\definecolor{cationcol}{RGB}{0,90,190}      % bleu   — cations
+\definecolor{anioncol}{RGB}{200,60,55}      % rouge  — anions
+\definecolor{cristalcol}{RGB}{110,105,120}  % gris   — solide cristallin
+\definecolor{eaucol}{RGB}{120,180,220}      % bleu clair — solvant (eau)
+\definecolor{solcol}{RGB}{0,135,90}         % vert   — solubilité s
+\definecolor{kpscol}{RGB}{198,93,9}         % orange — produit de solubilité
+\definecolor{qcol}{RGB}{120,94,200}         % violet — quotient Q
+\definecolor{precipcol}{RGB}{110,70,40}     % brun   — précipité
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}   % concentration d'une espèce
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Solubilité et produit de solubilité}\\[6pt]
+   {\large\bfseries Dissolution des composés ioniques, $K_{\mathrm{ps}}$, précipitation}};
+\end{tikzpicture}
+
+\vspace{0.3cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,9}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : cristal + dissolution + équilibre ---
+\begin{tikzpicture}[scale=1.0]
+  % bécher
+  \draw[thick] (-4,0) -- (-4,3) -- (-3.2,3) -- (-3.2,0);
+  \draw[thick] (4,0) -- (4,3) -- (3.2,3) -- (3.2,0);
+  \draw[thick,line width=1.4pt] (-4.5,0) -- (4.5,0);
+  % eau
+  \fill[eaucol!25] (-4,0.1) rectangle (4,2.9);
+  \draw[eaucol!70!black,thick] (-4,2.9) -- (4,2.9);
+  % cristal au fond
+  \begin{scope}
+    \clip (-4,0.1) rectangle (4,2.9);
+    \foreach \x in {-2.2,-1.4,-0.6,0.2,1.0,1.8}{
+      \foreach \y in {0.35,0.85}{
+        \node[crx] at (\x,\y) {};}
+      \node[crx] at (\x,0.6) {};}
+  \end{scope}
+  \node[font=\scriptsize,cristalcol!30!black] at (-0.2,1.55) {\ce{AgCl(s)}};
+  % ions libres en solution
+  \foreach \x/\y in {-3.3/2.2,-2.8/1.7,2.9/1.4,3.5/2.3,2.5/2.6,3.3/0.9}{
+     \node[cat,scale=0.7] at (\x,\y) {$+$};}
+  \foreach \x/\y in {-3.5/1.3,-2.5/2.4,2.7/2.0,3.1/1.7,2.4/1.2,-3.0/1.9}{
+     \node[an,scale=0.7] at (\x,\y) {$-$};}
+  % flèches équilibre
+  \draw[->,>=Stealth,kpscol,thick] (-1.5,1.0) .. controls (-0.5,2.2) .. (1.2,2.3)
+       node[midway,above,kpscol,font=\scriptsize]{dissolution};
+  \draw[->,>=Stealth,precipcol,thick] (1.6,2.3) .. controls (0.5,1.2) .. (-1.1,1.0)
+       node[midway,below,precipcol,font=\scriptsize]{précipitation};
+  % équation
+  \node[primarydark,font=\large] at (0,-0.7)
+     {$\ce{AgCl(s) <=> Ag^{+}(aq) + Cl^{-}(aq)}$};
+  \node[kpscol,font=\small] at (0,-1.25)
+     {$K_{\mathrm{ps}}=\Ce{Ag^{+}}\Ce{Cl^{-}}$};
+\end{tikzpicture}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item décrire la \textbf{dissolution} d'un composé ionique et écrire son \textbf{équation de dissolution} ;
+  \item définir la \textbf{solubilité} $s$ (molaire et massique) et convertir entre les deux ;
+  \item écrire le \textbf{produit de solubilité} $\Kps$ et le relier à $s$ selon la \textbf{stœchiométrie} ;
+  \item utiliser le \textbf{quotient réactionnel} $Q$ pour prévoir une \textbf{précipitation} ;
+  \item exploiter l'\textbf{effet d'ion commun} pour déplacer l'équilibre de solubilité ;
+  \item décrire l'\textbf{influence du pH} sur la solubilité (hydroxydes, sels d'acides faibles).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 9 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Dissolution d'un composé ionique dans l'eau}
+% =====================================================================
+Certaines substances, lorsqu'on les plonge dans l'eau, semblent « disparaître » : le sel de table
+\ce{NaCl} se dissout, le sucre aussi. D'autres, comme le sable \ce{SiO2}, restent intacts. La fiche
+qui commence ici s'intéresse aux composés \textbf{ioniques} — les \emph{sels} — et à la façon dont
+l'eau parvient (ou non) à les désagréger en ions. C'est le point de départ de toute la chimie des
+solutions, des précipitations, des dosages et même de la \emph{formation des calculs rénaux}
+(voir l'exemple sur l'oxalate de calcium).
+
+\subsection{Soluté, solvant, solution : le vocabulaire de base}
+
+\begin{definition}[solution, soluté, solvant]
+Une \textbf{solution} est un mélange \emph{homogène} (d'une seule phase) obtenu en dissolvant une
+substance, le \textbf{soluté}, dans un \textbf{solvant} (le plus souvent l'eau, que l'on note $(aq)$
+pour \emph{aqueux}). Le soluté peut être :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{moléculaire} (le sucre \ce{C12H22O11} reste sous forme de molécules intactes dans l'eau) ;
+  \item \textbf{ionique} (le sel \ce{NaCl} se sépare en ions \ce{Na+} et \ce{Cl-}).
+\end{itemize}
+\end{definition}
+
+\begin{definition}[électrolyte]
+Un \textbf{électrolyte} est une substance qui, dissoute dans l'eau, libère des \textbf{ions} : la
+solution conduit alors le courant électrique. Un composé ionique (\ce{NaCl}, \ce{AgCl},
+\ce{CaCO3}, \dots) est toujours un électrolyte. À l'inverse, une solution de sucre — qui ne contient
+pas d'ions — \emph{ne conduit pas} le courant : c'est un \textbf{non-électrolyte}.
+\end{definition}
+
+\subsection{Le mécanisme microscopique : comment l'eau « casse » le cristal}
+
+Pour comprendre la dissolution, il faut se rappeler que l'eau est une molécule \textbf{polaire} :
+l'atome d'oxygène porte une charge partielle négative $\delta^-$, les hydrogènes une charge partielle
+positive $\delta^+$. Lorsqu'on plonge un cristal ionique dans l'eau, les molécules d'eau viennent
+s'orienter autour des ions de surface : les pôles $\delta^-$ attirent les cations, les pôles $\delta^+$
+attirent les anions. Cet \emph{enveloppement} par les molécules d'eau s'appelle la
+\textbf{solvatation} (ou \emph{hydration} lorsque le solvant est l'eau). Les ions arrachés au réseau
+cristallin partent seuls dans la solution, entourés de leur « cage » de molécules d'eau.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % réseau cristallin (à gauche)
+  \node[primarydark,font=\small\bfseries] at (-3.6,2.7) {Cristal ionique solide};
+  \foreach \x in {0,1,2,3}{
+    \foreach \y in {0,1,2}{
+      \pgfmathsetmacro{\xx}{-4.8+\x*0.7}
+      \pgfmathsetmacro{\yy}{-0.5+\y*0.7}
+      \pgfmathtruncatemacro{\pair}{mod(\x+\y,2)}
+      \ifnum\pair=0
+        \node[cat] at (\xx,\yy) {$+$};
+      \else
+        \node[an] at (\xx,\yy) {$-$};
+      \fi
+    }
+  }
+  \draw[thick,cristalcol] (-5,0.1) rectangle (-2.2,2.0);
+  % flèche "dissolution"
+  \draw[->,>=Stealth,kpscol,thick,line width=1.4pt] (-2.0,1.0) -- (-0.4,1.0)
+       node[midway,above,kpscol,font=\scriptsize]{\ce{H2O}};
+  \node[kpscol,font=\scriptsize] at (-1.2,0.7){dissolution};
+  % ions hydratés (à droite)
+  \node[primarydark,font=\small\bfseries] at (2.6,2.7) {Ions hydratés en solution};
+  \draw[thick,eaucol!70!black] (0,0.1) rectangle (5.4,2.0);
+  \fill[eaucol!20] (0,0.1) rectangle (5.4,2.0);
+  % cation entouré de molécules d'eau
+  \node[cat] at (1.4,1.2) {$+$};
+  \foreach \a in {0,60,...,300}{
+     \draw[eaucol!80!black,thin] ($(1.4,1.2)+(\a:0.45)$) circle (0.12);}
+  % anion entouré
+  \node[an] at (3.2,1.4) {$-$};
+  \foreach \a in {30,90,...,330}{
+     \draw[eaucol!80!black,thin] ($(3.2,1.4)+(\a:0.45)$) circle (0.12);}
+  % autres ions libres
+  \node[cat,scale=0.75] at (4.4,0.7) {$+$};
+  \node[an,scale=0.75] at (2.2,0.6) {$-$};
+  \foreach \a in {20,100,...,300}{
+     \draw[eaucol!80!black,thin] ($(2.2,0.6)+(\a:0.32)$) circle (0.09);}
+  % légende
+  \node[font=\scriptsize,eaucol!50!black] at (4.8,1.7) {\ce{H2O}};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}
+La dissolution n'est \emph{jamais} complète : si l'on ajoute beaucoup de sel dans peu d'eau, une partie
+du sel reste solide au fond du récipient. On dit que la solution est \textbf{saturée}. La quantité
+maximale de soluté que l'on peut dissoudre est précisément la \textbf{solubilité}, notion centrale de
+cette fiche.
+\end{remarque}
+
+% =====================================================================
+\subsection{Équation de dissolution}
+% =====================================================================
+
+\begin{definition}[équation de dissolution]
+L'\textbf{équation de dissolution} décrit la séparation d'un composé ionique solide en ses ions
+hydratés. Pour un sel binaire de formule $\mathrm{M}_p\mathrm{X}_q$ (cation $\mathrm{M}^{q+}$,
+anion $\mathrm{X}^{p-}$), elle s'écrit :
+\[ \boxed{\,\ce{M_{p}X_{q}(s) <=> p\,M^{q+}(aq) + q\,X^{p-}(aq)}\,} \]
+Le solide est noté $(s)$, les ions aqueux $(aq)$. Les coefficients $p$ et $q$ sont les
+\textbf{indices stœchiométriques} de la formule du sel.
+\end{definition}
+
+\begin{attention}[ne pas oublier les coefficients !]
+C'est l'erreur la plus fréquente : \ce{Ag3PO4} ne se dissout pas en $\Ce{Ag3PO4}$, mais en
+\textbf{3} ions \ce{Ag+} et \textbf{1} ion \ce{PO4^{3-}} :
+\[ \ce{Ag3PO4(s) <=> 3 Ag^{+}(aq) + PO4^{3-}(aq)}. \]
+Le coefficient $3$ devant \ce{Ag+} est \emph{essentiel} : il intervient dans le produit de solubilité
+sous forme d'exposant (voir la section 3).
+\end{attention}
+
+\begin{exemple}[écriture de quelques équations de dissolution]
+Écrivons l'équation de dissolution des sels les plus courants :
+
+\smallskip
+\begin{center}\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l l l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Sel} & \textbf{Équation de dissolution} & \textbf{Type}\\
+\midrule
+Chlorure d'argent & $\ce{AgCl(s) <=> Ag^{+}(aq) + Cl^{-}(aq)}$ & $1{:}1$\\
+Carbonate de calcium & $\ce{CaCO3(s) <=> Ca^{2+}(aq) + CO3^{2-}(aq)}$ & $1{:}1$\\
+Bromure de plomb(II) & $\ce{PbBr2(s) <=> Pb^{2+}(aq) + 2 Br^{-}(aq)}$ & $1{:}2$\\
+Fluorure de calcium & $\ce{CaF2(s) <=> Ca^{2+}(aq) + 2 F^{-}(aq)}$ & $1{:}2$\\
+Hydroxyde de fer(III) & $\ce{Fe(OH)3(s) <=> Fe^{3+}(aq) + 3 OH^{-}(aq)}$ & $1{:}3$\\
+Phosphate d'argent & $\ce{Ag3PO4(s) <=> 3 Ag^{+}(aq) + PO4^{3-}(aq)}$ & $3{:}1$\\
+Phosphate de calcium & $\ce{Ca3(PO4)2(s) <=> 3 Ca^{2+}(aq) + 2 PO4^{3-}(aq)}$ & $3{:}2$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+Le « type » $p{:}q$ (cation$:$anion) indique combien d'ions de chaque sorte sont libérés par
+\textbf{une} unité de sel dissous. Il conditionne entièrement la forme de l'expression du produit de
+solubilité : c'est ce que l'on va établir plus loin.
+\end{exemple}
+
+% =====================================================================
+\section{La solubilité \texorpdfstring{$s$}{s}}
+% =====================================================================
+La \textbf{solubilité} est la grandeur qui mesure « combien » d'un composé on peut dissoudre. Elle est
+le pendant, côté macroscopique, de la dissolution microscopique décrite précédemment.
+
+\subsection{Définition de la solubilité}
+
+\begin{definition}[solubilité]
+La \textbf{solubilité} $s$ d'un composé est le nombre \textbf{maximal} de moles de ce composé que l'on
+peut dissoudre dans \textbf{un litre} de solution, à une température donnée, pour obtenir une solution
+\textbf{saturée}.
+\end{definition}
+
+\begin{ou}
+  \item $s$ : la solubilité (molaire), en \textbf{moles par litre} ($\si{\mole\per\litre}$, soit
+        $\si{\molar}$) ;
+  \item « maximale » : au-delà de $s$, le composé ne se dissout plus, il s'accumule sous forme solide
+        (précipité) au fond du récipient ;
+  \item la solubilité dépend de la \textbf{température} : il faut toujours la préciser.
+\end{ou}
+
+\begin{remarque}[concentration des ions à saturation]
+Une fois l'équilibre de dissolution atteint dans l'eau pure, la concentration des ions est
+\emph{fixée} par la solubilité $s$ et par la stœchiométrie. Pour un sel de type
+$\mathrm{M}_p\mathrm{X}_q$ :
+\[ [\mathrm{M}^{q+}] = p\,s \qquad\text{et}\qquad [\mathrm{X}^{p-}] = q\,s. \]
+Ainsi pour \ce{PbBr2} ($p=1$, $q=2$) : $[\ce{Pb^{2+}}]=s$ et $[\ce{Br-}]=2s$. Ce point est crucial pour
+exprimer le $\Kps$ en fonction de $s$ (section suivante).
+\end{remarque}
+
+\subsection{Solubilité molaire et solubilité massique}
+
+\begin{definition}[solubilité massique]
+La \textbf{solubilité massique} $s_m$ est la masse \textbf{maximale} de soluté dissoute par litre de
+solution. Elle s'exprime en \textbf{grammes par litre} ($\si{\gram\per\litre}$). Elle est reliée à la
+solubilité molaire par la masse molaire $M$ du composé.
+\end{definition}
+
+\begin{formule}[passage molaire $\leftrightarrow$ massique]
+\[ \boxed{\,s_m = s \times M\,} \qquad\Longleftrightarrow\qquad
+   \boxed{\,s = \dfrac{s_m}{M}\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $s_m$ : la solubilité massique, en \si{\gram\per\litre} ;
+  \item $s$ : la solubilité molaire, en \si{\mole\per\litre} ($\si{\molar}$) ;
+  \item $M$ : la masse molaire du sel dissous, en \si{\gram\per\mole}.
+\end{ou}
+
+\noindent\textbf{Astuce mnémotechnique.} La solubilité massique est celle que l'on mesure à la balance
+(en \si{\gram}); la solubilité molaire est celle que l'on utilise dans les calculs (en \si{\mole}).
+On passe de l'une à l'autre par $M$, exactement comme pour les concentrations (Fiche 4).
+
+\begin{exemple}[conversion de la solubilité massique en molaire : \ce{PbBr2}]
+La solubilité massique du bromure de plomb \ce{PbBr2} dans l'eau pure à \qty{25}{\degreeCelsius} vaut
+$s_m=\qty{4{,}84}{\gram\per\litre}$. Calculons sa solubilité molaire.
+
+\smallskip
+\textbf{Étape 1 — masse molaire de \ce{PbBr2}.}
+\[ M(\ce{PbBr2}) = M(\ce{Pb}) + 2\,M(\ce{Br}) = 207{,}2 + 2\times 79{,}9
+   = \qty{367{,}0}{\gram\per\mole}. \]
+
+\textbf{Étape 2 — conversion.}
+\[ s = \dfrac{s_m}{M} = \dfrac{\qty{4{,}84}{\gram\per\litre}}{\qty{367{,}0}{\gram\per\mole}}
+     = \qty{1{,}32e-2}{\mole\per\litre} = \qty{1{,}32e-2}{\molar}. \]
+
+\textbf{Interprétation.} Un litre d'eau saturée en \ce{PbBr2} contient
+$\qty{1{,}32e-2}{\mole}$ de sel dissous, soit la masse $\qty{4{,}84}{\gram}$ mesurée. Cette valeur de
+$s$ nous servira pour calculer le $\Kps$ dans la section suivante.
+\end{exemple}
+
+\subsection{Composés solubles, peu solubles, insolubles}
+
+Toute la chimie de cette fiche porte sur les sels \textbf{peu solubles} : ce sont ceux dont la
+solubilité est si faible qu'on ne peut pas les dissoudre en quantité notable, mais dont la
+\emph{fraction} dissoute est précisément quantifiée par le $\Kps$. Le tableau ci-dessous fixe les
+ordres de grandeur.
+
+\begin{center}\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l l l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Dénomination} & \textbf{Solubilité $s$} & \textbf{Exemples}\\
+\midrule
+très soluble   & $s > \qty{e-1}{\molar}$  & \ce{NaCl}, \ce{KNO3}, \ce{sucre}\\
+soluble        & $\qty{e-3}{\molar} < s < \qty{e-1}{\molar}$ & \ce{CaSO4}\\
+peu soluble    & $\qty{e-6}{\molar} < s < \qty{e-3}{\molar}$ & \ce{Ca(OH)2}, \ce{CaC2O4}\\
+très peu soluble (insoluble) & $s < \qty{e-6}{\molar}$ & \ce{AgCl}, \ce{BaSO4}, \ce{Fe(OH)3}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}[« Insoluble » ne veut pas dire « zéro » !]
+Même \ce{AgCl}, réputé « insoluble », libère une \emph{infime} quantité d'ions ($s \approx
+\qty{1{,}3e-5}{\molar}$). Cette quantité, bien que microscopique, est \textbf{mesurable} et obéit à une
+loi précise : c'est elle qui fait l'objet du $\Kps$. On ne dit donc jamais qu'un sel « ne se dissout
+pas du tout » : il se dissout toujours \emph{un peu}, et le $\Kps$ quantifie ce \emph{un peu}.
+\end{attention}
+
+% =====================================================================
+\section{Le produit de solubilité \texorpdfstring{$\Kps$}{Kps}}
+% =====================================================================
+Le produit de solubilité est la \textbf{constante d'équilibre} associée à l'équation de dissolution.
+Comme toute constante d'équilibre, il caractérise l'état de \textbf{saturation} et permet de prévoir
+si un sel va précipiter ou non.
+
+\subsection{Activité et convention sur le solide}
+
+Avant d'écrire la constante d'équilibre, il faut une convention indispensable.
+
+\begin{definition}[activité d'un solide pur]
+L'\textbf{activité} d'une espèce est sa « concentration efficace » telle qu'elle intervient dans la
+loi d'action de masse. Pour un \textbf{solide pur} (\ce{AgCl(s)}, \ce{NaCl(s)}, \dots) ou un
+\textbf{liquide pur} (l'eau solvant), l'activité vaut \textbf{1} par convention.
+\end{definition}
+
+\begin{remarque}[pourquoi 1 ?]
+L'activité d'un solide ne dépend pas de sa quantité : que l'on ait $\qty{1}{\milli\gram}$ ou
+$\qty{1}{\kilo\gram}$ de \ce{AgCl} solide, sa contribution à l'équilibre est la même — seul compte ce
+qui est \emph{dissous}. C'est pourquoi on « élimine » le solide de l'expression du $\Kps$ en lui
+attribuant l'activité 1.
+\end{remarque}
+
+\subsection{Définition du produit de solubilité}
+
+\begin{definition}[produit de solubilité]
+Soit un composé ionique $\mathrm{M}_p\mathrm{X}_q$ se dissolvant selon
+\[ \ce{M_{p}X_{q}(s) <=> p\,M^{q+}(aq) + q\,X^{p-}(aq)}. \]
+Le \textbf{produit de solubilité} $\Kps$ est la constante d'équilibre de cette réaction, définie par
+le \textbf{produit des concentrations des ions} à saturation, chacune élevée à sa stœchiométrie :
+\[ \boxed{\,\Kps = [\mathrm{M}^{q+}]^{p}\,[\mathrm{X}^{p-}]^{q}\,} \]
+\end{definition}
+
+\begin{ou}
+  \item $\Kps$ : le produit de solubilité, nombre \textbf{sans dimension} (constante d'équilibre) ;
+  \item $[\mathrm{M}^{q+}]$ : concentration molaire du cation à saturation, en \si{\mole\per\litre} ;
+  \item $[\mathrm{X}^{p-}]$ : concentration molaire de l'anion à saturation, en \si{\mole\per\litre} ;
+  \item $p$ et $q$ : les coefficients stœchiométriques de l'équation de dissolution.
+\end{ou}
+
+\begin{attention}[$\Kps$ sans unité !]
+Bien que les concentrations s'expriment en \si{\mole\per\litre}, le produit de solubilité est une
+\textbf{constante d'équilibre} : il est donc \textbf{sans unité} (les unités sont formellement divisées
+par la concentration standard). On écrit par exemple $\Kps(\ce{AgCl})=\num{1{,}8e-10}$ sans unité.
+\end{attention}
+
+\subsection{Cas général : la formule du livre pour \texorpdfstring{$MX_n$}{MXn}}
+
+\begin{theoreme}[produit de solubilité d'un sel $MX_n$]
+Pour un sel de forme $\mathrm{MX}_n$ (un cation, $n$ anions), par exemple \ce{AgCl} ($n=1$),
+\ce{PbBr2} ($n=2$), \ce{Fe(OH)3} ($n=3$), l'équation de dissolution est
+\[ \ce{MX_{n}(s) <=> M^{n+}(aq) + n\,X^{-}(aq)}, \]
+et le produit de solubilité s'écrit simplement :
+\[ \boxed{\,\Kps(\mathrm{MX}_n) = [\mathrm{M}^{n+}]\,[\mathrm{X}^{-}]^{n}\,} \]
+\end{theoreme}
+
+\noindent C'est exactement la formule donnée par la synthèse de la Fiche 9 du livre. On l'applique
+immédiatement aux exemples les plus courants :
+
+\begin{exemple}[expression de $\Kps$ pour plusieurs sels]
+Donnons l'expression littérale du produit de solubilité pour différents sels, à partir de leur
+équation de dissolution :
+
+\smallskip
+\begin{center}\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{l l l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Sel} & \textbf{Équation de dissolution} & \textbf{Expression de $\Kps$}\\
+\midrule
+\ce{Ag3PO4}  & $\ce{Ag3PO4(s) <=> 3 Ag^{+} + PO4^{3-}}$ & $\Kps = [\ce{Ag+}]^{3}[\ce{PO4^{3-}}]$\\
+\ce{Fe(OH)3} & $\ce{Fe(OH)3(s) <=> Fe^{3+} + 3 OH^{-}}$ & $\Kps = [\ce{Fe^{3+}}][\ce{OH-}]^{3}$\\
+\ce{CaCO3}   & $\ce{CaCO3(s) <=> Ca^{2+} + CO3^{2-}}$ & $\Kps = [\ce{Ca^{2+}}][\ce{CO3^{2-}}]$\\
+\ce{PbBr2}   & $\ce{PbBr2(s) <=> Pb^{2+} + 2 Br^{-}}$ & $\Kps = [\ce{Pb^{2+}}][\ce{Br-}]^{2}$\\
+\ce{Mn(OH)2} & $\ce{Mn(OH)2(s) <=> Mn^{2+} + 2 OH^{-}}$ & $\Kps = [\ce{Mn^{2+}}][\ce{OH-}]^{2}$\\
+\ce{AgCl}    & $\ce{AgCl(s) <=> Ag^{+} + Cl^{-}}$ & $\Kps = [\ce{Ag+}][\ce{Cl-}]$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+On voit apparaître la \textbf{règle d'or} : \emph{l'exposant de chaque ion dans $\Kps$ est égal à son
+coefficient dans l'équation de dissolution}. Écrire correctement cette équation est donc la moitié du
+travail.
+\end{exemple}
+
+% =====================================================================
+\section{Relation entre \texorpdfstring{$\Kps$}{Kps} et solubilité \texorpdfstring{$s$}{s}}
+% =====================================================================
+Le $\Kps$ et la solubilité $s$ décrivent le \emph{même} état de saturation, sous deux angles
+différents : $s$ est un \textbf{nombre maximal de moles dissoutes}, $\Kps$ est un \textbf{produit de
+concentrations}. Les relier passe par un \emph{tableau d'avancement} de la dissolution.
+
+\subsection{Méthode : le tableau d'avancement de la dissolution}
+
+\begin{methode}[exprimer $\Kps$ en fonction de $s$]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Écrire} l'équation de dissolution avec les coefficients $p$ et $q$.
+  \item \textbf{Construire} le tableau d'avancement en notant $s$ la quantité de sel qui se dissout
+        (par litre) ; les concentrations à l'équilibre deviennent alors $[\mathrm{M}^{q+}]=p\,s$ et
+        $[\mathrm{X}^{p-}]=q\,s$.
+  \item \textbf{Reporter} ces concentrations dans l'expression de $\Kps$.
+  \item \textbf{Simplifier} pour obtenir $\Kps$ en fonction de $s$ uniquement.
+\end{enumerate}
+\end{methode}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % tableau d'avancement de dissolution
+  \node[font=\small\bfseries,primarydark] at (0,0)
+    {Tableau d'avancement de la dissolution de $\mathrm{M}_p\mathrm{X}_q$};
+  \node[anchor=north west,font=\footnotesize] at (-6.6,-0.6) {%
+    \begin{tabular}{|l|c|c|c|}
+      \hline
+      \rowcolor{primary!15}
+      & $\ce{M_{p}X_{q}(s)}$ & $p\,\ce{M^{q+}(aq)}$ & $q\,\ce{X^{p-}(aq)}$\\
+      \hline
+      État initial     & excès  & $0$        & $0$\\
+      \hline
+      À l'équilibre    & excès  & $\boldsymbol{p\,s}$  & $\boldsymbol{q\,s}$\\
+      \hline
+    \end{tabular}};
+\end{tikzpicture}
+\end{center}
+
+\noindent En reportant dans $\Kps = [\mathrm{M}^{q+}]^{p}[\mathrm{X}^{p-}]^{q}$ :
+\begin{equation}
+\boxed{\;\Kps = (p\,s)^{p}\,(q\,s)^{q} = p^{\,p}\,q^{\,q}\;s^{\,p+q}\;}
+\label{eq:Kpss}
+\end{equation}
+Cette formule \emph{générale} donne $\Kps$ en fonction de $s$ pour \emph{n'importe quel} sel
+$\mathrm{M}_p\mathrm{X}_q$.
+
+\subsection{Tableau récapitulatif par type de sel}
+
+\begin{center}\renewcommand{\arraystretch}{1.5}\small
+\begin{tabular}{c c c c c}
+\toprule
+\rowcolor{primary!12}
+\textbf{Type} & \textbf{$p,\ q$} & \textbf{Exemples} & \textbf{$\Kps$ en fonction de $s$} & \textbf{$s$ en fonction de $\Kps$}\\
+\midrule
+$1{:}1$ & $p=1,\ q=1$ & \ce{AgCl}, \ce{CaCO3}, \ce{SnS}     & $\Kps = s^{2}$            & $s=\sqrt{\Kps}$\\
+$1{:}2$ & $p=1,\ q=2$ & \ce{PbBr2}, \ce{CaF2}, \ce{Mn(OH)2} & $\Kps = 4\,s^{3}$         & $s=\sqrt[3]{\Kps/4}$\\
+$2{:}1$ & $p=2,\ q=1$ & \ce{Ag2SO4}, \ce{Ag2CrO4}           & $\Kps = 4\,s^{3}$         & $s=\sqrt[3]{\Kps/4}$\\
+$1{:}3$ & $p=1,\ q=3$ & \ce{Fe(OH)3}, \ce{Al(OH)3}          & $\Kps = 27\,s^{4}$        & $s=\sqrt[4]{\Kps/27}$\\
+$3{:}1$ & $p=3,\ q=1$ & \ce{Ag3PO4}                         & $\Kps = 27\,s^{4}$        & $s=\sqrt[4]{\Kps/27}$\\
+$3{:}2$ & $p=3,\ q=2$ & \ce{Ca3(PO4)2}, \ce{Ba3(PO4)2}      & $\Kps = 108\,s^{5}$       & $s=\sqrt[5]{\Kps/108}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remarque}[détail du calcul pour les types $1{:}3$ et $3{:}1$]
+Pour \ce{Fe(OH)3} ($1{:}3$, $p=1$, $q=3$) : à l'équilibre $[\ce{Fe^{3+}}]=s$ et
+$[\ce{OH-}]=3s$, donc
+\[ \Kps = (s)^{1}(3s)^{3} = s\times 27\,s^{3} = 27\,s^{4}. \]
+Pour \ce{Ag3PO4} ($3{:}1$, $p=3$, $q=1$) : à l'équilibre $[\ce{Ag+}]=3s$ et
+$[\ce{PO4^{3-}}]=s$, donc
+\[ \Kps = (3s)^{3}(s)^{1} = 27\,s^{3}\times s = 27\,s^{4}. \]
+On retrouve bien le même facteur $27$ pour les deux types, comme le confirme le tableau.
+\end{remarque}
+
+\begin{attention}[ne pas comparer directement des $\Kps$ de types différents !]
+Pour des sels de \textbf{même type} (par exemple tous $1{:}1$), un $\Kps$ plus petit signifie bien un
+sel moins soluble. Mais \textbf{entre types différents}, la comparaison directe des $\Kps$ est
+trompeuse : il faut repasser par $s$. Par exemple, $\Kps(\ce{AgCl})=\num{1{,}8e-10}$ ($1{:}1$) donne
+$s=\sqrt{\num{1{,}8e-10}}=\qty{1{,}3e-5}{\molar}$, alors que
+$\Kps(\ce{Ag2CrO4})=\num{1{,}1e-12}$ ($2{:}1$, plus petit !) donne
+$s=\sqrt[3]{\num{1{,}1e-12}/4}=\qty{6{,}5e-5}{\molar}$, soit \textbf{plus} soluble que \ce{AgCl}.
+\end{attention}
+
+\subsection{Exemples détaillés de calcul \texorpdfstring{$\Kps \leftrightarrow s$}{Kps <-> s}}
+
+\begin{exemple}[$\Kps$ de \ce{Ag3PO4} : type $3{:}1$]
+On demande l'expression du produit de solubilité du phosphate d'argent \ce{Ag3PO4} dans l'eau pure à
+\qty{25}{\degreeCelsius}.
+
+\smallskip
+\textbf{Étape 1 — équation de dissolution.}
+\[ \ce{Ag3PO4(s) <=> 3 Ag^{+}(aq) + PO4^{3-}(aq)} \]
+
+\textbf{Étape 2 — concentrations à l'équilibre.} On note $s$ la solubilité molaire. Une « unité » de
+sel libère \textbf{3} ions \ce{Ag+} et \textbf{1} ion \ce{PO4^{3-}} :
+\[ [\ce{Ag+}] = 3\,s, \qquad [\ce{PO4^{3-}}] = s. \]
+
+\textbf{Étape 3 — produit de solubilité.}
+\[ \Kps = [\ce{Ag+}]^{3}\,[\ce{PO4^{3-}}]^{1} = (3s)^{3}\,(s) = 27\,s^{3}\times s = \boxed{\,27\,s^{4}\,}. \]
+
+\textbf{Interprétation.} Même sans connaître la valeur numérique de $s$, on a établi la \emph{forme}
+de la relation : $\Kps=27\,s^{4}$. Cette dépendance en $s^{4}$ (et non $s^{2}$ comme pour un $1{:}1$)
+vient de la présence du coefficient $3$ devant \ce{Ag+}.
+\end{exemple}
+
+\begin{exemple}[$\Kps$ de \ce{Fe(OH)3} : type $1{:}3$]
+L'hydroxyde de fer(III) \ce{Fe(OH)3} est un hydroxyde très peu soluble (il précipite dès que l'eau
+devient basique). Quelle est l'expression de son $\Kps$ en fonction de $s$ ?
+
+\smallskip
+\textbf{Étape 1 — équation de dissolution.}
+\[ \ce{Fe(OH)3(s) <=> Fe^{3+}(aq) + 3 OH^{-}(aq)} \]
+
+\textbf{Étape 2 — concentrations à l'équilibre.}
+\[ [\ce{Fe^{3+}}] = s, \qquad [\ce{OH-}] = 3\,s. \]
+
+\textbf{Étape 3 — produit de solubilité.}
+\[ \Kps = [\ce{Fe^{3+}}]\,[\ce{OH-}]^{3} = (s)\,(3s)^{3} = s\times 27\,s^{3} = \boxed{\,27\,s^{4}\,}. \]
+
+\textbf{Interprétation.} On retrouve la même expression $27\,s^{4}$ que pour \ce{Ag3PO4}, ce qui est
+logique : \ce{Fe(OH)3} et \ce{Ag3PO4} sont tous deux de type \textbf{$1{:}3$} (ou $3{:}1$), avec un
+cation et un anion dont l'un porte le coefficient $3$.
+\end{exemple}
+
+\begin{exemple}[$\Kps$ de \ce{CaCO3} : type $1{:}1$]
+Le carbonate de calcium \ce{CaCO3} est le constituant principal du calcaire et des coquillages.
+
+\smallskip
+\textbf{Équation de dissolution.}
+\[ \ce{CaCO3(s) <=> Ca^{2+}(aq) + CO3^{2-}(aq)} \]
+
+\textbf{Concentrations à l'équilibre.} Type $1{:}1$, donc $[\ce{Ca^{2+}}]=s$ et
+$[\ce{CO3^{2-}}]=s$.
+
+\textbf{Produit de solubilité.}
+\[ \Kps = [\ce{Ca^{2+}}]\,[\ce{CO3^{2-}}] = s\times s = \boxed{\,s^{2}\,}. \]
+
+\textbf{Interprétation.} Pour tous les sels $1{:}1$, le $\Kps$ est simplement le carré de la
+solubilité. C'est la relation la plus simple : $\Kps=s^{2}\ \Leftrightarrow\ s=\sqrt{\Kps}$.
+\end{exemple}
+
+\begin{exemple}[$\Kps$ de \ce{PbBr2} : type $1{:}2$ avec solubilité massique]
+Le bromure de plomb \ce{PbBr2} a une solubilité \emph{massique} $s_m=\qty{4{,}84}{\gram\per\litre}$ à
+\qty{25}{\degreeCelsius}. Calculons son $\Kps$.
+
+\smallskip
+\textbf{Étape 1 — équation de dissolution.}
+\[ \ce{PbBr2(s) <=> Pb^{2+}(aq) + 2 Br^{-}(aq)} \]
+
+\textbf{Étape 2 — $\Kps$ en fonction de $s$ (molaire).} Type $1{:}2$ :
+\[ \Kps = [\ce{Pb^{2+}}][\ce{Br-}]^{2} = (s)(2s)^{2} = 4\,s^{3}. \]
+
+\textbf{Étape 3 — conversion massique $\to$ molaire.} On a vu plus haut
+$s = s_m/M = \qty{1{,}32e-2}{\molar}$.
+
+\textbf{Étape 4 — application numérique.}
+\[ \Kps = 4\,s^{3} = 4\times(\num{1{,}32e-2})^{3} = 4\times\num{2{,}30e-6}
+        \approx \num{9{,}2e-6}. \]
+
+\textbf{Forme littérale (alternative).} Sans faire le calcul numérique, en gardant $s_m$ :
+\[ \Kps = 4\left(\dfrac{s_m}{M}\right)^{3}
+        = 4\left(\dfrac{\qty{4{,}84}{\gram\per\litre}}{\qty{367{,}0}{\gram\per\mole}}\right)^{3}. \]
+C'est exactement la forme que demande le QCM n°4 du livre.
+\end{exemple}
+
+\begin{exemple}[$\Kps$ de \ce{Mn(OH)2} avec une concentration imposée]
+On considère une solution saturée d'hydroxyde de manganèse \ce{Mn(OH)2}. On suppose connue la
+concentration en ions \ce{Mn^{2+}} : $[\ce{Mn^{2+}}]=x/2$ (en \si{\mole\per\litre}). Exprimer le
+$\Kps$ en fonction de $x$.
+
+\smallskip
+\textbf{Étape 1 — équation.}
+\[ \ce{Mn(OH)2(s) <=> Mn^{2+}(aq) + 2 OH^{-}(aq)} \]
+
+\textbf{Étape 2 — repérer la solubilité.} La concentration $[\ce{Mn^{2+}}]$ est la solubilité $s$ :
+\[ s = [\ce{Mn^{2+}}] = \dfrac{x}{2}. \]
+
+\textbf{Étape 3 — concentration de l'autre ion.} D'après la stœchiométrie,
+$[\ce{OH-}] = 2\,s = 2\times\dfrac{x}{2} = x$.
+
+\textbf{Étape 4 — $\Kps$.}
+\[ \Kps = [\ce{Mn^{2+}}]\,[\ce{OH-}]^{2}
+        = \left(\dfrac{x}{2}\right)(x)^{2}
+        = \dfrac{x^{3}}{2}. \]
+
+\textbf{Interprétation.} La forme $\Kps=x^{3}/2$ est cohérente avec le type $1{:}2$
+($\Kps=4\,s^{3}=4(x/2)^{3}=x^{3}/2$). Cet exemple montre comment le $\Kps$ se laisse reformuler
+selon la grandeur imposée par l'énoncé.
+\end{exemple}
+
+\begin{exemple}[comparaison de phosphates : type $3{:}2$]
+On dispose de quatre phosphates peu solubles : \ce{Ba3(PO4)2}, \ce{Ca3(PO4)2}, \ce{Sr3(PO4)2} et
+\ce{Pb3(PO4)2}. On place \textbf{1 mole} de chacun dans \textbf{1 litre} d'eau pure à \qty{25}{\degreeCelsius}.
+Lequel donne la solution la plus concentrée en ions \ce{PO4^{3-}} ?
+
+\smallskip
+\textbf{Étape 1 — équation commune.} Tous ces sels sont de type $3{:}2$ :
+\[ \ce{M3(PO4)2(s) <=> 3 M^{2+}(aq) + 2 PO4^{3-}(aq)}. \]
+
+\textbf{Étape 2 — concentrations à l'équilibre.}
+\[ [\ce{M^{2+}}] = 3\,s, \qquad [\ce{PO4^{3-}}] = 2\,s. \]
+
+\textbf{Étape 3 — $\Kps$ en fonction de $s$.}
+\[ \Kps = [\ce{M^{2+}}]^{3}[\ce{PO4^{3-}}]^{2} = (3s)^{3}(2s)^{2}
+        = 27\,s^{3}\times 4\,s^{2} = \boxed{\,108\,s^{5}\,}. \]
+
+\textbf{Étape 4 — comparaison.} Tous les sels ayant la \textbf{même} équation $\Kps=108\,s^{5}$,
+la solubilité $s$ est une fonction \textbf{croissante monotone} de $\Kps$ :
+\[ s = \sqrt[5]{\dfrac{\Kps}{108}}. \]
+Plus $\Kps$ est grand, plus $s$ est grand, et plus $[\ce{PO4^{3-}}]=2s$ est grand.
+
+\smallskip
+Données du livre :
+\begin{center}\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Sel} & \textbf{$\Kps$} & \textbf{$[\ce{PO4^{3-}}]=2s$}\\
+\midrule
+\ce{Pb3(PO4)2} & $\num{1{,}0e-54}$ & le plus petit\\
+\ce{Ba3(PO4)2} & $\num{6{,}0e-39}$ & $\dots$\\
+\ce{Ca3(PO4)2} & $\num{1{,}3e-32}$ & $\dots$\\
+\ce{Sr3(PO4)2} & $\num{1{,}0e-31}$ & \textbf{le plus grand}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Conclusion.} Le \ce{Sr3(PO4)2}, qui a le $\Kps$ le plus \textbf{élevé}, est aussi le plus
+\textbf{soluble}, et libère donc le plus d'ions \ce{PO4^{3-}} dans la solution. Ici les quatre sels
+étant de même type, on peut comparer directement leurs $\Kps$.
+\end{exemple}
+
+% =====================================================================
+\section{Saturation, non-saturation et précipitation : \texorpdfstring{$Q$}{Q} vs \texorpdfstring{$\Kps$}{Kps}}
+% =====================================================================
+Le $\Kps$ caractérise l'\emph{équilibre} (état saturé). Mais que se passe-t-il si l'on mélange des
+ions dans des proportions \emph{quelconques} ? Va-t-il se former un précipité, ou tout va-t-il rester
+dissous ? La réponse passe par un second outil : le \textbf{quotient réactionnel} $Q$.
+
+\subsection{Le quotient réactionnel}
+
+\begin{definition}[quotient réactionnel $Q$]
+Le \textbf{quotient réactionnel} $Q$ (ou \emph{produit ionique}) est construit exactement comme le
+$\Kps$, mais avec les concentrations \textbf{effectives} des ions dans le mélange — pas forcément à
+l'équilibre. Pour $\mathrm{M}_p\mathrm{X}_q$ :
+\[ \boxed{\,Q = [\mathrm{M}^{q+}]_{\text{actuel}}^{\,p}\;[\mathrm{X}^{p-}]_{\text{actuel}}^{\,q}\,} \]
+\end{definition}
+
+\begin{ou}
+  \item $Q$ : le quotient réactionnel, sans dimension (comme $\Kps$) ;
+  \item $[\mathrm{M}^{q+}]_{\text{actuel}}$, $[\mathrm{X}^{p-}]_{\text{actuel}}$ : les concentrations
+        \emph{mesurées} dans le mélange, à l'instant où l'on se pose la question, en \si{\mole\per\litre} ;
+  \item les exposants $p,q$ sont les mêmes que dans le $\Kps$.
+\end{ou}
+
+\begin{remarque}[différence subtile entre $Q$ et $\Kps$]
+$\Kps$ et $Q$ ont la \textbf{même expression littérale}, mais des \textbf{significations opposées} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item $\Kps$ est une \textbf{constante} (valeur de référence à une température donnée, lue dans une
+        table) ;
+  \item $Q$ est une \textbf{variable} qui dépend des concentrations que l'on a \emph{réellement} dans
+        la solution à l'instant $t$.
+\end{itemize}
+Comparer $Q$ à $\Kps$ permet de prévoir l'évolution du système.
+\end{remarque}
+
+\subsection{Le critère de précipitation}
+
+\begin{theoreme}[règle de comparaison $Q$ / $\Kps$]
+Soit un mélange quelconque d'ions susceptibles de former le sel $\mathrm{M}_p\mathrm{X}_q$. En
+comparant $Q$ à $\Kps$ :
+\begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{$Q < \Kps$} : la solution est \textbf{non saturée}. Aucun précipité ne se forme ; si
+        l'on ajoute du solide, il continue de se dissoudre jusqu'à atteindre $Q=\Kps$.
+  \item \textbf{$Q = \Kps$} : la solution est \textbf{exactement saturée} (à l'équilibre). Le solide
+        coexiste avec la solution, en équilibre dynamique.
+  \item \textbf{$Q > \Kps$} : la solution est \textbf{sursaturée}. Un \textbf{précipité se forme} :
+        les ions s'associent en solide jusqu'à ce que $Q$ redescende à la valeur $\Kps$.
+\end{itemize}
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % axe Q
+  \draw[thick,->,>=Stealth] (-0.3,0) -- (13,0) node[right,font=\small]{$Q$};
+  % zone non saturé
+  \fill[solcol!18] (0,0) rectangle (5,1.4);
+  \node[solcol!40!black,font=\small\bfseries] at (2.5,0.7) {Non saturé};
+  \node[solcol!40!black,font=\scriptsize] at (2.5,0.3) {$Q<\Kps$ — pas de précipité};
+  % zone saturé (point Kps)
+  \draw[thick,kpscol,line width=1.5pt] (5,0) -- (5,1.4);
+  \node[kpscol,font=\small\bfseries] at (5,1.8) {$\Kps$};
+  \node[kpscol!50!black,font=\scriptsize,align=center] at (5,-0.5) {saturation\\ exacte};
+  % zone sursaturé
+  \fill[precipcol!22] (5.05,0) rectangle (12.5,1.4);
+  \node[precipcol!40!black,font=\small\bfseries] at (8.8,0.7) {Sursaturé};
+  \node[precipcol!40!black,font=\scriptsize] at (8.8,0.3) {$Q>\Kps$ — précipitation};
+  % flèche évolution (décalées pour éviter le chevauchement des libellés)
+  \draw[->,>=Stealth,solcol,thick] (1.2,-1.4) -- (4.4,-1.4)
+       node[midway,below,solcol!40!black,font=\scriptsize]{dissolution};
+  \draw[->,>=Stealth,precipcol,thick] (8.8,-1.4) -- (5.6,-1.4)
+       node[midway,below,precipcol!40!black,font=\scriptsize]{précipitation};
+  % grains de précipité (petits losanges)
+  \foreach \x/\y in {7/2.1,8/2.3,9/2.0,10/2.4,11/2.1,9.5/2.5}{
+    \fill[precipcol] (\x,\y) -- ++(0.18,0.1) -- ++(0.18,-0.1) -- ++(-0.18,-0.1) -- cycle;}
+  \node[precipcol!50!black,font=\scriptsize] at (9,2.9) {ions $\to$ précipité solide};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[décider s'il y a précipitation]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item Repérer le sel susceptible de se former et \textbf{écrire son $\Kps$}.
+  \item Calculer le \textbf{quotient $Q$} avec les concentrations effectives du mélange.
+  \item \textbf{Comparer} : $Q<\Kps$ (non saturé), $Q=\Kps$ (saturé), $Q>\Kps$ (précipitation).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[solution de \ce{SnS} : est-elle saturée ?]
+On considère une solution aqueuse de sulfure d'étain \ce{SnS} dont la concentration en ions
+\ce{Sn^{2+}} est $[\ce{Sn^{2+}}]=\qty{1{,}0e-19}{\mole\per\litre}$. On donne
+$\Kps(\ce{SnS})=\num{1{,}0e-26}$ à \qty{25}{\degreeCelsius}. Cette solution est-elle saturée ?
+
+\smallskip
+\textbf{Étape 1 — équation de dissolution de \ce{SnS}.}
+\[ \ce{SnS(s) <=> Sn^{2+}(aq) + S^{2-}(aq)} \quad\text{(type $1{:}1$, donc $\Kps=s^{2}$)} \]
+
+\textbf{Étape 2 — solubilité à saturation.} Si la solution était \emph{exactement} saturée, on aurait
+$s=\sqrt{\Kps}$, soit
+\[ s_{\text{sat}} = \sqrt{\num{1{,}0e-26}} = \num{1{,}0e-13}\ \si{\mole\per\litre}. \]
+Autrement dit, à saturation $[\ce{Sn^{2+}}]=\qty{1{,}0e-13}{\molar}$.
+
+\textbf{Étape 3 — comparaison.} La concentration réelle $[\ce{Sn^{2+}}]=\qty{1{,}0e-19}{\molar}$ est
+\textbf{très inférieure} à $s_{\text{sat}}=\qty{1{,}0e-13}{\molar}$ : la solution est
+\textbf{non saturée} (elle contient beaucoup moins d'ions qu'elle ne pourrait en accepter à
+saturation).
+
+\textbf{Avec le quotient $Q$.} Même conclusion par le calcul direct :
+$Q=[\ce{Sn^{2+}}][\ce{S^{2-}}]=\bigl(\num{1{,}0e-19}\bigr)^{2}=\num{1{,}0e-38} \ll \Kps=\num{1{,}0e-26}$,
+donc $Q<\Kps$ : non saturée.
+
+\textbf{Interprétation.} Si l'on plonge du \ce{SnS} solide dans cette solution, il continuera de se
+dissoudre jusqu'à atteindre la saturation $[\ce{Sn^{2+}}]=\qty{1{,}0e-13}{\molar}$.
+\end{exemple}
+
+\begin{exemple}[précipitation de \ce{Mg(OH)2} dans l'eau de mer]
+Le magnésium est extrait de l'eau de mer par précipitation de son hydroxyde \ce{Mg(OH)2}, dont le
+$\Kps=\num{9{,}0e-12}$ à \qty{298}{\kelvin}. Dans l'eau de mer, $[\ce{Mg^{2+}}]=\qty{0{,}06}{\molar}$.
+Si l'on ajuste la concentration en ions hydroxyde à $[\ce{OH-}]=\qty{2{,}0e-3}{\molar}$, la
+précipitation est-elle complète ?
+
+\smallskip
+\textbf{Étape 1 — équation de dissolution.}
+\[ \ce{Mg(OH)2(s) <=> Mg^{2+}(aq) + 2 OH^{-}(aq)} \]
+
+\textbf{Étape 2 — quotient $Q$.} Avec les concentrations effectives :
+\[ Q = [\ce{Mg^{2+}}]\,[\ce{OH-}]^{2}
+     = (0{,}06)\,(2{,}0\times 10^{-3})^{2}
+     = 0{,}06 \times 4{,}0\times 10^{-6}
+     = \num{2{,}4e-7}. \]
+
+\textbf{Étape 3 — comparaison.}
+\[ Q = \num{2{,}4e-7} \quad\text{et}\quad \Kps = \num{9{,}0e-12}. \]
+Comme $Q \gg \Kps$ (par un facteur $\sim 27\,000$), la solution est \textbf{largement sursaturée} :
+la précipitation de \ce{Mg(OH)2} se produit, et elle est \textbf{complète} (les ions \ce{Mg^{2+}} et
+\ce{OH-} s'associent en solide jusqu'à ce que $Q$ redescende à $\Kps$).
+
+\textbf{Interprétation industrielle.} C'est exactement le procédé utilisé pour récupérer le magnésium
+de l'eau de mer : on ajoute de la chaux \ce{Ca(OH)2}, qui libère des \ce{OH-}, et tout le magnésium
+précipite sous forme d'hydroxyde \ce{Mg(OH)2} solide, facile à filtrer.
+\end{exemple}
+
+% =====================================================================
+\section{L'effet d'ion commun}
+% =====================================================================
+Jusqu'ici, on a dissous les sels dans l'\textbf{eau pure}, où les seuls ions présents venaient du sel
+lui-même. Mais en pratique, on dissout souvent un sel dans une solution qui \emph{contient déjà} l'un
+de ses ions (apporté par un autre sel). C'est l'\textbf{effet d'ion commun} : la présence d'un ion
+déjà présent déplace l'équilibre et \emph{diminue} la solubilité.
+
+\subsection{Énoncé de l'effet d'ion commun}
+
+\begin{theoreme}[effet d'ion commun]
+Lorsqu'on dissout un sel peu soluble dans une solution qui contient déjà l'un de ses ions (à une
+concentration notable), la \textbf{solubilité du sel diminue}. C'est une conséquence directe du
+principe de Le Chatelier : l'équilibre de dissolution se déplace dans le sens qui « consomme » l'ion
+ajouté, c'est-à-dire vers la formation du solide.
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % état initial : AgCl dans eau pure
+  \node[font=\small\bfseries,primarydark] at (0,3.2) {\ce{AgCl} dans eau pure};
+  \draw[thick] (-2,0) rectangle (2,2.6);
+  \fill[eaucol!20] (-2,0) rectangle (2,2.6);
+  % quelque Ag+ et Cl-
+  \foreach \x/\y in {-1.4/2.0,-0.6/1.4,0.8/2.1,1.5/1.0}{
+    \node[cat,scale=0.6] at (\x,\y){$+$};}
+  \foreach \x/\y in {-1.0/1.0,0.4/2.2,1.1/1.7,1.7/2.0}{
+    \node[an,scale=0.6] at (\x,\y){$-$};}
+  % cristal au fond
+  \foreach \x in {-1.4,-0.7,0,0.7,1.4}{
+    \node[crx,scale=0.6] at (\x,0.25){};}
+  \node[font=\scriptsize] at (0,-0.4) {$s_{0}=\sqrt{\Kps}\approx\qty{1{,}3e-5}{\molar}$};
+
+  % flèche
+  \draw[->,>=Stealth,primary,line width=1.3pt] (2.3,1.3) -- (4.0,1.3)
+       node[midway,above,primary,font=\scriptsize,align=center]{ajout d'ion commun\\\ce{Cl^{-}}};
+  % état final : AgCl + NaCl
+  \node[font=\small\bfseries,primarydark] at (6.3,3.2) {\ce{AgCl} + \ce{NaCl}};
+  \draw[thick] (4.3,0) rectangle (8.3,2.6);
+  \fill[eaucol!20] (4.3,0) rectangle (8.3,2.6);
+  % beaucoup de Cl-
+  \foreach \x/\y in {4.7/2.0,5.0/1.2,5.6/2.2,6.0/1.5,6.4/2.1,6.8/1.2,7.2/2.0,7.6/1.6,8.0/2.2,4.9/1.7,6.2/0.8,7.4/0.9}{
+    \node[an,scale=0.6] at (\x,\y){$-$};}
+  % peu de Ag+
+  \foreach \x/\y in {5.2/1.9,7.0/1.4}{
+    \node[cat,scale=0.6] at (\x,\y){$+$};}
+  % cristal plus gros
+  \foreach \x in {4.7,5.3,5.9,6.5,7.1,7.7}{
+    \node[crx,scale=0.6] at (\x,0.25){};}
+  \node[font=\scriptsize] at (6.3,-0.4) {$s'\ll s_{0}$ \textbf{(solubilité réduite)}};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Quantifier l'effet d'ion commun}
+
+\begin{formule}[solubilité en présence d'un ion commun]
+Si l'on dissout un sel $\mathrm{MX}_n$ dans une solution qui contient déjà l'anion $\mathrm{X}^{-}$ à
+la concentration $C$ (grand $C \gg s$), alors le $\Kps$ s'écrit
+\[ \Kps = [\mathrm{M}^{n+}]\,[\mathrm{X}^{-}]^{n} \approx s'\,C^{\,n}, \]
+puisque l'anion est quasi entièrement apporté par la solution. La nouvelle solubilité vaut donc
+\[ \boxed{\,s' = \dfrac{\Kps}{C^{\,n}}\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $s'$ : la nouvelle solubilité du sel en présence de l'ion commun, en \si{\mole\per\litre} ;
+  \item $\Kps$ : le produit de solubilité du sel (sans dimension) ;
+  \item $C$ : la concentration (imposée, grande) de l'ion commun dans la solution, en \si{\mole\per\litre} ;
+  \item $n$ : le nombre d'ions $\mathrm{X}^{-}$ par unité de sel dissous.
+\end{ou}
+
+\begin{remarque}[hypothèse simplificatrice]
+La formule $s'=\Kps/C^{\,n}$ suppose que l'ion commun est \textbf{essentiellement} apporté par la
+solution ($C\gg s'$). C'est presque toujours le cas en pratique : on ajoute délibérément un excès
+d'ion commun pour « chasser » le sel en solution.
+\end{remarque}
+
+\begin{exemple}[effet d'ion commun sur \ce{AgCl} par ajout de \ce{Cl-}]
+On dispose d'une solution saturée de chlorure d'argent \ce{AgCl}, pour laquelle
+$\Kps=\num{1{,}8e-10}$. On y ajoute des ions chlorure jusqu'à ce que la concentration en \ce{Cl-} à
+l'équilibre soit $[\ce{Cl-}]=\qty{0{,}10}{\molar}$. Quelle est la nouvelle solubilité de \ce{AgCl} ?
+
+\smallskip
+\textbf{Étape 1 — solubilité dans l'eau pure (rappel).}
+\[ s_{0} = [\ce{Ag+}] = [\ce{Cl-}] = \sqrt{\Kps} = \sqrt{\num{1{,}8e-10}}
+        \approx \qty{1{,}3e-5}{\molar}. \]
+
+\textbf{Étape 2 — équation toujours valable à saturation.}
+\[ \ce{AgCl(s) <=> Ag^{+}(aq) + Cl^{-}(aq)},\qquad \Kps=[\ce{Ag+}][\ce{Cl-}]. \]
+
+\textbf{Étape 3 — nouvelle situation.} La concentration en \ce{Cl-} est désormais \emph{imposée} à
+$\qty{0{,}10}{\molar}$ (très supérieure à $s_{0}$) : c'est l'ion commun. La nouvelle solubilité $s'$
+est la concentration en \ce{Ag+}, qui est \emph{entièrement} produite par la dissolution :
+\[ s' = [\ce{Ag+}] = \dfrac{\Kps}{[\ce{Cl-}]}
+     = \dfrac{\num{1{,}8e-10}}{0{,}10}
+     = \qty{1{,}8e-9}{\molar}. \]
+
+\textbf{Étape 4 — comparaison.} Avant l'ajout : $s_{0}=\qty{1{,}3e-5}{\molar}$.
+Après l'ajout : $s'=\qty{1{,}8e-9}{\molar}$. La solubilité a été divisée par $\sim 7\,000$ ! La quasi-
+totalité de l'argent est « chassée » de la solution et retombe sous forme de \ce{AgCl} solide.
+
+\textbf{Forme alternative} : on peut écrire
+$s' = \Kps / [\ce{Cl-}] = \num{1{,}8e-10}/\num{0{,}10} = 10\times\Kps$, ce qui est la formulation
+donnée par le QCM n°8 du livre.
+\end{exemple}
+
+\begin{attention}[l'ion commun ne change pas $\Kps$ !]
+$\Kps$ est une \textbf{constante} à température donnée : il ne change pas. Ce qui change, c'est la
+\textbf{solubilité} $s$. L'égalité $\Kps=[\ce{Ag+}][\ce{Cl-}]$ reste vraie ; mais comme on impose
+$[\ce{Cl-}]=\qty{0{,}10}{\molar}$, c'est $[\ce{Ag+}]$ qui doit chuter pour conserver le produit.
+\end{attention}
+
+% =====================================================================
+\section{Influence du pH sur la solubilité}
+% =====================================================================
+Le pH mesure la concentration en ions \ce{H3O+} (et donc en \ce{OH-}). Comme beaucoup de sels peu
+solubles mettent en jeu des ions dont la concentration dépend du pH, ce dernier joue un rôle décisif.
+La synthèse du livre distingue \textbf{trois cas} où le pH est un paramètre clé.
+
+\subsection{Cas n°1 : précipitation des hydroxydes}
+
+Les hydroxydes \ce{M(OH)_n} sont des sels dont l'anion est \ce{OH-}. Leur $\Kps$ fait donc
+intervenir $[\ce{OH-}]^{n}$, concentration directement liée au pH.
+
+\begin{theoreme}[lien entre \texorpdfstring{$[\ce{OH-}]$}{[OH-]} et pH]
+Dans toute solution aqueuse à \qty{25}{\degreeCelsius}, les concentrations en ions \ce{H3O+} et
+\ce{OH-} sont liées par le produit ionique de l'eau :
+\[ K_{e} = [\ce{H3O+}][\ce{OH-}] = \num{1{,}0e-14}, \]
+d'où, en passant aux logarithmes ($\mathrm{pH}=-\log[\ce{H3O+}]$) :
+\[ \boxed{\,\mathrm{pH} = 14 + \log[\ce{OH-}]\,,\qquad [\ce{OH-}] = 10^{\,\mathrm{pH}-14}\,} \]
+\end{theoreme}
+
+\noindent Plus le pH est \textbf{élevé} (solution basique), plus $[\ce{OH-}]$ est grand, et plus les
+hydroxydes ont du mal à rester dissous : ils \textbf{précipitent}. À l'inverse, en milieu acide (pH
+faible), $[\ce{OH-}]$ est minuscule et les hydroxydes se dissolvent plus facilement.
+
+\begin{formule}[pH de début de précipitation d'un hydroxyde]
+Pour un hydroxyde \ce{M(OH)_n} de cation $\ce{M^{n+}}$ à la concentration $[\ce{M^{n+}}]$, la
+précipitation commence lorsque $Q=\Kps$, c'est-à-dire lorsque :
+\[ [\ce{OH-}] = \sqrt[\leftroot{-2}\uproot{2}\scriptstyle n]{\dfrac{\Kps}{[\ce{M^{n+}}]}}
+   \quad\Longrightarrow\quad
+   \boxed{\,\mathrm{pH}_{\text{précip.}} = 14 + \log\!\left(\sqrt[n]{\dfrac{\Kps}{[\ce{M^{n+}}]}}\right)\,} \]
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm,height=5.6cm,
+    xlabel={pH de la solution},
+    ylabel={Solubilité $s$ de \ce{M(OH)_n} (\si{\mole\per\litre})},
+    xmin=0,xmax=14,ymin=1e-12,ymax=1,
+    ymode=log,
+    axis lines=left,
+    xtick={0,2,4,6,8,10,12,14},
+    every axis x label/.style={at={(xticklabel cs:1)},anchor=west},
+    every axis y label/.style={at={(yticklabel cs:1)},anchor=south,rotate=-90},
+    legend pos=south west,legend style={font=\scriptsize,fill=white}]
+  % Fe(OH)3 : Kps = 2e-39 ; s = (Kps / [OH-]^3)^(1/1) = Kps/[OH-]^3, [OH-] = 10^(pH-14)
+  \addplot[domain=2:14,samples=80,thick,anioncol]{2e-39/(10^(x-14))^3};
+  \addlegendentry{\ce{Fe(OH)3} ($\Kps=\num{2e-39}$)}
+  % Al(OH)3 : Kps = 2e-32
+  \addplot[domain=2:14,samples=80,thick,cationcol]{2e-32/(10^(x-14))^3};
+  \addlegendentry{\ce{Al(OH)3} ($\Kps=\num{2e-32}$)}
+  % Mg(OH)2 : Kps = 9e-12
+  \addplot[domain=2:14,samples=80,thick,solcol]{(9e-12/(10^(x-14))^2)^(1/1)};
+  \addlegendentry{\ce{Mg(OH)2} ($\Kps=\num{9e-12}$)}
+  % zone basique
+  \fill[anioncol!10] (axis cs:7,1e-12) rectangle (axis cs:14,1);
+  \node[anioncol!50!black,font=\scriptsize,anchor=south east] at (axis cs:14,1e-11) {milieu basique};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent On lit clairement sur la figure : la solubilité des hydroxydes chute \textbf{brutalement}
+lorsque le pH augmente. C'est pourquoi l'alun \ce{Al(OH)3} et le fer \ce{Fe(OH)3} précipitent dès
+qu'on alcalinise légèrement l'eau, et pourquoi le magnésium de l'eau de mer précipite par ajout de
+chaux.
+
+\begin{exemple}[pH de début de précipitation de \ce{Al(OH)3}]
+On a une solution contenant $[\ce{Al^{3+}}]=\qty{1{,}0e-3}{\molar}$, et l'on sait que
+$\Kps(\ce{Al(OH)3})=\num{2{,}0e-32}$. À partir de quel pH l'hydroxyde d'aluminium commence-t-il à
+précipiter ?
+
+\smallskip
+\textbf{Étape 1 — condition de début de précipitation.} La précipitation s'amorce dès que la solution
+devient saturée, c'est-à-dire dès que $Q=\Kps$ :
+\[ \Kps = [\ce{Al^{3+}}]\,[\ce{OH-}]^{3}. \]
+
+\textbf{Étape 2 — concentration seuil en \ce{OH-}.} On isole $[\ce{OH-}]$ :
+\[ [\ce{OH-}] = \sqrt[3]{\dfrac{\Kps}{[\ce{Al^{3+}}]}}
+              = \sqrt[3]{\dfrac{\num{2{,}0e-32}}{\num{1{,}0e-3}}}
+              = \sqrt[3]{\num{2{,}0e-29}}. \]
+
+\textbf{Étape 3 — passage au pH.}
+\[ \mathrm{pH} = 14 + \log[\ce{OH-}]
+               = 14 + \log\!\left(\sqrt[3]{\num{2{,}0e-29}}\right). \]
+
+\textbf{Étape 4 — interprétation.} La quantité $\sqrt[3]{\num{2{,}0e-29}}$ est extrêmement petite
+(de l'ordre de $\qty{3e-10}{\molar}$), donc le $\log$ est négatif ($\approx -9{,}5$) et le pH seuil
+vaut environ $\mathrm{pH}\approx 4{,}5$. Autrement dit : \ce{Al(OH)3} commence à précipiter dès que
+l'eau cesse d'être franchement acide — d'où la floculation de l'aluminium dans le traitement des eaux
+potables.
+\end{exemple}
+
+\subsection{Cas n°2 : sels d'acides faibles}
+
+Certains anions sont les \textbf{bases conjuguées} d'acides faibles : \ce{CO3^{2-}} (acide faible
+\ce{HCO3-}/\ce{H2CO3}), \ce{S^{2-}} (acide faible \ce{HS-}/\ce{H2S}), \ce{C2O4^{2-}} (acide oxalique),
+\ce{F-} (acide \ce{HF}), etc. En milieu acide, ces anions réagissent avec \ce{H3O+} pour reformer
+l'acide faible \textbf{neutre}, ce qui les retire de la solution et \textbf{augmente} la solubilité
+du sel.
+
+\begin{theoreme}[effet du pH sur les sels d'acides faibles]
+Pour un sel dont l'anion est la base conjuguée d'un acide faible (par exemple \ce{CaCO3},
+\ce{FeS}, \ce{CaC2O4}), la solubilité \textbf{augmente} lorsque le pH \textbf{diminue} (milieu
+acide). En effet, l'acide \ce{H3O+} consomme l'anion selon
+\[ \ce{X^{p-} + H3O+ -> HX^{(p-1)-} + H2O}, \]
+ce qui déplace l'équilibre de dissolution vers la droite (encore Le Chatelier).
+\end{theoreme}
+
+\begin{exemple}[le calcaire \ce{CaCO3} se dissout dans l'eau acide]
+Le carbonate de calcium \ce{CaCO3} est la cause du tartre et du calcaire. Dans une eau neutre ou
+basique, il reste très peu soluble ($\Kps=\num{3{,}3e-9}$). Mais dans une eau \textbf{acide} (pluies
+acides, vinaigre, boissons gazeuses), il se dissout abondamment :
+\[ \ce{CaCO3(s) + 2 H3O+ -> Ca^{2+}(aq) + CO2(g) + 3 H2O}. \]
+L'anion \ce{CO3^{2-}} est « consommé » par les ions \ce{H3O+} et transformé en \ce{CO2} gazeux (qui
+s'échappe). La réaction est totale. C'est pourquoi une goutte de vinaigre sur un morceau de craie la
+fait \textbf{bulle} (dégagement de \ce{CO2}) et la dissout visiblement, alors que l'eau pure ne fait
+rien. Ce mécanisme explique aussi l'érosion des roches calcaires par les pluies acides.
+\end{exemple}
+
+\subsection{Cas n°3 : autres sels peu solubles}
+
+Pour les autres sels peu solubles (chlorures, sulfates, bromures, iodures, dont l'anion est la base
+conjointe d'un acide \emph{fort}), le pH n'a \textbf{pas d'influence notable} : l'anion ne réagit pas
+avec \ce{H3O+}. La solubilité de \ce{AgCl}, \ce{BaSO4}, \ce{PbBr2} est donc essentiellement
+\textbf{indépendante du pH}.
+
+\begin{attention}[trois cas, trois effets]
+Retenir la \emph{direction} de l'effet du pH :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Hydroxydes} : pH $\uparrow$ $\Rightarrow$ solubilité $\downarrow$ (précipitent en
+        milieu basique) ;
+  \item \textbf{Sels d'acides faibles} : pH $\downarrow$ $\Rightarrow$ solubilité $\uparrow$ (se
+        dissolvent en milieu acide) ;
+  \item \textbf{Autres sels} : solubilité \textbf{indépendante} du pH.
+\end{itemize}
+\end{attention}
+
+% =====================================================================
+\section{Quelques exemples complémentaires}
+% =====================================================================
+
+\begin{exemple}[volume d'eau nécessaire pour dissoudre l'oxalate de calcium]
+L'oxalate de calcium \ce{CaC2O4} est le composé principal des « calculs » qui se forment dans les
+reins. Sa solubilité molaire vaut $s=\qty{3{,}0e-6}{\molar}$ à \qty{37}{\degreeCelsius}. Quel volume
+d'eau pure faut-il pour dissoudre une quantité $n=\qty{6{,}0e-3}{\mole}$ ($6{,}0$ mmol) de ce composé ?
+
+\smallskip
+\textbf{Étape 1 — équation de dissolution.}
+\[ \ce{CaC2O4(s) <=> Ca^{2+}(aq) + C2O4^{2-}(aq)} \]
+
+\textbf{Étape 2 — interpréter $s$.} La solubilité $s=\qty{3{,}0e-6}{\molar}$ signifie : dans
+\qty{1}{\litre} d'eau saturée, on dissout au maximum $\qty{3{,}0e-6}{\mole}$ de \ce{CaC2O4}.
+
+\textbf{Étape 3 — règle de trois.} On cherche le volume $V$ tel que
+\[ s \times V = n \quad\Longrightarrow\quad V = \dfrac{n}{s}
+   = \dfrac{\qty{6{,}0e-3}{\mole}}{\qty{3{,}0e-6}{\mole\per\litre}}
+   = \qty{2{,}0e3}{\litre} = \qty{2000}{\litre}. \]
+
+\textbf{Interprétation médicale.} Il faut \qty{2000}{\litre} d'eau (deux mètres cubes !) pour
+dissoudre \qty{6{,}0}{milli\mole} de calcul d'oxalate de calcium. Cela illustre la très faible
+solubilité de ces calculs : une fois formés, ils ne partent pas par simple dilution — d'où l'usage de
+l'lasers (lithotripsie) en médecine pour les briser.
+\end{exemple}
+
+\begin{exemple}[vérifier la cohérence d'unités]
+On demande quelles sont, parmi les propositions suivantes, les deux assertions correctes :
+\begin{enumerate}[label=\textbf{\Alph*.},leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item L'unité de la solubilité de \ce{Pb3(PO4)2} est $\mathrm{M}^{5}$.
+  \item L'unité du produit de solubilité de \ce{Pb3(PO4)2} est $\mathrm{mol^{5}\,L^{-5}}$.
+  \item Le produit de solubilité est une constante d'équilibre.
+  \item $\Kps$ varie avec la température.
+\end{enumerate}
+
+\smallskip
+\textbf{Assertion A — fausse.} La solubilité est une \textbf{concentration molaire} ; elle s'exprime
+en \si{\mole\per\litre} (soit $\si{\molar}$), \textbf{jamais} en $\mathrm{M}^{5}$. La puissance $5$
+apparaît dans le $\Kps$, pas dans $s$.
+
+\textbf{Assertion B — fausse.} Le produit de solubilité est une \textbf{constante d'équilibre} : il
+est donc \textbf{sans dimension}, même si, dimensionnellement, l'expression
+$[\ce{Pb^{2+}}]^{3}[\ce{PO4^{3-}}]^{2}$ « contiendrait » des $\mathrm{mol^{5}\,L^{-5}}$.
+On écrit donc $\Kps=\num{1{,}0e-54}$ sans unité.
+
+\textbf{Assertion C — vraie.} Par définition, $\Kps$ est la constante d'équilibre de la réaction de
+dissolution : sa valeur fixe la position de l'équilibre à saturation.
+
+\textbf{Assertion D — vraie.} Comme toute constante d'équilibre, $\Kps$ dépend de la température. En
+général, la dissolution est \emph{endothermique}, donc $\Kps$ augmente avec $T$ (le sel devient plus
+soluble à chaud — c'est ce qu'on observe pour le sucre dans le café).
+
+\smallskip
+\textbf{Conclusion.} Les assertions \textbf{C et D} sont correctes.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse}
+% =====================================================================
+
+\noindent Le schéma ci-dessous relie l'ensemble des notions de la fiche : de l'équation de dissolution
+au produit de solubilité, puis à la prévision des précipitations et aux effets modulateurs
+(ion commun, pH).
+
+\begin{center}
+\begin{tikzpicture}[
+   node distance=7mm,
+   b/.style={draw,thick,rounded corners=3pt,align=center,inner sep=5pt,font=\small,fill=white},
+   bd/.style={b,fill=defcol!10},
+   bf/.style={b,fill=formulacol!12},
+   bt/.style={b,fill=thmcol!12},
+   ba/.style={b,fill=remarkcol!12},
+   >=Stealth]
+  \node[bd] (eq) {\textbf{Équation de dissolution}\\[2pt] $\ce{M_{p}X_{q}(s) <=> p\,M^{q+} + q\,X^{p-}}$};
+  \node[bf,below=10mm of eq] (kps) {\textbf{Produit de solubilité}\\ $\Kps=[\mathrm{M}^{q+}]^{p}[\mathrm{X}^{p-}]^{q}$\\ (sans unité, = cste à $T$ fixée)};
+  \node[bf,left=12mm of kps] (s) {\textbf{Solubilité $s$}\\ $\Kps=p^{p}q^{q}s^{p+q}$\\ ($s$ en \si{\mole\per\litre})};
+  \node[bt,right=12mm of kps] (q) {\textbf{Quotient $Q$}\\ $Q=[\mathrm{M}^{q+}]^{p}_{\text{act}}[\mathrm{X}^{p-}]^{q}_{\text{act}}$};
+  \node[bt,below=10mm of q] (crit) {\textbf{Critère de précipitation}\\ $Q<\Kps$: non saturé\\ $Q=\Kps$: saturé\\ $Q>\Kps$: précipite};
+  \node[ba,below=10mm of s] (ionc) {\textbf{Effet d'ion commun}\\ $s'=\Kps/C^{\,n}$\\ (solubilité $\downarrow$)};
+  \node[ba,below=10mm of kps] (ph) {\textbf{Effet du pH}\\ Hydroxydes : pH $\uparrow \Rightarrow s\downarrow$\\ Sels d'acide faible : pH $\downarrow \Rightarrow s\uparrow$};
+  \draw[->] (eq) -- (kps);
+  \draw[->] (kps) -- (s);
+  \draw[->] (kps) -- (q);
+  \draw[->] (q) -- (crit);
+  \draw[->] (kps) -- (ionc);
+  \draw[->] (kps) -- (ph);
+\end{tikzpicture}
+\end{center}
+
+\begin{tcolorbox}[boxbase,colback=formulacol!6,colframe=formulacol,
+   title={\textsc{Mémo — les formules à connaître}}]
+\begin{center}\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{l l l}
+\toprule
+\textbf{Situation} & \textbf{Formule} & \textbf{Remarque}\\
+\midrule
+Dissolution générale      & $\ce{M_{p}X_{q}(s) <=> p\,M^{q+} + q\,X^{p-}}$ & coefficients $p,q$\\
+Produit de solubilité     & $\Kps=[\mathrm{M}^{q+}]^{p}[\mathrm{X}^{p-}]^{q}$ & sans unité\\
+Sel $MX_n$ (formule livre)& $\Kps=[\mathrm{M}^{n+}][\mathrm{X}^{-}]^{n}$ & cas particulier\\
+$\Kps$ en fonction de $s$ & $\Kps=p^{p}q^{q}s^{p+q}$ & relation générale\\
+Type $1{:}1$              & $\Kps=s^{2}$ & \ce{AgCl}, \ce{CaCO3}\\
+Type $1{:}2$ ou $2{:}1$   & $\Kps=4s^{3}$ & \ce{PbBr2}, \ce{CaF2}\\
+Type $1{:}3$ ou $3{:}1$   & $\Kps=27s^{4}$ & \ce{Fe(OH)3}, \ce{Ag3PO4}\\
+Type $3{:}2$ ou $2{:}3$   & $\Kps=108s^{5}$ & \ce{Ca3(PO4)2}\\
+Solubilité massique       & $s_{m}=s\times M$ & $s_{m}$ en \si{\gram\per\litre}\\
+Quotient réactionnel      & $Q=[\mathrm{M}^{q+}]^{p}_{\text{act}}[\mathrm{X}^{p-}]^{q}_{\text{act}}$ & variable\\
+Critère de précipitation  & $Q>\Kps \Rightarrow$ précipite & règle clé\\
+Effet d'ion commun        & $s'=\Kps/C^{\,n}$ & $C$ imposée grand\\
+Lien pH$/[\ce{OH-}]$      & $\mathrm{pH}=14+\log[\ce{OH-}]$ & à \qty{25}{\degreeCelsius}\\
+pH de précip. hydroxyde   & $\mathrm{pH}=14+\log\sqrt[n]{\Kps/[\mathrm{M}^{n+}]}$ & début de précip.\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=primary!6,colframe=primary,
+   title={\textsc{Mémo — valeurs de référence (\qty{25}{\degreeCelsius})}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $\Kps(\ce{AgCl})=\num{1{,}8e-10}$\quad;\quad $\Kps(\ce{Ag2CrO4})=\num{1{,}1e-12}$.
+  \item $\Kps(\ce{CaCO3})=\num{3{,}3e-9}$\quad;\quad $\Kps(\ce{CaC2O4})=\num{2{,}3e-9}$.
+  \item $\Kps(\ce{CaF2})=\num{3{,}9e-11}$\quad;\quad $\Kps(\ce{BaSO4})=\num{1{,}1e-10}$.
+  \item $\Kps(\ce{Mg(OH)2})=\num{9{,}0e-12}$\quad;\quad $\Kps(\ce{Fe(OH)3})=\num{2{,}0e-39}$.
+  \item $\Kps(\ce{Al(OH)3})=\num{2{,}0e-32}$\quad;\quad $\Kps(\ce{SnS})=\num{1{,}0e-26}$.
+  \item Produit ionique de l'eau : $K_{e}=[\ce{H3O+}][\ce{OH-}]=\num{1{,}0e-14}$.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Mémo — les pièges classiques à éviter}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Coefficients stœchiométriques} : ne pas oublier le « $3$ » de \ce{Ag3PO4} ni les
+        exposants qui en découlent dans le $\Kps$.
+  \item \textbf{$\Kps$ sans unité} : c'est une constante d'équilibre. La solubilité $s$, elle, est en
+        \si{\mole\per\litre}.
+  \item \textbf{Conversion massique $\leftrightarrow$ molaire} : toujours passer par $s=s_m/M$ avant
+        de calculer un $\Kps$.
+  \item \textbf{Comparaison de $\Kps$} : entre sels de \emph{même type}, le plus petit $\Kps$ est le
+        moins soluble ; entre \emph{types différents}, repasser par $s$.
+  \item \textbf{Ion commun} : le $\Kps$ ne change pas, c'est la solubilité qui chute.
+  \item \textbf{pH} : pour les hydroxydes, ne pas confondre $\mathrm{pH}$ et $\mathrm{pOH}$
+        ($\mathrm{pH}+\mathrm{pOH}=14$).
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+   title={\textsc{Méthode générale — résoudre un problème de solubilité}}]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Écrire} l'équation de dissolution avec les bons coefficients $p,q$.
+  \item \textbf{Construire} le $\Kps$ à partir des concentrations à l'équilibre
+        $[\mathrm{M}^{q+}]=p\,s$ et $[\mathrm{X}^{p-}]=q\,s$.
+  \item \textbf{Convertir} si nécessaire les données (massique $\to$ molaire par $s=s_m/M$).
+  \item \textbf{Identifier la question} : calcul de $\Kps$, de $s$, ou prévision de précipitation
+        ($Q$ vs $\Kps$).
+  \item \textbf{Appliquer} la formule adaptée (ion commun, pH si hydroxyde ou acide faible).
+  \item \textbf{Vérifier} l'ordre de grandeur et la cohérence des unités.
+\end{enumerate}
+\end{tcolorbox}
+
+\vfill
+\begin{center}
+\textcolor{primary}{\rule{0.5\textwidth}{1pt}}\\[4pt]
+{\small\color{black!60}Fin de la Fiche 9 — Solubilité et produit de solubilité.}
+\end{center}
+
+\end{document}

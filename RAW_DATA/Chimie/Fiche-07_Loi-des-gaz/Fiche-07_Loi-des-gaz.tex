@@ -1,0 +1,1305 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 7
+%  Loi des gaz
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières)
+%               ou  latexmk -pdf Cours_Fiche-07_Loi-des-gaz.tex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités & chimie ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+% unités non SI utiles pour les gaz
+\DeclareSIUnit{\atm}{atm}
+\DeclareSIUnit{\bar}{bar}
+\DeclareSIUnit{\mmHg}{mmHg}
+\DeclareSIUnit{\torr}{Torr}
+\usepackage[version=4]{mhchem}   % formules chimiques : \ce{N2}, \ce{CO2}...
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (mauve = couleur de la section Chimie du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{150,98,162}      % mauve (couleur du livre — Chimie)
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{reglecol}{RGB}{150,98,162}     % mauve — règles
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+% --- couleurs spécifiques « gaz » ---
+\definecolor{gazcol}{RGB}{0,120,190}        % bleu  — molécules de gaz
+\definecolor{pcol}{RGB}{200,40,55}          % rouge — pression
+\definecolor{vcol}{RGB}{0,135,90}           % vert  — volume
+\definecolor{tcol}{RGB}{198,93,9}           % orange — température
+\definecolor{ncol}{RGB}{120,94,200}         % violet — quantité de matière
+\definecolor{azote}{RGB}{60,90,200}         % bleu  — diazote
+\definecolor{oxygene}{RGB}{210,60,60}       % rouge — dioxygène
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Loi des gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis
+\newcommand{\gp}{gaz parfait}
+\newcommand{\GP}{gaz parfaits}
+\newcommand{\Vm}{V_{\mathrm{m}}}
+
+% --- macro pour dessiner un « nuage » de molécules de gaz dans un rectangle ---
+% #1 = nombre de points, #2..#5 = xmin,ymin,xmax,ymax (utilisé manuellement)
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Loi des gaz}\\[6pt]
+   {\large\bfseries Du gaz parfait aux pressions partielles}};
+\end{tikzpicture}
+
+\vspace{0.3cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,7}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : piston + molécules + équation d'état ---
+\begin{tikzpicture}[scale=1.0]
+  % cylindre
+  \draw[thick] (0,0) rectangle (4.2,3);
+  \fill[gazcol!8] (0,0) rectangle (4.2,2.3);
+  % piston
+  \draw[fill=primary!30,thick] (0,2.3) rectangle (4.2,2.65);
+  \draw[thick] (2.0,2.65) -- (2.0,3.5);
+  \draw[thick,fill=primary!30] (1.5,3.5) rectangle (2.7,3.75);
+  \node[above] at (2.1,3.75) {\footnotesize piston mobile};
+  % molécules (points) avec petites flèches de vitesse
+  \foreach \x/\y in {0.6/0.5,1.4/1.1,2.3/0.4,3.1/1.4,3.7/0.7,0.9/1.7,
+                     2.0/1.9,2.8/0.9,1.2/0.3,3.4/1.9,0.4/1.2,3.9/1.6}{
+     \fill[gazcol] (\x,\y) circle (2.4pt);
+     \draw[gazcol,->,>=Stealth,thin] (\x,\y) -- ++(0.32,0.18);}
+  % flèche pression sur les parois
+  \foreach \y in {0.5,1.2,1.9}{
+     \draw[pcol,->,>=Stealth] (0.05,\y) -- (-0.45,\y);
+     \draw[pcol,->,>=Stealth] (4.15,\y) -- (4.65,\y);}
+  \node[pcol,font=\scriptsize,rotate=90] at (-0.75,1.2) {pression $p$};
+  % equation
+  \node[font=\Large] at (7.6,1.7)
+     {$\textcolor{pcol}{p}\,\textcolor{vcol}{V}=\textcolor{ncol}{n}\,R\,\textcolor{tcol}{T}$};
+  \node[font=\scriptsize,align=left,anchor=west] at (6.05,0.7)
+     {\textcolor{pcol}{$p$} : pression\\
+      \textcolor{vcol}{$V$} : volume\\
+      \textcolor{ncol}{$n$} : quantité de matière\\
+      \textcolor{tcol}{$T$} : température};
+\end{tikzpicture}
+
+\vspace{0.2cm}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item décrire l'\textbf{état gazeux} à l'aide des quatre variables d'état $p$, $V$, $n$, $T$ et maîtriser leurs \textbf{unités} ;
+  \item énoncer et appliquer les trois \textbf{lois historiques} : Boyle-Mariotte, Charles--Gay-Lussac et Avogadro ;
+  \item utiliser l'\textbf{équation d'état des \GP} $pV=nRT$ et la valeur de la constante $R$ ;
+  \item calculer la \textbf{masse volumique} et la \textbf{masse molaire} d'un gaz, ainsi que sa \textbf{densité} par rapport à l'air ;
+  \item exploiter le \textbf{volume molaire} $\qty{22{,}4}{\litre\per\mole}$ aux conditions normales (CNTP) ;
+  \item traiter un \textbf{mélange gazeux} avec la \textbf{loi de Dalton} (pressions partielles, fraction molaire).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 7 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{L'état gazeux : décrire un gaz par quatre nombres}
+% =====================================================================
+La chimie étudie souvent des réactions qui produisent ou consomment des \textbf{gaz} (combustions,
+fermentations, synthèses industrielles comme celle de l'ammoniac \ce{NH3}). Contrairement à un solide
+ou à un liquide, un gaz n'a ni forme ni volume propres : il \emph{occupe tout le récipient} qui le
+contient. Pour le décrire complètement, il suffit pourtant de \textbf{quatre grandeurs}, appelées
+\emph{variables d'état}.
+
+\begin{definition}[gaz et variables d'état]
+Un \textbf{gaz} est un état de la matière dans lequel les molécules sont très espacées, animées d'une
+agitation incessante et désordonnée, et n'interagissent presque pas entre elles. L'état d'un
+échantillon de gaz est entièrement fixé par la donnée de \textbf{quatre variables d'état} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item la \textcolor{pcol}{\textbf{pression}} $p$ ;
+  \item le \textcolor{vcol}{\textbf{volume}} $V$ ;
+  \item la \textcolor{ncol}{\textbf{quantité de matière}} $n$ (nombre de moles) ;
+  \item la \textcolor{tcol}{\textbf{température}} $T$.
+\end{itemize}
+Les lois des gaz sont précisément les \emph{relations} qui lient ces quatre nombres entre eux.
+\end{definition}
+
+\subsection{Le modèle microscopique : d'où vient la pression ?}
+
+À l'échelle microscopique, un gaz est un essaim de molécules qui se déplacent en ligne droite et
+rebondissent sur les parois du récipient. Chaque choc d'une molécule contre la paroi exerce une
+minuscule poussée ; la somme de ces milliards de chocs par seconde et par unité de surface produit
+une force continue : c'est la \textbf{pression}.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % boîte
+  \draw[thick] (0,0) rectangle (5,3.2);
+  \fill[gazcol!6] (0,0) rectangle (5,3.2);
+  % molécules + vecteurs vitesse
+  \foreach \x/\y/\dx/\dy in {0.8/0.7/0.4/0.3, 1.7/2.3/-0.3/0.35, 2.6/1.2/0.45/-0.2,
+        3.5/2.6/0.2/0.4, 4.2/0.9/-0.4/0.25, 1.2/1.8/0.35/-0.35, 3.0/0.5/-0.25/0.4,
+        4.4/2.2/0.3/0.3, 2.1/2.8/0.4/-0.2, 3.7/1.6/-0.4/-0.3}{
+     \fill[gazcol] (\x,\y) circle (2.6pt);
+     \draw[gazcol,->,>=Stealth,thin] (\x,\y) -- ++(\dx,\dy);}
+  % choc sur la paroi droite illustré
+  \fill[pcol] (4.85,1.5) circle (2.6pt);
+  \draw[pcol,->,>=Stealth,thick] (4.85,1.5) -- (5.35,1.5);
+  \node[pcol,right,font=\scriptsize] at (5.4,1.5) {force du choc sur la paroi};
+  % légende
+  \node[gazcol,font=\scriptsize] at (2.5,-0.4) {molécules en mouvement désordonné (agitation thermique)};
+\end{tikzpicture}
+\end{center}
+
+\noindent Ce modèle explique immédiatement deux faits :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item plus on \textbf{chauffe} le gaz, plus les molécules vont vite, plus les chocs sont violents et
+        fréquents $\Rightarrow$ la pression (ou le volume) \emph{augmente} ;
+  \item plus on \textbf{comprime} le gaz (volume plus petit), plus les molécules frappent souvent les
+        parois $\Rightarrow$ la pression \emph{augmente}.
+\end{itemize}
+
+\subsection{Le gaz parfait : un modèle idéal}
+
+\begin{definition}[gaz parfait]
+Un \textbf{\gp} est un gaz idéalisé qui obéit exactement aux hypothèses suivantes :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,label=(\arabic*)]
+  \item les molécules sont \textbf{ponctuelles} : leur volume propre est négligeable devant le volume
+        offert ;
+  \item elles \textbf{n'interagissent pas} à distance (pas de forces d'attraction ni de répulsion entre
+        elles) ;
+  \item leurs \textbf{chocs} (entre elles et sur les parois) sont \emph{élastiques} : ils ne dissipent
+        pas d'énergie.
+\end{enumerate}
+\end{definition}
+
+\begin{remarque}
+Le modèle du \gp\ est une \emph{idéalisation}. Les gaz réels s'en rapprochent d'autant mieux qu'ils
+sont \textbf{peu denses} : basse pression et température pas trop basse. Dans les conditions usuelles
+du laboratoire, l'air, le diazote, le dioxygène, etc.\ se comportent en très bonne approximation comme
+des \GP. Sauf mention contraire, \textbf{tous les gaz de ce cours sont supposés parfaits}.
+\end{remarque}
+
+\subsection{Les quatre grandeurs et leurs unités}
+
+Maîtriser les \textbf{unités} est ici décisif : la valeur de la constante $R$ (vue plus loin) dépend du
+choix d'unités, et une erreur d'unité est la première source de fautes dans les calculs de gaz.
+
+% ----- Pression -----
+\subsubsection{La pression \texorpdfstring{$p$}{p}}
+
+\begin{definition}[pression]
+La \textbf{pression} est la force pressante exercée perpendiculairement à une surface, rapportée à
+l'aire de cette surface :
+\[ p=\frac{F}{S}. \]
+\end{definition}
+
+\begin{ou}
+  \item $p$ : la pression, en pascals (\si{\pascal}) dans le Système international ;
+  \item $F$ : la force pressante, en newtons (\si{\newton}) ;
+  \item $S$ : l'aire de la surface pressée, en mètres carrés (\si{\meter\squared}).
+\end{ou}
+
+\noindent L'unité SI est le \textbf{pascal} : $\qty{1}{\pascal}=\qty{1}{\newton\per\meter\squared}$.
+C'est une très petite unité, on utilise donc souvent ses multiples et des unités usuelles. Le tableau
+suivant rassemble les conversions à connaître.
+
+\begin{center}\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l l l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Unité} & \textbf{Symbole} & \textbf{Équivalence}\\
+\midrule
+pascal              & \si{\pascal}   & unité SI de base\\
+kilopascal          & \si{\kilo\pascal} & $\qty{1}{\kilo\pascal}=\qty{1000}{\pascal}$\\
+bar                 & \si{\bar}      & $\qty{1}{\bar}=\qty{e5}{\pascal}=\qty{100}{\kilo\pascal}$\\
+atmosphère          & \si{\atm}      & $\qty{1}{\atm}=\qty{101325}{\pascal}\approx\qty{101{,}3}{\kilo\pascal}$\\
+millimètre de mercure & \si{\mmHg}   & $\qty{1}{\atm}=\qty{760}{\mmHg}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}
+$\qty{1}{\atm}\approx\qty{1}{\bar}$ mais \emph{ce n'est pas exactement égal} :
+$\qty{1}{\atm}=\qty{1{,}013}{\bar}$. Dans les calculs de la fiche, on emploie surtout l'atmosphère
+($\qty{1}{\atm}$) car la valeur de $R$ y devient très simple.
+\end{attention}
+
+% ----- Volume -----
+\subsubsection{Le volume \texorpdfstring{$V$}{V}}
+
+\begin{definition}[volume]
+Le \textbf{volume} $V$ est l'espace occupé par le gaz, c'est-à-dire le volume du récipient (le gaz
+remplit tout l'espace disponible).
+\end{definition}
+
+\begin{ou}
+  \item $V$ : le volume, en mètres cubes (\si{\meter\cubed}) dans le SI, mais le plus souvent en
+        litres (\si{\litre}) en chimie.
+\end{ou}
+
+\noindent Conversions indispensables :
+\[ \qty{1}{\litre}=\qty{1}{\deci\meter\cubed}=\qty{e-3}{\meter\cubed}=\qty{1000}{\milli\litre},
+   \qquad \qty{1}{\meter\cubed}=\qty{1000}{\litre}. \]
+On retiendra notamment $\qty{1}{\milli\litre}=\qty{1}{\centi\meter\cubed}$ et
+$\qty{1}{\meter\cubed}=\qty{1000}{\litre}$, très utile pour passer du volume d'une pièce (en \si{\meter\cubed})
+à un volume de gaz (en \si{\litre}).
+
+% ----- Température -----
+\subsubsection{La température \texorpdfstring{$T$}{T}}
+
+\begin{definition}[température absolue]
+Dans les lois des gaz, la température doit \emph{toujours} être exprimée en \textbf{kelvins}
+(\si{\kelvin}), unité de la \textbf{température absolue}. Le zéro de cette échelle, $\qty{0}{\kelvin}$,
+est le \textbf{zéro absolu} : la température la plus basse possible, où l'agitation des molécules cesse.
+\end{definition}
+
+\begin{formule}[conversion Celsius $\leftrightarrow$ Kelvin]
+\[ \boxed{\,T(\si{\kelvin}) = \theta(\si{\degreeCelsius}) + 273{,}15\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $T$ : la température absolue, en kelvins (\si{\kelvin}) ;
+  \item $\theta$ : la température en degrés Celsius (\si{\degreeCelsius}).
+\end{ou}
+
+\noindent En pratique, dans cette fiche, on arrondit fréquemment à $T=\theta+273$. Une variation de
+$\qty{1}{\degreeCelsius}$ correspond exactement à une variation de $\qty{1}{\kelvin}$ : seules les
+\emph{origines} des deux échelles diffèrent.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % axe horizontal Celsius
+  \draw[thick,->,>=Stealth] (-0.5,0) -- (10.5,0);
+  \draw[thick,->,>=Stealth] (-0.5,1.4) -- (10.5,1.4);
+  % graduations communes : -273.15, 0, 100, 273
+  % échelle : x = 1 + (theta)/40 ... on place manuellement
+  % positions : -273 -> 0 ; 0 -> 6.83 ; 27 -> 7.5 ; 100 -> 9.3  (1 unité x = 40°C)
+  \foreach \xc/\cel/\kel in {0/-273/0, 6.83/0/273, 7.5/27/300, 9.27/100/373}{
+     \draw (\xc,1.25) -- (\xc,1.55);
+     \draw (\xc,-0.15) -- (\xc,0.15);
+     \node[tcol,font=\scriptsize] at (\xc,1.85) {\kel\,K};
+     \node[font=\scriptsize] at (\xc,-0.45) {\cel\,\textdegree C};}
+  \node[left,tcol,font=\small\bfseries] at (-0.5,1.4) {K};
+  \node[left,font=\small\bfseries] at (-0.5,0) {\textdegree C};
+  % zéro absolu
+  \draw[densely dashed,attncol] (0,-0.6) -- (0,2.1);
+  \node[attncol,font=\scriptsize,align=center,above] at (0,2.1) {zéro absolu};
+  % décalage 273.15
+  \draw[<->,>=Stealth,primary] (0,0.7) -- (6.83,0.7);
+  \node[primary,font=\scriptsize,fill=white] at (3.4,0.7) {décalage de $273{,}15$};
+\end{tikzpicture}
+\end{center}
+
+\begin{attention}
+Oublier de convertir en kelvins est l'erreur \textbf{numéro un}. Une réaction « à $\qty{27}{\degreeCelsius}$ »
+se calcule avec $T=\qty{300}{\kelvin}$, \emph{jamais} avec $27$. Un rapport $T_2/T_1$ calculé en degrés
+Celsius donne un résultat totalement faux (on ne peut pas diviser des températures Celsius).
+\end{attention}
+
+% ----- Quantité de matière -----
+\subsubsection{La quantité de matière \texorpdfstring{$n$}{n}}
+
+\begin{definition}[mole et quantité de matière]
+La \textbf{quantité de matière} $n$ mesure le \emph{nombre de paquets} de molécules, exprimé en
+\textbf{moles} (\si{\mole}). Une mole contient $N_A=\qty{6{,}022e23}{}$ entités (nombre d'Avogadro). On
+la relie à la masse $m$ et à la masse molaire $M$ par :
+\[ n=\frac{m}{M}. \]
+\end{definition}
+
+\begin{ou}
+  \item $n$ : la quantité de matière, en moles (\si{\mole}) ;
+  \item $m$ : la masse de gaz, en grammes (\si{\gram}) ;
+  \item $M$ : la masse molaire du gaz, en grammes par mole (\si{\gram\per\mole}).
+\end{ou}
+
+\begin{remarque}
+Cette relation $n=m/M$ a été étudiée à la Fiche 4. Elle est essentielle ici : c'est le pont entre la
+\emph{masse} d'un gaz (ce que l'on pèse) et sa \emph{quantité de matière} (ce qui intervient dans
+$pV=nRT$).
+\end{remarque}
+
+% =====================================================================
+\section{Les trois lois historiques des gaz}
+% =====================================================================
+Avant de disposer de l'équation générale $pV=nRT$, les chimistes et physiciens des
+\textsc{xvii\textsuperscript{e}}--\textsc{xix\textsuperscript{e}} siècles ont découvert
+\emph{expérimentalement} trois lois partielles. Chacune fixe \textbf{deux} des quatre variables et
+décrit comment les \textbf{deux} autres sont liées. Ce sont les briques de base de la loi des \GP.
+
+\begin{center}\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l l l l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Loi} & \textbf{Ce qui est fixé} & \textbf{Ce qui varie} & \textbf{Relation}\\
+\midrule
+Boyle-Mariotte       & $n,\ T$ & $p,\ V$ & $pV=\text{cste}$\\
+Charles--Gay-Lussac  & $n,\ p$ & $V,\ T$ & $V/T=\text{cste}$\\
+Avogadro             & $p,\ T$ & $V,\ n$ & $V/n=\text{cste}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\subsection{Loi de Boyle-Mariotte (transformation à \texorpdfstring{$T$}{T} constante)}
+
+\begin{theoreme}[loi de Boyle-Mariotte]
+Pour une quantité fixée de gaz ($n$ constant) maintenue à \textbf{température constante} ($T$
+constante), le produit de la pression par le volume reste \textbf{constant}. Autrement dit, $p$ et $V$
+sont \textbf{inversement proportionnels} :
+\[ \boxed{\,p_1\times V_1 = p_2\times V_2\,} \]
+Si l'on comprime le gaz (on diminue $V$), sa pression $p$ augmente dans la même proportion, et
+réciproquement.
+\end{theoreme}
+
+\begin{ou}
+  \item $p_1,\ V_1$ : pression et volume dans l'état initial ;
+  \item $p_2,\ V_2$ : pression et volume dans l'état final ;
+  \item les unités de $p$ et de $V$ sont libres, à condition d'être \emph{les mêmes} de chaque côté de
+        l'égalité (par ex.\ $p$ en \si{\atm} et $V$ en \si{\litre}).
+\end{ou}
+
+\noindent Une transformation à température constante s'appelle une transformation \textbf{isotherme}.
+Dans un diagramme $(V,p)$, l'ensemble des états accessibles est une \textbf{hyperbole}
+$p=\text{cste}/V$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=9.5cm,height=6cm,
+    xlabel={Volume $V$ (\si{\litre})},
+    ylabel={Pression $p$ (\si{\atm})},
+    xmin=0,xmax=10,ymin=0,ymax=7,
+    axis lines=left,
+    xtick={2,4,6,8},ytick={1,2,3,4,5,6},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+    clip=false]
+  % isotherme pV = 12
+  \addplot[domain=2:9.5,samples=120,thick,gazcol]{12/x};
+  \node[gazcol,anchor=west] at (axis cs:5.4,4.6) {isotherme $pV=12$};
+  % deux états
+  \addplot[only marks,mark=*,pcol,mark size=2.2pt] coordinates {(2,6) (6,2)};
+  \node[pcol,anchor=west,font=\footnotesize] at (axis cs:2.2,6.2)
+     {$(V_1,p_1)=(\qty{2}{\litre},\qty{6}{\atm})$};
+  \node[pcol,anchor=west,font=\footnotesize] at (axis cs:6.2,2.3)
+     {$(V_2,p_2)=(\qty{6}{\litre},\qty{2}{\atm})$};
+  % pointillés
+  \draw[densely dashed,gray] (axis cs:2,0)--(axis cs:2,6)--(axis cs:0,6);
+  \draw[densely dashed,gray] (axis cs:6,0)--(axis cs:6,2)--(axis cs:0,2);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent On vérifie sur le graphique : $p_1V_1=6\times2=\num{12}$ et $p_2V_2=2\times6=\num{12}$ : le
+produit $pV$ est bien conservé.
+
+\begin{exemple}[compression d'un gaz dans une seringue]
+On enferme $\qty{24}{\litre}$ d'air dans un cylindre à la pression $p_1=\qty{1}{\atm}$, à température
+ambiante. On pousse le piston jusqu'à porter la pression à $p_2=\qty{3}{\atm}$, \emph{sans changer la
+température}. Quel est le nouveau volume $V_2$ ?
+
+\smallskip
+\textbf{Données et choix de la loi.} La température et la quantité de gaz ne changent pas : on est à
+$n$ et $T$ constants. C'est exactement le cadre de Boyle-Mariotte :
+\[ p_1 V_1 = p_2 V_2. \]
+
+\textbf{Isolation de l'inconnue.} On cherche $V_2$, donc :
+\[ V_2 = \frac{p_1 V_1}{p_2}. \]
+
+\textbf{Application numérique.}
+\[ V_2 = \frac{\qty{1}{\atm}\times\qty{24}{\litre}}{\qty{3}{\atm}}
+       = \qty{8}{\litre}. \]
+
+\textbf{Interprétation.} En triplant la pression, on a divisé le volume par $3$ ($24\to8$). C'est
+cohérent avec la proportionnalité \emph{inverse} : $p$ et $V$ varient en sens opposés, et leur produit
+$pV=\qty{24}{\atm\litre}$ est conservé.
+\end{exemple}
+
+% =====================================================================
+\subsection{Loi de Charles--Gay-Lussac (transformation à \texorpdfstring{$p$}{p} constante)}
+
+\begin{theoreme}[loi de Charles--Gay-Lussac]
+Pour une quantité fixée de gaz ($n$ constant) maintenue à \textbf{pression constante} ($p$ constante),
+le volume est \textbf{directement proportionnel à la température absolue} :
+\[ \boxed{\,\frac{V_1}{T_1}=\frac{V_2}{T_2}\,} \]
+Chauffer le gaz le dilate ; le refroidir le contracte, en proportion exacte de la température en
+kelvins.
+\end{theoreme}
+
+\begin{ou}
+  \item $V_1,\ T_1$ : volume et température absolue dans l'état initial ;
+  \item $V_2,\ T_2$ : volume et température absolue dans l'état final ;
+  \item $T_1,\ T_2$ \emph{obligatoirement} en kelvins (\si{\kelvin}) ; $V$ dans une unité quelconque,
+        identique des deux côtés.
+\end{ou}
+
+\noindent Une transformation à pression constante s'appelle une transformation \textbf{isobare}. Dans
+un diagramme $(T,V)$, les états forment une \textbf{droite passant par l'origine} $T=\qty{0}{\kelvin}$.
+Le prolongement de cette droite vers les volumes nuls pointe précisément vers le \textbf{zéro absolu}
+$\theta=\qty{-273{,}15}{\degreeCelsius}$ : c'est l'une des manières historiques de le mettre en
+évidence.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=10.5cm,height=5.6cm,
+    xlabel={Température $T$ (\si{\kelvin})},
+    ylabel={Volume $V$ (\si{\litre})},
+    xmin=-30,xmax=420,ymin=0,ymax=3.4,
+    axis lines=left,
+    xtick={0,100,200,273,300,400},
+    xticklabels={$0$,$100$,$200$,$273$,$300$,$400$},
+    ytick={1,2,3},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+    clip=false]
+  % droite V = (V/T)*T avec V/T = 2/300
+  \addplot[domain=0:400,samples=2,thick,vcol]{2/300*x};
+  \node[vcol,anchor=west,font=\footnotesize] at (axis cs:250,2.55) {$V\propto T$ (isobare)};
+  % états
+  \addplot[only marks,mark=*,pcol,mark size=2.2pt] coordinates {(300,2) (360,2.4)};
+  \draw[densely dashed,gray](axis cs:300,0)--(axis cs:300,2)--(axis cs:0,2);
+  \draw[densely dashed,gray](axis cs:360,0)--(axis cs:360,2.4)--(axis cs:0,2.4);
+  \node[pcol,anchor=west,font=\scriptsize] at (axis cs:305,1.75){$(\qty{300}{\kelvin},\qty{2}{\litre})$};
+  \node[pcol,anchor=west,font=\scriptsize] at (axis cs:300,2.95){$(\qty{360}{\kelvin},\qty{2{,}4}{\litre})$};
+  % zéro absolu
+  \node[attncol,font=\scriptsize,anchor=south] at (axis cs:0,0.05){$0$ K = zéro absolu};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[un ballon que l'on chauffe]
+Un ballon souple contient $V_1=\qty{2{,}0}{\litre}$ d'air à $\theta_1=\qty{27}{\degreeCelsius}$, à la
+pression atmosphérique. On le place dans une étuve à $\theta_2=\qty{87}{\degreeCelsius}$ ; la pression
+reste celle de l'atmosphère. Quel volume occupe-t-il alors ?
+
+\smallskip
+\textbf{Étape 1 — convertir en kelvins (indispensable).}
+\[ T_1 = 27+273 = \qty{300}{\kelvin}, \qquad T_2 = 87+273 = \qty{360}{\kelvin}. \]
+
+\textbf{Étape 2 — choisir la loi.} Pression constante, quantité de gaz constante $\Rightarrow$
+Charles--Gay-Lussac :
+\[ \frac{V_1}{T_1}=\frac{V_2}{T_2}
+   \quad\Longrightarrow\quad
+   V_2 = V_1\times\frac{T_2}{T_1}. \]
+
+\textbf{Étape 3 — application numérique.}
+\[ V_2 = \qty{2{,}0}{\litre}\times\frac{\qty{360}{\kelvin}}{\qty{300}{\kelvin}}
+       = \qty{2{,}0}{\litre}\times1{,}2 = \qty{2{,}4}{\litre}. \]
+
+\textbf{Interprétation.} La température absolue a augmenté de $20\,\%$ ($300\to360$), donc le volume
+augmente exactement de $20\,\%$ ($2{,}0\to2{,}4$). \textbf{Piège évité :} si l'on avait gardé les
+degrés Celsius, on aurait calculé $V_2=2{,}0\times87/27=\qty{6{,}4}{\litre}$, résultat absurde et faux.
+\end{exemple}
+
+\begin{remarque}[variante isochore]
+Il existe une troisième situation jumelle, à \textbf{volume constant} (\emph{isochore}) : alors
+$p_1/T_1=p_2/T_2$, c'est-à-dire que la pression est proportionnelle à la température absolue. C'est ce
+qui fait monter la pression d'un pneu ou d'une bombe aérosol quand ils chauffent. On la déduit
+immédiatement de $pV=nRT$ avec $V$ et $n$ constants.
+\end{remarque}
+
+% =====================================================================
+\subsection{Loi d'Avogadro (volumes égaux \texorpdfstring{$\to$}{->} mêmes nombres de molécules)}
+
+\begin{theoreme}[loi d'Avogadro]
+À température $T$ et pression $p$ \textbf{maintenues constantes}, le volume occupé par un gaz est
+\textbf{directement proportionnel à sa quantité de matière} :
+\[ \boxed{\,\frac{V_1}{n_1}=\frac{V_2}{n_2}\,} \]
+Conséquence fondamentale : \emph{des volumes égaux de gaz, pris dans les mêmes conditions de
+température et de pression, contiennent le même nombre de molécules}.
+\end{theoreme}
+
+\begin{ou}
+  \item $V_1,\ n_1$ : volume et quantité de matière du premier gaz (ou état) ;
+  \item $V_2,\ n_2$ : volume et quantité de matière du second gaz (ou état) ;
+  \item $V$ en unité quelconque (identique), $n$ en moles (\si{\mole}).
+\end{ou}
+
+\noindent Cette loi est surprenante : elle dit que la \emph{nature} du gaz n'intervient pas. À $p$ et
+$T$ fixés, un litre de \ce{H2} et un litre de \ce{CO2} contiennent \emph{le même nombre de molécules},
+bien que ces molécules aient des masses très différentes.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % récipient 1 : H2
+  \draw[thick] (0,0) rectangle (2.6,3);
+  \fill[gazcol!7] (0,0) rectangle (2.6,3);
+  \foreach \x/\y in {0.5/0.5,1.1/1.2,1.9/0.8,0.8/2.1,2.0/1.9,1.4/2.6,2.2/2.4,0.4/1.6}{
+     \fill[azote] (\x,\y) circle (2.6pt);}
+  \node[below] at (1.3,-0.25) {$\qty{1}{\litre}$ de \ce{H2}};
+  \node[font=\scriptsize] at (1.3,3.35) {8 molécules};
+  % égalité conditions
+  \node at (3.55,1.5) {\Large $=$};
+  \node[font=\scriptsize,align=center] at (3.55,0.7) {même $p$\\ même $T$};
+  % récipient 2 : CO2
+  \draw[thick] (4.5,0) rectangle (7.1,3);
+  \fill[gazcol!7] (4.5,0) rectangle (7.1,3);
+  \foreach \x/\y in {5.0/0.5,5.6/1.2,6.4/0.8,5.3/2.1,6.5/1.9,5.9/2.6,6.7/2.4,4.9/1.6}{
+     \fill[oxygene] (\x,\y) circle (3.6pt);}
+  \node[below] at (5.8,-0.25) {$\qty{1}{\litre}$ de \ce{CO2}};
+  \node[font=\scriptsize] at (5.8,3.35) {8 molécules};
+  % conclusion
+  \node[primarydark,font=\footnotesize,align=center] at (9.6,1.5)
+     {\textbf{même volume}\\ $\Rightarrow$ \textbf{même nombre}\\ \textbf{de molécules}\\[2pt]
+      (mais masses\\ différentes !)};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[gonfler un ballon double sa quantité de gaz]
+Un ballon contient $n_1=\qty{0{,}50}{\mole}$ de gaz et occupe $V_1=\qty{12{,}2}{\litre}$ à une
+certaine température et pression. On y injecte du gaz, toujours aux mêmes $p$ et $T$, jusqu'à atteindre
+$n_2=\qty{0{,}80}{\mole}$. Quel volume occupe-t-il ?
+\[ \frac{V_1}{n_1}=\frac{V_2}{n_2}
+   \;\Longrightarrow\;
+   V_2 = V_1\times\frac{n_2}{n_1}
+       = \qty{12{,}2}{\litre}\times\frac{0{,}80}{0{,}50}
+       = \qty{19{,}52}{\litre}. \]
+On a multiplié la quantité de matière par $1{,}6$, le volume est multiplié par le même facteur. Ce
+résultat prépare la notion capitale de \textbf{volume molaire} : le volume « par mole » est le même
+pour tous les \GP\ dans des conditions données.
+\end{exemple}
+
+% =====================================================================
+\section{La loi des gaz parfaits : l'équation d'état \texorpdfstring{$pV=nRT$}{pV=nRT}}
+% =====================================================================
+Les trois lois précédentes ne sont que des cas particuliers. En les fusionnant, on obtient une
+\textbf{équation unique} qui relie d'un seul coup les quatre variables d'état : c'est l'\textbf{équation
+d'état du \gp}, pierre angulaire de toute la fiche.
+
+\begin{formule}[loi des gaz parfaits]
+\[ \boxed{\,p\times V = n\times R\times T\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $p$ : la pression du gaz, en pascals (\si{\pascal}) si l'on travaille en SI, ou en \si{\atm} /
+        \si{\kilo\pascal} selon la valeur de $R$ choisie ;
+  \item $V$ : le volume occupé, en mètres cubes (\si{\meter\cubed}) en SI, ou en litres (\si{\litre}) ;
+  \item $n$ : la quantité de matière de gaz, en moles (\si{\mole}) ;
+  \item $R$ : la \textbf{constante des \GP} (voir ci-dessous) ;
+  \item $T$ : la température absolue, \emph{toujours} en kelvins (\si{\kelvin}).
+\end{ou}
+
+\begin{remarque}[comment $pV=nRT$ contient les trois lois]
+L'équation d'état \emph{résume} tout ce qui précède. Il suffit d'y fixer deux variables :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item à $n$ et $T$ fixés : $pV = (nRT)=\text{cste}\ \Rightarrow$ \textbf{Boyle-Mariotte} ;
+  \item à $n$ et $p$ fixés : $V/T = (nR/p)=\text{cste}\ \Rightarrow$ \textbf{Charles--Gay-Lussac} ;
+  \item à $p$ et $T$ fixés : $V/n = (RT/p)=\text{cste}\ \Rightarrow$ \textbf{Avogadro}.
+\end{itemize}
+On n'a donc \emph{qu'une seule} formule à mémoriser : les trois lois historiques en découlent.
+\end{remarque}
+
+\subsection{La constante des gaz parfaits \texorpdfstring{$R$}{R}}
+
+\begin{definition}[constante des gaz parfaits]
+$R$ est une \textbf{constante universelle} (la même pour tous les gaz). Sa \emph{valeur numérique}
+dépend des unités choisies pour $p$ et $V$ ; il faut donc choisir la version de $R$ \textbf{cohérente}
+avec ses unités.
+\end{definition}
+
+\begin{center}\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{c c c c}
+\toprule
+\rowcolor{primary!12}
+\textbf{Valeur de $R$} & \textbf{$p$ en} & \textbf{$V$ en} & \textbf{$T$ en}\\
+\midrule
+$\qty{8{,}314}{\joule\per\mole\per\kelvin}$           & \si{\pascal}      & \si{\meter\cubed} & \si{\kelvin}\\
+$\qty{8{,}314}{\kilo\pascal\litre\per\mole\per\kelvin}$ & \si{\kilo\pascal} & \si{\litre}       & \si{\kelvin}\\
+$\qty{0{,}082}{\atm\litre\per\mole\per\kelvin}$        & \si{\atm}         & \si{\litre}       & \si{\kelvin}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}
+Les deux premières lignes ont la \emph{même} valeur numérique $8{,}314$ car
+$\qty{1}{\kilo\pascal}\times\qty{1}{\litre}=\qty{1}{\joule}$. La troisième, $R=\num{0,082}$, est
+réservée au couple (\si{\atm}, \si{\litre}) — c'est la plus pratique pour les calculs « chimie » de
+cette fiche. \textbf{Ne mélangez jamais} une pression en \si{\atm} avec $R=8{,}314$ : choisissez une
+ligne du tableau et tenez-vous-y.
+\end{attention}
+
+\subsection{Forme « quantité de matière » et autres réarrangements}
+
+L'équation $pV=nRT$ s'isole selon l'inconnue recherchée. La forme la plus utilisée en chimie donne
+directement le \textbf{nombre de moles} à partir des conditions $(p,V,T)$ :
+
+\begin{formule}[nombre de moles d'un gaz]
+\[ \boxed{\,n = \dfrac{p\,V}{R\,T}\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $n$ : la quantité de matière, en moles (\si{\mole}) ;
+  \item $p,\ V,\ T$ : pression, volume et température absolue, dans des unités cohérentes avec $R$.
+\end{ou}
+
+\noindent On obtient de même, selon le besoin :
+\[ p=\frac{nRT}{V},\qquad V=\frac{nRT}{p},\qquad T=\frac{pV}{nR}. \]
+
+\subsection{Conditions normales (CNTP) et volume molaire \texorpdfstring{$\qty{22{,}4}{\litre\per\mole}$}{22,4 L/mol}}
+
+Pour comparer des gaz, on définit des conditions de référence.
+
+\begin{definition}[conditions normales de température et de pression]
+Les \textbf{conditions normales de température et de pression} (CNTP, aussi notées TPN ou PTN dans le
+livre) correspondent à :
+\[ p=\qty{1}{\atm}\qquad\text{et}\qquad T=\qty{273}{\kelvin}\ (\theta=\qty{0}{\degreeCelsius}). \]
+\end{definition}
+
+\begin{theoreme}[volume molaire aux CNTP]
+Aux CNTP, \textbf{une mole de n'importe quel \gp\ occupe le même volume}, appelé \textbf{volume
+molaire} :
+\[ \boxed{\,\Vm = \frac{RT}{p} = \qty{22{,}4}{\litre\per\mole}\,} \]
+\end{theoreme}
+
+\noindent \textbf{Démonstration.} On part de $pV=nRT$ avec $n=\qty{1}{\mole}$, et l'on calcule le
+volume aux CNTP avec $R=\num{0,082}$ :
+\[ \Vm = \frac{nRT}{p}
+       = \frac{\qty{1}{\mole}\times\num{0,082}\times\qty{273}{\kelvin}}{\qty{1}{\atm}}
+       = \qty{22{,}4}{\litre}. \]
+
+\begin{formule}[passage volume $\leftrightarrow$ quantité de matière aux CNTP]
+\[ \boxed{\,n = \dfrac{V}{\Vm} = \dfrac{V}{\qty{22{,}4}{\litre\per\mole}}\,}
+   \qquad\Longleftrightarrow\qquad
+   V = n\times\qty{22{,}4}{\litre\per\mole}. \]
+\end{formule}
+
+\begin{ou}
+  \item $n$ : quantité de matière de gaz, en moles (\si{\mole}) ;
+  \item $V$ : volume du gaz mesuré \emph{aux CNTP}, en litres (\si{\litre}) ;
+  \item $\Vm=\qty{22{,}4}{\litre\per\mole}$ : le volume molaire aux CNTP.
+\end{ou}
+
+\noindent Le diagramme ci-dessous (repris de la synthèse du livre) résume comment ces relations
+s'articulent.
+
+\begin{center}
+\begin{tikzpicture}[
+   box/.style={draw,thick,rounded corners=2pt,align=center,inner sep=4pt,font=\small},
+   lab/.style={font=\scriptsize,midway},
+   >=Stealth]
+  % bloc gaz parfaits
+  \node[box,fill=gazcol!10] (gp) at (0,0) {\textbf{Gaz parfaits}};
+  % loi générale
+  \node[box,fill=formulacol!12] (gen) at (6.4,0) {Loi générale\\ $n=\dfrac{pV}{RT}$\ (\si{\mole})};
+  \draw[->,dashed] (gp) -- node[lab,above]{sont régis par} (gen);
+  % CNTP
+  \node[box,fill=primary!8,align=left] (cntp) at (1.0,2.6)
+     {CNTP : $p=\qty{1}{\atm}$, $T=\qty{273}{\kelvin}$\\
+      $R=\qty{0{,}082}{\atm\litre\per\mole\per\kelvin}$\\
+      $\dfrac{RT}{p}=\qty{22{,}4}{\litre\per\mole}$};
+  % V = 22,4
+  \node[box,fill=vcol!12] (v) at (6.4,2.6) {$V=\qty{22{,}4}{\litre}$};
+  \draw[->,gazcol] (cntp.east) -- node[lab,above,sloped]{$\div\,22{,}4$}  (v.west);
+  \draw[<->] (gen) -- node[lab,right,align=left]{si $n=\qty{1}{\mole}$\\ $\times\,22{,}4$} (v);
+  % pression partielle
+  \node[box,fill=ncol!10,align=center] (dalton) at (3.2,-2.5)
+     {Chaque gaz exerce $p_i=\chi_i\times p_{\text{totale}}$\\[1pt]
+      et $p_{\text{totale}}=\displaystyle\sum_i p_i=p_A+p_B+p_C+\dots$\ \ \textbf{(loi de Dalton)}};
+  \draw[->,dashed] (gp) -- node[lab,left]{dont} (dalton);
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[du volume au nombre de moles : l'azote aux CNTP]
+On dispose de $V=\qty{44{,}8}{\litre}$ de diazote \ce{N2} mesurés aux CNTP. Combien de moles
+cela représente-t-il ?
+
+\smallskip
+\textbf{Méthode 1 — volume molaire.}
+\[ n=\frac{V}{\Vm}=\frac{\qty{44{,}8}{\litre}}{\qty{22{,}4}{\litre\per\mole}}=\qty{2{,}0}{\mole}. \]
+
+\textbf{Méthode 2 — équation d'état (pour vérifier).} Avec $p=\qty{1}{\atm}$, $T=\qty{273}{\kelvin}$,
+$R=\num{0,082}$ :
+\[ n=\frac{pV}{RT}
+    =\frac{\qty{1}{\atm}\times\qty{44{,}8}{\litre}}{\num{0,082}\times\qty{273}{\kelvin}}
+    =\frac{44{,}8}{22{,}386}\approx\qty{2{,}0}{\mole}. \]
+Les deux méthodes concordent : $\qty{44{,}8}{\litre}$ aux CNTP correspondent à $\qty{2{,}0}{\mole}$.
+Le volume molaire $\qty{22{,}4}{\litre\per\mole}$ n'est rien d'autre qu'un raccourci de l'équation
+d'état dans les conditions normales.
+\end{exemple}
+
+\begin{exemple}[calcul d'une pression : un gaz dans une bouteille]
+On enferme $n=\qty{0{,}50}{\mole}$ de dioxygène \ce{O2} dans une bouteille rigide de
+$V=\qty{5{,}0}{\litre}$ portée à $\theta=\qty{27}{\degreeCelsius}$. Quelle pression règne à
+l'intérieur ?
+
+\smallskip
+\textbf{Étape 1 — kelvins :} $T=27+273=\qty{300}{\kelvin}$.
+
+\textbf{Étape 2 — isoler $p$ :} $p=\dfrac{nRT}{V}$.
+
+\textbf{Étape 3 — application numérique} (on prend $R=\num{0,082}$, $V$ en \si{\litre}, donc $p$ sortira
+en \si{\atm}) :
+\[ p=\frac{\qty{0{,}50}{\mole}\times\num{0,082}\times\qty{300}{\kelvin}}{\qty{5{,}0}{\litre}}
+    =\frac{12{,}3}{5{,}0}=\qty{2{,}46}{\atm}. \]
+La pression vaut environ $\qty{2{,}5}{\atm}$, soit deux fois et demie la pression atmosphérique.
+\end{exemple}
+
+% =====================================================================
+\section{Masse volumique, masse molaire et densité d'un gaz}
+% =====================================================================
+L'équation d'état ne contient pas directement la masse. Mais comme $n=m/M$, on peut y faire entrer la
+\textbf{masse} $m$ et la \textbf{masse molaire} $M$ du gaz, et accéder ainsi à sa \textbf{masse
+volumique} $\rho$. C'est ce qui permet, à l'inverse, d'\emph{identifier} un gaz inconnu en mesurant sa
+masse volumique.
+
+\subsection{Masse volumique d'un gaz}
+
+\begin{definition}[masse volumique]
+La \textbf{masse volumique} $\rho$ d'un gaz est la masse contenue dans l'unité de volume :
+\[ \rho=\frac{m}{V}. \]
+\end{definition}
+
+\begin{ou}
+  \item $\rho$ : la masse volumique, en \si{\gram\per\litre} (ou \si{\kilo\gram\per\meter\cubed}) ;
+  \item $m$ : la masse de gaz, en grammes (\si{\gram}) ;
+  \item $V$ : le volume occupé, en litres (\si{\litre}).
+\end{ou}
+
+\noindent \textbf{Établissement de la formule.} On part de $pV=nRT$ et de $n=\dfrac{m}{M}$. En
+remplaçant $n$ :
+\[ pV=\frac{m}{M}RT
+   \;\Longrightarrow\;
+   pM=\frac{m}{V}RT=\rho RT. \]
+On en tire la masse volumique d'un \gp\ :
+
+\begin{formule}[masse volumique d'un gaz parfait]
+\[ \boxed{\,\rho = \dfrac{p\,M}{R\,T}\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $\rho$ : la masse volumique du gaz, en \si{\gram\per\litre} ;
+  \item $p$ : la pression, dans l'unité cohérente avec $R$ ;
+  \item $M$ : la masse molaire du gaz, en \si{\gram\per\mole} ;
+  \item $R$ : la constante des \GP\ ; \quad $T$ : la température absolue, en \si{\kelvin}.
+\end{ou}
+
+\begin{remarque}
+Cette formule montre qu'à $p$ et $T$ donnés, la masse volumique d'un gaz est \textbf{proportionnelle à
+sa masse molaire} $M$ : un gaz « lourd » (grand $M$, comme \ce{CO2}) est plus dense qu'un gaz « léger »
+(petit $M$, comme \ce{He}). C'est pourquoi le \ce{CO2} s'accumule au fond d'une cave et l'hélium fait
+monter les ballons.
+\end{remarque}
+
+\subsection{Masse molaire d'un gaz}
+
+En isolant $M$ dans la relation $pM=\rho RT$ (ou dans $pV=\frac{m}{M}RT$), on obtient une méthode de
+\textbf{détermination expérimentale de la masse molaire} d'un gaz : il suffit de peser une masse $m$ de
+gaz occupant un volume $V$ connu dans des conditions $(p,T)$ connues.
+
+\begin{formule}[masse molaire d'un gaz]
+\[ \boxed{\,M = \dfrac{m\,R\,T}{p\,V}\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $M$ : la masse molaire cherchée, en \si{\gram\per\mole} ;
+  \item $m$ : la masse de gaz pesée, en grammes (\si{\gram}) ;
+  \item $p,\ V,\ T$ : conditions de la mesure (unités cohérentes avec $R$, $T$ en \si{\kelvin}).
+\end{ou}
+
+\noindent Aux CNTP, cette relation se simplifie énormément : comme une mole occupe
+$\qty{22{,}4}{\litre}$, on a directement
+\[ M = \rho\times\Vm = \rho\times\qty{22{,}4}{\litre\per\mole}\qquad(\text{aux CNTP}). \]
+
+\begin{exemple}[identifier un gaz inconnu par sa masse volumique]
+Aux CNTP, on mesure la masse volumique d'un gaz inconnu : $\rho=\qty{1{,}25}{\gram\per\litre}$. Quelle
+est sa masse molaire, et de quel gaz peut-il s'agir ?
+
+\smallskip
+\textbf{Calcul de $M$.} Aux CNTP, $M=\rho\times\Vm$ :
+\[ M=\qty{1{,}25}{\gram\per\litre}\times\qty{22{,}4}{\litre\per\mole}=\qty{28}{\gram\per\mole}. \]
+
+\textbf{Identification.} Une masse molaire de $\qty{28}{\gram\per\mole}$ correspond au diazote \ce{N2}
+($2\times14=28$) ou au monoxyde de carbone \ce{CO} ($12+16=28$). La mesure de la masse volumique seule
+ne permet pas de les distinguer, mais elle restreint déjà fortement les possibilités.
+
+\textbf{Vérification par l'équation complète.} Pour $V=\qty{1}{\litre}$, on a
+$m=\rho V=\qty{1{,}25}{\gram}$, et avec $p=\qty{1}{\atm}$, $T=\qty{273}{\kelvin}$ :
+\[ M=\frac{mRT}{pV}
+    =\frac{\qty{1{,}25}{\gram}\times\num{0,082}\times\qty{273}{\kelvin}}{\qty{1}{\atm}\times\qty{1}{\litre}}
+    \approx\qty{28}{\gram\per\mole}. \]
+Cohérent.
+\end{exemple}
+
+\begin{exemple}[masse volumique du dioxyde de carbone]
+Quelle est la masse volumique du \ce{CO2} aux CNTP ? Sa masse molaire est
+$M=12+2\times16=\qty{44}{\gram\per\mole}$.
+\[ \rho=\frac{M}{\Vm}=\frac{\qty{44}{\gram\per\mole}}{\qty{22{,}4}{\litre\per\mole}}
+       =\qty{1{,}96}{\gram\per\litre}. \]
+Le \ce{CO2} ($\qty{1{,}96}{\gram\per\litre}$) est nettement plus dense que l'air
+($\approx\qty{1{,}29}{\gram\per\litre}$, voir ci-dessous) : il « coule » dans l'air, ce qui explique
+son emploi dans les extincteurs (il étouffe la flamme en chassant l'air).
+\end{exemple}
+
+\subsection{Composition de l'air et densité d'un gaz par rapport à l'air}
+
+\begin{definition}[composition de l'air]
+L'air est un mélange gazeux dont la composition \textbf{en volume} est approximativement :
+\[ \approx 80\,\%\ \text{de diazote } \ce{N2} \qquad\text{et}\qquad \approx 20\,\%\ \text{de
+dioxygène } \ce{O2}. \]
+Sa masse molaire moyenne vaut $M_{\text{air}}=\qty{28{,}8}{\gram\per\mole}$, et $\qty{1}{\litre}$ d'air
+a une masse de $\qty{1{,}29}{\gram}$ aux CNTP.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  % barre 100% : 80% azote + 20% oxygène
+  \fill[azote!75] (0,0) rectangle (8,1);
+  \fill[oxygene!75] (8,0) rectangle (10,1);
+  \draw[thick] (0,0) rectangle (10,1);
+  \node[white] at (4,0.5) {\textbf{\ce{N2} — \SI{80}{\percent}}};
+  \node[white] at (9,0.5) {\textbf{\ce{O2}}};
+  \node[oxygene,below,font=\scriptsize] at (9,0) {\SI{20}{\percent}};
+  \node[below,font=\scriptsize] at (4,-0.05) {composition de l'air \emph{en volume}};
+  \node[right,font=\footnotesize,align=left] at (10.4,0.5)
+     {$M_{\text{air}}=\qty{28{,}8}{\gram\per\mole}$\\ $\rho_{\text{air}}\approx\qty{1{,}29}{\gram\per\litre}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}[d'où vient $\qty{28{,}8}{\gram\per\mole}$ ?]
+C'est la moyenne pondérée des masses molaires, selon les proportions volumiques (qui sont aussi des
+proportions molaires d'après Avogadro) :
+\[ M_{\text{air}} = 0{,}80\times M(\ce{N2}) + 0{,}20\times M(\ce{O2})
+   = 0{,}80\times28 + 0{,}20\times32 = 22{,}4+6{,}4 = \qty{28{,}8}{\gram\per\mole}. \]
+\end{remarque}
+
+\begin{definition}[densité d'un gaz par rapport à l'air]
+La \textbf{densité} $d$ d'un gaz par rapport à l'air est le rapport (sans unité) de sa masse volumique
+à celle de l'air, dans les mêmes conditions. Comme à $p,T$ fixés $\rho\propto M$, cela revient au
+rapport des masses molaires :
+\[ d=\frac{\rho_{\text{gaz}}}{\rho_{\text{air}}}=\frac{M_{\text{gaz}}}{M_{\text{air}}}
+    =\frac{M_{\text{gaz}}}{\qty{28{,}8}{\gram\per\mole}}. \]
+\end{definition}
+
+\noindent On en déduit la relation du livre, qui donne la masse molaire d'un gaz connaissant sa densité :
+
+\begin{formule}[masse molaire à partir de la densité]
+\[ \boxed{\,M_{\text{gaz}} = M_{\text{air}}\times d_{\text{gaz}} = \qty{28{,}8}{\gram\per\mole}\times
+   d_{\text{gaz}}\,}\qquad(\text{aux CNTP}). \]
+\end{formule}
+
+\begin{ou}
+  \item $M_{\text{gaz}}$ : masse molaire du gaz, en \si{\gram\per\mole} ;
+  \item $M_{\text{air}}=\qty{28{,}8}{\gram\per\mole}$ : masse molaire moyenne de l'air ;
+  \item $d_{\text{gaz}}$ : densité du gaz par rapport à l'air (nombre sans unité).
+\end{ou}
+
+\begin{exemple}[ballons : pourquoi l'hélium monte et le \ce{CO2} descend]
+Comparons trois gaz à l'air ($M_{\text{air}}=\qty{28{,}8}{\gram\per\mole}$) :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Hélium} \ce{He}, $M=\qty{4}{\gram\per\mole}$ :
+        $d=\dfrac{4}{28{,}8}=0{,}14<1$ $\Rightarrow$ plus léger que l'air, \emph{il monte} (ballons
+        gonflés à l'hélium).
+  \item \textbf{Dioxyde de carbone} \ce{CO2}, $M=\qty{44}{\gram\per\mole}$ :
+        $d=\dfrac{44}{28{,}8}=1{,}53>1$ $\Rightarrow$ plus lourd que l'air, \emph{il descend} (s'accumule
+        au sol).
+  \item \textbf{Diazote} \ce{N2}, $M=\qty{28}{\gram\per\mole}$ :
+        $d=\dfrac{28}{28{,}8}=0{,}97\approx1$ $\Rightarrow$ quasiment la densité de l'air (ce qui est
+        logique, l'air étant à $80\,\%$ du \ce{N2}).
+\end{itemize}
+\textbf{Lecture inverse :} si l'on mesure expérimentalement $d=1{,}53$ pour un gaz inconnu, alors
+$M=28{,}8\times1{,}53\approx\qty{44}{\gram\per\mole}$, ce qui oriente vers le \ce{CO2}.
+\end{exemple}
+
+% =====================================================================
+\section{Mélanges gazeux : la loi de Dalton des pressions partielles}
+% =====================================================================
+Jusqu'ici, le récipient ne contenait qu'un seul gaz. Or l'air, les gaz de combustion, l'atmosphère
+d'un réacteur sont des \textbf{mélanges}. La loi de Dalton décrit comment chaque constituant participe
+à la pression totale.
+
+\subsection{Pression partielle}
+
+\begin{definition}[pression partielle]
+Dans un mélange gazeux, la \textbf{pression partielle} $p_i$ d'un constituant est la pression qu'il
+exercerait \emph{s'il occupait seul} tout le volume du récipient, à la même température. Chaque gaz se
+comporte comme si les autres n'existaient pas (hypothèse des \GP\ : pas d'interaction entre molécules).
+\end{definition}
+
+\begin{theoreme}[loi de Dalton]
+La \textbf{pression totale} d'un mélange de \GP\ est égale à la \textbf{somme des pressions partielles}
+de ses constituants :
+\[ \boxed{\,p_{\text{tot}} = p_A + p_B + p_C + \dots = \sum_i p_i\,} \]
+\end{theoreme}
+
+\begin{ou}
+  \item $p_{\text{tot}}$ : la pression totale du mélange, en \si{\atm} (ou autre unité de pression) ;
+  \item $p_A,\ p_B,\ p_C,\dots$ : les pressions partielles de chaque gaz, dans la même unité.
+\end{ou}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % récipient A
+  \draw[thick] (0,0) rectangle (2.4,2.8);
+  \foreach \x/\y in {0.5/0.5,1.1/1.4,1.8/0.8,0.7/2.2,1.9/2.0,1.3/1.0}{
+     \fill[azote] (\x,\y) circle (2.8pt);}
+  \node[below,font=\footnotesize] at (1.2,-0.2) {\ce{N2} seul};
+  \node[azote,above,font=\scriptsize] at (1.2,2.8) {$p_A$};
+  % plus
+  \node at (3.0,1.4) {\Large $+$};
+  % récipient B
+  \draw[thick] (3.6,0) rectangle (6.0,2.8);
+  \foreach \x/\y in {4.1/0.7,5.0/1.5,5.6/0.6,4.4/2.1,5.3/2.3}{
+     \fill[oxygene] (\x,\y) circle (3.4pt);}
+  \node[below,font=\footnotesize] at (4.8,-0.2) {\ce{O2} seul};
+  \node[oxygene,above,font=\scriptsize] at (4.8,2.8) {$p_B$};
+  % egale
+  \node at (6.6,1.4) {\Large $=$};
+  % récipient mélange (même volume)
+  \draw[thick] (7.2,0) rectangle (9.6,2.8);
+  \foreach \x/\y in {7.6/0.5,8.2/1.4,8.9/0.8,7.8/2.2,9.0/2.0,8.4/1.0}{
+     \fill[azote] (\x,\y) circle (2.8pt);}
+  \foreach \x/\y in {8.6/0.5,7.7/1.5,9.2/1.4,8.1/2.3,8.9/2.4}{
+     \fill[oxygene] (\x,\y) circle (3.4pt);}
+  \node[below,font=\footnotesize] at (8.4,-0.2) {mélange};
+  \node[primarydark,above,font=\scriptsize] at (8.4,2.8) {$p_{\text{tot}}=p_A+p_B$};
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Origine de la loi.} Chaque gaz suit sa propre équation d'état dans le volume commun
+$V$ à la température commune $T$ : $p_i V = n_i RT$. En sommant sur tous les gaz :
+\[ \Big(\sum_i p_i\Big)V = \Big(\sum_i n_i\Big)RT = n_{\text{tot}}RT, \]
+ce qui montre que $\sum_i p_i$ joue le rôle de la pression totale : $p_{\text{tot}}V=n_{\text{tot}}RT$.
+
+\subsection{Fraction molaire et pression partielle}
+
+\begin{definition}[fraction molaire]
+La \textbf{fraction molaire} $\chi_A$ d'un constituant $A$ est la proportion de ses moles parmi le
+nombre total de moles du mélange :
+\[ \chi_A = \frac{n_A}{n_{\text{total}}}. \]
+C'est un nombre \emph{sans unité}, compris entre $0$ et $1$. La somme des fractions molaires de tous
+les constituants vaut $1$ : $\sum_i \chi_i = 1$.
+\end{definition}
+
+\begin{ou}
+  \item $\chi_A$ : la fraction molaire du gaz $A$ (sans unité) ;
+  \item $n_A$ : la quantité de matière du gaz $A$, en moles (\si{\mole}) ;
+  \item $n_{\text{total}}$ : la quantité de matière totale du mélange, en moles (\si{\mole}).
+\end{ou}
+
+\begin{formule}[pression partielle et fraction molaire]
+\[ \boxed{\,p_A = \chi_A \times p_{\text{totale}}\,} \]
+\end{formule}
+
+\begin{ou}
+  \item $p_A$ : la pression partielle du gaz $A$, en \si{\atm} ;
+  \item $\chi_A$ : la fraction molaire du gaz $A$ (sans unité) ;
+  \item $p_{\text{totale}}$ : la pression totale du mélange, en \si{\atm}.
+\end{ou}
+
+\noindent\textbf{Justification.} En divisant $p_A V = n_A RT$ par $p_{\text{tot}}V=n_{\text{tot}}RT$,
+les facteurs $V$, $R$, $T$ se simplifient :
+\[ \frac{p_A}{p_{\text{tot}}}=\frac{n_A}{n_{\text{tot}}}=\chi_A
+   \quad\Longrightarrow\quad p_A=\chi_A\,p_{\text{tot}}. \]
+La pression partielle d'un gaz est donc, tout simplement, sa \emph{part} de la pression totale —
+proportionnelle à sa fraction molaire.
+
+\begin{remarque}
+Pour des \GP, la fraction \textbf{molaire} est égale à la fraction \textbf{volumique} (conséquence de
+la loi d'Avogadro). C'est pourquoi « l'air contient $20\,\%$ de \ce{O2} en volume » signifie aussi
+$\chi(\ce{O2})=0{,}20$, et donc $p(\ce{O2})=0{,}20\times p_{\text{atm}}$.
+\end{remarque}
+
+\begin{exemple}[pressions partielles dans un mélange \ce{N2}/\ce{O2}]
+Un récipient rigide de $V=\qty{10{,}0}{\litre}$ à $T=\qty{300}{\kelvin}$ contient
+$n(\ce{N2})=\qty{0{,}30}{\mole}$ et $n(\ce{O2})=\qty{0{,}20}{\mole}$. Déterminons la pression totale et
+les pressions partielles.
+
+\smallskip
+\textbf{Étape 1 — quantité totale.}
+$n_{\text{tot}}=0{,}30+0{,}20=\qty{0{,}50}{\mole}$.
+
+\textbf{Étape 2 — pression totale} (équation d'état, $R=\num{0,082}$) :
+\[ p_{\text{tot}}=\frac{n_{\text{tot}}RT}{V}
+   =\frac{\qty{0{,}50}{\mole}\times\num{0,082}\times\qty{300}{\kelvin}}{\qty{10{,}0}{\litre}}
+   =\frac{12{,}3}{10{,}0}=\qty{1{,}23}{\atm}. \]
+
+\textbf{Étape 3 — fractions molaires.}
+\[ \chi(\ce{N2})=\frac{0{,}30}{0{,}50}=0{,}60,\qquad \chi(\ce{O2})=\frac{0{,}20}{0{,}50}=0{,}40
+   \qquad(\text{somme}=1\ \checkmark). \]
+
+\textbf{Étape 4 — pressions partielles.}
+\[ p(\ce{N2})=0{,}60\times1{,}23=\qty{0{,}74}{\atm},\qquad
+   p(\ce{O2})=0{,}40\times1{,}23=\qty{0{,}49}{\atm}. \]
+
+\textbf{Vérification (loi de Dalton).}
+$p(\ce{N2})+p(\ce{O2})=0{,}74+0{,}49=\qty{1{,}23}{\atm}=p_{\text{tot}}$ $\checkmark$. Tout est
+cohérent.
+\end{exemple}
+
+\begin{exemple}[combien d'oxygène dans une pièce ? une application de l'air]
+Combien de moles — et quelle masse — de dioxygène \ce{O2} contient une pièce de dimensions
+$\qty{2}{\meter}\times\qty{5{,}6}{\meter}\times\qty{2}{\meter}$ aux CNTP, sachant que l'air contient
+$20\,\%$ de \ce{O2} en volume ?
+
+\smallskip
+\textbf{Étape 1 — volume d'air.}
+\[ V_{\text{air}}=2\times5{,}6\times2=\qty{22{,}4}{\meter\cubed}=\qty{22400}{\litre}. \]
+
+\textbf{Étape 2 — moles d'air total} (aux CNTP, $\Vm=\qty{22{,}4}{\litre\per\mole}$) :
+\[ n_{\text{air}}=\frac{V_{\text{air}}}{\Vm}=\frac{\qty{22400}{\litre}}{\qty{22{,}4}{\litre\per\mole}}
+   =\qty{1000}{\mole}. \]
+
+\textbf{Étape 3 — moles de \ce{O2}} (fraction volumique $=$ fraction molaire $=0{,}20$) :
+\[ n(\ce{O2})=0{,}20\times1000=\qty{200}{\mole}. \]
+
+\textbf{Étape 4 — masse de \ce{O2}} ($M(\ce{O2})=2\times16=\qty{32}{\gram\per\mole}$) :
+\[ m(\ce{O2})=n\times M=200\times32=\qty{6400}{\gram}=\qty{6{,}4}{\kilo\gram}. \]
+La pièce contient $\qty{200}{\mole}$, soit $\qty{6{,}4}{\kilo\gram}$, de dioxygène. Remarquez l'astuce
+de l'énoncé : le volume tombe pile sur $\qty{22{,}4}{\meter\cubed}$, donc $\qty{1000}{\mole}$ d'air —
+un clin d'œil au volume molaire.
+\end{exemple}
+
+\begin{exemple}[passer d'un volume de gaz à une masse via la stœchiométrie]
+\emph{Cet exemple relie la loi des gaz à un bilan de matière (Fiche 5).} On fait réagir
+$\qty{44{,}8}{\litre}$ de \ce{N2} et $\qty{67{,}2}{\litre}$ de \ce{H2}, mesurés aux CNTP, selon la
+synthèse de l'ammoniac :
+\[ \ce{N2(g) + 3 H2(g) -> 2 NH3(g)}. \]
+Quelle masse maximale d'ammoniac \ce{NH3} peut-on obtenir ?
+
+\smallskip
+\textbf{Étape 1 — volumes $\to$ moles} (aux CNTP, on divise par $\qty{22{,}4}{\litre\per\mole}$) :
+\[ n(\ce{N2})=\frac{44{,}8}{22{,}4}=\qty{2{,}0}{\mole},\qquad
+   n(\ce{H2})=\frac{67{,}2}{22{,}4}=\qty{3{,}0}{\mole}. \]
+
+\textbf{Étape 2 — réactif limitant.} La réaction consomme $1$ \ce{N2} pour $3$ \ce{H2}. Pour
+$\qty{2{,}0}{\mole}$ de \ce{N2}, il faudrait $3\times2=\qty{6{,}0}{\mole}$ de \ce{H2} ; on n'en a que
+$\qty{3{,}0}{\mole}$. C'est donc le \textbf{dihydrogène \ce{H2} qui est limitant}.
+
+\textbf{Étape 3 — quantité d'ammoniac formé.} D'après les coefficients, $3$ \ce{H2} donnent $2$ \ce{NH3} :
+\[ n(\ce{NH3})=\frac{2}{3}\times n(\ce{H2})=\frac{2}{3}\times3{,}0=\qty{2{,}0}{\mole}. \]
+
+\textbf{Étape 4 — masse} ($M(\ce{NH3})=14+3\times1=\qty{17}{\gram\per\mole}$) :
+\[ m(\ce{NH3})=n\times M=2{,}0\times17=\qty{34}{\gram}. \]
+On obtient au mieux $\qty{34}{\gram}$ d'ammoniac. Cet exemple montre la \textbf{chaîne de raisonnement}
+typique en chimie des gaz : \emph{volume} $\xrightarrow{\,\div\,22{,}4\,}$ \emph{moles}
+$\xrightarrow{\text{stœchiométrie}}$ \emph{moles du produit} $\xrightarrow{\,\times M\,}$ \emph{masse}.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse}
+% =====================================================================
+
+\noindent Le schéma suivant relie l'ensemble des notions de la fiche, du cas particulier (lois
+historiques) au cas général (équation d'état), puis aux mélanges (Dalton).
+
+\begin{center}
+\begin{tikzpicture}[
+   node distance=6mm,
+   b/.style={draw,thick,rounded corners=3pt,align=center,inner sep=5pt,font=\small,fill=white},
+   bgp/.style={b,fill=gazcol!12},
+   bf/.style={b,fill=formulacol!12},
+   bd/.style={b,fill=ncol!10},
+   >=Stealth]
+  \node[bf] (etat) {\textbf{Équation d'état du gaz parfait}\\[2pt] $pV=nRT$};
+  \node[bgp,below left=12mm and 6mm of etat] (boyle) {\textbf{Boyle-Mariotte}\\ ($T$ cste)\\ $p_1V_1=p_2V_2$};
+  \node[bgp,below=12mm of etat] (charles) {\textbf{Charles--Gay-Lussac}\\ ($p$ cste)\\ $\dfrac{V_1}{T_1}=\dfrac{V_2}{T_2}$};
+  \node[bgp,below right=12mm and 6mm of etat] (avo) {\textbf{Avogadro}\\ ($p,T$ cstes)\\ $\dfrac{V_1}{n_1}=\dfrac{V_2}{n_2}$};
+  \draw[->] (etat) -- (boyle);
+  \draw[->] (etat) -- (charles);
+  \draw[->] (etat) -- (avo);
+  % branche masse / densité
+  \node[bf,right=14mm of etat] (masse) {\textbf{Masse / densité}\\ $\rho=\dfrac{pM}{RT}$,\quad $M=\dfrac{mRT}{pV}$\\ $M_{\text{gaz}}=28{,}8\,d$};
+  \draw[->] (etat) -- (masse);
+  % branche CNTP
+  \node[bf,above=10mm of etat] (cntp) {\textbf{CNTP} : $\qty{1}{\atm}$, $\qty{273}{\kelvin}$\\ $\Vm=\qty{22{,}4}{\litre\per\mole}$,\quad $n=\dfrac{V}{22{,}4}$};
+  \draw[->] (etat) -- (cntp);
+  % branche Dalton
+  \node[bd,below=12mm of charles] (dalton) {\textbf{Mélanges — loi de Dalton}\\ $p_{\text{tot}}=\sum p_i$,\quad $\chi_A=\dfrac{n_A}{n_{\text{tot}}}$,\quad $p_A=\chi_A\,p_{\text{tot}}$};
+  \draw[->] (charles) -- (dalton);
+\end{tikzpicture}
+\end{center}
+
+\begin{tcolorbox}[boxbase,colback=formulacol!6,colframe=formulacol,
+   title={\textsc{Mémo — les formules à connaître}}]
+\begin{center}\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{l l l}
+\toprule
+\textbf{Situation} & \textbf{Formule} & \textbf{Conditions}\\
+\midrule
+Cas général                 & $pV=nRT$                       & toujours (gaz parfait)\\
+$T$ constante               & $p_1V_1=p_2V_2$                & Boyle-Mariotte\\
+$p$ constante               & $V_1/T_1=V_2/T_2$              & Charles--Gay-Lussac\\
+$p,T$ constantes            & $V_1/n_1=V_2/n_2$             & Avogadro\\
+Nombre de moles             & $n=pV/RT$                      & toujours\\
+Aux CNTP                    & $n=V/22{,}4$                  & $p=\qty{1}{\atm}$, $T=\qty{273}{\kelvin}$\\
+Masse volumique             & $\rho=pM/(RT)$                & toujours\\
+Masse molaire               & $M=mRT/(pV)$                 & toujours\\
+Densité / air               & $M_{\text{gaz}}=28{,}8\,d$    & aux CNTP\\
+Pression partielle          & $p_A=\chi_A\,p_{\text{tot}}$  & mélange (Dalton)\\
+Pression totale             & $p_{\text{tot}}=\sum p_i$     & mélange (Dalton)\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=primary!6,colframe=primary,
+   title={\textsc{Mémo — valeurs et constantes de référence}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Constante des gaz} : $R=\qty{8{,}314}{\joule\per\mole\per\kelvin}=\qty{8{,}314}{\kilo\pascal\litre\per\mole\per\kelvin}=\qty{0{,}082}{\atm\litre\per\mole\per\kelvin}$.
+  \item \textbf{CNTP} (= TPN = PTN) : $p=\qty{1}{\atm}$, $T=\qty{273}{\kelvin}$ ($\theta=\qty{0}{\degreeCelsius}$).
+  \item \textbf{Volume molaire aux CNTP} : $\Vm=\qty{22{,}4}{\litre\per\mole}$.
+  \item \textbf{Air} : $\approx 80\,\%$ \ce{N2} $+$ $20\,\%$ \ce{O2} (en volume) ; $M_{\text{air}}=\qty{28{,}8}{\gram\per\mole}$ ; $\rho_{\text{air}}\approx\qty{1{,}29}{\gram\per\litre}$ (CNTP).
+  \item \textbf{Conversions} : $\qty{1}{\atm}=\qty{101325}{\pascal}=\qty{760}{\mmHg}$ ; $\qty{1}{\meter\cubed}=\qty{1000}{\litre}$ ; $T(\si{\kelvin})=\theta+273{,}15$.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Mémo — les pièges classiques à éviter}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Température} : toujours en \textbf{kelvins} dans $pV=nRT$ et dans les rapports $V/T$, $p/T$. Convertir avant tout calcul.
+  \item \textbf{Cohérence $R$ / unités} : associer $R=\num{0,082}$ à (\si{\atm}, \si{\litre}), ou $R=8{,}314$ à (\si{\pascal}, \si{\meter\cubed}). Ne jamais panacher.
+  \item \textbf{Le volume $\qty{22{,}4}{\litre\per\mole}$} n'est valable qu'\textbf{aux CNTP}. Hors CNTP, repasser par $pV=nRT$.
+  \item \textbf{Fraction molaire $=$ fraction volumique} pour les \GP\ seulement (grâce à Avogadro).
+  \item \textbf{Pression partielle} $p_A=\chi_A\,p_{\text{tot}}$ : c'est la fraction \emph{molaire}, pas la fraction massique.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+   title={\textsc{Méthode générale — résoudre un problème de gaz}}]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Lister} les grandeurs connues et l'inconnue ; repérer ce qui est \emph{constant}.
+  \item \textbf{Convertir} les unités : température en \si{\kelvin}, pression et volume cohérents avec le $R$ choisi.
+  \item \textbf{Choisir la loi} : une variable constante $\to$ loi historique ; sinon $\to$ $pV=nRT$ ; mélange $\to$ Dalton.
+  \item \textbf{Isoler} littéralement l'inconnue \emph{avant} l'application numérique.
+  \item \textbf{Calculer}, puis \textbf{vérifier} l'ordre de grandeur et l'homogénéité (les unités doivent se simplifier correctement).
+\end{enumerate}
+\end{tcolorbox}
+
+\vfill
+\begin{center}
+\textcolor{primary}{\rule{0.5\textwidth}{1pt}}\\[4pt]
+{\small\color{black!60}Fin de la Fiche 7 — Loi des gaz.}
+\end{center}
+
+\end{document}

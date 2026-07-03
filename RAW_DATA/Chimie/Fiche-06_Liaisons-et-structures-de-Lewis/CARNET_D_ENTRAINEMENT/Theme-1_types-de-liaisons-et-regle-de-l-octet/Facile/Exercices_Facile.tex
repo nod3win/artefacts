@@ -1,0 +1,115 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 1
+%  Niveau FACILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{atomO}{RGB}{220,55,45}
+\definecolor{atomN}{RGB}{48,80,200}
+\definecolor{atomH}{RGB}{235,235,235}
+\definecolor{lonepair}{RGB}{120,94,200}
+\definecolor{bondcol}{RGB}{60,60,70}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!5,colframe=primary,
+   title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 1} — Types de liaisons et octet}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Niveau Facile}\\[2pt]
+{\small\itshape Lire la fiche \texttt{Tuto\_Theme-1} avant de commencer. Aucune calculatrice n'est nécessaire.}
+\end{center}
+\medskip
+
+\begin{exo}[électrons de valence]
+En utilisant le numéro de colonne du tableau périodique, donner le nombre d'électrons de
+\textbf{valence} de chacun de ces atomes :
+\[ \ce{C}, \qquad \ce{O}, \qquad \ce{Cl}, \qquad \ce{H}, \qquad \ce{P}, \qquad \ce{Na}, \qquad \ce{S}, \qquad \ce{N}. \]
+\end{exo}
+
+\begin{exo}[duet ou octet ?]
+Pour chacun des atomes suivants, indiquer de combien d'électrons il cherche à s'entourer lorsqu'il
+se lie : \textbf{2} (duet) ou \textbf{8} (octet) ?
+\[ \ce{H}, \qquad \ce{O}, \qquad \ce{C}, \qquad \ce{He}, \qquad \ce{F}, \qquad \ce{N}. \]
+\end{exo}
+
+\begin{exo}[nommer le type de liaison]
+Indiquer, pour chaque situation, s'il s'agit d'une liaison \textbf{covalente}, \textbf{ionique}
+ou \textbf{covalente de coordination (dative)} :
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item la liaison entre les deux atomes de la molécule de dichlore \ce{Cl2} ;
+  \item la cohésion dans le solide chlorure de sodium \ce{NaCl} ;
+  \item la quatrième liaison \ce{N-H} formée lorsque \ce{NH3} capte un proton \ce{H+} ;
+  \item la liaison dans le dihydrogène \ce{H2} (\ce{H-H}).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[doublets liants et non liants]
+On donne ci-dessous la structure de Lewis de la molécule d'eau \ce{H2O}. Autour de l'atome
+d'oxygène, compter :
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item le nombre de \textbf{doublets liants} ;
+  \item le nombre de \textbf{doublets non liants} (paires libres).
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (O) at (0,0);
+  \coordinate (Ha) at (-1.3,-0.9);
+  \coordinate (Hb) at ( 1.3,-0.9);
+  \draw[bondcol,line width=1.4pt] (O)--($(Ha)+(0.25,0.17)$);
+  \draw[bondcol,line width=1.4pt] (O)--($(Hb)+(-0.25,0.17)$);
+  \node[font=\large\bfseries] at (O){O};
+  \node[font=\large\bfseries] at (Ha){H};
+  \node[font=\large\bfseries] at (Hb){H};
+  \foreach \a in {60,120}{\fill[lonepair] ($(O)+(\a:0.55)$) circle (2.4pt);}
+  \foreach \a in {90}{}
+  \fill[lonepair] ($(O)+(75:0.8)$) circle (2.4pt);
+  \fill[lonepair] ($(O)+(105:0.8)$) circle (2.4pt);
+\end{tikzpicture}
+\end{center}
+\end{exo}
+
+\begin{exo}[l'octet est-il respecté ?]
+On donne la structure de Lewis de l'ammoniac \ce{NH3} : l'azote y forme trois liaisons \ce{N-H}
+et porte un doublet non liant.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item Combien d'électrons entourent l'atome d'azote ? (compter les liaisons \emph{et} le doublet libre)
+  \item L'azote respecte-t-il la règle de l'octet ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,101 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 2 — Reconnaissance et classification des groupements fonctionnels
+%  NIVEAU DIFFICILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=2em,bond length=0.9em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\newcommand{\runtitle}{Thème 2 — Difficile — Corrigé}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox[auto counter]{corr}[1]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Corrigé}~\thetcbcounter\ \textmd{--- \itshape #1}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=excol,colframe=excol,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{2pt}}
+
+\begin{document}
+
+\banner{Thème 2 — Reconnaissance des groupements fonctionnels}{Niveau \textbf{Difficile} — Corrigé détaillé \quad$\vert$\quad Fiche 12, Chimie organique}
+
+% ---------------------------------------------------------------------
+\begin{corr}{l'aspirine (acide acétylsalicylique)}
+\textbf{a)} En position ortho du cycle : un groupe $\ce{-C(=O)-OH}$ $\Rightarrow$ \rep{acide carboxylique} ; et un enchaînement $\ce{-O-C(=O)-CH3}$ $\Rightarrow$ \rep{ester}. On compte aussi les \rep{3 doubles liaisons $\ce{C=C}$} du noyau aromatique.\\
+\textbf{b)} Dans $\ce{Ar-O-C(=O)-CH3}$, l'oxygène pontant est \textbf{directement lié à un carbonyle} : il fait partie de la fonction \textbf{ester} ($\ce{-O-C(=O)-}$). Un \emph{éther} exigerait un O pontant \emph{deux carbones non-carbonyle}. \rep{Il n'y a donc aucune fonction éther libre dans l'aspirine} (erreur classique).\\
+\textbf{c)} Le noyau benzénique (Kekulé) apporte \rep{3 doubles liaisons $\ce{C=C}$}.\\[2pt]
+\emph{Bilan : 1 acide carboxylique, 1 ester, 3 doubles liaisons C=C — pas d'éther.}
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{le paracétamol}
+\textbf{a)} Le motif azoté est $\ce{-NH-C(=O)-CH3}$ : l'azote est \textbf{accolé à un carbonyle} $\Rightarrow$ c'est une \rep{amide}, \emph{pas} une amine (malgré la liaison $\ce{C-N}$).\\
+\textbf{b)} Le $\ce{-OH}$ est porté par un carbone \emph{du cycle aromatique} : ce n'est pas un carbone saturé (« tétragonal »). Ce n'est donc \rep{pas un alcool} au sens strict de la fiche : on l'appelle un \rep{phénol}.\\
+\textbf{c)} Le noyau apporte \rep{3 doubles liaisons $\ce{C=C}$}.\\[2pt]
+\emph{Bilan : 1 amide, 1 phénol (OH aromatique), 3 doubles liaisons C=C.}
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{molécule polyfonctionnelle oxygénée (type stéroïde)}
+On parcourt $\ce{HO-CH2-CO-CH2-CH(OH)-CH2-CO-C(CH3)2-OH}$.\\
+\textbf{a)} \rep{2 cétones} : le premier $\ce{C=O}$ est encadré par le C de $\ce{HOCH2}$ et un $\ce{CH2}$ ; le second $\ce{C=O}$ est encadré par un $\ce{CH2}$ et le C de $\ce{C(CH3)2OH}$. Les deux carbonyles sont bien \emph{entre deux carbones}.\\
+\textbf{b)} \rep{3 alcools} :
+\begin{itemize}[leftmargin=1.6em,itemsep=0pt]
+  \item $\ce{HO-CH2-}$ : C--OH lié à 1 autre C $\Rightarrow$ \rep{primaire} ;
+  \item $\ce{-CH(OH)-}$ : C--OH lié à 2 autres C $\Rightarrow$ \rep{secondaire} ;
+  \item $\ce{-C(CH3)2-OH}$ : C--OH lié à 3 autres C $\Rightarrow$ \rep{tertiaire}.
+\end{itemize}
+\textbf{c)} Fonctions oxygénées : \rep{deux cétones et trois alcools} (1 primaire, 1 secondaire, 1 tertiaire) — exactement le type de réponse attendu pour l'hydrocortisone.
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{un fragment de type aspartame}
+On parcourt $\ce{HOOC-CH2-CH(NH2)-CO-NH-CH2-COO-CH3}$, en repérant d'abord les $\ce{C=O}$.\\
+\textbf{a)} \rep{Quatre fonctions} : $\ce{HOOC-}$ $\Rightarrow$ \rep{acide carboxylique} ; $\ce{-NH2}$ $\Rightarrow$ \rep{amine} ; $\ce{-C(=O)-NH-}$ $\Rightarrow$ \rep{amide} ; $\ce{-C(=O)-O-CH3}$ $\Rightarrow$ \rep{ester}.\\
+\textbf{b)} L'azote du $\ce{-NH2}$ est lié \emph{uniquement} à un carbone \textbf{saturé} (le $\ce{CH}$) : \textbf{aucun carbonyle n'est accolé à cet azote}. C'est donc une \rep{amine primaire} (le voisinage d'un $\ce{C=O}$ sur le carbone \emph{adjacent} ne change rien — c'est le motif des acides aminés).\\
+\textbf{c)} Les deux carbonyles se distinguent par ce qui les accompagne : $\ce{C=O}$ lié à un \textbf{N} $\Rightarrow$ \rep{amide} ; $\ce{C=O}$ lié à un \textbf{O--C} $\Rightarrow$ \rep{ester}. On regarde toujours l'atome (autre que le carbone de chaîne) porté par le carbonyle.
+\end{corr}
+
+\end{document}

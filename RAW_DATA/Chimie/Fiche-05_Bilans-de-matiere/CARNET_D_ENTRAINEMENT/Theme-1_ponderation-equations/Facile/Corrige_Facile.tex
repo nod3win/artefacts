@@ -1,0 +1,110 @@
+% =====================================================================
+%  THÈME 1 — Pondération des équations chimiques
+%  Niveau FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{corrcol}{RGB}{176,110,20}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 1 : Pondération}}
+\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Pondération}\\[1pt]
+{\large\color{corrcol}\textbf{Corrigé — Niveau Facile}}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{cor}[synthèse de l'ammoniac]
+\textbf{a)} On équilibre l'azote puis l'hydrogène. À droite \ce{NH3} : pour avoir 2 N, il faut
+$2\,\ce{NH3}$, ce qui donne $2\times3=6$ atomes H ; à gauche il faut donc $3\,\ce{H2}$ ($=6$ H) :
+\[ \boxed{\ce{N2 + 3 H2 -> 2 NH3}} \]
+\emph{Vérif :} N $2=2$ ; H $6=6$. \checkmark
+\rep{b) Somme $=1+3+2=\boxed{6}$.}
+\end{cor}
+
+\begin{cor}[combustion du méthane]
+\textbf{a)} Carbone : 1 C $\to 1\,\ce{CO2}$. Hydrogène : 4 H $\to 2\,\ce{H2O}$ ($2\times2=4$).
+Oxygène à droite : $1\times2+2\times1=4$ atomes O $\Rightarrow 2\,\ce{O2}$ à gauche :
+\[ \boxed{\ce{CH4 + 2 O2 -> CO2 + 2 H2O}} \]
+\rep{b) De chaque côté : \textbf{4 atomes d'oxygène} ($2\,\ce{O2}=4$ à gauche ; $2+2=4$ à droite). \checkmark}
+\end{cor}
+
+\begin{cor}[oxydation du fer]
+Fer : \ce{Fe2O3} impose 2 Fe $\Rightarrow 2\,\ce{Fe}$. Oxygène : 3 O à droite face à des paquets de 2 ;
+ppcm$(2,3)=6$, d'où $3\,\ce{O2}$ (6 O) à gauche et $2\,\ce{Fe2O3}$ (6 O) à droite. On re-corrige le fer :
+$2\,\ce{Fe2O3}=4$ Fe $\Rightarrow 4\,\ce{Fe}$ :
+\[ \boxed{\ce{4 Fe + 3 O2 -> 2 Fe2O3}} \]
+\emph{Vérif :} Fe $4=4$ ; O $6=6$. \checkmark
+\rep{Somme $=4+3+2=\boxed{9}$.}
+\end{cor}
+
+\begin{cor}[repérer une erreur de pondération]
+\textbf{a) Inventaire de « \ce{2 Al + O2 -> Al2O3} ».}
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+Élément & Réactifs & Produits\\ \midrule
+\ce{Al} & $2$ & $2$ \quad\checkmark\\
+\ce{O}  & $2$ (\ce{O2}) & $3$ (\ce{Al2O3}) \quad\textcolor{red}{$\neq$}\\
+\bottomrule
+\end{tabular}
+\end{center}
+L'oxygène n'est \textbf{pas} équilibré ($2\neq3$) : l'équation proposée est \textbf{fausse}.
+
+\textbf{b)} On équilibre l'oxygène par ppcm$(2,3)=6$ : $3\,\ce{O2}$ (6 O) à gauche, $2\,\ce{Al2O3}$
+(6 O) à droite ; puis l'aluminium : $2\,\ce{Al2O3}=4$ Al $\Rightarrow 4\,\ce{Al}$ :
+\[ \boxed{\ce{4 Al + 3 O2 -> 2 Al2O3}} \]
+\rep{Somme $=4+3+2=\boxed{9}$.}
+\end{cor}
+
+\begin{cor}[nommer le type de réaction]
+\begin{enumerate}[label=\arabic*., leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item \ce{AgNO3 + KBr -> AgBr(s) + KNO3} : formation d'un solide peu soluble (\ce{AgBr})
+        $\Rightarrow$ \textbf{précipitation}.
+  \item \ce{CaCO3 -> CaO + CO2} : une seule espèce se scinde en deux $\Rightarrow$ \textbf{décomposition}.
+  \item \ce{C2H4 + H2 -> C2H6} : addition de \ce{H2} sur un alcène $\Rightarrow$ \textbf{hydrogénation}.
+  \item \ce{H2SO4 + 2 NaOH -> Na2SO4 + 2 H2O} : transfert de protons entre un acide et une base
+        $\Rightarrow$ \textbf{acide--base}.
+  \item \ce{4 Fe + 3 O2 -> 2 Fe2O3} : le fer perd des électrons, l'oxygène en gagne
+        $\Rightarrow$ \textbf{redox} (oxydoréduction).
+\end{enumerate}
+\rep{$1=$ précipitation ; $2=$ décomposition ; $3=$ hydrogénation ; $4=$ acide--base ; $5=$ redox.}
+\end{cor}
+
+\end{document}

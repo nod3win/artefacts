@@ -1,0 +1,103 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 3 — Nomenclature et priorité des fonctions
+%  NIVEAU FACILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=2em,bond length=0.9em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\newcommand{\runtitle}{Thème 3 — Facile — Corrigé}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox[auto counter]{corr}[1]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Corrigé}~\thetcbcounter\ \textmd{--- \itshape #1}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=excol,colframe=excol,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{2pt}}
+
+\begin{document}
+
+\banner{Thème 3 — Nomenclature et priorité des fonctions}{Niveau \textbf{Facile} — Corrigé détaillé \quad$\vert$\quad Fiche 12, Chimie organique}
+
+% ---------------------------------------------------------------------
+\begin{corr}{donner le nom (fonction unique)}
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{(A)} $\ce{CH3CH2CH2OH}$ : alcool, 3 C, $\ce{-OH}$ en bout $\Rightarrow$ \rep{propan-1-ol} ;
+  \item \textbf{(B)} $\ce{CH3CH2CH2CHO}$ : aldéhyde, 4 C (le $\ce{CHO}$ est le C1) $\Rightarrow$ \rep{butanal} ;
+  \item \textbf{(C)} $\ce{CH3COCH3}$ : cétone, 3 C, $\ce{C=O}$ en position 2 $\Rightarrow$ \rep{propanone} (propan-2-one) ;
+  \item \textbf{(D)} $\ce{CH3CH2COOH}$ : acide, 3 C (le $\ce{COOH}$ est le C1) $\Rightarrow$ \rep{acide propanoïque}.
+\end{itemize}
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{numéroter la chaîne}
+Pour un acide carboxylique, \textbf{le carbone de la fonction porte toujours le n\textsuperscript{o}1}. Donc :
+\[ \underset{\text{n}^\circ 1}{\ce{COOH}}-\underset{2}{\ce{CH2}}-\underset{3}{\ce{CH2}}-\underset{4}{\ce{CH3}} \]
+Le carbone du $\ce{-COOH}$ est le \rep{n\textsuperscript{o}1} ; on numérote ensuite $2,3,4$ jusqu'au $\ce{CH3}$ terminal. (C'est un cas imposé, valable aussi pour ester, aldéhyde et amide.)
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{repérer la fonction principale}
+\textbf{a)} On a un $\ce{-CHO}$ (\rep{aldéhyde}) et un $\ce{-OH}$ (\rep{alcool}).\\
+\textbf{b)} Dans l'échelle, $\ce{-CHO} > \ce{-OH}$ : la \rep{fonction principale est l'aldéhyde} (suffixe \textit{-al}). L'alcool, moins prioritaire, devient un \rep{préfixe « hydroxy- »}. (Le nom complet serait \emph{3-hydroxypropanal}.)
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{du suffixe à la fonction}
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item butan-2-\textbf{ol} $\Rightarrow$ \rep{alcool} ;
+  \item propan\textbf{al} $\Rightarrow$ \rep{aldéhyde} ;
+  \item acide éthano\textbf{ïque} $\Rightarrow$ \rep{acide carboxylique} ;
+  \item butan-2-\textbf{one} $\Rightarrow$ \rep{cétone} ;
+  \item éthan\textbf{amide} $\Rightarrow$ \rep{amide}.
+\end{itemize}
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{nommer une molécule ramifiée}
+La fonction est un \textbf{alcool} (suffixe \textit{-ol}). La chaîne la plus longue contenant le $\ce{-OH}$ compte \textbf{3 carbones} (propan-). On numérote pour que le $\ce{-OH}$ ait le plus petit indice : $\ce{-OH}$ en \textbf{1}, la ramification $\ce{-CH3}$ tombe alors en \textbf{2}. Nom : \rep{2-méthylpropan-1-ol}.
+\end{corr}
+
+\end{document}

@@ -1,0 +1,145 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 1 : Les chiffres significatifs
+%  THÈME 1 — Compter les chiffres significatifs (le cas des zéros)
+%  Fiche TUTO (à lire avant les exercices)
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=8pt]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{sigcol}{RGB}{0,90,200}
+\definecolor{nosigcol}{RGB}{210,30,40}
+\definecolor{reglecol}{RGB}{150,98,162}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto · Thème 1}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=1.6mm,bottom=1.6mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{regle}[1][]{boxbase,colback=reglecol!7,colframe=reglecol,
+  title={\textsc{Règle}\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\ : \textmd{\itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\ : \textmd{\itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\ : \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 — Compter les chiffres significatifs}\\[1pt]
+{\large\color{primary} Le cas délicat des zéros}
+\end{center}
+
+\vspace{1mm}
+
+Un \textbf{\cs} (CS) est un chiffre qui \emph{porte une information sur la mesure}. Le
+nombre de CS est la « carte d'identité » de la précision d'un nombre mesuré : plus il y en a,
+plus la mesure est précise. Ce thème entraîne \emph{une seule} mécanique : \textbf{savoir compter}
+les CS d'un nombre, en maîtrisant le rôle ambigu du chiffre~$0$.
+
+\begin{regle}[le principe de base]
+On lit le nombre \textbf{de gauche à droite}. Le comptage des CS \textbf{commence au premier chiffre
+non nul}. \textbf{Tout chiffre non nul} ($1$ à $9$) est \emph{toujours} significatif. Toute la
+difficulté se résume donc au traitement des zéros.
+\end{regle}
+
+\begin{regle}[les trois lois des zéros]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Zéros de tête} (à gauche du 1\textsuperscript{er} chiffre non nul) : \textcolor{nosigcol}{\textbf{jamais}}
+        significatifs. Ils ne font que \emph{caler la virgule} (ordre de grandeur). Ex. : dans
+        $\num{0,0072}$, les zéros $0{,}00$ ne comptent pas $\rightarrow$ \textbf{2}~CS.
+  \item \textbf{Zéros captifs} (coincés \emph{entre} deux chiffres non nuls) : \textcolor{sigcol}{\textbf{toujours}}
+        significatifs. Ex. : $\num{2005}$ $\rightarrow$ \textbf{4}~CS.
+  \item \textbf{Zéros de queue \emph{après} la virgule} : \textcolor{sigcol}{\textbf{toujours}}
+        significatifs (on ne les écrirait pas s'ils n'étaient pas mesurés). Ex. : $\num{15,200}$
+        $\rightarrow$ \textbf{5}~CS ; $\num{60,0}$ $\rightarrow$ \textbf{3}~CS.
+\end{itemize}
+\end{regle}
+
+\begin{exemple}[le nombre qui contient tous les cas : $m=\num{0,0035070}$]
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  \node[font=\Large] at (0,0)
+     {$0,\textcolor{nosigcol}{00}\,\textbf{3}\,\textbf{5}\,\textcolor{sigcol}{\textbf 0}\,\textbf{7}\,\textcolor{sigcol}{\textbf 0}$};
+  \draw[nosigcol,thick,->,>=Stealth] (-1.05,0.7) -- (-1.05,0.22);
+  \node[nosigcol,above,align=center,font=\scriptsize] at (-1.05,0.7){zéros de tête\\ \emph{non} sig.};
+  \draw[sigcol,thick,->,>=Stealth] (0.30,-0.72) -- (0.30,-0.22);
+  \draw[sigcol,thick,->,>=Stealth] (1.18,-0.72) -- (1.18,-0.22);
+  \node[sigcol,below,align=center,font=\scriptsize] at (0.74,-0.78){zéros captif et de queue\\ \emph{sont} sig.};
+\end{tikzpicture}
+\end{center}
+Bilan : $3,\,5,\,0,\,7,\,0$ sont significatifs $\Rightarrow \boxed{\mathbf{5}}$~CS.
+\end{exemple}
+
+\begin{attention}[deux pièges à ne jamais oublier]
+\textbf{1. CS $\neq$ décimales.} On ne compte pas les chiffres après la virgule, mais les chiffres
+significatifs. $\num{0,007}$ a \emph{trois} décimales mais \textbf{un seul} CS ; $\num{42,5}$ a
+\emph{une} décimale mais \textbf{trois} CS.
+
+\smallskip
+\textbf{2. Les zéros de queue d'un \emph{entier} sont ambigus.} Écrit tel quel, $\num{100}$ peut avoir
+$1$, $2$ ou $3$~CS : on ne sait pas si les zéros sont mesurés ou de simple cadrage. Seule la
+\textbf{notation scientifique} tranche : $\num{1e2}$ (1~CS), $\num{1,0e2}$ (2~CS), $\num{1,00e2}$ (3~CS).
+\end{attention}
+
+\begin{methode}[compter les CS en 3 réflexes]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item Je repère le \textbf{premier chiffre non nul} : le comptage démarre ici.
+  \item Je compte \textbf{tout} jusqu'au dernier chiffre écrit, en gardant les zéros captifs et les
+        zéros de queue \emph{s'il y a une virgule}.
+  \item Cas d'un entier à zéros de queue ($\num{2500}$) : je signale l'\textbf{ambiguïté} et je propose
+        la notation scientifique adaptée.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[comptage express]
+\small
+\begin{center}\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c c >{\raggedright\arraybackslash}m{7.2cm}}
+\toprule
+\textbf{Nombre} & \textbf{CS} & \textbf{Pourquoi}\\
+\midrule
+$\num{42,5}$      & $3$ & trois chiffres non nuls\\
+$\num{0,0100}$    & $3$ & zéros de tête non sig. ; deux zéros de queue sig.\\
+$\num{2005}$      & $4$ & deux zéros \emph{captifs} sig.\\
+$\num{4,00e3}$    & $3$ & notation scientifique : tout ce qui est écrit est sig.\\
+$\num{2030}$      & $3$ (ambigu) & zéro captif sig. ; zéro de queue d'entier ambigu\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{exemple}
+
+\end{document}

@@ -1,0 +1,204 @@
+% =====================================================================
+%  PRÉAMBULE COMMUN — Carnet d'entraînement, Fiche 2 (Nomenclature)
+%  (inséré physiquement dans chaque document pour qu'il soit autonome)
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques & chimie ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Graphismes & mise en page ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  fit,backgrounds,decorations.pathreplacing}
+\usepackage[a4paper,margin=2.2cm,headheight=28pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE (charte « Chimie » — mauve/prune du cours)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{metalcol}{RGB}{198,150,40}
+\definecolor{nonmetcol}{RGB}{0,140,150}
+\definecolor{oxycol}{RGB}{210,55,45}
+\definecolor{hydcol}{RGB}{60,120,210}
+\definecolor{catcol}{RGB}{200,70,120}
+\definecolor{ancol}{RGB}{40,110,190}
+\definecolor{saltcol}{RGB}{120,90,160}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+\newtcolorbox{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{regle}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Méthode-clé}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!6,colframe=primary,
+  title={\textsc{Astuce concours}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exercice (numéroté) ----
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=primary!4,colframe=primarydark,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% ---- Corrigé (numéroté) ----
+\newtcolorbox[auto counter]{corrige}[1][]{%
+  boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Nomenclature}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{}{0em}{}
+
+% ---- Bandeau de titre réutilisable : \bandeau{Thème}{Sous-titre} ----
+\newcommand{\bandeau}[2]{%
+  \begin{center}
+  \begin{tikzpicture}
+  \node[rectangle,rounded corners=7pt,fill=primary,text=white,
+        minimum width=16.0cm,minimum height=1.7cm,align=center,inner sep=8pt]
+    {{\Large\bfseries #1}\\[3pt]{\normalsize #2}};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{0.3cm}}
+\begin{document}
+\bandeau{Thème 1 — Ions, valences et nombre d'oxydation}{Tuto : la brique de base de toute la nomenclature}
+
+\noindent Avant de \emph{nommer} ou d'\emph{écrire} un composé, il faut savoir lire ses éléments : sont-ils
+métalliques ? quelle charge portent-ils ? à quel \textbf{degré d'oxydation} se trouvent-ils ? Ce thème
+entraîne cette lecture. Tout le reste du carnet en dépend.
+
+\section*{1. Métaux \emph{vs} non-métaux : le premier réflexe}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item Un \textbf{métal} \emph{cède} des électrons $\rightarrow$ il forme un \textbf{cation} (charge $\oplus$).
+        Exemples : \ce{Na}, \ce{K}, \ce{Ca}, \ce{Mg}, \ce{Al}, \ce{Fe}, \ce{Cu}, \ce{Zn}, \ce{Ag}, \ce{Pb}, \ce{Sn}.
+  \item Un \textbf{non-métal} \emph{capte} des électrons $\rightarrow$ il forme un \textbf{anion} (charge $\ominus$)
+        ou se lie par covalence. Exemples : \ce{O}, \ce{H}, \ce{N}, \ce{C}, \ce{S}, \ce{P}, \ce{F}, \ce{Cl}, \ce{Br}, \ce{I}.
+\end{itemize}
+
+\begin{definition}[valence]
+La \textbf{valence} d'un ion est la \emph{valeur absolue de sa charge}. \ce{Na+} et \ce{Cl-} : valence 1 ;
+\ce{Ca^2+} et \ce{SO4^2-} : valence 2 ; \ce{Al^3+} et \ce{PO4^3-} : valence 3.
+\end{definition}
+
+\begin{astuce}
+Un cation a \emph{perdu} des électrons : son nombre d'électrons vaut $Z - (\text{charge})$. Un anion en a
+\emph{gagné} : $Z + (\text{|charge|})$. Ex.\ \ce{Ca^2+} : $20-2=18$ électrons ; \ce{O^2-} : $8+2=10$ électrons.
+\end{astuce}
+
+\section*{2. Les ions polyatomiques à connaître (par c\oe ur)}
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{>{\raggedright\arraybackslash}p{5.0cm} >{\raggedright\arraybackslash}p{5.0cm} >{\raggedright\arraybackslash}p{4.2cm}}
+\rowcolor{primary!18}
+\textbf{Valence 1} & \textbf{Valence 2} & \textbf{Valence 3} \\
+\midrule
+\textbf{ammonium} \ce{NH4+} \emph{(seul cation !)} & sulfate \ce{SO4^2-} & phosphate \ce{PO4^3-} \\
+nitrate \ce{NO3-} / nitrite \ce{NO2-} & sulfite \ce{SO3^2-} & \\
+hydroxyde \ce{OH-} & carbonate \ce{CO3^2-} & \\
+acétate \ce{CH3COO-} & chromate \ce{CrO4^2-} & \\
+permanganate \ce{MnO4-} & dichromate \ce{Cr2O7^2-} & \\
+perchlorate \ce{ClO4-} & thiosulfate \ce{S2O3^2-} & \\
+\end{tabular}
+\end{center}
+\noindent\textbf{Piège de signe :} dans cette liste, \ce{NH4+} est le \emph{seul} cation ; tous les autres
+sont des anions.
+
+\section*{3. Le nombre d'oxydation (n.o.)}
+Le \textbf{nombre d'oxydation} (noté en chiffres romains, $+\mathrm{II}$, $-\mathrm{II}$, \ldots) est la
+charge \emph{fictive} qu'aurait un atome si tous les électrons de chaque liaison étaient donnés à l'atome le
+plus électronégatif. On l'obtient avec six conventions, appliquées dans l'ordre :
+
+\begin{regle}[les 6 conventions du n.o.]
+\begin{enumerate}[label=(\arabic*),leftmargin=2.0em,topsep=2pt,itemsep=0.5pt]
+  \item corps simple (\ce{O2}, \ce{Fe}, \ce{Cl2}) : n.o. \textbf{nul} ;
+  \item ion monoatomique : n.o. \textbf{= sa charge} (\ce{Cl-}$\to-\mathrm{I}$, \ce{Ca^2+}$\to+\mathrm{II}$) ;
+  \item oxygène : $-\mathrm{II}$ (sauf peroxydes $\ce{O2^2-}$ : $-\mathrm{I}$) ;
+  \item hydrogène : $+\mathrm{I}$ (sauf hydrures métalliques \ce{H-} : $-\mathrm{I}$) ;
+  \item alcalins $+\mathrm{I}$, alcalino-terreux $+\mathrm{II}$, fluor $-\mathrm{I}$ ;
+  \item \textbf{somme des n.o. = charge globale} (0 si la molécule est neutre).
+\end{enumerate}
+\end{regle}
+
+\begin{methode}[calculer le n.o. d'un élément « central »]
+On note $x$ le n.o. inconnu, on remplace \ce{O} par $-\mathrm{II}$ et \ce{H} par $+\mathrm{I}$, on multiplie
+chaque n.o. par le nombre d'atomes, puis on écrit : \textbf{somme = charge globale}, et l'on résout.
+\end{methode}
+
+\begin{exemple}[le n.o. du manganèse dans \ce{KMnO4} (grand classique du concours)]
+\ce{KMnO4} est neutre. Le potassium (alcalin) vaut $+\mathrm{I}$, chaque oxygène $-\mathrm{II}$
+(il y en a 4). On pose $x$ = n.o. du manganèse :
+\[ (+\mathrm{I}) + x + 4\times(-\mathrm{II}) = 0 \;\Longrightarrow\; x - \mathrm{VIII} + \mathrm{I}=0
+   \;\Longrightarrow\; \boxed{x = +\mathrm{VII}}. \]
+Le manganèse est donc au degré $+\mathrm{VII}$ (et non $+\mathrm{VIII}$ : c'est le piège classique). Comme
+$Z_{\ce{Mn}}=25$, l'atome a alors cédé 7 électrons : il en garde $25-7=18$.
+\end{exemple}
+
+\begin{attention}
+Un \textbf{métal} n'a jamais un n.o. \emph{négatif} à l'état naturel : on écarte d'office « cuivre $-\mathrm{I}$ »
+ou « fer $-\mathrm{II}$ ». Le n.o. sert surtout à distinguer les métaux à \emph{valences multiples}
+(\ce{Fe^2+}/\ce{Fe^3+}, \ce{Cu+}/\ce{Cu^2+}, \ce{Sn^2+}/\ce{Sn^4+}, \ce{Pb^2+}/\ce{Pb^4+}).
+\end{attention}
+\end{document}

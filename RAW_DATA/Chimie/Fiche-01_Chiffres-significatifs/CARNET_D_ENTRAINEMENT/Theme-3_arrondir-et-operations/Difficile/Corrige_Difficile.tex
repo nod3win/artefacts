@@ -1,0 +1,97 @@
+% =====================================================================
+%  THÈME 3 — Arrondir & opérations — CORRIGÉ — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Difficile · Thème 3}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
+  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,
+  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Corrigé — Niveau Difficile}\\[1pt]
+{\color{primary} Thème 3 : calculs en chaîne \& cas mixtes}
+\end{center}
+\vspace{2mm}
+
+\begin{cor}[Masse molaire puis nombre de moles]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $M(\ce{CO2})=M(\ce{C})+2\,M(\ce{O})=\num{12,01}+2\times\num{16,00}=\num{12,01}+\num{32,00}$.
+        C'est une \emph{addition} : la donnée à $2$ décimales impose $2$ décimales :
+        $\boxed{M(\ce{CO2})=\qty{44,01}{\gram\per\mole}}$ ($4$~CS).
+  \item $\displaystyle n=\frac{m}{M}=\frac{\qty{5,00}{\gram}}{\qty{44,01}{\gram\per\mole}}
+        =\num{0,113610}\ldots\ \si{\mole}$ (valeur non arrondie).
+  \item C'est une \emph{division} : min des \CS\ $=3$ (venant de $m=\num{5,00}$, car $M$ en a $4$).
+        Donc $\boxed{n\approx\qty{0,114}{\mole}}$. La masse $m$ ($3$~CS) fixe la limite.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Volume d'un cube]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $V=a^3=\num{3,20}^3=\qty{32,768}{\centi\metre\cubed}$ (brut).
+  \item Multiplication : $a$ a $3$~CS $\Rightarrow V$ a $3$~CS. Chiffre supprimé $6\,(\ge5)$ :
+        $\boxed{V\approx\qty{32,8}{\centi\metre\cubed}}$.
+  \item « À $4$~CS » : $\qty{32,768}{}\to\qty{32,77}{\centi\metre\cubed}$ (supprimé $8\ge5$).
+        \textbf{Différence :} « arrondir à $n$~CS » est un geste \emph{mécanique} qu'on subit quand
+        l'énoncé l'impose ; « donner le bon nombre de CS » découle des \emph{données} via la règle de
+        l'opération (ici $3$~CS). Les deux ne coïncident pas forcément.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[La catastrophe de la soustraction]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $m_{\text{dépôt}}=\num{47,52}-\num{47,48}=\num{0,04}$. Les deux pesées ont $2$ décimales
+        $\Rightarrow$ résultat à $2$ décimales : $\boxed{m_{\text{dépôt}}=\qty{0,04}{\gram}}$.
+  \item Chaque pesée avait $\mathbf{4}$~CS ; la différence n'en a plus que $\mathbf{1}$. La
+        soustraction de deux nombres très voisins fait s'effondrer la précision.
+  \item Si l'on arrondissait dès une étape intermédiaire, l'erreur d'arrondi se propagerait et
+        s'amplifierait (surtout avant une soustraction voisine). En gardant des \emph{chiffres de
+        garde} et en n'arrondissant qu'au résultat final, on limite cette erreur cumulée.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Masse volumique d'un liquide]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item Masse du liquide (\emph{soustraction}, $2$ décimales chacune) :
+        $m=\num{80,36}-\num{50,00}=\qty{30,36}{\gram}$ ($4$~CS).
+  \item $\displaystyle \rho=\frac{m}{V}=\frac{\qty{30,36}{\gram}}{\qty{30,00}{\milli\litre}}
+        =\num{1,012}\ \si{\gram\per\milli\litre}$. \emph{Division} : min $=4$~CS
+        $\Rightarrow \boxed{\rho=\qty{1,012}{\gram\per\milli\litre}}$.
+  \item $\rho=\qty{1,012}{\gram\per\milli\litre}\times\num{1000}=\qty{1012}{\gram\per\litre}
+        =\num{1,012e3}\ \si{\gram\per\litre}$.
+  \item Étape a) : règle des \textbf{décimales} (soustraction). Étape b) : règle des \textbf{\CS}
+        (division).
+\end{enumerate}
+\end{cor}
+
+\end{document}

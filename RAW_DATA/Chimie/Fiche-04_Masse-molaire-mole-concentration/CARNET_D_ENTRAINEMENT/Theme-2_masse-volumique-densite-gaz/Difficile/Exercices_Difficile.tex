@@ -1,0 +1,126 @@
+% =====================================================================
+%  FICHE 4 — THEME 2 — Exercices niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{M}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{eaucol}{RGB}{150,195,225}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox{donnees}{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Données}}}
+\newcounter{exo}
+\newenvironment{exo}[1][]{%
+  \par\medskip\refstepcounter{exo}%
+  \noindent\begin{tcolorbox}[boxbase,colback=primary!7,colframe=primary,
+     title={\textsc{Exercice \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
+  {\end{tcolorbox}}
+
+% ---- macro : un cylindre gradue (yscale) ----
+% #1 = decalage x (cm) ; #2 = niveau final (mL) ; #3 = etiquette
+\newcommand{\cylindre}[3]{%
+\begin{scope}[xshift=#1cm,yscale=0.30]
+  \fill[eaucol!55] (0.05,0) rectangle (1.05,{#2-8});
+  \fill[gray!55] (0.35,0.4) rectangle (0.75,2.2);
+  \draw[gray!70,line width=1pt] (0,0) rectangle (1.1,15.5);
+  \foreach \r in {10,12,14,16,18,20,22}{
+     \draw[gray!70] (0,{\r-8}) -- (0.25,{\r-8});
+     \node[left,font=\tiny,inner sep=1pt] at (0,{\r-8}) {\r};}
+  \node[font=\footnotesize] at (0.55,-3.2) {(#3)};
+  \node[left,font=\tiny] at (0,-1.4) {mL};
+\end{scope}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\NA}{N_{\!\text{A}}}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- Niveau Difficile}\\[2pt]
+{\color{primary}\itshape Attribuer, identifier, comparer des volumes}
+\end{center}
+
+\begin{donnees}
+Masses molaires atomiques (\si{\gram\per\mole}) : $\ce{H}=1$ ; $\ce{C}=12$ ; $\ce{N}=14$ ;
+$\ce{O}=16$.\quad $V_m=\SI{22.4}{\litre\per\mole}$ aux CNTP.
+\end{donnees}
+
+\begin{exo}[attribuer trois solides à leur cylindre]
+On plonge séparément trois solides non solubles \ce{X}, \ce{Y} et \ce{Z}, tous de masse
+$\SI{20.0}{\gram}$, dans trois cylindres gradués contenant chacun $\SI{10.0}{\milli\litre}$ d'eau.
+Les niveaux finals lus sont représentés ci-dessous :
+\begin{center}
+\begin{tikzpicture}
+  \cylindre{0}{15}{a}
+  \cylindre{3.2}{12}{b}
+  \cylindre{6.4}{20}{c}
+\end{tikzpicture}
+\end{center}
+Les masses volumiques des solides sont $\rho(\ce{X})=\SI{4.0}{\gram\per\cubic\centi\metre}$,
+$\rho(\ce{Y})=\SI{10.0}{\gram\per\cubic\centi\metre}$ et
+$\rho(\ce{Z})=\SI{2.0}{\gram\per\cubic\centi\metre}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Calculer le volume de chacun des trois solides.
+  \item En déduire le niveau d'eau final attendu dans chaque cas.
+  \item Attribuer à chaque solide (\ce{X}, \ce{Y}, \ce{Z}) le cylindre correspondant (a, b ou c).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[combien de moles de dioxygène dans une pièce ?]
+On considère une pièce de dimensions $\SI{2}{\metre}\times\SI{2}{\metre}\times\SI{5.6}{\metre}$,
+remplie d'air aux CNTP. L'air est constitué de $\SI{20}{\percent}$ de dioxygène et
+$\SI{80}{\percent}$ de diazote (pourcentages \emph{volumiques}).
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Calculer le volume de la pièce, puis l'exprimer en litres.
+  \item En déduire le volume de dioxygène qu'elle contient.
+  \item Calculer la quantité de matière (nombre de moles) de dioxygène.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[de la masse volumique d'un gaz à son identité]
+Aux CNTP, un gaz a une masse volumique $\rho=\SI{1.25}{\gram\per\litre}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item En considérant une mole de ce gaz, exprimer $\rho$ en fonction de la masse molaire $M$ et du
+        volume molaire $V_m$.
+  \item En déduire la masse molaire du gaz, et proposer une identité possible.
+  \item Quelle serait la masse de $\SI{10.0}{\litre}$ de ce gaz aux CNTP ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[même masse, volumes différents]
+On dispose de deux ballons aux CNTP : le premier contient $\SI{32}{\gram}$ de méthane \ce{CH4}, le
+second $\SI{32}{\gram}$ de dioxygène \ce{O2}.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Calculer le volume de gaz dans chaque ballon.
+  \item Lequel occupe le plus grand volume ? Justifier en une phrase.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,1885 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 5
+%  Dérivation
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (thème rouge-corail du livre de mathématiques)
+% =====================================================================
+\definecolor{primary}{RGB}{226,74,88}       % rouge corail (couleur du livre)
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{40,90,150}       % bleu acier — comment faire
+
+% couleurs réutilisées dans les figures
+\definecolor{courbe}{RGB}{32,110,200}       % courbe de f
+\definecolor{courbeder}{RGB}{210,70,40}     % courbe de f'
+\definecolor{tang}{RGB}{0,150,90}           % tangente
+\definecolor{grille}{RGB}{200,205,215}      % grille
+\definecolor{plus}{RGB}{200,60,60}          % signe +
+\definecolor{moins}{RGB}{30,90,200}         % signe -
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Comment faire (méthode pas-à-pas) ----
+\newtcolorbox{commentfaire}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Dérivation}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Dérivation}\\[6pt]
+   {\large Le nombre dérivé, les règles de calcul et l'étude des fonctions}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,5}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : une courbe et sa tangente ---
+\begin{tikzpicture}[scale=1.0]
+  \def\xa{-0.7} \def\xb{4.2}
+  % axes
+  \draw[->,grille,line width=0.8pt] (\xa,0) -- (\xb,0) node[right,black,font=\footnotesize]{$x$};
+  \draw[->,grille,line width=0.8pt] (0,-0.6) -- (0,3.6) node[above,black,font=\footnotesize]{$y$};
+  % courbe f(x) = 0.28 (x-1)^2 + 0.6
+  \draw[courbe,line width=1.6pt,domain=\xa:\xb,smooth,samples=120]
+       plot (\x,{0.28*(\x-1)*(\x-1)+0.6});
+  \node[courbe,font=\small,anchor=west] at (0.3,3.25) {$y=f(x)$};
+  % point de tangence en x0 = 3 : f(3)=0.28*4+0.6=1.72 ; f'(3)=0.56*2=1.12
+  \def\xz{3} \def\fz{1.72} \def\mz{1.12}
+  \fill[primarydark] (\xz,\fz) circle (2.2pt);
+  \node[primarydark,below right,font=\footnotesize] at (\xz,\fz) {$P_0\big(x_0,f(x_0)\big)$};
+  % tangente
+  \draw[tang,line width=1.3pt,domain=1.7:4.1] plot (\x,{\fz+\mz*(\x-\xz)});
+  \node[tang,font=\small,align=center] at (1.55,2.75) {tangente\\ de pente $f'(x_0)$};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir le \textbf{nombre dérivé} d'une fonction en un point comme limite du \textbf{taux d'accroissement} ;
+  \item interpréter ce nombre dérivé comme la \textbf{pente de la tangente} et comme une \textbf{vitesse instantanée} ;
+  \item connaître et appliquer les \textbf{17 formules de dérivation} (puissances, produit, quotient, fonctions composées, trigonométriques, logarithmes, exponentielles) ;
+  \item utiliser le signe de la \textbf{dérivée première} $f'$ pour étudier la croissance et trouver les \textbf{extremums} ;
+  \item utiliser le signe de la \textbf{dérivée seconde} $f''$ pour étudier la \textbf{concavité} et les \textbf{points d'inflexion} ;
+  \item écrire l'\textbf{équation de la tangente} à une courbe en un point donné.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 5 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : à quoi sert la dérivation ?}
+% =====================================================================
+La \textbf{dérivation} est l'un des outils les plus puissants des mathématiques. Elle répond à une
+question apparemment simple mais centrale : \emph{à quelle vitesse une grandeur varie-t-elle à un
+instant précis ?}
+
+Considérons une voiture dont la position évolue dans le temps. On sait calculer sa
+\textbf{vitesse moyenne} : il suffit de diviser la distance parcourue par la durée du trajet. Mais
+comment connaître la vitesse affichée par le compteur \emph{à un instant exact}, par exemple à
+\qty{3}{\second} pile ? C'est précisément ce que permet la dérivation : passer d'une variation
+\emph{moyenne} (entre deux instants) à une variation \emph{instantanée} (en un seul point), grâce à
+l'idée de \textbf{limite}.
+
+Géométriquement, le même outil répond à une autre question : \emph{quelle est l'inclinaison exacte
+d'une courbe en un point donné ?} La réponse est la \textbf{pente de la tangente}, et nous verrons
+qu'elle coïncide exactement avec le nombre dérivé.
+
+\begin{remarque}
+La dérivation se construit en trois temps que ce cours suit dans l'ordre :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{le nombre dérivé en un point} (section \ref{sec:nombre}) : la définition fondatrice ;
+  \item \textbf{les formules de dérivation} (section \ref{sec:formules}) : pour dériver sans recalculer
+        de limite à chaque fois ;
+  \item \textbf{les propriétés des dérivées} (sections \ref{sec:der1}, \ref{sec:der2}, \ref{sec:tangente}) :
+        ce que $f'$ et $f''$ nous apprennent sur la fonction $f$ (variations, extremums, concavité, tangente).
+\end{enumerate}
+\end{remarque}
+
+% =====================================================================
+\section{Le nombre dérivé et la fonction dérivée}
+\label{sec:nombre}
+% =====================================================================
+
+\subsection{Le taux d'accroissement (variation moyenne)}
+
+Avant de parler de variation instantanée, il faut parler de variation \emph{moyenne} entre deux
+points. C'est le rôle du taux d'accroissement.
+
+\begin{definition}[Taux d'accroissement de $f$ entre $x_0$ et $x_0+h$]
+Soit $f$ une fonction et $x_0$ un point de son domaine. Pour un petit écart $h\neq 0$, le
+\textbf{taux d'accroissement} (ou taux de variation moyen) de $f$ entre $x_0$ et $x_0+h$ est le
+quotient
+\[
+   \tau(h)=\frac{f(x_0+h)-f(x_0)}{h}.
+\]
+\end{definition}
+
+\noindent Décortiquons ce quotient, terme par terme :
+\begin{ou}
+  \item $f(x_0+h)-f(x_0)$ : la \textbf{variation de la sortie} (de l'ordonnée $y$), c'est-à-dire de
+        combien la fonction a augmenté ou diminué. Unité : celle de $y$ (par exemple des mètres en cinématique) ;
+  \item $h=(x_0+h)-x_0$ : la \textbf{variation de l'entrée} (de l'abscisse $x$), l'écart entre les deux
+        points. Unité : celle de $x$ (par exemple des secondes) ;
+  \item $\tau(h)$ : le rapport des deux, soit la variation de $y$ \emph{par unité} de variation de $x$.
+        Son unité est donc $[y]/[x]$ (par exemple des \unit{\metre\per\second}).
+\end{ou}
+
+Géométriquement, $\tau(h)$ est la \textbf{pente de la sécante} qui joint les deux points
+$A\big(x_0,f(x_0)\big)$ et $B\big(x_0+h,\,f(x_0+h)\big)$ de la courbe.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  \def\xz{1} \def\h{2}
+  % grille légère
+  \draw[grille,very thin] (-0.3,-0.3) grid[step=0.5] (4.2,3.4);
+  % axes
+  \draw[->,line width=0.9pt] (-0.3,0) -- (4.3,0) node[right,font=\footnotesize]{$x$};
+  \draw[->,line width=0.9pt] (0,-0.3) -- (0,3.5) node[above,font=\footnotesize]{$y$};
+  % courbe f(x)=0.35 x^2 + 0.3
+  \draw[courbe,line width=1.4pt,domain=-0.2:3.9,smooth,samples=100]
+       plot (\x,{0.35*\x*\x+0.3});
+  \node[courbe,font=\small,anchor=west] at (0.2,3.25) {$y=f(x)$};
+  % points A et B
+  \def\fa{0.65} % 0.35*1+0.3
+  \def\fb{2.75} % 0.35*9+0.3 -> at x=3 : 0.35*9+0.3=3.45 ; use x0+h=3
+  \pgfmathsetmacro{\fbb}{0.35*(\xz+\h)*(\xz+\h)+0.3}
+  \fill[primarydark] (\xz,\fa) circle (1.6pt) node[below right,font=\footnotesize]{$A$};
+  \fill[primarydark] (\xz+\h,\fbb) circle (1.6pt) node[above left,font=\footnotesize]{$B$};
+  % secante
+  \pgfmathsetmacro{\pente}{(\fbb-\fa)/\h}
+  \draw[courbeder,line width=1.2pt,domain=0.3:3.8]
+       plot (\x,{\fa+\pente*(\x-\xz)});
+  \node[courbeder,font=\small] at (1.0,2.7) {sécante $(AB)$};
+  % triangle des accroissements
+  \draw[dashed,black!55] (\xz,\fa) -- (\xz+\h,\fa) -- (\xz+\h,\fbb);
+  \node[font=\footnotesize] at (\xz+\h/2,\fa-0.28) {$h$};
+  \node[font=\footnotesize,align=left] at (\xz+\h+0.95,{(\fa+\fbb)/2})
+       {$f(x_0{+}h)$\\$-\,f(x_0)$};
+  % abscisses
+  \node[font=\footnotesize] at (\xz,-0.25) {$x_0$};
+  \node[font=\footnotesize] at (\xz+\h,-0.25) {$x_0{+}h$};
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 1}} : le taux d'accroissement est la pente de la sécante $(AB)$.
+Le triangle « horizontal $h$, vertical $f(x_0+h)-f(x_0)$ » donne directement $\tau(h)$.}
+\end{center}
+
+\subsection{Le nombre dérivé (variation instantanée)}
+
+Faisons maintenant tendre $h$ vers $0$ : le point $B$ glisse sur la courbe et se rapproche de $A$.
+La sécante $(AB)$ pivote autour de $A$ et tend vers une position limite : la \textbf{tangente}. La
+pente de cette tangente est le \textbf{nombre dérivé}.
+
+\begin{definition}[Fonction dérivable en un point — nombre dérivé]
+On suppose que la fonction $f$ est continue au point $x=x_0$. On dit que $f$ est \textbf{dérivable au
+point} $x=x_0$ si le taux d'accroissement de $f$ au point $x_0$ admet une \textbf{limite réelle}
+lorsque $h$ tend vers zéro. Cette limite est appelée \textbf{nombre dérivé} de $f$ en $x_0$ et se
+note $f'(x_0)$ :
+\[
+   \boxed{\;\limh \frac{f(x_0+h)-f(x_0)}{h}=f'(x_0)\;}
+\]
+\end{definition}
+
+\begin{ou}
+  \item $x_0$ : le \textbf{point} où l'on calcule la dérivée (une abscisse fixée) ;
+  \item $h$ : l'écart qui tend vers $0$ — c'est le c\oe ur du passage « moyen $\to$ instantané » ;
+  \item $f'(x_0)$ : le \textbf{nombre dérivé}, valeur unique qui mesure la variation instantanée de $f$
+        en $x_0$. C'est un \emph{nombre}, pas une fonction. Son unité est $[y]/[x]$ ;
+  \item « limite réelle » : la limite doit exister \emph{et} être un nombre fini. Si elle n'existe pas
+        (ou vaut $\pm\infty$), $f$ n'est pas dérivable en $x_0$.
+\end{ou}
+
+\begin{remarque}[Une autre écriture, utile pour la tangente]
+En posant $x=x_0+h$ (donc $h=x-x_0$, et $h\to 0 \Leftrightarrow x\to x_0$), la même définition s'écrit
+\[
+   f'(x_0)=\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}.
+\]
+Cette forme « avec $x$ » est celle qu'on retrouvera pour l'équation de la tangente (section \ref{sec:tangente}).
+\end{remarque}
+
+\subsection{Interprétation géométrique : la pente de la tangente}
+
+\begin{theoreme}[Nombre dérivé = pente de la tangente]
+Si $f$ est dérivable en $x_0$, alors la courbe de $f$ admet au point $P_0\big(x_0,f(x_0)\big)$ une
+\textbf{tangente} dont le \textbf{coefficient angulaire} (la pente) est exactement $f'(x_0)$.
+\end{theoreme}
+
+C'est l'image à retenir : la tangente est la « position limite » des sécantes lorsque le second point
+se rapproche du premier.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  \draw[->,line width=0.9pt] (-0.3,0) -- (4.4,0) node[right,font=\footnotesize]{$x$};
+  \draw[->,line width=0.9pt] (0,-0.3) -- (0,3.6) node[above,font=\footnotesize]{$y$};
+  \def\xz{1.5}
+  \pgfmathsetmacro{\fz}{0.30*\xz*\xz+0.4}
+  \pgfmathsetmacro{\mz}{0.60*\xz}
+  % courbe
+  \draw[courbe,line width=1.5pt,domain=-0.2:4.0,smooth,samples=120]
+       plot (\x,{0.30*\x*\x+0.4});
+  \node[courbe,font=\small,anchor=west] at (0.2,2.95) {$y=f(x)$};
+  % trois sécantes qui pivotent (B se rapproche de A)
+  \foreach \hh/\op in {2.2/30, 1.4/55, 0.7/80}{
+    \pgfmathsetmacro{\fb}{0.30*(\xz+\hh)*(\xz+\hh)+0.4}
+    \pgfmathsetmacro{\pe}{(\fb-\fz)/\hh}
+    \draw[black!\op,line width=0.7pt,domain=0.3:4.0] plot (\x,{\fz+\pe*(\x-\xz)});
+    \fill[black!\op] (\xz+\hh,\fb) circle (1.3pt);
+  }
+  % tangente
+  \draw[tang,line width=1.4pt,domain=0.1:3.6] plot (\x,{\fz+\mz*(\x-\xz)});
+  \node[tang,font=\small] at (3.35,2.05) {tangente};
+  % point A
+  \fill[primarydark] (\xz,\fz) circle (2pt) node[below right,font=\footnotesize]{$P_0$};
+  \node[font=\footnotesize] at (\xz,-0.25) {$x_0$};
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 2}} : quand $h\to 0$, les sécantes (en gris) pivotent vers la
+\textcolor{tang}{tangente} (en vert). Sa pente est $f'(x_0)$.}
+\end{center}
+
+\subsection{Interprétation cinématique : la vitesse instantanée}
+
+En physique, si $f(x)$ donne la \textbf{position} d'un mobile en fonction du temps $x$, alors :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item le taux d'accroissement $\dfrac{f(x_0+h)-f(x_0)}{h}$ est la \textbf{vitesse moyenne} entre les
+        instants $x_0$ et $x_0+h$ ;
+  \item le nombre dérivé $f'(x_0)$ est la \textbf{vitesse instantanée} à l'instant $x_0$.
+\end{itemize}
+
+Détaillons l'exemple fondateur du livre, celui d'un mobile en mouvement rectiligne uniformément
+accéléré (MRUA).
+
+\begin{exemple}[Vitesse instantanée d'un mobile en MRUA]
+On considère la trajectoire d'un mobile en MRUA d'équation horaire
+\[
+   y=f(x)=\tfrac12\,x^2,
+\]
+avec une accélération $a=\qty{1}{\metre\per\second\squared}$, $x$ le temps en secondes et une vitesse
+initiale $v_0=\qty{0}{\metre\per\second}$. On cherche la dérivée $f'(x_0)$, c'est-à-dire la vitesse
+instantanée à l'instant $x_0$.
+
+\medskip
+\textbf{Étape 1 — écrire le taux d'accroissement.}
+\[
+   f'(x_0)=\limh\frac{f(x_0+h)-f(x_0)}{h}
+          =\limh\frac{\tfrac12(x_0+h)^2-\tfrac12(x_0)^2}{h}.
+\]
+
+\textbf{Étape 2 — développer le numérateur.} Comme $(x_0+h)^2=x_0^2+2x_0h+h^2$,
+\[
+   \tfrac12(x_0+h)^2-\tfrac12 x_0^2
+   =\tfrac12\big(x_0^2+2x_0h+h^2-x_0^2\big)
+   =\tfrac12\big(2x_0h+h^2\big).
+\]
+
+\textbf{Étape 3 — simplifier par $h$} (licite car $h\neq 0$ tant que la limite n'est pas prise) :
+\[
+   f'(x_0)=\limh\frac{\tfrac12(2x_0h+h^2)}{h}
+          =\limh\frac{\tfrac12\,h\,(2x_0+h)}{h}
+          =\limh\frac{2x_0+h}{2}.
+\]
+
+\textbf{Étape 4 — faire tendre $h$ vers $0$.} Le terme $h$ disparaît :
+\[
+   f'(x_0)=\frac{2x_0+0}{2}=x_0.
+\]
+
+\textbf{Conclusion.} D'où $f'(x_0)=x_0$. Cela donne directement la vitesse instantanée à chaque instant :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item pour $x_0=3 \Rightarrow f'(x_0)=3$ : la vitesse instantanée vaut \qty{3}{\metre\per\second} à l'instant \qty{3}{\second} ;
+  \item pour $x_0=4 \Rightarrow f'(x_0)=4$ : la vitesse instantanée vaut \qty{4}{\metre\per\second} à l'instant \qty{4}{\second}.
+\end{itemize}
+
+\textbf{Vérification par l'accélération.} Avec ces deux vitesses instantanées, on retrouve bien
+\[
+   a=\qty{1}{\metre\per\second\squared}=\frac{\Delta v}{\Delta t}=\frac{4-3}{1}.
+\]
+On constate donc que pour $f(x)=\tfrac12 x^2$, on a $f'(x)=x$ : la dérivée transforme la loi de
+position en loi de vitesse.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \begin{axis}[
+      width=13.2cm,height=8.4cm,
+      xmin=0,xmax=6.4,ymin=0,ymax=15,
+      xtick={1,2,3},ytick={2,4,6,8,10,12,14},
+      axis lines=middle,
+      clip=false,
+      xlabel={},ylabel={},
+      grid=both,grid style={grille,very thin},
+      tick label style={font=\footnotesize},
+      label style={font=\footnotesize},
+    ]
+    \def\xz{4}\def\xh{4.5}
+    % parabole y = 0.5 x^2
+    \addplot[courbe,line width=1.6pt,domain=0:5,samples=120]{0.5*x^2};
+    \node[courbe,anchor=west] at (axis cs:0.4,12.0) {\small $y=f(x)=\tfrac12 x^2$};
+    % points entiers
+    \addplot[only marks,mark=*,courbe,mark size=1.6pt]
+        coordinates {(0,0)(1,0.5)(2,2)(3,4.5)(4,8)};
+    % x0 = 4 (f=8) et x0+h = 4.5 (f=10.125)
+    \addplot[only marks,mark=*,primarydark,mark size=2.2pt] coordinates {(\xz,8)(\xh,{0.5*\xh*\xh})};
+    % pointillés f(x0) et f(x0+h)
+    \draw[dashed,black!55] (axis cs:0,8) -- (axis cs:\xz,8);
+    \draw[dashed,black!55] (axis cs:0,{0.5*\xh*\xh}) -- (axis cs:\xh,{0.5*\xh*\xh});
+    \draw[dashed,black!55] (axis cs:\xz,0) -- (axis cs:\xz,8);
+    \draw[dashed,black!55] (axis cs:\xh,0) -- (axis cs:\xh,{0.5*\xh*\xh});
+    % labels gauche (clip=false : visibles hors cadre, à gauche des graduations)
+    \node[anchor=east,font=\scriptsize] at (axis cs:-0.55,8) {$f(x_0)$};
+    \node[anchor=east,font=\scriptsize] at (axis cs:-0.55,10.4) {$f(x_0{+}h)$};
+    % accroissement vertical (bien à droite des points)
+    \draw[<->,courbeder,line width=1pt] (axis cs:5.1,8) -- (axis cs:5.1,{0.5*\xh*\xh});
+    \node[courbeder,anchor=west,font=\scriptsize,align=left] at (axis cs:5.2,9.06)
+        {$f(x_0{+}h)$\\$-\,f(x_0)$};
+    % labels abscisses (clip=false : sous l'axe)
+    \node[anchor=north,font=\scriptsize] at (axis cs:\xz,-0.2) {$x_0$};
+    \node[anchor=north,font=\scriptsize] at (axis cs:\xh,-0.2) {$x_0{+}h$};
+    % fleche h
+    \draw[<->,black!60] (axis cs:\xz,1.2) -- (axis cs:\xh,1.2);
+    \node[font=\scriptsize] at (axis cs:4.25,1.75) {$h$};
+    % titres des axes
+    \node[anchor=south west,font=\footnotesize] at (axis cs:0.1,15) {$y$ (position en m)};
+    \node[anchor=north east,font=\footnotesize] at (axis cs:6.4,-0.2) {$x$ (temps en s)};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 3}} : la parabole de position $y=\tfrac12 x^2$. Le rapport
+$\frac{f(x_0+h)-f(x_0)}{h}$ tend vers la pente de la tangente, qui vaut $x_0$ (la vitesse instantanée).}
+\end{center}
+
+\subsection{De la dérivée en un point à la fonction dérivée}
+
+Dans l'exemple précédent, on a trouvé que $f'(x_0)=x_0$ \emph{quel que soit} le point $x_0$ choisi.
+Autrement dit, à chaque abscisse $x$ on peut associer le nombre dérivé en ce point : cela définit une
+\textbf{nouvelle fonction}, la \textbf{fonction dérivée}, notée $f'$.
+
+\begin{definition}[Fonction dérivée]
+Lorsque $f$ est dérivable en tout point d'un intervalle $I$, la \textbf{fonction dérivée} de $f$ est
+la fonction
+\[
+   f' : x\longmapsto f'(x)=\limh\frac{f(x+h)-f(x)}{h},
+\]
+qui à chaque $x$ de $I$ associe le nombre dérivé de $f$ en ce point.
+\end{definition}
+
+\begin{attention}[Ne pas confondre $f'(x_0)$ et $f'$]
+$f'(x_0)$ est un \textbf{nombre} (le nombre dérivé en un point précis $x_0$) ; $f'$ est une
+\textbf{fonction} (la fonction dérivée). On obtient le premier en évaluant la seconde en $x_0$.
+\end{attention}
+
+\begin{remarque}[Dérivabilité et continuité]
+Si une fonction est \textbf{dérivable} en $x_0$, alors elle y est nécessairement \textbf{continue}.
+La réciproque est fausse : une fonction peut être continue sans être dérivable (par exemple en un
+point « anguleux » comme le sommet de $|x|$ en $0$, où la tangente n'est pas définie de manière
+unique). C'est pourquoi la définition commence par supposer $f$ continue en $x_0$.
+\end{remarque}
+
+% =====================================================================
+\section{Le formulaire de dérivation}
+\label{sec:formules}
+% =====================================================================
+Calculer une dérivée à partir de la limite du taux d'accroissement est long et fastidieux. Heureusement,
+une fois la dérivée des fonctions de base établie (par la définition), on dispose de \textbf{règles}
+qui permettent de dériver presque toutes les fonctions usuelles \emph{sans recalculer de limite}.
+
+\medskip
+\noindent Dans tout ce qui suit, on adopte les conventions du livre :
+\begin{ou}
+  \item $a$ : une \textbf{constante} non nulle et positive ;
+  \item $C$ : une \textbf{constante} quelconque ;
+  \item $U$ et $V$ : des \textbf{fonctions} de la variable $x$ ;
+  \item $x$ : la \textbf{variable indépendante} ;
+  \item $U'$, $V'$ : les dérivées de $U$ et $V$. La dérivée de $U(V)$ se note $U'(V')$.
+\end{ou}
+
+\subsection{Les dérivées de référence}
+
+\begin{formule}[Dérivée d'une constante]
+\[
+   C'=0 \qquad (C \text{ est une constante}).
+\]
+\end{formule}
+\noindent \textbf{Interprétation.} Une fonction constante est une droite horizontale : sa pente est
+nulle partout, donc sa dérivée est nulle. Exemple : si $y=3$, alors $y'=0$.
+
+\begin{formule}[Dérivée de la variable]
+\[
+   x'=1.
+\]
+\end{formule}
+\noindent \textbf{Interprétation.} La fonction $y=x$ est la première bissectrice, droite de pente $1$ ;
+sa dérivée vaut donc $1$. Exemple : si $y=2x$, alors $y'=2$ (la pente de la droite $y=2x$).
+
+\begin{formule}[Dérivée d'une puissance (forme composée)]
+\[
+   \big(U^{\,n}\big)' = n\times U^{\,n-1}\times U'.
+\]
+\end{formule}
+\begin{ou}
+  \item $U$ : une fonction de $x$ ;
+  \item $n$ : l'exposant (entier, fractionnaire, positif ou négatif) ;
+  \item $U'$ : la dérivée de la fonction $U$ — c'est le facteur qui « vient de l'intérieur »
+        (règle de la chaîne).
+\end{ou}
+\noindent \textbf{Cas particulier essentiel.} Si $U=x$ (donc $U'=1$), on retrouve $\big(x^n\big)'=n\,x^{n-1}$.
+Cette formule fonctionne aussi avec des \textbf{racines} et des \textbf{exposants négatifs}, à condition de
+réécrire la racine sous forme de puissance : $\sqrt[n]{x^{p}}=x^{p/n}$.
+
+\begin{exemple}[La puissance sous toutes ses formes]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=4pt]
+  \item \textbf{Puissance entière :} $y=x^4 \Rightarrow y'=4\times x^{3}\times x' = 4x^3\times 1 = 4x^3.$
+  \item \textbf{Racine cubique :} on écrit $y=\sqrt[3]{x^2}=x^{2/3}$, puis
+  \[
+     y'=\frac{2}{3}\times x^{\frac{2}{3}-1}\times x'
+       =\frac{2}{3}\times x^{-\frac13}
+       =\frac{2}{3}\times\frac{1}{\sqrt[3]{x}}.
+  \]
+  \item \textbf{Racine carrée :} on écrit $y=\sqrt{x}=x^{1/2}$, puis
+  \[
+     y'=\frac12\,x^{\frac12-1}\,x'=\frac12\,x^{-\frac12}=\frac{1}{2\sqrt{x}}.
+  \]
+  \item \textbf{Forme générale :} $y=\sqrt[n]{x^{p}}=x^{p/n}\Rightarrow y'=\dfrac{p}{n}\,x^{\frac{p}{n}-1}=\dots$
+\end{itemize}
+\end{exemple}
+
+\begin{commentfaire}[Dériver une racine ou un exposant négatif]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Réécrire} la racine en puissance : $\sqrt{x}=x^{1/2}$, $\sqrt[3]{x^2}=x^{2/3}$,
+        $\dfrac{1}{x^2}=x^{-2}$.
+  \item \textbf{Appliquer} $\big(x^n\big)'=n\,x^{n-1}$ : on \emph{descend} l'exposant devant et on
+        \emph{retire} $1$ à l'exposant.
+  \item \textbf{Revenir} si besoin à la notation racine ($x^{-1/2}=\tfrac{1}{\sqrt{x}}$) pour présenter
+        un résultat « propre ».
+\end{enumerate}
+\end{commentfaire}
+
+\subsection{Les règles opératoires}
+
+\begin{formule}[Dérivée d'une somme]
+\[
+   \big(U+V\big)' = U'+V'.
+\]
+\end{formule}
+\noindent \textbf{Interprétation.} La dérivée d'une somme est la somme des dérivées : on dérive chaque
+terme séparément. (De même, $\big(U-V\big)'=U'-V'$, et $\big(a\,U\big)'=a\,U'$ : une constante
+multiplicative « sort » de la dérivée.)
+
+\begin{exemple}[Somme d'une puissance et d'une racine]
+Soit $y=x^2+\sqrt[3]{x}$. On dérive terme à terme :
+\[
+   y'=\big(x^2\big)'+\big(\sqrt[3]{x}\big)'
+     =2x+\frac13\times\frac{1}{\sqrt[3]{x^2}}\qquad (n\in\mathbb{N}_0).
+\]
+\end{exemple}
+
+\begin{formule}[Dérivée d'un produit]
+\[
+   \big(U\times V\big)' = U'\times V + U\times V'.
+\]
+\end{formule}
+\begin{ou}
+  \item $U'\times V$ : on dérive le premier facteur, on garde le second ;
+  \item $U\times V'$ : on garde le premier facteur, on dérive le second ;
+  \item on \textbf{additionne} les deux. \textbf{Attention :} $\big(UV\big)'\neq U'V'$ (erreur classique !).
+\end{ou}
+
+\begin{exemple}[Dérivée d'un produit]
+Soit $y=x\times\sqrt{x+1}$. Posons $U=x$ et $V=\sqrt{x+1}$. Alors $U'=1$ et
+$V'=\dfrac{1}{2\sqrt{x+1}}$ (racine d'une fonction composée). D'où
+\[
+   y'=\underbrace{(x)'}_{U'}\times\big(\sqrt{x+1}\big)+x\times\underbrace{\big(\sqrt{x+1}\big)'}_{V'}
+     =1\times\big(\sqrt{x+1}\big)+x\times\frac{1}{2\sqrt{x+1}}.
+\]
+\end{exemple}
+
+\begin{formule}[Dérivée d'un quotient]
+\[
+   \left(\frac{U}{V}\right)' = \frac{U'\times V - U\times V'}{V^2}.
+\]
+\end{formule}
+\begin{ou}
+  \item au numérateur : \textbf{« dérivée du haut $\times$ bas $-$ haut $\times$ dérivée du bas »}
+        (l'ordre compte, à cause du signe $-$) ;
+  \item au dénominateur : le \textbf{carré du dénominateur} $V^2$ ;
+  \item la formule n'est valable que là où $V\neq 0$.
+\end{ou}
+
+\begin{exemple}[Dérivée d'un quotient]
+Soit $y=\dfrac{x^2}{1+x^4}$. Posons $U=x^2$ (donc $U'=2x$) et $V=1+x^4$ (donc $V'=4x^3$). Alors
+\[
+   y'=\frac{\big(x^2\big)'\times\big(1+x^4\big)-x^2\times\big(1+x^4\big)'}{\big(1+x^4\big)^2}
+     =\frac{2x\times\big(1+x^4\big)-x^2\times\big(4x^3\big)}{\big(1+x^4\big)^2}.
+\]
+\end{exemple}
+
+\begin{commentfaire}[Dériver un quotient $U/V$ sans se tromper de signe]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Identifier} le haut $U$ et le bas $V$, puis calculer à part $U'$ et $V'$.
+  \item \textbf{Écrire} le numérateur dans le bon ordre : $U'V - UV'$ (jamais $UV'-U'V$).
+  \item \textbf{Mettre} $V^2$ au dénominateur.
+  \item \textbf{Développer et simplifier} le numérateur seulement (on laisse souvent $V^2$ factorisé).
+\end{enumerate}
+\end{commentfaire}
+
+\subsection{Les dérivées trigonométriques}
+
+\begin{formule}[Sinus et cosinus composés]
+\[
+   \big(\sin U\big)' = U'\times\cos U
+   \qquad\text{et}\qquad
+   \big(\cos U\big)' = U'\times(-\sin U).
+\]
+\end{formule}
+\noindent \textbf{À retenir :} dériver $\cos$ fait \emph{apparaître un signe moins}. Le facteur $U'$
+est toujours présent dès que l'argument n'est pas simplement $x$.
+
+\begin{exemple}[Sinus et cosinus d'une fonction]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=4pt]
+  \item $y=\sin\big(x^2\big) \Rightarrow y'=\big(x^2\big)'\times\cos\big(x^2\big)=2x\cos\big(x^2\big).$
+  \item $y=\cos\dfrac{x}{2} \Rightarrow y'=\left(\dfrac{x}{2}\right)'\times\left(-\sin\dfrac{x}{2}\right)
+        =-\dfrac12\sin\dfrac{x}{2}.$
+\end{itemize}
+\end{exemple}
+
+\begin{formule}[Tangente et cotangente composées]
+\[
+   \big(\tg U\big)' = U'\times\frac{1}{\cos^2 U}
+   \qquad\text{et}\qquad
+   \big(\cotg U\big)' = -\,U'\times\frac{1}{\sin^2 U}.
+\]
+\end{formule}
+
+\begin{exemple}[Dérivée de $\tg$ et $\cotg$]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=4pt]
+  \item $y=\tg(2x)\Rightarrow y'=(2x)'\times\dfrac{1}{\cos^2(2x)}=\dfrac{2}{\cos^2(2x)}.$
+  \item $y=\cotg x\Rightarrow y'=-(x)'\times\dfrac{1}{\sin^2 x}=\dfrac{-1}{\sin^2 x}.$
+\end{itemize}
+\end{exemple}
+
+\subsection{Les dérivées des fonctions trigonométriques inverses}
+
+\begin{formule}[Arc sinus et arc cosinus]
+\[
+   \big(\arcsin U\big)' = \frac{U'}{\sqrt{1-U^2}}
+   \qquad\text{et}\qquad
+   \big(\arccos U\big)' = \frac{-\,U'}{\sqrt{1-U^2}}.
+\]
+\end{formule}
+\noindent Comme pour $\cos$, l'arc cosinus introduit un signe moins. Le dénominateur $\sqrt{1-U^2}$
+impose $-1<U<1$.
+
+\begin{exemple}[Dérivée de $\arcsin$ et $\arccos$]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=5pt]
+  \item $y=\arcsin x\Rightarrow y'=\dfrac{(x)'}{\sqrt{1-x^2}}=\dfrac{1}{\sqrt{1-x^2}}.$
+  \item $y=\arccos\big(x^2\big)\Rightarrow y'=\dfrac{-\big(x^2\big)'}{\sqrt{1-\big(x^2\big)^2}}
+        =\dfrac{-2x}{\sqrt{1-x^4}}.$
+\end{itemize}
+\end{exemple}
+
+\begin{formule}[Arc tangente et arc cotangente]
+\[
+   \big(\arctg U\big)' = \frac{U'}{1+U^2}
+   \qquad\text{et}\qquad
+   \big(\arccotg U\big)' = \frac{-\,U'}{1+U^2}.
+\]
+\end{formule}
+
+\begin{exemple}[Dérivée de $\arctg$ et $\arccotg$]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=5pt]
+  \item $y=\arctg(2x)\Rightarrow y'=\dfrac{(2x)'}{1+(2x)^2}=\dfrac{2}{1+4x^2}.$
+  \item $y=\arccotg x\Rightarrow y'=\dfrac{-(x)'}{1+(x)^2}=\dfrac{-1}{1+x^2}.$
+\end{itemize}
+\end{exemple}
+
+\subsection{Les dérivées logarithmiques et exponentielles}
+
+\begin{formule}[Logarithme de base $a$ et logarithme népérien]
+\[
+   \big(\log_a U\big)' = \frac{U'}{U\,\ln a}
+   \qquad\text{et}\qquad
+   \big(\ln U\big)' = \frac{U'}{U\times\ln e}=\frac{U'}{U}.
+\]
+\end{formule}
+\begin{ou}
+  \item $\ln a$ : le logarithme népérien de la base $a$ (constante). Pour le logarithme décimal, $a=10$ donc $\ln 10$ apparaît ;
+  \item $\ln e = 1$ : c'est pourquoi le cas du logarithme népérien se simplifie en $\dfrac{U'}{U}$ ;
+  \item $U'$ : la dérivée de l'argument (règle de la chaîne).
+\end{ou}
+
+\begin{exemple}[Dérivée de logarithmes]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=5pt]
+  \item $y=\log_3 x\Rightarrow y'=\dfrac{(x)'}{x\,\ln 3}=\dfrac{1}{x\,\ln 3}.$
+  \item $y=\log_{10} x\Rightarrow y'=\dfrac{(x)'}{x\,\ln 10}=\dfrac{1}{x\,\ln 10}.$
+  \item $y=\ln x\Rightarrow y'=\dfrac{(x)'}{x}=\dfrac{1}{x}.$
+\end{itemize}
+\end{exemple}
+
+\begin{formule}[Exponentielle de base $a$]
+\[
+   \big(a^{\,U}\big)' = U'\times a^{\,U}\times\ln a.
+\]
+\end{formule}
+\noindent \textbf{Cas particulier.} Pour $a=e$ (puisque $\ln e=1$), on obtient la propriété
+remarquable $\big(e^{\,U}\big)'=U'\,e^{\,U}$ : l'exponentielle népérienne est « sa propre dérivée »
+(au facteur $U'$ près).
+
+\begin{exemple}[Dérivée d'une exponentielle]
+$y=3^{\,x}\Rightarrow y'=\big(3^x\big)'=(x)'\times 3^x\times\ln 3 = 3^x\times\ln 3.$
+\end{exemple}
+
+\subsection{Tableau récapitulatif des 17 formules}
+
+Le tableau ci-dessous rassemble toutes les formules, avec à gauche la règle et à droite une
+application typique. C'est le formulaire à mémoriser.
+
+\begin{center}
+\renewcommand{\arraystretch}{2.0}
+\small
+\begin{tabular}{@{}c >{\centering\arraybackslash}m{4.7cm} >{\raggedright\arraybackslash}m{8.3cm}@{}}
+\toprule
+\rowcolor{primary!18}
+\textbf{N\textsuperscript{o}} & \textbf{Formule de dérivation} & \multicolumn{1}{c}{\textbf{Application}}\\
+\midrule
+1. & $C'=0$ & $y=3\Rightarrow y'=0$\\ \hline
+2. & $x'=1$ & $y=2x\Rightarrow y'=2$\\ \hline
+3. & $\big(U^{n}\big)'=n\,U^{n-1}U'$ & $y=x^4\Rightarrow y'=4x^3$ \;;\; $y=\sqrt{x}\Rightarrow y'=\dfrac{1}{2\sqrt{x}}$\\ \hline
+4. & $\big(U+V\big)'=U'+V'$ & $y=x^2+\sqrt[3]{x}\Rightarrow y'=2x+\dfrac{1}{3\sqrt[3]{x^2}}$\\ \hline
+5. & $\big(U\,V\big)'=U'V+U\,V'$ & $y=x\sqrt{x+1}\Rightarrow y'=\sqrt{x+1}+\dfrac{x}{2\sqrt{x+1}}$\\ \hline
+6. & $\left(\dfrac{U}{V}\right)'=\dfrac{U'V-U\,V'}{V^2}$ & $y=\dfrac{x^2}{1+x^4}\Rightarrow y'=\dfrac{2x(1+x^4)-x^2(4x^3)}{(1+x^4)^2}$\\ \hline
+7. & $\big(\sin U\big)'=U'\cos U$ & $y=\sin x^2\Rightarrow y'=2x\cos x^2$\\ \hline
+8. & $\big(\cos U\big)'=-U'\sin U$ & $y=\cos\dfrac{x}{2}\Rightarrow y'=-\dfrac12\sin\dfrac{x}{2}$\\ \hline
+9. & $\big(\tg U\big)'=\dfrac{U'}{\cos^2 U}$ & $y=\tg 2x\Rightarrow y'=\dfrac{2}{\cos^2 2x}$\\ \hline
+10. & $\big(\cotg U\big)'=\dfrac{-U'}{\sin^2 U}$ & $y=\cotg x\Rightarrow y'=\dfrac{-1}{\sin^2 x}$\\ \hline
+11. & $\big(\arcsin U\big)'=\dfrac{U'}{\sqrt{1-U^2}}$ & $y=\arcsin x\Rightarrow y'=\dfrac{1}{\sqrt{1-x^2}}$\\ \hline
+12. & $\big(\arccos U\big)'=\dfrac{-U'}{\sqrt{1-U^2}}$ & $y=\arccos x^2\Rightarrow y'=\dfrac{-2x}{\sqrt{1-x^4}}$\\ \hline
+13. & $\big(\arctg U\big)'=\dfrac{U'}{1+U^2}$ & $y=\arctg 2x\Rightarrow y'=\dfrac{2}{1+4x^2}$\\ \hline
+14. & $\big(\arccotg U\big)'=\dfrac{-U'}{1+U^2}$ & $y=\arccotg x\Rightarrow y'=\dfrac{-1}{1+x^2}$\\ \hline
+15. & $\big(\log_a U\big)'=\dfrac{U'}{U\ln a}$ & $y=\log_{10} x\Rightarrow y'=\dfrac{1}{x\ln 10}$\\ \hline
+16. & $\big(\ln U\big)'=\dfrac{U'}{U}$ & $y=\ln x\Rightarrow y'=\dfrac{1}{x}$\\ \hline
+17. & $\big(a^{U}\big)'=U'\,a^{U}\ln a$ & $y=3^{x}\Rightarrow y'=3^{x}\ln 3$\\
+\bottomrule
+\end{tabular}
+\renewcommand{\arraystretch}{1.0}
+\end{center}
+
+\begin{remarque}
+Dans ce tableau récapitulatif, les \textbf{ensembles de définition} des fonctions ne sont pas précisés.
+En pratique, il faut toujours vérifier où la fonction (et sa dérivée) sont définies : par exemple
+$\sqrt{x}$ n'est dérivable que pour $x>0$, $\ln x$ que pour $x>0$, $\tg x$ que là où $\cos x\neq 0$, etc.
+\end{remarque}
+
+\subsection{La dérivation des fonctions composées}
+
+Les formules 3, 7 à 17 contiennent toutes le facteur $U'$ : c'est la marque de la
+\textbf{règle de dérivation en chaîne}. On dérive « de l'extérieur vers l'intérieur », et on
+\textbf{multiplie} par la dérivée de l'intérieur.
+
+\begin{commentfaire}[Dériver une fonction composée (« en pelures d'oignon »)]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Repérer la couche externe} (la dernière opération appliquée) : est-ce un carré ?
+        un sinus ? une racine ? un logarithme ?
+  \item \textbf{Dériver cette couche} en gardant l'intérieur intact (avec la formule correspondante).
+  \item \textbf{Multiplier} par la dérivée de l'intérieur ($U'$).
+  \item \textbf{Recommencer} si l'intérieur est lui-même composé (on enchaîne les facteurs).
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[Composition de plusieurs couches : $y=\sin^2\big(\sqrt{x}+1\big)$]
+La fonction comporte trois couches : un carré, un sinus, une racine. On utilise successivement
+$\big(U^n\big)'=nU^{n-1}U'$ puis $\big(\sin U\big)'=U'\cos U$.
+
+\medskip
+\textbf{Couche 1 — le carré.} Avec $U=\sin\big(\sqrt{x}+1\big)$ et $n=2$ :
+\[
+   f'(x)=2\,\sin^{1}\big(\sqrt{x}+1\big)\times\Big(\sin\big(\sqrt{x}+1\big)\Big)'.
+\]
+
+\textbf{Couche 2 — le sinus.} On dérive $\sin\big(\sqrt{x}+1\big)$ :
+\[
+   \Big(\sin\big(\sqrt{x}+1\big)\Big)'=\big(\sqrt{x}+1\big)'\times\cos\big(\sqrt{x}+1\big)
+   =\left(\frac{1}{2\sqrt{x}}+0\right)\cos\big(\sqrt{x}+1\big).
+\]
+
+\textbf{Assemblage.}
+\[
+   f'(x)=2\,\sin\big(\sqrt{x}+1\big)\times\frac{1}{2\sqrt{x}}\times\cos\big(\sqrt{x}+1\big).
+\]
+En utilisant l'identité $2\sin\theta\cos\theta=\sin(2\theta)$ avec $\theta=\sqrt{x}+1$, on simplifie :
+\[
+   \boxed{\;f'(x)=\frac{1}{2\sqrt{x}}\,\sin\big(2(\sqrt{x}+1)\big)\;}\qquad \text{pour tout } x\in[1,+\infty[.
+\]
+\end{exemple}
+
+\begin{exemple}[Racine d'un logarithme : $y=\sqrt{\ln(\cos x+2)}$]
+On réécrit la racine en puissance : $f(x)=\big(\ln(\cos x+2)\big)^{1/2}$. Deux formules sont en jeu :
+$\big(U^n\big)'=nU^{n-1}U'$ et $\big(\ln U\big)'=\dfrac{U'}{U}$.
+
+\medskip
+\textbf{Couche externe (puissance $1/2$).}
+\[
+   f'(x)=\frac12\big(\ln(\cos x+2)\big)^{\frac12-1}\times\big(\ln(\cos x+2)\big)'.
+\]
+
+\textbf{Couche interne (logarithme).} Avec $U=\cos x+2$ et $U'=-\sin x$ :
+\[
+   \big(\ln(\cos x+2)\big)'=\frac{-\sin x}{\cos x+2}.
+\]
+
+\textbf{Assemblage.}
+\[
+   \boxed{\;f'(x)=\frac12\times\frac{1}{\sqrt{\ln(\cos x+2)}}\times\frac{-\sin x}{\cos x+2}
+   =\frac{-\sin x}{2(\cos x+2)\sqrt{\ln(\cos x+2)}}\;}
+\]
+\end{exemple}
+
+\begin{exemple}[Logarithme décimal d'un quotient : $y=\dfrac{2}{5}+\log\!\left(\dfrac{2}{x^2+1}\right)$]
+Ici $\log$ désigne le logarithme de base $10$. On combine $\big(\log_a U\big)'=\dfrac{U'}{U\ln a}$ et
+la règle du quotient. La constante $\tfrac25$ disparaît à la dérivation.
+
+\medskip
+\textbf{Dérivée de l'intérieur} $U=\dfrac{2}{x^2+1}$ (quotient avec haut constant) :
+\[
+   U'=\frac{0\times(x^2+1)-2\times(x^2+1)'}{(x^2+1)^2}=\frac{-2\times 2x}{(x^2+1)^2}=\frac{-4x}{(x^2+1)^2}.
+\]
+
+\textbf{Application de la formule du logarithme} (base $10$, donc $\ln 10$) :
+\[
+   f'(x)=0+\frac{U'}{U\,\ln 10}
+        =\frac{\dfrac{-4x}{(x^2+1)^2}}{\dfrac{2}{x^2+1}\times\ln 10}
+        =\frac{-4x}{(x^2+1)^2}\times\frac{x^2+1}{2\ln 10}.
+\]
+
+\textbf{Simplification.}
+\[
+   \boxed{\;f'(x)=\frac{-2x}{x^2+1}\times\frac{1}{\ln 10}\;}
+\]
+\end{exemple}
+
+\subsection{Deux dérivées composées « générales » très utiles}
+
+On rencontre souvent des fonctions où l'on ne connaît pas $f$ explicitement, mais seulement le fait
+qu'elle est dérivable. Les deux résultats suivants sont alors précieux.
+
+\begin{exemple}[Le carré d'une fonction : $g=f^2$]
+Soit $f$ dérivable sur $\R$ et $g(x)=f^2(x)$. Comme $g=f\times f$ (produit de deux fonctions),
+la règle du produit donne
+\[
+   g'(x)=\big(f(x)\times f(x)\big)'=f'(x)\,f(x)+f(x)\,f'(x)=\boxed{\,2\,f'(x)\,f(x)\,}.
+\]
+\textbf{À retenir :} $\big(f^2\big)'=2f'f$ et \emph{non} $2f$ : le facteur $f'$ est indispensable
+(c'est encore la règle de la chaîne, avec $\big(U^2\big)'=2UU'$).
+\end{exemple}
+
+\begin{exemple}[Trois fois le logarithme d'une fonction : $g=3\ln|f|$]
+Soit $f$ dérivable et ne s'annulant pas sur un intervalle $I$, et $g(x)=3\ln|f(x)|$. On distingue
+deux cas selon le signe de $f$, mais le résultat est le même :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item si $f(x)>0$ : $g=3\ln f$, donc $g'=3\times\dfrac{f'}{f}$ ;
+  \item si $f(x)<0$ : $g=3\ln(-f)$, donc $g'=3\times\dfrac{(-f)'}{-f}=3\times\dfrac{-f'}{-f}=3\times\dfrac{f'}{f}$.
+\end{itemize}
+Dans les deux cas :
+\[
+   \boxed{\,g'(x)=3\times\frac{f'(x)}{f(x)}\,}.
+\]
+La valeur absolue ne change donc rien à la dérivée : $\big(\ln|f|\big)'=\dfrac{f'}{f}$.
+\end{exemple}
+
+\begin{exemple}[Composée avec une fonction inconnue : $v(x)=u\big(\ln(x+1)\big)$ et $v(x)=u(3x)$]
+Soit $u$ dérivable. La règle de la chaîne « dérivée de l'extérieur évaluée en l'intérieur,
+$\times$ dérivée de l'intérieur » donne :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=4pt]
+  \item $v(x)=u\big(\ln(x+1)\big)\Rightarrow v'(x)=\big(\ln(x+1)\big)'\times u'\big(\ln(x+1)\big)
+        =\dfrac{u'\big(\ln(x+1)\big)}{x+1}.$
+  \item $v(x)=u(3x)\Rightarrow v'(x)=(3x)'\times u'(3x)=3\,u'(3x).$ \\
+        En particulier si $u(x)=x^2$ (donc $u'(x)=2x$ et $u'(3x)=2\times 3x=6x$), on obtient
+        $v'(x)=3\times 6x=18x$. On le vérifie directement : $v(x)=u(3x)=(3x)^2=9x^2$, d'où
+        $v'(x)=\big(9x^2\big)'=18x$. \checkmark
+\end{itemize}
+\end{exemple}
+
+% =====================================================================
+\section{Propriétés de la dérivée première : variations et extremums}
+\label{sec:der1}
+% =====================================================================
+On entre maintenant dans le c\oe ur des \emph{applications} de la dérivation. La fonction dérivée $f'$
+n'est pas un simple objet de calcul : son \textbf{signe} raconte tout le comportement de $f$.
+
+\begin{theoreme}[Signe de $f'$ et sens de variation]
+Soit une fonction $f$ définie et dérivable sur $\R$ (ou sur un intervalle). Le signe de la fonction
+dérivée $f'$ nous informe sur la \textbf{croissance}, la \textbf{décroissance} et l'existence des
+\textbf{extremums locaux} (maximum et minimum) de $f$ :
+\begin{itemize}[leftmargin=1.7em,topsep=3pt,itemsep=2pt]
+  \item si $f'(x)>0 \Rightarrow$ la fonction $f$ est \textbf{croissante} ;
+  \item si $f'(x)<0 \Rightarrow$ la fonction $f$ est \textbf{décroissante} ;
+  \item si $f'(x)=0$ \textbf{en changeant de signe} $\Rightarrow$ la fonction $f$ présente un
+        \textbf{extremum local}, c'est-à-dire :
+        \begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+          \item un \textbf{maximum local} lorsque $f'$ passe du signe positif au signe négatif ;
+          \item un \textbf{minimum local} lorsque $f'$ passe du signe négatif au signe positif.
+        \end{itemize}
+\end{itemize}
+\end{theoreme}
+
+\noindent \textbf{Pourquoi ?} Si la pente de la tangente est positive ($f'>0$), la courbe « monte »
+quand on avance vers la droite : $f$ croît. Si la pente est négative ($f'<0$), la courbe « descend ».
+Entre une montée et une descente, la courbe atteint un sommet (maximum) ; entre une descente et une
+montée, un creux (minimum). En ces points, la tangente est horizontale, donc $f'=0$.
+
+\medskip
+La figure ci-dessous est le \textbf{tableau de variation} de référence : $f'$ est positive, s'annule
+en $x_0$ en devenant négative (maximum), puis s'annule en $x_1$ en redevenant positive (minimum).
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.0,yscale=1.0]
+  % cadre
+  \draw[primary,line width=1pt] (0,0) rectangle (12,3.4);
+  \draw[primary,line width=1pt] (0,2.4) -- (12,2.4);  % séparation x / f'
+  \draw[primary,line width=1pt] (0,1.7) -- (12,1.7);  % séparation f' / f
+  \draw[primary,line width=1pt] (1.4,0) -- (1.4,3.4); % colonne labels
+  % labels de gauche
+  \node[font=\small] at (0.7,2.9) {$x$};
+  \node[font=\small] at (0.7,2.05) {$f'(x)$};
+  \node[font=\small] at (0.7,0.85) {$f(x)$};
+  % ligne des x : -inf, x0, x1, +inf
+  \node[font=\small] at (1.9,2.9) {$-\infty$};
+  \node[font=\small,primarydark] at (5.6,2.9) {$x_0$};
+  \node[font=\small,primarydark] at (9.0,2.9) {$x_1$};
+  \node[font=\small] at (11.6,2.9) {$+\infty$};
+  % ligne des signes de f'
+  \node[plus,font=\small] at (3.0,2.05) {$+$};
+  \node[plus,font=\small] at (4.3,2.05) {$+$};
+  \node[font=\small] at (5.6,2.05) {$0$};
+  \node[moins,font=\small] at (6.7,2.05) {$-$};
+  \node[moins,font=\small] at (7.6,2.05) {$-$};
+  \node[moins,font=\small] at (8.5,2.05) {$-$};
+  \node[font=\small] at (9.0,2.05) {$0$};
+  \node[plus,font=\small] at (10.1,2.05) {$+$};
+  \node[plus,font=\small] at (11.2,2.05) {$+$};
+  % petites barres sous les zeros (f' s'annule)
+  \draw[black!50] (5.6,1.7) -- (5.6,2.4);
+  \draw[black!50] (9.0,1.7) -- (9.0,2.4);
+  % fleches de variation de f
+  \draw[->,thmcol,line width=1.3pt] (1.7,0.2) -- (5.35,1.45);
+  \node[thmcol,font=\scriptsize,rotate=16] at (3.2,0.72) {croissante};
+  \draw[->,attncol,line width=1.3pt] (5.85,1.45) -- (8.75,0.2);
+  \node[attncol,font=\scriptsize,rotate=-19] at (7.3,0.72) {décroissante};
+  \draw[->,thmcol,line width=1.3pt] (9.25,0.25) -- (11.6,1.45);
+  \node[thmcol,font=\scriptsize,rotate=18] at (10.5,0.72) {croissante};
+  % valeurs des extremums (au-dessus de l'apex / sous le creux)
+  \node[primarydark,font=\footnotesize,anchor=south] at (5.6,1.5)
+       {$f(x_0)$~\textcolor{black!60}{\scriptsize(maximum)}};
+  \node[primarydark,font=\footnotesize,anchor=north] at (9.0,0.15)
+       {$f(x_1)$~\textcolor{black!60}{\scriptsize(minimum)}};
+\end{tikzpicture}\\[3pt]
+{\small\textbf{\textcolor{primary}{Figure 4}} : tableau de variation. La fonction $f$ a un
+\textbf{maximum local} en $x=x_0$ et un \textbf{minimum local} en $x=x_1$.}
+\end{center}
+
+\begin{remarque}[Le changement de signe est essentiel]
+Soit $f$ définie et dérivable sur $]a;b[$. Si $f'$ s'annule en $x_0$ ($x_0\in\,]a;b[$)
+\textbf{et change de signe}, alors $f$ admet un extremum local en $x_0$.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Si $f'$ s'annule \emph{sans} changer de signe, il n'y a \emph{pas} d'extremum (la courbe a
+        juste une tangente horizontale puis repart dans le même sens : c'est un \emph{point
+        d'inflexion à tangente horizontale}).
+  \item On peut aussi avoir un maximum/minimum \textbf{sans dérivée nulle} (par exemple à un point
+        anguleux, ou au bord d'un intervalle fermé).
+\end{itemize}
+\end{remarque}
+
+\begin{commentfaire}[Dresser le tableau de variation d'une fonction]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Déterminer le domaine} de définition de $f$.
+  \item \textbf{Calculer $f'(x)$} avec les formules de dérivation.
+  \item \textbf{Résoudre $f'(x)=0$} : ce sont les abscisses candidates aux extremums (les
+        « racines » de $f'$).
+  \item \textbf{Étudier le signe de $f'$} entre ces racines (tableau de signes — souvent en
+        factorisant $f'$).
+  \item \textbf{Traduire} : $f'>0\Rightarrow$ flèche montante ; $f'<0\Rightarrow$ flèche descendante.
+  \item \textbf{Repérer les extremums} là où $f'$ change de signe, et calculer les valeurs $f(x_i)$.
+\end{enumerate}
+\end{commentfaire}
+
+\subsection{Exemple détaillé : une dérivée qui ne change pas de signe}
+
+\begin{exemple}[$f(x)=3x^3-3x^2+x+1$ — fonction toujours croissante]
+On considère $f$ définie sur $\R$ par $f(x)=3x^3-3x^2+x+1$. Étudions ses variations.
+
+\medskip
+\textbf{Étape 1 — calculer la dérivée.} $f$ est dérivable sur $\R$ (polynôme) et
+\[
+   f'(x)=3\times 3x^2-3\times 2x+1+0=9x^2-6x+1.
+\]
+
+\textbf{Étape 2 — factoriser et chercher les racines.} On reconnaît une identité remarquable :
+\[
+   f'(x)=9x^2-6x+1=(3x-1)^2.
+\]
+Cette dérivée s'annule au point $x=\tfrac13$ (car $3x-1=0\Leftrightarrow x=\tfrac13$).
+
+\textbf{Étape 3 — étudier le signe.} Un carré est toujours positif ou nul : $(3x-1)^2\geq 0$ pour
+tout $x$. Donc $f'(x)\geq 0$ partout, et $f'$ \textbf{ne change pas de signe} en $\tfrac13$
+(elle s'annule mais reste positive de part et d'autre).
+
+\textbf{Étape 4 — conclure.} La fonction $f$ est \textbf{croissante sur tout $\R$}. Bien que
+$f'(\tfrac13)=0$, il n'y a \textbf{aucun extremum local} (la dérivée ne change pas de signe) :
+en $x=\tfrac13$, la courbe présente seulement une tangente horizontale, c'est un point d'inflexion à
+tangente horizontale.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+      width=10.5cm,height=6.6cm,
+      xmin=-1.1,xmax=1.6,ymin=-1.2,ymax=3.2,
+      axis lines=middle,xlabel={$x$},ylabel={$y$},
+      xtick={-1,1},ytick={-1,1},
+      grid=both,grid style={grille,very thin},
+      tick label style={font=\footnotesize},label style={font=\footnotesize},
+      clip=true,
+    ]
+    \addplot[courbe,line width=1.6pt,domain=-0.95:1.45,samples=120]{3*x^3-3*x^2+x+1};
+    \node[courbe,font=\small,anchor=west] at (axis cs:-0.95,2.75) {$y=3x^3-3x^2+x+1$};
+    % point d'inflexion x=1/3
+    \addplot[only marks,mark=*,primarydark,mark size=2pt] coordinates {(0.3333,1.1111)};
+    \draw[tang,line width=1pt,dashed] (axis cs:-0.4,1.1111) -- (axis cs:1.05,1.1111);
+    \node[primarydark,font=\scriptsize,above left] at (axis cs:0.33,1.11) {$x=\tfrac13$};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 5}} : la courbe de $f(x)=3x^3-3x^2+x+1$ est strictement
+croissante ; en $x=\tfrac13$ la tangente est horizontale mais il n'y a pas d'extremum.}
+\end{center}
+
+\subsection{Exemple détaillé : compter les extremums}
+
+\begin{exemple}[$f(x)=\dfrac{x^5}{5}-16x$ — combien d'extremums ?]
+On considère $f$ définie sur $\R$ par $f(x)=\dfrac{x^5}{5}-16x$. Cherchons le nombre d'extremums locaux.
+
+\medskip
+\textbf{Étape 1 — dériver.}
+\[
+   f'(x)=\frac{5x^4}{5}-16=x^4-16.
+\]
+
+\textbf{Étape 2 — factoriser.} On utilise deux fois l'identité $a^2-b^2=(a-b)(a+b)$ :
+\[
+   f'(x)=x^4-16=\big(x^2-4\big)\big(x^2+4\big)=(x-2)(x+2)\big(x^2+4\big).
+\]
+
+\textbf{Étape 3 — résoudre $f'(x)=0$.} Le facteur $x^2+4>0$ ne s'annule jamais. Il reste
+\[
+   f'(x)=0 \Longleftrightarrow x=2 \ \text{ou}\ x=-2.
+\]
+
+\textbf{Étape 4 — tableau de signes.} On reporte les signes de chaque facteur :
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.0,yscale=0.95]
+  \draw[primary,line width=0.9pt] (0,0) rectangle (12,3.2);
+  \foreach \y in {0.8,1.4,2.0,2.6}{\draw[primary,line width=0.7pt] (0,\y) -- (12,\y);}
+  \draw[primary,line width=0.9pt] (2.0,0) -- (2.0,3.2);
+  % labels
+  \node[font=\footnotesize] at (1.0,2.9) {$x$};
+  \node[font=\footnotesize] at (1.0,2.3) {$x+2$};
+  \node[font=\footnotesize] at (1.0,1.7) {$x-2$};
+  \node[font=\footnotesize] at (1.0,1.1) {$x^2+4$};
+  \node[font=\footnotesize] at (1.0,0.4) {$f'(x)$};
+  % entetes x
+  \node[font=\footnotesize] at (2.6,2.9) {$-\infty$};
+  \node[font=\footnotesize,primarydark] at (5.4,2.9) {$-2$};
+  \node[font=\footnotesize,primarydark] at (8.6,2.9) {$2$};
+  \node[font=\footnotesize] at (11.4,2.9) {$+\infty$};
+  % x+2
+  \node[moins,font=\footnotesize] at (3.7,2.3) {$-$}; \node[font=\footnotesize] at (5.4,2.3) {$0$};
+  \node[plus,font=\footnotesize] at (7.0,2.3) {$+$}; \node[plus,font=\footnotesize] at (10.0,2.3) {$+$};
+  % x-2
+  \node[moins,font=\footnotesize] at (3.7,1.7) {$-$}; \node[moins,font=\footnotesize] at (7.0,1.7) {$-$};
+  \node[font=\footnotesize] at (8.6,1.7) {$0$}; \node[plus,font=\footnotesize] at (10.0,1.7) {$+$};
+  % x^2+4
+  \node[plus,font=\footnotesize] at (3.7,1.1) {$+$}; \node[plus,font=\footnotesize] at (7.0,1.1) {$+$};
+  \node[plus,font=\footnotesize] at (10.0,1.1) {$+$};
+  % f'
+  \node[plus,font=\footnotesize] at (3.7,0.4) {$+$}; \node[font=\footnotesize] at (5.4,0.4) {$0$};
+  \node[moins,font=\footnotesize] at (7.0,0.4) {$-$}; \node[font=\footnotesize] at (8.6,0.4) {$0$};
+  \node[plus,font=\footnotesize] at (10.0,0.4) {$+$};
+  \draw[black!45] (5.4,0) -- (5.4,2.6); \draw[black!45] (8.6,0) -- (8.6,2.6);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Étape 5 — conclure.} La dérivée $f'$ change de signe \textbf{deux fois} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item en $x=-2$ : $f'$ passe de $+$ à $-$ $\Rightarrow$ \textbf{maximum local} en $-2$ ;
+  \item en $x=2$ : $f'$ passe de $-$ à $+$ $\Rightarrow$ \textbf{minimum local} en $2$.
+\end{itemize}
+La fonction possède donc \textbf{exactement 2 extremums locaux}.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+      width=11cm,height=7cm,
+      xmin=-3.2,xmax=3.2,ymin=-30,ymax=30,
+      axis lines=middle,xlabel={$x$},ylabel={$y$},
+      xtick={-2,2},ytick={\empty},
+      grid=both,grid style={grille,very thin},
+      tick label style={font=\footnotesize},label style={font=\footnotesize},
+      restrict y to domain=-40:40,clip=true,
+    ]
+    \addplot[courbe,line width=1.6pt,domain=-3.05:3.05,samples=160]{(x^5)/5-16*x};
+    \node[courbe,font=\small,anchor=west] at (axis cs:0.35,17) {$y=\dfrac{x^5}{5}-16x$};
+    % extremums : f(-2)=(-32/5)+32=25.6 ; f(2)=(32/5)-32=-25.6
+    \addplot[only marks,mark=*,attncol,mark size=2.3pt] coordinates {(-2,25.6)};
+    \addplot[only marks,mark=*,thmcol,mark size=2.3pt] coordinates {(2,-25.6)};
+    \node[attncol,font=\scriptsize,above] at (axis cs:-2,25.6) {max local};
+    \node[thmcol,font=\scriptsize,below] at (axis cs:2,-25.6) {min local};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 6}} : la courbe de $f(x)=\tfrac{x^5}{5}-16x$ présente un
+maximum local en $x=-2$ et un minimum local en $x=2$.}
+\end{center}
+
+% =====================================================================
+\section{Propriétés de la dérivée seconde : concavité et inflexion}
+\label{sec:der2}
+% =====================================================================
+La dérivée $f'$ est elle-même une fonction : on peut donc la dériver à son tour. On obtient la
+\textbf{dérivée seconde}, notée $f''$ (lire « $f$ seconde »). Là où $f'$ renseigne sur les variations
+de $f$, la dérivée seconde $f''$ renseigne sur la \textbf{forme} de la courbe : sa \textbf{concavité}.
+
+\begin{definition}[Dérivée seconde]
+Soit $f'$ définie et dérivable sur $\R$. La \textbf{dérivée seconde} de $f$ est la dérivée de la
+dérivée première :
+\[
+   f''(x)=\big(f'(x)\big)'.
+\]
+\end{definition}
+
+\begin{theoreme}[Signe de $f''$ et concavité]
+C'est la dérivée seconde $f''$ qui nous informe sur la \textbf{concavité} de la courbe et sur les
+\textbf{points d'inflexion} :
+\begin{itemize}[leftmargin=1.7em,topsep=3pt,itemsep=2pt]
+  \item si $f''(x)>0 \Rightarrow$ la concavité est orientée vers les $y$ \textbf{positifs}
+        (vers le \textbf{haut}) : la courbe a la forme d'un « bol » $\smallsmile$ ;
+  \item si $f''(x)<0 \Rightarrow$ la concavité est orientée vers les $y$ \textbf{négatifs}
+        (vers le \textbf{bas}) : la courbe a la forme d'une « cloche » $\smallfrown$ ;
+  \item le point $A(x_0,y_0)$ est un \textbf{point d'inflexion} de $f$ si et seulement si :
+        \begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+          \item $f''(x_0)$ \textbf{s'annule en changeant de signe}, et
+          \item $f'(x_0)$ existe.
+        \end{itemize}
+\end{itemize}
+\end{theoreme}
+
+\noindent \textbf{Image à retenir.} Un point d'inflexion est un point où la courbe « change de
+courbure » : elle passe de creuse vers le haut à creuse vers le bas (ou l'inverse). C'est l'endroit
+où la tangente \emph{traverse} la courbe.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % --- concavité vers le haut ---
+  \begin{scope}[xshift=0cm]
+    \draw[->,black!60] (-1.6,0) -- (1.8,0) node[right,font=\scriptsize]{$x$};
+    \draw[->,black!60] (0,-0.4) -- (0,2.3) node[above,font=\scriptsize]{$y$};
+    \draw[courbe,line width=1.5pt,domain=-1.3:1.3,smooth,samples=60] plot (\x,{0.9*\x*\x+0.25});
+    \node[font=\scriptsize,thmcol] at (0,-0.75) {$f''(x)>0$};
+    \node[font=\scriptsize] at (0,-1.15) {concavité vers le \textbf{haut}};
+  \end{scope}
+  % --- point d'inflexion ---
+  \begin{scope}[xshift=6cm]
+    \draw[->,black!60] (-1.8,0) -- (1.9,0) node[right,font=\scriptsize]{$x$};
+    \draw[->,black!60] (0,-1.3) -- (0,1.4) node[above,font=\scriptsize]{$y$};
+    \draw[courbe,line width=1.5pt,domain=-1.4:1.4,smooth,samples=80] plot (\x,{0.55*\x*\x*\x});
+    \fill[primarydark] (0,0) circle (1.8pt);
+    \draw[tang,line width=0.9pt,dashed] (-1.5,0) -- (1.5,0);
+    \node[primarydark,font=\scriptsize,above left] at (0,0) {$A$};
+    \node[font=\scriptsize,primarydark] at (0,-1.7) {point d'inflexion};
+    \node[font=\scriptsize] at (0,-2.1) {$f''$ change de signe};
+  \end{scope}
+  % --- concavité vers le bas ---
+  \begin{scope}[xshift=12cm]
+    \draw[->,black!60] (-1.6,0) -- (1.8,0) node[right,font=\scriptsize]{$x$};
+    \draw[->,black!60] (0,-2.3) -- (0,0.4) node[above,font=\scriptsize]{$y$};
+    \draw[courbe,line width=1.5pt,domain=-1.3:1.3,smooth,samples=60] plot (\x,{-0.9*\x*\x-0.25});
+    \node[font=\scriptsize,attncol] at (0,-2.75) {$f''(x)<0$};
+    \node[font=\scriptsize] at (0,-3.15) {concavité vers le \textbf{bas}};
+  \end{scope}
+\end{tikzpicture}\\[3pt]
+{\small\textbf{\textcolor{primary}{Figure 7}} : à gauche $f''>0$ (bol, vers le haut), au milieu un
+point d'inflexion (changement de concavité), à droite $f''<0$ (cloche, vers le bas).}
+\end{center}
+
+\begin{commentfaire}[Étudier la concavité et trouver les points d'inflexion]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Calculer} $f'$, puis dériver à nouveau pour obtenir $f''$.
+  \item \textbf{Résoudre} $f''(x)=0$ : ce sont les candidats « points d'inflexion ».
+  \item \textbf{Étudier le signe} de $f''$ : là où $f''>0$, concavité vers le haut ;
+        là où $f''<0$, concavité vers le bas.
+  \item \textbf{Confirmer} chaque point d'inflexion : il faut que $f''$ \emph{change} de signe
+        (et que $f'$ existe au point).
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[Une concavité toujours tournée vers le haut]
+Soit $f(x)=x-3\ln|x+2|$, définie sur $\R\setminus\{-2\}$ (on l'étudiera complètement à la
+section \ref{sec:synthese}). Sa dérivée première est $f'(x)=1-\dfrac{3}{x+2}$. Dérivons une seconde fois :
+\[
+   f''(x)=\left(1-\frac{3}{x+2}\right)'=\left(-3(x+2)^{-1}\right)'
+         =-3\times(-1)(x+2)^{-2}\times 1=\frac{3}{(x+2)^2}.
+\]
+Le facteur $(x+2)^2$ est \emph{strictement positif} pour tout $x\neq -2$. Donc $f''(x)>0$ sur tout
+$\R\setminus\{-2\}$ : la concavité de $f$ est \textbf{toujours orientée vers le haut}, et la fonction
+n'admet \textbf{aucun point d'inflexion} (puisque $f''$ ne change jamais de signe).
+
+\medskip
+\textbf{Lecture d'un point particulier.} La courbe de $f''$ coupe l'axe des ordonnées au point
+d'abscisse $0$, c'est-à-dire en $\big(0;f''(0)\big)$ :
+\[
+   f''(0)=\frac{3}{(0+2)^2}=\frac{3}{4}=0{,}75,
+\]
+donc ce point de rencontre est $\big(0;\tfrac34\big)$.
+\end{exemple}
+
+% =====================================================================
+\section{L'équation de la tangente}
+\label{sec:tangente}
+% =====================================================================
+On a vu que $f'(x_0)$ est la \emph{pente} de la tangente à la courbe au point d'abscisse $x_0$.
+On peut maintenant écrire l'\textbf{équation complète} de cette droite tangente.
+
+\begin{theoreme}[Équation de la tangente en un point]
+Soit $f$ une fonction dérivable en $x_0$. Dans un repère orthonormé, la droite passant par
+$P_0\big(x_0;f(x_0)\big)$ et de pente $f'(x_0)$ est la \textbf{tangente} à la courbe d'équation
+$y=f(x)$ au point $P_0$. Son équation est :
+\[
+   \boxed{\;y=(x-x_0)\,f'(x_0)+f(x_0)\;}
+\]
+\end{theoreme}
+
+\begin{ou}
+  \item $f'(x_0)$ : la \textbf{pente} (coefficient angulaire) de la tangente — le nombre dérivé en $x_0$ ;
+  \item $f(x_0)$ : l'\textbf{ordonnée} du point de contact $P_0$ ;
+  \item $x_0$ : l'\textbf{abscisse} du point de contact ;
+  \item $(x;y)$ : les coordonnées d'un point \emph{quelconque} de la tangente.
+\end{ou}
+
+\noindent \textbf{D'où vient cette formule ?} Une droite de pente $m$ passant par $(x_0;y_0)$ a pour
+équation $y-y_0=m(x-x_0)$. En prenant $m=f'(x_0)$ et $y_0=f(x_0)$, on retrouve exactement la formule
+encadrée. La tangente de $f$ en $P_0$ est aussi la limite du taux $\dfrac{f(x)-f(x_0)}{x-x_0}$ quand
+$x$ tend vers $x_0$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  \draw[->,line width=0.9pt] (-0.4,0) -- (4.6,0) node[right,font=\footnotesize]{$x$};
+  \draw[->,line width=0.9pt] (0,-0.4) -- (0,3.7) node[above,font=\footnotesize]{$y$};
+  \def\xz{2.0}
+  \pgfmathsetmacro{\fz}{0.32*\xz*\xz+0.3}   % f(x0)
+  \pgfmathsetmacro{\mz}{0.64*\xz}           % f'(x0)
+  \def\xx{3.0}
+  \pgfmathsetmacro{\fx}{0.32*\xx*\xx+0.3}   % f(x)
+  % courbe
+  \draw[courbe,line width=1.5pt,domain=-0.1:4.1,smooth,samples=120] plot (\x,{0.32*\x*\x+0.3});
+  \node[courbe,font=\small,anchor=west] at (0.3,3.35) {$y=f(x)$};
+  % tangente
+  \draw[tang,line width=1.3pt,domain=0.3:4.2] plot (\x,{\fz+\mz*(\x-\xz)});
+  \node[tang,font=\footnotesize,align=left] at (4.0,2.05) {Tangente de $f$\\ au point $x=x_0$};
+  % secante vers P
+  \draw[black!55,line width=0.8pt,domain=0.8:3.4] plot (\x,{\fz+((\fx-\fz)/(\xx-\xz))*(\x-\xz)});
+  % points
+  \fill[primarydark] (\xz,\fz) circle (2pt) node[above left,font=\footnotesize]{$P_0$};
+  \fill[primarydark] (\xx,\fx) circle (2pt) node[above left,font=\footnotesize]{$P$};
+  % reperes
+  \draw[dashed,black!50] (\xz,0) -- (\xz,\fz); \node[font=\footnotesize,below] at (\xz,0) {$x_0$};
+  \draw[dashed,black!50] (\xx,0) -- (\xx,\fx); \node[font=\footnotesize,below] at (\xx,0) {$x$};
+  \draw[dashed,black!50] (0,\fz) -- (\xz,\fz); \node[font=\footnotesize,left] at (0,\fz) {$f(x_0)$};
+  \draw[dashed,black!50] (0,\fx) -- (\xx,\fx); \node[font=\footnotesize,left] at (0,\fx) {$f(x)$};
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 8}} : la tangente en $P_0$ est la position limite de la
+sécante $(P_0P)$ lorsque $P\to P_0$. Sa pente est $f'(x_0)$.}
+\end{center}
+
+\begin{commentfaire}[Déterminer l'équation de la tangente en $x=x_0$]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Calculer $f(x_0)$} : l'ordonnée du point de contact.
+  \item \textbf{Calculer $f'(x)$}, puis \textbf{évaluer $f'(x_0)$} : la pente.
+  \item \textbf{Remplacer} dans $y=(x-x_0)f'(x_0)+f(x_0)$.
+  \item \textbf{Développer} pour obtenir la forme $y=mx+p$ si on le souhaite.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{remarque}[Tangentes particulières]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Tangente horizontale} : si $f'(x_0)=0$, la tangente est horizontale d'équation
+        $y=f(x_0)$ (cas des extremums et inflexions à tangente horizontale).
+  \item \textbf{Droites perpendiculaires} : deux droites de pentes $m_1$ et $m_2$ sont
+        perpendiculaires si et seulement si $m_1\times m_2=-1$ (c'est-à-dire $m_2=-\tfrac{1}{m_1}$,
+        « l'opposé de l'inverse »).
+  \item \textbf{Lecture de pente sur un graphe} : plus la courbe « monte raide » en un point, plus
+        $f'$ y est grand ; une courbe qui « descend » a $f'<0$.
+\end{itemize}
+\end{remarque}
+
+\subsection{Exemple détaillé : tangente horizontale}
+
+\begin{exemple}[Une tangente horizontale en $x=1$ pour $f(x)=x-3\ln|x+2|$]
+Reprenons $f(x)=x-3\ln|x+2|$, dont la dérivée est $f'(x)=1-\dfrac{3}{x+2}$ (calcul détaillé à la
+section \ref{sec:synthese}). L'équation de la tangente au point d'abscisse $x=1$ est
+$y=(x-1)f'(1)+f(1)$.
+
+\medskip
+\textbf{Pente.}
+\[
+   f'(1)=1-\frac{3}{1+2}=1-\frac{3}{3}=1-1=0.
+\]
+La pente est nulle : \textbf{la tangente est horizontale}.
+
+\medskip
+\textbf{Ordonnée du point de contact.}
+\[
+   f(1)=1-3\ln|1+2|=1-3\ln 3.
+\]
+
+\textbf{Équation de la tangente.} Avec $f'(1)=0$ :
+\[
+   y=(x-1)\times 0+(1-3\ln 3)\quad\Longrightarrow\quad \boxed{\,y=1-3\ln 3\,}.
+\]
+C'est bien l'équation d'une droite horizontale.
+\end{exemple}
+
+\subsection{Exemple détaillé : retrouver $f'(x_0)$ à partir d'un point de la tangente}
+
+\begin{exemple}[La tangente en $x=1$ passe par $(3;2)$, avec $f(1)=0$]
+Soit $f$ continue et dérivable sur $\R$. On sait, par lecture graphique, que $f(1)=0$ et que la
+tangente à la courbe au point d'abscisse $1$ passe \textbf{également} par le point de coordonnées
+$(3;2)$. Quel est le nombre dérivé $f'(1)$ ?
+
+\medskip
+\textbf{Méthode 1 — par la formule de la tangente.} L'équation de la tangente en $x=1$ est
+$y=(x-1)f'(1)+f(1)$. Comme elle passe par $(3;2)$, on remplace $x=3$ et $y=2$ :
+\[
+   2=(3-1)\,f'(1)+f(1)=2f'(1)+0.
+\]
+On résout : $2=2f'(1)\Rightarrow f'(1)=1$.
+
+\medskip
+\textbf{Méthode 2 — par la pente entre deux points.} Le nombre dérivé $f'(1)$ est le coefficient
+angulaire de la tangente. Cette droite passe par les points $\big(1;f(1)\big)=(1;0)$ et $(3;2)$.
+Sa pente vaut donc
+\[
+   f'(1)=\frac{2-0}{3-1}=\frac{2}{2}=1.
+\]
+Les deux méthodes concordent : $\boxed{f'(1)=1}$.
+\end{exemple}
+
+\subsection{Exemple détaillé : tangentes et perpendicularité}
+
+\begin{exemple}[Tangente perpendiculaire à une droite donnée]
+Toujours pour $f(x)=x-3\ln|x+2|$ (donc $f'(x)=1-\tfrac{3}{x+2}$), montrons que la tangente au point
+d'abscisse $x=0$ est perpendiculaire à la droite d'équation $y=2x+1$.
+
+\medskip
+\textbf{Pente de la tangente en $0$.}
+\[
+   f'(0)=1-\frac{3}{0+2}=1-\frac{3}{2}=-\frac{1}{2}.
+\]
+
+\textbf{Ordonnée du point de contact.} $f(0)=0-3\ln|0+2|=-3\ln 2$.
+
+\textbf{Équation de la tangente en $0$.}
+\[
+   y=(x-0)\times\Big(-\tfrac12\Big)+(-3\ln 2)=-\tfrac12 x-3\ln 2.
+\]
+
+\textbf{Test de perpendicularité.} La droite $y=2x+1$ a pour pente $m_1=2$ ; la tangente a pour pente
+$m_2=-\tfrac12$. Or
+\[
+   m_1\times m_2=2\times\Big(-\tfrac12\Big)=-1.
+\]
+Le produit des pentes vaut $-1$ : les deux droites sont bien \textbf{perpendiculaires}. (Autrement dit,
+$-\tfrac12$ est « l'opposé de l'inverse » de $2$.)
+\end{exemple}
+
+% =====================================================================
+\section{Lire un graphe : relier \texorpdfstring{$f$}{f}, \texorpdfstring{$f'$}{f'} et \texorpdfstring{$f''$}{f''}}
+\label{sec:lecture}
+% =====================================================================
+Beaucoup de questions ne demandent aucun calcul : il suffit de \emph{lire} une courbe et d'en déduire
+des informations sur la dérivée. Voici les correspondances à maîtriser, puis des exemples détaillés.
+
+\begin{commentfaire}[Déduire le signe de $f'$ et $f''$ à partir de la courbe de $f$]
+\begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Où $f$ monte} (croissante) $\Rightarrow f'>0$ ; \textbf{où $f$ descend} (décroissante)
+        $\Rightarrow f'<0$.
+  \item \textbf{Aux sommets et aux creux} (extremums) à tangente horizontale $\Rightarrow f'=0$.
+  \item \textbf{Où la courbe est un « bol »} $\smallsmile$ (concave vers le haut) $\Rightarrow f''>0$ ;
+        \textbf{où elle est une « cloche »} $\smallfrown$ (concave vers le bas) $\Rightarrow f''<0$.
+  \item \textbf{La courbe de $f'$} coupe l'axe des $x$ là où $f$ a un extremum ; elle est au-dessus
+        de l'axe là où $f$ croît, en dessous là où $f$ décroît.
+\end{itemize}
+\end{commentfaire}
+
+\subsection{Exemple détaillé : analyser une courbe donnée}
+
+\begin{exemple}[Lecture d'une courbe avec maximum et minimum]
+On considère une fonction $f$ définie sur $[-8;8]$ dont l'allure est la suivante : $f$ croît
+fortement de $x=-8$ jusqu'à un \textbf{maximum} au point $C$ (vers $x\approx 0$, à hauteur $y\approx 7$),
+puis chute jusqu'à un \textbf{minimum} au point $B$ (vers $x\approx 1$, à hauteur $y\approx 0$), et
+remonte doucement ensuite ; le point $A$ se situe juste après $B$, sur la partie remontante.
+
+\medskip
+Analysons quelques affirmations typiques :
+\begin{itemize}[leftmargin=1.6em,topsep=3pt,itemsep=4pt]
+  \item \textbf{« $f$ est croissante sur $[1;8]$ »} — \textcolor{thmcol}{Vrai}. Après le minimum $B$
+        (vers $x=1$), la courbe remonte : pour $x_1<x_2$ dans $[1;8]$, on a $f(x_1)<f(x_2)$.
+  \item \textbf{« $f'$ est strictement positive sur $[-8;-2]$ »} — \textcolor{thmcol}{Vrai}. Sur cette
+        partie, $f$ est strictement croissante, donc sa pente (donc $f'$) est strictement positive.
+  \item \textbf{« Au point $A$, la dérivée de $f$ est nulle »} — \textcolor{attncol}{Faux}. En $A$ la
+        courbe \emph{monte} (partie remontante après $B$) : la tangente est une droite oblique de
+        \emph{pente positive}, donc $f'(A)>0$, pas $0$.
+  \item \textbf{« $f$ a un maximum et un minimum sur $[-8;8]$ »} — \textcolor{thmcol}{Vrai} : maximum
+        local au point $C$, minimum local (négatif ou nul) au point le plus bas, situé entre $A$ et $B$.
+  \item \textbf{« La tangente au point $C$ est horizontale »} — \textcolor{thmcol}{Vrai} : $C$ est un
+        maximum, donc $f'(C)=0$ et la tangente y est horizontale.
+  \item \textbf{« La tangente au point $A$ a un coefficient angulaire positif »} —
+        \textcolor{thmcol}{Vrai}, car la courbe monte en $A$ (cohérent avec $f'(A)>0$).
+\end{itemize}
+\textbf{Comparer des nombres dérivés.} Pour deux abscisses, on compare les \emph{pentes} : là où la
+courbe monte plus raide, $f'$ est plus grand. Par exemple, si en $x=-4$ la montée est plus raide qu'en
+$x=0$ (sommet, pente nulle), alors $f'(-4)>f'(0)$.
+\end{exemple}
+
+\subsection{Exemple détaillé : la courbe de \texorpdfstring{$f$}{f} et celle de \texorpdfstring{$f'$}{f'}}
+
+\begin{exemple}[Reconnaître la courbe de la dérivée]
+Soit $f$ continue et dérivable, dont la courbe a la forme d'une cubique : elle \textbf{monte} jusqu'à
+un maximum en $x=0$, \textbf{descend} jusqu'à un minimum en $x=2$, puis \textbf{remonte}. Quelle est
+l'allure de la courbe de $f'$ ?
+
+\medskip
+\textbf{Raisonnement.}
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $f$ admet un extremum en $x=0$ et en $x=2$ $\Rightarrow f'(0)=0$ et $f'(2)=0$ : la courbe de
+        $f'$ \textbf{coupe l'axe des $x$} en $0$ et en $2$.
+  \item Avant $0$, $f$ croît $\Rightarrow f'>0$ (courbe de $f'$ au-dessus de l'axe).
+  \item Entre $0$ et $2$, $f$ décroît $\Rightarrow f'<0$ (courbe de $f'$ sous l'axe).
+  \item Après $2$, $f$ croît $\Rightarrow f'>0$ (au-dessus de l'axe).
+\end{itemize}
+La dérivée d'une cubique est une \textbf{parabole} ; ici elle s'annule en $0$ et $2$, est positive à
+l'extérieur de $[0;2]$ et négative à l'intérieur : c'est donc une parabole tournée vers le haut,
+passant par $(0;0)$ et $(2;0)$.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+      width=13cm,height=6.4cm,
+      xmin=-1.6,xmax=3.6,ymin=-3,ymax=4.2,
+      axis lines=middle,xlabel={$x$},ylabel={$y$},
+      xtick={0,2},ytick=\empty,
+      grid=both,grid style={grille,very thin},
+      tick label style={font=\footnotesize},label style={font=\footnotesize},
+      legend style={font=\footnotesize,at={(0.02,0.98)},anchor=north west,draw=none,fill=none},
+      clip=true,
+    ]
+    % f : cubique avec max en 0, min en 2 -> f'(x)=k x(x-2) ; choisissons f(x)=  (1/3)x^3 - x^2 + 1.5
+    \addplot[courbe,line width=1.6pt,domain=-1.45:3.45,samples=140]{(1/3)*x^3 - x^2 + 1.8};
+    \addlegendentry{$y=f(x)$}
+    % f'(x) = x^2 - 2x  (parabole, racines 0 et 2)
+    \addplot[courbeder,line width=1.4pt,dashed,domain=-1.45:3.45,samples=140]{x^2 - 2*x};
+    \addlegendentry{$y=f'(x)$}
+    \addplot[only marks,mark=*,courbeder,mark size=1.8pt] coordinates {(0,0)(2,0)};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 9}} : la courbe de $f$ (trait plein bleu) a ses extremums en
+$x=0$ et $x=2$ ; la courbe de $f'$ (pointillés rouges) y coupe l'axe des abscisses.}
+\end{center}
+
+\subsection{Exemple détaillé : retrouver une fonction à partir d'un tableau de signes}
+
+\begin{exemple}[Quelle fonction colle au tableau de signes de $f'$ ?]
+On donne le tableau de signes suivant pour $f'$ : la dérivée $f'$ est \textbf{strictement positive
+partout} ($+$ avant et après), \textbf{sauf en $x=\tfrac23$ où elle n'est pas définie}
+(symbole $\nexists$). Parmi plusieurs expressions, laquelle correspond ?
+
+\medskip
+\textbf{Lecture du tableau.} On cherche une fonction $f$ dont la dérivée $f'$ vérifie deux conditions :
+\emph{(i)} $f'(x)>0$ pour tout $x\neq\tfrac23$, et \emph{(ii)} $f'$ n'est pas définie en $x=\tfrac23$.
+La non-définition en $\tfrac23$ suggère un dénominateur qui s'annule, du type $(2-3x)$, car
+$2-3x=0\Leftrightarrow x=\tfrac23$.
+
+\medskip
+\textbf{Test du bon candidat} $f(x)=\dfrac{-3x^2+4x}{2-3x}$. C'est un quotient $\dfrac{U}{V}$ avec
+$U=-3x^2+4x$ (donc $U'=-6x+4$) et $V=2-3x$ (donc $V'=-3$). La règle du quotient donne :
+\[
+   f'(x)=\frac{(-6x+4)(2-3x)-(-3x^2+4x)(-3)}{(2-3x)^2}.
+\]
+Développons le numérateur :
+\[
+   (-6x+4)(2-3x)=-12x+18x^2+8-12x=18x^2-24x+8,
+\]
+\[
+   -(-3x^2+4x)(-3)=-(9x^2-12x)=-9x^2+12x.
+\]
+Somme : $18x^2-24x+8-9x^2+12x=9x^2-12x+8$. Donc
+\[
+   f'(x)=\frac{9x^2-12x+8}{(2-3x)^2}.
+\]
+
+\textbf{Signe.} Le dénominateur $(2-3x)^2>0$. Pour le numérateur, le discriminant vaut
+\[
+   \Delta=(-12)^2-4\times 9\times 8=144-288=-144<0,
+\]
+et le coefficient dominant $a=9>0$ : un trinôme de discriminant négatif garde le signe de $a$, donc
+$9x^2-12x+8>0$ \emph{partout}. Ainsi $f'(x)>0$ pour tout $x\neq\tfrac23$, et $f'$ n'est pas définie en
+$\tfrac23$ : les \textbf{deux conditions du tableau sont vérifiées}.
+
+\medskip
+\textbf{Pourquoi pas les autres ?} Pour $f(x)=\dfrac{x^2-1}{2-3x}$, on trouve
+$f'(x)=\dfrac{-3x^2+4x-3}{(2-3x)^2}$, dont le numérateur $-3x^2+4x-3$ a $\Delta=16-36=-20<0$ et $a=-3<0$ :
+il est \emph{toujours négatif}, donc $f'<0$ — cela ne colle pas. De même $f(x)=\dfrac{-3}{2-3x}$ donne
+$f'(x)=\dfrac{-9}{(2-3x)^2}<0$. Ces candidats sont écartés.
+\end{exemple}
+
+% =====================================================================
+\section{Étude de fonction complète : mettre tous les outils ensemble}
+\label{sec:synthese}
+% =====================================================================
+Cette section rassemble tout le cours sur un seul exemple « fil rouge », étudié à fond. On y voit
+comment domaine, dérivée première, tableau de variation, dérivée seconde, concavité et tangentes
+s'articulent.
+
+\begin{exemple}[Étude complète de $f(x)=x-3\ln|x+2|$]
+On considère, dans un repère orthonormé, la fonction $f$ définie par $f(x)=x-3\ln|x+2|$.
+
+\medskip
+\textbf{Étape 1 — domaine de définition.} Le logarithme exige un argument strictement positif ; la
+valeur absolue $|x+2|$ est strictement positive sauf quand $x+2=0$. Donc
+\[
+   D_f=\R\setminus\{-2\}.
+\]
+La valeur absolue permet d'écrire $f$ sans le symbole $|\cdot|$ sur deux intervalles :
+\[
+   \begin{cases}
+     f(x)=x-3\ln(x+2) & \text{si } x\in\,]-2;+\infty[,\\[2pt]
+     f(x)=x-3\ln(-x-2) & \text{si } x\in\,]-\infty;-2[.
+   \end{cases}
+\]
+
+\textbf{Étape 2 — dérivée première.} On dérive sur chaque morceau avec $\big(\ln U\big)'=\dfrac{U'}{U}$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item sur $]-2;+\infty[$ : $f'(x)=1-3\times\dfrac{1}{x+2}=1-\dfrac{3}{x+2}$ ;
+  \item sur $]-\infty;-2[$ : $f'(x)=1-3\times\dfrac{-1}{-x-2}=1-\dfrac{3}{x+2}$.
+\end{itemize}
+Les deux expressions co\"incident : pour tout $x\in\R\setminus\{-2\}$,
+\[
+   \boxed{\;f'(x)=1-\frac{3}{x+2}=\frac{(x+2)-3}{x+2}=\frac{x-1}{x+2}\;}
+\]
+
+\textbf{Étape 3 — racine et signe de $f'$.} La dérivée s'annule au numérateur :
+\[
+   f'(x)=0 \Longleftrightarrow x-1=0 \Longleftrightarrow x=1.
+\]
+On étudie le signe du quotient $\dfrac{x-1}{x+2}$ en plaçant les valeurs $-2$ (interdite) et $1$ :
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.05,yscale=0.95]
+  \draw[primary,line width=0.9pt] (0,0) rectangle (12.5,3.4);
+  \foreach \y in {0.95,1.65,2.35}{\draw[primary,line width=0.7pt] (0,\y) -- (12.5,\y);}
+  \draw[primary,line width=0.9pt] (2.6,0) -- (2.6,3.4);
+  % labels
+  \node[font=\footnotesize] at (1.3,3.0) {Valeur de $x$};
+  \node[font=\footnotesize] at (1.3,2.0) {$x-1$};
+  \node[font=\footnotesize] at (1.3,1.3) {$x+2$};
+  \node[font=\footnotesize] at (1.3,0.45) {$f'(x)=\frac{x-1}{x+2}$};
+  % entetes
+  \node[font=\footnotesize] at (3.3,3.0) {$-\infty$};
+  \node[font=\footnotesize,primarydark] at (6.0,3.0) {$-2$};
+  \node[font=\footnotesize,primarydark] at (9.2,3.0) {$1$};
+  \node[font=\footnotesize] at (12.0,3.0) {$+\infty$};
+  % x-1 : - jusqu'a 1 puis +
+  \node[moins,font=\footnotesize] at (4.6,2.0) {$-$};
+  \node[moins,font=\footnotesize] at (7.6,2.0) {$-$};
+  \node[font=\footnotesize] at (9.2,2.0) {$0$};
+  \node[plus,font=\footnotesize] at (10.8,2.0) {$+$};
+  % x+2 : - jusqu'a -2 puis +
+  \node[moins,font=\footnotesize] at (4.6,1.3) {$-$};
+  \node[font=\footnotesize] at (6.0,1.3) {$0$};
+  \node[plus,font=\footnotesize] at (7.6,1.3) {$+$};
+  \node[plus,font=\footnotesize] at (10.8,1.3) {$+$};
+  % f' : + / nexists / - / 0 / +
+  \node[plus,font=\footnotesize] at (4.6,0.45) {$+$};
+  \node[font=\footnotesize,primarydark] at (6.0,0.45) {$\nexists$};
+  \node[moins,font=\footnotesize] at (7.6,0.45) {$-$};
+  \node[font=\footnotesize] at (9.2,0.45) {$0$};
+  \node[plus,font=\footnotesize] at (10.8,0.45) {$+$};
+  \draw[black!45] (6.0,0) -- (6.0,2.35);
+  \draw[black!45] (9.2,0) -- (9.2,2.35);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Étape 4 — variations.} On en déduit :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item sur $]-\infty;-2[$ : $f'>0$, $f$ est \textbf{croissante} ;
+  \item sur $]-2;1[$ : $f'<0$, $f$ est \textbf{décroissante} ;
+  \item sur $]1;+\infty[$ : $f'>0$, $f$ est \textbf{croissante}.
+\end{itemize}
+En $x=1$, $f'$ passe de $-$ à $+$ : $f$ admet un \textbf{minimum local} en $1$, de valeur
+$f(1)=1-3\ln 3$. En particulier, $f$ est strictement croissante sur $[1;4]$.
+
+\medskip
+\textbf{Étape 5 — dérivée seconde et concavité.} On dérive $f'(x)=1-3(x+2)^{-1}$ :
+\[
+   f''(x)=-3\times(-1)(x+2)^{-2}=\frac{3}{(x+2)^2}.
+\]
+Comme $(x+2)^2>0$ pour tout $x\neq -2$, on a $f''(x)>0$ partout : la concavité est \textbf{toujours
+vers le haut}, et il n'y a \textbf{aucun point d'inflexion}.
+
+\medskip
+\textbf{Étape 6 — quelques tangentes remarquables.} (Voir aussi les exemples de la section
+\ref{sec:tangente}.)
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item En $x=1$ : $f'(1)=\dfrac{1-1}{1+2}=0$, donc la tangente est \textbf{horizontale} :
+        $y=1-3\ln 3$ (cohérent avec le minimum).
+  \item En $x=4$ : $f'(4)=\dfrac{4-1}{4+2}=\dfrac{3}{6}=\dfrac{1}{2}$ : le coefficient angulaire de la
+        tangente vaut $\tfrac12$.
+  \item En $x=0$ : $f'(0)=\dfrac{0-1}{0+2}=-\dfrac12$ ; la tangente $y=-\tfrac12 x-3\ln 2$ est
+        \textbf{perpendiculaire} à $y=2x+1$ (produit des pentes $=-1$).
+\end{itemize}
+
+\textbf{Étape 7 — point de rencontre de $f''$ avec l'axe des ordonnées.} C'est $\big(0;f''(0)\big)$
+avec $f''(0)=\dfrac{3}{(0+2)^2}=\dfrac34=0{,}75$. Le point est $\big(0;\tfrac34\big)$.
+
+\medskip
+\textbf{Synthèse graphique.}
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+      width=12.5cm,height=7.4cm,
+      xmin=-6.5,xmax=6.5,ymin=-4,ymax=8,
+      axis lines=middle,xlabel={$x$},ylabel={$y$},
+      xtick={-2,1},ytick={1},
+      grid=both,grid style={grille,very thin},
+      tick label style={font=\footnotesize},label style={font=\footnotesize},
+      restrict y to domain=-8:14,clip=true,samples=200,
+    ]
+    % branche x > -2
+    \addplot[courbe,line width=1.6pt,domain=-1.96:6.4]{x-3*ln(abs(x+2))};
+    % branche x < -2
+    \addplot[courbe,line width=1.6pt,domain=-6.4:-2.04]{x-3*ln(abs(x+2))};
+    % asymptote verticale x=-2
+    \addplot[attncol,dashed,line width=0.9pt,domain=-4:8] coordinates {(-2,-4)(-2,8)};
+    \node[attncol,font=\scriptsize,rotate=90,above] at (axis cs:-2,5.5) {$x=-2$};
+    \node[courbe,font=\small] at (axis cs:3.6,7.0) {$f(x)=x-3\ln|x+2|$};
+    % minimum en x=1
+    \addplot[only marks,mark=*,thmcol,mark size=2.2pt] coordinates {(1,{1-3*ln(3)})};
+    \node[thmcol,font=\scriptsize,below right] at (axis cs:1,{1-3*ln(3)}) {min en $x=1$};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 10}} : la courbe de $f(x)=x-3\ln|x+2|$. Asymptote verticale
+en $x=-2$ (hors domaine), branche gauche croissante, minimum local en $x=1$, concavité toujours vers
+le haut.}
+\end{center}
+
+\subsection{Exemple détaillé : reconstituer les paramètres d'une fonction}
+
+\begin{exemple}[Trouver $m$, $n$, $p$ pour $f(x)=mx^2+nx+p$]
+Soit $f(x)=mx^2+nx+p$ avec $m,n,p\in\R$. On donne trois informations :
+\emph{(i)} la courbe de $f$ coupe l'axe des ordonnées en $y=1$ ;
+\emph{(ii)} la courbe de $f'$ passe par le point $(1;3)$ ;
+\emph{(iii)} l'axe de symétrie de la courbe de $f$ est la droite $x=\tfrac58$.
+Déterminons $m$, $n$ et $p$.
+
+\medskip
+\textbf{Condition (i) — l'ordonnée à l'origine.} La courbe coupe l'axe des $y$ en $x=0$, donc
+$f(0)=1$. Or $f(0)=m\times 0^2+n\times 0+p=p$. D'où
+\[
+   \boxed{p=1}.
+\]
+
+\textbf{Condition (ii) — un point de la dérivée.} La dérivée est $f'(x)=2mx+n$. Le point $(1;3)$
+appartient à sa courbe, donc $f'(1)=3$ :
+\[
+   f'(1)=2m\times 1+n=2m+n=3. \tag{I}
+\]
+
+\textbf{Condition (iii) — l'axe de symétrie.} Pour une parabole $mx^2+nx+p$, l'axe de symétrie est
+$x=\dfrac{-n}{2m}$. La condition donne
+\[
+   \frac{-n}{2m}=\frac58 \;\Longleftrightarrow\; 8(-n)=5(2m) \;\Longleftrightarrow\; 10m+8n=0. \tag{II}
+\]
+
+\textbf{Résolution du système.} On résout
+\[
+   \begin{cases} 2m+n=3 & (\mathrm{I})\\ 10m+8n=0 & (\mathrm{II})\end{cases}
+\]
+On multiplie (I) par $-5$ pour opposer les coefficients de $m$ :
+\[
+   \begin{cases} -10m-5n=-15 & (\mathrm{I'})\\ \phantom{-}10m+8n=0 & (\mathrm{II})\end{cases}
+\]
+La somme (I$'$)$+$(II) donne $3n=-15$, soit $n=-5$. En reportant dans (I) :
+$2m+(-5)=3\Rightarrow 2m=8\Rightarrow m=4$.
+
+\medskip
+\textbf{Conclusion.} $\boxed{m=4,\quad n=-5,\quad p=1}$, c'est-à-dire $f(x)=4x^2-5x+1$.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse}
+\label{sec:carte}
+% =====================================================================
+La carte ci-dessous résume les liens entre $f$, sa dérivée première $f'$ et sa dérivée seconde $f''$.
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={font=\footnotesize},
+    box/.style={draw=primary,rounded corners=2pt,fill=primary!6,align=center,inner sep=4pt,line width=0.7pt},
+    boxb/.style={draw=defcol,rounded corners=2pt,fill=defcol!8,align=center,inner sep=4pt,line width=0.8pt},
+    lbl/.style={midway,fill=white,inner sep=1.5pt,font=\scriptsize\bfseries},
+    fl/.style={->,>=Stealth,line width=0.8pt,black!70},
+  ]
+  % noeud central f'(x)
+  \node[boxb] (fp) at (0,0) {$f'(x)$};
+  % se calcule selon -> regles
+  \node[box] (regles) at (0,2.6) {les règles de dérivation\\(voir le formulaire)};
+  \draw[fl] (fp) -- (regles) node[lbl]{se calcule selon};
+  % est -> derivee de f
+  \node[box] (der) at (3.6,1.6) {la dérivée de $f$};
+  \draw[fl] (fp) -- (der) node[lbl,pos=0.55]{est};
+  % nous renseigne sur -> 3 boites
+  \node[box] (cr) at (5.4,0.2) {la croissance de $f$};
+  \node[box] (dec) at (5.4,-0.9) {la décroissance de $f$};
+  \node[box] (ext) at (5.4,-2.0) {les extremums\\ locaux de $f$};
+  \draw[fl] (fp.east) .. controls (2.2,0.2) .. (cr.west) node[lbl,pos=0.45]{renseigne sur};
+  \draw[fl] (fp.east) .. controls (2.2,-0.9) .. (dec.west);
+  \draw[fl] (fp.east) .. controls (2.2,-2.0) .. (ext.west);
+  % coeff angulaire
+  \node[box] (coef) at (0,-2.4) {le coefficient angulaire de la\\ tangente à la courbe de $f$};
+  \draw[fl] (fp.south) -- (coef.north);
+  % f''(x)
+  \node[boxb] (fpp) at (-4.6,-2.4) {$f''(x)$};
+  \draw[fl] (fpp.north) .. controls (-4.6,0) .. (fp.west) node[lbl,pos=0.5,fill=white]{dérivée de};
+  \node[box] (conc) at (-4.6,-4.0) {la concavité de la courbe $f$};
+  \draw[fl] (fpp) -- (conc) node[lbl]{renseigne sur};
+  % 3 cas de f''
+  \node[boxb] (cp) at (-7.6,-5.8) {$f''(x)>0$};
+  \node[boxb] (cz) at (-4.6,-5.8) {$f''(x)=0$};
+  \node[boxb] (cn) at (-1.6,-5.8) {$f''(x)<0$};
+  \draw[fl] (conc.south) -- (cp.north);
+  \draw[fl] (conc.south) -- (cz.north);
+  \draw[fl] (conc.south) -- (cn.north);
+  % pictos concavite
+  \node (picp) at (-7.6,-6.9) {};
+  \draw[courbe,line width=1.3pt] (-8.1,-6.95) .. controls (-7.6,-6.55) and (-7.6,-6.55) .. (-7.1,-6.95);
+  \node[font=\scriptsize] at (-7.6,-7.25) {vers le haut};
+  \node[font=\scriptsize] at (-4.6,-6.7) {point d'inflexion};
+  \draw[courbe,line width=1.3pt] (-5.05,-7.0) .. controls (-4.75,-6.7) and (-4.45,-7.3) .. (-4.15,-7.0);
+  \draw[courbe,line width=1.3pt] (-2.1,-6.6) .. controls (-1.6,-7.0) and (-1.6,-7.0) .. (-1.1,-6.6);
+  \node[font=\scriptsize] at (-1.6,-7.25) {vers le bas};
+\end{tikzpicture}\\[4pt]
+{\small\textbf{\textcolor{primary}{Figure 11}} : carte de synthèse — ce que $f'$ et $f''$ nous
+apprennent sur $f$.}
+\end{center}
+
+\begin{remarque}[Trois précisions importantes]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Cette synthèse concerne les fonctions dont les dérivées à gauche et à droite des points
+        choisis existent et sont égales (fonctions « lisses »).
+  \item On peut avoir un maximum ou un minimum \textbf{sans dérivée nulle} (point anguleux, bord d'intervalle).
+  \item Un extremum \textbf{local} peut aussi être un extremum \textbf{global} (sur tout le domaine).
+\end{itemize}
+\end{remarque}
+
+\subsection{Formulaire à mémoriser}
+
+\begin{tcolorbox}[boxbase,colback=formulacol!5,colframe=formulacol,
+    title={\textsc{L'essentiel de la dérivation}}]
+\textbf{Définition (nombre dérivé / pente de la tangente / vitesse instantanée) :}
+\[
+   f'(x_0)=\limh\frac{f(x_0+h)-f(x_0)}{h}.
+\]
+
+\smallskip
+\textbf{Règles de calcul :}
+\[
+   (C)'=0,\quad (x)'=1,\quad (U^n)'=nU^{n-1}U',\quad (U+V)'=U'+V',
+\]
+\[
+   (UV)'=U'V+UV',\qquad \left(\frac{U}{V}\right)'=\frac{U'V-UV'}{V^2}.
+\]
+\[
+   (\sin U)'=U'\cos U,\quad (\cos U)'=-U'\sin U,\quad (\tg U)'=\frac{U'}{\cos^2U},
+\]
+\[
+   (\ln U)'=\frac{U'}{U},\quad (\log_a U)'=\frac{U'}{U\ln a},\quad (a^U)'=U'a^U\ln a.
+\]
+
+\smallskip
+\textbf{Étude de fonction :}
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item $f'>0\Rightarrow f$ croît ; $f'<0\Rightarrow f$ décroît ; $f'=0$ \emph{en changeant de signe} $\Rightarrow$ extremum.
+  \item $f''>0\Rightarrow$ concavité vers le haut ; $f''<0\Rightarrow$ vers le bas ; $f''=0$ \emph{en changeant de signe} $\Rightarrow$ inflexion.
+  \item Tangente en $x_0$ : $\;y=(x-x_0)f'(x_0)+f(x_0)$.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{center}
+\small\itshape\color{black!55}
+Fin du cours — Fiche 5 : Dérivation. Document rédigé d'après l'extrait du livre, figures TikZ originales.
+\end{center}
+
+\end{document}
+
+
+
+
+
+
+

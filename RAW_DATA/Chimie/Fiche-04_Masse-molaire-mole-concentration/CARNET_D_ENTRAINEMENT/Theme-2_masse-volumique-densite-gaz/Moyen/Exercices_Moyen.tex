@@ -1,0 +1,99 @@
+% =====================================================================
+%  FICHE 4 — THEME 2 — Exercices niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{M}
+\DeclareSIUnit\atm{atm}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox{donnees}{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Données}}}
+\newcounter{exo}
+\newenvironment{exo}[1][]{%
+  \par\medskip\refstepcounter{exo}%
+  \noindent\begin{tcolorbox}[boxbase,colback=primary!7,colframe=primary,
+     title={\textsc{Exercice \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
+  {\end{tcolorbox}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\NA}{N_{\!\text{A}}}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- Niveau Moyen}\\[2pt]
+{\color{primary}\itshape Enchaîner volume, masse et quantité de matière}
+\end{center}
+
+\begin{donnees}
+Masses molaires atomiques (\si{\gram\per\mole}) : $\ce{H}=1$ ; $\ce{C}=12$ ; $\ce{O}=16$ ;
+$\ce{Cl}=35{,}5$.\quad $V_m=\SI{22.4}{\litre\per\mole}$ aux CNTP.
+\end{donnees}
+
+\begin{exo}[chaîne volume $\to$ masse $\to$ quantité]
+Le dichlorométhane \ce{CH2Cl2} est un solvant de densité $d=1{,}70$. On en prélève
+$\SI{100}{\milli\litre}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Déterminer la masse de dichlorométhane prélevée.
+  \item Calculer sa masse molaire, puis la quantité de matière correspondante.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[masse molaire d'un gaz]
+Un échantillon de $\SI{5.0}{\gram}$ d'un gaz occupe, aux CNTP, un volume de $\SI{5.6}{\litre}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Quelle quantité de matière de gaz cela représente-t-il ?
+  \item En déduire la masse molaire du gaz.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[masse volumique et conversions « piégeuses »]
+La masse volumique de l'or vaut $\rho=\SI{19.3}{\gram\per\cubic\centi\metre}$. On dispose d'un
+lingot d'or de masse $\SI{7.72}{\hecto\gram}$.\\
+Quel volume (en \si{\milli\litre}) occupe ce lingot ? \emph{(Attention à l'unité de masse : le
+hectogramme.)}
+\end{exo}
+
+\begin{exo}[du gaz au volume]
+On dispose de $\SI{16}{\gram}$ de dioxygène \ce{O2} à $\SI{0}{\celsius}$ sous $\SI{1}{\atm}$.
+Quel volume ce gaz occupe-t-il ?
+\end{exo}
+
+\begin{exo}[masse volumique par déplacement d'eau]
+Un cylindre gradué contient $\SI{10.0}{\milli\litre}$ d'eau. On y plonge entièrement un solide non
+soluble de masse $\SI{20.0}{\gram}$ ; le niveau d'eau monte alors jusqu'à $\SI{15.0}{\milli\litre}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Quel est le volume du solide ?
+  \item En déduire sa masse volumique.
+\end{enumerate}
+\end{exo}
+
+\end{document}

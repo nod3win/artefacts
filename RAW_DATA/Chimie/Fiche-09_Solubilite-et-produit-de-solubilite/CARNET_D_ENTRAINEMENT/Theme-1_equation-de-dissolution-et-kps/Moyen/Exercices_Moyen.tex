@@ -1,0 +1,199 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 1 — Équation de dissolution \& $\Kps$}%
+{Exercices — Niveau Moyen}%
+{Du nom à l'expression du $\Kps$, et le chemin inverse}
+
+\noindent\textit{Consigne : chaque question enchaîne deux gestes (nom$\to$formule$\to$équation$\to\Kps$,
+ou lecture inverse). Reste littéral, sans valeurs numériques.}
+\medskip
+
+\begin{exercice}[du nom à l'expression du $\Kps$]
+Pour le \textbf{phosphate de calcium}, composé principal des os :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item écris la formule du sel (calcium \ce{Ca^{2+}}, ion phosphate \ce{PO4^{3-}}) ;
+  \item écris l'équation de dissolution ;
+  \item écris l'expression de $\Kps$ et précise le type $p{:}q$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[groupement polyatomique et exposants]
+On considère le \textbf{phosphate de baryum} \ce{Ba3(PO4)2}.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item Écris son équation de dissolution.
+  \item Écris l'expression de $\Kps$.
+  \item Donne les deux exposants apparaissant dans le $\Kps$ et explique pourquoi le groupement
+        \ce{PO4^{3-}} n'est pas « cassé » en atomes.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[lecture inverse : retrouver le sel]
+On te donne l'expression d'un produit de solubilité :
+\[ \Kps = \Ce{Ca^2+}\,\Ce{F-}^{2}. \]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item De quel sel s'agit-il ? Donne sa formule.
+  \item Écris l'équation de dissolution correspondante.
+  \item Quel est son type $p{:}q$ ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[tableau à compléter]
+Recopie et complète le tableau suivant (équation de dissolution, type $p{:}q$, expression de $\Kps$) :
+
+\smallskip
+\begin{center}\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\rowcolor{primary!12}
+\textbf{Sel} & \textbf{Équation} & \textbf{Type} & \textbf{$\Kps$}\\
+\hline
+\ce{BaSO4}     & \dots & \dots & \dots\\ \hline
+\ce{PbI2}      & \dots & \dots & \dots\\ \hline
+\ce{Ag2S}      & \dots & \dots & \dots\\ \hline
+\ce{Cr(OH)3}   & \dots & \dots & \dots\\ \hline
+\end{tabular}
+\end{center}
+\end{exercice}
+
+\begin{exercice}[électrolyte ou non : qui contribue au $\Kps$ ?]
+On dissout séparément dans l'eau : (i) du sel \ce{NaCl}, (ii) du glucose \ce{C6H12O6}, (iii) du sulfate
+de calcium \ce{CaSO4}.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item Lesquels sont des \textbf{électrolytes} (libèrent des ions) ? Justifie.
+  \item Pour ceux qui le sont, écris l'équation de dissolution.
+  \item Pour lequel de ces solutés la notion de « produit de solubilité » a-t-elle un sens ? Explique
+        en une phrase pourquoi le glucose n'a pas de $\Kps$.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

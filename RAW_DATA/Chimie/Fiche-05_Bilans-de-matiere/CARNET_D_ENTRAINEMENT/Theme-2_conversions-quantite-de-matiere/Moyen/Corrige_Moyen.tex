@@ -1,0 +1,88 @@
+% =====================================================================
+%  THÈME 2 — Conversions en quantité de matière
+%  Niveau MOYEN — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{corrcol}{RGB}{176,110,20}
+\newcommand{\gmol}{\si{\gram\per\mole}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 2 : Conversions}}
+\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 2 — Conversions}\\[1pt]
+{\large\color{corrcol}\textbf{Corrigé — Niveau Moyen}}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{cor}[du gramme au volume gazeux]
+Mole : $n=\dfrac{m}{M}=\dfrac{16}{32}=\SI{0,50}{\mole}$.\quad
+Volume : $V=n\,\Vm = 0{,}50\times22{,}4 = \boxed{\SI{11,2}{\litre}}$.
+\rep{Chaîne masse $\to$ mole $\to$ volume respectée.}
+\end{cor}
+
+\begin{cor}[la densité d'un liquide]
+\textbf{a)} $m=\rho\times V = 1{,}70\times100 = \SI{170}{\gram}$.\\
+\textbf{b)} $n=\dfrac{m}{M}=\dfrac{170}{85}=\boxed{\SI{2,0}{\mole}}$.
+\rep{La densité sert à passer du \emph{volume} à la \emph{masse} avant $n=m/M$.}
+\end{cor}
+
+\begin{cor}[peser un nombre voulu de molécules]
+\textbf{a)} $n=\dfrac{N}{N_A}=\dfrac{\SI{1,20e21}{}}{\SI{6,02e23}{}}=\SI{1,99e-3}{\mole}$
+($\approx\SI{2,0e-3}{\mole}$).\\
+\textbf{b)} $m=n\times M = \SI{1,99e-3}{}\times182 = \SI{0,363}{\gram} = \boxed{\SI{363}{\milli\gram}}$
+(soit $\approx\SI{364}{\milli\gram}$).
+\rep{Chaîne entités $\to$ mole $\to$ masse. Ordre : $\div N_A$ puis $\times M$.}
+\end{cor}
+
+\begin{cor}[du comprimé à la concentration]
+\textbf{a)} $\SI{755}{\milli\gram}=\SI{0,755}{\gram}$ ; $n=\dfrac{0{,}755}{151}=\SI{5,0e-3}{\mole}$.\\
+\textbf{b)} $\SI{200}{\milli\litre}=\SI{0,200}{\litre}$ ;
+$C=\dfrac{n}{V}=\dfrac{\SI{5,0e-3}{}}{0{,}200}=\boxed{\SI{2,5e-2}{\Molar}}$.
+\rep{Deux conversions d'unités à ne pas oublier : mg $\to$ g et mL $\to$ L.}
+\end{cor}
+
+\begin{cor}[remonter à la masse molaire d'un gaz]
+\textbf{a)} $n=\dfrac{V}{\Vm}=\dfrac{5{,}6}{22{,}4}=\SI{0,25}{\mole}$.\\
+\textbf{b)} $M=\dfrac{m}{n}=\dfrac{5{,}0}{0{,}25}=\boxed{\SI{20}{\gram\per\mole}}$.
+\rep{Le volume gazeux donne $n$ ; la masse pesée donne ensuite $M=m/n$.}
+\end{cor}
+
+\end{document}

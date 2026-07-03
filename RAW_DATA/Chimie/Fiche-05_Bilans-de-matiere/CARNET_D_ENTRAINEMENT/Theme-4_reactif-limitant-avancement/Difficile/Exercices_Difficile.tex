@@ -1,0 +1,117 @@
+% =====================================================================
+%  THÈME 4 — Réactif limitant et avancement
+%  Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{difcol}{RGB}{176,40,60}
+\definecolor{reacA}{RGB}{0,90,200}
+\definecolor{reacB}{RGB}{210,30,40}
+\definecolor{prodC}{RGB}{0,140,90}
+\newcommand{\nq}[1]{n_{\text{#1}}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 4 : Limitant}}
+\fancyhead[R]{\small\textcolor{difcol}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=difcol!5,colframe=difcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Réactif limitant}\\[1pt]
+{\large\color{difcol}\textbf{Niveau Difficile}}\\[2pt]
+{\itshape Objectif : lire un graphe d'avancement, traiter le cas stœchiométrique et les données mêlées.}\\
+{\color{primary}\rule{0.64\linewidth}{1pt}}
+\end{center}
+
+\textbf{Données :} $\Vm=\SI{22,4}{\litre\per\mole}$ (TPN).
+
+\begin{exo}[lecture d'un graphe d'avancement]
+On étudie la réaction $\ce{2 A + B -> 3 C}$. Le graphe ci-dessous donne l'évolution des quantités de
+matière en fonction de l'avancement $\xi$.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+   width=10.5cm,height=5.8cm,
+   xlabel={\small avancement $\xi$ (mol)},ylabel={\small $n$ (mol)},
+   xmin=0,xmax=0.12,ymin=0,ymax=0.33,
+   axis lines=left,
+   xtick={0,0.02,0.04,0.06,0.08,0.10},
+   ytick={0,0.05,0.10,0.15,0.20,0.25,0.30},
+   grid=both,grid style={black!12},
+   tick label style={font=\footnotesize},label style={font=\footnotesize},
+   legend style={font=\scriptsize,at={(1.02,1)},anchor=north west,draw=black!25},
+   clip=false,
+]
+  \addplot[reacA,line width=1.1pt] coordinates {(0,0.20)(0.10,0)}; \addlegendentry{$\nq{A}$}
+  \addplot[reacB,line width=1.1pt] coordinates {(0,0.15)(0.10,0.05)}; \addlegendentry{$\nq{B}$}
+  \addplot[prodC,line width=1.1pt] coordinates {(0,0)(0.10,0.30)}; \addlegendentry{$\nq{C}$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Lis sur le graphe les quantités initiales $\nq{A,0}$ et $\nq{B,0}$.
+  \item Quel réactif s'annule le premier ? En déduire $\xi_{\max}$ et le réactif limitant.
+  \item Donne les quantités finales de \ce{A}, \ce{B} et \ce{C} à $\xi_{\max}$.
+  \item Parmi les trois courbes, laquelle a la pente la plus raide ? Relie ta réponse aux coefficients
+        stœchiométriques.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le cas particulier stœchiométrique]
+La formation de l'hydrure d'aluminium s'écrit $\ce{2 Al + 3 H2 -> 2 AlH3}$. On introduit
+\SI{0,36}{\gram} d'aluminium et \SI{0,04}{\gram} de dihydrogène.
+\emph{Masses molaires (\si{\gram\per\mole}) :} \ce{Al}=27 ; \ce{H2}=2 ; \ce{AlH3}=30.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Convertis les deux masses en quantités de matière.
+  \item Calcule les rapports $n/\nu$ pour \ce{Al} et \ce{H2}. Que constates-tu ?
+  \item Un étudiant affirme : « le dihydrogène est le réactif limitant ». A-t-il raison ? Justifie.
+  \item Quelle masse d'hydrure \ce{AlH3} obtient-on (rendement \SI{100}{\percent}) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[données mêlées : masse, mole et solution]
+Soit la réaction pondérée
+\[ \ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 2 KCl + 4 H2O}. \]
+On introduit \SI{58,93}{\gram} de cobalt ($M(\ce{Co})=\SI{58,93}{\gram\per\mole}$), \SI{1,500}{\mole}
+de \ce{KNO3} et \SI{20}{\milli\litre} d'acide chlorhydrique à \SI{6}{\Molar}.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Convertis \emph{chaque} réactif en quantité de matière (attention aux unités !).
+  \item Calcule les trois rapports $n/\nu$.
+  \item Quel est le réactif limitant ? (Ce résultat servira de base au bilan complet du Thème 5.)
+\end{enumerate}
+\end{exo}
+
+\end{document}

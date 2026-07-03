@@ -1,0 +1,1145 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 8
+%  Thermodynamique et équilibre chimique
+%  Document généré en LaTeX, figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités & chimie ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,
+         group-separator={\,},group-minimum-digits=4}
+\usepackage[version=4]{mhchem}   % formules chimiques : \ce{NaCl}, \ce{NO2}...
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (mauve = couleur de la section Chimie du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{150,98,162}      % mauve (couleur du livre — Chimie)
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{reglecol}{RGB}{150,98,162}     % mauve — règles
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+\definecolor{exocol}{RGB}{200,60,40}        % rouge-orangé — exothermique
+\definecolor{endocol}{RGB}{0,110,180}       % bleu — endothermique
+\definecolor{chaleur}{RGB}{214,72,33}       % rouge chaleur
+\definecolor{travail}{RGB}{30,110,180}      % bleu travail
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Propriété / Théorème (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Principe (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{principe}[1][]{%
+  boxbase,colback=reglecol!8,colframe=reglecol,
+  title={\textsc{Principe}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thermodynamique et équilibre chimique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis
+\newcommand{\dH}{\Delta H}
+\newcommand{\dHr}{\Delta H^{\circ}_{\text{réaction}}}
+\newcommand{\dHf}{\Delta H^{\circ}_{\text{f}}}
+\newcommand{\dS}{\Delta S}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.8cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Thermodynamique}\\[4pt]
+   {\Huge\bfseries et équilibre chimique}\\[7pt]
+   {\large\bfseries Énergie, chaleur, enthalpie, entropie et déplacement d'équilibre}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,8}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : un diagramme enthalpique exo/endo ---
+\begin{tikzpicture}[scale=1.0]
+  % Axe enthalpie
+  \draw[->,thick] (0,-0.3) -- (0,3.4) node[above]{\small $H$};
+  \draw[->,thick] (0,0) -- (9.2,0) node[right]{\small avancement};
+  % Exothermique (gauche)
+  \draw[exocol,very thick] (0.6,2.6) -- (2.0,2.6) node[midway,above,font=\scriptsize]{Réactifs};
+  \draw[exocol,very thick] (2.8,0.7) -- (4.2,0.7) node[midway,below,font=\scriptsize]{Produits};
+  \draw[->,exocol,thick] (2.4,2.6) -- (2.4,0.7) node[midway,right,font=\scriptsize]{$\dH<0$};
+  \node[exocol,font=\scriptsize\bfseries] at (2.4,3.15) {exothermique};
+  % Endothermique (droite)
+  \draw[endocol,very thick] (5.2,0.9) -- (6.6,0.9) node[midway,below,font=\scriptsize]{Réactifs};
+  \draw[endocol,very thick] (7.4,2.8) -- (8.8,2.8) node[midway,above,font=\scriptsize]{Produits};
+  \draw[->,endocol,thick] (7.0,0.9) -- (7.0,2.8) node[midway,left,font=\scriptsize]{$\dH>0$};
+  \node[endocol,font=\scriptsize\bfseries] at (7.0,3.3) {endothermique};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15.5cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item énoncer les \textbf{trois principes} de la thermodynamique et les relier à l'énergie et au désordre ;
+  \item exploiter le \textbf{premier principe} $\dH=Q+W$ et distinguer \textbf{chaleur} $Q$ et \textbf{travail} $W$ ;
+  \item comprendre la notion de \textbf{fonction d'état} et tracer un \textbf{diagramme enthalpique} (réactions exo/endothermiques) ;
+  \item appliquer la \textbf{loi de Hess} et l'\textbf{enthalpie standard de formation} pour calculer une enthalpie de réaction ;
+  \item mener un \textbf{bilan calorimétrique} ($Q=mc\Delta T$, chaleurs latentes) sur des cas concrets ;
+  \item interpréter l'\textbf{entropie} et le \textbf{deuxième principe} (spontanéité, sens du désordre) ;
+  \item définir un \textbf{équilibre chimique}, écrire et exploiter la \textbf{constante d'équilibre} $K$ ;
+  \item prévoir le sens d'évolution d'un système par la \textbf{loi de Le Chatelier}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 8 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Vue d'ensemble : la thermodynamique chimique}
+% =====================================================================
+La \textbf{thermodynamique} est la science qui étudie les \emph{échanges d'énergie} (sous forme de
+chaleur et de travail) qui accompagnent les transformations de la matière. En chimie, elle répond à
+deux grandes questions :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Combien d'énergie} une réaction dégage-t-elle ou absorbe-t-elle ? (c'est l'objet de la
+        \emph{thermochimie} : enthalpie, calorimétrie) ;
+  \item \textbf{Dans quel sens} une transformation se produit-elle spontanément, et jusqu'où va-t-elle ?
+        (c'est l'objet de l'\emph{entropie} et de l'\emph{équilibre chimique}).
+\end{itemize}
+
+\begin{definition}[système, milieu extérieur et univers]
+On appelle \textbf{système} la portion d'espace que l'on étudie (le contenu d'un bécher, les molécules
+qui réagissent). Tout le reste est le \textbf{milieu extérieur}. La réunion des deux forme l'\textbf{univers}.
+On distingue :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item un système \textbf{ouvert} : il échange \emph{matière et énergie} avec l'extérieur ;
+  \item un système \textbf{fermé} : il échange \emph{de l'énergie} mais \emph{pas de matière} ;
+  \item un système \textbf{isolé} : il n'échange \emph{ni matière ni énergie} (cas idéal du calorimètre
+        parfait, dit \emph{adiabatique}).
+\end{itemize}
+\end{definition}
+
+Toute la thermodynamique repose sur \textbf{trois principes} fondamentaux, résumés ci-dessous ; les
+sections suivantes les développent un à un.
+
+\begin{center}
+\begin{tikzpicture}[
+   node distance=0.6cm,
+   pr/.style={rectangle,rounded corners=4pt,draw=primary,line width=1pt,
+              fill=primary!7,align=center,inner sep=6pt,text width=4.3cm,font=\small},
+   tit/.style={rectangle,rounded corners=4pt,fill=primary,text=white,
+              align=center,inner sep=6pt,font=\bfseries}]
+  \node[tit] (t) {Les 3 principes de la thermodynamique};
+  \node[pr,below=0.9cm of t,xshift=-5.4cm] (p1)
+     {\textbf{1\textsuperscript{er} principe}\\ \emph{Conservation de l'énergie}\\[2pt] $\dH = Q + W$};
+  \node[pr,below=0.9cm of t] (p2)
+     {\textbf{2\textsuperscript{e} principe}\\ \emph{Sens d'évolution}\\[2pt] un processus est spontané si le \textbf{désordre augmente} ($\dS_{\text{univers}}>0$)};
+  \node[pr,below=0.9cm of t,xshift=5.4cm] (p3)
+     {\textbf{3\textsuperscript{e} principe}\\ \emph{Origine de l'entropie}\\[2pt] $S = 0\ \si{\joule\per\mol\per\kelvin}$ à $T = \SI{0}{\kelvin}$};
+  \draw[->,primary,thick] (t) -- (p1);
+  \draw[->,primary,thick] (t) -- (p2);
+  \draw[->,primary,thick] (t) -- (p3);
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 1}} : organisation générale de la fiche autour des trois principes.}
+\end{center}
+
+% =====================================================================
+\section{Premier principe : énergie interne, chaleur et travail}
+% =====================================================================
+\subsection{Énergie interne et conservation de l'énergie}
+
+Toute substance possède une réserve d'énergie cachée dans le mouvement de ses molécules et dans ses
+\textbf{liaisons chimiques} : c'est son \textbf{énergie interne} $U$. Une réaction chimique réorganise
+les liaisons ; elle s'accompagne donc d'une variation d'énergie interne $\Delta U$, qui se manifeste
+par un échange de \textbf{chaleur} et/ou de \textbf{travail} avec le milieu extérieur.
+
+\begin{principe}[Premier principe — conservation de l'énergie]
+L'énergie ne se crée pas et ne se détruit pas : elle se \textbf{transforme} et se \textbf{transfère}.
+La variation d'énergie interne d'un système fermé est égale à la somme de la chaleur et du travail
+qu'il échange avec l'extérieur.
+\end{principe}
+
+\begin{formule}[Premier principe de la thermodynamique]
+\[ \boxed{\;\Delta U \;=\; Q \;+\; W\;} \]
+\begin{ou}
+  \item $\Delta U$ : variation d'\textbf{énergie interne} du système, en joules ($\si{\joule}$) ;
+  \item $Q$ : \textbf{chaleur} échangée avec le milieu extérieur, en joules ($\si{\joule}$) ;
+  \item $W$ : \textbf{travail} échangé (le plus souvent travail des forces de pression), en joules ($\si{\joule}$).
+\end{ou}
+\textbf{Convention de signe} (point de vue du système) :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item ce que le système \emph{reçoit} est compté \textbf{positivement} ($Q>0$, $W>0$) ;
+  \item ce que le système \emph{cède} est compté \textbf{négativement} ($Q<0$, $W<0$).
+\end{itemize}
+\end{formule}
+
+\begin{remarque}
+Pour un \textbf{système isolé}, aucun échange n'est possible : $Q=0$ et $W=0$, donc $\Delta U = 0$,
+c'est-à-dire $U = \text{Cte}$. L'énergie interne d'un système isolé est constante.
+\end{remarque}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % milieu extérieur
+  \draw[dashed,primary!60,line width=1pt,rounded corners=6pt] (-5.9,-2.3) rectangle (5.9,2.3);
+  \node[primary!70,font=\small\itshape,anchor=west] at (-5.7,1.95) {milieu extérieur};
+  % système
+  \node[draw=primarydark,line width=1.2pt,fill=primary!12,rounded corners=5pt,
+        minimum width=3.0cm,minimum height=2.0cm,align=center,font=\small\bfseries] (sys)
+        {Système\\ (énergie\\ interne $U$)};
+  % flèche chaleur reçue (gauche, haut)
+  \draw[->,line width=1.4pt,chaleur] (-5.0,0.6) -- (-1.55,0.6);
+  \node[chaleur,font=\scriptsize,align=center,above] at (-3.3,0.68) {$Q>0$\\ chaleur reçue};
+  % flèche travail reçu (gauche, bas)
+  \draw[->,line width=1.4pt,travail] (-5.0,-0.6) -- (-1.55,-0.6);
+  \node[travail,font=\scriptsize,align=center,below] at (-3.3,-0.68) {$W>0$\\ travail reçu};
+  % flèche chaleur cédée (droite, haut)
+  \draw[->,line width=1.4pt,chaleur] (1.55,0.6) -- (5.0,0.6);
+  \node[chaleur,font=\scriptsize,align=center,above] at (3.3,0.68) {$Q<0$\\ chaleur cédée};
+  % flèche travail cédé (droite, bas)
+  \draw[->,line width=1.4pt,travail] (1.55,-0.6) -- (5.0,-0.6);
+  \node[travail,font=\scriptsize,align=center,below] at (3.3,-0.68) {$W<0$\\ travail cédé};
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 2}} : conventions de signe du premier principe. Tout ce qui
+\emph{entre} dans le système est positif, tout ce qui \emph{sort} est négatif.}
+\end{center}
+
+\subsection{Travail des forces de pression}
+
+Lorsqu'une réaction libère ou consomme du gaz, le volume du système varie et il « pousse » ou est
+« poussé par » l'atmosphère : c'est le travail des forces de pression. À \textbf{pression extérieure
+constante}, il vaut :
+
+\begin{formule}[Travail des forces de pression (pression constante)]
+\[ \boxed{\;W \;=\; -\,p\,\Delta V\;} \]
+\begin{ou}
+  \item $W$ : travail échangé, en joules ($\si{\joule}$) ;
+  \item $p$ : \textbf{pression extérieure} (supposée constante), en pascals ($\si{\pascal}$) ;
+  \item $\Delta V = V_{\text{final}}-V_{\text{initial}}$ : variation de volume du système, en mètres cubes ($\si{\cubic\metre}$).
+\end{ou}
+\end{formule}
+
+\begin{remarque}
+Le signe « $-$ » traduit la convention : si le système se \emph{dilate} ($\Delta V>0$, il pousse
+l'extérieur), il \emph{cède} du travail, donc $W<0$. S'il se \emph{contracte} ($\Delta V<0$), il
+\emph{reçoit} du travail, $W>0$.
+\end{remarque}
+
+\subsection{Chaleur de réaction à pression constante}
+
+La plupart des réactions de laboratoire se déroulent à l'air libre, donc à \textbf{pression constante}
+(la pression atmosphérique). Dans ce cas, la chaleur échangée prend un nom et un symbole particuliers :
+c'est la \textbf{variation d'enthalpie} $\dH$.
+
+\begin{formule}[Chaleur échangée à pression constante]
+\[ \boxed{\;Q_p \;=\; \dH\;} \]
+\begin{ou}
+  \item $Q_p$ : chaleur échangée \emph{à pression constante}, en joules ($\si{\joule}$) ;
+  \item $\dH$ : variation d'\textbf{enthalpie} du système, en joules ($\si{\joule}$), souvent exprimée en $\si{\kilo\joule}$ ou $\si{\kilo\joule\per\mol}$.
+\end{ou}
+\end{formule}
+
+C'est pourquoi, en thermochimie, on parle presque toujours d'enthalpie : à pression constante, mesurer
+la chaleur d'une réaction revient exactement à mesurer son $\dH$.
+
+% =====================================================================
+\section{L'enthalpie, une fonction d'état}
+% =====================================================================
+\subsection{Définition et propriété fondamentale}
+
+\begin{definition}[enthalpie $H$]
+L'\textbf{enthalpie} $H$ est une grandeur énergétique du système définie par $H = U + pV$. Sa variation
+$\dH$ mesure l'énergie thermique échangée par le système à pression constante. On l'exprime en
+$\si{\joule}$, $\si{\kilo\joule}$ ou, rapportée à une mole, en $\si{\kilo\joule\per\mol}$.
+\end{definition}
+
+\begin{theoreme}[$H$ est une fonction d'état]
+L'enthalpie est une \textbf{fonction d'état} : sa variation $\dH$ ne dépend \emph{que de l'état initial
+et de l'état final} du système, et \emph{pas du chemin suivi} pour passer de l'un à l'autre.
+\[ \dH \;=\; H_{\text{final}} - H_{\text{initial}} \;=\; H_{\text{produits}} - H_{\text{réactifs}}. \]
+\end{theoreme}
+
+Cette propriété est capitale : elle autorise à \emph{décomposer} une réaction compliquée en une suite
+d'étapes plus simples (réelles ou fictives) dont les enthalpies s'\textbf{additionnent}. C'est le
+fondement de la \textbf{loi de Hess} (§\ref{sec:hess}) et des \textbf{cycles thermochimiques}.
+
+\begin{remarque}
+On travaille en pratique avec des \emph{variations} $\dH$ et jamais avec la valeur absolue de $H$ :
+seule la différence entre deux états est mesurable et utile.
+\end{remarque}
+
+\subsection{Réactions exothermiques et endothermiques}
+
+Le signe de $\dH$ classe les réactions en deux familles. On le visualise sur un \textbf{diagramme
+enthalpique}, où l'on porte en ordonnée l'enthalpie $H$ des réactifs et des produits.
+
+\begin{definition}[réaction exothermique / endothermique / athermique]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Une réaction est \textbf{exothermique} si elle \emph{dégage} de la chaleur vers l'extérieur :
+        $\dH < 0$. Les produits sont \emph{moins} énergétiques que les réactifs.
+  \item Une réaction est \textbf{endothermique} si elle \emph{absorbe} de la chaleur : $\dH > 0$. Les
+        produits sont \emph{plus} énergétiques que les réactifs.
+  \item Une réaction est \textbf{athermique} si elle n'échange \emph{ni} ne dégage \emph{ni} n'absorbe
+        de chaleur ($\dH \approx 0$).
+\end{itemize}
+\end{definition}
+
+\begin{attention}
+Ne pas confondre \textbf{athermique} et \textbf{adiabatique} ! \emph{Athermique} qualifie une
+\emph{réaction} qui n'échange pas de chaleur. \emph{Adiabatique} qualifie une \emph{enceinte} (un
+calorimètre) à travers laquelle aucune chaleur ne passe : ni perte, ni absorption avec l'extérieur.
+\end{attention}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+% ---- Diagramme exothermique ----
+\begin{scope}
+  \draw[->,thick] (0,-0.3) -- (0,4.2) node[above]{$H$ (kJ)};
+  \draw[exocol,very thick] (0.5,3.4) -- (2.6,3.4);
+  \node[anchor=south west,font=\small] at (0.55,3.45) {Réactifs};
+  \draw[exocol,very thick] (3.4,1.0) -- (5.5,1.0);
+  \node[anchor=south west,font=\small] at (3.45,1.05) {Produits};
+  \draw[->,exocol,line width=1.2pt] (3.0,3.4) -- (3.0,1.0)
+        node[midway,right,font=\small]{$\dH<0$};
+  \draw[dashed,gray] (2.6,3.4) -- (3.4,3.4);
+  \draw[dashed,gray] (2.6,1.0) -- (3.4,1.0);
+  \node[exocol,font=\bfseries] at (2.9,4.0) {Réaction exothermique};
+  \node[font=\scriptsize,align=center] at (2.9,0.25) {l'énergie des produits est \emph{plus basse}\\ $\Rightarrow$ la réaction \textbf{dégage} de la chaleur};
+\end{scope}
+% ---- Diagramme endothermique ----
+\begin{scope}[xshift=8.2cm]
+  \draw[->,thick] (0,-0.3) -- (0,4.2) node[above]{$H$ (kJ)};
+  \draw[endocol,very thick] (0.5,1.0) -- (2.6,1.0);
+  \node[anchor=south west,font=\small] at (0.55,1.05) {Réactifs};
+  \draw[endocol,very thick] (3.4,3.4) -- (5.5,3.4);
+  \node[anchor=south west,font=\small] at (3.45,3.45) {Produits};
+  \draw[->,endocol,line width=1.2pt] (3.0,1.0) -- (3.0,3.4)
+        node[midway,right,font=\small]{$\dH>0$};
+  \draw[dashed,gray] (2.6,1.0) -- (3.4,1.0);
+  \draw[dashed,gray] (2.6,3.4) -- (3.4,3.4);
+  \node[endocol,font=\bfseries] at (2.9,4.0) {Réaction endothermique};
+  \node[font=\scriptsize,align=center] at (2.9,0.25) {l'énergie des produits est \emph{plus haute}\\ $\Rightarrow$ la réaction \textbf{absorbe} de la chaleur};
+\end{scope}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 3}} : diagrammes enthalpiques. Le sens de la flèche verticale
+donne immédiatement le signe de $\dH$.}
+\end{center}
+
+\begin{exemple}[lire le signe de $\dH$ sur une équation]
+Pour la synthèse de l'ammoniac \;$\tfrac12\,\ce{N2} + \tfrac32\,\ce{H2} \rightleftharpoons \ce{NH3}$,\;
+le livre donne $\dH_{\text{réaction}} = \SI{-46}{\kilo\joule}$.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Le signe est \emph{négatif} : la réaction est donc \textbf{exothermique}, elle dégage
+        $\SI{46}{\kilo\joule}$ par mole de \ce{NH3} formée.
+  \item Comme $\dH = H_{\text{produits}} - H_{\text{réactifs}} < 0$, on en déduit
+        $H_{\text{produits}} < H_{\text{réactifs}}$ : l'enthalpie des réactifs ($\ce{N2}$, $\ce{H2}$)
+        est \textbf{plus élevée} que celle du produit ($\ce{NH3}$). C'est exactement ce que montre le
+        diagramme de gauche de la figure~3.
+\end{itemize}
+\end{exemple}
+
+\begin{exemple}[la combustion, toujours exothermique]
+Brûler un carburant est une réaction de \textbf{combustion}, toujours exothermique : l'énergie stockée
+dans les liaisons des molécules est libérée lors de l'oxydation des atomes de carbone. Pour l'octane
+(un constituant de l'essence) :
+\[ \ce{C8H18} + \tfrac{25}{2}\,\ce{O2} \;\longrightarrow\; 8\,\ce{CO2} + 9\,\ce{H2O} + \text{Énergie}. \]
+Le « $+\,$Énergie » à droite traduit le caractère exothermique ($\dH<0$). C'est parce que ces molécules
+\emph{possèdent} de l'énergie chimique qu'il y a dégagement de chaleur quand on les brûle.
+\end{exemple}
+
+% =====================================================================
+\section{Enthalpie de formation et loi de Hess}
+\label{sec:hess}
+% =====================================================================
+\subsection{Enthalpie standard de formation}
+
+\begin{definition}[enthalpie standard de formation $\dHf$]
+L'\textbf{enthalpie standard de formation} d'un composé, notée $\dHf$, est la variation d'enthalpie de
+la réaction qui forme \textbf{une mole} de ce composé \emph{à partir des corps purs simples} pris dans
+leur état le plus stable, dans les conditions standard. Elle s'exprime en $\si{\kilo\joule\per\mol}$.
+\end{definition}
+
+\begin{theoreme}[enthalpie de formation d'un corps pur simple]
+Par \textbf{convention}, l'enthalpie standard de formation d'un \textbf{corps pur simple} dans son état
+le plus stable est \textbf{nulle} :
+\[ \dHf(\text{corps pur simple}) = \SI{0}{\kilo\joule\per\mol}\qquad
+   \text{ex. : } \dHf(\ce{O2}),\ \dHf(\ce{N2}),\ \dHf(\ce{Ar}),\ \dHf(\ce{H2}) = 0. \]
+On ne « forme » pas un élément à partir de lui-même : sa formation ne coûte aucune énergie.
+\end{theoreme}
+
+\subsection{La loi de Hess}
+
+\begin{theoreme}[Loi de Hess]
+L'enthalpie d'une réaction est égale à la \textbf{somme des enthalpies de formation des produits} moins
+la \textbf{somme des enthalpies de formation des réactifs}, chacune pondérée par son coefficient
+stœchiométrique. C'est une conséquence directe du fait que $H$ est une fonction d'état.
+\end{theoreme}
+
+\begin{formule}[Loi de Hess]
+\[ \boxed{\;\dHr \;=\; \sum_i n_i\,\dHf(\text{produits}) \;-\; \sum_j n_j\,\dHf(\text{réactifs})\;} \]
+\begin{ou}
+  \item $\dHr$ : enthalpie standard de la réaction, en $\si{\kilo\joule}$ (ou $\si{\kilo\joule\per\mol}$) ;
+  \item $n_i,\ n_j$ : \textbf{coefficients stœchiométriques} des produits et des réactifs (nombres sans unité) ;
+  \item $\dHf(\text{produits})$, $\dHf(\text{réactifs})$ : enthalpies standard de formation, en $\si{\kilo\joule\per\mol}$.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[forme générale sur une réaction simple]
+Pour la réaction \;$\ce{A} \longrightarrow 2\,\ce{B}$\;, la loi de Hess donne directement :
+\[ \dHr \;=\; 2\,\dHf(\ce{B}) \;-\; \dHf(\ce{A}). \]
+Le coefficient $2$ devant $\ce{B}$ se retrouve comme facteur devant son enthalpie de formation.
+\end{exemple}
+
+\begin{remarque}
+La loi de Hess explique aussi la propriété « énergétique » du signe de $\dHr$ : si $\dHr < 0$ alors
+$\sum n_i\,\dHf(\text{produits}) < \sum n_j\,\dHf(\text{réactifs})$ — l'énergie des produits formés est
+\emph{inférieure} à celle des réactifs : il y a eu \textbf{perte d'énergie} (réaction exothermique).
+\end{remarque}
+
+\subsection{Le cycle de Hess : un exemple complet}
+
+Quand on ne connaît pas directement $\dHr$ mais que l'on dispose d'un \textbf{diagramme énergétique}
+(un cycle), on applique le principe : \emph{en parcourant un cycle fermé et en revenant au point de
+départ, la somme des variations d'enthalpie est nulle}. Si une flèche est parcourue à contre-sens, on
+change le signe de sa valeur.
+
+\begin{exemple}[oxydation du dioxyde de soufre]
+On considère l'oxydation \;$2\,\ce{SO2}(g) + \ce{O2}(g) \longrightarrow 2\,\ce{SO3}(g)$\;, d'enthalpie
+$\dHr$ inconnue. On sait que $\dHf(\ce{SO2}(g)) = \SI{-300}{\kilo\joule\per\mol}$ et
+$\dHf(\ce{SO3}(g)) = \SI{-400}{\kilo\joule\per\mol}$. Le diagramme énergétique ci-dessous représente
+les trois niveaux et les deux chemins possibles depuis les éléments.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[->,thick] (0,-0.3) -- (0,5.1) node[above]{$H$ (kJ)};
+  % niveau 0 : éléments
+  \draw[primarydark,very thick] (0.4,4.4) -- (8.7,4.4);
+  \node[anchor=west,font=\small] at (0.5,4.72) {$2\,\ce{S}(s) + 2\,\ce{O2}(g) + \ce{O2}(g)$};
+  \node[anchor=east,font=\scriptsize] at (0.3,4.4) {$0$};
+  % niveau SO2 : -600
+  \draw[exocol,very thick] (0.4,2.5) -- (4.9,2.5);
+  \node[anchor=west,font=\small] at (1.4,2.82) {$2\,\ce{SO2}(g) + \ce{O2}(g)$};
+  % niveau SO3 : -800
+  \draw[endocol,very thick] (2.9,0.9) -- (8.7,0.9);
+  \node[anchor=west,font=\small] at (6.3,1.22) {$2\,\ce{SO3}(g)$};
+  % fleche elements -> SO2  (2 x -300)  (colonne gauche dégagée)
+  \draw[->,line width=1.1pt,exocol] (1.0,4.4) -- (1.0,2.5)
+        node[midway,fill=white,font=\scriptsize]{$2\times(-300)$};
+  % fleche elements -> SO3  (2 x -400)  (colonne droite dégagée)
+  \draw[->,line width=1.1pt,endocol] (7.7,4.4) -- (7.7,0.9)
+        node[midway,fill=white,font=\scriptsize]{$2\times(-400)$};
+  % fleche SO2 -> SO3 : DHr ?  (colonne centrale, label à droite, loin de "2 SO3")
+  \draw[->,line width=1.1pt,attncol] (3.8,2.5) -- (3.8,0.9)
+        node[midway,right,font=\scriptsize,attncol]{$\dHr=\;?$};
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 4}} : cycle de Hess pour l'oxydation de $\ce{SO2}$.}
+\end{center}
+
+\textbf{Raisonnement.} On part des éléments (niveau $0$) et on rejoint $2\,\ce{SO3}$ de deux façons :
+soit directement ($2\times(-400)$), soit en passant par $2\,\ce{SO2}$ ($2\times(-300)$ puis $\dHr$).
+Comme $H$ est une fonction d'état, les deux chemins donnent la même enthalpie :
+\[ 2\times(-300) + \dHr \;=\; 2\times(-400). \]
+\textbf{Résolution.}
+\[ \dHr \;=\; 2\times(-400) - 2\times(-300) \;=\; -800 + 600 \;=\; \SI{-200}{\kilo\joule}. \]
+Cette valeur correspond à la formation de \textbf{2 mol} de $\ce{SO3}$. Rapportée à une mole :
+\[ \dHr \;=\; \frac{-200}{2} \;=\; \SI{-100}{\kilo\joule\per\mol\ de\ \ce{SO3}}. \]
+La réaction est \textbf{exothermique}. On retrouve bien le résultat par la loi de Hess directe :
+$\dHr = 2\,\dHf(\ce{SO3}) - 2\,\dHf(\ce{SO2}) = 2(-400)-2(-300) = \SI{-200}{\kilo\joule}$.
+\end{exemple}
+
+% =====================================================================
+\section{Calorimétrie : mesurer la chaleur}
+% =====================================================================
+La \textbf{calorimétrie} est la technique expérimentale qui mesure les quantités de chaleur. On réalise
+la transformation dans un \textbf{calorimètre} (enceinte adiabatique) et on suit la variation de
+température. Deux formules suffisent : la chaleur \emph{sensible} (qui change la température) et la
+chaleur \emph{latente} (qui change l'état physique).
+
+\subsection{Chaleur sensible : $Q = mc\Delta T$}
+
+\begin{formule}[Chaleur sensible (échauffement / refroidissement)]
+\[ \boxed{\;Q \;=\; m \times c \times \Delta T\;} \]
+\begin{ou}
+  \item $Q$ : quantité de chaleur échangée, en $\si{\joule}$ (souvent en $\si{\kilo\joule}$) ;
+  \item $m$ : masse du corps, en $\si{\kilogram}$ ;
+  \item $c$ : \textbf{capacité thermique massique} du corps, en $\si{\kilo\joule\per\kelvin\per\kilogram}$ ;
+  \item $\Delta T = T_{\text{final}} - T_{\text{initial}}$ : variation de température, en $\si{\kelvin}$ ou en $\si{\celsius}$
+        (une \emph{variation} a la même valeur dans les deux échelles).
+\end{ou}
+\end{formule}
+
+\begin{remarque}
+La capacité thermique massique $c$ représente l'énergie nécessaire pour élever de $\SI{1}{\kelvin}$ la
+température de $\SI{1}{\kilogram}$ de substance. Pour l'eau, elle dépend de l'état physique :
+\[ c_{\text{eau liquide}} = \SI{4.185}{\kilo\joule\per\kelvin\per\kilogram},\quad
+   c_{\text{glace}} = \SI{2.060}{\kilo\joule\per\kelvin\per\kilogram},\quad
+   c_{\text{vapeur}} = \SI{1.85}{\kilo\joule\per\kelvin\per\kilogram}. \]
+\end{remarque}
+
+\subsection{Chaleur latente : changement d'état}
+
+Pendant un changement d'état (fusion, vaporisation\ldots), la température \textbf{ne varie pas} : toute
+la chaleur sert à briser ou reformer les liaisons entre molécules. On parle de \textbf{chaleur latente}.
+
+\begin{formule}[Chaleur latente de changement d'état]
+\[ \boxed{\;Q \;=\; m \times L\;} \]
+\begin{ou}
+  \item $Q$ : chaleur absorbée ou dégagée pendant le changement d'état, en $\si{\kilo\joule}$ ;
+  \item $m$ : masse qui change d'état, en $\si{\kilogram}$ ;
+  \item $L$ : \textbf{chaleur latente massique} (enthalpie de changement d'état), en $\si{\kilo\joule\per\kilogram}$.
+\end{ou}
+\end{formule}
+
+Pour l'eau : $L_{\text{fusion}} = \SI{334}{\kilo\joule\per\kilogram}$ (à $\SI{0}{\celsius}$) et
+$L_{\text{vaporisation}} = \SI{2257}{\kilo\joule\per\kilogram}$ (à $\SI{100}{\celsius}$).
+
+\subsection{Le bilan calorimétrique}
+
+\begin{theoreme}[Conservation de l'énergie dans un calorimètre]
+Dans un calorimètre \emph{adiabatique}, aucune chaleur ne sort vers l'extérieur. Les chaleurs échangées
+entre les corps présents se compensent exactement : la somme des chaleurs reçues et cédées est nulle.
+\[ \boxed{\;\textstyle\sum_i Q_i \;=\; 0\;}\qquad\Longleftrightarrow\qquad
+   \big|\textstyle\sum Q_{\text{reçues}}\big| = \big|\textstyle\sum Q_{\text{cédées}}\big|. \]
+Une chaleur \emph{reçue} est positive, une chaleur \emph{cédée} est négative.
+\end{theoreme}
+
+\begin{exemple}[chauffer $\SI{100}{\gram}$ de glace de $\SI{-80}{\celsius}$ jusqu'à la vapeur à $\SI{160}{\celsius}$]
+On veut la quantité totale de chaleur $Q$ nécessaire pour transformer $\SI{0.1}{\kilogram}$ de glace
+prise à $\SI{-80}{\celsius}$ en vapeur portée à $\SI{160}{\celsius}$. Le parcours comporte
+\textbf{cinq étapes} : trois échauffements (chaleur sensible) et deux changements d'état (chaleur latente).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,every node/.style={font=\scriptsize}]
+  % paliers horizontaux (chaleur sensible) et verticaux (chaleur latente)
+  % etape 1 : -80 -> 0 (glace)
+  \draw[->,line width=1.1pt,endocol] (0,0) -- (2.6,0);
+  \node[above] at (1.3,0) {$m\,c_{\text{glace}}\,\Delta T$};
+  \node[below left] at (0,0) {$-80\,\si{\celsius}$};
+  \node[below] at (0,-0.35) {glace};
+  % etape 2 : fusion a 0
+  \draw[->,line width=1.1pt,chaleur] (2.6,0) -- (2.6,1.1);
+  \node[right] at (2.6,0.55) {$m\,L_{\text{fusion}}$};
+  \node[below] at (2.6,0) {$0\,\si{\celsius}$};
+  % etape 3 : 0 -> 100 (eau liquide)
+  \draw[->,line width=1.1pt,endocol] (2.6,1.1) -- (6.0,1.1);
+  \node[above] at (4.3,1.1) {$m\,c_{\text{eau liq.}}\,\Delta T$};
+  % etape 4 : vaporisation a 100
+  \draw[->,line width=1.1pt,chaleur] (6.0,1.1) -- (6.0,2.2);
+  \node[right] at (6.0,1.65) {$m\,L_{\text{vap.}}$};
+  \node[below] at (6.0,1.1) {$100\,\si{\celsius}$};
+  % etape 5 : 100 -> 160 (vapeur)
+  \draw[->,line width=1.1pt,endocol] (6.0,2.2) -- (8.6,2.2);
+  \node[above] at (7.3,2.2) {$m\,c_{\text{vap.}}\,\Delta T$};
+  \node[above right] at (8.6,2.2) {$160\,\si{\celsius}$};
+  \node[below] at (8.6,2.2) {vapeur};
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 5}} : « escalier » calorimétrique. Les segments
+\textcolor{endocol}{horizontaux} sont des échauffements ($Q=mc\Delta T$), les segments
+\textcolor{chaleur}{verticaux} sont des changements d'état ($Q=mL$).}
+\end{center}
+
+\textbf{Mise en équation.} On additionne les cinq contributions :
+\[ Q = m\,c_{\text{glace}}\Delta T \;+\; m\,L_{\text{fusion}} \;+\; m\,c_{\text{eau liq.}}\Delta T
+       \;+\; m\,L_{\text{vap.}} \;+\; m\,c_{\text{vapeur}}\Delta T. \]
+\textbf{Application numérique} (avec $m=\SI{0.1}{\kilogram}$) :
+\begin{align*}
+ Q &= \underbrace{0{,}1\times 2{,}060\times\big(0-(-80)\big)}_{\text{glace : }-80\to 0\,\si{\celsius}}
+   + \underbrace{0{,}1\times 334}_{\text{fusion}}
+   + \underbrace{0{,}1\times 4{,}185\times(100-0)}_{\text{eau : }0\to 100\,\si{\celsius}}\\[2pt]
+   &\quad + \underbrace{0{,}1\times 2257}_{\text{vaporisation}}
+   + \underbrace{0{,}1\times 1{,}85\times(160-100)}_{\text{vapeur : }100\to 160\,\si{\celsius}} \quad(\si{\kilo\joule}).
+\end{align*}
+On calcule chaque terme :
+\[ Q = 16{,}48 + 33{,}4 + 41{,}85 + 225{,}7 + 11{,}1 = \boxed{\SI{328.53}{\kilo\joule}}. \]
+\textbf{Lecture du résultat.} Le terme dominant est la \textbf{vaporisation} ($\SI{225.7}{\kilo\joule}$,
+soit près de $70\,\%$ du total) : c'est de loin l'étape la plus coûteuse en énergie, car $L_{\text{vap.}}$
+est très grand devant les autres. C'est pourquoi la vapeur d'eau transporte énormément d'énergie.
+\end{exemple}
+
+\begin{exemple}[neutralisation acide--base dans un calorimètre]
+Dans un calorimètre adiabatique en verre, on mélange $\SI{50}{\milli\litre}$ d'hydroxyde de sodium
+\ce{NaOH} à $\SI{2.00}{\mol\per\litre}$ et $\SI{50}{\milli\litre}$ d'acide chlorhydrique \ce{HCl} de
+même concentration, tous deux à $\SI{20.0}{\celsius}$. Après réaction, la température atteint
+$\SI{30}{\celsius}$. On admet que le verre ne s'échauffe pas et que la masse volumique vaut
+$\SI{1}{\gram\per\milli\litre}$.
+
+La réaction est une neutralisation, \textbf{exothermique} :
+\[ \ce{HCl}(aq) + \ce{NaOH}(aq) \longrightarrow \ce{H2O} + \ce{NaCl}(aq) + \text{Chaleur}. \]
+\textbf{Étape 1 — masse et variation de température.} Le volume total est
+$50+50 = \SI{100}{\milli\litre}$, soit une masse d'eau $m = \SI{0.1}{\kilogram}$. La variation est
+$\Delta T = 30 - 20 = \SI{10}{\celsius}$.
+
+\textbf{Étape 2 — chaleur captée par l'eau.} Comme le verre ne s'échauffe pas, toute la chaleur dégagée
+par la réaction est captée par l'eau :
+\[ Q = m\,c_{\text{eau}}\,\Delta T = 0{,}1 \times 4{,}185 \times 10 = \SI{4.185}{\kilo\joule}
+     = \boxed{\SI{4185}{\joule}}. \]
+\textbf{Piège d'unités.} Attention au facteur $1000$ : $\SI{4.185}{\kilo\joule}$ font bien
+$\SI{4185}{\joule}$ (et non $\SI{4.185}{\joule}$ ni $\SI{41.85}{\joule}$).
+\end{exemple}
+
+\begin{exemple}[dissolution d'un sel : enthalpie molaire de dissolution]
+Dans un calorimètre en verre de masse $m_v$ contenant une masse d'eau $m_e$ à $\SI{21.0}{\celsius}$, on
+ajoute $n$ moles de sulfate de cuivre(II) solide à la même température. Après dissolution, la solution
+atteint $\SI{23}{\celsius}$ ; on suppose que seule \emph{la moitié} de la masse du verre s'échauffe.
+Données : $c_v = \SI{0.8368}{\kilo\joule\per\celsius\per\kilogram}$ et
+$c_e = \SI{4.185}{\kilo\joule\per\celsius\per\kilogram}$.
+
+\textbf{Variation de température :} $\Delta T = 23 - 21 = \SI{2}{\celsius}$ (soit $\SI{2}{\kelvin}$).
+
+\textbf{Chaleur captée par l'eau :}
+\[ Q_1 = m_e \, c_e \, \Delta T = m_e \, c_e \times 2 = 2\,m_e\,c_e. \]
+\textbf{Chaleur captée par le calorimètre} (seule la moitié du verre s'échauffe) :
+\[ Q_2 = \frac{m_v}{2}\, c_v \, \Delta T = \frac{m_v}{2}\, c_v \times 2 = m_v\,c_v. \]
+\textbf{Bilan.} Comme la dissolution \emph{réchauffe} le milieu, elle \emph{cède} de la chaleur : c'est
+une dissolution \textbf{exothermique}, donc $\dH < 0$. La chaleur cédée par le sel est captée par l'eau
+et le verre : $|Q| = |Q_1 + Q_2|$. L'enthalpie molaire de dissolution est la chaleur rapportée à
+\textbf{une mole} de sel dissous :
+\[ \boxed{\;\dH = \frac{-\,|Q_1 + Q_2|}{n}\ \si{\kilo\joule\per\mol}\;} \]
+le signe « $-$ » rappelant que la dissolution est exothermique.
+\end{exemple}
+
+\begin{exemple}[barre de fer froide plongée dans l'eau : congélation partielle]
+Un cas riche où l'eau gèle \emph{partiellement}. Un calorimètre adiabatique (capacité négligeable)
+contient $\SI{200}{\gram}$ d'eau à $\SI{4}{\celsius}$. On y plonge une barre de fer de $\SI{500}{\gram}$
+sortant d'un congélateur à $\SI{-40}{\celsius}$. Données : $c_{\text{eau}} = \SI{4}{\kilo\joule\per\kelvin\per\kilogram}$,
+$c_{\text{glace}} = \SI{2}{\kilo\joule\per\kelvin\per\kilogram}$, $c_{\text{fer}} = \SI{0.5}{\kilo\joule\per\kelvin\per\kilogram}$,
+$L = \SI{334}{\kilo\joule\per\kilogram}$.
+
+\textbf{(a) Énergie qu'il faut fournir au fer pour passer de $-40$ à $\SI{0}{\celsius}$ :}
+\[ Q_{\text{fer}} = m_{\text{fer}}\,c_{\text{fer}}\,\Delta T = 0{,}5 \times 0{,}5 \times \big(0-(-40)\big)
+   = 0{,}5\times0{,}5\times40 = \SI{10}{\kilo\joule}. \]
+\textbf{(b) Énergie que l'eau peut céder en se refroidissant de $4$ à $\SI{0}{\celsius}$ :}
+\[ |Q_{\text{eau}}| = m_{\text{eau}}\,c_{\text{eau}}\,|\Delta T| = 0{,}200 \times 4 \times |0-4|
+   = \SI{3.2}{\kilo\joule}. \]
+\textbf{(c) Comparaison.} L'eau ne peut céder que $\SI{3.2}{\kilo\joule}$, alors que le fer réclame
+$\SI{10}{\kilo\joule}$ pour atteindre $\SI{0}{\celsius}$. Il manque $10 - 3{,}2 = \SI{6.8}{\kilo\joule}$.
+Cette énergie ne peut venir que de la \textbf{congélation} d'une partie de l'eau (qui libère sa chaleur
+latente). Si \emph{toute} l'eau gelait, elle libérerait
+$Q = m_{\text{eau}}\,L = 0{,}200\times 334 = \SI{66.8}{\kilo\joule}$, bien plus que les
+$\SI{6.8}{\kilo\joule}$ requis : donc \textbf{seule une partie} de l'eau gèle.
+
+\textbf{(d) Masse d'eau gelée.} Le bilan $\sum Q_i = 0$ s'écrit (énergie reçue par le fer $=$ énergie
+cédée par l'eau qui refroidit $+$ énergie libérée par la congélation) :
+\[ 10 = 3{,}2 + m\times 334 \quad\Longrightarrow\quad
+   m = \frac{10 - 3{,}2}{334} = \frac{6{,}8}{334} \approx \SI{0.0204}{\kilogram} \approx \SI{20.4}{\gram}. \]
+\textbf{(e) Masse d'eau restée liquide :}
+\[ m_{\text{eau liquide}} = 200 - \frac{6{,}8}{334}\times 1000 = 200 - \frac{6800}{334}
+   \approx \SI{179.6}{\gram}. \]
+La température finale d'équilibre est donc $\SI{0}{\celsius}$, avec coexistence de glace et d'eau liquide.
+\end{exemple}
+
+% =====================================================================
+\section{Entropie et deuxième principe}
+% =====================================================================
+Le premier principe dit que l'énergie se conserve, mais ne dit pas \emph{dans quel sens} une
+transformation se produit. C'est le rôle du \textbf{deuxième principe} et de l'\textbf{entropie}.
+
+\begin{definition}[entropie $S$ et désordre]
+L'\textbf{entropie} $S$ mesure le \textbf{désordre} (le nombre d'arrangements possibles) d'un système.
+Elle s'exprime en $\si{\joule\per\mol\per\kelvin}$. Plus un système est désordonné, plus son entropie
+est grande. Ordre croissant du désordre : \;solide $<$ liquide $<$ gaz $<$ gaz dispersé.
+\end{definition}
+
+\begin{principe}[Deuxième principe — sens d'évolution spontané]
+Un processus est \textbf{spontané} si le \textbf{désordre total augmente}, c'est-à-dire si l'entropie de
+l'univers croît :
+\[ \dS_{\text{univers}} > 0. \]
+Quand cette condition est réalisée, la réaction tend à devenir \textbf{complète} (elle évolue d'elle-même
+dans ce sens).
+\end{principe}
+
+\begin{principe}[Troisième principe — origine des entropies]
+À la température du \textbf{zéro absolu} ($T = \SI{0}{\kelvin}$), un cristal parfait est parfaitement
+ordonné : son entropie est nulle.
+\[ S = \SI{0}{\joule\per\mol\per\kelvin}\quad\text{à}\quad T = \SI{0}{\kelvin}. \]
+Ce principe fixe une \emph{origine} commune aux entropies (contrairement à l'enthalpie, dont seule la
+variation est accessible).
+\end{principe}
+
+\subsection{Prévoir le signe de $\dS$ d'une réaction}
+
+\begin{methode}[signe de $\Delta S$ « à vue »]
+Regarder comment varie le \emph{désordre} entre réactifs et produits :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{apparition de gaz} ou \textbf{augmentation du nombre de moles de gaz} $\Rightarrow$ désordre $\nearrow$, $\dS > 0$ ;
+  \item \textbf{disparition de gaz} ou \textbf{diminution du nombre de moles de gaz} $\Rightarrow$ désordre $\searrow$, $\dS < 0$ ;
+  \item \textbf{dissolution} d'un solide $\Rightarrow$ désordre $\nearrow$, $\dS > 0$ ;
+  \item \textbf{fusion / vaporisation / sublimation} $\Rightarrow$ désordre $\nearrow$, $\dS > 0$.
+\end{itemize}
+\end{methode}
+
+\begin{exemple}[déterminer le signe de $\dS$ sur quatre réactions]
+On indique pour chaque cas si « le désordre augmente » ($\dS > 0$) est \textbf{vrai} ou \textbf{faux}.
+\begin{itemize}[leftmargin=1.6em,topsep=3pt,itemsep=3pt]
+  \item \textbf{Synthèse de l'ammoniac} : $\ce{N2}(g) + 3\,\ce{H2}(g) \rightarrow 2\,\ce{NH3}(g)$.
+        On passe de \textbf{4 moles} de gaz à \textbf{2 moles} de gaz : le désordre \emph{diminue},
+        $\dS < 0$. L'affirmation « $\dS > 0$ » est donc \textbf{fausse}.
+  \item \textbf{Dissolution du saccharose} : $\ce{C12H22O11}(s) \rightarrow \ce{C12H22O11}(aq)$. Un solide
+        ordonné se disperse dans l'eau : le désordre \emph{augmente}, $\dS > 0$. \textbf{Vrai}.
+  \item \textbf{Réaction acide--base gazeuse} : $\ce{NH3}(g) + \ce{HCl}(g) \rightarrow \ce{NH4Cl}(s)$. On
+        passe de \textbf{2 moles} de gaz à un \textbf{solide} : le désordre \emph{diminue}, $\dS < 0$.
+        L'affirmation « $\dS < 0$ » est donc \textbf{vraie}.
+  \item \textbf{Décomposition du carbonate} : $\ce{CaCO3}(s) \rightarrow \ce{CaO}(s) + \ce{CO2}(g)$. On
+        \emph{crée} du gaz à partir d'un solide : le désordre \emph{augmente}, $\dS > 0$. \textbf{Vrai}.
+\end{itemize}
+\end{exemple}
+
+\begin{exemple}[sublimation de la « neige carbonique »]
+Lorsque le dioxyde de carbone solide se transforme en gaz, $\ce{CO2}(s) \rightarrow \ce{CO2}(g)$ (c'est
+une \emph{sublimation}), on passe d'un solide très ordonné à un gaz très désordonné. L'entropie
+\textbf{augmente} nettement, $\dS > 0$.
+\end{exemple}
+
+% =====================================================================
+\section{L'équilibre chimique}
+% =====================================================================
+\subsection{Réaction réversible et état d'équilibre}
+
+Beaucoup de réactions ne sont pas totales : elles peuvent se dérouler dans les \textbf{deux sens}. On les
+note avec une double flèche $\rightleftharpoons$.
+
+\begin{definition}[réaction réversible, sens 1 et sens 2]
+Une réaction est \textbf{réversible} si elle peut évoluer dans les deux sens : le \textbf{sens direct}
+(sens 1, de gauche à droite) et le \textbf{sens inverse} (sens 2, de droite à gauche).
+\[ a\,\ce{A} + b\,\ce{B} \;\underset{\text{sens 2}}{\overset{\text{sens 1}}{\rightleftharpoons}}\;
+   c\,\ce{C} + d\,\ce{D}. \]
+\end{definition}
+
+\begin{definition}[état d'équilibre chimique]
+L'\textbf{équilibre chimique} est l'état \textbf{stationnaire} atteint quand la \textbf{vitesse du sens
+direct} est exactement égale à la \textbf{vitesse du sens inverse}. À l'échelle macroscopique, les
+concentrations \emph{ne varient plus}, mais à l'échelle microscopique les deux réactions continuent de
+se produire sans cesse : on parle d'\textbf{équilibre dynamique}.
+\end{definition}
+
+\begin{theoreme}[caractéristiques de l'état d'équilibre]
+À l'équilibre, à température $T_{\text{éq}}$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item la vitesse de formation des produits est \textbf{égale} à la vitesse du processus inverse ;
+  \item les concentrations des espèces restent \textbf{constantes} dans le temps (état stationnaire) ;
+  \item réactifs et produits sont \emph{transformés sans cesse l'un en l'autre} ;
+  \item \textbf{aucune énergie} extérieure n'est nécessaire pour maintenir l'équilibre.
+\end{itemize}
+\end{theoreme}
+
+\begin{attention}
+« Équilibre » ne veut pas dire « quantités égales » ! À l'équilibre, les concentrations de réactifs et
+de produits sont \emph{constantes}, mais \emph{pas nécessairement égales} entre elles.
+\end{attention}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+   width=11.5cm, height=6.2cm,
+   xlabel={temps $t$}, ylabel={concentration},
+   xtick=\empty, ytick=\empty,
+   axis lines=left, xmin=0, xmax=10, ymin=0, ymax=5,
+   clip=false, every axis plot/.append style={line width=1.2pt}]
+  % reactif decroissant vers plateau 1.2
+  \addplot[endocol,domain=0:7,samples=80]{1.2 + 3.3*exp(-0.7*x)};
+  \addplot[endocol,domain=7:10]{1.2};
+  % produit croissant vers plateau 3.2
+  \addplot[exocol,domain=0:7,samples=80]{3.2 - 3.2*exp(-0.7*x)};
+  \addplot[exocol,domain=7:10]{3.2};
+  % ligne equilibre
+  \draw[dashed,gray] (axis cs:6.2,0) -- (axis cs:6.2,5);
+  \node[gray,font=\scriptsize,anchor=south] at (axis cs:8.1,4.4) {équilibre atteint};
+  \node[endocol,font=\small,anchor=west] at (axis cs:7.1,1.2) {réactifs};
+  \node[exocol,font=\small,anchor=west] at (axis cs:7.1,3.2) {produits};
+  \draw[<->,gray] (axis cs:8.4,1.2) -- (axis cs:8.4,3.2)
+        node[midway,right,font=\scriptsize,black]{plateaux constants $\ne$ égaux};
+\end{axis}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 6}} : évolution des concentrations vers l'équilibre. Au-delà
+d'un certain temps, elles deviennent \emph{constantes} (plateaux), mais restent en général différentes.}
+\end{center}
+
+\subsection{La constante d'équilibre $K$}
+
+\begin{formule}[Constante d'équilibre (loi d'action de masse)]
+Pour la réaction $a\,\ce{A} + b\,\ce{B} \rightleftharpoons c\,\ce{C} + d\,\ce{D}$, la constante
+d'équilibre s'écrit, à l'aide des concentrations \emph{à l'équilibre} :
+\[ \boxed{\;K \;=\; \dfrac{[\ce{C}]^{c}\,[\ce{D}]^{d}}{[\ce{A}]^{a}\,[\ce{B}]^{b}}\;} \]
+\begin{ou}
+  \item $K$ : constante d'équilibre (sans unité dans la convention usuelle) ;
+  \item $[\ce{C}],[\ce{D}]$ : concentrations des \textbf{produits} à l'équilibre, en $\si{\mol\per\litre}$ ;
+  \item $[\ce{A}],[\ce{B}]$ : concentrations des \textbf{réactifs} à l'équilibre, en $\si{\mol\per\litre}$ ;
+  \item $a,b,c,d$ : coefficients stœchiométriques, qui deviennent les \textbf{exposants}.
+\end{ou}
+\textbf{Règle : produits au numérateur, réactifs au dénominateur}, chacun élevé à son coefficient.
+\end{formule}
+
+\begin{attention}[espèces qui n'apparaissent PAS dans $K$]
+Les \textbf{solides purs} et les \textbf{liquides purs} (par exemple le solvant) n'apparaissent
+\emph{pas} dans l'expression de $K$ : leur « concentration » est constante. Seuls les \textbf{gaz} et les
+\textbf{espèces dissoutes} (notées $(aq)$) figurent dans $K$.
+\end{attention}
+
+\begin{exemple}[exemple du livre : repérer ce qui entre dans $K$]
+Pour la réaction réversible \;$2\,\ce{A}(aq) + \ce{B}(s) \rightleftharpoons 2\,\ce{C}(g) + \ce{D}(aq)$\;,
+le solide $\ce{B}(s)$ \emph{disparaît} de l'expression. Il reste :
+\[ K = \frac{[\ce{C}(g)]^{2}\,[\ce{D}(aq)]}{[\ce{A}(aq)]^{2}}. \]
+\end{exemple}
+
+\begin{theoreme}[de quoi dépend $K$ — et de quoi il ne dépend pas]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item $K$ dépend \textbf{uniquement de la température} : changer $T$ change la valeur de $K$ ;
+  \item $K$ \emph{ne dépend pas} des concentrations initiales : on peut partir de quantités quelconques,
+        $K$ garde la même valeur à $T$ donnée ;
+  \item $K$ dépend de la façon dont l'équation est \textbf{écrite} (de ses coefficients) ;
+  \item un \textbf{catalyseur} ne modifie pas $K$ (il accélère seulement l'arrivée à l'équilibre).
+\end{itemize}
+\end{theoreme}
+
+\subsection{Interprétation de la valeur de $K$}
+
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $K \gg 1$ : l'équilibre est très déplacé vers les \textbf{produits} (réaction quasi totale) ;
+  \item $K \ll 1$ : l'équilibre est très déplacé vers les \textbf{réactifs} (réaction très limitée) ;
+  \item $K \approx 1$ : réactifs et produits coexistent en proportions comparables.
+\end{itemize}
+
+\begin{exemple}[calculer $K$ à partir des concentrations à l'équilibre]
+Soit le système \;$\ce{PCl5}(g) \rightleftharpoons \ce{PCl3}(g) + \ce{Cl2}(g)$\; en équilibre à
+$\SI{298}{\kelvin}$. Les concentrations valent $[\ce{PCl5}] = \SI{0.40}{\mol\per\litre}$,
+$[\ce{PCl3}] = \SI{1.40}{\mol\per\litre}$ et $[\ce{Cl2}] = \SI{0.50}{\mol\per\litre}$.
+
+\textbf{Écriture de $K$} (produits sur réactifs, chaque coefficient vaut $1$) :
+\[ K = \frac{[\ce{PCl3}]\,[\ce{Cl2}]}{[\ce{PCl5}]}. \]
+\textbf{Application numérique :}
+\[ K = \frac{1{,}40 \times 0{,}50}{0{,}40} = \frac{0{,}70}{0{,}40} = \boxed{1{,}75}. \]
+Comme $K = 1{,}75 > 1$, l'équilibre est \emph{légèrement} déplacé vers les produits ($\ce{PCl3}$ et
+$\ce{Cl2}$).
+\end{exemple}
+
+\begin{exemple}[l'effet des coefficients : $K$ dépend de l'écriture]
+Le même système $\ce{PCl5}(g) \rightleftharpoons \ce{PCl3}(g) + \ce{Cl2}(g)$ à $\SI{300}{\kelvin}$ a une
+constante $K = 2$. Que vaut la constante $K'$ si l'on écrit l'équation avec des coefficients triplés :
+\[ 3\,\ce{PCl5}(g) \rightleftharpoons 3\,\ce{PCl3}(g) + 3\,\ce{Cl2}(g)\;? \]
+Tous les exposants sont multipliés par $3$, ce qui revient à \textbf{élever $K$ à la puissance 3} :
+\[ K' = \left(\frac{[\ce{PCl3}]\,[\ce{Cl2}]}{[\ce{PCl5}]}\right)^{3} = K^{3} = 2^{3} = \boxed{8}. \]
+\textbf{Leçon :} une constante d'équilibre n'a de sens que \emph{rapportée à une équation précise}.
+Multiplier les coefficients par $n$ élève $K$ à la puissance $n$.
+\end{exemple}
+
+\begin{exemple}[équilibre hétérogène : la pression à l'équilibre]
+À $\SI{1000}{\celsius}$, la réaction \;$\ce{FeO}(s) + \ce{CO}(g) \rightleftharpoons \ce{Fe}(s) + \ce{CO2}(g)$\;
+a une constante $K = 0{,}4$. On introduit du $\ce{FeO}(s)$ \emph{en excès} et du monoxyde de carbone sous
+$p_{\ce{CO}} = \SI{1}{atm}$. Quelle est la pression de $\ce{CO2}$ à l'équilibre ?
+
+\textbf{Étape 1 — écriture de $K$.} Les solides $\ce{FeO}$ et $\ce{Fe}$ \emph{n'apparaissent pas}. En
+phase gazeuse, on travaille avec les pressions partielles :
+\[ K = \frac{p_{\ce{CO2}}}{p_{\ce{CO}}} = 0{,}4. \]
+\textbf{Étape 2 — conservation.} Chaque molécule de $\ce{CO}$ consommée donne une molécule de $\ce{CO2}$ :
+le nombre total de moles de gaz est constant, donc $p_{\ce{CO}} + p_{\ce{CO2}} = \SI{1}{atm}$. Posons
+$p_{\ce{CO2}} = x$, d'où $p_{\ce{CO}} = 1 - x$.
+
+\textbf{Étape 3 — résolution.}
+\[ \frac{x}{1-x} = 0{,}4 \;\Longrightarrow\; x = 0{,}4(1-x) \;\Longrightarrow\; 1{,}4\,x = 0{,}4
+   \;\Longrightarrow\; x = \frac{0{,}4}{1{,}4} = \boxed{\tfrac{2}{7}\ \si{atm}} \approx \SI{0.29}{atm}. \]
+\end{exemple}
+
+% =====================================================================
+\section{Déplacement d'équilibre : la loi de Le Chatelier}
+% =====================================================================
+Quand on perturbe un système à l'équilibre (en changeant la température, la pression ou une
+concentration), il « réagit » pour s'opposer à la perturbation. C'est la \textbf{loi de Le Chatelier}
+(ou loi de modération).
+
+\begin{theoreme}[Loi de Le Chatelier]
+Si l'on modifie un facteur d'un système à l'équilibre, l'équilibre se déplace dans le sens qui tend à
+\textbf{s'opposer} (à \emph{modérer}) la modification imposée.
+\end{theoreme}
+
+\begin{remarque}[lien avec la thermochimie]
+Pour une réaction réversible, un sens est \textbf{endothermique} et l'autre \textbf{exothermique}. Si la
+réaction directe absorbe de la chaleur ($\dHr > 0$), alors la réaction inverse en dégage, et
+réciproquement.
+\end{remarque}
+
+\subsection{Les trois leviers et le tableau de Le Chatelier}
+
+Pour la réaction-type du livre, \;$2\,\ce{A}(aq) + \ce{B}(s) \rightleftharpoons 2\,\ce{C}(g) + \ce{D}(aq)$,\;
+endothermique dans le sens 1 ($\dHr > 0$) :
+
+\renewcommand{\arraystretch}{1.45}
+\begin{center}
+\begin{tabular}{|>{\centering\arraybackslash}m{3.5cm}|>{\centering\arraybackslash}m{4.3cm}|>{\raggedright\arraybackslash}m{6.3cm}|}
+\hline
+\rowcolor{primary!85}\textcolor{white}{\textbf{Modification}} &
+\textcolor{white}{\textbf{Sens du déplacement}} &
+\textcolor{white}{\textbf{Explication}}\\
+\hline
+\rowcolor{primary!6} Température $T \nearrow$ & sens 1 (vers la droite) &
+   l'équilibre va dans le sens \textbf{endothermique} (qui absorbe la chaleur ajoutée).\\
+\hline
+ Température $T \searrow$ & sens 2 (vers la gauche) &
+   l'équilibre va dans le sens \textbf{exothermique} (qui produit de la chaleur).\\
+\hline
+\rowcolor{primary!6} Pression $p \nearrow$ & sens 2 (vers la gauche) &
+   l'équilibre va vers le côté qui a \textbf{moins} de molécules gazeuses (désordre $\searrow$).\\
+\hline
+ Pression $p \searrow$ & sens 1 (vers la droite) &
+   l'équilibre va vers le côté qui a \textbf{plus} de molécules gazeuses (désordre $\nearrow$).\\
+\hline
+\rowcolor{primary!6} $[\ce{A}] \nearrow$ (réactif) & sens 1 (vers la droite) &
+   l'équilibre consomme l'excès : il évolue dans le sens où $[\ce{A}]$ \textbf{diminue}.\\
+\hline
+ $m(\ce{B})$ solide $\nearrow$ & \textbf{aucun effet} &
+   un \textbf{solide} (ou liquide) pur n'intervient pas : ajouter $\ce{B}(s)$ ne déplace rien.\\
+\hline
+ Catalyseur & \textbf{aucun effet} &
+   il accélère les deux sens également : il fait \emph{atteindre} l'équilibre plus vite, sans le déplacer.\\
+\hline
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1.0}
+
+\begin{attention}
+L'effet de la \textbf{pression} ne concerne que les \textbf{gaz}, et seulement si leur nombre de moles
+\emph{change} entre les deux côtés. Si les deux côtés ont le même nombre de moles de gaz, une variation
+de pression \textbf{n'a aucun effet} sur l'équilibre.
+\end{attention}
+
+\subsection{Effet de la température sur $K$}
+
+\begin{theoreme}[la température change $K$]
+Seule la \textbf{température} modifie la valeur de la constante $K$. Pour une réaction
+\textbf{endothermique} ($\dHr > 0$), une élévation de $T$ \emph{augmente} $K$ (l'équilibre se déplace
+vers les produits). Pour une réaction \textbf{exothermique} ($\dHr < 0$), une élévation de $T$
+\emph{diminue} $K$.
+\end{theoreme}
+
+\begin{exemple}[effet de $T$ sur une réaction exothermique à l'équilibre]
+Soit la réaction exothermique $\dHr < 0$ à l'équilibre. Une \textbf{augmentation de température} la
+déplace dans le sens \emph{endothermique}, c'est-à-dire \textbf{vers la gauche} (vers les réactifs) ;
+elle fait donc \textbf{diminuer} la constante $K$. Inversement, pour une réaction \textbf{endothermique}
+($\dHr > 0$), augmenter $T$ déplace l'équilibre \textbf{vers la droite} et \emph{augmente} la
+concentration des produits.
+\end{exemple}
+
+\begin{exemple}[décomposition du carbonate de baryum — quels leviers déplacent à droite ?]
+Dans un récipient fermé (volume constant), la décomposition \textbf{endothermique} :
+\[ \ce{BaCO3}(s) \rightleftharpoons \ce{BaO}(s) + \ce{CO2}(g). \]
+Quelles opérations déplacent l'équilibre vers la \textbf{droite} (formation des produits) ?
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Ajouter un catalyseur} : aucun effet (ne déplace pas l'équilibre). \textcolor{attncol}{Non.}
+  \item \textbf{Ouvrir le récipient} : le $\ce{CO2}(g)$ s'échappe, donc $[\ce{CO2}]$ diminue ;
+        l'équilibre se déplace vers la droite pour en reformer. \textcolor{excol}{\textbf{Oui.}}
+  \item \textbf{Ajouter du $\ce{BaCO3}(s)$} : c'est un solide pur, aucun effet. \textcolor{attncol}{Non.}
+  \item \textbf{Ajouter du $\ce{CO2}$} : on ajoute un produit, l'équilibre recule (vers la gauche).
+        \textcolor{attncol}{Non.}
+  \item \textbf{Augmenter la pression} : favorise le côté à \emph{moins} de gaz, soit la gauche (la
+        droite a $\SI{1}{mol}$ de gaz, la gauche $0$). \textcolor{attncol}{Non.}
+  \item \textbf{Augmenter la température} : réaction endothermique $\Rightarrow$ déplacement vers la
+        droite. \textcolor{excol}{\textbf{Oui.}}
+\end{itemize}
+\textbf{Conclusion :} seules \emph{l'ouverture du récipient} et \emph{l'augmentation de température}
+poussent la réaction vers les produits.
+\end{exemple}
+
+\begin{exemple}[procédé de contact : améliorer le rendement en $\ce{SO3}$]
+À volume constant, soit l'oxydation \textbf{exothermique} \;$2\,\ce{SO2}(g) + \ce{O2}(g) \rightleftharpoons 2\,\ce{SO3}(g)$.\;
+Comment \textbf{augmenter le rendement} en $\ce{SO3}$ (déplacer vers la droite) ?
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Introduire de l'oxygène en excès} : on ajoute un réactif, l'équilibre le consomme en
+        allant vers la droite. \textcolor{excol}{\textbf{Oui.}}
+  \item \textbf{Abaisser la température} : la réaction est exothermique, donc baisser $T$ la déplace vers
+        la droite. \textcolor{excol}{\textbf{Oui.}}
+  \item \textbf{Augmenter la pression} : la gauche compte $3$ moles de gaz, la droite $2$ : augmenter $p$
+        favorise le côté à moins de gaz, soit la droite. \textcolor{excol}{\textbf{Oui.}}
+  \item \textbf{Introduire un catalyseur} : accélère l'équilibre mais ne le déplace pas (n'agit que sur
+        la \emph{cinétique}, pas sur le \emph{rendement}). \textcolor{attncol}{Non.}
+  \item \textbf{Ajouter de l'argon à volume constant} : gaz inerte, ne change pas les pressions
+        partielles, aucun effet. \textcolor{attncol}{Non.}
+\end{itemize}
+\textbf{Compromis industriel.} Baisser $T$ améliore le rendement mais \emph{ralentit} la réaction. En
+pratique (procédé de contact), on choisit une température modérée \emph{plus} un catalyseur pour aller
+assez vite tout en gardant un bon rendement.
+\end{exemple}
+
+\begin{exemple}[transformation inverse : le trioxyde redonne du dioxyde]
+À volume constant, la réaction \textbf{endothermique} \;$2\,\ce{SO3}(g) \rightleftharpoons 2\,\ce{SO2}(g) + \ce{O2}(g)$\;
+(c'est l'inverse de la précédente). Pour transformer \emph{plus} de $\ce{SO3}$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Augmenter la température} : réaction endothermique $\Rightarrow$ déplacement vers la
+        droite (plus de $\ce{SO3}$ décomposé). \textcolor{excol}{\textbf{Oui.}}
+  \item \textbf{Catalyseur} : aucun effet sur le rendement. \textcolor{attncol}{Non.}
+  \item \textbf{Introduire de l'oxygène} : on ajoute un produit $\Rightarrow$ recul vers la gauche.
+        \textcolor{attncol}{Non.}
+  \item \textbf{Augmenter la pression} : la gauche a $2$ moles, la droite $3$ moles de gaz ; augmenter
+        $p$ favorise la gauche. \textcolor{attncol}{Non.}
+\end{itemize}
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse et formulaire}
+% =====================================================================
+
+\begin{tcolorbox}[boxbase,colback=primary!4,colframe=primary,
+   title={\textsc{Formulaire essentiel de la fiche 8}}]
+\renewcommand{\arraystretch}{1.6}
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}m{5.2cm} >{\centering\arraybackslash}m{4.6cm} >{\raggedright\arraybackslash}m{4.6cm}}
+\textbf{Grandeur / loi} & \textbf{Formule} & \textbf{Unités}\\
+\hline
+Premier principe & $\dH = Q + W$ & $\si{\joule}$ (ou $\si{\kilo\joule}$)\\
+Travail ($p$ cte) & $W = -p\,\Delta V$ & $W$ en $\si{\joule}$, $p$ en $\si{\pascal}$, $V$ en $\si{\cubic\metre}$\\
+Chaleur ($p$ cte) & $Q_p = \dH$ & $\si{\joule}$\\
+Loi de Hess & $\dHr = \sum n_i\dHf(\text{prod.}) - \sum n_j\dHf(\text{réac.})$ & $\si{\kilo\joule}$, $\dHf$ en $\si{\kilo\joule\per\mol}$\\
+Chaleur sensible & $Q = m\,c\,\Delta T$ & $m$ en $\si{\kilogram}$, $c$ en $\si{\kilo\joule\per\kelvin\per\kilogram}$\\
+Chaleur latente & $Q = m\,L$ & $L$ en $\si{\kilo\joule\per\kilogram}$\\
+Bilan calorimétrique & $\sum_i Q_i = 0$ & $\si{\kilo\joule}$\\
+Constante d'équilibre & $K = \dfrac{[\ce{C}]^c[\ce{D}]^d}{[\ce{A}]^a[\ce{B}]^b}$ & sans unité ; $[\;]$ en $\si{\mol\per\litre}$\\
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1.0}
+\end{tcolorbox}
+
+\begin{tcolorbox}[boxbase,colback=thmcol!5,colframe=thmcol,
+   title={\textsc{Les réflexes à retenir}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Signe de $\dH$} : $\dH<0 \Rightarrow$ exothermique (dégage), $\dH>0 \Rightarrow$
+        endothermique (absorbe). Réactifs en haut $=$ exo.
+  \item \textbf{Fonction d'état} : $\dH$ ne dépend que des états initial et final $\Rightarrow$ on peut
+        décomposer (loi de Hess, cycles).
+  \item \textbf{Corps pur simple} : $\dHf = 0$ par convention.
+  \item \textbf{Entropie} : apparition de gaz, dissolution, fusion $\Rightarrow$ $\dS > 0$. Spontané si
+        $\dS_{\text{univers}} > 0$.
+  \item \textbf{$K$} : produits / réactifs, exposants $=$ coefficients ; \emph{ni solides ni liquides
+        purs} ; ne dépend que de $T$.
+  \item \textbf{Le Chatelier} : le système s'oppose à la perturbation. $T\nearrow \to$ sens endo ;
+        $p\nearrow \to$ côté à moins de gaz ; ajout d'un réactif $\to$ on le consomme. Catalyseur et
+        solides purs : \emph{aucun déplacement}.
+\end{itemize}
+\end{tcolorbox}
+
+\vfill
+\begin{center}
+{\small\color{black!55}— Fin du cours — Fiche 8 : Thermodynamique et équilibre chimique —}
+\end{center}
+
+\end{document}

@@ -1,0 +1,95 @@
+% =====================================================================
+%  FICHE 8 — THÈME 4 — NIVEAU FACILE — ÉNONCÉS
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\dS}{\Delta S}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 4 : Entropie et deuxième principe}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 4 — Entropie et deuxième principe}\\[1pt]{\small Niveau \textsc{Facile} — énoncés}};
+\end{tikzpicture}
+\end{center}
+
+\begin{exercice}[ordre du désordre]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Classer par entropie \textbf{croissante} : la glace, la vapeur d'eau, l'eau liquide.
+  \item Pour une même substance, quel état physique possède l'entropie la plus \emph{grande} ?
+        La plus \emph{petite} ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[signe de $\dS$ pour un changement d'état]
+Indiquer le signe de $\dS$ pour chacune des transformations physiques suivantes.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Fusion de la glace : $\ce{H2O}(s) \rightarrow \ce{H2O}(l)$.
+  \item Vaporisation de l'eau : $\ce{H2O}(l) \rightarrow \ce{H2O}(g)$.
+  \item Condensation de la vapeur : $\ce{H2O}(g) \rightarrow \ce{H2O}(l)$.
+  \item Congélation de l'eau : $\ce{H2O}(l) \rightarrow \ce{H2O}(s)$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[dissolution et précipitation]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Dissolution du sel : $\ce{NaCl}(s) \rightarrow \ce{Na+}(aq) + \ce{Cl-}(aq)$. Signe de $\dS$ ?
+  \item Précipitation : $\ce{Ag+}(aq) + \ce{Cl-}(aq) \rightarrow \ce{AgCl}(s)$. Signe de $\dS$ ?
+  \item Justifier en une phrase pour chacun (en termes de désordre).
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[les principes]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Énoncer la condition du \textbf{deuxième principe} pour qu'un processus soit spontané.
+  \item Que vaut l'entropie d'un cristal parfait à $T=\SI{0}{\kelvin}$ ? Comment s'appelle ce principe ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[le désordre augmente-t-il ?]
+Pour chaque transformation, répondre par \textbf{vrai} ou \textbf{faux} à l'affirmation « le désordre
+augmente ($\dS>0$) », et justifier.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Sublimation de la neige carbonique : $\ce{CO2}(s) \rightarrow \ce{CO2}(g)$.
+  \item Dimérisation : $2\,\ce{NO2}(g) \rightarrow \ce{N2O4}(g)$.
+  \item Décomposition : $\ce{CaCO3}(s) \rightarrow \ce{CaO}(s) + \ce{CO2}(g)$.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

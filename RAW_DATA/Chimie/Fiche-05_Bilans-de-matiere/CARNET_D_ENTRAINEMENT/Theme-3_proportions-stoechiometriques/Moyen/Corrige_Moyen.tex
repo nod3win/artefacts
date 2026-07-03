@@ -1,0 +1,88 @@
+% =====================================================================
+%  THÈME 3 — Proportions stœchiométriques
+%  Niveau MOYEN — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{corrcol}{RGB}{176,110,20}
+\newcommand{\nq}[1]{n_{\text{#1}}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 3 : Proportions}}
+\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 3 — Proportions}\\[1pt]
+{\large\color{corrcol}\textbf{Corrigé — Niveau Moyen}}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{cor}[compléter le schéma « en escalier »]
+Le coefficient de \ce{Al2(SO4)3} vaut 1 : le rapport de référence est $\dfrac{0{,}300}{1}=0{,}300$. On remonte :
+\[
+\nq{Al(OH)3}=2\times0{,}300=\boxed{\SI{0,600}{\mole}},\quad
+\nq{H2SO4}=3\times0{,}300=\boxed{\SI{0,900}{\mole}},\quad
+\nq{H2O}=6\times0{,}300=\boxed{\SI{1,800}{\mole}}.
+\]
+\rep{Tout est simplement multiplié par $0{,}300$ par rapport aux coefficients : bilan stœchiométrique.}
+\end{cor}
+
+\begin{cor}[combustion : produire une masse de \ce{CO2} donnée]
+\textbf{a)} $\nq{CO2}=\dfrac{m}{M}=\dfrac{88}{44}=\SI{2,0}{\mole}$.\\
+\textbf{b)} Ratio \ce{CH4}:\ce{CO2}$=1:1$ : $\nq{CH4}=2{,}0$~mol, soit $m=2{,}0\times16=\boxed{\SI{32}{\gram}}$.\\
+\textbf{c)} Ratio \ce{O2}:\ce{CO2}$=2:1$ : $\nq{O2}=2\times2{,}0=4{,}0$~mol, soit
+$V=n\Vm=4{,}0\times22{,}4=\boxed{\SI{89,6}{\litre}}$.
+\end{cor}
+
+\begin{cor}[du carbure de calcium à l'acétylène]
+$\nq{CaC2}=\dfrac{320}{64}=\SI{5,0}{\mole}$. Le ratio \ce{CaC2}:\ce{C2H2}$=1:1$, donc
+$\nq{C2H2}=\boxed{\SI{5,0}{\mole}}$.
+\end{cor}
+
+\begin{cor}[quelles masses de réactifs pour un produit donné ?]
+\textbf{a)} $\nq{NH3}=\dfrac{34}{17}=\SI{2,0}{\mole}$.\\
+\textbf{b)} $\nq{H2}=\nq{NH3}\times\dfrac{3}{2}=2{,}0\times\dfrac{3}{2}=3{,}0$~mol $\Rightarrow m(\ce{H2})=3{,}0\times2=\boxed{\SI{6,0}{\gram}}$.\\
+\phantom{b)} $\nq{N2}=\nq{NH3}\times\dfrac{1}{2}=1{,}0$~mol $\Rightarrow m(\ce{N2})=1{,}0\times28=\boxed{\SI{28}{\gram}}$.
+\rep{Contrôle Lavoisier : $6+28=\SI{34}{\gram}$ de réactifs $=\SI{34}{\gram}$ de \ce{NH3} produit. \checkmark}
+\end{cor}
+
+\begin{cor}[un volume de gaz dégagé]
+$\nq{CaCO3}=\dfrac{25}{100}=\SI{0,25}{\mole}$. Ratio \ce{CaCO3}:\ce{CO2}$=1:1$, donc $\nq{CO2}=0{,}25$~mol.
+Volume : $V=n\Vm=0{,}25\times22{,}4=\boxed{\SI{5,6}{\litre}}$.
+\end{cor}
+
+\end{document}

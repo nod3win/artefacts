@@ -1,0 +1,1664 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 10
+%  Acide, base et réaction acide-base
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Chimie ----------
+\usepackage[version=4]{mhchem}   % formules chimiques : \ce{...}
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (charte « Chimie » : mauve / prune du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,161}      % mauve (couleur Chimie du livre)
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / règles
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « acide-base » réutilisées dans les figures
+\definecolor{acidecol}{RGB}{205,60,45}      % acide (rouge)
+\definecolor{basecol}{RGB}{40,110,200}      % base (bleu)
+\definecolor{protcol}{RGB}{240,150,30}      % proton H+ (orange)
+\definecolor{eaucol}{RGB}{0,160,190}        % eau / neutre (turquoise)
+\definecolor{selcol}{RGB}{120,90,160}       % sel (mauve)
+\definecolor{neutcol}{RGB}{90,170,90}       % neutre (vert)
+\definecolor{titrcol}{RGB}{160,60,150}      % titrage (magenta)
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Règle / Propriété (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{regle}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Règle}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Proposition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 10} — Acide, base et réaction acide-base}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.7cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Acide, base}\\[5pt]
+   {\Huge\bfseries et réaction acide-base}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,10}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : un acide cède H+ à une base ---
+\begin{tikzpicture}[scale=1.0]
+  % acide HA
+  \node[circle,draw=acidecol,fill=acidecol!12,line width=1.2pt,minimum size=1.9cm] (ac) at (-5,0) {\ce{HA}};
+  \node[acidecol,font=\footnotesize,below=1pt of ac] {acide};
+  % proton H+
+  \node[circle,draw=protcol,fill=protcol!18,line width=1.2pt,minimum size=1.0cm,font=\small\bfseries] (h) at (-2.3,0.6) {\ce{H+}};
+  \node[protcol,font=\scriptsize,above=1pt of h] {proton};
+  % base B-
+  \node[circle,draw=basecol,fill=basecol!12,line width=1.2pt,minimum size=1.9cm] (ba) at (0.2,0) {\ce{B^-}};
+  \node[basecol,font=\footnotesize,below=1pt of ba] {base};
+  % flèches de transfert
+  \draw[-Stealth,acidecol,line width=1.3pt] (ac.east) to[bend left=18] (h.west);
+  \draw[-Stealth,basecol,line width=1.3pt] (h.east) to[bend left=18] (ba.north west);
+  % arrow -> produits
+  \draw[-Stealth,primary,line width=1.5pt] (1.5,0) -- (3.0,0);
+  % base conjuguée A-
+  \node[circle,draw=acidecol,fill=acidecol!8,line width=1.1pt,minimum size=1.7cm] (aco) at (4.6,0.6) {\ce{A^-}};
+  \node[acidecol,font=\footnotesize,above=1pt of aco] {base conjuguée};
+  % acide conjugué HB
+  \node[circle,draw=basecol,fill=basecol!8,line width=1.1pt,minimum size=1.7cm] (hbo) at (4.6,-0.8) {\ce{HB}};
+  \node[basecol,font=\footnotesize,below=1pt of hbo] {acide conjugué};
+  \node[font=\small] at (3.0,-0.5) {$+$};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15.2cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant{\OE}\,e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir un \textbf{acide} et une \textbf{base} selon les trois théories (\textbf{Arrhenius}, \textbf{Brønsted-Lowry}, \textbf{Lewis}) ;
+  \item manipuler la notion de \textbf{couple acide/base conjugués} et identifier les \textbf{ampholytes} ;
+  \item distinguer \textbf{électrolytes forts} et \textbf{faibles}, et utiliser le \textbf{degré d'ionisation} $\alpha$ ;
+  \item maîtriser l'\textbf{autoprotolyse de l'eau}, le \textbf{produit ionique} $K_e$ et la définition du \textbf{pH} ;
+  \item utiliser les constantes $K_a$, $pK_a$, $K_b$, $pK_b$ et leurs relations ($K_a K_b = K_e$, $pK_a + pK_b = 14$) ;
+  \item \textbf{calculer le pH} des solutions d'acide fort, de base forte, d'acide faible et de base faible ;
+  \item lire un \textbf{diagramme de prédominance} et un \textbf{diagramme de distribution} ;
+  \item \textbf{prévoir le sens d'une réaction acide-base} à partir de $\Delta pK_a$ et de $K_{\text{équi}} = 10^{\Delta pK_a}$ ;
+  \item comprendre le rôle d'une \textbf{solution tampon} et utiliser l'équation de \textbf{Henderson-Hasselbalch} ;
+  \item interpréter une \textbf{courbe de titrage} acide-base et repérer le \textbf{point d'équivalence}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 10 de chimie du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : les acides et les bases, cœur de la chimie en solution}
+% =====================================================================
+Les acides et les bases forment l'une des plus vastes familles de réactions de la chimie. On les rencontre
+partout : le \textbf{jus de citron} (acide citrique) et le \textbf{vinaigre} (acide acétique) sont acides ; la
+\textbf{lessive de soude}, le \textbf{bicarbonate} et les \textbf{medicaments antiacides} sont basiques. Dans le
+corps humain, le \textbf{sang} est maintenu à \textbf{pH $\approx 7,36$} par un système tampon ; la digestion
+fait intervenir l'\textbf{acide chlorhydrique} de l'estomac (pH $\approx 1\text{--}2$).
+
+Comprendre les acides et les bases, c'est donc comprendre comment une espèce chimique peut \textbf{céder} ou
+\textbf{capter} un proton \ce{H+}, comment se mesure l'\textbf{acidité} d'une solution (le \textbf{pH}), et
+comment deux espèces réagissent l'une avec l'autre. Cette fiche construit, de zéro, tout l'édifice
+théorique nécessaire.
+
+\begin{methode}[lecture de la fiche]
+Le fil conducteur est le suivant : (1) on \emph{définit} ce qu'est un acide et une base ; (2) on quantifie
+leur \emph{force} ($K_a$, $pK_a$) ; (3) on mesure l'acidité d'une solution (le \emph{pH}) ; (4) on
+\emph{prévoit} les réactions acide-base ; (5) on en tire des applications (tampons, titrages).
+\end{methode}
+
+% =====================================================================
+\section{Définitions des acides et des bases : les trois théories}
+% =====================================================================
+Il existe trois définitions historiques des acides et des bases, de la plus restrictive à la plus générale.
+Elles ne se contredisent pas : chacune \emph{englobe} la précédente.
+
+\subsection{La théorie d'Arrhenius (1884)}
+
+\begin{definition}[acide et base selon Arrhenius]
+Un \textbf{acide} est une substance qui, dissoute dans l'eau, libère des ions \textbf{oxonium (hydronium)}
+\ce{H3O+} (ou, de façon équivalente, des protons \ce{H+}). \\
+Une \textbf{base} est une substance qui, dissoute dans l'eau, libère des ions \textbf{hydroxyde} \ce{OH-}.
+\end{definition}
+
+\begin{exemple}[acides et bases selon Arrhenius]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item L'acide chlorhydrique : \ce{HCl + H2O -> H3O+ + Cl-}. Le \ce{HCl} cède son \ce{H+} à l'eau, d'où
+        l'apparition d'\ce{H3O+} : c'est un \textbf{acide d'Arrhenius}.
+  \item La soude : \ce{NaOH -> Na+ + OH-}. L'hydroxyde de sodium libère des ions \ce{OH-} : c'est une
+        \textbf{base d'Arrhenius}.
+\end{itemize}
+\end{exemple}
+
+\begin{remarque}[limite de la théorie d'Arrhenius]
+Cette définition est \textbf{restreinte au milieu aqueux}. Elle ne permet pas d'expliquer pourquoi
+l'ammoniac \ce{NH3} est une base alors qu'il ne contient pas de groupe \ce{OH} : c'est ce qui a motivé
+la théorie suivante.
+\end{remarque}
+
+\subsection{La théorie de Brønsted-Lowry (1923) --- la plus utilisée en pratique}
+
+\begin{definition}[acide et base selon Brønsted-Lowry]
+Un \textbf{acide} est une espèce chimique capable de \textbf{céder (donner) un proton} \ce{H+}. \\
+Une \textbf{base} est une espèce chimique capable de \textbf{capter (accepter) un proton} \ce{H+}.
+\end{definition}
+
+\begin{attention}[le proton nu \ce{H+} n'existe pas en solution]
+Le proton \ce{H+} (un simple noyau d'hydrogène) est extrêmement petit et donc \textbf{hyper-réactif} : en
+solution aqueuse il ne survit jamais seul, il est toujours \textbf{solvaté} sous la forme \ce{H3O+} (ion
+oxonium, ou hydronium). On écrit donc indifféremment \ce{H+} ou \ce{H3O+} dans les équations, mais il faut
+garder à l'esprit que c'est toujours \ce{H3O+} qui est réellement présent dans l'eau.
+\end{attention}
+
+L'avantage de la définition de Brønsted-Lowry est qu'elle fait apparaître l'idée fondamentale de
+\textbf{couple acide/base conjugués}.
+
+\subsection{Couples acide/base conjugués}
+
+\begin{definition}[couple acide/base conjugués]
+Lorsqu'un acide \ce{HA} cède un proton, il se transforme en une base \ce{A-}, appelée sa \textbf{base
+conjuguée}. Réciproquement, lorsqu'une base \ce{B} capte un proton, elle se transforme en un acide \ce{BH},
+appelé son \textbf{acide conjugué}. Les deux espèces, reliées par le transfert d'un \ce{H+}, forment un
+\textbf{couple acide/base conjugués} noté \ce{HA/A-} ou $\text{acide}/\text{base}$.
+\end{definition}
+
+La demi-équation qui relie les deux membres d'un couple s'écrit toujours :
+\begin{equation*}
+\ce{HA <=> A- + H+} \qquad\text{ou, en milieu aqueux :}\qquad \ce{HA + H2O <=> A- + H3O+}.
+\end{equation*}
+
+\begin{regle}[construire un couple acide/base conjugués]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Pour trouver la \textbf{base conjuguée} d'un acide : on lui \textbf{enlève un \ce{H+}} (un H et une
+        charge positive).
+  \item Pour trouver l'\textbf{acide conjugué} d'une base : on lui \textbf{ajoute un \ce{H+}}.
+\end{itemize}
+\end{regle}
+
+\begin{exemple}[couples acide/base usuels]
+\begin{center}\small
+\rowcolors{2}{defcol!6}{white}
+\begin{tabular}{lll}
+\rowcolor{defcol!18}
+\textbf{Acide} & \textbf{Base conjuguée} & \textbf{Remarque} \\
+\midrule
+\ce{HCl / Cl-} & chlorure & acide fort / base indifférente \\
+\ce{CH3COOH / CH3COO-} & acétate & acide éthanoïque (vinaigre) \\
+\ce{NH4+ / NH3} & ammoniac & l'ion ammonium est l'acide de l'ammoniac \\
+\ce{H2O / OH-} & hydroxyde & l'eau est l'acide de la soude \\
+\ce{H3O+ / H2O} & eau & l'hydronium est l'acide de l'eau \\
+\ce{H2CO3 / HCO3-} & hydrogénocarbonate & couple du sang \\
+\ce{HCO3- / CO3^{2-}} & carbonate & \ce{HCO3-} est ici l'acide \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{exemple}
+
+\begin{attention}[\ce{H3O+} n'a pas d'acide conjugué]
+L'acide conjugué d'une base s'obtient en \emph{ajoutant} un \ce{H+}. Si l'on ajoute \ce{H+} à \ce{H3O+}, on
+obtient \ce{H4O^{2+}}, qui n'existe pas en solution aqueuse. On dit donc que \textbf{l'acide conjugué de
+\ce{H3O+} n'existe pas}. De même, \ce{OH-} est une base très forte dont la base conjuguée n'est pas
+observable dans l'eau.
+\end{attention}
+
+\subsubsection{Les ampholytes (espèces amphiprotiques)}
+
+\begin{definition}[ampholyte]
+Un \textbf{ampholyte} (ou espèce \emph{amphiprotique}) est une espèce qui peut \textbf{se comporter soit
+comme un acide, soit comme une base}, selon ce avec quoi elle réagit. Cela arrive dès qu'elle possède à la
+fois un \ce{H} capable d'être cédé \emph{et} un site capable de capter un \ce{H+}.
+\end{definition}
+
+\begin{exemple}[l'eau et les sels acides sont des ampholytes]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{L'eau \ce{H2O}} est l'ampholyte le plus important : elle peut \emph{céder} un \ce{H+} (couple
+        \ce{H2O/OH-}, rôle d'acide) ou en \emph{capter} un (couple \ce{H3O+/H2O}, rôle de base).
+  \item L'\textbf{hydrogénocarbonate \ce{HCO3-}} est un ampholyte : acide du couple
+        \ce{HCO3-/CO3^{2-}}, base du couple \ce{H2CO3/HCO3-}.
+  \item L'ion \textbf{dihydrogénophosphate \ce{H2PO4-}} : acide de \ce{H2PO4-/HPO4^{2-}}, base de
+        \ce{H3PO4/H2PO4-}.
+\end{itemize}
+\end{exemple}
+
+\begin{exemple}[écrire les deux rôles d'un ampholyte, ici \ce{HCO3-}]
+\textbf{En tant qu'acide} (il cède un \ce{H+}) :
+\[ \ce{HCO3- + H2O <=> CO3^{2-} + H3O+} \qquad (\text{couple } \ce{HCO3-/CO3^{2-}},\ pK_a = 10{,}4). \]
+\textbf{En tant que base} (il capte un \ce{H+}) :
+\[ \ce{HCO3- + H3O+ -> H2CO3 + H2O} \qquad (\text{couple } \ce{H2CO3/HCO3-},\ pK_a = 6{,}4). \]
+On voit que \ce{HCO3-} joue tantôt le rôle de l'acide, tantôt celui de la base : c'est bien un ampholyte.
+\end{exemple}
+
+\subsection{La théorie de Lewis (1923) --- la plus générale}
+
+\begin{definition}[acide et base selon Lewis]
+Un \textbf{acide de Lewis} est un composé \textbf{accepteur d'une paire électronique} (souvent un atome
+central possédant une \emph{orbitale lacunaire}, c'est-à-dire vide). \\
+Une \textbf{base de Lewis} est un composé \textbf{donneur d'une paire électronique}.
+\end{definition}
+
+\begin{remarque}[toutes les définitions ne se recouvrent pas exactement]
+La définition de Lewis est \textbf{plus générale} que celle de Brønsted-Lowry : tout acide de Brønsted est un
+acide de Lewis (le \ce{H+} accepte un doublet), mais l'inverse est faux. Par exemple, l'ion \ce{Ag+} réagit
+avec l'ammoniac \ce{NH3} pour former \ce{[Ag(NH3)2]+} : \ce{Ag+} est un acide de Lewis (il accepte les
+doublets de l'azote) sans \emph{jamais} échanger de proton.
+\end{remarque}
+
+\begin{exemple}[vision de Lewis du couple \ce{H3O+/H2O}]
+Dans l'eau, l'acide \ce{H+} (acide de Lewis) possède une orbitale vide et accepte un doublet de l'oxygène de
+\ce{H2O} (base de Lewis) pour former \ce{H3O+}. La liaison \ce{O-H} supplémentaire naît du partage du
+doublet apporté par l'oxygène. Cette image « donneur / accepteur de doublet » est la version électronique du
+transfert de proton de Brønsted.
+\end{exemple}
+
+% =====================================================================
+\section{Électrolytes forts et faibles --- degré d'ionisation}
+% =====================================================================
+
+\subsection{Électrolytes : définition}
+
+\begin{definition}[électrolyte]
+Un \textbf{électrolyte} est une substance qui, dissoute dans l'eau, produit des \textbf{ions} : la solution
+conduit alors le courant électrique. On distingue :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item les \textbf{électrolytes forts} : substances \textbf{complètement dissociées} dans l'eau (sels
+        solubles, acides forts, bases fortes). Ce sont des espèces à \textbf{$K_a$ ou $K_b$ élevé}.
+  \item les \textbf{électrolytes faibles} : substances \textbf{partiellement dissociées} dans l'eau (acides
+        faibles, bases faibles). Ce sont des espèces à \textbf{$K_a$ ou $K_b$ faible}.
+\end{itemize}
+\end{definition}
+
+\begin{exemple}[acides forts, base forte, acide faible]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Acides forts} (dissociation totale) : \ce{HCl}, \ce{HBr}, \ce{HNO3}, \ce{H2SO4} (pour la
+        première acidité), \ce{HClO4}. On écrit la flèche totale : \ce{HCl + H2O -> H3O+ + Cl-}.
+  \item \textbf{Base forte} : \ce{NaOH}, \ce{KOH} : \ce{NaOH -> Na+ + OH-}.
+  \item \textbf{Acide faible} : \ce{CH3COOH} (acide acétique), \ce{HF}, \ce{HNO2}. La dissociation est
+        \emph{partielle} : \ce{CH3COOH + H2O <=> CH3COO- + H3O+}. La majeure partie de l'acide reste sous sa
+        forme \ce{CH3COOH} non dissociée.
+\end{itemize}
+\end{exemple}
+
+\subsection{Degré d'ionisation $\alpha$}
+
+\begin{formule}[degré d'ionisation]
+Le \textbf{degré d'ionisation} (ou taux de dissociation) d'un électrolyte est le rapport entre la quantité
+qui s'est effectivement dissociée et la quantité initialement dissoute :
+\[ \boxed{\alpha \;=\; \frac{\text{quantité dissociée}}{\text{quantité dissoute}}}, \qquad 0 \leq \alpha \leq 1. \]
+\end{formule}
+
+\begin{ou}
+\item $\alpha$ : degré d'ionisation (\textbf{sans dimension}, souvent exprimé en pourcentage : $\alpha \times 100\,\%$).
+\item Une valeur $\alpha = 1$ (soit $100\,\%$) correspond à une \textbf{dissociation totale} (électrolyte fort).
+\item Une valeur $\alpha < 1$ correspond à une \textbf{dissociation partielle} (électrolyte faible).
+\end{ou}
+
+\begin{exemple}[degré d'ionisation de l'acide nitreux]
+Le QCM 17 du livre fixe \ce{HNO2} avec $K_a = 10^{-4}$ (donc $pK_a = 4$) et un pH imposé à $4$. L'acide
+nitreux est un \textbf{acide faible}. On cherche son degré d'ionisation à ce pH.
+
+\smallskip
+\textbf{Étape 1 — écrire l'équation de dissociation et l'expression du $pK_a$.}
+\[ \ce{HNO2 + H2O <=> NO2- + H3O+}, \qquad pK_a = pK_a + \log\frac{[\ce{NO2-}]}{[\ce{HNO2}]} \;\text{(Henderson)}. \]
+
+\textbf{Étape 2 — exploiter pH $= pK_a$.} Comme $\mathrm{pH} = \mathrm{p}K_a = 4$ :
+\[ 4 = 4 + \log\frac{[\ce{NO2-}]}{[\ce{HNO2}]} \;\Longrightarrow\; \log\frac{[\ce{NO2-}]}{[\ce{HNO2}]} = 0
+   \;\Longrightarrow\; \frac{[\ce{NO2-}]}{[\ce{HNO2}]} = 1 \;\Longrightarrow\; [\ce{NO2-}] = [\ce{HNO2}]. \]
+
+\textbf{Étape 3 — en déduire $\alpha$.} La quantité dissociée vaut $[\ce{NO2-}]$, la quantité restante
+$[\ce{HNO2}]$. Comme elles sont égales, la moitié de l'acide s'est dissociée :
+\[ \boxed{\alpha = 50\,\%}. \]
+C'est la réponse D du QCM 17 : lorsque $\mathrm{pH} = \mathrm{p}K_a$, exactement la moitié de l'acide est sous
+forme dissociée.
+\end{exemple}
+
+\begin{remarque}[loi de dilution d'Ostwald]
+Pour un acide faible de concentration $C_a$, on montre (voir section~\ref{sec:pHfaible}) que le degré
+d'ionisation vaut approximativement :
+\[ \alpha \approx \sqrt{\frac{K_a}{C_a}}. \]
+Ainsi, \textbf{plus on dilue} (plus $C_a$ diminue), \textbf{plus $\alpha$ augmente} : c'est la \emph{loi de
+dilution d'Ostwald} (QCM 18). Un acide faible est donc d'autant plus dissocié (en proportion) qu'il est dilué.
+\end{remarque}
+
+% =====================================================================
+\section{L'autoprotolyse de l'eau et le produit ionique $K_e$}
+% =====================================================================
+
+\subsection{L'auto-ionisation (autoprotolyse) de l'eau}
+
+L'eau étant un ampholyte, deux molécules d'eau peuvent s'échanger un proton : l'une joue l'acide, l'autre la
+base. C'est l'\textbf{autoprotolyse} (ou auto-ionisation) de l'eau.
+
+\begin{regle}[autoprotolyse de l'eau]
+\[ \boxed{\ce{2 H2O <=> H3O+ + OH-}}. \]
+Une molécule d'eau cède un \ce{H+} (rôle d'acide) à une autre molécule d'eau (rôle de base). Il apparaît un
+ion oxonium \ce{H3O+} et un ion hydroxyde \ce{OH-}.
+\end{regle}
+
+\subsection{Le produit ionique de l'eau $K_e$}
+
+\begin{formule}[produit ionique de l'eau]
+La constante d'équilibre de l'autoprotolyse de l'eau est appelée \textbf{produit ionique} et notée $K_e$ (ou
+$K_w$) :
+\[ \boxed{K_e = [\ce{H3O+}] \times [\ce{OH-}]}. \]
+\textbf{À \SI{25}{\celsius}, $K_e = 1{,}0 \times 10^{-14}$}.
+\end{formule}
+
+\begin{ou}
+\item $K_e$ : produit ionique de l'eau (\textbf{sans dimension} ; produit de deux concentrations divisées par
+      la concentration standard).
+\item $[\ce{H3O+}]$ : concentration molaire en ions oxonium, en \si{mol.L^{-1}}.
+\item $[\ce{OH-}]$ : concentration molaire en ions hydroxyde, en \si{mol.L^{-1}}.
+\end{ou}
+
+\begin{attention}[l'eau n'intervient pas dans l'expression de $K_e$]
+On n'écrit \emph{jamais} $[\ce{H2O}]$ dans le produit ionique. Pourquoi ? Parce que l'eau est le
+\textbf{solvant} en très large excès : sa concentration est quasi constante ($\approx \SI{55,6}{mol.L^{-1}}$)
+et on l'incorpore dans la constante $K_e$. C'est la réponse \textbf{B} du QCM 3 :
+$K_e = [\ce{OH-}]\times[\ce{H3O+}]$, et non une expression contenant $[\ce{H2O}]$.
+\end{attention}
+
+\subsection{Variation de $K_e$ avec la température}
+
+\begin{regle}[$K_e$ dépend de la température]
+L'autoprotolyse est une réaction \textbf{endothermique}. Donc, par le principe de Le Chatelier, \textbf{plus
+la température augmente, plus $K_e$ augmente} (et plus le pH neutre diminue). Réciproquement, à plus basse
+température, $K_e$ est plus petit.
+\end{regle}
+
+\begin{exemple}[QCM 13 : solution « basique » à pH 7 lorsque $T$ change]
+On se place à une température $T$ où $K_e = 4 \times 10^{-14}$.
+
+\smallskip
+\textbf{Étape 1 — déterminer le pH neutre à cette température.} En milieu neutre,
+$[\ce{H3O+}] = [\ce{OH-}]$, donc :
+\[ K_e = [\ce{H3O+}]^2 \;\Longrightarrow\; [\ce{H3O+}] = \sqrt{K_e} = \sqrt{4\times10^{-14}} = 2\times10^{-7}\ \si{mol.L^{-1}}. \]
+\textbf{Étape 2 — en déduire le pH neutre.}
+\[ \mathrm{pH}_{\text{neutre}} = -\log(2\times10^{-7}) = 7 - \log 2 \approx 7 - 0{,}30 = \mathbf{6{,}70}. \]
+\textbf{Conclusion.} À cette température, le pH neutre vaut $6{,}70$. Une solution à $\mathrm{pH}=7$ a donc
+un pH \emph{supérieur} au pH neutre : elle est \textbf{légèrement basique} (proposition I vraie). La
+proposition II « le pH d'une solution basique est toujours $>7$ » est \textbf{fausse}, car elle oublie la
+dépendance en température. Réponse : \textbf{B}.
+
+\smallskip
+Cet exemple est crucial : la valeur $7$ n'est « magique » \textbf{qu'à \SI{25}{\celsius}}. Dès que $K_e$
+change, le pH neutre change aussi.
+\end{exemple}
+
+% =====================================================================
+\section{Le pH et le pOH}
+% =====================================================================
+
+\subsection{Définition du pH}
+
+\begin{formule}[définition du pH]
+Le \textbf{pH} (potentiel hydrogène) mesure l'acidité d'une solution :
+\[ \boxed{\mathrm{pH} = -\log[\ce{H3O+}]}, \]
+soit, de façon équivalente, $[\ce{H3O+}] = 10^{-\mathrm{pH}}$ (\si{mol.L^{-1}}).
+\end{formule}
+
+\begin{ou}
+\item $\mathrm{pH}$ : potentiel hydrogène (\textbf{sans dimension}, compris usuellement entre 0 et 14).
+\item $[\ce{H3O+}]$ : concentration molaire en ions oxonium, en \si{mol.L^{-1}}.
+\item $\log$ : logarithme décimal ($\log 10 = 1$, $\log 1 = 0$, $\log 10^{-n} = -n$).
+\end{ou}
+
+\begin{regle}[pK]
+De façon générale, on note $\mathrm{p}X = -\log X$ pour toute grandeur $X$ (positive). Ainsi :
+$\mathrm{p}K_a = -\log K_a$, $\mathrm{p}K_b = -\log K_b$, $\mathrm{p}K_e = -\log K_e$, $\mathrm{pOH} = -\log[\ce{OH-}]$.
+\end{regle}
+
+\subsection{Définition du pOH et relation fondamentale $\mathrm{pH}+\mathrm{pOH}=14$}
+
+\begin{formule}[pOH et relation pH/pOH]
+On définit de même le \textbf{pOH} :
+\[ \mathrm{pOH} = -\log[\ce{OH-}]. \]
+En combinant avec $K_e = [\ce{H3O+}][\ce{OH-}]$ et en prenant $-\log$ :
+\[ \boxed{\mathrm{pH} + \mathrm{pOH} = \mathrm{p}K_e = 14 \quad \text{à \SI{25}{\celsius}}.} \]
+\end{formule}
+
+\begin{ou}
+\item $\mathrm{pOH}$ : sans dimension.
+\item $[\ce{OH-}]$ : concentration molaire en ions hydroxyde, en \si{mol.L^{-1}}.
+\item À \SI{25}{\celsius}, $\mathrm{p}K_e = -\log(10^{-14}) = 14$.
+\end{ou}
+
+\subsection{Caractère acide, neutre, basique}
+
+\begin{regle}[caractère d'une solution à \SI{25}{\celsius}]
+À \SI{25}{\celsius} (où $K_e = 10^{-14}$), le pH neutre vaut $7$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Solution acide} : $\mathrm{pH} < 7$, c'est-à-dire $[\ce{H3O+}] > [\ce{OH-}]$ (et
+        $[\ce{H3O+}] > 10^{-7}$ \si{mol.L^{-1}}).
+  \item \textbf{Solution neutre} : $\mathrm{pH} = 7$, soit $[\ce{H3O+}] = [\ce{OH-}] = 10^{-7}$ \si{mol.L^{-1}}.
+  \item \textbf{Solution basique} : $\mathrm{pH} > 7$, soit $[\ce{H3O+}] < [\ce{OH-}]$.
+\end{itemize}
+\end{regle}
+
+\begin{attention}[« basique » $\Leftrightarrow$ « pH $> 7$ » : seulement à \SI{25}{\celsius} !]
+Comme vu au QCM 13, si la température change, le pH neutre change et la frontière « 7 » n'est plus valable.
+Ne jamais écrire « basique $\Leftrightarrow \mathrm{pH} > 7$ » sans préciser la température.
+\end{attention}
+
+\begin{exemple}[QCM 5 : variations croisées de \ce{H3O+} et \ce{OH-}]
+À température constante, $K_e = [\ce{H3O+}]\times[\ce{OH-}]$ est \textbf{constant}. Si $[\ce{H3O+}]$
+augmente, alors $[\ce{OH-}]$ doit \textbf{diminuer} pour que le produit reste égal à $K_e$, et inversement :
+\[ K_e = [\ce{H3O+}]\,\nearrow \;\times\; [\ce{OH-}]\,\searrow \;=\; \text{cte}. \]
+Réponse : \textbf{B} (la concentration en \ce{OH-} diminue).
+\end{exemple}
+
+% --- Figure : échelle de pH ---
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  % dégradé lissé rouge (acide) -> vert (neutre, pH 7) -> bleu (basique)
+  \def\HH{0.8}
+  \shade[left color=acidecol,right color=neutcol] (0,0) rectangle (7,\HH);
+  \shade[left color=neutcol,right color=basecol] (7,0) rectangle (14,\HH);
+  \draw[primary,line width=0.6pt] (0,0) rectangle (14,\HH);
+  % graduations
+  \foreach \x in {0,1,2,...,14}{
+     \draw (\x,0) -- (\x,-0.15);
+     \node[below] at (\x,-0.15) {\x};
+  }
+  \node[below=16pt,font=\bfseries\color{primarydark}] at (7,-0.15) {pH};
+  % labels de zones
+  \node[above,white,font=\bfseries] at (3.0,\HH) {ACIDE};
+  \node[above,white,font=\bfseries] at (7.0,\HH) {NEUTRE};
+  \node[above,white,font=\bfseries] at (10.8,\HH) {BASIQUE};
+  % exemples
+  \draw[<-,line width=0.7pt,acidecol] (1.5,\HH) -- ++(0,0.55) node[above,font=\scriptsize,align=center]{estomac\\(pH$\approx$1--2)};
+  \draw[<-,line width=0.7pt,acidecol] (3.0,\HH) -- ++(0,0.55) node[above,font=\scriptsize,align=center]{citron\\(pH$\approx$2--3)};
+  \draw[<-,line width=0.7pt,neutcol] (7.0,\HH) -- ++(0,0.55) node[above,font=\scriptsize,align=center]{eau pure\\(pH$=$7)};
+  \draw[<-,line width=0.7pt,basecol] (9.0,\HH) -- ++(0,0.55) node[above,font=\scriptsize,align=center]{sang\\(pH$\approx$7,4)};
+  \draw[<-,line width=0.7pt,basecol] (13.0,\HH) -- ++(0,0.55) node[above,font=\scriptsize,align=center]{soude\\(pH$\approx$13)};
+\end{tikzpicture}
+\end{center}
+{\small\textit{Figure 1 --- L'échelle de pH à \SI{25}{\celsius}. Du rouge (acide) au bleu (basique), en passant
+par le vert (neutre, pH$=$7).}}
+
+\begin{exemple}[QCM 12 : repérer une solution acide]
+À \SI{25}{\celsius}, une solution est acide si $\mathrm{pH} < 7$. Or
+$\mathrm{pH} < 7 \;\Longleftrightarrow\; -\log[\ce{H3O+}] < 7 \;\Longleftrightarrow\; [\ce{H3O+}] > 10^{-7}$ \si{mol.L^{-1}}.
+La seule affirmation correcte est donc \textbf{D} : $[\ce{H3O+}] > 10^{-7}$ \si{mol.L^{-1}} (ce qui entraîne,
+via $K_e$, que $[\ce{OH-}] < 10^{-7}$ \si{mol.L^{-1}}).
+\end{exemple}
+
+\begin{exemple}[QCM 16 : comparer deux acidités par le pH]
+La concentration en \ce{H3O+} du sang ($\mathrm{pH}=7{,}36$) vaut $[\ce{H3O+}]_{\text{sang}} = 10^{-7{,}36}$.
+Celle d'une solution à $\mathrm{pH}=8{,}36$ vaut $10^{-8{,}36}$. Le rapport vaut :
+\[ \frac{[\ce{H3O+}]_{\text{sang}}}{[\ce{H3O+}]_{\text{sol.}}} = \frac{10^{-7{,}36}}{10^{-8{,}36}} = 10^{8{,}36 - 7{,}36} = 10^{1} = \mathbf{10}. \]
+\textbf{Interprétation :} un écart de \emph{1 unité de pH} correspond à un facteur \textbf{10} sur la
+concentration en \ce{H3O+}. C'est la conséquence directe du logarithme : $\Delta\mathrm{pH} = 1 \Leftrightarrow
+\Delta[\ce{H3O+}] = \text{facteur } 10$. Réponse : \textbf{C}.
+\end{exemple}
+
+% =====================================================================
+\section{Force des acides et des bases : $K_a$, $pK_a$, $K_b$, $pK_b$}
+% =====================================================================
+Deux acides ne se dissocient pas de la même façon : \ce{HCl} est « totalement » dissocié, alors que
+\ce{CH3COOH} ne l'est que partiellement. La \textbf{force} d'un acide (ou d'une base) se quantifie par une
+constante d'équilibre.
+
+\subsection{Constante d'acidité $K_a$ et $pK_a$}
+
+\begin{formule}[constante d'acidité]
+Soit un acide \ce{HA} en solution aqueuse : $\ce{HA + H2O <=> A- + H3O+}$. La \textbf{constante d'acidité}
+$K_a$ du couple \ce{HA/A-} est :
+\[ \boxed{K_a = \frac{[\ce{A-}]\times[\ce{H3O+}]}{[\ce{HA}]}}, \qquad \mathrm{p}K_a = -\log K_a. \]
+\end{formule}
+
+\begin{ou}
+\item $K_a$ : constante d'acidité (\textbf{sans dimension}), d'autant \textbf{plus grande} que l'acide est
+      \textbf{fort} (bien dissocié).
+\item $\mathrm{p}K_a$ : sans dimension ; \textbf{d'autant plus petit} que l'acide est fort.
+\item $[\ce{HA}]$ : concentration de l'acide non dissocié, en \si{mol.L^{-1}}.
+\item $[\ce{A-}]$ : concentration de la base conjuguée, en \si{mol.L^{-1}}.
+\item $[\ce{H3O+}]$ : concentration en ions oxonium, en \si{mol.L^{-1}}.
+\end{ou}
+
+\begin{attention}[sens du $pK_a$ : à ne jamais inverser !]
+\textbf{Plus $K_a$ est grand $\Rightarrow$ plus l'acide est fort $\Rightarrow$ plus $\mathrm{p}K_a$ est petit.}
+Le logarithme « inverse » le sens : un acide fort a un $K_a$ grand mais un $\mathrm{p}K_a$ \emph{petit}
+(les acides forts ont $\mathrm{p}K_a < 0$). À retenir par cœur (QCM 6D et 6E) :
+\[ K_a \nearrow \;\Longleftrightarrow\; \mathrm{p}K_a \searrow \;\Longleftrightarrow\; \text{acidité} \nearrow. \]
+\end{attention}
+
+\subsection{Constante de basicité $K_b$ et $pK_b$}
+
+\begin{formule}[constante de basicité]
+Soit une base \ce{B} en solution aqueuse : $\ce{B + H2O <=> BH + OH-}$. La \textbf{constante de basicité}
+$K_b$ est :
+\[ \boxed{K_b = \frac{[\ce{BH}]\times[\ce{OH-}]}{[\ce{B}]}}, \qquad \mathrm{p}K_b = -\log K_b. \]
+\end{formule}
+
+\begin{ou}
+\item $K_b$ : constante de basicité (\textbf{sans dimension}), d'autant plus grande que la base est forte.
+\item $\mathrm{p}K_b$ : sans dimension ; plus il est petit, plus la base est forte.
+\item $[\ce{B}]$ : concentration de la base, en \si{mol.L^{-1}} ; $[\ce{BH}]$ : acide conjugué, en \si{mol.L^{-1}}.
+\item $[\ce{OH-}]$ : concentration en ions hydroxyde, en \si{mol.L^{-1}}.
+\end{ou}
+
+\subsection{Relations fondamentales : $K_a \times K_b = K_e$ et $\mathrm{p}K_a + \mathrm{p}K_b = 14$}
+
+\begin{theoreme}[relation entre $K_a$, $K_b$ et $K_e$]
+Pour un \textbf{même couple acide/base \ce{HA/A-}}, les constantes $K_a$ (acidité) et $K_b$ (basicité de la
+base conjuguée \ce{A-}) sont reliées par :
+\[ \boxed{K_a \times K_b = K_e}, \qquad\text{soit, à \SI{25}{\celsius} :}\qquad \boxed{\mathrm{p}K_a + \mathrm{p}K_b = 14}. \]
+\end{theoreme}
+
+\begin{ou}
+\item $K_a$ et $K_b$ : constantes du \textbf{même couple} (l'une décrit l'acide \ce{HA}, l'autre la base
+      conjuguée \ce{A-}).
+\item $K_e = 10^{-14}$ à \SI{25}{\celsius}.
+\end{ou}
+
+\begin{methode}[démonstration rapide]
+On additionne la réaction acide $\ce{HA + H2O <=> A- + H3O+}$ ($K_a$) et la réaction basique
+$\ce{A- + H2O <=> HA + OH-}$ ($K_b$). Les \ce{HA} et \ce{A-} s'éliminent, il reste $\ce{2 H2O <=> H3O+ + OH-}$
+dont la constante est $K_e$. Or la constante d'une somme de réactions est le \textbf{produit} des constantes :
+donc $K_a \times K_b = K_e$.
+\end{methode}
+
+\begin{regle}[force croisée d'un couple]
+Pour un même couple, l'acide et la base conjuguée ont des forces \textbf{opposées} (QCM 6I) :
+\[ \text{acide fort} \;\Longleftrightarrow\; K_a \text{ grand} \;\Longleftrightarrow\; K_b \text{ petit}
+   \;\Longleftrightarrow\; \text{base conjuguée faible}. \]
+\textbf{Plus un acide est faible, plus sa base conjuguée est forte}, et réciproquement. (D'où le $pK_a + pK_b
+= \text{cte}$.)
+\end{regle}
+
+\subsection{Échelle de force : classification des acides}
+
+\begin{center}
+\rowcolors{2}{formulacol!6}{white}
+\begin{tabular}{lll}
+\rowcolor{formulacol!18}
+\textbf{Couple} & \textbf{$\mathrm{p}K_a$} & \textbf{Force de l'acide} \\
+\midrule
+\ce{HCl / Cl-}        & $< 0$ (acide fort)   & fort \\
+\ce{H3O+ / H2O}       & $-1{,}74$            & (référence en solution aqueuse) \\
+\ce{H2C2O4 / HC2O4-}  & $1{,}2$              & faible (plutôt fort) \\
+\ce{H2SO3 / HSO3-}    & $1{,}8$              & faible \\
+\ce{HF / F-}          & $3{,}45$             & faible \\
+\ce{HCOOH / HCOO-}    & $3{,}75$             & faible \\
+\ce{CH3COOH / CH3COO-}& $4{,}75$             & faible \\
+\ce{H2CO3 / HCO3-}    & $6{,}4$              & faible \\
+\ce{H2S / HS-}        & $7{,}0$              & très faible \\
+\ce{NH4+ / NH3}       & $9{,}25$             & très faible \\
+\ce{HCO3- / CO3^{2-}} & $10{,}4$             & très faible \\
+\ce{H2O / OH-}        & $15{,}7$             & (référence en solution aqueuse) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{exemple}[lire la force d'un acide à partir de son $pK_a$]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \ce{HCl} ($\mathrm{p}K_a < 0$) : acide \textbf{fort}. Sa base conjuguée \ce{Cl-} est une base
+        \textbf{négligeable} (on l'appelle ion \emph{spectateur}).
+  \item \ce{CH3COOH} ($\mathrm{p}K_a = 4{,}75$) : acide \textbf{faible}. Sa base conjuguée \ce{CH3COO-} est
+        une base faible mais réelle ($\mathrm{p}K_b = 14 - 4{,}75 = 9{,}25$).
+  \item \ce{NH4+} ($\mathrm{p}K_a = 9{,}25$) : acide \textbf{très faible}. Sa base conjuguée \ce{NH3}
+        (ammoniac) est une \textbf{base faible plutôt forte} ($\mathrm{p}K_b = 4{,}75$).
+\end{itemize}
+\end{exemple}
+
+% =====================================================================
+\section{Calcul du pH des solutions aqueuses}
+% =====================================================================
+\label{sec:pHfaible}
+Savoir calculer le pH est l'objectif central de cette fiche. On distingue quatre cas selon la force de
+l'acide ou de la base.
+
+\subsection{pH d'un acide fort}
+
+\begin{formule}[pH d'un acide fort]
+Un acide fort \ce{HA} est \textbf{totalement dissocié} : $\ce{HA + H2O -> H3O+ + A-}$. Si $C_a$ est la
+concentration initiale (apportée) de l'acide, alors $[\ce{H3O+}] = C_a$ et :
+\[ \boxed{\mathrm{pH} = -\log C_a}. \]
+\end{formule}
+
+\begin{ou}
+\item $C_a$ : concentration molaire de l'acide fort apporté, en \si{mol.L^{-1}}.
+\item L'approximation néglige l'autoprotolyse de l'eau (valable si $C_a \gg 10^{-7}$ \si{mol.L^{-1}}).
+\end{ou}
+
+\begin{exemple}[QCM 14 : pH d'une solution de \ce{HCl} à 0,01 M]
+\ce{HCl} est un acide fort, donc totalement dissocié :
+\[ [\ce{H3O+}] = C_a = 1{,}0\times10^{-2}\ \si{mol.L^{-1}} \;\Longrightarrow\; \mathrm{pH} = -\log(10^{-2}) = \mathbf{2}. \]
+Réponse : \textbf{B}.
+\end{exemple}
+
+\begin{exemple}[QCM 25 : diluer un acide fort concentré]
+On introduit \SI{20}{mL} de \ce{HCl} à \SI{5,0}{M} dans une fiole de \SI{1000}{mL} et on complète avec de
+l'eau distillée. La quantité de matière d'\ce{HCl} est conservée (la dilution ne change pas $n$) :
+\[ n = C_1 V_1 = 5{,}0 \times 0{,}020 = 0{,}10\ \si{mol}. \]
+Après dilution dans $V_{\text{total}} = \SI{1,0}{L}$ :
+\[ C_a = \frac{n}{V_{\text{total}}} = \frac{0{,}10}{1{,}0} = 0{,}10\ \si{mol.L^{-1}}. \]
+\ce{HCl} est un acide fort, donc :
+\[ \mathrm{pH} = -\log(0{,}10) = \mathbf{1}. \]
+Réponse : \textbf{B}.
+\end{exemple}
+
+\begin{exemple}[QCM 4 : mélange de plusieurs acides forts]
+On prépare une solution A en mélangeant \SI{50}{mL} contenant \ce{HCl} à 0,1 M et \ce{HBr} à 0,1 M, auquel on
+ajoute \SI{50}{mL} de \ce{HCl} à 0,8 M (\ce{HCl} et \ce{HBr} sont tous deux des acides forts).
+
+\smallskip
+\textbf{Étape 1 — compter les ions \ce{H3O+} de chaque source.} Chaque acide fort cède intégralement ses \ce{H+} :
+\[ n_1(\ce{H3O+}) = 0{,}050\times0{,}1 = 5\times10^{-3}\ \si{mol}\ (\ce{HCl}\ \text{du mélange}), \]
+\[ n_2(\ce{H3O+}) = 0{,}050\times0{,}1 = 5\times10^{-3}\ \si{mol}\ (\ce{HBr}), \]
+\[ n_3(\ce{H3O+}) = 0{,}050\times0{,}8 = 4\times10^{-2}\ \si{mol}\ (\ce{HCl}\ \text{ajouté}). \]
+\textbf{Étape 2 — somme et concentration.}
+\[ n_{\text{tot}} = 0{,}005 + 0{,}005 + 0{,}040 = 0{,}050\ \si{mol},\qquad V_{\text{tot}} = 0{,}100\ \si{L}, \]
+\[ [\ce{H3O+}] = \frac{0{,}050}{0{,}100} = 0{,}50\ \si{mol.L^{-1}}. \]
+\textbf{Étape 3 — pH.}
+\[ \mathrm{pH} = -\log(0{,}50) = -\log(1/2) = \log 2 \approx \mathbf{0{,}30}. \]
+Réponse : \textbf{A} ($\log 2$).
+\end{exemple}
+
+\begin{exemple}[QCM 26 : dilution d'un acide fort]
+On dilue 10 fois un acide chlorhydrique de $\mathrm{pH}=2$. La concentration initiale en \ce{H3O+} est
+$C = 10^{-2}$ \si{mol.L^{-1}} ; après dilution par 10, elle devient $C' = 10^{-3}$ \si{mol.L^{-1}}, soit :
+\[ \mathrm{pH}' = -\log(10^{-3}) = \mathbf{3}. \]
+\textbf{Loi générale :} diluer un acide fort par un facteur 10 \textbf{augmente le pH de 1 unité}
+($\mathrm{pH}' = \mathrm{pH} + 1$). Réponse : \textbf{C}.
+\end{exemple}
+
+\subsection{pH d'une base forte}
+
+\begin{formule}[pH d'une base forte monobasique]
+Une base forte (ex.\ \ce{NaOH}, \ce{KOH}) est \textbf{totalement dissociée} :
+$\ce{NaOH -> Na+ + OH-}$. Si $C_b$ est la concentration apportée, alors $[\ce{OH-}] = C_b$ et :
+\[ \mathrm{pOH} = -\log C_b \quad\text{puis}\quad \boxed{\mathrm{pH} = 14 + \log C_b}\quad (\text{à \SI{25}{\celsius}}). \]
+\end{formule}
+
+\begin{ou}
+\item $C_b$ : concentration molaire de la base forte, en \si{mol.L^{-1}}.
+\item On a utilisé $\mathrm{pH} = 14 - \mathrm{pOH} = 14 - (-\log C_b) = 14 + \log C_b$.
+\end{ou}
+
+\begin{exemple}[QCM 15 : pH d'une solution de \ce{NaOH} à 0,1 M]
+\ce{NaOH} est une base forte, donc $[\ce{OH-}] = C_b = 0{,}10$ \si{mol.L^{-1}} :
+\[ \mathrm{pH} = 14 + \log(0{,}10) = 14 + (-1) = \mathbf{13}. \]
+Réponse : \textbf{D}.
+\end{exemple}
+
+\begin{exemple}[QCM 27 : base forte dibasique (\ce{Ba(OH)2})]
+L'hydroxyde de baryum \ce{Ba(OH)2} est une base forte qui libère \textbf{deux} ions \ce{OH-} par formule :
+\[ \ce{Ba(OH)2 -> Ba^{2+} + 2 OH-}. \]
+À la concentration $C = 0{,}005$ \si{mol.L^{-1}} :
+\[ [\ce{OH-}] = 2 \times C = 2 \times 0{,}005 = 0{,}010\ \si{mol.L^{-1}}. \]
+D'où :
+\[ \mathrm{pOH} = -\log(0{,}010) = 2 \;\Longrightarrow\; \mathrm{pH} = 14 - 2 = \mathbf{12}. \]
+\textbf{Attention au facteur 2} : \ce{Ba(OH)2} apporte \emph{deux} \ce{OH-} par unité. Réponse : \textbf{B}.
+\end{exemple}
+
+\begin{exemple}[QCM 28 : mélange de plusieurs bases fortes]
+On mélange \SI{25}{mL} de \ce{NaOH} à \SI{2,20}{M}, \SI{50}{mL} de \ce{Ba(OH)2} à 0,10 M et \SI{50}{mL} de
+\ce{KOH} à 0,20 M (volume total = \SI{75}{mL}). Comptons les moles d'\ce{OH-} :
+\[ n_{\ce{NaOH}} = 0{,}025 \times 2{,}20 = 0{,}055\ \si{mol}, \]
+\[ n_{\ce{Ba(OH)2}} = 0{,}050 \times 0{,}10 \times 2 = 0{,}010\ \si{mol}\ (\text{facteur 2 !}), \]
+\[ n_{\ce{KOH}} = 0{,}050 \times 0{,}20 = 0{,}010\ \si{mol}. \]
+Total : $n(\ce{OH-}) = 0{,}055 + 0{,}010 + 0{,}010 = 0{,}075$ \si{mol}. D'où :
+\[ [\ce{OH-}] = \frac{0{,}075}{0{,}075} = 1{,}0\ \si{mol.L^{-1}} \;\Longrightarrow\; \mathrm{pOH} = 0
+   \;\Longrightarrow\; \mathrm{pH} = \mathbf{14}. \]
+Réponse : \textbf{A}.
+\end{exemple}
+
+\subsection{pH d'un acide faible}
+
+Pour un acide faible \ce{HA}, la dissociation est partielle : $\ce{HA <=> A- + H+}$. On démontre (en
+négligeant l'autoprotolyse et en supposant $[\ce{HA}]_{\text{éq}} \approx C_a$, valable si l'acide est peu
+dissocié) la formule approchée suivante.
+
+\begin{formule}[pH approché d'un acide faible]
+\[ \boxed{\mathrm{pH} = \frac{1}{2}\left(\mathrm{p}K_a - \log C_a\right)}. \]
+\end{formule}
+
+\begin{ou}
+\item $C_a$ : concentration molaire de l'acide faible, en \si{mol.L^{-1}}.
+\item $\mathrm{p}K_a$ : $\mathrm{p}K_a$ du couple \ce{HA/A-} (sans dimension).
+\item La formule est valable si $\alpha \ll 1$ (acide peu dissocié), soit $C_a \gg K_a$.
+\end{ou}
+
+\begin{methode}[démonstration]
+Le tableau d'avancement donne, à l'équilibre : $[\ce{H3O+}] = [\ce{A-}] = x$ et $[\ce{HA}] = C_a - x \approx C_a$.
+Comme $K_a = \dfrac{x^2}{C_a}$, on a $x = [\ce{H3O+}] = \sqrt{K_a\,C_a}$. En prenant $-\log$ :
+\[ \mathrm{pH} = -\log\sqrt{K_a C_a} = \tfrac{1}{2}\bigl(-\log K_a - \log C_a\bigr) = \tfrac{1}{2}(\mathrm{p}K_a - \log C_a). \]
+Quant au degré d'ionisation, $\alpha = \dfrac{[\ce{A-}]}{C_a} = \dfrac{\sqrt{K_a C_a}}{C_a} = \sqrt{\dfrac{K_a}{C_a}}$,
+ce qui redonne la \emph{loi de dilution d'Ostwald} ($\alpha \approx \sqrt{K_a/C_a}$, réponse QCM 19A).
+\end{methode}
+
+\begin{exemple}[acide acétique 0,1 M]
+Pour l'acide acétique ($\mathrm{p}K_a = 4{,}75$) à $C_a = 0{,}10$ \si{mol.L^{-1}} :
+\[ \mathrm{pH} = \tfrac{1}{2}\bigl(4{,}75 - \log(0{,}10)\bigr) = \tfrac{1}{2}(4{,}75 + 1) = \tfrac{5{,}75}{2} \approx \mathbf{2{,}88}. \]
+On vérifie la validité : $\alpha = \sqrt{K_a/C_a} = \sqrt{10^{-4{,}75}/0{,}10} \approx 1{,}3\,\% \ll 1$. L'acide est
+bien peu dissocié, l'approximation tient.
+\end{exemple}
+
+\begin{exemple}[QCM 20 : effet de la dilution sur le degré d'ionisation]
+On dispose d'acide acétique ($\mathrm{p}K_a = 4{,}75$) à $C_0 = 0{,}10$ \si{mol.L^{-1}}, de degré
+d'ionisation $\alpha_0 \approx \sqrt{K_a/C_0}$. On veut \textbf{tripler} $\alpha$. D'après la loi de
+dilution, $\alpha \propto 1/\sqrt{C}$, donc pour multiplier $\alpha$ par 3 il faut diviser $C$ par $3^2 = 9$.
+On doit donc diluer par un facteur 9.
+
+\smallskip
+Initialement 1 L à $0{,}10$ \si{mol.L^{-1}}. Pour diluer par 9, on passe à un volume final $V_f = 9$ L, soit
+ajouter $\mathbf{8}$ \si{L} d'eau. Réponse : \textbf{C}.
+\end{exemple}
+
+\subsection{pH d'une base faible}
+
+\begin{formule}[pH approché d'une base faible]
+Pour une base faible \ce{B} de concentration $C_b$ :
+\[ \boxed{\mathrm{pH} = 7 + \tfrac{1}{2}\bigl(\mathrm{p}K_a + \log C_b\bigr)}, \]
+où $\mathrm{p}K_a$ est celui du \textbf{couple acide conjugué / base} (\ce{BH/B}).
+\end{formule}
+
+\begin{ou}
+\item $C_b$ : concentration molaire de la base faible, en \si{mol.L^{-1}}.
+\item $\mathrm{p}K_a$ : du couple \ce{BH/B}.
+\end{ou}
+
+\begin{exemple}[QCM 32 : identifier une solution basique faible]
+Une solution d'ammoniac \ce{NH3} à $1{,}0\times10^{-3}$ \si{mol.L^{-1}} a un pH mesuré de $10{,}15$. Le
+$\mathrm{p}K_a$ du couple \ce{NH4+/NH3} est $9{,}3$. Vérifions qu'il s'agit d'une \textbf{base faible} :
+\[ \mathrm{pH}_{\text{théorique}} = 7 + \tfrac{1}{2}\bigl(9{,}3 + \log(10^{-3})\bigr) = 7 + \tfrac{1}{2}(9{,}3 - 3) = 7 + 3{,}15 = \mathbf{10{,}15}. \]
+La valeur théorique correspond exactement à la mesure : c'est une \textbf{base faible}. Réponse : \textbf{D}.
+\end{exemple}
+
+% =====================================================================
+\section{Domaines de prédominance et diagramme de distribution}
+% =====================================================================
+Le $\mathrm{p}K_a$ d'un couple \ce{HA/A-} permet de savoir, pour un pH donné, quelle espèce du couple
+\textbf{domine} majoritairement en solution. C'est l'objet des diagrammes de prédominance et de distribution.
+
+\subsection{Diagramme de prédominance}
+
+\begin{regle}[domaines de prédominance d'un couple \ce{HA/A-}]
+Pour un couple acide/base de $\mathrm{p}K_a$ donné :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item si $\mathrm{pH} < \mathrm{p}K_a$, l'espèce \textbf{acide \ce{HA} prédomine} ($[\ce{HA}] > [\ce{A-}]$) ;
+  \item si $\mathrm{pH} > \mathrm{p}K_a$, l'espèce \textbf{basique \ce{A-} prédomine} ($[\ce{A-}] > [\ce{HA}]$) ;
+  \item si $\mathrm{pH} = \mathrm{p}K_a$, les deux espèces sont en \textbf{proportions égales}
+        ($[\ce{HA}] = [\ce{A-}]$).
+\end{itemize}
+On retient l'approximation pratique : l'espèce acide prédomine dès que $\mathrm{pH} < \mathrm{p}K_a - 1$
+(pour plus de $90\,\%$), la base dès que $\mathrm{pH} > \mathrm{p}K_a + 1$.
+\end{regle}
+
+% --- Figure : diagramme de prédominance ---
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  \draw[->,line width=0.8pt] (0,0) -- (12,0) node[right] {pH};
+  \foreach \x in {0,2,...,12}{
+    \draw (\x,-0.1) -- (\x,0.1);
+    \node[below] at (\x,-0.15) {\x};
+  }
+  % zone acide
+  \fill[acidecol!18] (0,0.2) rectangle (6,1.1);
+  \node[acidecol,font=\bfseries] at (3,0.65) {HA prédomine};
+  % zone basique
+  \fill[basecol!18] (6,0.2) rectangle (12,1.1);
+  \node[basecol,font=\bfseries] at (9,0.65) {A$^-$ prédomine};
+  % frontière pKa
+  \draw[dashed,primary,line width=1pt] (6,0) -- (6,1.4);
+  \node[above,primary,font=\bfseries] at (6,1.4) {pH = p$K_a$};
+  \node[below=2pt,primary,font=\scriptsize] at (6,-0.5) {[HA] = [A$^-$]};
+  % zones >90%
+  \draw[<-,acidecol,line width=0.7pt] (1,1.1) -- (1,1.45) node[above,font=\scriptsize,align=center]{HA\\$>90\,\%$};
+  \draw[<-,basecol,line width=0.7pt] (11,1.1) -- (11,1.45) node[above,font=\scriptsize,align=center]{A$^-$\\$>90\,\%$};
+  \node[below=20pt,font=\itshape] at (6,-0.5) {Diagramme de prédominance du couple HA / A$^-$};
+\end{tikzpicture}
+\end{center}
+{\small\textit{Figure 2 --- Diagramme de prédominance. À gauche de $\mathrm{p}K_a$, l'acide \ce{HA} domine ;
+à droite, la base \ce{A-}. À $\mathrm{pH}=\mathrm{p}K_a$, les deux sont à parts égales.}}
+
+\begin{exemple}[QCM 35 : espèce majoritaire de \ce{H2CO3} à pH 7,4]
+Le carbonate d'hydrogène est introduit à $10^{-3}$ \si{mol.L^{-1}}, à $\mathrm{pH} = 7{,}4$. Les deux couples
+du « carbonate » sont :
+\[ \ce{H2CO3/HCO3-}\ (pK_{a1}=6{,}4) \qquad\text{et}\qquad \ce{HCO3-/CO3^{2-}}\ (pK_{a2}=10{,}4). \]
+À $\mathrm{pH}=7{,}4$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $7{,}4 > 6{,}4$ : donc \ce{H2CO3} est minoritaire devant \ce{HCO3-}.
+  \item $7{,}4 < 10{,}4$ : donc \ce{HCO3-} domine devant \ce{CO3^{2-}}.
+\end{itemize}
+L'espèce \textbf{majoritaire est \ce{HCO3-}} (l'ion hydrogénocarbonate). Réponse : \textbf{B}.
+\end{exemple}
+
+\begin{exemple}[QCM 39E : forme de l'acide oxalique dans l'intestin]
+L'acide oxalique \ce{H2C2O4} est un diacide ($pK_{a1}=1{,}2$, $pK_{a2}=4{,}3$). Dans l'intestin à
+$\mathrm{pH}=6{,}4$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $6{,}4 > 4{,}3 = pK_{a2}$ : donc \ce{HC2O4-} (acide intermédiaire) a cédé son 2\textsuperscript{e}
+        \ce{H+}, et \ce{C2O4^{2-}} domine largement devant \ce{HC2O4-}.
+\end{itemize}
+Affirmation E (« la plus grande partie se trouve sous \ce{HC2O4-} ») est donc \textbf{fausse} : à pH 6,4, c'est
+\ce{C2O4^{2-}} qui prédomine. (À retenir pour la lecture de ce QCM.)
+\end{exemple}
+
+\subsection{Diagramme de distribution}
+
+Le diagramme de prédominance indique « qui gagne », mais pas « de combien ». Le \textbf{diagramme de
+distribution} trace, pour chaque pH, la \textbf{fraction} (pourcentage) de chaque espèce du couple.
+
+\begin{formule}[fractions d'acide et de base conjugués]
+Les fractions $\alpha_{\ce{HA}}$ et $\alpha_{\ce{A-}}$ (somme = 1) valent :
+\[ \alpha_{\ce{HA}} = \frac{[\ce{H3O+}]}{[\ce{H3O+}]+K_a}, \qquad \alpha_{\ce{A-}} = \frac{K_a}{[\ce{H3O+}]+K_a}. \]
+Les deux courbes se croisent à $\mathrm{pH} = \mathrm{p}K_a$ (chacune à $50\,\%$).
+\end{formule}
+
+% --- Figure : diagramme de distribution (pgfplots) ---
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12.5cm,height=7cm,
+    xlabel={pH},ylabel={Fraction (\%)},
+    xmin=0,xmax=14,ymin=0,ymax=100,
+    xtick={0,2,...,14},ytick={0,20,...,100},
+    grid=both,major grid style={gray!25},
+    axis lines=left,
+    legend style={at={(0.02,0.02)},anchor=south west,font=\small,draw=none,fill=white,fill opacity=0.8},
+    title={\small Diagramme de distribution (couple \ce{CH3COOH/CH3COO-}, $pK_a=4{,}75$)}]
+  % fraction base A-
+  \addplot[domain=0:14,samples=140,smooth,basecol,line width=1.3pt]
+    {100/(1+10^(-(x-4.75)))};
+  \addlegendentry{\ce{CH3COO-} (base)}
+  % fraction acide HA
+  \addplot[domain=0:14,samples=140,smooth,acidecol,line width=1.3pt]
+    {100/(1+10^(x-4.75))};
+  \addlegendentry{\ce{CH3COOH} (acide)}
+  % point de croisement
+  \draw[dashed,primary,line width=0.9pt] (axis cs:4.75,0) -- (axis cs:4.75,50);
+  \draw[dashed,primary,line width=0.9pt] (axis cs:0,50) -- (axis cs:4.75,50);
+  \node[primary,font=\scriptsize] at (axis cs:5.6,55) {pH$=$p$K_a$};
+  \node[primary,font=\scriptsize] at (axis cs:5.6,44) {(50\,\% / 50\,\%)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+{\small\textit{Figure 3 --- Diagramme de distribution de l'acide acétique. La courbe rouge (acide \ce{CH3COOH})
+domine à faible pH, la courbe bleue (base \ce{CH3COO-}) domine à pH élevé. Les deux se croisent à
+$\mathrm{pH}=\mathrm{p}K_a=4{,}75$, au point $50\,\%/50\,\%$.}}
+
+\begin{remarque}[utilité des diagrammes]
+Le diagramme de distribution sert à : \textbf{(i)} visualiser l'espèce prédominante à un pH donné ;
+\textbf{(ii)} justifier les \emph{approximations} de calcul de pH (par exemple, négliger \ce{A-} si
+$\mathrm{pH} \ll \mathrm{p}K_a$) ; \textbf{(iii)} \emph{vérifier} a posteriori la cohérence d'un résultat de
+pH. Pour les approximations, on admet $-\log[\ce{CH3COOH}]_{\text{init}} < \mathrm{p}K_a - 1$ et
+$-\log[\ce{CH3COO-}]_{\text{init}} < \mathrm{p}K_b - 1$.
+\end{remarque}
+
+% =====================================================================
+\section{Réactions acide-base et prévision du sens}
+% =====================================================================
+\label{sec:reaction}
+Lorsqu'on mélange un acide et une base, un \textbf{transfert de proton} se produit. La question centrale est
+de savoir si cette réaction est \textbf{complète}, \textbf{équilibrée} (limitée) ou \textbf{impossible}, et
+on le prévoit à partir des $\mathrm{p}K_a$.
+
+\subsection{Principe : la réaction va du plus fort vers le plus faible}
+
+\begin{regle}[sens privilégié d'une réaction acide-base]
+Une réaction acide-base se produit entre l'acide d'un couple et la base d'un \textbf{autre} couple. Le
+transfert de proton va \textbf{de l'acide le plus fort vers l'acide le plus faible} (les produits sont plus
+stables que les réactifs). Autrement dit : la réaction est favorisée si l'acide formé est plus faible que
+l'acide réactif (QCM 7C).
+\end{regle}
+
+Considérons un acide \ce{HA} (couple \ce{HA/A-}) et une base \ce{B-} (couple \ce{HB/B-}). En additionnant les
+deux demi-équations, on obtient la réaction globale :
+\[ \underbrace{\ce{HA}}_{\text{acide 1}} + \underbrace{\ce{B-}}_{\text{base 2}}
+   \;\ce{<=>}\; \underbrace{\ce{HB}}_{\text{acide 2}} + \underbrace{\ce{A-}}_{\text{base 1}}. \]
+
+\subsection{Constante d'équilibre $K_{\text{équi}} = 10^{\Delta pK_a}$}
+
+\begin{theoreme}[constante d'équilibre d'une réaction acide-base]
+La constante d'équilibre de la réaction entre l'acide \ce{HA} (réactif) et la base \ce{B-} (qui forme l'acide
+\ce{HB}) vaut :
+\[ \boxed{K_{\text{équi}} = \frac{[\ce{A-}]\times[\ce{HB}]}{[\ce{HA}]\times[\ce{B-}]}
+       = \frac{K_a(\ce{HA})}{K_a(\ce{HB})} = 10^{\,\mathrm{p}K_a(\ce{HB})-\mathrm{p}K_a(\ce{HA})}
+       = 10^{\,\Delta\mathrm{p}K_a}}, \]
+avec $\Delta\mathrm{p}K_a = \mathrm{p}K_a(\text{acide \textbf{formé}}) - \mathrm{p}K_a(\text{acide \textbf{réactif}})$.
+\end{theoreme}
+
+\begin{methode}[démonstration détaillée]
+\textbf{Étape 1 — les deux demi-réactions et leurs constantes.} L'acide \ce{HA} réagit avec l'eau :
+\[ \ce{HA + H2O <=> A- + H3O+} \quad (I), \qquad K_a(\ce{HA}) = \frac{[\ce{A-}][\ce{H3O+}]}{[\ce{HA}]}. \]
+La base \ce{B-} capte un proton de \ce{H3O+} :
+\[ \ce{B- + H3O+ <=> HB + H2O} \quad (II). \]
+La constante de (II) est l'inverse de la constante d'acidité de \ce{HB} :
+\[ K_{(II)} = \frac{1}{K_a(\ce{HB})} = \frac{[\ce{HB}]}{[\ce{B-}][\ce{H3O+}]}. \]
+\textbf{Étape 2 — on additionne (I) et (II).} Les \ce{H3O+} et \ce{H2O} se simplifient, il reste :
+\[ \ce{HA + B- <=> A- + HB}. \]
+\textbf{Étape 3 — la constante est le produit des constantes.} En multipliant $K_a(\ce{HA})$ par $K_{(II)}$ :
+\[ K_{\text{équi}} = K_a(\ce{HA})\times\frac{1}{K_a(\ce{HB})} = \frac{K_a(\ce{HA})}{K_a(\ce{HB})}. \]
+\textbf{Étape 4 — passage aux $pK_a$.} Comme $K_a = 10^{-\mathrm{p}K_a}$ :
+\[ K_{\text{équi}} = \frac{10^{-\mathrm{p}K_a(\ce{HA})}}{10^{-\mathrm{p}K_a(\ce{HB})}}
+   = 10^{\,\mathrm{p}K_a(\ce{HB})-\mathrm{p}K_a(\ce{HA})} = 10^{\,\Delta\mathrm{p}K_a}. \]
+\end{methode}
+
+\begin{attention}[bien définir $\Delta pK_a$]
+Dans cette fiche, $\Delta\mathrm{p}K_a = \mathrm{p}K_a(\textbf{acide formé}) - \mathrm{p}K_a(\textbf{acide
+réactif})$. \textbf{Ne pas inverser} réactif et formé ! On vérifie toujours la cohérence : un $\Delta pK_a$
+positif donne un $K_{\text{équi}} > 1$, donc une réaction dans le sens direct.
+\end{attention}
+
+\subsection{Les trois cas : complète, équilibrée, impossible}
+
+\begin{regle}[critères de prévision d'une réaction acide-base]
+À partir de $\Delta\mathrm{p}K_a$ (acide formé $-$ acide réactif) :
+\begin{center}
+\rowcolors{2}{thmcol!6}{white}
+\begin{tabular}{ccl}
+\rowcolor{thmcol!18}
+$\Delta\mathrm{p}K_a$ & $K_{\text{équi}}$ & Nature de la réaction \\
+\midrule
+$> 2$ & $\geq 10^{2}$ & \textbf{Réaction complète} (flèche totale $\rightarrow$) \\
+$0 \leq \Delta\mathrm{p}K_a \leq 2$ & $1 \leq K \leq 10^{2}$ & \textbf{Réaction équilibrée} (limitée, $\rightleftharpoons$) \\
+$< -2$ & $< 10^{-2}$ & \textbf{Réaction impossible} (sens inverse) \\
+\bottomrule
+\end{tabular}
+\end{center}
+Convention pratique du livre : on considère la réaction \textbf{complète} si $K_{\text{équi}} \geq 10^{2}$.
+\end{regle}
+
+\begin{remarque}[cas particulier $\Delta pK_a = 0$ : pas de réaction]
+Si l'acide réactif et l'acide formé ont le même $\mathrm{p}K_a$ (c'est-à-dire si on mélange un acide et
+\textbf{sa propre base conjuguée}), alors $\Delta\mathrm{p}K_a = 0$ et $K_{\text{équi}} = 1$. La composition du
+mélange est inchangée : \textbf{un acide ne réagit pas avec sa propre base conjuguée} (QCM 7E, 8D).
+\end{remarque}
+
+\begin{methode}[protocole en 4 étapes pour prévoir une réaction]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Identifier l'acide réactif, sa base conjuguée, et leur $pK_a$.
+  \item Identifier la base réactive, son acide conjugué, et son $pK_a$.
+  \item Calculer $\Delta\mathrm{p}K_a = \mathrm{p}K_a(\text{acide formé}) - \mathrm{p}K_a(\text{acide réactif})$.
+  \item Conclure selon le tableau ci-dessus.
+\end{enumerate}
+\end{methode}
+
+% --- Figure : réaction acide-base (schéma) ---
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  % acide réactif HA
+  \node[draw=acidecol,fill=acidecol!12,line width=1.1pt,rounded corners=3pt,minimum width=1.8cm,minimum height=1cm] (ha) at (0,1.3) {\ce{HA}};
+  \node[acidecol,font=\scriptsize] at (0,2.0) {acide réactif};
+  \node[acidecol,font=\scriptsize] at (0,0.6) {$pK_a$(HA)};
+  % base réactive B-
+  \node[draw=basecol,fill=basecol!12,line width=1.1pt,rounded corners=3pt,minimum width=1.8cm,minimum height=1cm] (b) at (0,-1.3) {\ce{B-}};
+  \node[basecol,font=\scriptsize] at (0,-2.0) {base réactive};
+  \node[basecol,font=\scriptsize] at (0,-0.6) {$pK_a$(HB)};
+  % produits
+  \node[draw=acidecol,fill=acidecol!8,line width=1pt,rounded corners=3pt,minimum width=1.8cm,minimum height=1cm] (a) at (7,1.3) {\ce{A-}};
+  \node[acidecol,font=\scriptsize] at (7,2.0) {base conjuguée formée};
+  \node[draw=basecol,fill=basecol!8,line width=1pt,rounded corners=3pt,minimum width=1.8cm,minimum height=1cm] (hb) at (7,-1.3) {\ce{HB}};
+  \node[basecol,font=\scriptsize] at (7,-2.0) {acide conjugué formé};
+  % flèches
+  \draw[-Stealth,primary,line width=1.4pt] (2.2,0) -- (4.6,0) node[midway,above,font=\scriptsize] {$\Delta pK_a = pK_a(\text{HB})-pK_a(\text{HA})$};
+  \draw[-Stealth,acidecol,line width=0.9pt] (ha) -- (a);
+  \draw[-Stealth,basecol,line width=0.9pt] (b) -- (hb);
+\end{tikzpicture}
+\end{center}
+{\small\textit{Figure 4 --- Schéma d'une réaction acide-base. La flèche centrale indique le sens privilégié
+si $\Delta\mathrm{p}K_a>0$ ; la réaction est complète si $\Delta\mathrm{p}K_a>2$.}}
+
+\begin{exemple}[QCM 7D et 9A : \ce{H3PO4} sur le carbonate]
+La réaction entre l'acide phosphorique \ce{H3PO4} ($pK_a = 2{,}12$) et la base carbonate \ce{CO3^{2-}}
+(forme l'acide \ce{HCO3-} de $pK_a = 10{,}4$) :
+\[ \ce{H3PO4 + CO3^{2-} -> H2PO4- + HCO3-}. \]
+\textbf{Identification :} acide réactif \ce{H3PO4} ($pK_a=2{,}12$), acide formé \ce{HCO3-} ($pK_a=10{,}4$).
+\[ \Delta\mathrm{p}K_a = 10{,}4 - 2{,}12 = 8{,}28 \gg 2. \]
+\textbf{Conclusion :} la réaction est \textbf{complète} (QCM 7D « vrai », QCM 9A correcte). Le transfert de
+proton est total. À retenir : \emph{l'évolution va toujours d'un acide fort vers un acide faible}.
+\end{exemple}
+
+\begin{exemple}[QCM 7E : un acide ne réagit pas avec sa base conjuguée]
+On tente la réaction entre \ce{H3PO4} ($pK_a=2{,}12$) et \ce{H2PO4-}. Mais \ce{H2PO4-} est la \textbf{base
+conjuguée de \ce{H3PO4}} : l'acide formé serait \ce{H3PO4} (son propre acide !), donc :
+\[ \Delta\mathrm{p}K_a = pK_a(\ce{H3PO4}) - pK_a(\ce{H3PO4}) = 2{,}12 - 2{,}12 = 0. \]
+$K_{\text{équi}} = 10^0 = 1$ : la réaction \textbf{n'a pas lieu} dans un sens privilégié. Réponse : « faux ».
+\end{exemple}
+
+\begin{exemple}[QCM 7F et 9C : réaction impossible]
+On teste la réaction : \ce{HCO3- + HPO4^{2-} <=> CO3^{2-} + H2CO3}.
+L'acide réactif est \ce{HCO3-} ($pK_a=10{,}4$), l'acide formé serait \ce{H2CO3} ($pK_a=6{,}4$) :
+\[ \Delta\mathrm{p}K_a = 6{,}4 - 10{,}4 = -4{,}0 < -2. \]
+\textbf{Conclusion :} la réaction est \textbf{impossible} dans le sens direct (elle irait en sens inverse).
+Réponse : QCM 7F « vrai » (transfert complet impossible), QCM 9C incorrecte.
+\end{exemple}
+
+\begin{exemple}[QCM 10 : quelles bases réagissent totalement avec \ce{HC2O4-} ?]
+On cherche les bases capables de réagir \textbf{complètement} avec l'acide \ce{HC2O4-} ($pK_a=4{,}3$),
+c'est-à-dire dont l'acide conjugué a un $pK_a$ tel que $\Delta\mathrm{p}K_a > 2$. Testons chaque base :
+
+\smallskip
+\begin{center}
+\rowcolors{2}{thmcol!6}{white}
+\begin{tabular}{lccl}
+\rowcolor{thmcol!18}
+Base testée & Acide conjugué ($pK_a$) & $\Delta pK_a$ & Conclusion \\
+\midrule
+\ce{HSO3-} & \ce{H2SO3} ($1{,}8$) & $1{,}8-4{,}3=-2{,}5$ & impossible \\
+\ce{C2O4^{2-}} & \ce{HC2O4-} ($4{,}3$) & $4{,}3-4{,}3=0$ & aucune \\
+\ce{CO3^{2-}} & \ce{HCO3-} ($10{,}4$) & $10{,}4-4{,}3=6{,}1>2$ & \textbf{complète} \\
+\ce{HS-} & \ce{H2S} ($7{,}0$) & $7{,}0-4{,}3=2{,}7>2$ & \textbf{complète} \\
+\ce{F-} & \ce{HF} ($3{,}45$) & $3{,}45-4{,}3=-0{,}85$ & impossible \\
+\bottomrule
+\end{tabular}
+\end{center}
+Les deux bases convenables sont \ce{CO3^{2-}} et \ce{HS-}. Réponses : \textbf{C et D}.
+\end{exemple}
+
+\begin{exemple}[QCM 9D : acide oxalique sur phosphate]
+\[ \ce{H2C2O4 + PO4^{3-} -> HC2O4- + HPO4^{2-}}. \]
+Acide réactif : \ce{H2C2O4} ($pK_{a1}=1{,}2$). Acide formé : \ce{HPO4^{2-}} ($pK_a=12{,}67$).
+\[ \Delta\mathrm{p}K_a = 12{,}67 - 1{,}2 = 11{,}47 \gg 2 \;\Longrightarrow\; \textbf{réaction complète}. \]
+QCM 9D : correcte.
+\end{exemple}
+
+% =====================================================================
+\section{L'équation de Henderson-Hasselbalch}
+% =====================================================================
+Cette équation relie directement le pH d'un mélange au $\mathrm{p}K_a$ et au rapport des concentrations des
+deux formes du couple. C'est l'\textbf{outil de calcul central} pour les solutions tampons.
+
+\begin{formule}[équation de Henderson-Hasselbalch]
+Pour un couple acide/base \ce{HA/A-}, à l'équilibre :
+\[ \boxed{\mathrm{pH} = \mathrm{p}K_a + \log\frac{[\ce{A-}]}{[\ce{HA}]}}. \]
+\end{formule}
+
+\begin{ou}
+\item $\mathrm{pH}$, $\mathrm{p}K_a$ : sans dimension.
+\item $[\ce{A-}]$ : concentration de la \textbf{forme basique} (base conjuguée), en \si{mol.L^{-1}}.
+\item $[\ce{HA}]$ : concentration de la \textbf{forme acide}, en \si{mol.L^{-1}}.
+\item Si $[\ce{A-}] = [\ce{HA}]$, alors $\mathrm{pH} = \mathrm{p}K_a$.
+\item Si $[\ce{A-}] > [\ce{HA}]$, alors $\mathrm{pH} > \mathrm{p}K_a$ (milieu plus basique).
+\item Si $[\ce{A-}] < [\ce{HA}]$, alors $\mathrm{pH} < \mathrm{p}K_a$ (milieu plus acide).
+\end{ou}
+
+\begin{methode}[démonstration]
+Par définition $K_a = \dfrac{[\ce{A-}][\ce{H3O+}]}{[\ce{HA}]}$. On isole $[\ce{H3O+}]$ :
+\[ [\ce{H3O+}] = K_a\,\frac{[\ce{HA}]}{[\ce{A-}]}. \]
+On prend $-\log$ des deux côtés :
+\[ \mathrm{pH} = \mathrm{p}K_a - \log\frac{[\ce{HA}]}{[\ce{A-}]} = \mathrm{p}K_a + \log\frac{[\ce{A-}]}{[\ce{HA}]}. \]
+\end{methode}
+
+\begin{exemple}[QCM 38 : rapport de concentrations dans le couple carbonate]
+Quel pH obtient-on avec un mélange contenant \textbf{10 fois plus} d'hydrogénocarbonate \ce{HCO3-} que
+d'acide carbonique \ce{H2CO3} ? On a $\frac{[\ce{HCO3-}]}{[\ce{H2CO3}]} = 10$. Le couple
+\ce{H2CO3/HCO3-} a $pK_{a1} = 6{,}4$ :
+\[ \mathrm{pH} = 6{,}4 + \log(10) = 6{,}4 + 1 = \mathbf{7{,}4}. \]
+Réponse : \textbf{C}. (On notera que $7{,}4$ est précisément le pH du sang, maintenu par ce système tampon !)
+\end{exemple}
+
+\begin{exemple}[QCM 17 revisité : $\mathrm{pH}=\mathrm{p}K_a$ implique 50/50]
+Pour \ce{HNO2} ($pK_a=4$) à $\mathrm{pH}=4$, Henderson donne :
+\[ 4 = 4 + \log\frac{[\ce{NO2-}]}{[\ce{HNO2}]} \;\Longrightarrow\; \log\frac{[\ce{NO2-}]}{[\ce{HNO2}]}=0
+   \;\Longrightarrow\; \frac{[\ce{NO2-}]}{[\ce{HNO2}]}=1. \]
+On retrouve bien la moitié dissociée ($\alpha=50\,\%$). \textbf{Règle d'or :} à $\mathrm{pH}=\mathrm{p}K_a$,
+les deux formes du couple coexistent à parts égales.
+\end{exemple}
+
+% =====================================================================
+\section{Les solutions tampons}
+% =====================================================================
+
+\subsection{Définition et propriétés}
+
+\begin{definition}[solution tampon]
+Une \textbf{solution tampon} est un mélange d'un \textbf{acide faible} et de sa \textbf{base conjuguée} en
+proportions notables. Son pH est \textbf{voisin du $\mathrm{p}K_a$} du couple et \textbf{varie très peu}
+lorsqu'on ajoute de petites quantités d'acide ou de base, ou lorsqu'on dilue modérément.
+\end{definition}
+
+\begin{regle}[propriétés d'une solution tampon]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Le pH d'un tampon est donné par Henderson : $\mathrm{pH} = \mathrm{p}K_a + \log\frac{[\ce{A-}]}{[\ce{HA}]}$.
+  \item La zone d'efficacité maximale est $\mathrm{p}K_a \pm 1$.
+  \item \textbf{Ajout d'acide fort} : il est consommé par la base \ce{A-} ($\ce{A- + H3O+ -> HA}$), le pH
+        baisse peu.
+  \item \textbf{Ajout de base forte} : elle est consommée par l'acide \ce{HA} ($\ce{HA + OH- -> A- + H2O}$),
+        le pH monte peu.
+\end{itemize}
+\end{regle}
+
+% --- Figure : solution tampon (bécher) ---
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  % bécher
+  \draw[line width=1pt,primary] (-2.5,0) -- (-2.5,2.2) (-2.5,2.2) -- (-2.2,2.4);
+  \draw[line width=1pt,primary] (2.5,0) -- (2.5,2.2) (2.5,2.2) -- (2.2,2.4);
+  \draw[line width=1pt,primary] (-2.6,0) -- (2.6,0);
+  % liquide
+  \fill[eaucol!20] (-2.45,0.05) rectangle (2.45,1.7);
+  \draw[eaucol,line width=0.8pt] (-2.45,1.7) -- (2.45,1.7);
+  % espèces HA et A-
+  \node[acidecol] at (-1.2,1.0) {\ce{HA}};
+  \node[basecol] at (0.3,1.3) {\ce{A-}};
+  \node[acidecol] at (1.3,0.7) {\ce{HA}};
+  \node[basecol] at (-0.6,0.6) {\ce{A-}};
+  \node[acidecol] at (1.0,1.4) {\ce{HA}};
+  \node[basecol] at (1.8,1.1) {\ce{A-}};
+  % légendes
+  \node[font=\bfseries] at (0,2.9) {Solution tampon};
+  \node[font=\scriptsize,align=center] at (0,-0.5) {Mélange acide faible \ce{HA} + base conjuguée \ce{A-}};
+  \node[font=\scriptsize,acidecol] at (-4,1.4) {ajout H$^+$};
+  \draw[-Stealth,acidecol,line width=0.9pt] (-4,1.1) -- (-2.6,1.1);
+  \node[font=\scriptsize,basecol] at (4,1.4) {ajout OH$^-$};
+  \draw[-Stealth,basecol,line width=0.9pt] (4,1.1) -- (2.6,1.1);
+  \node[font=\scriptsize,align=center,neutcol] at (0,1.95) {pH $\approx$ p$K_a$ stable};
+\end{tikzpicture}
+\end{center}
+{\small\textit{Figure 5 --- Principe d'une solution tampon. L'acide \ce{HA} neutralise les bases ajoutées,
+la base \ce{A-} neutralise les acides ajoutés : le pH reste stable.}}
+
+\subsection{Préparation d'un tampon}
+
+\begin{methode}[préparer une solution tampon de pH donné]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Choisir un couple dont le $\mathrm{p}K_a$ est \textbf{le plus proche possible} du pH souhaité
+        (tampon efficace si $\mathrm{pH} \in [\mathrm{p}K_a-1,\ \mathrm{p}K_a+1]$).
+  \item Calculer le rapport $\frac{[\ce{A-}]}{[\ce{HA}]} = 10^{\mathrm{pH}-\mathrm{p}K_a}$.
+  \item Préparer le mélange : soit en mélangeant directement l'acide faible et son sel (ex.\
+        \ce{CH3COOH} + \ce{CH3COONa}), soit par \textbf{titrage partiel} (on fait réagir une partie de
+        l'acide par une base forte pour engendrer la base conjuguée).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[QCM 40 : préparer un tampon acétate de pH 4,74]
+On veut préparer un tampon de pH $4{,}74$ à partir de \SI{100}{mL} de \ce{CH3COOH} à \SI{0,20}{M}
+($pK_a = 4{,}74$). On ajoute un volume $V$ de \ce{NaOH} à \SI{0,20}{M}.
+
+\smallskip
+\textbf{Analyse.} La soude (base forte) réagit \textbf{totalement} avec l'acide acétique pour former la base
+conjuguée \ce{CH3COO-} :
+\[ \ce{CH3COOH + OH- -> CH3COO- + H2O}. \]
+Au fur et à mesure qu'on verse \ce{NaOH}, $[\ce{HA}]$ diminue et $[\ce{A-}]$ augmente. Le pH vaut
+$\mathrm{p}K_a = 4{,}74$ \textbf{exactement} lorsque $[\ce{HA}] = [\ce{A-}]$, c'est-à-dire à la
+\textbf{demi-équivalence} : il faut neutraliser la \textbf{moitié} de l'acide initial.
+
+\textbf{Calcul.} Quantité initiale d'acide : $n_{\ce{HA},0} = 0{,}100 \times 0{,}20 = 0{,}020$ \si{mol}. Il
+faut neutraliser la moitié, soit $n(\ce{OH-}) = 0{,}010$ \si{mol}. Avec la soude à \SI{0,20}{M} :
+\[ V = \frac{n}{C} = \frac{0{,}010}{0{,}20} = 0{,}050\ \si{L} = \mathbf{50\ mL}. \]
+Réponse : \textbf{D}. \textbf{Règle :} le pH d'un tampon vaut $\mathrm{p}K_a$ à la \emph{demi-équivalence} du titrage.
+\end{exemple}
+
+\begin{exemple}[QCM 36 : reconnaître un tampon basique]
+Pour préparer un tampon de pH \textbf{basique}, il faut un couple de $pK_a$ \textbf{élevé}. Parmi les propositions,
+\ce{NaHCO3 + Na2CO3} correspond au couple \ce{HCO3-/CO3^{2-}} ($pK_a = 10{,}4$) : c'est le seul mélange d'un
+acide faible (\ce{HCO3-}) et de sa base conjuguée (\ce{CO3^{2-}}) avec un $pK_a$ basique. Les autres mélanges
+ne sont pas des tampons (ou ne le sont pas à pH basique). Réponse : \textbf{E}.
+\end{exemple}
+
+\begin{exemple}[QCM 37 : tampon formiate auquel on ajoute un acide fort]
+On dispose de \SI{100}{mL} d'un tampon contenant \ce{HCOOH} à \SI{0,60}{M} et \ce{HCOONa} à \SI{0,50}{M}
+($pK_a = 3{,}75$). On ajoute \SI{40}{mL} de \ce{HCl} à \SI{1,00}{M}. Calcul du pH final.
+
+\smallskip
+\textbf{Étape 1 — quantités initiales (avant réaction).}
+\[ n(\ce{HCOOH})_0 = 0{,}100\times0{,}60 = 0{,}060\ \si{mol},\qquad
+   n(\ce{HCOO-})_0 = 0{,}100\times0{,}50 = 0{,}050\ \si{mol}, \]
+\[ n(\ce{H3O+})_{\text{ajouté}} = 0{,}040\times1{,}00 = 0{,}040\ \si{mol}. \]
+
+\textbf{Étape 2 — la base \ce{HCOO-} neutralise l'acide fort (réaction totale).}
+\[ \ce{HCOO- + H3O+ -> HCOOH + H2O}. \]
+L'acide fort consomme la base \ce{HCOO-} et produit l'acide \ce{HCOOH}. Nouvelles quantités :
+\[ n(\ce{HCOO-}) = 0{,}050 - 0{,}040 = 0{,}010\ \si{mol}, \]
+\[ n(\ce{HCOOH}) = 0{,}060 + 0{,}040 = 0{,}100\ \si{mol}. \]
+
+\textbf{Étape 3 — Henderson (le rapport de concentrations = rapport des quantités, même volume).}
+\[ \mathrm{pH} = \mathrm{p}K_a + \log\frac{n(\ce{HCOO-})}{n(\ce{HCOOH})}
+   = 3{,}75 + \log\frac{0{,}010}{0{,}100} = 3{,}75 + \log(0{,}1) = 3{,}75 - 1 = \mathbf{2{,}75}. \]
+Réponse : \textbf{C}. \textbf{Leçon :} un tampon « résiste », mais si on dépasse sa capacité (ici la base
+\ce{HCOO-} est presque épuisée), le pH chute fortement.
+\end{exemple}
+
+\begin{remarque}[le tampon acétique ne dépend pas que du $pK_a$]
+QCM 39A est fausse : le pH d'un tampon \ce{CH3COOH/CH3COO-} dépend du \textbf{rapport} des concentrations
+(via Henderson), pas seulement du $\mathrm{p}K_a$. Deux tampons du même couple mais de rapports différents
+ont des pH différents.
+\end{remarque}
+
+% =====================================================================
+\section{Titrages acide-base}
+% =====================================================================
+
+\subsection{Principe d'un titrage}
+
+\begin{definition}[titrage (dosage) acide-base]
+Un \textbf{titrage} (ou dosage) consiste à déterminer la concentration d'un acide (ou d'une base) en le
+faisant réagir avec une solution de base (ou d'acide) de \textbf{concentration connue}, jusqu'à l'
+\textbf{équivalence}. À l'équivalence, les réactifs ont été mélangés dans les \textbf{proportions
+stœchiométriques} : les quantités d'acide et de base apportées ont réagi totalement.
+\end{definition}
+
+\begin{formule}[relation à l'équivalence]
+Pour le titrage d'un acide \ce{HA} par une base \ce{BOH} (ou inversement), à l'équivalence :
+\[ \boxed{C_a\,V_a = C_b\,V_b} \quad\text{(pour un monoacide et une monobase)}. \]
+\end{formule}
+
+\begin{ou}
+\item $C_a$, $C_b$ : concentrations molaire de l'acide et de la base, en \si{mol.L^{-1}}.
+\item $V_a$, $V_b$ : volumes à l'équivalence, en \si{L} (ou en \si{mL} tant qu'ils sont cohérents).
+\item Pour un diacide (\ce{H2SO4}) titré par une monobase : $2\,C_a V_a = C_b V_b$.
+\end{ou}
+
+\begin{exemple}[QCM 30 : déterminer une concentration inconnue]
+On dose \SI{10}{mL} de \ce{HCl} de concentration inconnue $C_a$ (après dilution dans \SI{50}{mL} d'eau) par
+\SI{20}{mL} de \ce{NaOH} à \SI{0,20}{M}. \ce{HCl} et \ce{NaOH} sont monobasiques :
+\[ C_a V_a = C_b V_b \;\Longrightarrow\; C_a = \frac{C_b V_b}{V_a} = \frac{0{,}20\times 0{,}020}{0{,}010}
+   = \frac{0{,}0040}{0{,}010} = \mathbf{0{,}40\ M}. \]
+Réponse : \textbf{D}.
+\end{exemple}
+
+\begin{exemple}[QCM 29 : titrage par un diacide]
+On neutralise \SI{30}{mL} de \ce{NaOH} à 0,10 M par \ce{H2SO4}. Comme \ce{H2SO4} est un diacide (2 \ce{H+} par
+molécule), la relation à l'équivalence est $2 C_a V_a = C_b V_b$.
+
+\smallskip
+Testons la proposition A : $V_a = \SI{15}{mL}$ de \ce{H2SO4} à \SI{0,20}{M}.
+\[ 2 \times 0{,}20 \times 15 = 6{,}0, \qquad C_b V_b = 0{,}10 \times 30 = 3{,}0. \]
+Inégalité ($6{,}0 \neq 3{,}0$) : la proposition A ne convient pas.
+
+\smallskip
+Testons la proposition D : $V_a = \SI{30}{mL}$ de \ce{H2SO4} à \SI{0,020}{M}.
+\[ 2 \times 0{,}020 \times 30 = 1{,}2 \neq 3{,}0. \]
+Procédons plutôt directement : il faut $C_a V_a = C_b V_b/2 = (0{,}10\times30)/2 = 1{,}5$. Avec
+$V_a = \SI{15}{mL}$ : $C_a = 1{,}5/15 = 0{,}10$ M. C'est la proposition B (\SI{15}{mL} de \ce{H2SO4} à
+\SI{0,10}{M}). Réponse : \textbf{B}.
+\end{exemple}
+
+\subsection{Le point d'équivalence et le pH à l'équivalence}
+
+\begin{regle}[pH à l'équivalence selon la force des espèces]
+À \SI{25}{\celsius}, le pH au point d'équivalence dépend du couple acide/base titré :
+\begin{center}
+\rowcolors{2}{formulacol!6}{white}
+\begin{tabular}{lll}
+\rowcolor{formulacol!18}
+Acide dosé & Base dosée & pH à l'équivalence \\
+\midrule
+fort (\ce{HCl}) & par base forte (\ce{NaOH}) & \textbf{neutre} ($\mathrm{pH}=7$) \\
+fort (\ce{HCl}) & par base faible & \textbf{acide} \\
+faible (\ce{CH3COOH}) & par base forte (\ce{NaOH}) & \textbf{basique} ($\mathrm{pH}>7$) \\
+faible & par base faible & $\mathrm{pH} \approx 7$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{regle}
+
+\begin{exemple}[QCM 21 et 22 : pH à l'équivalence]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Acide fort + base forte} (QCM 21) : à l'équivalence, il ne reste que des ions spectateurs
+        (\ce{Na+}, \ce{Cl-}) et l'eau ; $[\ce{H3O+}]=[\ce{OH-}]=10^{-7}$ \si{mol.L^{-1}}, soit
+        \textbf{$\mathrm{pH}=7$} (neutre). Réponse : \textbf{B}.
+  \item \textbf{Acide faible + base forte} (QCM 22) : à l'équivalence, la base conjuguée \ce{A-} de l'acide
+        faible est présente (hydrolyse basique), le pH est \textbf{basique} ($>7$). Réponse : \textbf{C}.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[à l'équivalence, \ce{H3O+} n'est jamais exactement nul]
+QCM 24D (« la concentration en \ce{H3O+} est nulle à l'équivalence ») est \textbf{fausse}. Il y a toujours au
+moins l'autoprotolyse de l'eau ($10^{-7}$ \si{mol.L^{-1}}). « Nulle » n'existe pas en solution aqueuse.
+\end{attention}
+
+\subsection{Courbes de titrage}
+
+La \textbf{courbe de titrage} représente $\mathrm{pH} = f(V_{\text{base versée}})$. Elle présente un
+\textbf{saut de pH} au voisinage de l'équivalence. La forme dépend de la force de l'acide.
+
+% --- Figure : courbes de titrage (pgfplots) ---
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12.5cm,height=7cm,
+    xlabel={Volume de \ce{NaOH} versé (mL)},ylabel={pH},
+    xmin=0,xmax=40,ymin=0,ymax=14,
+    xtick={0,5,...,40},ytick={0,2,...,14},
+    grid=both,major grid style={gray!25},
+    axis lines=left,
+    legend style={at={(0.98,0.05)},anchor=south east,font=\small,draw=none,fill=white,fill opacity=0.8},
+    title={\small Titrage de 20 mL d'acide (0,10 M) par \ce{NaOH} (0,10 M)}]
+  % acide fort HCl : équivalence à V=20 mL, pH=7
+  \addplot[acidecol,line width=1.3pt,smooth] coordinates {
+    (0,1)(5,1.4)(10,1.7)(15,2)(18,2.5)(19.5,3)(19.9,3.7)
+    (20,7)
+    (20.1,10.3)(20.5,11)(22,11.5)(25,11.9)(30,12.1)(40,12.4)};
+  \addlegendentry{Acide fort (\ce{HCl})}
+  % acide faible CH3COOH : équivalence à V=20 mL, pH basique, demi-équivalence pH=pKa=4.75
+  \addplot[basecol,line width=1.3pt,smooth,dashed] coordinates {
+    (0,2.9)(2,3.9)(5,4.2)(8,4.5)(10,4.75)(12,5.0)(15,5.3)
+    (18,5.9)(19,6.5)(19.8,8)(20,8.7)
+    (20.5,10.5)(22,11.1)(25,11.6)(30,12.0)(40,12.3)};
+  \addlegendentry{Acide faible (\ce{CH3COOH})}
+  % équivalence
+  \draw[dashed,gray,line width=0.8pt] (axis cs:20,0) -- (axis cs:20,14);
+  \node[gray,font=\scriptsize,rotate=90] at (axis cs:19.6,11.5) {équivalence};
+  % demi-équivalence
+  \draw[dotted,basecol,line width=0.8pt] (axis cs:10,0) -- (axis cs:10,4.75) -- (axis cs:0,4.75);
+  \node[basecol,font=\scriptsize] at (axis cs:6.5,5.2) {demi-équ.};
+  \node[basecol,font=\scriptsize] at (axis cs:2.2,4.75) {p$K_a$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+{\small\textit{Figure 6 --- Comparaison des courbes de titrage. Acide fort (rouge plein) : saut brutal
+autour de pH 7. Acide faible (bleu pointillé) : point de départ plus élevé, demi-équivalence à
+$\mathrm{pH}=\mathrm{p}K_a=4{,}75$, équivalence en milieu basique ($\mathrm{pH}>7$).}}
+
+\begin{regle}[lecture d'une courbe de titrage]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Le \textbf{point d'équivalence} est au \textbf{centre du saut de pH} (point d'inflexion).
+  \item La \textbf{demi-équivalence} ($V = V_E/2$) donne directement le $\mathrm{p}K_a$ (pour un acide faible) :
+        à ce point, $\mathrm{pH} = \mathrm{p}K_a$.
+  \item Le pH initial indique la force de l'acide : un acide fort démarre à un pH très bas (proche de
+        $-\log C_a$), un acide faible démarre plus haut.
+  \item La pente du saut : \textbf{plus le saut est vertical, plus l'acide est fort}.
+\end{itemize}
+\end{regle}
+
+\begin{exemple}[QCM 23 : identifier deux acides sur leurs courbes]
+Deux solutions \ce{HA} et \ce{HA_1} de même concentration sont titrées séparément par \ce{NaOH}. L'une présente
+un saut brutal partant d'un pH initial très bas ; l'autre démarre plus haut avec un saut moins marqué.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item La courbe avec \textbf{pH initial très bas et saut vertical} est celle d'un \textbf{acide fort} :
+        \ce{HA} (ou \ce{HA_1}) est un acide fort.
+  \item La courbe avec \textbf{pH initial plus élevé et saut moins raide} est celle d'un \textbf{acide faible}.
+\end{itemize}
+On conclut selon la courbe attribuée à chaque espèce : par exemple, si la courbe de \ce{HA} a le saut le plus
+marqué, alors \ce{HA} est l'acide fort (réponse A), et \ce{HA_1} est l'acide faible (réponse D).
+\end{exemple}
+
+\begin{exemple}[QCM 24 : exploiter une courbe donnée]
+La courbe de titrage d'un acide (\SI{15}{mL}) par une base montre un saut autour de $V_E \approx \SI{15}{mL}$
+avec un pH final au point d'équivalence proche de 7.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item La concentration initiale de l'acide : comme $C_a V_a = C_b V_E$ et que l'allure (saut brutal, pH à
+        l'équivalence $\approx 7$) est typique d'un acide \textbf{fort} dosé par une base forte.
+  \item Le pH initial est très bas (acide fort) ; la concentration se lit au départ : si
+        $\mathrm{pH}_{\text{initial}} \approx 2$, alors $C_a = 10^{-2} = \mathbf{0{,}01\ M}$.
+  \item C'est bien un dosage \textbf{acide fort / base forte}. Affirmations correctes : B et C.
+\end{itemize}
+\end{exemple}
+
+\subsection{Indicateurs colorés}
+
+\begin{definition}[indicateur coloré]
+Un \textbf{indicateur coloré} est un acide faible (ou base) dont les formes acide et basique ont des
+\textbf{couleurs différentes}. Sa zone de virage est centrée sur son $\mathrm{p}K_a$ (intervalle
+$\mathrm{p}K_a \pm 1$). On le choisit de sorte que le pH à l'équivalence \textbf{tombe dans la zone de virage}.
+\end{definition}
+
+\begin{center}
+\rowcolors{2}{remarkcol!6}{white}
+\begin{tabular}{lll}
+\rowcolor{remarkcol!18}
+\textbf{Indicateur} & \textbf{Zone de virage} & \textbf{Couleur acide $\to$ basique} \\
+\midrule
+Hélianthine (méthylorange) & $3{,}1$ -- $4{,}4$ & rouge $\to$ jaune \\
+Rouge de méthyle & $4{,}8$ -- $6{,}0$ & rouge $\to$ jaune \\
+Bleu de bromothymol (BBT)  & $6{,}0$ -- $7{,}6$ & jaune $\to$ bleu \\
+Phénolphtaléine            & $8{,}2$ -- $10{,}0$ & incolore $\to$ rose \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{regle}[choix de l'indicateur]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Dosage \textbf{acide fort / base forte} ($\mathrm{pH}_E \approx 7$) : \textbf{BBT}.
+  \item Dosage \textbf{acide faible / base forte} ($\mathrm{pH}_E > 7$) : \textbf{phénolphtaléine}.
+  \item Dosage \textbf{acide fort / base faible} ($\mathrm{pH}_E < 7$) : \textbf{hélianthine}.
+\end{itemize}
+\end{regle}
+
+% =====================================================================
+\section{Hydrolyse des sels et pH des solutions salines}
+% =====================================================================
+Un sel dissous dans l'eau peut donner une solution \textbf{acide, neutre ou basique} selon la force relative
+de ses ions : c'est l'\textbf{hydrolyse}.
+
+\begin{regle}[caractère acide ou basique d'une solution de sel]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Sel d'\textbf{acide fort + base forte} (ex.\ \ce{NaCl}) : solution \textbf{neutre} (pH = 7). Ni
+        \ce{Na+}, ni \ce{Cl-} ne réagissent avec l'eau.
+  \item Sel d'\textbf{acide faible + base forte} (ex.\ \ce{CH3COONa}, acétate de sodium) : solution
+        \textbf{basique}. L'ion \ce{CH3COO-} (base conjuguée d'un acide faible) capte un \ce{H+} de l'eau
+        ($\ce{CH3COO- + H2O <=> CH3COOH + OH-}$), libérant des \ce{OH-}.
+  \item Sel d'\textbf{acide fort + base faible} (ex.\ \ce{NH4Cl}, chlorure d'ammonium) : solution
+        \textbf{acide}. L'ion \ce{NH4+} (acide conjugué d'une base faible) cède un \ce{H+} à l'eau
+        ($\ce{NH4+ + H2O <=> NH3 + H3O+}$), libérant des \ce{H3O+}.
+\end{itemize}
+\end{regle}
+
+\begin{exemple}[QCM 33 : solution de chlorure d'ammonium]
+Le chlorure d'ammonium \ce{NH4Cl} provient d'un \textbf{acide fort} (\ce{HCl}) et d'une \textbf{base faible}
+(\ce{NH3}). En solution, l'ion \ce{NH4+} (acide faible, $pK_a = 9{,}25$) cède un proton à l'eau :
+\[ \ce{NH4+ + H2O <=> NH3 + H3O+}. \]
+La solution est donc \textbf{acide}, quel que soit le détail de la concentration. Réponse : \textbf{A}.
+\end{exemple}
+
+\begin{exemple}[QCM 34 : solution d'acétate de sodium]
+L'acétate de sodium \ce{CH3COONa} provient d'un \textbf{acide faible} (\ce{CH3COOH}, $pK_a = 4{,}75$) et
+d'une \textbf{base forte} (\ce{NaOH}). L'ion \ce{CH3COO-} (base conjuguée) capte un \ce{H+} de l'eau :
+\[ \ce{CH3COO- + H2O <=> CH3COOH + OH-}. \]
+La solution est \textbf{basique}. Réponse : \textbf{B}.
+\end{exemple}
+
+\begin{exemple}[QCM 39D : acétate d'ammonium, sel d'acide et base faibles]
+L'acétate d'ammonium \ce{NH4CH3COO} contient \ce{NH4+} (acide, $pK_a=9{,}25$) et \ce{CH3COO-} (base,
+$pK_a$ du couple $=4{,}75$). C'est un sel d'acide faible et de base faible. La solution est
+\textbf{approximativement neutre} si les $pK_a$ sont « symétriques » autour de 7 (ici $4{,}75$ et $9{,}25$,
+dont la moyenne vaut exactement 7). Réponse : affirmation D correcte (solution neutre).
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse et récapitulatif}
+% =====================================================================
+
+\subsection{Toutes les formules essentielles en un tableau}
+
+\begin{center}
+\rowcolors{2}{formulacol!6}{white}
+\begin{tabular}{lll}
+\rowcolor{formulacol!18}
+\textbf{Grandeur} & \textbf{Formule} & \textbf{Domaine} \\
+\midrule
+pH & $\mathrm{pH} = -\log[\ce{H3O+}]$ & toute solution \\
+pOH & $\mathrm{pOH} = -\log[\ce{OH-}]$ & toute solution \\
+Produit ionique & $K_e = [\ce{H3O+}][\ce{OH-}] = 10^{-14}$ (à \SI{25}{\celsius}) & eau et solutions aqueuses \\
+pH + pOH & $\mathrm{pH}+\mathrm{pOH} = 14$ (à \SI{25}{\celsius}) & toute solution \\
+Constante d'acidité & $K_a = \dfrac{[\ce{A-}][\ce{H3O+}]}{[\ce{HA}]}$ & acide faible \\
+Relation $K_a/K_b$ & $K_a K_b = K_e$,\quad $\mathrm{p}K_a+\mathrm{p}K_b = 14$ & un même couple \\
+Degré d'ionisation & $\alpha = \dfrac{\text{quantité dissociée}}{\text{quantité dissoute}}$ & électrolyte \\
+Ostwald & $\alpha \approx \sqrt{K_a/C_a}$ & acide faible dilué \\
+pH acide fort & $\mathrm{pH} = -\log C_a$ & acide fort \\
+pH base forte & $\mathrm{pH} = 14 + \log C_b$ & monobase forte \\
+pH acide faible & $\mathrm{pH} = \tfrac12(\mathrm{p}K_a - \log C_a)$ & acide faible \\
+pH base faible & $\mathrm{pH} = 7 + \tfrac12(\mathrm{p}K_a + \log C_b)$ & base faible \\
+Henderson & $\mathrm{pH} = \mathrm{p}K_a + \log\dfrac{[\ce{A-}]}{[\ce{HA}]}$ & mélange / tampon \\
+Réaction A/B & $K_{\text{équi}} = 10^{\,\Delta\mathrm{p}K_a}$ & réaction acide-base \\
+Équivalence & $C_a V_a = C_b V_b$ & titrage monoacide/monobase \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{La règle d'or à retenir}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary]
+\textbf{Au cœur de toute la chimie acide-base :} une réaction acide-base \textbf{va du plus fort vers le plus
+faible}. On la quantifie par
+\[ \boxed{K_{\text{équi}} = 10^{\,\Delta\mathrm{p}K_a}},\qquad
+   \Delta\mathrm{p}K_a = \mathrm{p}K_a(\text{acide formé}) - \mathrm{p}K_a(\text{acide réactif}). \]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item $\Delta\mathrm{p}K_a > 2$ : réaction \textbf{complète}.
+  \item $0 \leq \Delta\mathrm{p}K_a \leq 2$ : réaction \textbf{équilibrée}.
+  \item $\Delta\mathrm{p}K_a < -2$ : réaction \textbf{impossible}.
+\end{itemize}
+Cette unique règle, combinée à l'équation de Henderson-Hasselbalch, permet de résoudre l'immense majorité
+des problèmes d'acide-base.
+\end{tcolorbox}
+
+\subsection{Les pièges classiques (à éviter à l'examen)}
+
+\begin{attention}[erreurs fréquentes]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Confondre le sens du $\mathrm{p}K_a$ : \textbf{plus il est petit, plus l'acide est fort}.
+  \item Croire que « basique = $\mathrm{pH}>7$ » sans préciser la température (valable \emph{seulement} à
+        \SI{25}{\celsius}).
+  \item Oublier le facteur 2 pour \ce{Ba(OH)2} ou \ce{H2SO4} (dibase / diacide).
+  \item Écrire $[\ce{H2O}]$ dans le produit ionique $K_e$ (jamais : l'eau est le solvant).
+  \item Dire qu'à l'équivalence $[\ce{H3O+}]=0$ (faux : il reste l'autoprotolyse, $10^{-7}$ \si{mol.L^{-1}}).
+  \item Inverser acide formé et acide réactif dans $\Delta\mathrm{p}K_a$.
+  \item Croire qu'un acide réagit avec sa propre base conjuguée (faux : $\Delta\mathrm{p}K_a = 0$).
+\end{itemize}
+\end{attention}
+
+\begin{remarque}[prolongements]
+Cette fiche pose les bases. Les prolongements naturels sont : la \textbf{Fiche 8} (thermodynamique des
+équilibres, qui relie $K$ à $\Delta_r G^\circ$), la \textbf{Fiche 9} (solubilité et produit de solubilité
+$K_s$, qui utilise le même formalisme des constantes d'équilibre), et la \textbf{Fiche 11} (réactions
+d'oxydo-réduction, autre grande catégorie de réactions par transfert — d'électrons cette fois).
+\end{remarque}
+
+\vfill
+\begin{center}
+\small\color{black!55}
+\textit{Cours de chimie — Fiche 10 : Acide, base et réaction acide-base.}\\
+Figures originales en TikZ ; rédigé à partir du contenu de la Fiche 10 du livre.
+\end{center}
+
+\end{document}

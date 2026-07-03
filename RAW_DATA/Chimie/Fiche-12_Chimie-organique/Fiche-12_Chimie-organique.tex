@@ -1,0 +1,979 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 12
+%  Chimie organique : les groupements fonctionnels
+%  Document généré en LaTeX, molécules tracées avec chemfig,
+%  figures schématiques tracées « from scratch » avec TikZ.
+%  Compilation : pdflatex (2 passes pour la table des matières)
+%               ou  latexmk -pdf Cours_Fiche-12_Chimie-organique.tex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+\providecommand{\degree}{^\circ} % symbole degré en mode mathématique
+
+% ---------- Unités & chimie ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}   % formules chimiques : \ce{CH4}, \ce{CO2}...
+\usepackage{chemfig}             % structures moléculaires
+\setchemfig{atom sep=2em,bond length=0.9em,cram width=2.5pt}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (mauve = couleur de la section Chimie du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{150,98,162}      % mauve (couleur du livre — Chimie)
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{reglecol}{RGB}{150,98,162}     % mauve — règles
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+% --- couleurs spécifiques « organique » ---
+\definecolor{ccol}{RGB}{60,60,60}           % carbone — gris foncé
+\definecolor{hcol}{RGB}{120,120,120}        % hydrogène — gris
+\definecolor{ocol}{RGB}{200,40,55}          % oxygène — rouge
+\definecolor{ncol}{RGB}{0,90,200}           % azote — bleu
+\definecolor{scol}{RGB}{200,170,40}         % soufre — jaune/orange
+\definecolor{sigma}{RGB}{0,135,90}          % liaison sigma — vert
+\definecolor{picol}{RGB}{200,40,55}         % liaison pi — rouge
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Règle ----
+\newtcolorbox{regle}[1][]{%
+  boxbase,colback=reglecol!6,colframe=reglecol,
+  title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique : groupements fonctionnels}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Chimie organique}\\[6pt]
+   {\large\bfseries Les groupements fonctionnels}};
+\end{tikzpicture}
+
+\vspace{0.3cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,12}}
+
+\vspace{0.5cm}
+
+% --- Illustration de couverture : mosaïque de familles fonctionnelles ---
+\begin{tikzpicture}[scale=0.95]
+  \node[draw=primary,thick,rounded corners,fill=primary!4,minimum width=15cm,
+        minimum height=3.4cm,align=center] (fond) at (0,0) {};
+  % petit nuage d'exemples chimiques
+  \node[font=\large] at (-5.4,0.7)  {\chemfig{CH_3-[:30]CH_2-[:-30]CH_3}};
+  \node[font=\scriptsize,primarydark] at (-5.4,0.05) {propane (alcane)};
+  \node[font=\large] at (-5.4,-0.95) {\chemfig{CH_2=[:30]CH_2}};
+  \node[font=\scriptsize,primarydark] at (-5.4,-1.55) {éthène (alcène)};
+  \node[font=\large] at (-1.6,0.7)  {\chemfig{CH_3-[:30](=[:90]O)-[:-30]OH}};
+  \node[font=\scriptsize,primarydark] at (-1.6,0.05) {acide éthanoïque};
+  \node[font=\large] at (-1.6,-0.95){\chemfig{CH_3-[:30](=[:90]O)-[:-30]CH_3}};
+  \node[font=\scriptsize,primarydark] at (-1.6,-1.55){propanone (cétone)};
+  \node[font=\large] at (2.2,0.7)  {\chemfig{CH_3-[:30]OH}};
+  \node[font=\scriptsize,primarydark] at (2.2,0.05) {méthanol (alcool)};
+  \node[font=\large] at (2.2,-0.95){\chemfig{CH_3-[:30](=[:90]O)-[:-30]NH_2}};
+  \node[font=\scriptsize,primarydark] at (2.2,-1.55){éthananamide (amide)};
+  \node[font=\large] at (5.9,0.7)  {\chemfig{CH_3-[:30]NH_2}};
+  \node[font=\scriptsize,primarydark] at (5.9,0.05) {méthylamine (amine)};
+  \node[font=\large] at (5.9,-0.95){\chemfig{CH_3-[:30]O-[:-30]CH_3}};
+  \node[font=\scriptsize,primarydark] at (5.9,-1.55){diméthyléther (éther)};
+\end{tikzpicture}
+
+\vspace{0.2cm}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item reconnaître les trois grandes familles d'\textbf{hydrocarbures} (alcanes, alcènes, alcynes) et leur \textbf{formule générale} ;
+  \item représenter les molécules en \textbf{formules topologiques} (squelettes en zigzag) et comprendre l'origine de la géométrie \textbf{tétraédrique} du carbone ;
+  \item distinguer les carbones \textbf{primaire, secondaire, tertiaire et quaternaire} ;
+  \item identifier, lire et nommer les principaux \textbf{groupements fonctionnels} (alcool, éther, aldéhyde, cétone, acide carboxylique, ester, amine, amide, nitrile, thiol, imine) ;
+  \item appliquer les \textbf{règles de nomenclature} et l'\textbf{ordre de priorité} des fonctions ;
+  \item calculer la \textbf{masse molaire} d'une molécule organique à partir de sa formule brute.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 12 du livre — molécules tracées avec \texttt{chemfig}, figures originales en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : qu'est-ce que la chimie organique~?}
+% =====================================================================
+La \textbf{chimie organique} est la branche de la chimie qui étudie les composés du \textbf{carbone}. On rencontre ces composés partout dans le vivant et dans l'industrie : le \textbf{méthane} des gaz naturels, l'\textbf{éthanol} des boissons, l'\textbf{aspirine}, les \textbf{plastiques}, les \textbf{protéines}, l'\textbf{ADN}, etc. On dénombre aujourd'hui plusieurs \textbf{dizaines de millions} de molécules organiques connues, contre quelques centaines de milliers de composés minéraux : la richesse de cette chimie tient presque entièrement à un seul atome, le carbone.
+
+\begin{definition}[L'atome de carbone en chimie organique]
+L'atome de carbone possède $4$ électrons de valence~: il forme donc \textbf{toujours $4$ liaisons covalentes}. On dit qu'il est \textbf{tétravalent}. Cette valence de $4$ lui permet de s'enchaîner en longues chaînes, en cycles, en réseaux, et de multiplier les géométries.
+\end{definition}
+
+\begin{theoreme}[Tétravalence du carbone]
+Quelle que soit la molécule organique considérée, la somme des ordres de liaison portés par chaque atome de carbone vaut toujours $4$. Autrement dit, un carbone engagé dans une \emph{triple} liaison ne peut plus former que \emph{une} liaison simple supplémentaire ($3+1=4$)~; un carbone d'une \emph{double} liaison forme encore \emph{deux} liaisons simples ($2+2=4$).
+\end{theoreme}
+
+\subsection{Pourquoi tant de molécules organiques~?}
+La diversité de la chimie organique s'explique par trois propriétés cumulées du carbone :
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item la \textbf{caténation} : les atomes de C peuvent s'enchaîner les uns aux autres (chaînes linéaires, ramifiées, cycliques) ;
+  \item la \textbf{stabilité} des liaisons C--C et C--H ;
+  \item la capacité à former des liaisons \textbf{multiples} (doubles C=C, triples C$\equiv$C) et à accueillir des \textbf{hétéroatomes} (O, N, S, halogènes\dots).
+\end{itemize}
+
+\subsection{La notion centrale de groupement fonctionnel}
+La plupart des molécules organiques peuvent être vues comme une \textbf{chaîne carbonée} (le «\,squelette\,») sur laquelle sont greffés des petits groupes d'atomes, les \textbf{groupements fonctionnels}. C'est ce \emph{groupement fonctionnel}, beaucoup plus que la longueur de la chaîne, qui détermine la \textbf{réactivité} et les \textbf{propriétés chimiques} de la molécule. Toute cette fiche tourne donc autour d'une idée simple :
+\begin{regle}[Idée maîtresse]
+Repérer et nommer le (ou les) groupement(s) fonctionnel(s) d'une molécule, c'est déjà connaître l'essentiel de son comportement chimique.
+\end{regle}
+
+% =====================================================================
+\section{Le carbone, ses liaisons et ses formules}
+% =====================================================================
+Avant d'aborder les familles de molécules, fixons le vocabulaire et les modes de représentation.
+
+\subsection{Liaisons $\sigma$ et $\pi$}
+\begin{definition}[Liaisons $\sigma$ et $\pi$]
+\hfill
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item Une \textbf{liaison $\sigma$} (\emph{sigma}) est une liaison simple : les deux atomes partagent \textbf{une} paire d'électrons. La rotation autour de l'axe de la liaison est \textbf{libre}.
+  \item Une \textbf{liaison $\pi$} (\emph{pi}) s'ajoute \emph{à} une liaison $\sigma$ pour former une \textbf{double} liaison ($\sigma+\pi$) ou, par paire, une \textbf{triple} liaison ($\sigma+2\pi$). Une liaison multiple est donc plus \emph{courte} et plus \emph{forte} qu'une liaison simple.
+\end{itemize}
+\end{definition}
+
+\begin{attention}[Rotation bloquée]
+La partie $\pi$ d'une double liaison C=C \textbf{bloque la rotation} des deux carbones l'un par rapport à l'autre. C'est précisément ce blocage qui rend possibles les isomères \textbf{cis/trans} des alcènes (voir section~\ref{sec:alcenes}).
+\end{attention}
+
+\subsection{Géométrie tétraédrique du carbone saturé}
+Un carbone qui ne forme que des liaisons simples adopte une géométrie \textbf{tétraédrique} : ses $4$ liaisons pointent vers les sommets d'un tétraèdre régulier.
+
+\begin{formule}[Angle entre deux liaisons C--C--C]
+\[
+\angle(\text{C--C--C}) = 109\degree28' \;\approx\; 109{,}5\degree
+\]
+\begin{ou}
+  \item $109\degree28'$ est l'angle entre deux sommets quelconques d'un tétraèdre régulier, vu depuis son centre. C'est une \textbf{grandeur angulaire sans dimension} (en degrés $\degree$ ou en radians).
+\end{ou}
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % centre C
+  \coordinate (C) at (0,0);
+  % 4 sommets d'un tétraèdre (projections 2D)
+  \coordinate (A) at (1.6,-0.55);
+  \coordinate (B) at (-1.6,-0.55);
+  \coordinate (D) at (0.0,1.95);
+  \coordinate (E) at (0.55,0.35);   % liaison vers l'avant (en pointillés)
+  % liaison arrière en pointillés
+  \draw[ccol,thick,dashed] (C) -- (E);
+  \draw[ccol,thick] (C) -- (A);
+  \draw[ccol,thick] (C) -- (B);
+  \draw[ccol,thick] (C) -- (D);
+  % atomes
+  \node[circle,fill=ccol,text=white,inner sep=2pt,font=\scriptsize\bfseries] at (C) {C};
+  \node[circle,fill=hcol,text=white,inner sep=2pt,font=\scriptsize\bfseries] at (A) {H};
+  \node[circle,fill=hcol,text=white,inner sep=2pt,font=\scriptsize\bfseries] at (B) {H};
+  \node[circle,fill=hcol,text=white,inner sep=2pt,font=\scriptsize\bfseries] at (D) {H};
+  \node[circle,fill=hcol,text=white,inner sep=2pt,font=\scriptsize\bfseries] at (E) {H};
+  % angle
+  \draw[primary,thick,->,>=Stealth] (0.45,0.05) arc[start angle=8,end angle=82,radius=0.45];
+  \node[primary,font=\scriptsize] at (1.05,0.55) {$109\degree28'$};
+\end{tikzpicture}
+\end{center}
+C'est cette géométrie tétraédrique qui, enchaînée d'atome en atome, donne aux chaînes carbonées leur allure caractéristique en \textbf{zigzag} (voir plus bas).
+
+\subsection{Les quatre façons d'écrire une molécule}
+Prenons le \emph{butan-1-ol} (\ce{CH3CH2CH2CH2OH}) pour illustrer les quatre représentations usuelles :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{primarydark}}p{3.3cm} X}
+\toprule
+Formule \emph{brute} & $\ce{C4H10O}$ — on ne voit que la composition atomique totale. \\
+\midrule
+Formule \emph{développée} & Toutes les liaisons sont dessinées, y compris C--H. \\
+\midrule
+Formule \emph{semi-développée} & Les liaisons C--H \textbf{ne sont pas} écrites~; seules les liaisons entre atomes «\,porteurs\,» sont visibles : \ce{CH3-CH2-CH2-CH2-OH}. \\
+\midrule
+Formule \emph{topologique} (squelette) & On ne dessine que les \textbf{lignes de la chaîne carbonée} en zigzag~; chaque sommet (et chaque extrémité) est un carbone, les H sont sous-entendus. \\[2pt]
+\multicolumn{2}{c}{\chemfig{CH_3-[:30]CH_2-[:-30]CH_2-[:30]CH_2-[:-30]OH}} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{remarque}[Le zigzag n'est pas un hasard]
+La disposition en zigzag de l'écriture topologique n'est pas une convention décorative~: elle reflète fidèlement la géométrie tétraédrique des carbones. Les liaisons C--H, elles, sont simplement \emph{sous-entendues} car il y en a trop pour qu'il soit pratique de les dessiner toutes.
+\end{remarque}
+
+% =====================================================================
+\section{Les alcanes : hydrocarbures saturés acycliques}
+% =====================================================================
+\begin{definition}[Alcane]
+Un \textbf{alcane} est un hydrocarbure (composé de C et de H uniquement) \textbf{acyclique} (chaîne ouverte, sans cycle) et \textbf{saturé} : il ne contient que des liaisons \emph{simples} C--C et C--H.
+\end{definition}
+
+\subsection{Formule générale}
+\begin{formule}[Formule générale des alcanes]
+\[
+\boxed{\;\ce{C_n H_{2n+2}}\;}
+\qquad\text{avec } n\geqslant 1
+\]
+\begin{ou}
+  \item $n$ : \textbf{nombre d'atomes de carbone} de la molécule (entier, sans unité) ;
+  \item $2n+2$ : nombre d'atomes d'hydrogène, \textbf{entièrement déterminé} par $n$.
+\end{ou}
+On la retient en vérifiant qu'elle «\,colle\,» aux premiers alcanes :
+$\ce{CH4}$ ($n=1$), $\ce{C2H6}$ ($n=2$), $\ce{C3H8}$ ($n=3$), $\ce{C4H10}$ ($n=4$)\dots
+\end{formule}
+
+\begin{theoreme}[Degré d'insaturation / indice d'hydrogène]
+Pour une molécule organique de formule brute $\ce{C_n H_m N_p X_q O_r}$ (X = halogène, O ignoré), l'\textbf{indice de déficience en hydrogène} (ou degré d'insaturation) vaut :
+\[
+\boxed{\;I = \dfrac{2n+2 + p - m - q}{2}\;}
+\]
+\begin{ou}
+  \item $I$ : nombre de \textbf{liaisons $\pi$ + cycles} (sans dimension)~; un alcane saturé acyclique donne $I=0$ ;
+  \item $n,m,p,q$ : nombres d'atomes de C, H, N, X (sans dimension)~; l'oxygène n'entre pas dans le calcul.
+\end{ou}
+Si $I=0$ pour un hydrocarbure $\ce{C_nH_m}$, c'est nécessairement un alcane saturé acyclique.
+\end{theoreme}
+
+\begin{exemple}[Reconnaître un alcane par sa formule brute]
+La formule $\ce{C5H12}$ est-elle celle d'un alcane~? Avec $n=5$, la formule générale prévoit $2\times5+2 = 12$ atomes d'H. C'est exactement le cas, donc \textbf{oui}. Vérifions aussi avec l'indice : $I=\dfrac{2\cdot5+2-12}{2}=\dfrac{0}{2}=0$ : pas de liaison multiple ni de cycle, la molécule est bien un \textbf{alcane saturé}. À l'inverse, $\ce{C5H10}$ donnerait $I=\dfrac{12-10}{2}=1$ : un degré d'insaturation, c'est-à-dire un alcène ou un cycloalcane.
+\end{exemple}
+
+\subsection{Nomenclature des alcanes linéaires}
+Le nom d'un alcane s'obtient en accolant un \textbf{préfixe grec} (qui compte les carbones) au suffixe \textbf{\textit{-ane}}.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c l l c c}
+\toprule
+$n$ & Nom & Préfixe & Formule brute & Formule semi-développée \\
+\midrule
+1 & \textbf{méthane} & méth- & $\ce{CH4}$ & $\ce{CH4}$ \\
+2 & \textbf{éthane} & éth- & $\ce{C2H6}$ & \ce{CH3-CH3} \\
+3 & \textbf{propane} & prop- & $\ce{C3H8}$ & \ce{CH3-CH2-CH3} \\
+4 & \textbf{butane} & but- & $\ce{C4H10}$ & \ce{CH3-CH2-CH2-CH3} \\
+5 & \textbf{pentane} & pent- & $\ce{C5H12}$ & \ce{CH3-(CH2)3-CH3} \\
+6 & \textbf{hexane} & hex- & $\ce{C6H14}$ & \ce{CH3-(CH2)4-CH3} \\
+7 & \textbf{heptane} & hept- & $\ce{C7H16}$ & \ce{CH3-(CH2)5-CH3} \\
+8 & \textbf{octane} & oct- & $\ce{C8H18}$ & \ce{CH3-(CH2)6-CH3} \\
+9 & \textbf{nonane} & non- & $\ce{C9H20}$ & \ce{CH3-(CH2)7-CH3} \\
+10 & \textbf{décane} & déc- & $\ce{C10H22}$ & \ce{CH3-(CH2)8-CH3} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{regle}[Les deux observations du livre]
+\hfill
+\begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
+  \item Tous les alcanes portent un nom qui se termine par le suffixe \textbf{\textit{-ane}}.
+  \item L'agencement des atomes adopte le plus souvent une \textbf{conformation en zigzag}, reflet de la géométrie tétraédrique des carbones.
+\end{enumerate}
+\end{regle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \node[primarydark,font=\bfseries] at (-3.2,0) {propane};
+  \chemfig{CH_3-[:30]CH_2-[:-30]CH_3}
+  \node at (3.4,0) {\quad};
+\end{tikzpicture}\hspace{0.4cm}
+\begin{tikzpicture}[scale=0.85]
+  \node[primarydark,font=\bfseries] at (-3.2,0) {pentane};
+  \chemfig{CH_3-[:30]CH_2-[:-30]CH_2-[:30]CH_2-[:-30]CH_3}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Classification des atomes de carbone}
+Selon le nombre d'\emph{autres carbones} auxquels il est lié, un carbone se classe en quatre types. Cette classification est \textbf{fondamentale} car elle sert aussi à classer les fonctions (alcools et amines primaires/secondaires/tertiaires).
+
+\begin{definition}[Carbone primaire, secondaire, tertiaire, quaternaire]
+\hfill
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Carbone primaire} (noté C$_1$) : lié à \textbf{1 seul} autre carbone.
+  \item \textbf{Carbone secondaire} (C$_2$) : lié à \textbf{2} autres carbones.
+  \item \textbf{Carbone tertiaire} (C$_3$) : lié à \textbf{3} autres carbones.
+  \item \textbf{Carbone quaternaire} (C$_4$) : lié à \textbf{4} autres carbones (et donc à \textbf{0 hydrogène}).
+\end{itemize}
+\end{definition}
+
+\begin{exemple}[Les trois isomères du pentane, classification des carbones]
+La formule brute $\ce{C5H12}$ ne correspond pas à une seule molécule mais à \textbf{trois isomères de constitution} (mêmes atomes, assemblages différents) :
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{2.6}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{c c c}
+\toprule
+\textbf{n-pentane} & \textbf{2-méthylbutane} & \textbf{2,2-diméthylpropane} \\
+& \textbf{(isopentane)} & \textbf{(néopentane)} \\
+\midrule
+\scalebox{0.72}{\chemfig{CH_3-[:30]CH_2-[:-30]CH_2-[:30]CH_2-[:-30]CH_3}} &
+\scalebox{0.72}{\chemfig{CH_3-[:30]CH(-[:-90]CH_3)-[:-30]CH_2-[:30]CH_3}} &
+\scalebox{0.72}{\chemfig{C(-[:30]CH_3)(-[:-30]CH_3)(-[:90]CH_3)-[:-90]CH_3}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+Analysons le \textbf{2,2-diméthylpropane} (néopentane, structure la plus ramifiée) :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item le carbone \textbf{central} est relié à \textbf{4} autres carbones : c'est un \textbf{carbone quaternaire} (il ne porte \textbf{aucun} hydrogène) ;
+  \item les \textbf{quatre} carbones périphériques ($-\ce{CH3}$) sont chacun liés à un seul autre carbone : ce sont \textbf{quatre carbones primaires}, chacun attaché à \textbf{trois} atomes d'hydrogène.
+\end{itemize}
+On dit donc que le néopentane contient \textbf{quatre carbones primaires et un carbone quaternaire}. Le compte des atomes se vérifie : $4\times(\ce{CH3}) + 1\times\mathrm{C} = \ce{C5H12}$. $\checkmark$
+\end{exemple}
+
+\begin{methode}[Identifier un isomère à partir d'une description]
+Face à un énoncé du type «\,quatre atomes de C liés à trois H chacun\,», on reconnaît immédiatement \textbf{quatre groupements $-\ce{CH3}$}, donc quatre \textbf{carbones primaires}. Le cinquième carbone (qui complète $\ce{C5}$) ne porte alors \textbf{plus aucun H} : c'est le carbone quaternaire central. On en déduit le \textbf{néopentane}, l'isomère le plus ramifié du pentane.
+\end{methode}
+
+\begin{remarque}[Isomères et propriétés]
+Plus un alcane est \textbf{ramifié}, plus son \emph{point d'ébullition} baisse (les chaînes se tassent moins bien). Ainsi le n-pentane bout à $\qty{36}{\celsius}$, tandis que le néopentane bout dès $\qty{9{,}5}{\celsius}$. Même formule brute, propriétés physiques différentes : c'est tout l'intérêt des isomères.
+\end{remarque}
+
+% =====================================================================
+\section{Les alcènes : hydrocarbures à double liaison}
+\label{sec:alcenes}
+% =====================================================================
+\begin{definition}[Alcène]
+Un \textbf{alcène} est un hydrocarbure \textbf{acyclique} contenant \textbf{au moins une double liaison} C=C. On parle aussi d'hydrocarbure \textbf{insaturé} (il n'est pas «\,saturé\,» en hydrogène).
+\end{definition}
+
+\begin{formule}[Formule générale des alcènes (à une double liaison)]
+\[
+\boxed{\;\ce{C_n H_{2n}}\;}
+\qquad n\geqslant 2
+\]
+\begin{ou}
+  \item $n$ : nombre d'atomes de carbone (sans dimension) ;
+  \item $2n$ : nombre d'atomes d'H, inférieur de $2$ unités à celui d'un alcane, car chaque \textbf{double liaison} «\,enlève\,» deux hydrogènes à la formule.
+\end{ou}
+\end{formule}
+
+\begin{attention}[Cycloalcanes et alcènes : attention aux jumeaux]
+Les \textbf{cycloalcanes} (alcanes cycliques, ex.\ cyclohexane $\ce{C6H12}$) ont eux aussi la formule $\ce{C_nH_{2n}}$, \textbf{mais pour une tout autre raison} : la fermeture du cycle retire deux hydrogènes. Formule brute identique, structures différentes : ne pas conclure «\,$\ce{C_nH_{2n}}$ donc alcène\,» sans vérifier l'absence de cycle.
+\end{attention}
+
+\subsection{Premiers alcènes}
+\begin{center}
+\begin{tabular}{c l c c}
+\toprule
+$n$ & Nom & Formule brute & Structure \\
+\midrule
+2 & \textbf{éthène} (éthylène) & $\ce{C2H4}$ & \chemfig{CH_2=[:30]CH_2} \\
+3 & \textbf{propène} & $\ce{C3H6}$ & \chemfig{CH_2=[:30]CH-[:-30]CH_3} \\
+4 & \textbf{but-1-ène} & $\ce{C4H8}$ & \chemfig{CH_2=[:30]CH-[:-30]CH_2-[:30]CH_3} \\
+4 & \textbf{but-2-ène} & $\ce{C4H8}$ & \chemfig{CH_3-[:30]CH=[:-30]CH-[:30]CH_3} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Stéréoisomérie \emph{cis}/\emph{trans} (Z/E)}
+Le but-2-ène $\ce{CH3-CH=CH-CH3}$ existe sous \textbf{deux formes géométriques distinctes}, que l'on ne peut pas superposer : c'est la \textbf{stéréoisomérie cis/trans}.
+
+\begin{definition}[Isomères cis et trans]
+\hfill
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item La configuration est \textbf{cis} (ou \emph{Z}) lorsque les deux groupements identiques (ici $-\ce{CH3}$) sont disposés du \textbf{même côté} de la double liaison C=C.
+  \item La configuration est \textbf{trans} (ou \emph{E}) lorsque ces groupements sont disposés \textbf{de part et d'autre} de la double liaison.
+\end{itemize}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % cis
+  \node[font=\large] at (-3.8,1.3) {cis (Z)};
+  \node[font=\Large] at (-3.8,0.0) {\chemfig{CH_3-[:30](-[:-30]H)=[:30](-[:-30]H)-[:-30]CH_3}};
+  \node[font=\scriptsize,primarydark] at (-3.8,-1.0) {les deux $\ce{CH3}$ du même côté};
+  % trans
+  \node[font=\large] at (3.8,1.3) {trans (E)};
+  \node[font=\Large] at (3.8,0.0) {\chemfig{CH_3-[:30](-[:90]H)=[:-30](-[:90]H)-[:30]CH_3}};
+  \node[font=\scriptsize,primarydark] at (3.8,-1.0) {les deux $\ce{CH3}$ de part et d'autre};
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[Origine de la stéréoisomérie cis/trans]
+La \textbf{double liaison C=C} comporte une liaison $\pi$ qui \textbf{interdit toute rotation} des deux carbones l'un par rapport à l'autre. Les deux arrangements cis et trans sont donc \textbf{figés} et constituent deux molécules \textbf{réellement distinctes} (points d'ébullition, densité, etc.\ différents).
+\end{theoreme}
+
+\begin{exemple}[Pourquoi cis et trans ne sont pas identiques]
+Imaginez que l'on essaie de transformer le \emph{cis}-but-2-ène en \emph{trans}-but-2-ène par simple rotation autour de la double liaison : il faudrait «\,casser\,» la liaison $\pi$, ce qui demande une forte énergie. Sans apport d'énergie, la transformation est impossible~: les deux molécules coexistent séparément. Concrètement, le \emph{trans}-but-2-ène bout à $\qty{0{,}9}{\celsius}$ alors que le \emph{cis} bout à $\qty{3{,}7}{\celsius}$ : preuve qu'il s'agit bien de deux espèces chimiques différentes.
+\end{exemple}
+
+% =====================================================================
+\section{Les alcynes : hydrocarbures à triple liaison}
+% =====================================================================
+\begin{definition}[Alcyne]
+Un \textbf{alcyne} est un hydrocarbure \textbf{acyclique} contenant \textbf{au moins une triple liaison} C$\equiv$C. C'est donc aussi un hydrocarbure insaturé.
+\end{definition}
+
+\begin{formule}[Formule générale des alcynes (à une triple liaison)]
+\[
+\boxed{\;\ce{C_n H_{2n-2}}\;}
+\qquad n\geqslant 2
+\]
+\begin{ou}
+  \item $n$ : nombre d'atomes de carbone (sans dimension) ;
+  \item $2n-2$ : nombre d'atomes d'H. Une \textbf{triple liaison} retire \textbf{quatre} hydrogènes par rapport à l'alcane ($2n+2\to 2n-2$), car elle équivaut à \emph{deux} degrés d'insaturation.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[Géométrie linéaire du groupement C$\equiv$C]
+Autour d'une triple liaison, chaque carbone est de géométrie \textbf{linéaire} : les liaisons forment un angle de $180\degree$. La molécule d'\textbf{éthyne} (\emph{acétylène}) $\ce{HC#CH}$ est donc parfaitement rectiligne.
+\end{remarque}
+
+\begin{center}
+\begin{tabular}{c l c c}
+\toprule
+$n$ & Nom & Formule brute & Structure \\
+\midrule
+2 & \textbf{éthyne} (acétylène) & $\ce{C2H2}$ & \chemfig{HC~[:30]CH} \\
+3 & \textbf{propyne} & $\ce{C3H4}$ & \chemfig{HC~[:30]C-[:-30]CH_3} \\
+4 & \textbf{but-2-yne} & $\ce{C4H6}$ & \chemfig{CH_3-[:30]C~[:-30]C-[:30]CH_3} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{exemple}[Vérifier une formule d'alcyne]
+Le but-2-yne $\ce{CH3-C#C-CH3}$ contient $4$ carbones. La formule générale $\ce{C_nH_{2n-2}}$ prévoit $2\times4-2=6$ hydrogènes, soit $\ce{C4H6}$. Comptons sur la structure : $2$ groupements $\ce{CH3}$ ($6$ H) et deux carbones d'alcyne sans H $\rightarrow$ \textbf{6 H au total}. La formule est confirmée. De plus l'indice d'insaturation vaut $I=\dfrac{2\cdot4+2-6}{2}=\dfrac{4}{2}=2$ : deux degrés, exactement la valeur d'une triple liaison ($1\;\sigma+2\;\pi$).
+\end{exemple}
+
+% =====================================================================
+\section{Les groupements fonctionnels : vue d'ensemble}
+% =====================================================================
+Jusqu'ici, nous n'avons croisé que des molécules faites de \textbf{carbone et d'hydrogène} (les hydrocarbures). Mais la chaîne carbonée peut aussi accueillir d'autres atomes.
+
+\begin{definition}[Hétéroatome et groupement fonctionnel]
+\hfill
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item Un \textbf{hétéroatome} est tout atome \emph{autre} que C et H présent dans une molécule organique : principalement O, N, S, P, ou les halogènes (Cl, Br\dots).
+  \item Un \textbf{groupement fonctionnel} est un ensemble caractéristique d'atomes (souvent avec un hétéroatome) greffé sur la chaîne carbonée et qui \textbf{confère à la molécule une réactivité particulière}.
+\end{itemize}
+\end{definition}
+
+\begin{regle}[Les groupements fonctionnels gouvernent la chimie]
+Ce sont les \textbf{groupements fonctionnels} qui déterminent les \textbf{propriétés chimiques} de la molécule. Deux molécules de squelettes très différents mais portant la même fonction réagiront de façon semblable (même famille chimique). Ces groupements sont souvent réactifs et peuvent réagir avec d'autres pour donner de nouveaux produits.
+\end{regle}
+
+\subsection{Tableau récapitulatif des principales fonctions}
+Voici la liste des principaux groupements fonctionnels (en plus des doubles C=C des alcènes et des triples C$\equiv$C des alcynes). Le \textbf{suffixe} est l'indice qui, dans le \emph{nom}, révèle la \emph{fonction}.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.7}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{primarydark}}l c >{\centering\arraybackslash}p{2.9cm} X}
+\toprule
+Fonction & Groupement & Suffixe & Exemple-type \\
+\midrule
+Acide carboxylique & \chemfig{-[:30](=[:90]O)-[:-30]OH} & \textit{acide \dots-oïque} & acide éthanoïque \ce{CH3COOH} \\
+Ester & \chemfig{-[:30](=[:90]O)-[:-30]O-[:30]\textcolor{primarydark}{R}} & \textit{-oate d'alkyle} & éthanoate de méthyle \\
+Amide & \chemfig{-[:30](=[:90]O)-[:-30]NH_2} & \textit{-amide} & éthananamide \\
+Nitrile & \chemfig{-[:30]C~[:30]N} & \textit{-nitrile} & éthanedinitrile \\
+Aldéhyde & \chemfig{-[:30](=[:90]O)-[:-30]H} & \textit{-al} & propanal \\
+Cétone & \chemfig{-[:30](=[:90]O)-[:-30]\textcolor{primarydark}{R}} & \textit{-one} & propanone \\
+Alcool & \chemfig{-[:30]OH} & \textit{-ol} & butan-1-ol \\
+Thiol & \chemfig{-[:30]SH} & \textit{-thiol} & éthanethiol \\
+Amine & \chemfig{-[:30]NH_2} & \textit{-amine} & méthylamine \\
+Imine & \chemfig{-[:30](=[:90]NH)-[:-30]\textcolor{primarydark}{R}} & \textit{-imine} & base de Schiff \\
+Éther & \chemfig{-[:30]O-[:-30]\textcolor{primarydark}{R}} & \textit{oxyde d'alkyle} & éthylméthyléther \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{remarque}[Lecture du tableau]
+Une double liaison C=O pris isolément s'appelle un \textbf{carbonyle}. Selon ce qui entoure ce carbonyle, la fonction change : $-\text{C(=O)}-\text{H}$ = \emph{aldéhyde}~; $-\text{C(=O)}-$ encadré de deux C = \emph{cétone}~; $-\text{C(=O)}-\text{OH}$ = \emph{acide carboxylique}~; $-\text{C(=O)}-\text{OR}$ = \emph{ester}~; $-\text{C(=O)}-\text{NH}_2$ = \emph{amide}. \textbf{Un même groupe carbonyle, cinq fonctions différentes :} tout est dans le voisinage.
+\end{remarque}
+
+% =====================================================================
+\section{Étude détaillée des familles fonctionnelles}
+% =====================================================================
+Nous parcourons maintenant chaque famille en détaillant le groupement, le suffixe, la nomenclature et des exemples commentés.
+
+% ---------------------------------------------------------------------
+\subsection{Les alcools (--OH)}
+\begin{definition}[Alcool]
+Un \textbf{alcool} est une molécule organique dans laquelle un groupement hydroxyle $-\text{OH}$ est lié à un carbone \textbf{tétragonal} (c'est-à-dire un carbone qui ne forme que des liaisons simples, donc \emph{pas} un carbonyle). Son nom se termine par le suffixe \textbf{\textit{-ol}}.
+\end{definition}
+
+\begin{regle}[Classification des alcools]
+Selon la nature du carbone porteur du $-\text{OH}$ :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item alcool \textbf{primaire} : le C--OH est un carbone \emph{primaire}~;
+  \item alcool \textbf{secondaire} : le C--OH est un carbone \emph{secondaire}~;
+  \item alcool \textbf{tertiaire} : le C--OH est un carbone \emph{tertiaire}.
+\end{itemize}
+\end{regle}
+
+\begin{exemple}[Les quatre butanols]
+Pour $4$ carbones, on peut «\,placer\,» le $-\text{OH}$ de plusieurs façons, ce qui donne des alcools de classes différentes :
+\begin{center}
+\renewcommand{\arraystretch}{2.0}
+\begin{tabular}{l c l}
+\toprule
+Nom & Structure & Classe \\
+\midrule
+butan-1-ol (n-butanol) & \chemfig{CH_3-[:30]CH_2-[:-30]CH_2-[:30]CH_2-[:-30]OH} & primaire \\
+butan-2-ol & \chemfig{CH_3-[:30]CH_2-[:-30]CH(-[:90]OH)-[:-30]CH_3} & secondaire \\
+2-méthylpropan-1-ol & \chemfig{CH_3-[:30]CH(-[:-90]CH_3)-[:-30]CH_2-[:30]OH} & primaire \\
+2-méthylpropan-2-ol (tert-butanol) & \chemfig{CH_3-[:30]C(-[:-30]CH_3)(-[:90]OH)-[:-90]CH_3} & tertiaire \\
+\bottomrule
+\end{tabular}
+\end{center}
+Reprenons le \textbf{2-méthylpropan-2-ol} : le carbone porteur du $-\text{OH}$ est relié à \textbf{trois} autres carbones (trois $\ce{CH3}$), donc c'est un \textbf{carbone tertiaire} : l'alcool est bien \textbf{tertiaire}.
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Les éthers (--O--)}
+\begin{definition}[Éther]
+Un \textbf{éther} contient un atome d'oxygène pontant deux groupements alkyles : $\mathrm{R-O-R'}$, avec R et R' $\neq$ H. Le nom usuel est «\,oxyde de \dots\,» (ou \textit{oxyde d'alkyle}).
+\end{definition}
+
+\begin{exemple}[Éthers courants]
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Diméthyléther} \ce{CH3-O-CH3} : \chemfig{CH_3-[:30]O-[:-30]CH_3}.
+  \item \textbf{Éthylméthyléther} \ce{CH3-O-CH2CH3} : \chemfig{CH_3-[:30]O-[:-30]CH_2-[:30]CH_3}.
+  \item «\,Éther éthylique\,» (diéthylique) \ce{CH3CH2-O-CH2CH3}, jadis utilisé comme anesthésique.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[Alcool ou éther~? même formule brute~!]
+Le diméthyléther \ce{CH3OCH3} et l'\textbf{éthanol} \ce{CH3CH2OH} ont tous deux la formule brute \ce{C2H6O}. Pourtant, l'un est un \emph{éther} (O entre deux C) et l'autre un \emph{alcool} (O--H terminal). C'est le parfait exemple d'\textbf{isomères de fonction} : même formule brute, fonctions chimiques différentes, propriétés très différentes.
+\end{attention}
+
+% ---------------------------------------------------------------------
+\subsection{Les aldéhydes (--CHO)}
+\begin{definition}[Aldéhyde]
+Un \textbf{aldéhyde} contient le groupement carbonyle $-\text{C(=O)H}$, c'est-à-dire un carbonyle porté par \textbf{au moins un hydrogène}. Le suffixe est \textbf{\textit{-al}}.
+\end{definition}
+
+\begin{exemple}[Aldéhydes]
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Méthanal} (formol) \ce{HCHO} : \chemfig{H-[:30](=[:90]O)-[:-30]H}.
+  \item \textbf{Éthanal} (acétaldéhyde) \ce{CH3CHO} : \chemfig{CH_3-[:30](=[:90]O)-[:-30]H}.
+  \item \textbf{Propanal} \ce{CH3CH2CHO} : \chemfig{CH_3-[:30]CH_2-[:-30](=[:90]O)-[:-30]H}.
+\end{itemize}
+Dans un aldéhyde, le carbone fonctionnel est toujours en \textbf{extrémité de chaîne} (il porte un H).
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Les cétones (--CO--)}
+\begin{definition}[Cétone]
+Une \textbf{cétone} contient un carbonyle $>\text{C=O}$ encadré par \textbf{deux atomes de carbone} (et aucun hydrogène sur le carbone carbonyle). Le suffixe est \textbf{\textit{-one}}.
+\end{definition}
+
+\begin{exemple}[Cétones]
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Propanone} (acétone) \ce{CH3COCH3} : \chemfig{CH_3-[:30](=[:90]O)-[:-30]CH_3}. C'est le solvant «\,qui sent l'onguent\,», utilisé pour dissoudre les vernis à ongles.
+  \item \textbf{Butan-2-one} (méthyléthylcétone) \ce{CH3COCH2CH3} : \chemfig{CH_3-[:30](=[:90]O)-[:-30]CH_2-[:30]CH_3}.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[Aldéhyde vs cétone]
+La \emph{seule} différence est le voisinage du carbonyle~: un \textbf{H} sur le C carbonyle $\rightarrow$ \emph{aldéhyde} (suffixe \textit{-al})~; \textbf{deux C} autour du carbonyle $\rightarrow$ \emph{cétone} (suffixe \textit{-one}). Le groupement $>\text{C=O}$ s'appelle \textbf{carbonyle} dans les deux cas.
+\end{attention}
+
+% ---------------------------------------------------------------------
+\subsection{Les acides carboxyliques (--COOH)}
+\begin{definition}[Acide carboxylique]
+Un \textbf{acide carboxylique} porte le groupement $-\text{C(=O)OH}$, noté $-\text{COOH}$, qui combine un carbonyle et un hydroxyle sur le \textbf{même} carbone. Le nom commence par «\,\textbf{acide}\,» et se termine par \textbf{\textit{-oïque}}.
+\end{definition}
+
+\begin{exemple}[Acides carboxyliques]
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Acide méthanoïque} (acide formique, sécrété par les fourmis) \ce{HCOOH}.
+  \item \textbf{Acide éthanoïque} (acide acétique, vinaigre) \ce{CH3COOH} : \chemfig{CH_3-[:30](=[:90]O)-[:-30]OH}.
+  \item \textbf{Acide benzoïque} (conservateur E210) : un cycle benzénique portant $-\text{COOH}$.
+\end{itemize}
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Les esters (--COOR)}
+\begin{definition}[Ester]
+Un \textbf{ester} a pour groupement $-\text{C(=O)O-R}$, où le carbone carbonyle est lié à un oxygène lui-même lié à un groupe alkyle R. Le nom est de la forme «\,\textit{acide}\,\dots\,\textit{-oate de}\,\dots\,\textit{yle}\,».
+\end{definition}
+
+\begin{exemple}[Esters]
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Éthanoate de méthyle} \ce{CH3COOCH3} : \chemfig{CH_3-[:30](=[:90]O)-[:-30]O-[:30]CH_3}. Il sent l'onguent fruité.
+  \item Les esters sont responsables des arômes (banane, pomme, ananas\dots) et sont formés par \textbf{estérification} d'un acide carboxylique avec un alcool.
+\end{itemize}
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Les amines (--NH$_2$)}
+\begin{definition}[Amine]
+Une \textbf{amine} dérive de l'ammoniac \ce{NH3} par remplacement d'un, deux ou trois H par des groupes alkyles. On classe les amines comme les alcools :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item amine \textbf{primaire} $\mathrm{R-NH_2}$ (suffixe \textit{-amine}) ;
+  \item amine \textbf{secondaire} $\mathrm{R_2NH}$ ;
+  \item amine \textbf{tertiaire} $\mathrm{R_3N}$.
+\end{itemize}
+\end{definition}
+
+\begin{exemple}[Amines]
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+  \item \textbf{Méthylamine} \ce{CH3NH2} : \chemfig{CH_3-[:30]NH_2} (amine primaire).
+  \item \textbf{Triméthylamine} \ce{N(CH3)3} (amine tertiaire), responsable de l'odeur du poisson pourri.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[Amine ou amide~?]
+Une \textbf{amine} a l'azote lié \emph{directement} à un carbone saturé ($\mathrm{C-N}$). Un \textbf{amide} a l'azote lié à un \textbf{carbonyle} ($\mathrm{C(=O)-N}$). Confondre les deux est l'erreur classique~: la présence du carbonyle change tout.
+\end{attention}
+
+% ---------------------------------------------------------------------
+\subsection{Les amides (--CONH--)}
+\begin{definition}[Amide]
+Un \textbf{amide} contient le groupement $-\text{C(=O)NH}_2$ (ou ses dérivés N-substitués). Le suffixe est \textbf{\textit{-amide}}.
+\end{definition}
+
+\begin{exemple}[Amide]
+L'\textbf{éthananamide} (acétamide) \ce{CH3CONH2} : \chemfig{CH_3-[:30](=[:90]O)-[:-30]NH_2}. La \textbf{liaison amide} $-\text{CO-NH-}$ est le lien chimique qui enchaîne les acides aminés dans les \textbf{protéines} : c'est l'une des fonctions les plus importantes de la biochimie.
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Les nitriles (--CN), thiols (--SH) et imines (=NH)}
+\begin{definition}[Nitrile, thiol, imine]
+\hfill
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Nitrile} : groupement $-\text{C}\equiv\text{N}$, suffixe \textit{-nitrile}. Ex.\ éthanedinitrile, ou l'\textbf{acétonitrile} \ce{CH3CN} : \chemfig{CH_3-[:30]C~[:30]N}.
+  \item \textbf{Thiol} : groupement $-\text{SH}$ (soufre remplaçant l'oxygène d'un alcool), suffixe \textit{-thiol}. Ex.\ \textbf{éthanethiol} \ce{CH3CH2SH} : \chemfig{CH_3-[:30]CH_2-[:-30]SH}, à l'odeur d'ail.
+  \item \textbf{Imine} : groupement $>\text{C=NH}$, suffixe \textit{-imine}. Les imines apparaissent dans de nombreuses réactions biologiques (ex.\ formation des bases de Schiff).
+\end{itemize}
+\end{definition}
+
+% =====================================================================
+\section{Nomenclature : règles et priorité des fonctions}
+% =====================================================================
+Nommer systématiquement une molécule organique obéit à des règles précises (nomenclature IUPAC). En voici l'essentiel.
+
+\subsection{La chaîne principale}
+\begin{regle}[Choix de la chaîne principale]
+La \textbf{chaîne principale} est la chaîne carbonée la plus longue qui contient la \textbf{fonction principale} (le groupement prioritaire, cf.\ ci-dessous). On la numérote pour que la fonction principale reçoive le \textbf{plus petit indice possible}.
+\end{regle}
+
+\subsection{Numérotation imposée par certaines fonctions}
+\begin{regle}[Le carbone fonctionnel porte le n$^\circ$ 1]
+Pour les fonctions \textbf{acide carboxylique} ($-\text{COOH}$), \textbf{ester} ($-\text{COOR}$), \textbf{aldéhyde} ($-\text{CHO}$) et \textbf{amide} ($-\text{CONH-}$), l'atome de carbone de la fonction porte \textbf{toujours le numéro 1}. Les autres règles de nomenclature restent par ailleurs identiques (préfixes pour les ramifications, indices de position pour les liaisons multiples, etc.).
+\end{regle}
+
+\subsection{Ordre de priorité des fonctions}
+\begin{theoreme}[Échelle de priorité des fonctions]
+Lorsqu'une molécule contient \textbf{plusieurs} groupements fonctionnels, on choisit la «\,fonction principale\,» comme étant celle de \textbf{plus haute priorité} dans l'échelle décroissante suivante~:
+\[
+\boxed{\;\begin{aligned}
+& -\text{COOH} \;>\; -\text{COOR} \;>\; -\text{CONH}_2 \;>\; -\text{CHO} \;>\; -\text{CO}- \\[2pt]
+& \;>\; -\text{OH} \;>\; -\text{NH}_2 \;>\; -\text{O}- \;>\; -\text{HC=CH}- \;>\; -\text{C}\equiv\text{C}-
+\end{aligned}\;}
+\]
+Les fonctions de plus basse priorité présentes deviennent alors de simples \textbf{préfixes} (ex.\ un $-\text{OH}$ secondaire devient «\,hydroxy-\,» si l'acide est la fonction principale).
+\end{theoreme}
+
+\begin{remarque}[Comment lire cette échelle]
+L'acide carboxylique est \textbf{le plus prioritaire} : s'il est présent, c'est lui qui donne son nom à la molécule (préfixe «\,acide\,», suffixe «\,-oïque\,»). À l'autre bout, les simples doubles et triples liaisons C=C et C$\equiv$C sont les \textbf{moins prioritaires} : on ne les mentionne que par un préfixe (\textit{én-}, \textit{yn-}) ou un indice si aucune autre fonction n'est là.
+\end{remarque}
+
+\begin{methode}[Nommer une molécule, pas à pas]
+\hfill
+\begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Repérer} tous les groupements fonctionnels présents.
+  \item \textbf{Classer} les fonctions selon l'échelle de priorité $\rightarrow$ la plus haute est la \emph{fonction principale} (elle donne son suffixe au nom).
+  \item \textbf{Choisir} la chaîne principale : la plus longue contenant la fonction principale.
+  \item \textbf{Numéroter} : donner l'indice le plus petit à la fonction principale (n$^\circ$ 1 pour COOH, COOR, CHO, amide).
+  \item \textbf{Écrire} : préfixes des ramifications + préfixes des fonctions secondaires (avec indices) + nom de la chaîne + suffixe de la fonction principale (avec indice si utile).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[Nomenclature détaillée]
+Soit la molécule suivante :
+\begin{center}\chemfig{HO-[:30]CH_2-[:-30]CH(-[:90]CH_3)-[:-30]CH_2-[:30](=[:90]O)-[:-30]OH}\end{center}
+\textbf{Étape 1 —} On repère deux groupements~: un $-\text{OH}$ «\,alcool\,» à une extrémité, et un $-\text{COOH}$ «\,acide carboxylique\,» à l'autre. On voit aussi une ramification $-\text{CH3}$ (méthyle) sur le 3\up{e} carbone en partant de l'acide.
+
+\textbf{Étape 2 —} Selon l'échelle, $-\text{COOH} > -\text{OH}$~: la \textbf{fonction principale} est donc l'\textbf{acide carboxylique} (suffixe \textit{-oïque}, préfixe «\,acide\,»). L'alcool devient une fonction secondaire $\rightarrow$ préfixe \textbf{\textit{hydroxy-}}.
+
+\textbf{Étape 3 —} La chaîne principale (4 carbones, contenant le $-\text{COOH}$) est la plus longue~: c'est un dérivé de l'acide \textbf{butanoïque}.
+
+\textbf{Étape 4 —} On numérote à partir du carbone de l'acide (n$^\circ$ 1 obligatoire)~: le $-\text{COOH}$ est en 1, la ramification méthyle et le groupement hydroxy tombent en position 3 (la chaîne compte 4 carbones, le $-\text{CH2OH}$ est en C$_4$).
+
+\textbf{Étape 5 —} Nom complet~: \textbf{\textit{acide 3-hydroxy-3-méthylbutanoïque}}. (L'ordre alphabétique des préfixes «\,hydroxy\,» et «\,méthyl\,» est respecté, chacun avec son indice.)
+\end{exemple}
+
+% =====================================================================
+\section{Masse molaire d'une molécule organique}
+% =====================================================================
+Connaître la \textbf{formule brute} d'une molécule permet de calculer sa \textbf{masse molaire moléculaire}, grandeur indispensable pour les bilans de matière et les dosages.
+
+\begin{formule}[Masse molaire moléculaire]
+\[
+\boxed{\;M = \sum_{i} n_i \cdot M_i\;}
+\]
+\begin{ou}
+  \item $M$ : \textbf{masse molaire} de la molécule, en $\mathrm{g\,mol^{-1}}$ (on l'appelle aussi «\,masse moléculaire relative\,» lorsqu'elle est sans unité) ;
+  \item $n_i$ : nombre d'atomes de l'élément $i$ dans la formule brute (sans dimension) ;
+  \item $M_i$ : \textbf{masse molaire atomique} de l'élément $i$ (en $\mathrm{g\,mol^{-1}}$), lue dans la classification périodique.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[Calcul de masse molaire]
+Données~: $M(\mathrm{C})=\qty{12}{\g\per\mole}$, $M(\mathrm{H})=\qty{1}{\g\per\mole}$, $M(\mathrm{N})=\qty{14}{\g\per\mole}$.
+
+Soit un composé de formule brute $\ce{C6H14N2}$. Sa masse molaire vaut~:
+\[
+M = 6\cdot M(\mathrm{C}) + 14\cdot M(\mathrm{H}) + 2\cdot M(\mathrm{N})
+   = 6\times12 + 14\times1 + 2\times14
+   = 72 + 14 + 28 = \boxed{\qty{114}{\g\per\mole}}.
+\]
+
+\medskip
+\textbf{Détail du calcul, à pas comptés :}
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item contribution du carbone~: $6$ atomes $\times \qty{12}{\g\per\mole} = \qty{72}{\g\per\mole}$ ;
+  \item contribution de l'hydrogène~: $14$ atomes $\times \qty{1}{\g\per\mole} = \qty{14}{\g\per\mole}$ ;
+  \item contribution de l'azote~: $2$ atomes $\times \qty{14}{\g\per\mole} = \qty{28}{\g\per\mole}$ ;
+  \item \textbf{total}~: $72 + 14 + 28 = \qty{114}{\g\per\mole}$.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[Masse molaire et masse moléculaire relative]
+La \textbf{masse molaire} $M$ \emph{s'exprime en $\mathrm{g\,mol^{-1}}$}. La \textbf{masse moléculaire relative} (parfois notée $M_r$) est le \emph{même nombre} mais \textbf{sans unité}~: c'est un rapport à un douzième de la masse d'un atome de carbone~12. Dans un QCM, une réponse du type «\,$114\;\mathrm{g\,mol^{-1}}$\,» peut donc être fausse si la question portait sur la \emph{masse moléculaire} (sans unité)~! Toujours vérifier la grandeur demandée.
+\end{attention}
+
+% =====================================================================
+\section{Repérer les fonctions : exemples commentés}
+% =====================================================================
+La compétence clé de cette fiche est de \textbf{lire une structure développée et d'y recenser les fonctions}. Exerçons-la sur des molécules réelles, \textbf{sans exercice}, par l'analyse détaillée.
+
+% ---------------------------------------------------------------------
+\subsection{L'aspirine (acide acétylsalicylique)}
+\begin{exemple}[Analyse fonctionnelle de l'aspirine]
+La structure de l'aspirine est~:
+\begin{center}\chemfig{*6(-=-(-(-[:30]OH)=[:90]O)=-(-O-[:150](-[:-150]CH_3)=[:90]O)=-=)}\end{center}
+
+Parcourons la molécule et listons ce que l'on \emph{voit} :
+\begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
+  \item Un \textbf{cycle benzénique} (hexagone avec trois doubles liaisons alternées, dites «\,de Kekulé\,»). Ce cycle comporte donc \textbf{trois doubles liaisons C=C}.
+  \item En position \textbf{1} du cycle, un groupement $-\text{C(=O)OH}$~: c'est une \textbf{fonction acide carboxylique} ($-\text{COOH}$).
+  \item En position \textbf{2} (ortho), un oxygène relié au cycle, puis $-\text{C(=O)CH3}$. L'enchaînement est $\mathrm{Ar-O-C(=O)-CH3}$, c'est-à-dire un \textbf{ester} (acétyle sur l'oxygène).
+\end{enumerate}
+
+\textbf{Bilan~:} l'aspirine contient bien \textbf{une fonction acide carboxylique}, \textbf{une fonction ester} et \textbf{trois doubles liaisons C=C} (du noyau aromatique).
+
+\begin{attention}[Le piège classique de l'aspirine]
+Beaucoup ajoutent, à tort, une «\,fonction éther\,» à l'aspirine, en voyant le $\mathrm{Ar-O-C}$. Mais ici l'oxygène n'est pas un simple pont entre deux alkyles~: il fait partie de la \textbf{fonction ester} ($\mathrm{-O-C(=O)-}$). \textbf{Il n'y a donc pas de fonction éther libre dans l'aspirine.} C'est l'erreur la plus fréquente sur cette molécule.
+\end{attention}
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Molécule polyfonctionnelle à plusieurs carbonyles}
+\begin{exemple}[Repérer aldéhyde, cétone et alcène dans une même structure]
+Considérons une molécule linéaire comportant~:
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item à une extrémité, un $-\text{CHO}$~: \textbf{fonction aldéhyde} (carbonyle $>\text{C=O}$ lié d'un côté à un C, de l'autre à un H) ;
+  \item plus loin, un $>\text{C=O}$ encadré par deux carbones~: \textbf{fonction cétone} ;
+  \item entre les deux, une \textbf{double liaison C=C}~: \textbf{fonction alcène}.
+\end{itemize}
+\textbf{Bilan~:} trois fonctions chimiques (alcène, cétone, aldéhyde), \textbf{deux} d'entre elles étant des \textbf{carbonyles}. \textbf{Comptage des carbones~:} les atomes de C liés chacun à \emph{deux} hydrogènes sont les $\ce{-CH2-}$ internes~; les atomes de C liés à un \emph{seul} H dépendent du voisinage (carbone d'alcène $\ce{-CH=}$, ou $\ce{CHO}$). Toujours raisonner atome par atome en pointant la formule.
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Classification des alcools dans une structure complexe}
+\begin{exemple}[Trois fonctions alcools + une cétone]
+Soit une molécule où l'on distingue~:
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{deux} groupements $-\text{OH}$ portés par des carbones \emph{tertiaires} (le C--OH est lié à 3 autres C)~: \textbf{deux alcools tertiaires} («\,Alcool III\,») ;
+  \item \textbf{un} groupement $-\text{OH}$ porté par un carbone \emph{secondaire}~: \textbf{un alcool secondaire} («\,Alcool II\,») ;
+  \item un $>\text{C=O}$ encadré de deux carbones~: \textbf{une fonction cétone}.
+\end{itemize}
+\textbf{Bilan~:} la molécule contient bien \textbf{trois fonctions alcools} (et non quatre) et \textbf{une fonction cétone}. Attention donc~: \emph{«\,trois fonctions alcools\,»} est correct, mais \emph{«\,deux alcools secondaires\,»} est \textbf{faux} (il n'y en a qu'\textbf{un} secondaire, les deux autres sont tertiaires). Comptez \textbf{et} classez.
+
+\medskip
+Supposons maintenant que l'on \textbf{réduise} le carbonyle cétone $>\text{C=O}$ en $>\text{CH-OH}$ (ajout de H, disparition de la liaison $\pi$)~: la cétone disparaît et devient un \textbf{quatrième alcool}. Le nouveau carbone $>\text{CH-OH}$ étant secondaire, la molécule compte alors \textbf{quatre fonctions alcools au total} (deux tertiaires + deux secondaires). Une réaction de réduction peut ainsi transformer une cétone en alcool secondaire.
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Amide et amine~: ne pas confondre}
+\begin{exemple}[Une molécule riche en azote]
+Soit une structure contenant~:
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item un enchaînement $\mathrm{-C(=O)-N<}$~: c'est une \textbf{fonction amide} (présence du carbonyle) ;
+  \item deux atomes d'azote liés à \textbf{trois} carbones chacun $\mathrm{N(CH_3)_3}$-like~: deux \textbf{amines tertiaires} (azote sans H, lié à 3 C, \emph{sans} carbonyle voisin) ;
+  \item une extrémité $\mathrm{-NH2}$~: une \textbf{amine primaire}.
+\end{itemize}
+\textbf{Bilan~:} deux amines tertiaires + une amine primaire + une amide. L'erreur à éviter~: voir l'enchaînement $\mathrm{C-N}$ de l'amide et le qualifier d'«\,amine secondaire\,». \textbf{Tant qu'il y a un carbonyle accolé à l'azote, c'est une amide, pas une amine.}
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse et tableau récapitulatif}
+% =====================================================================
+Pour fixer les idées, voici un mémo récapitulatif de toutes les familles vues dans cette fiche.
+
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{primarydark}}l >{\centering\arraybackslash}X c >{\centering\arraybackslash}p{3.0cm}}
+\toprule
+Famille & Groupement & Formule / suffixe & Particularité \\
+\midrule
+Alcane & $-\text{C-C-}$ (simples) & $\ce{C_nH_{2n+2}}$ / \textit{-ane} & saturé, zigzag \\
+Alcène & $-\text{C=C-}$ & $\ce{C_nH_{2n}}$ / \textit{-ène} & cis/trans possible \\
+Alcyne & $-\text{C}\equiv\text{C-}$ & $\ce{C_nH_{2n-2}}$ / \textit{-yne} & linéaire à la triple liaison \\
+Alcool & $-\text{OH}$ & \textit{-ol} & C--OH primaire/II/III \\
+Éther & $-\text{O-}$ & oxyde d'alkyle & O entre deux C \\
+Aldéhyde & $-\text{CHO}$ & \textit{-al} & carbonyle + H, en bout de chaîne \\
+Cétone & $>\text{C=O}$ & \textit{-one} & carbonyle entre deux C \\
+Acide carboxylique & $-\text{COOH}$ & \textit{acide \dots-oïque} & C n$^\circ$1, le plus prioritaire \\
+Ester & $-\text{COOR}$ & \textit{-oate d'alkyle} & odeurs fruitées \\
+Amine & $-\text{NH2}$ & \textit{-amine} & primaire/II/III \\
+Amide & $-\text{CONH-}$ & \textit{-amide} & lien des protéines \\
+Nitrile & $-\text{CN}$ & \textit{-nitrile} & triple liaison C$\equiv$N \\
+Thiol & $-\text{SH}$ & \textit{-thiol} & S à la place de O \\
+Imine & $>\text{C=NH}$ & \textit{-imine} & C=N \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{methode}[Check-list finale avant un examen]
+\hfill
+\begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Comptez} les atomes~: la formule brute confirme-t-elle un alcane ($\ce{C_nH_{2n+2}}$), un alcène/cycloalcane ($\ce{C_nH_{2n}}$), un alcyne ($\ce{C_nH_{2n-2}}$)~?
+  \item \textbf{Cherchez les carbonyles} $>\text{C=O}$ puis demandez ce qu'il y a autour~: H $\rightarrow$ aldéhyde~; C+C $\rightarrow$ cétone~; OH $\rightarrow$ acide~; O--R $\rightarrow$ ester~; N $\rightarrow$ amide.
+  \item \textbf{Cherchez les hétéroatomes isolés}~: $-\text{OH}$ hors carbonyle = alcool~; $-\text{O-}$ pont = éther~; $-\text{NH2}$ hors carbonyle = amine~; $-\text{SH}$ = thiol~; $-\text{C}\equiv\text{N}$ = nitrile.
+  \item \textbf{Classez} les carbones (primaire/II/III/IV) pour les alcools et amines.
+  \item \textbf{Priorité}~: si plusieurs fonctions, appliquez l'échelle $-\text{COOH} > -\text{COOR} > -\text{CONH}_2 > -\text{CHO} > -\text{CO}- > -\text{OH} > -\text{NH}_2 > -\text{O}- > \text{C=C} > \text{C}\equiv\text{C}$.
+  \item \textbf{Numérotez} en donnant le plus petit indice à la fonction principale (n$^\circ$1 pour COOH/COOR/CHO/amide).
+\end{enumerate}
+\end{methode}
+
+\begin{remarque}[Lien avec les fiches suivantes]
+Connaître ces groupements fonctionnels est \textbf{indispensable} pour la suite du programme~: l'\textbf{estérification} et l'\textbf{hydrolyse} (acide~$+$~alcool $\leftrightarrow$ ester), la \textbf{réaction des acides et des bases} (acide carboxylique $\rightleftharpoons$ carboxylate, amine $\rightleftharpoons$ ammonium), ou encore les \textbf{réactions d'oxydoréduction} (alcool $\leftrightarrow$ aldéhyde/cétone $\leftrightarrow$ acide carboxylique). Toute la chimie organique de réaction s'organise autour des transformations \textbf{d'une fonction en une autre}.
+\end{remarque}
+
+\vfill
+\begin{center}
+\small\color{primarydark}\rule{0.5\textwidth}{0.4pt}\\[2pt]
+\textit{Fin de la Fiche 12 — Chimie organique : les groupements fonctionnels}
+\end{center}
+
+\end{document}

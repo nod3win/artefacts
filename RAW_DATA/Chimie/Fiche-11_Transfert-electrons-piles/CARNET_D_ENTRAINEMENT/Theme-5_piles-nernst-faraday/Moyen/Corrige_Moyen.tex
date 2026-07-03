@@ -1,0 +1,100 @@
+% =====================================================================
+%  FICHE 11 — THEME 5 — Corrigé MOYEN — Piles, Nernst, Faraday
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.0cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+\newcommand{\Ered}{\ensuremath{E_{\mathrm{r}}^{\circ}}}
+\newcommand{\fem}{\ensuremath{\Delta E}}
+\newcommand{\cc}[1]{\left[#1\right]}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 5} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Corrigé Moyen}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[la pile zinc--argent en conditions standard]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item $-0{,}76<+0{,}80$ : \textbf{anode} = zinc ($\ce{Zn -> Zn^{2+} + 2 e^-}$),
+        \textbf{cathode} = argent ($\ce{Ag+ + e^- -> Ag}$).
+  \item $\fem^{\circ}=\Ered(\ce{Ag+}/\ce{Ag})-\Ered(\ce{Zn^{2+}}/\ce{Zn})=0{,}80-(-0{,}76)=\boxed{1{,}56\ \mathrm{V}}$.
+\end{enumerate}
+\emph{(La ddp standard de la pile Zn/Ag vaut donc $1{,}56$\,V ; cf. annales 2022-Q19 et livre QCM~26.)}
+\end{corr}
+
+\begin{corr}[potentiel d'une demi-pile de cuivre]
+Nernst avec $n=2$, $\cc{\ce{Cu^{2+}}}=0{,}01$ et $\cc{\ce{Cu}}=1$ (solide) :
+\[
+E = 0{,}34 + \frac{0{,}06}{2}\log(0{,}01) = 0{,}34 + 0{,}03\times(-2) = 0{,}34 - 0{,}06 = \boxed{0{,}28\ \mathrm{V}}.
+\]
+Diluer \ce{Cu^{2+}} (la forme oxydée) \textbf{abaisse} le potentiel : la demi-pile devient
+\emph{moins} oxydante. \emph{(Réponse C, livre QCM~23.)}
+\end{corr}
+
+\begin{corr}[potentiel de la demi-pile permanganate]
+Avec $\cc{\ce{MnO4^-}}=\cc{\ce{Mn^{2+}}}=0{,}01$ et $\cc{\ce{H+}}=1$ :
+\[
+E = 1{,}51 + \frac{0{,}06}{5}\log\frac{0{,}01\times 1^{8}}{0{,}01}
+= 1{,}51 + \frac{0{,}06}{5}\log(1) = 1{,}51 + 0 = \boxed{1{,}51\ \mathrm{V}}.
+\]
+Le quotient vaut $1$ ($\log 1 = 0$) : la dilution de \ce{MnO4^-} est compensée par celle de
+\ce{Mn^{2+}}, et le pH$=0$ donne $\cc{\ce{H+}}=1$. On retrouve exactement \Ered.
+\emph{(Réponse B, livre QCM~24.)}
+\end{corr}
+
+\begin{corr}[dépôt de cuivre par électrolyse]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item $t = 30\times 60 = \SI{1800}{s}$ ; $n=2$. Loi de Faraday :
+        \[
+        m = \frac{M\,I\,t}{n\,F} = \frac{63{,}5\times 2{,}0\times 1800}{2\times 96485}
+        = \frac{228\,600}{192\,970} \simeq \boxed{1{,}18\ \mathrm{g}}.
+        \]
+  \item $Q = It = 2{,}0\times 1800 = \SI{3600}{C}$, soit $Q/F \simeq \SI{0.0373}{mol}$ d'électrons.
+        Comme $n=2$, il se dépose $0{,}0373/2 \simeq \SI{0.0187}{mol}$ de \ce{Cu}, soit
+        $0{,}0187\times 63{,}5 \simeq \SI{1.18}{g}$. \checkmark
+\end{enumerate}
+\end{corr}
+
+\begin{corr}[durée d'une argenture]
+$n=1$. On isole $t$ dans la loi de Faraday :
+\[
+t = \frac{m\,n\,F}{M\,I} = \frac{10\times 1\times 96485}{107{,}9\times 5{,}0}
+= \frac{964\,850}{539{,}5} \simeq \boxed{1788\ \mathrm{s}} \simeq \SI{29.8}{min}.
+\]
+Il faut donc environ \SI{30}{min}. La masse déposée est \textbf{proportionnelle} à $I$ et à $t$ :
+doubler l'intensité diviserait ce temps par deux.
+\end{corr}
+
+\end{document}

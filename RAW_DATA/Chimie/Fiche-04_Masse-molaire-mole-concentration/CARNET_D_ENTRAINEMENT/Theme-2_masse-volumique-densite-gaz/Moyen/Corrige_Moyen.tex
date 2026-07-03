@@ -1,0 +1,94 @@
+% =====================================================================
+%  FICHE 4 — THEME 2 — Corrige niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{M}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newcounter{exo}
+\newenvironment{corr}[1][]{%
+  \par\medskip\refstepcounter{exo}%
+  \noindent\begin{tcolorbox}[boxbase,colback=excol!5,colframe=excol,
+     title={\textsc{Correction \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
+  {\end{tcolorbox}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Corrigé Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\NA}{N_{\!\text{A}}}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- Corrigé Moyen}
+\end{center}
+
+\begin{corr}[chaîne volume $\to$ masse $\to$ quantité]
+\textbf{a)} Densité $1{,}70\Leftrightarrow\rho=\SI{1.70}{\gram\per\milli\litre}$, donc
+$m=\rho\,V=1{,}70\times100=\SI{170}{\gram}$.\\[2pt]
+\textbf{b)} $M(\ce{CH2Cl2})=12+2(1)+2(35{,}5)=12+2+71=\SI{85}{\gram\per\mole}$, d'où
+\[ n=\frac{m}{M}=\frac{170}{85}=\SI{2.0}{\mole}. \]
+\[ \boxed{n(\ce{CH2Cl2})=\SI{2.0}{\mole}} \]
+\end{corr}
+
+\begin{corr}[masse molaire d'un gaz]
+\textbf{a)} Pour un gaz, $n=\dfrac{V}{V_m}$ :
+\[ n=\frac{5{,}6}{22{,}4}=\SI{0.25}{\mole}. \]
+\textbf{b)} La masse molaire est la masse d'une mole, soit $M=\dfrac{m}{n}$ :
+\[ M=\frac{5{,}0}{0{,}25}=\SI{20}{\gram\per\mole}. \]
+\[ \boxed{M=\SI{20}{\gram\per\mole}} \]
+\end{corr}
+
+\begin{corr}[masse volumique et conversions « piégeuses »]
+On convertit d'abord la masse : $\SI{7.72}{\hecto\gram}=7{,}72\times100=\SI{772}{\gram}$.
+On isole le volume dans $\rho=m/V$ :
+\[ V=\frac{m}{\rho}=\frac{772}{19{,}3}=\SI{40}{\cubic\centi\metre}=\SI{40}{\milli\litre}. \]
+\[ \boxed{V=\SI{40}{\milli\litre}} \]
+\textit{Piège :} oublier de convertir le hectogramme ($\SI{1}{\hecto\gram}=\SI{100}{\gram}$) mène à
+un résultat 100 fois trop petit.
+\end{corr}
+
+\begin{corr}[du gaz au volume]
+$M(\ce{O2})=\SI{32}{\gram\per\mole}$. On passe par la quantité de matière :
+\[ n=\frac{16}{32}=\SI{0.50}{\mole}\ \Rightarrow\ V=n\,V_m=0{,}50\times22{,}4=\SI{11.2}{\litre}. \]
+\[ \boxed{V=\SI{11.2}{\litre}} \]
+\end{corr}
+
+\begin{corr}[masse volumique par déplacement d'eau]
+\textbf{a)} Le volume du solide est l'\textbf{augmentation} du niveau d'eau :
+$V=15{,}0-10{,}0=\SI{5.0}{\milli\litre}$.\\[2pt]
+\textbf{b)} $\rho=\dfrac{m}{V}=\dfrac{20{,}0}{5{,}0}=\SI{4.0}{\gram\per\milli\litre}
+=\SI{4.0}{\gram\per\cubic\centi\metre}$.
+\[ \boxed{V=\SI{5.0}{\milli\litre};\quad \rho=\SI{4.0}{\gram\per\cubic\centi\metre}} \]
+\textit{Piège :} prendre le niveau final ($\SI{15}{\milli\litre}$) au lieu de l'augmentation
+($\SI{5}{\milli\litre}$).
+\end{corr}
+
+\end{document}

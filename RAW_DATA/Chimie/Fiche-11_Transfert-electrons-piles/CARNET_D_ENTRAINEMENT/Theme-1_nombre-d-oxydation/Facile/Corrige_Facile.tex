@@ -1,0 +1,99 @@
+% =====================================================================
+%  FICHE 11 — THEME 1 — Corrigé FACILE — Le nombre d'oxydation
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Corrigé Facile}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[corps simples et ions monoatomiques]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{O2} : corps simple (règle R1) $\Rightarrow \NO(\ce{O})=0$.
+  \item \ce{Na+} : ion monoatomique de charge $+1$ (R2) $\Rightarrow \NO(\ce{Na})=+\mathrm{I}$.
+  \item \ce{Al^{3+}} : ion monoatomique de charge $+3$ (R2) $\Rightarrow \NO(\ce{Al})=+\mathrm{III}$.
+  \item \ce{Cl^-} : ion monoatomique de charge $-1$ (R2) $\Rightarrow \NO(\ce{Cl})=-\mathrm{I}$.
+  \item \ce{Fe(s)} : corps simple, métal à l'état natif (R1) $\Rightarrow \NO(\ce{Fe})=0$.
+  \item \ce{P4} : corps simple (R1) $\Rightarrow \NO(\ce{P})=0$.
+\end{itemize}
+\textbf{Retenir :} corps simple $\to 0$ ; ion monoatomique $\to$ sa charge. Aucun calcul.
+\end{corr}
+
+\begin{corr}[le \NO\ de l'oxygène]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{CaO} : cas général $\Rightarrow \NO(\ce{O})=-\mathrm{II}$ (on vérifie : $\NO(\ce{Ca})=+\mathrm{II}$, somme $=0$).
+  \item \ce{CO2} : cas général $\Rightarrow \NO(\ce{O})=-\mathrm{II}$.
+  \item \ce{H2O2} : \textbf{peroxyde} (liaison \ce{O-O}), exception R4 $\Rightarrow \NO(\ce{O})=-\mathrm{I}$
+        (vérif. : $2(+1)+2x=0\Rightarrow x=-1$).
+  \item \ce{Na2O2} : \textbf{peroxyde} de sodium, exception R4 $\Rightarrow \NO(\ce{O})=-\mathrm{I}$
+        (vérif. : $2(+1)+2x=0\Rightarrow x=-1$).
+\end{itemize}
+\textbf{Piège classique :} reconnaître un peroxyde ($-\mathrm{I}$) et non un oxyde ordinaire ($-\mathrm{II}$).
+\end{corr}
+
+\begin{corr}[le \NO\ de l'hydrogène]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{HCl} : cas général $\Rightarrow \NO(\ce{H})=+\mathrm{I}$.
+  \item \ce{NH3} : cas général $\Rightarrow \NO(\ce{H})=+\mathrm{I}$.
+  \item \ce{CaH2} : \textbf{hydrure métallique} (exception R3) $\Rightarrow \NO(\ce{H})=-\mathrm{I}$.
+  \item \ce{H2} : corps simple (R1) $\Rightarrow \NO(\ce{H})=0$.
+\end{itemize}
+L'\textbf{hydrure} est \ce{CaH2} : le calcium (métal) est moins électronégatif que l'hydrogène, qui
+joue alors le rôle d'anion hydrure \ce{H^-}. On vérifie : $\NO(\ce{Ca})=+\mathrm{II}$ et
+$(+\mathrm{II})+2(-\mathrm{I})=0$.
+\end{corr}
+
+\begin{corr}[un seul atome inconnu]
+On écrit à chaque fois $\sum\NO=0$ (molécules neutres), avec $\NO(\ce{H})=+\mathrm{I}$ et $\NO(\ce{O})=-\mathrm{II}$.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{SO2} : $x+2(-2)=0 \Rightarrow x=+4$, donc $\NO(\ce{S})=+\mathrm{IV}$.
+  \item \ce{CH4} : $x+4(+1)=0 \Rightarrow x=-4$, donc $\NO(\ce{C})=-\mathrm{IV}$.
+  \item \ce{NH3} : $x+3(+1)=0 \Rightarrow x=-3$, donc $\NO(\ce{N})=-\mathrm{III}$.
+\end{enumerate}
+\end{corr}
+
+\begin{corr}[vérifier une attribution]
+Avec $\NO(\ce{S})=+\mathrm{IV}$ et $\NO(\ce{O})=-\mathrm{II}$, et 1~atome de S pour 2~atomes de O :
+\[
+\sum\NO = (+4) + 2\times(-2) = +4 - 4 = 0.
+\]
+La somme vaut bien $0$, ce qui est \textbf{cohérent} avec le caractère neutre de \ce{SO2}.
+L'attribution proposée est donc correcte. \emph{Toujours utiliser cette égalité comme contrôle final.}
+\end{corr}
+
+\end{document}

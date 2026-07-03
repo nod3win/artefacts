@@ -1,0 +1,93 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 5
+%  Niveau FACILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{atomO}{RGB}{220,55,45}
+\definecolor{bondcol}{RGB}{60,60,70}
+\definecolor{piecol}{RGB}{198,93,9}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!5,colframe=primary,
+   title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 5 — La résonance}}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 5 — Niveau Facile}\\[2pt]
+{\small\itshape Lire la fiche \texttt{Tuto\_Theme-5} avant de commencer. Aucune calculatrice n'est nécessaire.}
+\end{center}
+\medskip
+
+\begin{exo}[le vocabulaire de la résonance]
+Définir en \textbf{une phrase} chacune des expressions suivantes :
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item une \textbf{structure limite} (ou forme de résonance) ;
+  \item l'\textbf{hybride de résonance} ;
+  \item le symbole $\longleftrightarrow$ placé entre deux structures limites.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux ?]
+Indiquer si chaque affirmation est \textbf{vraie} ou \textbf{fausse}, et corriger si elle est fausse.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item « D'une forme de résonance à l'autre, les \emph{atomes} changent de place. »
+  \item « La \emph{géométrie} de la molécule change avec la résonance. »
+  \item « Le symbole $\longleftrightarrow$ désigne un équilibre chimique. »
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[compter les formes limites]
+Pour chacun des édifices suivants, donner le \textbf{nombre de structures limites équivalentes} :
+\[ \ce{O3}, \qquad \ce{CO3^2-}, \qquad \ce{NO3-}, \qquad \ce{ClO4-}. \]
+\end{exo}
+
+\begin{exo}[$\longleftrightarrow$ ou $\rightleftharpoons$ ?]
+On dispose de deux symboles : la double flèche de résonance $\longleftrightarrow$ et la double flèche
+d'équilibre $\rightleftharpoons$. Associer chacun à la bonne description :
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=1pt]
+  \item les formes de résonance d'\textbf{une seule} espèce ;
+  \item un \textbf{équilibre} entre \textbf{deux} espèces qui s'interconvertissent.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[qui présente de la résonance ?]
+Parmi les espèces suivantes, indiquer lesquelles présentent de la \textbf{résonance} et lesquelles
+\textbf{non} :
+\[ \ce{CH4}, \qquad \ce{CO3^2-}, \qquad \ce{H2O}, \qquad \ce{NO3-}, \qquad \ce{O3}. \]
+\end{exo}
+
+\end{document}

@@ -1,0 +1,1102 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 6
+%  Ondes (propagation, onde sinusoïdale, ondes stationnaires,
+%         diffraction & interférences)
+%  Figures TikZ tracées « from scratch ». Sans section exercices.
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{ondeA}{RGB}{0,114,178}   % bleu  (onde 1 / onde incidente)
+\definecolor{ondeB}{RGB}{220,110,30}  % orange (onde 2 / onde réfléchie)
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Ondes}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vv}[1]{\vec{#1}}
+\newcommand{\dd}{\mathrm{d}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.4cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {\Huge\bfseries Ondes\\[6pt]
+   \large\bfseries Propagation, ondes sinusoïdales, ondes stationnaires,\\[2pt]
+   diffraction \& interférences};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,6}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : une onde sinusoïdale + longueur d'onde ---
+\begin{tikzpicture}[scale=1.0]
+  \def\A{1.0}\def\L{2.4}
+  % axe horizontal
+  \draw[->,>=Stealth,black!70] (-0.4,0) -- (10.4,0) node[right]{$x$};
+  \draw[->,>=Stealth,black!70] (0,-1.5) -- (0,1.7) node[above]{$y$};
+  % sinusoïde (deux longueurs d'onde et demie)
+  \draw[primary,line width=1.4pt,smooth,samples=220,domain=0:9.6]
+        plot (\x,{\A*sin( \x*(360/\L) )});
+  % marquage de la longueur d'onde entre deux crêtes
+  \coordinate (c1) at ({0.25*\L},\A);
+  \coordinate (c2) at ({1.25*\L},\A);
+  \draw[<->,>=Stealth,primarydark,thick] (c1)++(0,0.35) -- ($(c2)+(0,0.35)$)
+        node[midway,above,fill=white,inner sep=1pt]{$\lambda$};
+  \draw[primarydark,dashed,line width=0.5pt] (c1) -- ++(0,0.45);
+  \draw[primarydark,dashed,line width=0.5pt] (c2) -- ++(0,0.45);
+  % amplitude
+  \draw[<->,>=Stealth,formulacol,thick] (8.4,0) -- (8.4,\A)
+        node[midway,right]{$A$};
+\end{tikzpicture}
+
+\vspace{0.6cm}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir une \textbf{onde mécanique progressive} et distinguer ondes
+        \textbf{longitudinale} et \textbf{transversale} ;
+  \item maîtriser les \textbf{grandeurs caractéristiques} d'une onde
+        (période, fréquence, longueur d'onde, célérité) et leurs relations ;
+  \item écrire et exploiter l'\textbf{équation d'une onde sinusoïdale}
+        (élongation, vitesse, accélération) et la notion de \textbf{déphasage} ;
+  \item décrire les \textbf{ondes stationnaires}, leurs \textbf{nœuds} et
+        \textbf{ventres}, et calculer les \textbf{harmoniques} d'une corde ;
+  \item expliquer la \textbf{diffraction} et les \textbf{interférences}
+        (franges, interfrange, conditions constructive/destructive).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.45cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 6 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Propagation d'une onde}
+% =====================================================================
+
+\subsection{Notion d'onde mécanique progressive}
+
+Dans la vie courante, on observe sans cesse des « signaux » qui voyagent : une vague
+qui parcourt la surface de l'eau, le son d'une voix qui traverse une pièce, la secousse
+qui file le long d'une corde à sauter. Dans tous ces cas, \emph{quelque chose se déplace
+d'un point à un autre} — mais ce « quelque chose » n'est ni de la matière, ni un objet :
+c'est une \textbf{perturbation} et l'\textbf{énergie} qu'elle transporte.
+
+\begin{definition}[onde mécanique progressive]
+Une \textbf{onde mécanique progressive} est la \emph{propagation d'une perturbation locale}
+dans un \textbf{milieu élastique} (corde, ressort, eau, air, sol\ldots), \textbf{sans transport
+de matière} mais \textbf{avec transport d'énergie}. Chaque point du milieu, lorsqu'il est
+atteint, ne fait qu'osciller \emph{autour de sa position d'équilibre} : il ne « suit » pas l'onde,
+il reproduit avec un certain retard le mouvement de la source.
+\end{definition}
+
+\begin{remarque}
+Le mot \emph{élastique} est essentiel : le milieu doit pouvoir se déformer puis revenir à son
+état initial. C'est cette élasticité qui transmet la perturbation de proche en proche. Le mot
+\emph{progressive} signifie que la perturbation \emph{avance} (par opposition à l'onde
+\emph{stationnaire} de la section~\ref{sec:stationnaire}, qui semble figée).
+\end{remarque}
+
+\subsection{Ondes longitudinales et ondes transversales}
+
+Selon la \emph{direction de la perturbation par rapport à la direction de propagation}, on
+distingue deux grandes familles d'ondes.
+
+\begin{definition}[onde longitudinale]
+Une onde est \textbf{longitudinale} lorsque les points du milieu vibrent
+\emph{parallèlement} à la direction de propagation. L'onde se présente alors comme une
+succession de zones de \textbf{compression} (points resserrés) et de \textbf{raréfaction}
+(points écartés). Exemple type : la compression d'un ressort (figure~\ref{fig:ressort}), ou
+le \textbf{son} dans l'air.
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % ---- ligne d'axe x ----
+  \draw[->,>=Stealth,ondeA,line width=0.9pt] (-0.2,0) -- (10.6,0)
+        node[right,black]{$x$ (m)};
+  % ---- ligne verticale du point P ----
+  \draw[dashed,black!70] (7.2,1.55) -- (7.2,-1.5) node[below]{};
+  \node[font=\bfseries] at (7.2,1.9) {P};
+  % ---- ressort du haut (instant t1) : compression à gauche ----
+  \begin{scope}[yshift=1.05cm]
+    \draw[black!75,line width=0.7pt,decorate,
+          decoration={coil,aspect=0.6,segment length=2.0pt,amplitude=4.5pt}]
+          (0,0) -- (1.7,0);
+    \draw[black!75,line width=0.7pt,decorate,
+          decoration={coil,aspect=0.6,segment length=5.0pt,amplitude=4.5pt}]
+          (1.7,0) -- (10,0);
+    \draw[->,>=Stealth,ondeA,line width=1.1pt] (0.35,0.42) -- (1.35,0.42)
+          node[above,midway,black]{$\vv v$};
+  \end{scope}
+  % ---- ressort du bas (instant t2) : compression au niveau de P ----
+  \begin{scope}[yshift=-1.05cm]
+    \draw[black!75,line width=0.7pt,decorate,
+          decoration={coil,aspect=0.6,segment length=5.0pt,amplitude=4.5pt}]
+          (0,0) -- (6.4,0);
+    \draw[black!75,line width=0.7pt,decorate,
+          decoration={coil,aspect=0.6,segment length=2.0pt,amplitude=4.5pt}]
+          (6.4,0) -- (8.0,0);
+    \draw[black!75,line width=0.7pt,decorate,
+          decoration={coil,aspect=0.6,segment length=5.0pt,amplitude=4.5pt}]
+          (8.0,0) -- (10,0);
+    \draw[->,>=Stealth,ondeA,line width=1.1pt] (5.9,0.42) -- (6.9,0.42)
+          node[above,midway,black]{$\vv v$};
+  \end{scope}
+\end{tikzpicture}
+\caption{L'onde se propage le long du ressort \textbf{parallèlement} à la direction de
+propagation (onde longitudinale). La zone de compression se déplace vers la droite à la
+vitesse $\vv v$ ; le point P, lui, ne fait qu'osciller sur place.}
+\label{fig:ressort}
+\end{figure}
+
+\begin{definition}[onde transversale]
+Une onde est \textbf{transversale} lorsque les points du milieu vibrent
+\emph{perpendiculairement} à la direction de propagation. Exemple type : l'ébranlement
+d'une corde tendue (figure~\ref{fig:corde}), ou les ondes à la surface de l'eau.
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- instant t1 : ébranlement à gauche, P au repos ---
+  \begin{scope}[yshift=3.2cm]
+    \draw[ondeA,line width=2pt] (0,-0.02) -- (10.2,-0.02);     % corde épaisse
+    \draw[->,>=Stealth,black!70] (0,0) -- (0,1.25) node[left,black]{$y$};
+    % impulsion (bosse) centrée en x=1
+    \draw[ondeA,line width=2pt,smooth,samples=80,domain=0:2.4]
+          plot (\x,{1.0*exp( -((\x-1)/0.42)^2 )});
+    \node[ondeA] at (0.55,1.5) {Ébranlement};
+    \draw[->,>=Stealth,ondeA,line width=1.1pt] (2.0,0.55) -- (3.0,0.55)
+          node[above,midway,black]{$\vv v$};
+    % graduations
+    \foreach \i in {0,1,...,11}{\draw[black!60] (\i*0.9,0) -- (\i*0.9,-0.16);}
+    \node[below] at (0,-0.2) {0}; \node[below] at (4.5,-0.2) {5};
+    \node[below] at (9,-0.2) {10}; \node[right,black] at (10.2,0) {$x$ en m};
+    \node[black] at (7.3,0.55) {Corde au repos};
+    \draw[dashed,black!70] (4.5,1.35) -- (4.5,-0.05);
+    \node[font=\bfseries] at (4.5,1.6) {P};
+  \end{scope}
+  % --- instant t2 : la bosse est arrivée en P ---
+  \begin{scope}[yshift=0cm]
+    \draw[ondeA,line width=2pt] (0,-0.02) -- (10.2,-0.02);
+    \draw[->,>=Stealth,black!70] (0,0) -- (0,1.25) node[left,black]{$y$};
+    \draw[ondeA,line width=2pt,smooth,samples=80,domain=3.1:5.9]
+          plot (\x,{1.0*exp( -((\x-4.5)/0.42)^2 )});
+    \draw[->,>=Stealth,ondeA,line width=1.1pt] (5.4,0.55) -- (6.4,0.55)
+          node[above,midway,black]{$\vv v$};
+    \foreach \i in {0,1,...,11}{\draw[black!60] (\i*0.9,0) -- (\i*0.9,-0.16);}
+    \node[below] at (0,-0.2) {0}; \node[below] at (4.5,-0.2) {5};
+    \node[below] at (9,-0.2) {10}; \node[right,black] at (10.2,0) {$x$ en m};
+    \node[black] at (7.7,0.55) {Corde au repos};
+    \draw[dashed,black!70] (4.5,1.35) -- (4.5,-0.05);
+    \node[font=\bfseries] at (4.5,1.6) {P};
+    \node[black] at (4.5,-0.95) {$v = x/t$};
+  \end{scope}
+\end{tikzpicture}
+\caption{L'onde se propage le long de la corde élastique \textbf{perpendiculairement} à la
+direction de propagation (onde transversale). Entre les deux instants, la bosse a parcouru
+la distance jusqu'à P à la vitesse $v = x/t$.}
+\label{fig:corde}
+\end{figure}
+
+\begin{theoreme}[indépendance de la célérité]
+La \textbf{vitesse de propagation} (ou \textbf{célérité}) d'une onde est \emph{indépendante}
+du type de perturbation (longitudinale ou transversale) et du \emph{sens} du déplacement.
+Elle ne dépend que des \textbf{propriétés du milieu} (sa rigidité, sa masse linéique, sa
+température\ldots). Une perturbation deux fois plus grande ne va donc pas plus vite : seule
+son énergie change, pas sa célérité.
+\end{theoreme}
+
+\begin{exemple}[reconnaître le type d'onde]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Le son dans l'air} est une onde \emph{longitudinale} : l'air se comprime et
+        se détend dans la \emph{même} direction que celle où le son voyage. C'est pour cela
+        qu'on ne peut pas « polariser » le son.
+  \item \textbf{La houle, la corde, la lumière} (onde électromagnétique) sont
+        \emph{transversales} : la grandeur qui oscille (hauteur d'eau, position de la corde,
+        champ électrique) est \emph{perpendiculaire} à la direction de propagation.
+  \item \textbf{Le bateau au mouillage} qui monte et descend au passage d'une vague illustre
+        parfaitement le « sans transport de matière » : le bateau revient à sa place, c'est
+        seulement l'énergie de la vague qui a continué son chemin.
+\end{itemize}
+\end{exemple}
+
+% =====================================================================
+\section{Équation de propagation et grandeurs caractéristiques}
+% =====================================================================
+
+\subsection{Équation de propagation : le retard}
+
+Considérons une source située à l'extrémité du milieu ($x=0$). Elle impose un mouvement
+$y_0(t)$. Un point P situé plus loin, à l'abscisse $x$, va reproduire \emph{exactement} ce
+mouvement, mais \textbf{en retard} : il faut que la perturbation parcoure la distance $x$ à la
+célérité $v$, ce qui prend un temps $\tau = x/v$.
+
+\begin{formule}[équation de propagation]
+\[ \boxed{\,y_{\mathrm P}(t) = y_0\!\left(t - \dfrac{x}{v}\right)\,} \]
+Le point P à l'abscisse $x$ refait, à l'instant $t$, ce que faisait la source à l'instant
+antérieur $t - x/v$.
+\begin{ou}
+  \item $y_{\mathrm P}(t)$ : \textbf{élongation} (déplacement) du point P à l'instant $t$, en
+        mètres (\si{\metre}) ;
+  \item $y_0$ : loi horaire imposée par la \textbf{source} (en \si{\metre}) ;
+  \item $x$ : \textbf{abscisse} (distance) du point P à la source, en mètres (\si{\metre}) ;
+  \item $v$ : \textbf{célérité} de l'onde dans le milieu, en \si{\metre\per\second} ;
+  \item $\dfrac{x}{v} = \tau$ : \textbf{retard} de P sur la source, en secondes (\si{\second}).
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Lecture.} Le terme $t - x/v$ est la signature même d'une onde qui se propage
+\emph{vers les $x$ croissants}. Si l'onde se propageait dans l'autre sens, on écrirait
+$t + x/v$. Tout point reçoit l'information « plus tard que la source », jamais avant : c'est le
+principe de causalité.
+
+\subsection{Grandeurs caractéristiques d'une onde périodique}
+
+Lorsque la source répète indéfiniment le même mouvement, l'onde devient \textbf{périodique} :
+elle se reproduit identique à elle-même à la fois \emph{dans le temps} (période $T$) et
+\emph{dans l'espace} (longueur d'onde $\lambda$).
+
+\begin{definition}[période, fréquence, longueur d'onde]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item La \textbf{période} $T$ est le temps nécessaire pour effectuer \emph{une vibration
+        complète} (en \si{\second}).
+  \item La \textbf{fréquence} $f$ est le \emph{nombre de vibrations par unité de temps}
+        (en \si{\hertz}, $\SI{1}{\hertz} = \SI{1}{\per\second}$).
+  \item La \textbf{longueur d'onde} $\lambda$ est la \emph{distance} entre deux points
+        consécutifs de l'onde qui vibrent à l'identique (deux crêtes successives par
+        exemple), en \si{\metre}. C'est la « période spatiale ».
+\end{itemize}
+\end{definition}
+
+\begin{formule}[période et fréquence]
+\[ \boxed{\,T = \dfrac{1}{f}\,}\qquad\Longleftrightarrow\qquad f = \dfrac{1}{T} \]
+\begin{ou}
+  \item $T$ : période, en secondes (\si{\second}) ;
+  \item $f$ : fréquence, en hertz (\si{\hertz}) ou \si{\per\second}.
+\end{ou}
+Période et fréquence sont \textbf{inverses} l'une de l'autre : plus une onde vibre vite
+(grande fréquence), plus sa période est courte.
+\end{formule}
+
+\begin{formule}[longueur d'onde et célérité]
+\[ \boxed{\,\lambda = v\times T = \dfrac{v}{f}\,}
+   \qquad\text{et de façon équivalente}\qquad
+   \boxed{\,v = \lambda\times f\,} \]
+\begin{ou}
+  \item $\lambda$ : longueur d'onde, en mètres (\si{\metre}) ;
+  \item $v$ : célérité de l'onde, en \si{\metre\per\second} ;
+  \item $T$ : période, en secondes (\si{\second}) ; \quad $f$ : fréquence, en \si{\hertz}.
+\end{ou}
+\textbf{Interprétation.} Pendant une période $T$, la source fait une oscillation complète et,
+dans le même temps, l'onde avance d'exactement une longueur d'onde $\lambda$. La relation
+$\lambda = vT$ n'est donc que la définition « distance = vitesse $\times$ temps » appliquée sur
+une période.
+\end{formule}
+
+\begin{attention}
+$f$ (la fréquence) est imposée par la \textbf{source} et ne change pas quand l'onde change de
+milieu. En revanche $v$ et $\lambda$ \emph{dépendent du milieu}. Quand une onde passe d'un
+milieu à un autre (l'air vers l'eau par ex.), sa fréquence reste la même mais sa longueur
+d'onde change, puisque $\lambda = v/f$.
+\end{attention}
+
+\begin{exemple}[calcul des grandeurs d'une onde sonore]
+Un haut-parleur émet un son pur de fréquence $f = \SI{100}{\hertz}$ dans l'air, où la célérité
+du son vaut $v = \SI{340}{\metre\per\second}$. Déterminons toutes les grandeurs.
+
+\smallskip
+\textbf{Période.} \quad
+$\displaystyle T = \frac{1}{f} = \frac{1}{\SI{100}{\hertz}} = \SI{0.01}{\second} = \SI{10}{\milli\second}.$
+Chaque oscillation complète de l'air dure un centième de seconde.
+
+\smallskip
+\textbf{Longueur d'onde.} \quad
+$\displaystyle \lambda = \frac{v}{f} = \frac{\SI{340}{\metre\per\second}}{\SI{100}{\hertz}}
+ = \SI{3.4}{\metre}.$
+Deux zones de compression successives sont distantes de \SI{3.4}{\metre} dans l'air.
+
+\smallskip
+\textbf{Vérification.} \quad
+$v = \lambda f = \SI{3.4}{\metre}\times\SI{100}{\hertz} = \SI{340}{\metre\per\second}$ : on
+retrouve bien la célérité de départ. \\[2pt]
+\textbf{Et dans l'eau ?} La célérité du son y vaut environ \SI{1480}{\metre\per\second}. La
+fréquence reste $\SI{100}{\hertz}$ (c'est la source qui la fixe), donc
+$\lambda_{\text{eau}} = 1480/100 = \SI{14.8}{\metre}$ : la longueur d'onde est plus de
+quatre fois plus grande, alors que le son « est le même » pour la source.
+\end{exemple}
+
+\begin{exemple}[onde à la surface de l'eau]
+Sur un lac, on compte que les crêtes des vagues passent toutes les $T = \SI{4}{\second}$
+sous un ponton, et l'on mesure une distance de $\lambda = \SI{2}{\metre}$ entre deux crêtes
+voisines. Alors :
+\[ v = \frac{\lambda}{T} = \frac{\SI{2}{\metre}}{\SI{4}{\second}} = \SI{0.5}{\metre\per\second},
+   \qquad f = \frac{1}{T} = \frac{1}{\SI{4}{\second}} = \SI{0.25}{\hertz}. \]
+Les vagues avancent donc à un demi-mètre par seconde, en effectuant un quart d'oscillation
+par seconde. On note au passage qu'une \emph{grande} longueur d'onde associée à une
+\emph{petite} fréquence donne une onde lente : tout est cohérent avec $v = \lambda f$.
+\end{exemple}
+
+% =====================================================================
+\section{Caractéristiques d'une onde sinusoïdale}
+% =====================================================================
+\label{sec:sinus}
+
+Le cas le plus important est celui où la source effectue un mouvement \textbf{sinusoïdal}
+(harmonique simple). L'onde qui en résulte est alors décrite par une fonction sinus, à la fois
+du temps $t$ et de la position $x$.
+
+\subsection{Équation de l'élongation}
+
+\begin{formule}[élongation d'une onde sinusoïdale progressive]
+\[ \boxed{\,y_{\mathrm P}(t) = A\,\sin\!\left[\omega\!\left(t-\frac{x}{v}\right)\right]
+   = A\,\sin\!\left(2\pi f\,t - \frac{2\pi x}{Tv}\right)
+   = A\,\sin\!\left(\omega t - k x\right)\,} \]
+\begin{ou}
+  \item $y_{\mathrm P}(t)$ : élongation du point P à l'instant $t$, en \si{\metre} ;
+  \item $A$ : \textbf{amplitude}, élongation maximale (toujours positive), en \si{\metre} ;
+  \item $\omega$ : \textbf{pulsation} (ou fréquence angulaire), en \si{\radian\per\second} ;
+  \item $k$ : \textbf{nombre d'onde} (pulsation spatiale), en \si{\radian\per\metre} ;
+  \item $t$ : temps, en \si{\second} ; \quad $x$ : abscisse du point, en \si{\metre} ;
+  \item $\omega t - kx$ : \textbf{phase} de l'onde, en \si{\radian}.
+\end{ou}
+\end{formule}
+
+\begin{formule}[pulsation et nombre d'onde]
+\[ \boxed{\,\omega = 2\pi f = \frac{2\pi}{T}\,}\qquad\qquad
+   \boxed{\,k = \frac{2\pi}{\lambda}\,} \]
+\begin{ou}
+  \item $\omega$ : pulsation, en \si{\radian\per\second} — c'est le « nombre de radians
+        balayés par seconde ». Un tour complet ($2\pi$ rad) correspond à une période ;
+  \item $k$ : nombre d'onde, en \si{\radian\per\metre} — le « nombre de radians par mètre ».
+        Un tour complet correspond à une longueur d'onde ;
+  \item on en déduit aussi $\dfrac{\omega}{k} = \dfrac{2\pi f}{2\pi/\lambda} = \lambda f = v$ :
+        \textbf{la célérité est le rapport de la pulsation au nombre d'onde}.
+\end{ou}
+\end{formule}
+
+La figure~\ref{fig:sinus} représente l'onde « photographiée » à un instant donné en fonction
+de la position $x$. On y lit l'amplitude $A$ (hauteur des crêtes) et la longueur d'onde
+$\lambda$ (distance entre deux crêtes).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \def\A{1.5}\def\Lc{3.0}   % amplitude (cm), longueur d'onde (cm)
+  % axes
+  \draw[->,>=Stealth,black!75] (-0.3,0) -- (10.2,0) node[right]{$x$ (m)};
+  \draw[->,>=Stealth,black!75] (0,-2.0) -- (0,2.1) node[left]{$y$};
+  \draw[dashed,black!40] (-0.2,\A) -- (10,\A);
+  \draw[dashed,black!40] (-0.2,-\A) -- (10,-\A);
+  \node[left] at (0,\A) {$A$}; \node[left] at (0,-\A) {$-A$};
+  \node[below left] at (0,0) {$0$};
+  % courbe sinusoïdale : crêtes en x = L/4 + nL
+  \draw[primary,line width=1.5pt,smooth,samples=240,domain=0:9.6]
+        plot (\x,{\A*sin( \x*(360/\Lc) )});
+  % points remarquables
+  \coordinate (A) at ({0.25*\Lc},\A);    % crête 1
+  \coordinate (C) at ({1.25*\Lc},\A);    % crête 2  (concordance avec A)
+  \coordinate (B) at ({0.75*\Lc},-\A);   % creux 1  (opposition avec A)
+  \coordinate (D) at ({1.75*\Lc},-\A);   % creux 2
+  \coordinate (P) at ({1.55*\Lc},{\A*sin(1.55*360)});
+  \foreach \pt/\lab/\pos in {A/A/above,C/C/above,B/B/below,D/D/below}{
+     \fill[primarydark] (\pt) circle (2.3pt); \node[\pos] at (\pt) {\textbf{\lab}};}
+  \fill[formulacol] (P) circle (2.3pt); \node[right,formulacol] at (P) {\textbf{P}};
+  % longueur d'onde entre A et C
+  \draw[<->,>=Stealth,primarydark,thick] ($(A)+(0,0.4)$) -- ($(C)+(0,0.4)$)
+       node[midway,above,fill=white,inner sep=1pt]{$\lambda$};
+  \draw[primarydark,dashed,line width=0.5pt] (A)--($(A)+(0,0.5)$);
+  \draw[primarydark,dashed,line width=0.5pt] (C)--($(C)+(0,0.5)$);
+  % demi-longueur d'onde entre A et B (opposition)
+  \draw[<->,>=Stealth,formulacol] ($(A)+(0,-0.0)$)
+        .. controls ($(A)!0.5!(B)+(0,1.0)$) .. ($(B)+(0,0.0)$);
+  \node[formulacol,fill=white,inner sep=1pt] at ($(A)!0.5!(B)+(0,0.55)$) {$\lambda/2$};
+\end{tikzpicture}
+\caption{Onde sinusoïdale à un instant fixé. Les points \textbf{A} et \textbf{C}, distants de
+$\lambda$, vibrent \emph{en concordance de phase}. Les points \textbf{A} et \textbf{B},
+distants de $\lambda/2$, vibrent \emph{en opposition de phase}.}
+\label{fig:sinus}
+\end{figure}
+
+\subsection{Vitesse et accélération d'un point du milieu}
+
+Un point P du milieu oscille : à tout instant il possède une \textbf{vitesse} et une
+\textbf{accélération}, obtenues en dérivant l'élongation par rapport au temps. \emph{Attention}
+à ne pas confondre cette vitesse $v_{\mathrm P}$ (mouvement \emph{transversal} du point) avec la
+célérité $v$ (vitesse de \emph{propagation} de l'onde).
+
+\begin{formule}[vitesse d'un point du milieu]
+\[ \boxed{\,v_{\mathrm P}(t) = y_{\mathrm P}'(t)
+   = A\,\omega\,\cos\!\left[\omega\!\left(t-\frac{x}{v}\right)\right]\,} \]
+\begin{ou}
+  \item $v_{\mathrm P}(t)$ : vitesse d'oscillation du point P, en \si{\metre\per\second} ;
+  \item $A\,\omega$ : \textbf{vitesse maximale} du point (atteinte quand il passe par sa
+        position d'équilibre), en \si{\metre\per\second} ;
+  \item $A$ en \si{\metre}, $\omega$ en \si{\radian\per\second}.
+\end{ou}
+\end{formule}
+
+\begin{formule}[accélération d'un point du milieu]
+\[ \boxed{\,a_{\mathrm P}(t) = v_{\mathrm P}'(t)
+   = -A\,\omega^{2}\,\sin\!\left[\omega\!\left(t-\frac{x}{v}\right)\right]
+   = -\,\omega^{2}\,y_{\mathrm P}(t)\,} \]
+\begin{ou}
+  \item $a_{\mathrm P}(t)$ : accélération du point P, en \si{\metre\per\second\squared} ;
+  \item $A\,\omega^{2}$ : \textbf{accélération maximale} (atteinte aux crêtes et aux creux), en
+        \si{\metre\per\second\squared} ;
+  \item la relation $a_{\mathrm P} = -\omega^{2}y_{\mathrm P}$ est la signature du
+        \textbf{mouvement harmonique simple} : l'accélération est toujours \emph{opposée} à
+        l'élongation et proportionnelle à elle (force de rappel).
+\end{ou}
+\end{formule}
+
+\subsection{Déphasage, concordance et opposition de phase}
+
+Si l'onde est \textbf{déphasée} d'un angle $\varphi$ (par exemple parce que la source n'a pas
+démarré à $t=0$), son équation devient :
+\[ \boxed{\,y_{\mathrm P}(t) = A\,\sin(\omega t - k x + \varphi)\,} \]
+où $\varphi$ est la \textbf{phase à l'origine}, en radians (\si{\radian}).
+
+\begin{definition}[concordance et opposition de phase]
+On compare deux points (ou deux ondes) selon la distance $d$ qui les sépare :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Concordance de phase} : si $d = n\lambda$ ($n\in\mathbb{Z}$), les deux points
+        vibrent \emph{exactement de la même façon} au même instant (ex. : A et C
+        sur la figure~\ref{fig:sinus}).
+  \item \textbf{Opposition de phase} : si $d = (2n+1)\dfrac{\lambda}{2}$ ($n\in\mathbb{Z}$),
+        les deux points vibrent \emph{de manière inverse} : quand l'un monte, l'autre descend
+        (ex. : A et B).
+\end{itemize}
+\end{definition}
+
+\begin{exemple}[déphasage entre deux ondes — étude complète]
+On considère deux ondes 1 et 2 de \emph{même fréquence} se propageant de gauche à droite
+(figure~\ref{fig:deux-ondes}). L'\textbf{Onde 1} a pour équation $y_1 = 0{,}2\,\sin(2\pi t)$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=13.4cm,height=6.8cm,
+  xmin=0,xmax=3,ymin=-0.37,ymax=0.37,
+  xtick={0,0.5,1,1.5,2,2.5,3},
+  ytick={-0.3,-0.2,-0.1,0,0.1,0.2,0.3},
+  grid=both,grid style={black!12},
+  axis lines=left,
+  xlabel={Temps en s},ylabel={Amplitude en m},
+  xlabel style={at={(axis description cs:0.5,-0.09)},anchor=north},
+  ylabel style={at={(axis description cs:-0.065,0.5)},rotate=0,anchor=south,
+     sloped=false},
+  tick label style={font=\footnotesize},
+  label style={font=\footnotesize},
+  samples=200,clip=false,
+  legend cell align=left,
+  legend style={at={(0.5,1.07)},anchor=south,legend columns=2,
+     draw=black!30,font=\footnotesize\bfseries,column sep=10pt},
+]
+  \addplot[ondeA,line width=1.3pt,domain=0:3]{0.2*sin(deg(2*pi*x))};
+  \addlegendentry{Onde 1}
+  \addplot[ondeB,line width=1.3pt,domain=0:3]{0.2*sin(deg(2*pi*x)-90)};
+  \addlegendentry{Onde 2}
+  % ligne de zéro plus marquée
+  \draw[black!45,line width=0.6pt] (axis cs:0,0) -- (axis cs:3,0);
+  % écart de phase Delta t entre les deux premières crêtes (0,25 -> 0,50)
+  \draw[<->,>=Stealth,black] (axis cs:0.25,0.265) -- (axis cs:0.5,0.265);
+  \node[font=\footnotesize,anchor=south,inner sep=1.5pt]
+       at (axis cs:0.37,0.275) {$\Delta t = \SI{0.25}{\second}$};
+  % période T entre deux crêtes successives de l'Onde 1 (0,25 -> 1,25)
+  \draw[<->,>=Stealth,black] (axis cs:0.25,-0.275) -- (axis cs:1.25,-0.275);
+  \node[font=\footnotesize,anchor=north,inner sep=1.5pt]
+       at (axis cs:0.75,-0.285) {$T = \SI{1}{\second}$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Les deux ondes ont la même période $T=\SI{1}{\second}$ et la même amplitude
+$A=\SI{0.2}{\metre}$. L'Onde 2 est décalée de $\Delta t = \SI{0.25}{\second}$ vers la droite :
+elle est \emph{en retard} sur l'Onde 1.}
+\label{fig:deux-ondes}
+\end{center}
+
+\textbf{1. Identification de l'avance/retard.} L'Onde 1 atteint son maximum
+($A = \SI{0.2}{\metre}$) \emph{en premier} : elle est donc \textbf{en avance de phase} sur
+l'Onde 2. L'écart temporel entre les deux (par exemple entre leurs premiers ventres) est
+$\Delta t = \SI{0.25}{\second}$. L'Onde 2 étant en retard, son déphasage $\varphi_2$ sera
+\emph{négatif} : $\Delta\varphi = \varphi_2 - \varphi_1 < 0$.
+
+\smallskip
+\textbf{2. Calcul du déphasage.} On utilise une simple proportionnalité : une période entière
+$T$ correspond à un tour complet $2\pi$. Donc un retard $\Delta t$ correspond à un angle :
+\[
+\begin{array}{r@{\;\longrightarrow\;}l}
+ T = \SI{1}{\second} & 2\pi \\[2pt]
+ \Delta t = \SI{0.25}{\second} & |\Delta\varphi|\;?
+\end{array}
+\qquad\Longrightarrow\qquad
+|\Delta\varphi| = \frac{\Delta t\times 2\pi}{T}
+ = \frac{0{,}25\times 2\pi}{1} = \frac{\pi}{2}.
+\]
+Comme l'Onde 2 est en \emph{retard}, on prend le signe négatif :
+\[ \Delta\varphi = \varphi_2 - \varphi_1 = \varphi_2 - 0
+   = -\left|\frac{\Delta t\times 2\pi}{T}\right| = -\frac{\pi}{2}
+   \quad\Longrightarrow\quad \varphi_2 = -\frac{\pi}{2}. \]
+
+\textbf{3. Équation de l'Onde 2.} On reporte $\varphi_2$ dans l'équation générale (avec la
+même pulsation $\omega = 2\pi$) :
+\[ \boxed{\,y_2 = 0{,}2\,\sin\!\left(2\pi t + \varphi_2\right)
+   = 0{,}2\,\sin\!\left(2\pi t - \frac{\pi}{2}\right).} \]
+
+\textbf{Important.} Si, au contraire, l'Onde 2 avait été \emph{en avance} sur l'Onde 1, on
+aurait eu $\Delta\varphi = \varphi_2 - \varphi_1 > 0$ (déphasage positif).
+\end{exemple}
+
+% =====================================================================
+\section{Ondes stationnaires}
+% =====================================================================
+\label{sec:stationnaire}
+
+\subsection{Réflexion et formation d'une onde stationnaire}
+
+\begin{definition}[réflexion sur un obstacle fixe]
+Lorsqu'une onde progressive arrive sur un \textbf{obstacle fixe}, dans un milieu élastique
+inchangé, elle subit une \textbf{réflexion totale} \emph{avec changement de signe de
+l'élongation} (la bosse repart en creux). L'énergie est \textbf{intégralement conservée} :
+l'onde réfléchie repart à la \emph{même célérité} que l'onde incidente.
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- onde incidente (haut) ---
+  \begin{scope}[yshift=1.6cm]
+    \draw[black,line width=1.6pt] (0,0) -- (10.0,0);
+    \draw[black,line width=1.6pt] (0,-0.45) -- (0,0.9);          % mur gauche
+    \draw[ondeA,line width=1.8pt,smooth,samples=70,domain=0.1:1.9]
+          plot (\x,{0.9*exp(-((\x-1)/0.4)^2)});
+    \node[ondeA,font=\bfseries\footnotesize] at (1.0,1.25) {Onde incidente};
+    \draw[->,>=Stealth,ondeA,line width=1.1pt] (1.7,0.45)--(2.7,0.45)
+          node[above,midway,black]{$\vv v$};
+    \foreach \i in {0,...,10}{\draw[black!60] (\i,0)--(\i,-0.18);}
+    \node[below] at (0,-0.2){0}; \node[below] at (5,-0.2){5};
+    \node[below] at (10,-0.2){10}; \node[right] at (10.0,0){$x$ en m};
+    \node at (7.4,0.45){Corde au repos};
+  \end{scope}
+  % --- onde réfléchie (bas) : revient en creux, vers la gauche ---
+  \begin{scope}[yshift=-1.1cm]
+    \draw[black,line width=1.6pt] (0,0) -- (10.0,0);
+    \draw[black,line width=1.6pt] (10,-0.9) -- (10,0.45);        % mur droit (obstacle)
+    \draw[ondeB,line width=1.8pt,smooth,samples=70,domain=8.1:9.9]
+          plot (\x,{-0.9*exp(-((\x-9)/0.4)^2)});
+    \node[ondeB,font=\bfseries\footnotesize] at (8.7,-1.25) {Onde réfléchie};
+    \draw[->,>=Stealth,ondeB,line width=1.1pt] (8.3,-0.45)--(7.3,-0.45)
+          node[above,midway,black]{$\vv v$};
+    \foreach \i in {0,...,10}{\draw[black!60] (\i,0)--(\i,0.18);}
+    \node[above] at (0,0.2){0}; \node[above] at (5,0.2){5};
+    \node[above] at (10,0.2){10}; \node[right] at (10.0,0){$x$ en m};
+    \node at (2.6,0.45){Corde au repos};
+  \end{scope}
+\end{tikzpicture}
+\caption{Réflexion d'un ébranlement sur l'obstacle fixe (mur de droite) : la bosse incidente
+(bleue) repart en creux (orange), avec la même vitesse. L'énergie est conservée.}
+\label{fig:reflexion}
+\end{figure}
+
+\begin{definition}[onde stationnaire, nœuds et ventres]
+La \textbf{superposition} (interférence) de l'onde incidente et de l'onde réfléchie donne
+naissance à une \textbf{onde stationnaire} : une figure qui ne se déplace plus, mais
+\emph{oscille sur place}. Elle est caractérisée par :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item des \textbf{nœuds} : points d'\emph{élongation toujours nulle} (le milieu y reste
+        immobile) ;
+  \item des \textbf{ventres} : points d'\emph{élongation maximale} (le milieu y oscille avec
+        l'amplitude la plus grande).
+\end{itemize}
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \def\A{1.1}\def\Ls{9.0}
+  % axes
+  \draw[->,>=Stealth,black!75] (-0.2,0) -- (10.4,0) node[right]{};
+  \draw[->,>=Stealth,black!75] (0,-1.95) -- (0,2.0) node[left]{Amplitude};
+  % obstacle fixe (mur droit)
+  \draw[black,line width=1.4pt] (\Ls,-1.35) -- (\Ls,1.35);
+  \node[anchor=west,font=\footnotesize] at (\Ls+0.1,1.1) {obstacle fixe};
+  % ondes incidente (bleu) et réfléchie (rouge), faibles
+  \draw[ondeA!60,line width=1pt,smooth,samples=240,domain=0:\Ls]
+        plot (\x,{0.58*sin(\x*60)});
+  \draw[ondeB!60,line width=1pt,smooth,samples=240,domain=0:\Ls]
+        plot (\x,{-0.58*sin(\x*60)});
+  % onde stationnaire (noir épais)
+  \draw[black,line width=1.8pt,smooth,samples=260,domain=0:\Ls]
+        plot (\x,{\A*sin(\x*60)});
+  % noeuds (points) et flèches de ventre
+  \foreach \xn in {0,3,6,9}{\fill[primarydark] (\xn,0) circle (2.3pt);}
+  \foreach \xv/\dir in {1.5/1,4.5/-1,7.5/1}{
+     \draw[->,>=Stealth,black!70,line width=0.7pt]
+        (\xv,{0.15*\dir}) -- (\xv,{(\A-0.05)*\dir});}
+  % --- étiquettes dans les marges (sans recouvrir la courbe noire) ---
+  % ventres (haut) en x = 1,5 et 7,5
+  \node[font=\footnotesize] (V1) at (1.5,1.66) {Ventre};
+  \draw[black!55,line width=0.5pt] (V1) -- (1.5,1.2);
+  \node[font=\footnotesize] (V3) at (7.5,1.66) {Ventre};
+  \draw[black!55,line width=0.5pt] (V3) -- (7.5,1.2);
+  % noeuds (haut) en x = 3 et 6
+  \node[font=\footnotesize] (N1) at (3,1.66) {Nœud};
+  \draw[black!55,line width=0.5pt] (N1) -- (3,0.12);
+  \node[font=\footnotesize] (N2) at (6,1.66) {Nœud};
+  \draw[black!55,line width=0.5pt] (N2) -- (6,0.12);
+  % ventre (bas) en x = 4,5
+  \node[font=\footnotesize] (V2) at (4.5,-1.66) {Ventre};
+  \draw[black!55,line width=0.5pt] (V2) -- (4.5,-1.2);
+  % identification des courbes (codée par la couleur)
+  \node[ondeA!75!black,font=\footnotesize] at (1.95,-1.66) {Onde incidente};
+  \node[ondeB!75!black,font=\footnotesize] at (7.15,-1.66) {Onde réfléchie};
+\end{tikzpicture}
+\caption{Onde stationnaire (trait noir épais) résultant de la somme de l'onde incidente
+(bleue) et de l'onde réfléchie (rouge) \emph{en phase}. Les \textbf{nœuds} sont fixes
+(amplitude nulle), les \textbf{ventres} oscillent au maximum.}
+\label{fig:stationnaire}
+\end{figure}
+
+\begin{remarque}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item L'amplitude de l'onde stationnaire est simplement la \textbf{somme des amplitudes} de
+        chacune des deux ondes (incidente et réfléchie).
+  \item On dit que l'onde stationnaire est \textbf{résonante} lorsque les conditions de
+        longueur d'onde (ou de fréquence) sont fixées par la géométrie du milieu.
+\end{itemize}
+\end{remarque}
+
+\subsection{Harmoniques d'une corde de longueur \texorpdfstring{$L$}{L}}
+
+Pour une corde de longueur $L$ fixée, seules certaines longueurs d'onde « rentrent » exactement
+dans la corde : ce sont les \textbf{modes propres} ou \textbf{harmoniques}.
+
+\begin{formule}[corde fixée aux deux extrémités]
+\[ \boxed{\,\lambda_n = \frac{2L}{n}\,}\qquad
+   \boxed{\,f_n = \frac{c}{\lambda_n} = \frac{n\,c}{2L}\,}\qquad (n = 1,2,3,\dots) \]
+\begin{ou}
+  \item $\lambda_n$ : longueur d'onde du mode $n$, en \si{\metre} ;
+  \item $L$ : longueur de la corde, en \si{\metre} ;
+  \item $c$ : célérité de l'onde sur la corde, en \si{\metre\per\second} ;
+  \item $f_n$ : fréquence du mode $n$ (la $n$-ième harmonique), en \si{\hertz} ;
+  \item $n$ : numéro de l'harmonique (entier $\ge 1$). $n=1$ : \textbf{mode fondamental}
+        (1\textsuperscript{re} harmonique) ; $n=2$ : 2\textsuperscript{e} harmonique ; etc.
+\end{ou}
+Les deux extrémités fixes \emph{imposent un nœud à chaque bout} : la corde contient donc un
+nombre entier de « fuseaux » (demi-longueurs d'onde), d'où $L = n\,\lambda_n/2$.
+\end{formule}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \def\Lh{9.0}\def\Ah{0.62}
+  \foreach \n/\yy/\lab in {1/3.6/{$n=1$}, 2/1.8/{$n=2$}, 3/0.0/{$n=3$}}{
+    \begin{scope}[yshift=\yy cm]
+      % murs (extrémités fixes) en vert
+      \draw[excol,line width=3pt] (0,-0.75)--(0,0.75);
+      \draw[excol,line width=3pt] (\Lh,-0.75)--(\Lh,0.75);
+      % enveloppe supérieure (bleue) et inférieure (noire)
+      \draw[defcol,line width=1.1pt,smooth,samples=200,domain=0:\Lh]
+            plot (\x,{\Ah*sin(\x*(\n*180/\Lh))});
+      \draw[black,line width=1.1pt,smooth,samples=200,domain=0:\Lh]
+            plot (\x,{-\Ah*sin(\x*(\n*180/\Lh))});
+      % noeuds
+      \foreach \k in {0,...,\n}{\fill[black] (\k*\Lh/\n,0) circle (2.4pt);}
+      \node[left=6pt,font=\small] at (0,0) {\lab};
+    \end{scope}
+  }
+  % cote L sous la première portée
+  \draw[<->,>=Stealth,black!75,dashed] (0,2.95) -- (\Lh,2.95)
+        node[midway,fill=white,inner sep=1pt]{$L$};
+\end{tikzpicture}
+\caption{Trois premiers modes propres d'une corde fixée à ses deux extrémités. Le mode $n$
+possède $n$ fuseaux (ventres) et $n+1$ nœuds (points noirs), dont les deux extrémités.}
+\label{fig:harmoniques}
+\end{figure}
+
+\begin{formule}[corde avec une extrémité libre]
+\[ \boxed{\,\lambda_n = \frac{4L}{2n-1}\,}\qquad (n = 1,2,3,\dots) \]
+\begin{ou}
+  \item $\lambda_n$ : longueur d'onde du mode $n$, en \si{\metre} ;
+  \item $L$ : longueur de la corde, en \si{\metre} ;
+  \item $n$ : numéro de l'harmonique (entier $\ge 1$).
+\end{ou}
+Une extrémité libre impose un \emph{ventre} (et non un nœud) à ce bout : seuls les modes
+« impairs » subsistent, d'où le facteur $2n-1$ au dénominateur.
+\end{formule}
+
+\begin{exemple}[harmoniques d'une corde de guitare]
+Une corde de longueur $L = \SI{1.2}{\metre}$, fixée à ses deux extrémités, est le siège d'ondes
+de célérité $c = \SI{120}{\metre\per\second}$. Calculons les trois premiers harmoniques avec
+$\lambda_n = 2L/n$ et $f_n = nc/(2L)$.
+
+\smallskip
+\textbf{Fondamental} ($n=1$) :
+\[ \lambda_1 = \frac{2\times 1{,}2}{1} = \SI{2.4}{\metre},\qquad
+   f_1 = \frac{1\times 120}{2\times 1{,}2} = \frac{120}{2{,}4} = \SI{50}{\hertz}. \]
+
+\textbf{2\textsuperscript{e} harmonique} ($n=2$) :
+\[ \lambda_2 = \frac{2\times 1{,}2}{2} = \SI{1.2}{\metre},\qquad
+   f_2 = \frac{2\times 120}{2{,}4} = \SI{100}{\hertz} = 2 f_1. \]
+
+\textbf{3\textsuperscript{e} harmonique} ($n=3$) :
+\[ \lambda_3 = \frac{2\times 1{,}2}{3} = \SI{0.8}{\metre},\qquad
+   f_3 = \frac{3\times 120}{2{,}4} = \SI{150}{\hertz} = 3 f_1. \]
+
+\smallskip
+\textbf{Conclusion.} Les fréquences propres sont des \emph{multiples entiers} du fondamental :
+$f_n = n f_1 = 50\,n$ \si{\hertz}. C'est exactement ce qui donne aux instruments à cordes leur
+sonorité « musicale » : la note de hauteur $f_1$ est accompagnée de ses harmoniques
+$2f_1, 3f_1,\dots$ Plus la corde est courte (petit $L$) ou tendue (grand $c$), plus le
+fondamental est aigu.
+\end{exemple}
+
+% =====================================================================
+\section{Diffraction et interférences}
+% =====================================================================
+
+\subsection{Diffraction}
+
+\begin{definition}[diffraction]
+La \textbf{diffraction} est le \emph{changement de direction} d'une onde qui rencontre un
+\textbf{obstacle} ou une \textbf{ouverture}. Elle n'est nettement observable que si la
+dimension de l'obstacle (ou de la fente) est du \emph{même ordre de grandeur} que la longueur
+d'onde $\lambda$. Après l'obstacle, l'onde « contourne » et s'étale : des fronts d'onde plans
+deviennent des fronts d'onde quasi circulaires.
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- fronts d'onde plans (à gauche) ---
+  \foreach \x in {0,0.6,1.2,1.8,2.4}{
+     \draw[black,line width=1pt] (\x,-2)--(\x,2);}
+  \draw[<->,>=Stealth,black] (1.2,2.25)--(1.8,2.25)
+        node[midway,above,font=\footnotesize]{$\lambda$};
+  \draw[->,>=Stealth,black,line width=1pt] (1.0,-2.45)--(2.2,-2.45)
+        node[right,font=\footnotesize]{$\vv v$};
+  \node[font=\footnotesize] at (1.2,-2.85) {Propagation des ondes};
+  % --- barrière avec fente au centre ---
+  \draw[black,line width=2.4pt] (3.4,0.45)--(3.4,2.1);
+  \draw[black,line width=2.4pt] (3.4,-2.1)--(3.4,-0.45);
+  \node[font=\footnotesize,rotate=90] at (3.05,1.25) {Obstacle};
+  \node[font=\footnotesize,rotate=90] at (3.05,-1.25) {Obstacle};
+  % --- fronts circulaires (à droite), centrés sur la fente ---
+  \foreach \r in {0.55,1.1,1.65,2.2,2.75}{
+     \draw[black,dashed,line width=0.8pt]
+       ([shift={(3.4,0)}]75:\r) arc (75:-75:\r);}
+  \draw[<->,>=Stealth,black] ([shift={(3.4,0)}]35:1.1)--([shift={(3.4,0)}]35:1.65)
+        node[midway,above right,font=\footnotesize]{$\lambda$};
+\end{tikzpicture}
+\caption{Diffraction par une fente de taille comparable à $\lambda$ : les fronts d'onde plans
+(à gauche) deviennent des fronts d'onde circulaires (à droite), comme si la fente était une
+nouvelle source.}
+\label{fig:diffraction}
+\end{figure}
+
+\subsection{Interférences de deux sources}
+
+\begin{definition}[interférences]
+Quand deux ondes de \emph{même longueur d'onde} issues de deux \textbf{sources synchrones}
+(cohérentes) se \textbf{superposent}, leurs élongations s'ajoutent. Selon les endroits, elles
+se renforcent ou s'annulent : on observe des \textbf{franges d'interférence}.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Interférence constructive} : les ondes arrivent \emph{en concordance de phase},
+        elles se renforcent $\Rightarrow$ frange brillante / \textbf{ventre}.
+  \item \textbf{Interférence destructive} : les ondes arrivent \emph{en opposition de phase},
+        elles s'annulent mutuellement $\Rightarrow$ frange sombre / \textbf{nœud}.
+\end{itemize}
+\end{definition}
+
+On considère deux sources synchrones $S_1$ et $S_2$ séparées d'une distance $a$, et un point
+$M$ d'un écran placé à la distance $D$ (figure~\ref{fig:young}). On note $d_1 = S_1M$ et
+$d_2 = S_2M$. L'élongation au point $M$ est la \emph{somme} des deux élongations :
+\begin{formule}[superposition au point M]
+\[ y_M = y_M^{1} + y_M^{2},\qquad
+   \begin{cases}
+     y_M^{1} = A\,\sin\!\Big(2\pi\big(t f - d_1/\lambda\big)\Big)\\[4pt]
+     y_M^{2} = A\,\sin\!\Big(2\pi\big(t f - d_2/\lambda\big)\Big)
+   \end{cases} \]
+\begin{ou}
+  \item $y_M^{1},\,y_M^{2}$ : élongations dues à chaque source au point $M$, en \si{\metre} ;
+  \item $A$ : amplitude commune des deux sources, en \si{\metre} ;
+  \item $d_1,\,d_2$ : distances des sources $S_1$, $S_2$ au point $M$, en \si{\metre} ;
+  \item $f$ : fréquence commune (\si{\hertz}) ; $\lambda$ : longueur d'onde (\si{\metre}).
+\end{ou}
+\end{formule}
+
+C'est la \textbf{différence de marche} $\delta = d_1 - d_2$ qui décide du type d'interférence :
+
+\begin{theoreme}[conditions d'interférence]
+\[ \text{\bf Constructive (ventre) : } d_1 - d_2 = n\lambda
+   \qquad\qquad
+   \text{\bf Destructive (nœud) : } d_1 - d_2 = (2n+1)\frac{\lambda}{2}, \]
+avec $n\in\mathbb{Z}$. Autrement dit : si la différence de marche est un \emph{multiple entier}
+de $\lambda$, les ondes se renforcent ; si c'est un \emph{multiple impair} de $\lambda/2$,
+elles s'annulent.
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % plan des sources (gauche) et écran (droite)
+  \draw[black,line width=1pt] (0,-2.6)--(0,2.8);
+  \draw[black,line width=1.4pt] (7,-2.8)--(7,3.2);
+  \node[right,font=\footnotesize] at (7,3.0) {Écran};
+  % sources
+  \coordinate (O)  at (0,0);
+  \coordinate (S2) at (0,1.1);
+  \coordinate (S1) at (0,-1.1);
+  \fill[black] (S1) circle (2.4pt) node[left]{$S_1$};
+  \fill[black] (S2) circle (2.4pt) node[left]{$S_2$};
+  \node[left] at (O) {$O$};
+  % point M sur l'écran
+  \coordinate (M) at (7,2.3);
+  \fill[black] (M) circle (2.4pt) node[above]{$M$};
+  % axe central
+  \draw[dashed,black!55] (O)--(7,0);
+  % rayons d1, d2
+  \draw[black,line width=0.9pt] (S1)--(M); \node at (3.2,0.95){$d_1$};
+  \draw[black,line width=0.9pt] (S2)--(M); \node at (3.6,2.0){$d_2$};
+  % cote a (entre les sources)
+  \draw[<->,>=Stealth,black] (-0.55,-1.1)--(-0.55,1.1)
+        node[midway,left]{$a$};
+  % cote D (distance plan-écran)
+  \draw[<->,>=Stealth,black] (0,-2.4)--(7,-2.4) node[midway,below]{$D$};
+  % cote x (hauteur de M)
+  \draw[<->,>=Stealth,black] (7.4,0)--(7.4,2.3) node[midway,right]{$x$};
+\end{tikzpicture}
+\caption{Dispositif des fentes de Young. La différence de marche
+$\delta = d_1 - d_2 = a\,x/D$ fixe l'intensité au point $M$ situé à la hauteur $x$ sur l'écran.}
+\label{fig:young}
+\end{figure}
+
+\begin{formule}[interfrange et différence de marche]
+\[ \boxed{\,i = \frac{\lambda\,D}{a}\,}\qquad\qquad
+   \boxed{\,d_1 - d_2 = \frac{a\,x}{D}\,} \]
+\begin{ou}
+  \item $i$ : \textbf{interfrange}, distance entre deux franges \emph{consécutives} de même
+        nature, en \si{\metre} ;
+  \item $\lambda$ : longueur d'onde, en \si{\metre} ;
+  \item $a$ : distance entre les deux sources (ou les deux fentes), en \si{\metre} ;
+  \item $D$ : distance entre le plan des sources et l'écran, en \si{\metre}, avec $D \gg a$ ;
+  \item $x$ : position du point $M$ sur l'écran (mesurée depuis l'axe central), en \si{\metre}.
+\end{ou}
+\textbf{Lecture.} L'interfrange est \emph{proportionnel} à $\lambda$ et à $D$, et
+\emph{inversement proportionnel} à $a$ : pour bien séparer les franges, on prend des fentes
+très rapprochées ($a$ petit) et un écran éloigné ($D$ grand).
+\end{formule}
+
+\begin{exemple}[fentes de Young — calcul de l'interfrange]
+Une lumière monochromatique de longueur d'onde $\lambda = \SI{600}{\nano\metre}$ (rouge)
+éclaire deux fentes distantes de $a = \SI{0.5}{\milli\metre}$. L'écran est placé à
+$D = \SI{2}{\metre}$. On veut l'interfrange $i$ et la position de la 3\textsuperscript{e} frange
+brillante.
+
+\smallskip
+\textbf{Conversion en unités SI.} \quad
+$\lambda = \SI{600}{\nano\metre} = \num{600e-9}\,\si{\metre} = \num{6e-7}\,\si{\metre}$,\quad
+$a = \SI{0.5}{\milli\metre} = \num{5e-4}\,\si{\metre}$.
+
+\smallskip
+\textbf{Interfrange.}
+\[ i = \frac{\lambda D}{a}
+   = \frac{\num{6e-7}\times 2}{\num{5e-4}}
+   = \frac{\num{1.2e-6}}{\num{5e-4}}
+   = \num{2.4e-3}\,\si{\metre} = \SI{2.4}{\milli\metre}. \]
+Deux franges brillantes voisines sont donc séparées de \SI{2.4}{\milli\metre} sur l'écran.
+
+\smallskip
+\textbf{Position de la 3\textsuperscript{e} frange brillante.} Les franges brillantes sont en
+$x_n = n\,i$ (interférence constructive, $d_1 - d_2 = n\lambda$), donc :
+\[ x_3 = 3\,i = 3\times \SI{2.4}{\milli\metre} = \SI{7.2}{\milli\metre}. \]
+
+\smallskip
+\textbf{Vérification par la différence de marche.} À la première frange brillante ($x = i$) :
+\[ d_1 - d_2 = \frac{a\,x}{D} = \frac{\num{5e-4}\times \num{2.4e-3}}{2}
+   = \num{6e-7}\,\si{\metre} = \lambda. \]
+On retrouve bien $d_1 - d_2 = 1\times\lambda$ : la condition d'interférence \emph{constructive}
+($n=1$) est satisfaite. Tout est cohérent.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : l'essentiel en un coup d'œil}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{>{\raggedright\arraybackslash}m{4.7cm}
+                >{\centering\arraybackslash}m{5.4cm}
+                >{\centering\arraybackslash}m{3.3cm}}
+\rowcolor{primary!18}
+\textbf{Grandeur / relation} & \textbf{Formule} & \textbf{Unité} \\
+\rowcolor{primary!5}
+Période $\leftrightarrow$ fréquence & $T = \dfrac{1}{f}$ & \si{\second},\ \si{\hertz} \\
+Longueur d'onde & $\lambda = vT = \dfrac{v}{f}$ & \si{\metre} \\
+\rowcolor{primary!5}
+Célérité & $v = \lambda f = \dfrac{\omega}{k}$ & \si{\metre\per\second} \\
+Pulsation, nombre d'onde & $\omega = 2\pi f,\quad k = \dfrac{2\pi}{\lambda}$
+   & \si{\radian\per\second},\ \si{\radian\per\metre} \\
+\rowcolor{primary!5}
+Élongation sinusoïdale & $y = A\sin(\omega t - kx + \varphi)$ & \si{\metre} \\
+Vitesse / accélération & $v_{\mathrm P}=A\omega\cos(\cdot),\ a_{\mathrm P}=-\omega^2 y$
+   & \si{\metre\per\second},\ \si{\metre\per\second\squared} \\
+\rowcolor{primary!5}
+Harmoniques (2 bouts fixes) & $\lambda_n = \dfrac{2L}{n},\ f_n=\dfrac{nc}{2L}$
+   & \si{\metre},\ \si{\hertz} \\
+Harmoniques (1 bout libre) & $\lambda_n = \dfrac{4L}{2n-1}$ & \si{\metre} \\
+\rowcolor{primary!5}
+Interférence constructive & $d_1-d_2 = n\lambda$ & \si{\metre} \\
+Interférence destructive & $d_1-d_2 = (2n+1)\dfrac{\lambda}{2}$ & \si{\metre} \\
+\rowcolor{primary!5}
+Interfrange (Young) & $i = \dfrac{\lambda D}{a}$ & \si{\metre} \\
+\end{tabular}
+\end{center}
+
+\vspace{0.3cm}
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{À retenir absolument}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item Une onde transporte de l'\textbf{énergie}, jamais de la matière ; chaque point
+        \emph{oscille sur place}.
+  \item \textbf{Longitudinale} = vibration parallèle à la propagation (son) ;
+        \textbf{transversale} = vibration perpendiculaire (corde, lumière).
+  \item La \textbf{fréquence} est imposée par la source ; la \textbf{célérité} et la
+        \textbf{longueur d'onde} dépendent du milieu.
+  \item \textbf{Concordance de phase} : $d=n\lambda$ ; \textbf{opposition de phase} :
+        $d=(2n+1)\lambda/2$. Ces mêmes conditions gouvernent les interférences.
+  \item Une \textbf{onde stationnaire} (incidente + réfléchie) possède des \textbf{nœuds}
+        fixes et des \textbf{ventres} ; une corde fixée ne vibre qu'à ses fréquences propres
+        $f_n = nc/2L$.
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

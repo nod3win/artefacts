@@ -1,0 +1,120 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 1 — Hydrocarbures, formules brutes et squelette carboné
+%  NIVEAU FACILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=2em,bond length=0.9em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\newcommand{\runtitle}{Thème 1 — Facile — Corrigé}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox[auto counter]{corr}[1]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Corrigé}~\thetcbcounter\ \textmd{--- \itshape #1}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=excol,colframe=excol,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{2pt}}
+
+\begin{document}
+
+\banner{Thème 1 — Hydrocarbures, formules brutes et squelette}{Niveau \textbf{Facile} — Corrigé détaillé \quad$\vert$\quad Fiche 12, Chimie organique}
+
+% ---------------------------------------------------------------------
+\begin{corr}{appliquer les formules générales}
+On applique directement les formules générales avec $n=6$ :
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=1pt]
+  \item alcane : $2n+2 = 14 \Rightarrow \rep{\ce{C6H14}}$ (\textbf{hexane}) ;
+  \item alcène : $2n = 12 \Rightarrow \rep{\ce{C6H12}}$ (\textbf{hex-1-ène}) ; une double liaison retire 2 H à l'alcane ;
+  \item alcyne : $2n-2 = 10 \Rightarrow \rep{\ce{C6H10}}$ (\textbf{hex-1-yne}) ; une triple liaison retire 4 H à l'alcane.
+\end{enumerate}
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{compter les hydrogènes de chaque carbone}
+On note la chaîne $\ce{CH3}$(1)$-\ce{CH}$(2)$-\ce{CH2}$(3)$-\ce{CH3}$(4), avec un méthyle ramifié ($*$) sur le carbone (2). Pour chaque C, nb de H $=4-$(liaisons vers d'autres C) :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item C(1) (bout de chaîne) : lié à 1 C $\Rightarrow$ \rep{3 H} ;
+  \item C(2) (central) : lié à 3 C (C1, C3 et le méthyle) $\Rightarrow$ \rep{1 H} ;
+  \item C($*$) (méthyle ramifié) : lié à 1 C $\Rightarrow$ \rep{3 H} ;
+  \item C(3) : lié à 2 C $\Rightarrow$ \rep{2 H} ;
+  \item C(4) (bout de chaîne) : lié à 1 C $\Rightarrow$ \rep{3 H}.
+\end{itemize}
+Total : $3+1+3+2+3 = \rep{12\ \text{H}}$ pour \rep{5\ \text{C}}, soit bien $\ce{C5H12}$. $\checkmark$
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{classer les carbones (I / II / III / IV)}
+On compte, pour chaque carbone, le nombre d'\emph{autres carbones} voisins :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item les \textbf{trois} $\ce{CH3}$ (les deux bouts de chaîne + le méthyle ramifié) sont liés à 1 seul C $\Rightarrow$ \rep{carbones primaires} ;
+  \item le $\ce{CH2}$ est lié à 2 C $\Rightarrow$ \rep{carbone secondaire} ;
+  \item le carbone central $\ce{CH}$ est lié à 3 C $\Rightarrow$ \rep{carbone tertiaire}.
+\end{itemize}
+Bilan : \rep{3 primaires, 1 secondaire, 1 tertiaire}, aucun quaternaire. (Cohérent avec l'exercice 2 : 3~H $\leftrightarrow$ primaire, 2~H $\leftrightarrow$ secondaire, 1~H $\leftrightarrow$ tertiaire.)
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{calculer un degré d'insaturation}
+$I=\dfrac{2n+2-m}{2}$ (ici $n=4$, donc $2n+2=10$) :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \ce{C4H10} : $I=\frac{10-10}{2}=\rep{0}$ $\Rightarrow$ aucune insaturation $\Rightarrow$ \rep{alcane saturé acyclique} (butane) ;
+  \item \ce{C4H8} : $I=\frac{10-8}{2}=\rep{1}$ $\Rightarrow$ une insaturation $\Rightarrow$ \rep{un alcène \emph{ou} un cycle} (butène ou cyclobutane) ;
+  \item \ce{C4H6} : $I=\frac{10-6}{2}=\rep{2}$ $\Rightarrow$ deux insaturations $\Rightarrow$ \rep{un alcyne, un diène, ou un cycle + une double liaison}.
+\end{itemize}
+Rappel : $I$ ne dit pas \emph{quelle} structure, seulement le nombre total de liaisons $\pi$ + cycles.
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{reconnaître la famille sur un squelette}
+On compte les carbones (5 sommets/extrémités partout) et on repère le type de liaison :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{(A)} liaisons simples uniquement $\Rightarrow$ \rep{alcane}, $\rep{\ce{C5H12}}$ (pentane) ;
+  \item \textbf{(B)} une double liaison $\Rightarrow$ \rep{alcène}, $\rep{\ce{C5H10}}$ (un pentène) ;
+  \item \textbf{(C)} une triple liaison $\Rightarrow$ \rep{alcyne}, $\rep{\ce{C5H8}}$ (un pentyne).
+\end{itemize}
+On vérifie la cohérence avec le degré d'insaturation : (A) $I=0$, (B) $I=1$, (C) $I=2$.
+\end{corr}
+
+\end{document}

@@ -1,0 +1,111 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 2
+%  Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!5,colframe=primary,
+   title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+
+% -------- macros des quatre grandeurs --------
+\newcommand{\nmax}{n_{\max}(e^-)}
+\newcommand{\nv}{n_{v}(e^-)}
+\newcommand{\nl}{n_{\ell}(e^-)}
+\newcommand{\nnl}{n_{n\ell}(e^-)}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 2} — Méthode des 5 étapes et structure de Lewis}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 2 — Niveau Difficile}\\[2pt]
+{\small\itshape Constructions pas à pas et comptages d'annales. Chaque question guide la
+suivante : répondez dans l'ordre.}
+\end{center}
+\medskip
+
+\begin{exo}[l'ion carbonate \ce{CO3^2-}, pas à pas]
+On construit la structure de Lewis de l'ion carbonate \ce{CO3^2-}.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item Quel est l'atome central ? Justifier brièvement.
+  \item Calculer $\nmax = 8a + 2b$.
+  \item Calculer $\nv$. \emph{Attention} : la charge est $q = -2$.
+  \item Calculer $\nl$ et en déduire le nombre de liaisons. Combien de liaisons \ce{C-O}
+        y a-t-il, et l'une d'elles est-elle multiple ?
+  \item Calculer $\nnl$ et répartir les doublets non liants sur les oxygènes. Vérifier enfin
+        que le carbone respecte l'octet.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'ion perchlorate \ce{ClO4^-}, pas à pas]
+On construit la structure de Lewis de l'ion perchlorate \ce{ClO4^-} ($N_v(\ce{Cl}) = 7$).
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item Quel est l'atome central ?
+  \item Calculer $\nmax = 8a + 2b$.
+  \item Calculer $\nv$ (la charge est $q = -1$).
+  \item Calculer $\nl$ et en déduire le nombre de liaisons \ce{Cl-O}. Sont-elles simples ?
+  \item Calculer $\nnl$ et répartir les doublets non liants. De combien d'électrons le chlore
+        s'entoure-t-il finalement ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le nitrite d'hydrogène \ce{HNO2}, d'après annale]
+Une annale demande : « \emph{le nombre total d'électrons de valence dans le nitrite d'hydrogène
+\ce{HNO2} vaut\dots} ». Le squelette de la molécule est \ce{H-O-N=O}.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item Calculer $\nv$, le nombre total d'électrons de valence (c'est la réponse attendue par
+        l'annale).
+  \item Calculer $\nmax$. On prendra bien garde à distinguer les atomes visant l'octet de
+        l'unique \ce{H} (duet).
+  \item Calculer $\nl$ et vérifier qu'il correspond bien à la répartition des liaisons du
+        squelette \ce{H-O-N=O} : $1$ liaison \ce{H-O}, $1$ liaison \ce{O-N} et $1$ double liaison
+        \ce{N=O}.
+  \item Calculer $\nnl$ et en déduire le nombre de doublets non liants.
+  \item Vérifier les octets de chaque \ce{O} et de \ce{N}, ainsi que le duet du \ce{H}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[compter $\nv$ d'espèces polyatomiques, d'après annale]
+Certaines annales demandent le nombre total d'électrons de valence d'un \emph{sel}, qui n'a pas
+d'atome central unique. On procède alors par simple comptage atomique.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item \textbf{Sulfite d'ammonium} \ce{(NH4)2SO3}. Dénombrer chaque type d'atome, puis calculer
+        $\nv$ ($N_v$ : \ce{N}{=}5, \ce{H}{=}1, \ce{S}{=}6, \ce{O}{=}6).
+  \item Pourquoi n'applique-t-on \emph{aucune} correction de charge ($-q$) dans ce calcul ?
+  \item Reprendre le même comptage pour le \textbf{nitrate d'ammonium} \ce{NH4NO3}.
+\end{enumerate}
+\end{exo}
+
+\end{document}

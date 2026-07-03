@@ -1,0 +1,89 @@
+% =====================================================================
+%  FICHE 11 — THEME 1 — Corrigé DIFFICILE — Le nombre d'oxydation
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Corrigé Difficile}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[la réaction aluminothermique]
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item \ce{Fe2O3} neutre, $\NO(\ce{O})=-\mathrm{II}$ : $2x+3(-2)=0 \Rightarrow 2x=6 \Rightarrow \NO(\ce{Fe})=+\mathrm{III}$.
+  \item \ce{Fe} est un corps simple $\Rightarrow \NO(\ce{Fe})=0$.
+  \item \ce{Al} corps simple $\Rightarrow 0$. Dans \ce{Al2O3} : $2x+3(-2)=0 \Rightarrow \NO(\ce{Al})=+\mathrm{III}$.
+  \item Aluminium : $0 \to +\mathrm{III}$, il \textbf{perd 3 électrons} par atome.
+        Fer : $+\mathrm{III} \to 0$, il \textbf{gagne 3 électrons} par atome.
+  \item L'aluminium voit son \NO\ \emph{augmenter} : il est \textbf{oxydé}, c'est donc le \textbf{réducteur}.
+        Le fer de \ce{Fe2O3} voit son \NO\ \emph{diminuer} : il est \textbf{réduit}, \ce{Fe2O3} est donc l'\textbf{oxydant}.
+\end{enumerate}
+\emph{(Ceci justifie les propositions « Al est le réducteur » et « 3 électrons par atome d'Al » des annales 2025-Q8.)}
+\end{corr}
+
+\begin{corr}[permanganate de potassium : démonter une erreur]
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item $\NO(\ce{O})=-\mathrm{II}$ (cas général, règle R4) et $\NO(\ce{K})=+\mathrm{I}$ (alcalin, règle R6).
+  \item Molécule neutre : $(+1)+x+4(-2)=0 \Rightarrow 1+x-8=0 \Rightarrow x=+7$.
+  \item L'affirmation est \textbf{fausse} : $\NO(\ce{Mn})=+\mathrm{VII}$, et non $+\mathrm{VIII}$.
+        L'erreur classique vient d'un mauvais compte des oxygènes ($4\times(-2)=-8$, pas $-7$).
+  \item Le manganèse est dans le groupe~7 : son \NO\ maximal vaut $+\mathrm{VII}$ (il ne possède que
+        7~électrons de valence à « céder » formellement). Un \NO\ de $+\mathrm{VIII}$ est donc
+        \textbf{physiquement impossible} pour cet élément : l'affirmation ne tenait pas la route.
+\end{enumerate}
+\emph{(Réf. annales 2020-Q1, proposition A ; 2021-Q25, proposition C.)}
+\end{corr}
+
+\begin{corr}[la magnétite : un \NO\ non entier]
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item \ce{Fe3O4} neutre : $3x+4(-2)=0 \Rightarrow 3x=8 \Rightarrow \NO(\ce{Fe})=+\dfrac{8}{3}\approx +2{,}67$.
+  \item Un \NO\ moyen non entier signale que les atomes de fer ne sont \textbf{pas tous équivalents}.
+        Ici, sur 3 atomes de fer, \textbf{un} est au \NO\ $+\mathrm{II}$ et \textbf{deux} sont au \NO\ $+\mathrm{III}$.
+        La moyenne vaut alors :
+        \[
+        \frac{1\times(+2) + 2\times(+3)}{3} = \frac{2+6}{3} = \frac{8}{3},
+        \]
+        ce qui coïncide avec le résultat de (a).
+  \item En écrivant $\ce{Fe3O4}=\ce{FeO}\cdot\ce{Fe2O3}$ : \ce{FeO} apporte un fer $+\mathrm{II}$
+        (car $x+(-2)=0$) et \ce{Fe2O3} apporte deux fers $+\mathrm{III}$ (question~1a). On retrouve bien
+        un fer $+\mathrm{II}$ et deux fers $+\mathrm{III}$, soit un \NO\ moyen de $+8/3$.
+\end{enumerate}
+\textbf{À retenir :} un \NO\ moyen non entier n'est pas une erreur — c'est la signature d'un composé
+à \emph{valence mixte}. Le concours attend la valeur moyenne exacte.
+\end{corr}
+
+\end{document}

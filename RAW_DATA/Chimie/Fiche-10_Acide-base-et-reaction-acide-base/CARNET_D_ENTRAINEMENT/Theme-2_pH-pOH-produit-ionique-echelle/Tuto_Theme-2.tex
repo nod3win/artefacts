@@ -1,0 +1,147 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit,backgrounds}
+\usepackage[a4paper,margin=2.0cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{acidecol}{RGB}{205,60,45}
+\definecolor{basecol}{RGB}{40,110,200}
+\definecolor{neutcol}{RGB}{90,170,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{definition}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{regle}[1][]{boxbase,colback=thmcol!6,colframe=thmcol,title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!6,colframe=formulacol,title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 10} — Thème 2 : pH, pOH, $K_e$}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- pH, pOH, produit ionique $K_e$ et échelle d'acidité}\\[3pt]
+{\color{primary}\itshape Fiche tuto à lire avant les exercices}
+\end{center}
+
+\section*{1. Le pH : traduire une concentration en un nombre}
+
+\begin{formule}[définition du pH]
+\[ \boxed{\mathrm{pH} = -\log[\ce{H3O+}]} \qquad\Longleftrightarrow\qquad [\ce{H3O+}] = 10^{-\mathrm{pH}}\ (\si{mol.L^{-1}}). \]
+\end{formule}
+
+Le logarithme décimal ne sert qu'à compresser des puissances de 10 : $\log 10^{-n} = -n$, $\log 1 = 0$,
+$\log(a\times 10^{-n}) = \log a - n$. À connaître par cœur : $\log 2 \approx 0{,}30$, $\log 3 \approx 0{,}48$,
+$\log 5 \approx 0{,}70$. Ainsi $[\ce{H3O+}] = 5\times10^{-4}$ donne
+$\mathrm{pH} = 4 - \log 5 \approx 4 - 0{,}70 = 3{,}30$.
+
+\section*{2. Le produit ionique de l'eau $K_e$}
+
+L'eau se dissocie très peu sur elle-même (autoprotolyse) : $\ce{2 H2O <=> H3O+ + OH-}$. La constante associée
+est le \textbf{produit ionique} :
+
+\begin{formule}[produit ionique de l'eau]
+\[ \boxed{K_e = [\ce{H3O+}]\times[\ce{OH-}]} \qquad\text{et à \SI{25}{\celsius} : } K_e = 1{,}0\times10^{-14}. \]
+\end{formule}
+
+\begin{attention}[{on n'écrit jamais $[\ce{H2O}]$ dans $K_e$}]
+L'eau est le solvant, en très large excès et de concentration quasi constante : elle est \emph{absorbée} dans
+la constante. L'expression correcte est $K_e = [\ce{H3O+}][\ce{OH-}]$, un produit de \emph{deux} concentrations
+seulement. À $T$ fixée, ce produit est constant : si $[\ce{H3O+}]$ augmente, alors $[\ce{OH-}]$ diminue
+d'autant (et réciproquement).
+\end{attention}
+
+\section*{3. pOH et la relation reine $\mathrm{pH}+\mathrm{pOH}=14$}
+
+On définit de même $\mathrm{pOH} = -\log[\ce{OH-}]$. En prenant $-\log$ de $K_e = [\ce{H3O+}][\ce{OH-}]$ :
+
+\begin{formule}[relation pH/pOH à \SI{25}{\celsius}]
+\[ \boxed{\mathrm{pH} + \mathrm{pOH} = \mathrm{p}K_e = 14} \qquad(\text{à \SI{25}{\celsius}}). \]
+\end{formule}
+
+C'est le pont qui relie les deux mondes : connaître l'un des quatre nombres
+($[\ce{H3O+}]$, $[\ce{OH-}]$, $\mathrm{pH}$, $\mathrm{pOH}$) permet de retrouver les trois autres.
+
+% --- Échelle de pH ---
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize]
+  \def\HH{0.55}
+  \shade[left color=acidecol,right color=neutcol] (0,0) rectangle (7,\HH);
+  \shade[left color=neutcol,right color=basecol] (7,0) rectangle (14,\HH);
+  \draw[primary,line width=0.5pt] (0,0) rectangle (14,\HH);
+  \foreach \x in {0,1,2,...,14}{\draw (\x,0) -- (\x,-0.12); \node[below] at (\x,-0.12) {\x};}
+  \node[below=12pt,font=\bfseries\color{primarydark}] at (7,-0.12) {pH (à \SI{25}{\celsius})};
+  \node[above,white,font=\bfseries\footnotesize] at (3.2,\HH) {ACIDE};
+  \node[above,white,font=\bfseries\footnotesize] at (7.0,\HH) {NEUTRE};
+  \node[above,white,font=\bfseries\footnotesize] at (10.8,\HH) {BASIQUE};
+\end{tikzpicture}
+\end{center}
+
+\begin{regle}[caractère d'une solution à \SI{25}{\celsius}]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{acide} : $\mathrm{pH}<7$, soit $[\ce{H3O+}]>[\ce{OH-}]$ (et $[\ce{H3O+}]>10^{-7}$) ;
+  \item \textbf{neutre} : $\mathrm{pH}=7$, soit $[\ce{H3O+}]=[\ce{OH-}]=10^{-7}$ ;
+  \item \textbf{basique} : $\mathrm{pH}>7$, soit $[\ce{H3O+}]<[\ce{OH-}]$.
+\end{itemize}
+\end{regle}
+
+\section*{4. Deux subtilités que le concours adore}
+
+\begin{attention}[« basique $\Leftrightarrow \mathrm{pH}>7$ » : vrai \emph{uniquement} à \SI{25}{\celsius}]
+$K_e$ augmente avec la température (autoprotolyse endothermique). Le pH neutre, égal à
+$-\log\sqrt{K_e}$, n'est donc \textbf{7 qu'à \SI{25}{\celsius}}. À une autre température, la frontière neutre
+se décale : une solution peut avoir $\mathrm{pH}=7$ et être \emph{basique} si le neutre y vaut, par exemple,
+$6{,}7$.
+\end{attention}
+
+\begin{remarque}[une unité de pH = un facteur 10]
+Le pH étant un $-\log$, un écart de \textbf{1 unité de pH correspond à un facteur 10} sur $[\ce{H3O+}]$.
+Passer de $\mathrm{pH}=6$ à $\mathrm{pH}=3$, c'est $\Delta\mathrm{pH}=3$, donc
+$[\ce{H3O+}]$ multipliée par $10^{3}=\mathbf{1000}$ : la solution est mille fois plus acide.
+\end{remarque}
+
+\begin{methode}[la roue des conversions]
+Pour passer d'une grandeur à l'autre : $[\ce{H3O+}] \xrightarrow{-\log} \mathrm{pH}
+\xrightarrow{14-\ } \mathrm{pOH} \xrightarrow{10^{-\ }} [\ce{OH-}]$, et
+$[\ce{OH-}] = K_e/[\ce{H3O+}]$ en raccourci direct.
+\end{methode}
+
+\end{document}

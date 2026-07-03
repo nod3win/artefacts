@@ -1,0 +1,102 @@
+% =====================================================================
+%  THÈME 3 — Proportions stœchiométriques
+%  Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{difcol}{RGB}{176,40,60}
+\newcommand{\nq}[1]{n_{\text{#1}}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 3 : Proportions}}
+\fancyhead[R]{\small\textcolor{difcol}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=difcol!5,colframe=difcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 3 — Proportions}\\[1pt]
+{\large\color{difcol}\textbf{Niveau Difficile}}\\[2pt]
+{\itshape Objectif : mener des chaînes complètes (masse/volume) et contrôler par la conservation de la masse.}\\
+{\color{primary}\rule{0.62\linewidth}{1pt}}
+\end{center}
+
+\textbf{Données :} $\Vm=\SI{22,4}{\litre\per\mole}$ (TPN), sauf indication contraire.
+
+\begin{exo}[bilan massique complet d'une synthèse]
+On veut préparer $\nq{Al2(SO4)3}=\SI{0,100}{\mole}$ de sulfate d'aluminium :
+\[ \ce{2 Al(OH)3 + 3 H2SO4 -> Al2(SO4)3 + 6 H2O}. \]
+\emph{Masses molaires (\si{\gram\per\mole}) :} \ce{Al(OH)3}=78 ; \ce{H2SO4}=98 ;
+\ce{Al2(SO4)3}=342 ; \ce{H2O}=18.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Quelles \textbf{masses} de \ce{Al(OH)3} et de \ce{H2SO4} faut-il engager ?
+  \item Quelle \textbf{masse d'eau} se forme ?
+  \item Calcule la masse de \ce{Al2(SO4)3} produite, puis vérifie la \textbf{loi de Lavoisier}
+        ($m_{\text{réactifs}}=m_{\text{produits}}$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remonter d'un volume de gaz à une masse de réactif]
+Le carbure de calcium produit de l'acétylène (gaz d'éclairage) :
+$\ce{CaC2 + 2 H2O -> C2H2 + Ca(OH)2}$. On souhaite obtenir \SI{60}{\deci\meter\cubed} d'acétylène
+\ce{C2H2} mesurés à \SI{298}{\kelvin}, où le volume molaire vaut $\Vm=\SI{24}{\litre\per\mole}$.
+\emph{Donnée :} $M(\ce{CaC2})=\SI{64}{\gram\per\mole}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Combien de moles d'acétylène veut-on produire ?
+  \item Combien de moles de \ce{CaC2} sont nécessaires ?
+  \item Quelle masse de \ce{CaC2} faut-il engager ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un airbag : de la masse au volume de gaz]
+Le gonflage d'un airbag repose sur la décomposition très rapide de l'azoture de sodium :
+\[ \ce{2 NaN3 -> 2 Na + 3 N2 ^}. \]
+On introduit \SI{13,0}{\gram} de \ce{NaN3} ($M=\SI{65}{\gram\per\mole}$).
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Combien de moles de \ce{NaN3} sont introduites ?
+  \item Combien de moles de diazote \ce{N2} sont produites ?
+  \item Quel volume de \ce{N2}, aux TPN, gonfle l'airbag ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[combustion du propane : masse, volume et Lavoisier]
+On brûle \SI{44}{\gram} de propane : $\ce{C3H8 + 5 O2 -> 3 CO2 + 4 H2O}$.
+\emph{Masses molaires (\si{\gram\per\mole}) :} \ce{C3H8}=44 ; \ce{O2}=32 ; \ce{CO2}=44 ; \ce{H2O}=18.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Combien de moles de propane brûle-t-on ?
+  \item Quel volume de dioxygène (aux TPN) est nécessaire ?
+  \item Quelle masse de \ce{CO2} et quelle masse d'eau se forment ?
+  \item Vérifie la conservation de la masse ($m_{\text{réactifs}}=m_{\text{produits}}$).
+\end{enumerate}
+\end{exo}
+
+\end{document}

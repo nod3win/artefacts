@@ -1,0 +1,92 @@
+% !TEX program = pdflatex
+% THEME 2 — Facile — Corrigé
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\atm}{atm}
+\DeclareSIUnit{\bar}{bar}
+\DeclareSIUnit{\mmHg}{mmHg}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\newtcolorbox{rep}[1][]{enhanced,breakable,colback=excol!5,colframe=excol,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,title={#1}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Loi des gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 · Facile · Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcounter{exo}
+\newenvironment{cor}[1][]{\refstepcounter{exo}\medskip
+  \noindent{\color{primarydark}\bfseries Corrigé \theexo.}\ \textit{#1}\par\nopagebreak\smallskip}{\par}
+\newcommand{\rf}[1]{\textbf{\textcolor{attncol}{#1}}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 2 — Niveau Facile — Corrigé}
+\end{center}
+\textcolor{primary}{\hrule height 1pt}
+\medskip
+
+\begin{cor}[Combien de moles ?]
+On cherche $n$ : on isole $n=\dfrac{pV}{RT}$. Unités atm/litre $\Rightarrow R=\num{0.082}$.
+\[ n=\frac{pV}{RT}=\frac{\qty{2.0}{\atm}\times\qty{10.0}{\litre}}{\num{0.082}\times\qty{300}{\kelvin}}
+    =\frac{20}{24{,}6}=\rf{\qty{0.81}{\mole}}. \]
+\end{cor}
+
+\begin{cor}[Quelle pression ?]
+On isole $p=\dfrac{nRT}{V}$. Conversion : $T=27+273=\qty{300}{\kelvin}$.
+\[ p=\frac{nRT}{V}=\frac{\qty{0.50}{\mole}\times\num{0.082}\times\qty{300}{\kelvin}}{\qty{5.0}{\litre}}
+    =\frac{12{,}3}{5{,}0}=\rf{\qty{2.46}{\atm}}. \]
+Soit environ deux fois et demie la pression atmosphérique.
+\end{cor}
+
+\begin{cor}[Quel volume ?]
+On isole $V=\dfrac{nRT}{p}$.
+\[ V=\frac{nRT}{p}=\frac{\qty{2.0}{\mole}\times\num{0.082}\times\qty{273}{\kelvin}}{\qty{1.0}{\atm}}
+    =\rf{\qty{44.8}{\litre}}. \]
+On reconnaît $2\times\qty{22.4}{\litre}$ : ce sont les conditions normales (voir Thème 3).
+\end{cor}
+
+\begin{cor}[Quelle température ?]
+On isole $T=\dfrac{pV}{nR}$.
+\[ T=\frac{pV}{nR}=\frac{\qty{1.0}{\atm}\times\qty{22.4}{\litre}}{\qty{1.0}{\mole}\times\num{0.082}}
+    =\frac{22{,}4}{0{,}082}=\rf{\qty{273}{\kelvin}}, \]
+soit $\theta=273-273=\rf{\qty{0}{\degreeCelsius}}$. C'est la définition même des conditions normales
+(CNTP).
+\end{cor}
+
+\begin{cor}[Choisir le bon $R$]
+\textbf{(a)} La pression est en \si{\kilo\pascal} et le volume en \si{\litre} : la valeur cohérente est
+$R=\qty{8.314}{\kilo\pascal\litre\per\mole\per\kelvin}$. \emph{(Utiliser $\num{0.082}$ ici donnerait un
+résultat faux d'un facteur $\sim100$.)}\\
+\textbf{(b)}
+\[ n=\frac{pV}{RT}=\frac{\qty{101.3}{\kilo\pascal}\times\qty{2.0}{\litre}}{\num{8.314}\times\qty{273}{\kelvin}}
+   =\frac{202{,}6}{2269{,}7}=\rf{\qty{0.089}{\mole}}. \]
+\end{cor}
+
+\end{document}

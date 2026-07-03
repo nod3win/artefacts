@@ -1,0 +1,260 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 4
+%  Niveau DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corcol}{RGB}{0,114,178}
+\definecolor{astucecol}{RGB}{198,93,9}
+\definecolor{atomC}{RGB}{80,80,88}
+\definecolor{atomH}{RGB}{235,235,235}
+\definecolor{atomO}{RGB}{220,55,45}
+\definecolor{atomN}{RGB}{48,80,200}
+\definecolor{atomF}{RGB}{150,210,120}
+\definecolor{atomCl}{RGB}{70,170,80}
+\definecolor{atomS}{RGB}{225,190,40}
+\definecolor{atomXe}{RGB}{60,180,200}
+\definecolor{lonepair}{RGB}{120,94,200}
+\definecolor{bondcol}{RGB}{60,60,70}
+
+\newcommand{\ball}[5]{\shade[ball color=#2] (#1) circle (#3);\node[font=\footnotesize\bfseries,text=#4] at (#1){#5};}
+\newcommand{\pbond}[2]{\draw[bondcol,line width=1.6pt] (#1)--(#2);}
+\newcommand{\wbond}[2]{\draw[bondcol,fill=bondcol,draw=none] let \p1=($(#2)-(#1)$), \n1={atan2(\y1,\x1)} in (#1) -- ($(#2)+(\n1+90:0.12)$) -- ($(#2)+(\n1-90:0.12)$) -- cycle;}
+\newcommand{\hbond}[2]{\draw[bondcol,line width=1pt,dash pattern=on 1.4pt off 1.8pt] (#1)--(#2);}
+\newcommand{\lobe}[3]{\begin{scope}[shift={(#1)},rotate=#2]\shade[ball color=lonepair!55,opacity=0.9] (#3,0) ellipse (0.34 and 0.20);\end{scope}}
+\newcommand{\AX}[2]{\ensuremath{\mathrm{AX_{#1}E_{#2}}}}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
+   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
+   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 4} — VSEPR et géométrie moléculaire}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile · Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 4 — Corrigé du niveau Difficile}
+\end{center}
+\medskip
+
+\begin{cor}[le trio canonique \ce{CH4} / \ce{NH3} / \ce{H2O}]
+\textbf{a) et b) Décompte.}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l c c c c}
+\toprule
+Molécule & $n$ & $m$ & Type & Géom. moléculaire\\
+\midrule
+\ce{CH4} & 4 & 0 & \AX{4}{0} & tétraédrique\\
+\ce{NH3} & 3 & 1 & \AX{3}{1} & pyramide trigonale\\
+\ce{H2O} & 2 & 2 & \AX{2}{2} & coudée\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{c)} \rep Dans les trois cas, $n+m = 4$ : la géométrie de \textbf{répulsion} est
+\textbf{tétraédrique} pour toutes. Mais le nombre de doublets libres augmente ($0,1,2$), donc en
+les masquant la géométrie \emph{moléculaire} change : \ce{CH4} tétraédrique, \ce{NH3} pyramide
+trigonale, \ce{H2O} coudée.\par
+\textbf{d)} \rep Un doublet libre repousse plus fort qu'un doublet liant ($E$--$E > E$--$X >
+X$--$X$). Chaque doublet libre supplémentaire « pousse » davantage sur les liaisons et
+\textbf{referme} l'angle : $109{,}5^\circ$ (0 doublet) $\to 107^\circ$ (1 doublet) $\to
+104{,}5^\circ$ (2 doublets).
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  % CH4
+  \begin{scope}
+    \coordinate (C) at (0,0);
+    \coordinate (Ha) at (0,1.4);\coordinate (Hb) at (-1.25,-0.7);
+    \coordinate (Hc) at (1.15,-0.5);\coordinate (Hd) at (0.3,-1.25);
+    \hbond{C}{Hd}\pbond{C}{Ha}\pbond{C}{Hb}\wbond{C}{Hc}
+    \ball{Ha}{atomH}{0.3}{black}{H}\ball{Hb}{atomH}{0.3}{black}{H}
+    \ball{Hc}{atomH}{0.3}{black}{H}\ball{Hd}{atomH}{0.3}{black}{H}
+    \ball{C}{atomC}{0.42}{white}{C}
+    \node[font=\scriptsize,align=center] at (0,-2){\ce{CH4}\\$109{,}5^\circ$};
+  \end{scope}
+  % NH3
+  \begin{scope}[xshift=4.6cm]
+    \coordinate (N) at (0,0);
+    \coordinate (Ha) at (-1.2,-0.8);\coordinate (Hb) at (1.1,-0.6);\coordinate (Hc) at (0.15,-1.3);
+    \pbond{N}{Ha}\wbond{N}{Hb}\hbond{N}{Hc}
+    \lobe{N}{90}{0.9}
+    \ball{Ha}{atomH}{0.3}{black}{H}\ball{Hb}{atomH}{0.3}{black}{H}\ball{Hc}{atomH}{0.3}{black}{H}
+    \ball{N}{atomN}{0.42}{white}{N}
+    \node[font=\scriptsize,align=center] at (0,-2){\ce{NH3}\\$\approx107^\circ$};
+  \end{scope}
+  % H2O
+  \begin{scope}[xshift=9.2cm]
+    \coordinate (O) at (0,0);
+    \coordinate (Ha) at (-1.2,-0.8);\coordinate (Hb) at (1.2,-0.8);
+    \pbond{O}{Ha}\pbond{O}{Hb}
+    \lobe{O}{68}{0.9}\lobe{O}{112}{0.9}
+    \ball{Ha}{atomH}{0.3}{black}{H}\ball{Hb}{atomH}{0.3}{black}{H}
+    \ball{O}{atomO}{0.42}{white}{O}
+    \node[font=\scriptsize,align=center] at (0,-2){\ce{H2O}\\$\approx104{,}5^\circ$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{cor}
+
+\begin{cor}[la famille bipyramide trigonale]
+\textbf{a)} \rep \ce{SF4} : \AX{4}{1} ; \ce{ClF3} : \AX{3}{2} ; \ce{XeF2} : \AX{2}{3}
+(tous ont $n+m = 5$).\par
+\textbf{b)} \rep Les doublets libres se logent en position \textbf{équatoriale}. En effet, une
+position axiale a \emph{trois} voisins proches à $90^\circ$ (répulsion forte), alors qu'une
+position équatoriale n'en a que \emph{deux} à $90^\circ$. Les doublets, plus répulsifs, choisissent
+donc l'équateur, moins encombré.\par
+\textbf{c)} \rep En masquant les doublets équatoriaux : \ce{SF4} devient \textbf{à bascule
+(papillon)}, \ce{ClF3} devient \textbf{en forme de T}, \ce{XeF2} devient \textbf{linéaire} (ses
+deux liaisons restent axiales, à $180^\circ$).
+\begin{center}
+\begin{tikzpicture}[scale=0.72]
+  % SF4
+  \begin{scope}
+    \coordinate (A) at (0,0);
+    \coordinate (aU) at (0,1.6);\coordinate (aD) at (0,-1.6);
+    \coordinate (eR) at (1.5,0);\coordinate (eLf) at (-1.25,-0.6);
+    \pbond{A}{aU}\pbond{A}{aD}\pbond{A}{eR}\wbond{A}{eLf}
+    \lobe{A}{152}{0.9}
+    \foreach \c in {aU,aD,eR,eLf}{\ball{\c}{atomF}{0.3}{black}{F}}
+    \ball{A}{atomS}{0.4}{black}{S}
+    \node[font=\scriptsize,align=center] at (0,-2.35){\ce{SF4}\\\AX{4}{1} à bascule};
+  \end{scope}
+  % ClF3
+  \begin{scope}[xshift=5.2cm]
+    \coordinate (A) at (0,0);
+    \coordinate (aU) at (0,1.6);\coordinate (aD) at (0,-1.6);\coordinate (eR) at (1.5,0);
+    \pbond{A}{aU}\pbond{A}{aD}\pbond{A}{eR}
+    \lobe{A}{152}{0.9}\lobe{A}{208}{0.9}
+    \foreach \c in {aU,aD,eR}{\ball{\c}{atomF}{0.3}{black}{F}}
+    \ball{A}{atomCl}{0.4}{white}{Cl}
+    \node[font=\scriptsize,align=center] at (0,-2.35){\ce{ClF3}\\\AX{3}{2} en T};
+  \end{scope}
+  % XeF2
+  \begin{scope}[xshift=10.4cm]
+    \coordinate (A) at (0,0);
+    \coordinate (aU) at (0,1.6);\coordinate (aD) at (0,-1.6);
+    \pbond{A}{aU}\pbond{A}{aD}
+    \lobe{A}{0}{0.95}\lobe{A}{152}{0.95}\lobe{A}{208}{0.95}
+    \foreach \c in {aU,aD}{\ball{\c}{atomF}{0.3}{black}{F}}
+    \ball{A}{atomXe}{0.4}{black}{Xe}
+    \node[font=\scriptsize,align=center] at (0,-2.35){\ce{XeF2}\\\AX{2}{3} linéaire};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{cor}
+
+\begin{cor}[géométrie de l'ion perchlorate \ce{ClO4^-}]
+\textbf{a)} \rep Autour du \ce{Cl} : $n=4$, $m=0 \Rightarrow$ \AX{4}{0}.\par
+\textbf{b)} \rep 4 sites de répulsion sans doublet libre : géométrie de répulsion \textbf{et}
+géométrie moléculaire toutes deux \textbf{tétraédriques}, avec des angles \ce{O-Cl-O} de
+$\mathbf{109{,}5^\circ}$.\par
+\textbf{c)} \rep \textbf{Non}, le choix de la structure de Lewis ne change \emph{pas} la géométrie.
+Que l'on écrive 4 liaisons simples ou 3 doubles + 1 simple, le chlore reste lié à \textbf{4}
+atomes d'oxygène et ne porte aucun doublet libre : dans les deux cas $n=4$, $m=0$, donc \AX{4}{0}.
+Une liaison multiple ne compte que pour \textbf{un seul} site de répulsion (sa direction), donc le
+nombre de sites reste 4 : la molécule est tétraédrique quelle que soit la formule mésomère
+retenue.
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \coordinate (Cl) at (0,0);
+  \coordinate (Oa) at (0,1.5);\coordinate (Ob) at (-1.35,-0.75);
+  \coordinate (Oc) at (1.25,-0.55);\coordinate (Od) at (0.35,-1.35);
+  \hbond{Cl}{Od}\pbond{Cl}{Oa}\pbond{Cl}{Ob}\wbond{Cl}{Oc}
+  \ball{Oa}{atomO}{0.32}{white}{O}\ball{Ob}{atomO}{0.32}{white}{O}
+  \ball{Oc}{atomO}{0.32}{white}{O}\ball{Od}{atomO}{0.32}{white}{O}
+  \ball{Cl}{atomCl}{0.42}{white}{Cl}
+  \node[font=\scriptsize,align=center] at (0,-2.1){\ce{ClO4^-} : \AX{4}{0} tétraédrique — $109{,}5^\circ$};
+\end{tikzpicture}
+\end{center}
+\end{cor}
+
+\begin{cor}[la famille octaédrique]
+\textbf{a)} \rep \ce{SF6} : \AX{6}{0} ; \ce{BrF5} : \AX{5}{1} ; \ce{XeF4} : \AX{4}{2}
+(tous ont $n+m = 6$).\par
+\textbf{b)} \rep Dans \ce{XeF4}, les \textbf{2} doublets libres se placent en positions
+\textbf{opposées} (à $180^\circ$ l'un de l'autre, au-dessus et au-dessous du plan). Ainsi ils
+minimisent leur répulsion mutuelle (répulsion $E$--$E$, la plus forte) en s'éloignant au maximum ;
+les 4 liaisons \ce{Xe-F} restent alors dans un même plan.\par
+\textbf{c)} \rep \ce{SF6} \textbf{octaédrique} ; \ce{BrF5} \textbf{pyramide à base carrée} (1
+doublet libre retiré) ; \ce{XeF4} \textbf{plan carré} (2 doublets libres opposés retirés).
+\begin{center}
+\begin{tikzpicture}[scale=0.78]
+  % SF6
+  \begin{scope}
+    \coordinate (A) at (0,0);
+    \coordinate (oU) at (0,1.6);\coordinate (oD) at (0,-1.6);
+    \coordinate (oL) at (-1.6,0);\coordinate (oR) at (1.6,0);
+    \coordinate (oF) at (0.7,-0.55);\coordinate (oB) at (-0.7,0.55);
+    \pbond{A}{oU}\pbond{A}{oD}\pbond{A}{oL}\pbond{A}{oR}\hbond{A}{oB}\wbond{A}{oF}
+    \foreach \c in {oU,oD,oL,oR,oF,oB}{\ball{\c}{atomF}{0.28}{black}{F}}
+    \ball{A}{atomS}{0.4}{black}{S}
+    \node[font=\scriptsize,align=center] at (0,-2.35){\ce{SF6}\\\AX{6}{0} octaèdre};
+  \end{scope}
+  % BrF5
+  \begin{scope}[xshift=5.4cm]
+    \coordinate (A) at (0,0);
+    \coordinate (oU) at (0,1.6);
+    \coordinate (oL) at (-1.6,0);\coordinate (oR) at (1.6,0);
+    \coordinate (oF) at (0.7,-0.55);\coordinate (oB) at (-0.7,0.55);
+    \pbond{A}{oU}\pbond{A}{oL}\pbond{A}{oR}\hbond{A}{oB}\wbond{A}{oF}
+    \lobe{A}{270}{0.9}
+    \foreach \c in {oU,oL,oR,oF,oB}{\ball{\c}{atomF}{0.28}{black}{F}}
+    \ball{A}{atomCl!55!white}{0.4}{black}{Br}
+    \node[font=\scriptsize,align=center] at (0,-2.35){\ce{BrF5}\\\AX{5}{1} pyr. base carrée};
+  \end{scope}
+  % XeF4
+  \begin{scope}[xshift=10.8cm]
+    \coordinate (A) at (0,0);
+    \coordinate (oL) at (-1.6,0);\coordinate (oR) at (1.6,0);
+    \coordinate (oF) at (0.72,-0.58);\coordinate (oB) at (-0.72,0.58);
+    \pbond{A}{oL}\pbond{A}{oR}\hbond{A}{oB}\wbond{A}{oF}
+    \lobe{A}{90}{0.9}\lobe{A}{270}{0.9}
+    \foreach \c in {oL,oR,oF,oB}{\ball{\c}{atomF}{0.28}{black}{F}}
+    \ball{A}{atomXe}{0.4}{black}{Xe}
+    \node[font=\scriptsize,align=center] at (0,-2.35){\ce{XeF4}\\\AX{4}{2} plan carré};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{cor}
+
+\begin{astucebox}[le fil conducteur des quatre exercices]
+Même géométrie de répulsion, formes différentes : c'est \emph{le nombre de doublets libres} qui
+sculpte la molécule. On garde toujours le réflexe : compter $n+m$ pour la figure de répulsion,
+placer les doublets libres là où ils gênent le moins (équatorial en bipyramide, opposés en
+octaèdre), puis les masquer pour lire la forme.
+\end{astucebox}
+
+\end{document}

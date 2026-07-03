@@ -1,0 +1,108 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 8 — THÈME 1 — NIVEAU MOYEN — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\dH}{\Delta H}
+\newcommand{\dU}{\Delta U}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 1 : Premier principe et enthalpie}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen — corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=excol,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 1 — Premier principe et enthalpie}\\[1pt]{\small Niveau \textsc{Moyen} — corrigé détaillé}};
+\end{tikzpicture}
+\end{center}
+
+\begin{correction}[travail des forces de pression]
+On convertit les volumes en \si{\cubic\metre} puis on applique $W=-p\,\Delta V$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=3pt]
+  \item $\Delta V = (5{,}0-2{,}0)=\SI{3.0}{\litre}=\SI{3.0e-3}{\cubic\metre}$.
+        \[ W = -p\,\Delta V = -(\SI{1.0e5}{\pascal})(\SI{3.0e-3}{\cubic\metre}) = \rep{\SI{-300}{\joule}}. \]
+        $W<0$ : en se dilatant, le gaz \rep{cède} du travail (il pousse l'atmosphère).
+  \item $\Delta V = (1{,}0-4{,}0)=\SI{-3.0}{\litre}=\SI{-3.0e-3}{\cubic\metre}$.
+        \[ W = -(\SI{2.0e5}{\pascal})(\SI{-3.0e-3}{\cubic\metre}) = \rep{\SI{+600}{\joule}}. \]
+        $W>0$ : comprimé, le gaz \rep{reçoit} du travail de l'extérieur.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[relier $\dH$, $W$ et $\dU$]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item La réaction libère de la chaleur : $\dH = \rep{\SI{-572}{\kilo\joule}}$, elle est \rep{exothermique}.
+  \item $\dU = \dH + W = -572 + 8 = \rep{\SI{-564}{\kilo\joule}}$.
+  \item Les réactifs comptent $3\ \si{mol}$ de gaz ($2\,\ce{H2}+\ce{O2}$), les produits $0$ ($\ce{H2O}$
+        liquide) : le volume \emph{diminue} fortement. L'atmosphère \emph{pousse} sur le système qui se
+        contracte : celui-ci \rep{reçoit} du travail, d'où $W>0$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[retrouver le travail échangé]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\dU = Q + W \Rightarrow W = \dU - Q = 500 - 800 = \rep{\SI{-300}{\joule}}$.
+  \item $W<0$ : le gaz \rep{cède} du travail ; il s'est donc \rep{dilaté}. (Il reçoit \SI{800}{\joule} de
+        chaleur, en garde \SI{500}{\joule} en énergie interne et en restitue \SI{300}{\joule} sous forme de travail.)
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[placer les produits sur le diagramme]
+On utilise $H_{\text{produits}} = H_{\text{réactifs}} + \dH$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $H_{\text{produits}} = 60 + 150 = \rep{\SI{210}{\kilo\joule}}$ : produits \emph{au-dessus},
+        réaction \rep{endothermique}.
+  \item $H_{\text{produits}} = 60 - 45 = \rep{\SI{15}{\kilo\joule}}$ : produits \emph{en dessous},
+        réaction \rep{exothermique}.
+  \item C'est le cas \rep{(a)} : $\dH>0$, la flèche va des réactifs (bas) vers les produits (haut), donc
+        vers le \emph{haut}.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[lire le « + Énergie » d'une équation]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Le « $+\,$Énergie » côté produits signale que la réaction \emph{libère} de l'énergie : elle est
+        exothermique, donc \rep{$\dH<0$}.
+  \item Cette énergie provient de l'\rep{énergie chimique stockée dans les liaisons} des réactifs,
+        restituée lors de l'oxydation du carbone et de l'hydrogène.
+  \item Puisque $\dH = H_{\text{produits}} - H_{\text{réactifs}} < 0$, on a $H_{\text{produits}} <
+        H_{\text{réactifs}}$ : les \rep{réactifs} ont l'enthalpie la plus \emph{élevée}.
+\end{enumerate}
+\end{correction}
+
+\end{document}

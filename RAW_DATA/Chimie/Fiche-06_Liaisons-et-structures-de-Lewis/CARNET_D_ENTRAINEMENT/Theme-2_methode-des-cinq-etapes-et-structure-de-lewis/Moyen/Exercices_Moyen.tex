@@ -1,0 +1,90 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 2
+%  Niveau MOYEN — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!5,colframe=primary,
+   title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+
+% -------- macros des quatre grandeurs --------
+\newcommand{\nmax}{n_{\max}(e^-)}
+\newcommand{\nv}{n_{v}(e^-)}
+\newcommand{\nl}{n_{\ell}(e^-)}
+\newcommand{\nnl}{n_{n\ell}(e^-)}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 2} — Méthode des 5 étapes et structure de Lewis}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 2 — Niveau Moyen}\\[2pt]
+{\small\itshape Appliquer la méthode des \textbf{5 étapes en entier}. Pour chaque molécule :
+identifier l'atome central, puis calculer $\nmax$, $\nv$, $\nl$ (nombre de liaisons) et $\nnl$
+(nombre de doublets libres), et enfin \emph{répartir} les doublets sur les atomes.}
+\end{center}
+\medskip
+
+\begin{exo}[l'ammoniac \ce{NH3}]
+Dérouler les 5 étapes pour \ce{NH3}. Préciser l'atome central, $\nmax$, $\nv$, le nombre de
+liaisons et le nombre de doublets non liants, puis indiquer où se place le(s) doublet(s) libre(s)
+et vérifier l'octet de l'azote.
+\end{exo}
+
+\begin{exo}[le difluorure de soufre \ce{SF2}]
+Dérouler les 5 étapes pour \ce{SF2} (atome central : le soufre). Donner $\nmax$, $\nv$, le nombre
+de liaisons \ce{S-F} et le nombre total de doublets non liants, puis indiquer leur répartition
+entre le soufre et les deux fluors. On donne $N_v(\ce{S}) = 6$ et $N_v(\ce{F}) = 7$.
+\end{exo}
+
+\begin{exo}[le dioxyde de carbone \ce{CO2}]
+Dérouler les 5 étapes pour \ce{CO2} (atome central : le carbone). Le calcul du nombre de liaisons
+doit vous conduire à une conclusion sur la \emph{nature} des liaisons \ce{C-O} : simples ou
+multiples ? Préciser aussi la répartition des doublets libres.
+\end{exo}
+
+\begin{exo}[la phosphine \ce{PH3}]
+Dérouler les 5 étapes pour \ce{PH3} (atome central : le phosphore, $N_v(\ce{P}) = 5$). Donner
+$\nmax$, $\nv$, le nombre de liaisons \ce{P-H} et le nombre de doublets libres, puis comparer la
+structure obtenue à celle de \ce{NH3}.
+\end{exo}
+
+\begin{exo}[le tétrachlorure de carbone \ce{CCl4}]
+Dérouler les 5 étapes pour \ce{CCl4} (atome central : le carbone). Donner $\nmax$, $\nv$, le
+nombre de liaisons \ce{C-Cl} et le nombre total de doublets non liants, puis indiquer combien de
+doublets libres porte chaque chlore.
+\end{exo}
+
+\end{document}

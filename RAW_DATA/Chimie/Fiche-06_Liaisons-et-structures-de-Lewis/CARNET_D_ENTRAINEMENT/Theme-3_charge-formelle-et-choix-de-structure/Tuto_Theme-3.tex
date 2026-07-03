@@ -1,0 +1,173 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 : Liaisons et structures de Lewis
+%  THÈME 3 — Charge formelle et choix de structure
+%  Fiche TUTO (à lire avant les exercices)
+%  Compilation : pdflatex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,fit,backgrounds}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=8pt]{geometry}
+
+% -------- palette --------
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{astucecol}{RGB}{198,93,9}
+\definecolor{atomCl}{RGB}{70,170,80}
+\definecolor{atomO}{RGB}{220,55,45}
+\definecolor{atomN}{RGB}{48,80,200}
+\definecolor{atomH}{RGB}{235,235,235}
+\definecolor{lonepair}{RGB}{120,94,200}
+\definecolor{bondcol}{RGB}{60,60,70}
+\definecolor{piecol}{RGB}{198,93,9}
+
+% -------- boîtes --------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{defbox}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+   title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methbox}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+   title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exbox}[1][]{boxbase,colback=excol!6,colframe=excol,
+   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attnbox}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Piège à éviter}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
+   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\CF}{\ensuremath{q_{\mathrm{f}}}}
+
+% -------- en-tête --------
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 3} — Charge formelle et choix de structure}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large Thème 3 — Charge formelle et choix de structure}]
+\textbf{Objectif du thème.} Savoir \emph{calculer} la charge formelle (\CF) d'un atome dans une
+structure de Lewis, \emph{vérifier} qu'elle est cohérente (la somme redonne la charge de
+l'édifice), et surtout \emph{s'en servir} pour \textbf{départager} plusieurs structures possibles
+et choisir la plus représentative.
+\end{tcolorbox}
+
+\section*{1. La charge formelle : une comptabilité d'électrons}
+
+Une fois une structure de Lewis dessinée, on attribue à chaque atome une \textbf{charge formelle}.
+Ce n'est pas une charge réelle : c'est un \emph{outil de comptabilité} qui dit si l'atome a, dans
+cette structure, \emph{plus} ou \emph{moins} d'électrons que lorsqu'il est neutre et isolé.
+
+\begin{defbox}[la formule à connaître par c\oe ur]
+\[ \boxed{\;\CF = N_v - 2\times(\text{nb de doublets non liants}) - (\text{nb de liaisons})\;} \]
+où $N_v$ est le nombre d'électrons de valence de l'atome neutre isolé (son numéro de colonne).
+On compte les \textbf{doublets libres en entier} ($\times 2$ électrons), et chaque \textbf{liaison
+apporte un seul électron propre} à l'atome (l'autre est attribué au partenaire).\\[2pt]
+\footnotesize\emph{Valences utiles :} \ce{H}=1, \ce{C}=4, \ce{N}=5, \ce{O}=6, \ce{S}=6, \ce{Cl}=7.
+\end{defbox}
+
+\begin{defbox}[trois propriétés indispensables]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=2pt]
+  \item \textbf{Somme = charge globale.} La somme des \CF{} de tous les atomes est égale à la charge
+        de l'édifice ($0$ pour une molécule neutre, $q$ pour un ion). C'est le test de cohérence.
+  \item \textbf{Meilleure structure = \CF{} minimales.} La structure la plus représentative est
+        celle dont les charges formelles sont les plus \textbf{proches de zéro}.
+  \item \textbf{Bon placement.} Les charges \emph{négatives} doivent se trouver sur les atomes les
+        plus \textbf{électronégatifs} (souvent \ce{O}, \ce{F}\ldots).
+\end{itemize}
+\end{defbox}
+
+\section*{2. Calculer une charge formelle : exemple guidé}
+
+\begin{methbox}[la marche à suivre pour un atome]
+\begin{enumerate}[leftmargin=1.7em,topsep=1pt,itemsep=1pt]
+  \item Lis sa valence $N_v$ (numéro de colonne).
+  \item Compte ses \textbf{doublets non liants} (paires libres) et multiplie par $2$.
+  \item Compte ses \textbf{liaisons} — \emph{attention : une double liaison compte pour 2 liaisons}.
+  \item Applique $\CF = N_v - 2\times(\text{doublets libres}) - (\text{liaisons})$.
+\end{enumerate}
+\end{methbox}
+
+\begin{exbox}[les charges formelles de l'ion carbonate \ce{CO3^2-}]
+Structure : un carbone central lié à trois oxygènes — \emph{un} \ce{O} par une double liaison,
+\emph{deux} \ce{O} par une simple liaison.
+
+\smallskip
+\textbf{Carbone central :} $0$ doublet libre, $4$ liaisons (une double $+$ deux simples).\;
+$\CF = 4 - 2\times 0 - 4 = \mathbf{0}.$
+
+\smallskip
+\textbf{Oxygène doublement lié :} $2$ doublets libres, $2$ liaisons.\;
+$\CF = 6 - 2\times 2 - 2 = 6 - 4 - 2 = \mathbf{0}.$
+
+\smallskip
+\textbf{Chaque oxygène simplement lié :} $3$ doublets libres, $1$ liaison.\;
+$\CF = 6 - 2\times 3 - 1 = 6 - 6 - 1 = \mathbf{-1}.$
+
+\smallskip
+\textbf{Bilan.}\quad $\CF$ totale $= 0 + 0 + (-1) + (-1) = -2$ : on retrouve la charge de l'ion, et
+les charges $-$ sont portées par les oxygènes (les plus électronégatifs). Structure cohérente.
+\end{exbox}
+
+\section*{3. Choisir la meilleure structure}
+
+Quand plusieurs structures respectent l'octet, on les départage par leurs charges formelles. Le cas
+d'école est l'ion \textbf{perchlorate} \ce{ClO4-}.
+
+\begin{exbox}[\ce{ClO4-} : l'octet étendu annule les charges]
+\textbf{Structure A} — quatre liaisons \ce{Cl-O} \emph{simples}. Le chlore respecte l'octet mais :
+\[ \CF(\ce{Cl}) = 7 - 0 - 4 = +3, \qquad \CF(\ce{O}_{\text{simple}}) = 6 - 6 - 1 = -1\ \text{(×4)}. \]
+Somme $= +3 + 4\times(-1) = -1$ \checkmark, mais une charge $+3$ sur le chlore est \emph{défavorable}.
+
+\smallskip
+\textbf{Structure B} — le \ce{Cl} (3\textsuperscript{e} période) fait un \textbf{octet étendu} :
+trois doubles liaisons $+$ une simple.
+\[ \CF(\ce{Cl}) = 7 - 0 - 7 = 0, \qquad \CF(\ce{O}_{\text{double}}) = 6 - 4 - 2 = 0, \qquad
+   \CF(\ce{O}_{\text{simple}}) = -1. \]
+Charges formelles \emph{minimales} : la structure B est la plus représentative.
+\end{exbox}
+
+\begin{attnbox}[qui a le droit d'annuler ses charges ?]
+Seul un atome de \textbf{période $\geq 3$} (\ce{P}, \ce{S}, \ce{Cl}\ldots) peut faire un octet
+étendu pour abaisser sa charge formelle. Un atome de 2\textsuperscript{e} période (\ce{C}, \ce{N},
+\ce{O}) ne peut \textbf{jamais} dépasser $8$ électrons : il garde sa charge formelle, même élevée
+(ainsi \ce{NO3-} garde \ce{N} à $\CF = +1$, quand \ce{ClO4-} ramène \ce{Cl} à $0$).
+\end{attnbox}
+
+\begin{astucebox}[le réflexe en une ligne]
+$\CF = N_v - 2\times(\text{doublets libres}) - (\text{nb de liaisons})$, et \textbf{une double
+liaison compte pour 2 liaisons}. Vérifie toujours : la somme des \CF{} doit redonner la charge de
+l'édifice.
+\end{astucebox}
+
+\end{document}

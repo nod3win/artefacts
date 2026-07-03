@@ -1,0 +1,116 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 1 — Hydrocarbures, formules brutes et squelette carboné
+%  NIVEAU DIFFICILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=2em,bond length=0.9em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\newcommand{\runtitle}{Thème 1 — Difficile — Corrigé}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox[auto counter]{corr}[1]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Corrigé}~\thetcbcounter\ \textmd{--- \itshape #1}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=excol,colframe=excol,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{2pt}}
+
+\begin{document}
+
+\banner{Thème 1 — Hydrocarbures, formules brutes et squelette}{Niveau \textbf{Difficile} — Corrigé détaillé \quad$\vert$\quad Fiche 12, Chimie organique}
+
+% ---------------------------------------------------------------------
+\begin{corr}{analyse complète d'un alcane ramifié}
+\textbf{a)} On parcourt $\ce{CH3-C(CH3)2-CH2-CH(CH3)-CH3}$ : 8 carbones. H : les 5 groupes $\ce{CH3}$ donnent $5\times3=15$~H, le $\ce{CH2}$ donne 2~H, le $\ce{CH}$ donne 1~H, le C central quaternaire 0~H. Total $15+2+1=18$~H $\Rightarrow \rep{\ce{C8H18}}$.\\
+\textbf{b)} $I=\dfrac{2\cdot8+2-18}{2}=\dfrac{0}{2}=\rep{0}$ $\Rightarrow$ aucune insaturation $\Rightarrow$ \rep{alcane saturé acyclique}. $\checkmark$\\
+\textbf{c)} Classification (nombre de carbones voisins) :
+\begin{itemize}[leftmargin=1.6em,itemsep=0pt]
+  \item le C central (portant les deux méthyles) est lié à \textbf{4} C $\Rightarrow$ \rep{quaternaire} (1) ;
+  \item le $\ce{CH}$ est lié à 3 C $\Rightarrow$ \rep{tertiaire} (1) ;
+  \item le $\ce{CH2}$ est lié à 2 C $\Rightarrow$ \rep{secondaire} (1) ;
+  \item les 5 groupes $\ce{CH3}$ sont liés à 1 C $\Rightarrow$ \rep{primaires} (5).
+\end{itemize}
+Bilan : \rep{5 primaires, 1 secondaire, 1 tertiaire, 1 quaternaire} ($5+1+1+1=8$ C). $\checkmark$\\
+\textbf{d)} \rep{3 H} : les 5 primaires (5 C) ; \rep{2 H} : le secondaire (1 C) ; \rep{1 H} : le tertiaire (1 C) ; \rep{0 H} : le quaternaire (1 C). Parfaitement cohérent avec c) : le lien « type de C $\leftrightarrow$ nb de H » est vérifié.
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{hydrogénation et degré d'insaturation (d'après la colchicine)}
+\textbf{a)} H ajoutés $= 37-25 = \rep{12\ \text{H}}$. Chaque $\ce{C=C}$ réduite fixe une molécule $\ce{H2}$ (2 H), donc nombre de $\ce{C=C}$ réduites $= 12/2 = \rep{6}$.\\
+\textbf{b)} $I=\dfrac{2n+2+p-m-q}{2}$ avec $n=22,\ m=25,\ p=1$ (N), $q=0$, O ignoré :
+\[ I=\frac{2\cdot22+2+1-25}{2}=\frac{44+2+1-25}{2}=\frac{22}{2}=\rep{11}. \]
+\textbf{c)} Insaturations non réduites $= 11-6 = \rep{5}$. Ce sont les \rep{cycles, carbonyles $\ce{C=O}$ et liaisons des noyaux aromatiques} qui ne sont pas hydrogénés dans ces conditions. (La colchicine est effectivement \textbf{tricyclique} et porte plusieurs $\ce{C=O}$, ce qui est cohérent.)
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{dénombrer et classer tous les isomères de \ce{C6H14}}
+\textbf{a)} $I=\dfrac{2\cdot6+2-14}{2}=0 \Rightarrow \rep{alcane}$ saturé acyclique.\\
+\textbf{b)} et \textbf{c)} — les \rep{5} isomères :
+\begin{center}\renewcommand{\arraystretch}{1.5}\small
+\begin{tabular}{c c l}
+\toprule
+Nom & Structure & Carbones \\
+\midrule
+\textbf{hexane} & \scalebox{0.62}{\chemfig{CH_3-[:30]CH_2-[:-30]CH_2-[:30]CH_2-[:-30]CH_2-[:30]CH_3}} & \rep{2 prim., 4 sec.} \\
+\textbf{2-méthylpentane} & \scalebox{0.62}{\chemfig{CH_3-[:30]CH(-[:-90]CH_3)-[:-30]CH_2-[:30]CH_2-[:-30]CH_3}} & \rep{3 prim., 2 sec., 1 tert.} \\
+\textbf{3-méthylpentane} & \scalebox{0.62}{\chemfig{CH_3-[:30]CH_2-[:-30]CH(-[:-90]CH_3)-[:30]CH_2-[:-30]CH_3}} & \rep{3 prim., 2 sec., 1 tert.} \\
+\textbf{2,2-diméthylbutane} & \scalebox{0.62}{\chemfig{CH_3-[:30]C(-[:90]CH_3)(-[:150]CH_3)-[:-30]CH_2-[:30]CH_3}} & \rep{4 prim., 1 sec., 1 quat.} \\
+\textbf{2,3-diméthylbutane} & \scalebox{0.62}{\chemfig{CH_3-[:-30]CH(-[:-90]CH_3)-[:30]CH(-[:90]CH_3)-[:-30]CH_3}} & \rep{4 prim., 2 tert.} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Carbone \textbf{quaternaire} : uniquement le \rep{2,2-diméthylbutane}. \quad \textbf{Deux} carbones tertiaires : uniquement le \rep{2,3-diméthylbutane}.
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{degré d'insaturation avec hétéroatomes (paracétamol)}
+\textbf{a)} $n=8,\ m=9,\ p=1$ (N), $q=0$, les \textbf{2 O sont ignorés} :
+\[ I=\frac{2\cdot8+2+1-9}{2}=\frac{16+2+1-9}{2}=\frac{10}{2}=\rep{5}. \]
+\textbf{b)} Un noyau benzénique $=$ 3 doubles liaisons $\ce{C=C}$ $+$ 1 cycle $=\rep{4\ \text{insaturations}}$. Il reste alors $5-4=\rep{1}$ insaturation à expliquer.\\
+\textbf{c)} La fonction \textbf{amide} porte un carbonyle $\ce{C=O}$, soit \textbf{1 double liaison} $=$ 1 insaturation : elle rend compte de la dernière unité ($4+1=5$). $\checkmark$\\
+Enfin, l'oxygène est \textbf{divalent} : l'insérer (ex.\ $\ce{CH3-CH3}\to\ce{CH3-O-CH3}$, tous deux $\ce{C2H6}\!\cdots$) ne change \emph{pas} le nombre d'hydrogènes nécessaires pour saturer la molécule. \rep{Un atome d'oxygène n'ajoute donc jamais d'insaturation}, d'où son absence dans la formule de $I$.
+\end{corr}
+
+\end{document}

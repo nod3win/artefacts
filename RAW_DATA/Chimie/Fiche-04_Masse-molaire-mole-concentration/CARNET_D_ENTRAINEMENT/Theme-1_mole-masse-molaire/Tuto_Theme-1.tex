@@ -1,0 +1,142 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 4 — THEME 1
+%  Tuto : Mole, masse molaire et nombre d'entites
+%  Compilation : pdflatex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{M}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox{definition}[1][]{boxbase,colback=defcol!5,colframe=defcol,
+   title={\textsc{Definition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+   title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+   title={\textsc{Methode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,1 : Mole, masse molaire, entit\'es}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- Tuto}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\NA}{N_{\!\text{A}}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large THÈME 1 --- Mole, masse molaire et nombre d'entités}]
+\textit{À lire avant les exercices.} Ce thème installe le \textbf{carrefour} de toute la
+fiche~4 : la \textbf{quantité de matière} $n$ (en moles). On apprend à passer, dans les deux sens,
+entre une \textbf{masse} (que l'on pèse), un \textbf{nombre d'entités} (que l'on ne peut pas compter)
+et cette quantité de matière $n$.
+\end{tcolorbox}
+
+\section*{1. Compter par paquets : la mole et le nombre d'Avogadro}
+Les atomes et molécules sont bien trop nombreux pour être comptés à l'unité : $\SI{18}{\gram}$
+d'eau contiennent déjà $\sim 6\times10^{23}$ molécules. On les regroupe donc en \textbf{paquets} de
+taille fixe, les \textbf{moles}. Compter en moles, c'est compter par paquets de
+$\NA = 6{,}02\times10^{23}$ entités.
+
+\begin{formule}[nombre d'entités $\leftrightarrow$ quantité de matière]
+\[ \boxed{\,N = n\times\NA\,}\qquad\Longleftrightarrow\qquad n=\dfrac{N}{\NA}
+   \qquad\text{avec }\ \NA \approx \SI{6.02e23}{\per\mole}. \]
+$N$ est un \emph{nombre pur} (sans unité) ; $n$ est en \si{\mole}. On \textbf{multiplie} par $\NA$
+pour aller des moles aux entités, on \textbf{divise} pour revenir.
+\end{formule}
+
+\begin{attention}[une mole \emph{de quoi} ?]
+Toujours préciser l'entité ! Une mole de \emph{molécules} \ce{O2} contient \textbf{2 moles}
+d'\emph{atomes} d'oxygène. De même, $\SI{1}{\mole}$ de \ce{FeSO4} contient $\SI{1}{\mole}$ d'ions
+\ce{Fe^2+} mais $\SI{4}{\mole}$ d'atomes d'oxygène.
+\end{attention}
+
+\section*{2. Peser la matière : la masse molaire}
+Au laboratoire on ne compte pas, on \textbf{pèse}. La \textbf{masse molaire} $M$ est la masse d'une
+mole d'une substance, en \textbf{\si{\gram\per\mole}} (jamais en «~uma~»). Pour un atome, $M$ est
+numériquement égale à la masse atomique relative lue dans la classification (ex.
+$M(\ce{O})=\SI{16}{\gram\per\mole}$). Pour un composé, on \textbf{additionne} les masses molaires
+atomiques de tous les atomes de la formule :
+\begin{formule}[masse molaire d'un composé et relation masse\,$\leftrightarrow$\,quantité]
+\[ M(\text{composé})=\sum_i \nu_i\,M(\text{élément}_i)
+   \qquad\text{et}\qquad \boxed{\,n=\dfrac{m}{M}\,}\ \Longleftrightarrow\ m=n\times M. \]
+$\nu_i$ = nombre d'atomes de l'élément $i$ dans la formule. Pour un \textbf{hydrate}
+$\ce{X}\cdot x\,\ce{H2O}$, on ajoute $x\times M(\ce{H2O})=x\times\SI{18}{\gram\per\mole}$.
+\end{formule}
+
+\begin{exemple}[trois calculs de masse molaire]
+Avec $\ce{H}=1$, $\ce{C}=12$, $\ce{O}=16$, $\ce{S}=32$, $\ce{Cu}=63{,}5$ (\si{\gram\per\mole}) :
+\[ M(\ce{H2O})=2(1)+16=\SI{18}{\gram\per\mole};\quad
+   M(\ce{C6H12O6})=6(12)+12(1)+6(16)=\SI{180}{\gram\per\mole}; \]
+\[ M(\ce{CuSO4.5H2O})=63{,}5+32+4(16)+5(18)=63{,}5+32+64+90=\SI{249.5}{\gram\per\mole}. \]
+\end{exemple}
+
+\section*{3. La part d'un élément : le pourcentage massique}
+Le \textbf{pourcentage massique} d'un élément dans un composé est la fraction de la masse molaire
+due à cet élément :
+\[ \%\,\text{élément}=\frac{\text{(nombre d'atomes)}\times M(\text{élément})}{M(\text{composé})}\times 100. \]
+Exemple : dans l'urée \ce{CH4N2O} ($M=60$), $\%\,\ce{C}=\dfrac{12}{60}\times100=\SI{20}{\percent}$.
+\emph{Utilisé « à l'envers »}, il permet de \textbf{remonter à une masse molaire} inconnue.
+
+\section*{4. La carte des conversions de ce thème}
+\begin{center}
+\begin{tikzpicture}[
+   box/.style={draw,rounded corners=3pt,align=center,font=\footnotesize,
+       minimum height=1cm,minimum width=2.8cm,line width=0.9pt},
+   fl/.style={-{Stealth[length=2.2mm]},line width=0.9pt},
+   op/.style={font=\scriptsize,inner sep=1.5pt}]
+  \node[box,draw=formulacol,fill=formulacol!8] (m) at (0,0) {Masse\\ $m$ (\si{\gram})};
+  \node[box,draw=excol,fill=excol!10] (n) at (5,0) {Quantité\\ $n$ (\si{\mole})};
+  \node[box,draw=primary,fill=primary!12] (N) at (10,0) {Nombre d'entités\\ $N$};
+  \draw[fl] ([yshift=4pt]m.east) -- node[op,above]{$\div M$} ([yshift=4pt]n.west);
+  \draw[fl] ([yshift=-6pt]n.west) -- node[op,below]{$\times M$} ([yshift=-6pt]m.east);
+  \draw[fl] ([yshift=4pt]n.east) -- node[op,above]{$\times\NA$} ([yshift=4pt]N.west);
+  \draw[fl] ([yshift=-6pt]N.west) -- node[op,below]{$\div\NA$} ([yshift=-6pt]n.east);
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[réflexes du thème]
+\begin{enumerate}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Repérer ce que l'on \textbf{connaît} et ce que l'on \textbf{cherche}, avec les unités.
+  \item \textbf{Passer par $n$} (les moles) : c'est le point de passage obligé.
+  \item Convertir masses en g, penser à $\SI{1}{\milli\gram}=\SI{e-3}{\gram}$,
+        $\SI{1}{\micro\gram}=\SI{e-6}{\gram}$.
+  \item Vérifier l'\textbf{entité} (molécule ? atome ? ion ?) et l'\textbf{ordre de grandeur}.
+\end{enumerate}
+\end{methode}
+
+\end{document}

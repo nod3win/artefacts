@@ -1,0 +1,1258 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 7
+%  Intégrale d'une fonction continue
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (thème « Mathématiques » : bleu indigo)
+% =====================================================================
+\definecolor{primary}{RGB}{30,75,145}        % indigo royal
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{primarylight}{RGB}{70,120,200}
+\definecolor{defcol}{RGB}{0,114,178}         % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,135,110}         % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{195,90,10}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,70,180}     % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}        % rouge — pièges
+\definecolor{excol}{RGB}{0,130,85}           % vert — exemples
+\definecolor{methcol}{RGB}{85,85,100}        % gris — méthode / comment-faire
+\definecolor{areacol}{RGB}{120,160,230}      % aire hachurée (bleu pâle)
+\definecolor{areacol2}{RGB}{230,150,80}      % 2e aire (orange pâle)
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode / Comment-faire ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  axe/.style={->,>=Stealth,black!65,line width=0.7pt},
+  courbe/.style={primary,line width=1.3pt},
+  courbe2/.style={areacol2!90!black,line width=1.3pt},
+  dvert/.style={gray,dashed,line width=0.7pt},
+  ptn/.style={circle,fill=black,inner sep=1.1pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!85!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\tg}{\tan}
+\newcommand{\cotg}{\cot}
+\newcommand{\arctg}{\arctan}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}   % unité d'aire
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Intégrale}\\[5pt]
+   {\Huge\bfseries d'une fonction continue}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,7}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : aire sous une parabole + notation ---
+\begin{tikzpicture}[scale=0.95]
+  \begin{axis}[
+    width=13cm,height=6.2cm,
+    axis lines=middle,
+    xmin=-0.6,xmax=3.6,ymin=-0.6,ymax=5.2,
+    xtick={0.5,3},xticklabels={$a$,$b$},
+    ytick=\empty,
+    xlabel={$x$},ylabel={$y$},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+    clip=false,
+  ]
+    \addplot[domain=0:3.4,samples=80,primary,line width=1.4pt] {0.5*x^2+0.3};
+    \addplot[name path=F,domain=0.5:3,samples=50,draw=none,forget plot] {0.5*x^2+0.3};
+    \path[name path=bord] (axis cs:0.5,0) -- (axis cs:3,0);
+    \addplot[areacol!50] fill between[of=F and bord];
+    \draw[dvert] (axis cs:0.5,0) -- (axis cs:0.5,0.425);
+    \draw[dvert] (axis cs:3,0)   -- (axis cs:3,4.8);
+    \node[primary,anchor=west] at (axis cs:2.0,3.6) {$\mathcal{C}_f:\ y=f(x)$};
+    \node[primarydark,font=\large] at (axis cs:1.75,1.6) {$\displaystyle\int_{a}^{b} f(x)\,\dd x$};
+  \end{axis}
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir une \textbf{primitive} et comprendre pourquoi il en existe une infinité (constante $C$) ;
+  \item utiliser le \textbf{tableau des primitives usuelles} en repérant la forme $U$ et son $\dd U$ ;
+  \item appliquer la méthode d'\textbf{intégration par parties} et faire le bon choix $U/V'$ ;
+  \item décomposer une \textbf{fraction rationnelle} en éléments simples pour l'intégrer ;
+  \item relier l'\textbf{intégrale définie} à la \textbf{primitive} via la formule de \textbf{Newton--Leibniz} ;
+  \item exploiter les \textbf{propriétés} des intégrales (Chasles, linéarité, positivité, croissance) ;
+  \item calculer des \textbf{aires planes} : sous une courbe, entre deux courbes, avec changement de signe.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 7 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : de la dérivée à l'intégrale}
+% =====================================================================
+La \textbf{dérivation} répond à la question : «\,étant donné une fonction $F$, quelle est sa
+dérivée $f=F'$\,?\,» L'\textbf{intégration} pose la question \emph{inverse} :
+«\,étant donné une fonction $f$, peut-on retrouver une fonction $F$ dont $f$ est la
+dérivée\,?\,» Une telle fonction $F$ s'appelle une \textbf{primitive} de $f$. À ce pur problème
+\emph{algébrique} s'ajoute, dès qu'on encadre $f$ entre deux bornes $a$ et $b$, une interprétation
+\emph{géométrique} puissante : l'\textbf{intégrale définie} $\int_a^b f(x)\,\dd x$ mesure l'
+\textbf{aire} comprise entre la courbe de $f$, l'axe des abscisses et les droites $x=a$, $x=b$.
+
+\subsection{Le problème inverse de la dérivation}
+
+On connaît, depuis la fiche « Dérivation », que la dérivée de $x^2$ est $2x$. Réciproquement,
+une primitive de $f(x)=2x$ est $F(x)=x^2$, car $(x^2)'=2x$. Mais $x^2+1$, $x^2-5$,
+$x^2+\pi$ conviennent tout aussi bien : elles ne diffèrent que par une \emph{constante}, qui
+disparaît quand on dérive. C'est cette famille de fonctions, toutes égales à une constante près,
+que l'on note $\int 2x\,\dd x = x^2+C$.
+
+\subsection{Intégrale indéfinie vs intégrale définie}
+
+Il faut bien distinguer deux notations très proches mais de nature différente :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\rowcolors{2}{primary!5}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.6cm} >{\raggedright\arraybackslash}p{5.2cm} >{\raggedright\arraybackslash}p{4.4cm}}
+\rowcolor{primary!18}
+\textbf{Notation} & \textbf{Nature du résultat} & \textbf{Constante $C$ ?}\\
+\midrule
+$\displaystyle\int f(x)\,\dd x$ \newline (\emph{intégrale indéfinie}) & Une \textbf{fonction} (la famille des primitives de $f$). & Oui, obligatoire.\\
+$\displaystyle\int_a^b f(x)\,\dd x$ \newline (\emph{intégrale définie}) & Un \textbf{nombre} (une aire algébrique). & Non, $C$ se simplifie.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remarque}[la virgule et la virgule\dots]
+En notation francophone, la \emph{virgule} est le séparateur décimal ($1{,}5$), tandis que
+$\dd x$ dans l'intégrale n'est \emph{pas} une multiplication mais l'indicateur de la variable
+d'intégration. Ne jamais écrire $\int f(x)dx$ sans espace : on écrit $\int f(x)\,\dd x$.
+\end{remarque}
+
+\subsection{Vocabulaire et notations}
+
+\begin{definition}[primitive, intégrale indéfinie]
+Soit $I$ un intervalle de $\R$ et $f$ une fonction définie sur $I$. On appelle
+\textbf{primitive de $f$ sur $I$} toute fonction $F$ définie et \textbf{dérivable} sur $I$ dont la
+dérivée est $f$, c'est-à-dire telle que
+\[ F'(x)=f(x)\qquad\text{pour tout }x\in I. \]
+On note alors
+\[ \boxed{\;\int f(x)\,\dd x = F(x)+C\;} \]
+l'\textbf{intégrale indéfinie} de $f$, où $C$ est une constante réelle arbitraire.
+\begin{ou}
+  \item $f$ : la fonction à intégrer, appelée \textbf{intégrande} (même « dimension » que $F$ divisée par $x$) ;
+  \item $F$ : une primitive particulière de $f$ (même « dimension » que $f\times x$) ;
+  \item $C\in\R$ : la \textbf{constante d'intégration} (même « dimension » que $F$) ;
+  \item $\dd x$ : indique que l'on intègre par rapport à la variable $x$.
+\end{ou}
+\end{definition}
+
+En mathématiques pures, $x$ et $f(x)$ sont des nombres sans dimension : la primitive $F$ aussi.
+Lorsque $f$ représente une grandeur physique (vitesse, concentration, force\dots), la dimension de
+$F=\int f\,\dd x$ est $[F]=[f]\times[x]$ : par exemple, intégrer une vitesse (\si{\metre\per\second})
+par rapport au temps (\si{\second}) donne une distance (\si{\metre}). C'est tout l'intérêt de
+l'intégrale en sciences.
+
+% =====================================================================
+\section{Primitive d'une fonction}
+% =====================================================================
+
+\subsection{Pourquoi une infinité de primitives ?}
+
+Comme la dérivée d'une constante est nulle, ajouter n'importe quel nombre $C$ à une primitive $F$
+ne change pas sa dérivée :
+
+\begin{theoreme}[structure de la famille des primitives]
+Si $F$ est une primitive de $f$ sur un intervalle $I$, alors \textbf{toutes} les primitives de $f$
+sur $I$ sont les fonctions de la forme
+\[ \boxed{\;x\longmapsto F(x)+C,\qquad C\in\R.\;} \]
+Réciproquement, deux primitives d'une même fonction diffèrent toujours d'une constante.
+\end{theoreme}
+
+\begin{remarque}[quand peut-on parler de «\,la\,» primitive ?]
+Sur un intervalle, deux primitives ne différent que d'une constante : dire «\,la\,» primitive est
+donc abusif tant que $C$ n'est pas fixée. On la détermine dès qu'on impose une
+\textbf{condition initiale} (la valeur de $F$ en un point), exactement comme en physique où la
+vitesse initiale fixe la constante d'intégration du mouvement.
+\end{remarque}
+
+\subsection{Propriétés fondamentales (linéarité)}
+
+L'intégration est une opération \textbf{linéaire}, image miroir de la linéarité de la dérivée :
+
+\begin{theoreme}[linéarité de l'intégrale indéfinie]
+Pour toutes fonctions $f$, $g$ admettant des primitives et toute constante $k\in\R$ :
+\begin{align}
+\int \bigl[f(x)+g(x)\bigr]\,\dd x &= \int f(x)\,\dd x+\int g(x)\,\dd x, \label{eq:linadd}\\
+\int k\,f(x)\,\dd x &= k\int f(x)\,\dd x. \label{eq:link}
+\end{align}
+\end{theoreme}
+
+\begin{exemple}[scinder puis intégrer terme à terme]
+Calculer $\displaystyle I=\int\bigl(3x^2+2x-5\bigr)\,\dd x$.
+
+\smallskip
+\textbf{Méthode.} Par linéarité \eqref{eq:linadd}--\eqref{eq:link}, on intègre chaque terme séparément :
+\[
+I=3\int x^2\,\dd x+2\int x\,\dd x-5\int 1\,\dd x
+ =3\cdot\frac{x^{3}}{3}+2\cdot\frac{x^{2}}{2}-5\,x+C
+ =\boxed{\,x^{3}+x^{2}-5x+C.\,}
+\]
+On peut \emph{vérifier} le résultat en dérivant : $(x^3+x^2-5x+C)'=3x^2+2x-5$. On retrouve bien
+l'intégrande : c'est le réflexe indispensable pour traquer les erreurs de signe et de coefficient.
+\end{exemple}
+
+% =====================================================================
+\section{Le formulaire des primitives usuelles}
+% =====================================================================
+
+Toute la mécanique du calcul intégral repose sur un \textbf{tableau de formes de référence}, à
+connaître par cœur. Chaque ligne associe à une forme d'intégrande \emph{une} primitive. La
+subtilité est que la formule est écrite avec une \emph{fonction auxiliaire} $U(x)$ et son
+différentiel $\dd U=U'(x)\,\dd x$ : c'est ce qui permet d'intégrer des fonctions \emph{composées}.
+
+\subsection{Mécanisme clé : la règle du $\dd U$}
+
+\begin{methode}[identifier $U$ et faire apparaître $\dd U$]
+La quasi-totalité des primitives du tableau s'écrivent en fonction d'une expression
+$U(x)$ et de $\dd U=U'(x)\,\dd x$. La mécanique est toujours la même :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Repérer} dans l'intégrande une «\,brique\,» $U(x)$ (ce qui est à l'intérieur d'une
+        puissance, d'un logarithme, d'un cosinus, d'une exponentielle\dots).
+  \item \textbf{Calculer} $\dd U=U'(x)\,\dd x$.
+  \item \textbf{Comparer} $\dd U$ avec ce qui est réellement écrit dans l'intégrande : s'il
+        \emph{manque} une constante $k$, on la compense en multipliant et divisant par $k$
+        (linéarité). S'il \emph{manque} un facteur non constant, la forme \emph{directe} ne marche
+        pas : penser à l'intégration par parties (section~4).
+  \item \textbf{Appliquer} la formule du tableau avec $U$ à la place de $x$.
+\end{enumerate}
+\end{methode}
+
+\subsection{Forme 1 -- constante et puissance}
+
+\begin{formule}[primitive d'une constante]
+Pour toute constante $a\in\R$ :
+\[
+\boxed{\;\int a\,\dd U = a\,U+C,\qquad \text{en particulier}\quad \int a\,\dd x = a\,x+C.\;}
+\]
+\begin{ou}
+  \item $a$ : constante réelle (sans dimension si $x$ est sans dimension) ;
+  \item $U$ : fonction de la variable $x$ ; $\dd U=U'(x)\,\dd x$ ;
+  \item $C\in\R$ : constante d'intégration.
+\end{ou}
+\end{formule}
+
+\begin{formule}[primitive d'une puissance ($U^n$)]
+Pour $n\in\R$ avec $n\neq -1$ :
+\[
+\boxed{\;\int U^{\,n}\,\dd U = \frac{U^{\,n+1}}{n+1}+C.\;}
+\]
+\begin{ou}
+  \item $U(x)$ : la fonction « interne » (souvent $U=x$, d'où $\int x^n\dd x=\dfrac{x^{n+1}}{n+1}+C$) ;
+  \item $n$ : exposant réel quelconque, \textbf{sauf} $-1$ (cas traité par le logarithme, forme 3) ;
+  \item $\dd U=U'(x)\,\dd x$ : le différentiel, qui doit apparaître tel quel dans l'intégrande.
+\end{ou}
+\end{formule}
+
+\begin{attention}[le piège $n=-1$]
+La formule $\dfrac{U^{n+1}}{n+1}$ \textbf{n'a pas de sens} pour $n=-1$ (division par zéro).
+Une primitive de $1/x$ n'est \emph{pas} une puissance : c'est $\ln|x|$ (voir forme~3).
+\end{attention}
+
+\begin{exemple}[puissance simple]
+\mbox{}\quad $\displaystyle\int x^{2018}\,\dd x=\frac{x^{2019}}{2019}+C$
+\quad (ici $U=x$, $n=2018$, $\dd U=\dd x$).\\
+On gagne un temps précieux au concours en reconnaissant ces formes directes sans développer.
+\end{exemple}
+
+\begin{exemple}[composition affine — faire apparaître le $\dd U$]
+Calculer $\displaystyle\int (x+3)^3\,\dd x$.
+
+\smallskip
+\textbf{Identification.} On pose $U=x+3$, donc $U'=1$ et $\dd U=1\cdot\dd x=\dd x$. Le $\dd U$
+demandé par la formule ($\dd x$) est \emph{exactement} présent. Avec $n=3$ :
+\[
+\int (x+3)^3\,\dd x=\int U^3\,\dd U=\frac{U^{4}}{4}+C=\boxed{\,\frac{(x+3)^4}{4}+C.\,}
+\]
+\textbf{Vérification.} En dérivant $\dfrac{(x+3)^4}{4}$ : $\dfrac{4(x+3)^3\cdot 1}{4}=(x+3)^3$. \checkmark
+\end{exemple}
+
+\begin{exemple}[composition non triviale — compenser par une constante]
+Calculer $\displaystyle\int (5x^2+3)^3\,10x\,\dd x$.
+
+\smallskip
+\textbf{Identification.} Posons $U=5x^2+3$. Alors $U'=10x$ et $\dd U=10x\,\dd x$. C'est
+\emph{exactement} le facteur $10x\,\dd x$ qui accompagne $(5x^2+3)^3$ dans l'intégrande : tout est
+réuni pour appliquer la formule avec $n=3$ :
+\[
+\int U^3\,\dd U=\frac{U^4}{4}+C=\boxed{\,\frac{(5x^2+3)^4}{4}+C.\,}
+\]
+\textbf{Si $10x$ avait été remplacé par $5x$.} Il manquerait un facteur $2$ : on écrirait
+$5x\,\dd x=\tfrac12\,\dd U$, d'où $\int U^3\cdot\tfrac12\,\dd U=\tfrac12\cdot\tfrac{U^4}{4}+C$.
+C'est le mécanisme \emph{compenser par une constante} de la méthode ci-dessus.
+\end{exemple}
+
+\subsection{Forme 2 -- logarithme ($\dd U/U$)}
+
+\begin{formule}[primitive de $\dd U/U$]
+\[
+\boxed{\;\int \frac{\dd U}{U}=\ln|U|+C.\;}
+\]
+\begin{ou}
+  \item $U(x)$ : fonction qui ne s'annule pas sur l'intervalle considéré ;
+  \item $|U|$ : \textbf{valeur absolue}, obligatoire car $\ln$ n'est défini que sur $]0,+\infty[$ ;
+  \item dimension : $\ln|U|$ est un nombre sans dimension (un logarithme est toujours sans dimension).
+\end{ou}
+\end{formule}
+
+\begin{attention}[ne jamais oublier la valeur absolue]
+Écrire $\int \dfrac{\dd x}{x}=\ln x+C$ est \textbf{faux} en général : cela n'est valable que sur
+$]0,+\infty[$. Sur $]-\infty,0[$, la primitive est $\ln(-x)+C$. La formule correcte, valable sur tout
+intervalle où $x\neq0$, est $\ln|x|+C$.
+\end{attention}
+
+\begin{exemple}[le $\dd U$ « tout prêt »]
+Calculer $\displaystyle\int \frac{2x\,\dd x}{x^2+3}$.
+
+\smallskip
+\textbf{Identification.} Posons $U=x^2+3$ ; alors $U'=2x$ et $\dd U=2x\,\dd x$. Le numérateur
+$2x\,\dd x$ est \emph{exactement} $\dd U$. On a donc directement
+\[
+\int\frac{\dd U}{U}=\ln|U|+C=\boxed{\,\ln(x^2+3)+C.\,}
+\]
+Ici $|U|$ est inutile car $x^2+3\geqslant 3>0$. \textbf{Vérification :}
+$\bigl[\ln(x^2+3)\bigr]'=\dfrac{2x}{x^2+3}$. \checkmark
+\end{exemple}
+
+\begin{exemple}[avec une fonction trigonométrique]
+Calculer $\displaystyle\int \frac{\sin x\,\dd x}{3-\cos x}$.
+
+\smallskip
+\textbf{Identification.} On reconnaît la forme $\dd U/U$ en posant $U=3-\cos x$. Comme
+$U'=\sin x$, on a $\dd U=\sin x\,\dd x$ : le numérateur est $\dd U$. D'où
+\[
+\int\frac{\sin x\,\dd x}{3-\cos x}=\int\frac{\dd U}{U}=\ln|U|+C=\boxed{\,\ln(3-\cos x)+C.\,}
+\]
+(Pas de valeur absolue car $3-\cos x\geqslant 2>0$.)
+\end{exemple}
+
+\subsection{Forme 3 -- sinus, cosinus}
+
+\begin{formule}[primitives trigonométriques de base]
+\[
+\boxed{\;\int \sin U\,\dd U = -\cos U+C,\qquad \int \cos U\,\dd U = \sin U+C.\;}
+\]
+\begin{ou}
+  \item $U$ et $\dd U$ : comme précédemment ; les angles sont en \textbf{radians} (sans dimension) ;
+  \item $-\cos U$ : le signe «\,$-$\,» devant $\cos$ est la source d'erreur n\textsuperscript{o}\,1 ; le retenir
+        par le réflexe «\,la dérivée de $\cos$ est $-\sin$\,».
+\end{ou}
+\end{formule}
+
+\begin{exemple}[composition linéaire]
+Calculer $\displaystyle\int \cos(2x+1)\cdot 2\,\dd x$.
+
+\smallskip
+Posons $U=2x+1$, donc $\dd U=2\,\dd x$, qui est présent. Alors
+$\int\cos U\,\dd U=\sin U+C=\boxed{\,\sin(2x+1)+C.\,}$
+
+\smallskip
+\textbf{Et si l'on n'avait que $\int\cos(2x+1)\,\dd x$ ?} Il manque le facteur $2$. On le crée
+artificiellement : $\dd U=2\,\dd x\Rightarrow \dd x=\tfrac12\,\dd U$, donc
+$\int\cos U\cdot\tfrac12\,\dd U=\tfrac12\sin U+C=\tfrac12\sin(2x+1)+C$.
+\end{exemple}
+
+\subsection{Forme 4 -- $1/\cos^2 U$ et $1/\sin^2 U$}
+
+\begin{formule}[primitives de $1/\cos^2$ et $1/\sin^2$]
+\[
+\boxed{\;\int\frac{\dd U}{\cos^2 U}=\tg U+C,\qquad \int\frac{\dd U}{\sin^2 U}=-\cotg U+C.\;}
+\]
+\begin{ou}
+  \item $\tg=\dfrac{\sin}{\cos}$ et $\cotg=\dfrac{\cos}{\sin}$ (notations du livre ; $\tg=\tan$, $\cotg=\cot$) ;
+  \item ici encore un signe «\,$-$\,» devant $\cotg$, à retenir via $(\cotg)'=-1/\sin^2$.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[composition pour $1/\cos^2$]
+Calculer $\displaystyle\int\frac{2x\,\dd x}{\cos^2(x^2+1)}$.
+
+\smallskip
+Posons $U=x^2+1$ ; alors $\dd U=2x\,\dd x$, présent au numérateur. Ainsi
+\[
+\int\frac{\dd U}{\cos^2 U}=\tg U+C=\boxed{\,\tan(x^2+1)+C.\,}
+\]
+\end{exemple}
+
+\subsection{Forme 5 -- fonctions circulaires réciproques ($\arcsin$, $\arctan$)}
+
+\begin{formule}[primitives donnant $\arcsin$ et $\arctan$]
+\[
+\boxed{\;\int\frac{\dd U}{\sqrt{1-U^2}}=\arcsin U+C,\qquad
+       \int\frac{\dd U}{1+U^2}=\arctan U+C.\;}
+\]
+\textbf{Variante utile} (pour $a-U^2>0$) :
+$\displaystyle\int\frac{\dd U}{\sqrt{a-U^2}}=\arcsin\!\frac{U}{\sqrt{a}}+C.$
+\begin{ou}
+  \item $U\in[-1,1]$ pour $\arcsin$ (sinon la racine n'est pas réelle) ;
+  \item $\arcsin$ et $\arctan$ renvoient un \textbf{angle en radians}.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[composer sur $\arcsin$]
+Calculer $\displaystyle\int\frac{3\,\dd x}{\sqrt{1-(3x)^2}}$.
+
+\smallskip
+Posons $U=3x$ ; $\dd U=3\,\dd x$, qui est exactement le numérateur. D'où
+$\int\frac{\dd U}{\sqrt{1-U^2}}=\arcsin U+C=\boxed{\,\arcsin(3x)+C.\,}$
+\end{exemple}
+
+\begin{exemple}[technique «\,multiplier-diviser\,» pour ajuster $\dd U$]
+Calculer $\displaystyle\int\frac{\dd x}{\sqrt{1-\bigl(\tfrac{x}{3}\bigr)^2}}$.
+
+\smallskip
+Posons $U=\tfrac{x}{3}$ ; alors $\dd U=\tfrac{1}{3}\,\dd x$, soit $\dd x=3\,\dd U$. On substitue :
+\[
+\int\frac{\dd x}{\sqrt{1-U^2}}=\int\frac{3\,\dd U}{\sqrt{1-U^2}}
+=3\int\frac{\dd U}{\sqrt{1-U^2}}=3\arcsin U+C
+=\boxed{\,3\,\arcsin\!\Bigl(\frac{x}{3}\Bigr)+C.\,}
+\]
+\textbf{Leçon générale.} Cette technique «\,multiplier et diviser par la constante qui manque\,»
+est \emph{la} recette universelle chaque fois que $\dd U$ diffère de l'intégrande par une simple
+constante. Elle fonctionne pour \emph{toutes} les formes du tableau.
+\end{exemple}
+
+\begin{exemple}[composer sur $\arctan$, deux astuces]
+\textbf{(a)} $\displaystyle\int\frac{\dd x}{1+(3x)^2}$. Posons $U=3x$, $\dd U=3\,\dd x$, d'où $\dd x=\tfrac13\,\dd U$ :
+\[
+\int\frac{\dd x}{1+U^2}=\frac13\int\frac{\dd U}{1+U^2}=\frac13\arctan(3x)+C.
+\]
+\textbf{(b)} $\displaystyle\int\frac{\dd x}{3+x^2}$. On factorise pour retrouver la forme
+$1+U^2$ : $\dfrac{1}{3+x^2}=\dfrac{1}{3}\cdot\dfrac{1}{1+\bigl(\tfrac{x}{\sqrt3}\bigr)^2}$.
+En posant $U=\tfrac{x}{\sqrt3}$, $\dd x=\sqrt3\,\dd U$ :
+\[
+\int\frac{\dd x}{3+x^2}=\frac{\sqrt3}{3}\arctan\!\Bigl(\frac{x}{\sqrt3}\Bigr)+C.
+\]
+\end{exemple}
+
+\subsection{Forme 6 -- exponentielle de base $a$}
+
+\begin{formule}[primitive de $a^U$]
+\[
+\boxed{\;\int a^{U}\,\dd U=\frac{a^{U}}{\ln a}+C,\qquad\text{en particulier}\quad \int e^{U}\,\dd U=e^{U}+C.\;}
+\]
+\begin{ou}
+  \item $a>0$, $a\neq1$ : base de l'exponentielle (sans dimension) ;
+  \item $\ln a$ : logarithme népérien de $a$ ; pour $a=e$, $\ln e=1$ et la formule se simplifie en $e^U$ ;
+  \item $U$ : exposant (sans dimension ; un exposant est \emph{toujours} sans dimension).
+\end{ou}
+\end{formule}
+
+\begin{exemple}[le cas $a=e$ et le cas général]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $\displaystyle\int e^{2x}\,\dd x=\frac12\int e^{2x}\cdot 2\,\dd x=\frac12\,e^{2x}+C$
+        (on a créé le $\dd U=2\,\dd x$ en multipliant-divisant par $2$).
+  \item $\displaystyle\int 10^{3x}\,\dd x=\frac13\int 10^{3x}\cdot 3\,\dd x=\frac13\cdot\frac{10^{3x}}{\ln 10}+C$.
+  \item $\displaystyle\int 2^{3x}\,\dd x=\frac13\cdot\frac{2^{3x}}{\ln 2}+C$.
+\end{itemize}
+\end{exemple}
+
+% =====================================================================
+\section{L'intégration par parties (IPP)}
+% =====================================================================
+
+Aucun tableau ne donne directement une primitive de $x\,e^x$, $x\cos x$ ou $\ln x$. Pour ces
+\textbf{produits} de deux fonctions de natures différentes, on dispose d'une technique universelle :
+l'\textbf{intégration par parties}, qui n'est rien d'autre que la dérivée d'un produit «\,lue à l'envers\,».
+
+\subsection{Démonstration de la formule}
+
+\begin{theoreme}[formule d'intégration par parties]
+Soient $U$ et $V$ deux fonctions dérivables. En intégrant la relation $(UV)'=U'V+UV'$, on obtient
+\[
+\boxed{\;\int U\,\dd V = U\,V-\int V\,\dd U.\;}
+\]
+\begin{ou}
+  \item $U$ : fonction choisie pour être \textbf{dérivée} (on calcule $U'$ puis $\dd U=U'\,\dd x$) ;
+  \item $V$ : fonction choisie pour être \textbf{intégrée} (on calcule $V=\int V'\,\dd x$) ;
+  \item l'objectif est que la nouvelle intégrale $\int V\,\dd U$ soit \emph{plus simple} que l'initiale.
+\end{ou}
+\end{theoreme}
+
+\textit{Démonstration.} Partons de la dérivée du produit :
+$\dfrac{\dd(UV)}{\dd x}=U'V+UV'$, soit, en différentiel,
+$\dd(UV)=V\,U'\,\dd x+U\,V'\,\dd x=V\,\dd U+U\,\dd V$.
+En intégrant les deux membres,
+$\int\dd(UV)=UV=\int V\,\dd U+\int U\,\dd V$, d'où, en isolant $\int U\,\dd V$ :
+$\int U\,\dd V=UV-\int V\,\dd U$. \hfill$\square$
+
+\subsection{La règle de choix $U/V'$}
+
+Le succès d'une IPP tient \emph{entièrement} au choix de $U$ et de $V'$. On retient l'ordre de
+priorité suivant pour attribuer le rôle de $U$ (ce qu'on dérive) :
+
+\begin{methode}[choisir $U$ et $V'$ dans une IPP]
+On pose en priorité $U$ égale à la fonction qui se situe le \textbf{plus à gauche} dans la liste
+ci-dessous (et $V'$ sera donc le reste de l'intégrande) :
+\[
+\underbrace{\ln,\ \log}_{\text{logarithmes}}
+\ >\ 
+\underbrace{\arcsin,\ \arctan}_{\text{circulaires réciproques}}
+\ >\ 
+\underbrace{x^n,\ \text{polynômes}}_{\text{algébriques}}
+\ >\ 
+\underbrace{\sin,\ \cos}_{\text{trigonométriques}}
+\ >\ 
+\underbrace{e^{x},\ a^{x}}_{\text{exponentielles}}.
+\]
+\textbf{Règle pratique du livre :} $U=\text{fonction logarithmique}$ (priorité absolue), puis
+$V'=\text{fonction trigonométrique}$ ou $V'=\text{exponentielle}$. Les polynômes se dérivent
+(ils perdent leur degré), les exponentielles et les $\sin/\cos$ s'intègrent sans se compliquer.
+\end{methode}
+
+\subsection{Comment faire : réussir une IPP en quatre gestes}
+
+\begin{methode}[dérouler une IPP]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Choisir} $U$ (selon la priorité ci-dessus) et $V'$ (le reste) ; écrire $U'$ et $V$.
+  \item \textbf{Appliquer} $\int U\,\dd V=UV-\int V\,\dd U$.
+  \item \textbf{Simplifier} la nouvelle intégrale ; en cas de produit qui «\,tourne en boucle\,»,
+        poser $I=\int\ldots$ et résoudre l'équation en $I$ (voir ci-dessous).
+  \item \textbf{Vérifier} en dérivant le résultat final.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[le cas d'école : $x\,e^x$]
+Calculer $\displaystyle\int x\,e^x\,\dd x$.
+
+\smallskip
+\textbf{Choix.} $U=x$ (algébrique, à dériver) et $V'=e^x$ (exponentielle, à intégrer), donc
+$U'=1$ et $V=e^x$. D'après la formule :
+\[
+\int x\,e^x\,\dd x=UV-\int V\,\dd U=x\,e^x-\int e^x\cdot 1\,\dd x
+=x\,e^x-e^x+C=\boxed{\,(x-1)\,e^x+C.\,}
+\]
+\textbf{Bilan.} L'intégrale initiale (produit) est devenue une intégrale \emph{immédiate}
+$\int e^x\dd x$ : c'est tout l'intérêt d'avoir dérivé $x$ en $1$.
+\end{exemple}
+
+\begin{exemple}[produit polynôme $\times$ trigonométrique]
+Calculer $\displaystyle\int x\cos x\,\dd x$.
+
+\smallskip
+\textbf{Choix.} $U=x$ ($\Rightarrow U'=1$), $V'=\cos x$ ($\Rightarrow V=\sin x$).
+\[
+\int x\cos x\,\dd x=x\sin x-\int \sin x\cdot 1\,\dd x
+=x\sin x-(-\cos x)+C=\boxed{\,x\sin x+\cos x+C.\,}
+\]
+\end{exemple}
+
+\begin{exemple}[le logarithme, qui n'a pas de primitive «\,directe\,»]
+Calculer $\displaystyle\int \ln x\,\dd x$.
+
+\smallskip
+On écrit $\ln x = \underbrace{1}_{V'}\cdot\underbrace{\ln x}_{U}$. Alors
+$U=\ln x\Rightarrow U'=\tfrac1x$, et $V'=1\Rightarrow V=x$.
+\[
+\int 1\cdot\ln x\,\dd x=x\ln x-\int x\cdot\frac1x\,\dd x
+=x\ln x-\int 1\,\dd x=\boxed{\,x\ln x-x+C.\,}
+\]
+\textbf{Pourquoi $\ln x$ en $U$ ?} Parce que sa dérivée $\tfrac1x$ est \emph{plus simple} ; à
+l'inverse, \emph{intégrer} $\ln x$ ne mènerait à rien de connu.
+\end{exemple}
+
+\begin{exemple}[produit polynôme $\times\,1/\cos^2$]
+Calculer $\displaystyle\int \frac{x}{\cos^2 x}\,\dd x$.
+
+\smallskip
+\textbf{Choix.} $U=x\Rightarrow U'=1$, $V'=\dfrac1{\cos^2 x}\Rightarrow V=\tan x$.
+\[
+\int \frac{x}{\cos^2 x}\,\dd x=x\tan x-\int \tan x\cdot 1\,\dd x.
+\]
+Il reste $\int\tan x\,\dd x=\int\dfrac{\sin x}{\cos x}\,\dd x$. Posons $W=\cos x$, $\dd W=-\sin x\,\dd x$,
+soit $\sin x\,\dd x=-\dd W$ : $\int\dfrac{\sin x\,\dd x}{\cos x}=-\int\dfrac{\dd W}{W}=-\ln|W|=-\ln|\cos x|$.
+Finalement
+\[
+\int \frac{x}{\cos^2 x}\,\dd x=\boxed{\,x\tan x+\ln|\cos x|+C.\,}
+\]
+\end{exemple}
+
+\begin{remarque}[quand l'IPP « boucle »]
+Pour $\int e^x\sin x\,\dd x$, deux IPP successives ramènent la même intégrale : on pose
+$I=\int e^x\sin x\,\dd x$, on obtient une équation $I=\ldots-I$ que l'on résout en $I$. Reconnaître
+cette situation évite de tourner en rond.
+\end{remarque}
+
+% =====================================================================
+\section{L'intégration par décomposition en fractions simples}
+% =====================================================================
+
+Lorsque l'intégrande est un \textbf{quotient de deux polynômes} (une \emph{fraction rationnelle})
+dont le dénominateur se factorise en termes du premier degré, on le décompose en une somme de
+fractions simples que l'on intègre ensuite individuellement (forme $\dd U/U\Rightarrow\ln|U|$).
+
+\subsection{Principe}
+
+Si le dénominateur s'écrit $(x-\alpha)(x-\beta)$ avec $\alpha\neq\beta$, on cherche deux constantes
+$A$ et $B$ telles que
+\[
+\frac{P(x)}{(x-\alpha)(x-\beta)}=\frac{A}{x-\alpha}+\frac{B}{x-\beta}.
+\]
+On identifie $A$ et $B$ soit en réduisant au même dénominateur puis en comparant les coefficients,
+soit — plus rapide — en \textbf{multipliant par $(x-\alpha)$ puis en faisant $x=\alpha$} (qui annule
+l'autre terme).
+
+\begin{methode}[décomposer une fraction rationnelle à deux pôles simples]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Factoriser} le dénominateur en $(x-\alpha)(x-\beta)$.
+  \item \textbf{Poser} $\dfrac{N(x)}{(x-\alpha)(x-\beta)}=\dfrac{A}{x-\alpha}+\dfrac{B}{x-\beta}$.
+  \item \textbf{Identifier} $A,B$ :
+        \[
+          A=\left.\frac{N(x)}{x-\beta}\right|_{x=\alpha},\qquad
+          B=\left.\frac{N(x)}{x-\alpha}\right|_{x=\beta}.
+        \]
+        (Astuce «\,multiplier-évaluer\,», valable pour des pôles \emph{simples}.)
+  \item \textbf{Intégrer} chaque morceau par $\int\dfrac{\dd x}{x-a}=\ln|x-a|$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[décomposition classique du livre]
+Calculer $\displaystyle\int \frac{2}{(x-1)(x+3)}\,\dd x$.
+
+\smallskip
+\textbf{Étape 1 -- Décomposition.} Posons
+$\dfrac{2}{(x-1)(x+3)}=\dfrac{A}{x-1}+\dfrac{B}{x+3}$.
+
+\textit{Méthode des coefficients.} En réduisant au même dénominateur :
+$\dfrac{2}{(x-1)(x+3)}=\dfrac{A(x+3)+B(x-1)}{(x-1)(x+3)}
+=\dfrac{(A+B)x+(3A-B)}{(x-1)(x+3)}$.
+Par identification, $A+B=0$ et $3A-B=2$. De la première, $B=-A$ ; injecté dans la seconde :
+$3A-(-A)=4A=2$, donc $A=\tfrac12$ et $B=-\tfrac12$.
+
+\textit{Vérification par l'astuce «\,multiplier-évaluer\,».}
+$A=\left.\dfrac{2}{x+3}\right|_{x=1}=\dfrac{2}{4}=\tfrac12$ ;
+$B=\left.\dfrac{2}{x-1}\right|_{x=-3}=\dfrac{2}{-4}=-\tfrac12$. \checkmark
+
+\textbf{Étape 2 -- Intégration.}
+\[
+\int\frac{2}{(x-1)(x+3)}\,\dd x
+=\frac12\int\frac{\dd x}{x-1}-\frac12\int\frac{\dd x}{x+3}
+=\boxed{\,\frac12\bigl(\ln|x-1|-\ln|x+3|\bigr)+C.\,}
+\]
+\end{exemple}
+
+\begin{exemple}[dénominateur à numérateur non constant]
+Décomposer $\displaystyle\frac{2x}{(x+1)(x+3)}$ et en déduire une primitive.
+
+\smallskip
+Posons $\dfrac{2x}{(x+1)(x+3)}=\dfrac{A}{x+1}+\dfrac{B}{x+3}$.
+Astuce «\,multiplier-évaluer\,» :
+$A=\left.\dfrac{2x}{x+3}\right|_{x=-1}=\dfrac{-2}{2}=-1$ ;
+$B=\left.\dfrac{2x}{x+1}\right|_{x=-3}=\dfrac{-6}{-2}=3$.
+Donc $\dfrac{2x}{(x+1)(x+3)}=\dfrac{-1}{x+1}+\dfrac{3}{x+3}$, et
+\[
+\int\frac{2x}{(x+1)(x+3)}\,\dd x=-\ln|x+1|+3\ln|x+3|+C.
+\]
+\end{exemple}
+
+% =====================================================================
+\section{L'intégrale définie}
+% =====================================================================
+
+Jusqu'ici, $\int f\,\dd x$ désignait une \emph{fonction}. En encadrant la variable entre deux
+bornes $a$ et $b$, on obtient l'\textbf{intégrale définie} $\int_a^b f(x)\,\dd x$ : un \emph{nombre}
+qui s'interprète comme une \textbf{aire}.
+
+\subsection{Définition géométrique (aire sous la courbe)}
+
+\begin{definition}[intégrale définie, interprétation géométrique]
+Soit $f$ une fonction \textbf{continue} sur l'intervalle $[a,b]$. L'intégrale définie
+\[
+\boxed{\;\int_a^b f(x)\,\dd x\;}
+\]
+représente l'\textbf{aire algébrique} de la surface délimitée par la courbe représentative de $f$,
+l'axe des abscisses ($y=0$) et les droites verticales d'équations $x=a$ et $x=b$.
+\begin{ou}
+  \item $a,b$ : bornes d'intégration (nombres réels, $a<b$ en général) ;
+  \item le résultat est exprimé en \textbf{unités d'aire} (\textbf{u.a.}) du repère ;
+  \item «\,algébrique\,» signifie que la portion sous l'axe des $x$ est comptée \emph{négativement}.
+\end{ou}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \begin{axis}[
+    width=12cm,height=6cm,
+    axis lines=middle,
+    xmin=-0.4,xmax=4.6,ymin=-0.7,ymax=4.6,
+    xtick={1,3.4},xticklabels={$a$,$b$},
+    ytick=\empty,
+    xlabel={$x$},ylabel={$y$},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+  ]
+    \addplot[domain=0.3:4.3,samples=80,primary,line width=1.4pt]
+       {-0.4*(x-2)^2+3.2};
+    \addplot[name path=F,domain=1:3.4,samples=50,draw=none,forget plot]
+       {-0.4*(x-2)^2+3.2};
+    \path[name path=bord] (axis cs:1,0) -- (axis cs:3.4,0);
+    \addplot[areacol!45] fill between[of=F and bord];
+    \draw[dvert] (axis cs:1,0) -- (axis cs:1,1.6);
+    \draw[dvert] (axis cs:3.4,0) -- (axis cs:3.4,3.064);
+    \node[primary] at (axis cs:2.2,1.2) {aire $=\displaystyle\int_a^b f(x)\,\dd x$};
+    \node[primary] at (axis cs:3.9,3.0) {$\mathcal{C}_f$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}[l'intuition des rectangles de Riemann]
+Pour \emph{construire} cette aire, on peut découper $[a,b]$ en $n$ petits intervalles de largeur
+$\Delta x$, sommer les aires des rectangles de hauteur $f(x_i)$, puis faire tendre $n\to\infty$ :
+$\displaystyle\int_a^b f(x)\,\dd x=\lim_{n\to\infty}\sum_{i=1}^n f(x_i)\,\Delta x$. Le symbole
+$\int$ n'est d'ailleurs qu'un «\,$S$\,» stylisé, pour \emph{somme}. Cette limite existe dès que $f$
+est \textbf{continue} : c'est pourquoi la fiche se restreint aux fonctions continues.
+\end{remarque}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \begin{axis}[
+    width=12cm,height=4.7cm,
+    axis lines=middle,
+    xmin=-0.3,xmax=4.5,ymin=-0.4,ymax=4.6,
+    xtick={0.5,3.5},xticklabels={$a$,$b$},
+    ytick=\empty,
+    xlabel={$x$},ylabel={$y$},
+    title={\footnotesize Somme de Riemann : approximation de l'aire par des rectangles},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+  ]
+    % rectangles de largeur 0.5 entre x=0.5 et x=3.5 (hauteur = valeur à gauche)
+    \foreach \i in {1,...,6}{
+      \pgfmathsetmacro{\xl}{0.5+0.5*(\i-1)}
+      \pgfmathsetmacro{\xr}{\xl+0.5}
+      \pgfmathsetmacro{\h}{0.35*\xl*\xl+0.4}
+      \addplot[areacol!45,draw=primary!55,line width=0.3pt,fill=areacol!45,forget plot]
+         coordinates {(\xl,0) (\xl,\h) (\xr,\h) (\xr,0) (\xl,0)};
+    }
+    \addplot[domain=0.3:4.2,samples=80,primary,line width=1.3pt] {0.35*x^2+0.4};
+    \draw[dvert] (axis cs:0.5,0) -- (axis cs:0.5,0.4875);
+    \draw[dvert] (axis cs:3.5,0) -- (axis cs:3.5,4.6875);
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Le lien clé : intégrale définie et primitive (Newton--Leibniz)}
+
+\begin{theoreme}[formule de Newton--Leibniz]
+Soit $f$ une fonction continue sur $[a,b]$ et $F$ une \textbf{quelconque} de ses primitives. Alors
+\[
+\boxed{\;\int_a^b f(x)\,\dd x = \bigl[F(x)\bigr]_a^b = F(b)-F(a).\;}
+\]
+\begin{ou}
+  \item $F$ : n'importe quelle primitive de $f$ ; la constante $C$ s'élimine : $(F(b)+C)-(F(a)+C)=F(b)-F(a)$ ;
+  \item $[\,F(x)\,]_a^b$ : notation condensée pour $F(b)-F(a)$, très utilisée en calcul ;
+  \item le résultat est un \textbf{nombre} (une aire, en u.a.).
+\end{ou}
+\end{theoreme}
+
+\begin{attention}[l'ordre des bornes compte !]
+$\int_a^b=-\int_b^a$. Retenir : \textbf{inverser les bornes change le signe}. Et bien sûr
+$\int_a^a f=0$ (aucune « largeur »).
+\end{attention}
+
+\begin{exemple}[le calcul type, de la primitive à l'aire]
+Calculer $\displaystyle\int_{16}^{25} x^3\,\dd x$ (aire sous $f(x)=x^3$ entre $x=16$ et $x=25$).
+
+\smallskip
+\textbf{1. Primitive.} $\int x^3\,\dd x=\dfrac{x^4}{4}$ (forme puissance, $n=3$).
+
+\textbf{2. Newton--Leibniz.}
+\[
+\int_{16}^{25} x^3\,\dd x=\left[\frac{x^4}{4}\right]_{16}^{25}
+=\frac{25^4}{4}-\frac{16^4}{4}
+=\frac{390\,625}{4}-\frac{65\,536}{4}
+=\frac{325\,089}{4}\approx 81\,272\ua.
+\]
+Le résultat est l'aire, exprimée en \textbf{unités d'aire} du repère.
+\end{exemple}
+
+\begin{exemple}[composition et ajustement sur un intervalle]
+Calculer $\displaystyle\int_0^{\pi/6}\sin(2x)\,\dd x$.
+
+\smallskip
+On crée le $\dd U=2\,\dd x$ : $\displaystyle\int_0^{\pi/6}\sin(2x)\,\dd x
+=\frac12\int_0^{\pi/6}\sin(2x)\cdot 2\,\dd x
+=\frac12\Bigl[-\cos(2x)\Bigr]_0^{\pi/6}$.
+\[
+=\frac12\bigl(-\cos(\pi/3)+\cos 0\bigr)=\frac12\Bigl(-\frac12+1\Bigr)
+=\boxed{\,\frac14\,}\ua\ (\text{ici l'angle est en radians, l'aire en u.a.}).
+\]
+\end{exemple}
+
+\begin{exemple}[utiliser le $\dd U$ déjà présent]
+Calculer $\displaystyle\int_0^1 x\,e^{x^2+1}\,\dd x$.
+
+\smallskip
+Posons $U=x^2+1$ ; $\dd U=2x\,\dd x$, d'où $x\,\dd x=\tfrac12\,\dd U$. Quand $x=0$, $U=1$ ;
+quand $x=1$, $U=2$.
+\[
+\int_0^1 x\,e^{x^2+1}\,\dd x=\frac12\int_1^2 e^{U}\,\dd U
+=\frac12\Bigl[e^{U}\Bigr]_1^2=\frac12(e^2-e)=\boxed{\,\frac{e}{2}(e-1)\,}\ua.
+\]
+\textbf{Astuce.} On pouvait aussi garder les bornes en $x$ :
+$\frac12\bigl[e^{x^2+1}\bigr]_0^1=\frac12(e^2-e^1)$.
+\end{exemple}
+
+\subsection{L'unité du résultat}
+
+\begin{remarque}[u.a. versus unités physiques]
+Dans un repère orthonormé «\,pur\,», $\int_a^b f\,\dd x$ s'exprime en \textbf{unités d'aire (u.a.)} :
+une u.a. est l'aire du rectangle $1\times 1$ du repère. Si les graduations portent des unités
+physiques ($x$ en \si{\second}, $f$ en \si{\metre\per\second}), l'aire est en
+\si{\metre\per\second}\,$\cdot$\,\si{\second}$=$\si{\metre}. Le calcul intégral relie ainsi des
+grandeurs de natures différentes : c'est le pont entre vitesse et distance, entre débit et volume,
+entre puissance et énergie.
+\end{remarque}
+
+% =====================================================================
+\section{Propriétés des intégrales définies}
+% =====================================================================
+
+Les propriétés suivantes découlent de la définition et de la formule de Newton--Leibniz. Elles
+sont \emph{constamment} utilisées pour découper, simplifier ou comparer des intégrales.
+
+\begin{theoreme}[propriétés algébriques des intégrales définies]
+Soient $f$ et $g$ continues sur $[a,b]$ et $k\in\R$. Alors :
+\begin{align}
+&\textbf{Relation de Chasles :}\quad &\int_a^b f(x)\,\dd x+\int_b^c f(x)\,\dd x &=\int_a^c f(x)\,\dd x,\\
+&\textbf{Bornes permutées :}\quad &\int_a^b f(x)\,\dd x &=-\int_b^a f(x)\,\dd x,\\
+&\textbf{Intervalle réduit à un point :}\quad &\int_a^a f(x)\,\dd x &=0,\\
+&\textbf{Linéarité (somme) :}\quad &\int_a^b \bigl[f(x)+g(x)\bigr]\,\dd x &=\int_a^b f+\int_a^b g,\\
+&\textbf{Linéarité (produit par une constante) :}\quad &\int_a^b k\,f(x)\,\dd x &=k\int_a^b f.
+\end{align}
+\end{theoreme}
+
+\begin{theoreme}[propriétés de comparaison (positivité, croissance)]
+\begin{align}
+&f(x)\geqslant 0\ \text{sur }[a,b]\ (a<b)\ \Longrightarrow\ \int_a^b f\geqslant 0,\\
+&f(x)\leqslant g(x)\ \text{sur }[a,b]\ \Longrightarrow\ \int_a^b f\leqslant\int_a^b g,\\
+&\textbf{Inégalité de la moyenne (majoration) :}\quad \Bigl|\int_a^b f\Bigr|\leqslant\int_a^b|f|.
+\end{align}
+\end{theoreme}
+
+\begin{remarque}[le sens de la relation de Chasles]
+Chasles dit que l'aire totale sur $[a,c]$ est la \emph{somme} des aires sur $[a,b]$ et $[b,c]$ :
+on peut \textbf{découper} une intégrale à volonté. C'est indispensable lorsque $f$ change de
+signe (section suivante) ou que l'intervalle nécessite des primitives par morceaux.
+\end{remarque}
+
+\begin{exemple}[linéarité pour gagner du temps]
+Calculer $\displaystyle\int_0^1\bigl(3x^2+2x+1\bigr)\,\dd x$ sans développer de calcul lourd.
+
+\smallskip
+Par linéarité :
+$\int_0^1(3x^2+2x+1)\,\dd x=3\bigl[\tfrac{x^3}{3}\bigr]_0^1+2\bigl[\tfrac{x^2}{2}\bigr]_0^1+\bigl[x\bigr]_0^1
+=1+1+1=\boxed{\,3\,}\ua.$
+\end{exemple}
+
+% =====================================================================
+\section{Calculs d'aires}
+% =====================================================================
+
+L'application phare de l'intégrale définie est le \textbf{calcul d'aires planes}. La règle d'or :
+une aire est toujours \textbf{positive} ; l'intégrale, elle, est \textbf{algébrique}. Selon la
+position de la courbe par rapport à l'axe, il faut donc parfois prendre la \textbf{valeur absolue}.
+
+\subsection{Aire sous une courbe (fonction positive)}
+
+Si $f(x)\geqslant 0$ sur $[a,b]$, l'aire coincide avec l'intégrale :
+\[
+\boxed{\;\mathcal{A}=\int_a^b f(x)\,\dd x\quad(\text{en u.a.}).\;}
+\]
+
+\begin{exemple}[aire sous $\ln x$ via IPP]
+Calculer l'aire délimitée par $\mathcal{C}_f$ ($f(x)=\ln x$), l'axe des abscisses et les droites
+$x=1$ et $x=e$.
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \begin{axis}[
+    width=10cm,height=5cm,
+    axis lines=middle,
+    xmin=-0.3,xmax=3.3,ymin=-0.6,ymax=1.5,
+    xtick={1,2.718},xticklabels={$1$,$e$},
+    ytick={1},yticklabels={$1$},
+    xlabel={$x$},ylabel={$y$},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+  ]
+    \addplot[domain=0.35:3.2,samples=80,primary,line width=1.3pt] {ln(x)};
+    \addplot[name path=F,domain=1:2.718,samples=40,draw=none,forget plot] {ln(x)};
+    \path[name path=bord] (axis cs:1,0) -- (axis cs:2.718,0);
+    \addplot[areacol!45] fill between[of=F and bord];
+    \draw[dvert] (axis cs:1,0)--(axis cs:1,0);
+    \draw[dvert] (axis cs:2.718,0)--(axis cs:2.718,1);
+    \node[primary] at (axis cs:2.4,0.45) {$\mathcal{A}$};
+    \node[primary] at (axis cs:2.9,0.95) {$\ln x$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+Sur $[1,e]$, $\ln x\geqslant 0$, donc $\mathcal{A}=\int_1^e \ln x\,\dd x$. Il n'existe pas de
+primitive «\,directe\,» de $\ln x$ : on intègre par parties (voir l'exemple dédié de la section~4),
+$U=\ln x$, $V'=1$ :
+\[
+\int_1^e \ln x\,\dd x=\bigl[x\ln x-x\bigr]_1^e
+=(e\cdot 1-e)-(1\cdot 0-1)=0+1=\boxed{\,1\,\ua.\,}
+\]
+\end{exemple}
+
+\subsection{Aire quand la fonction est négative}
+
+Si $f(x)\leqslant 0$ sur $[a,b]$, l'intégrale est \emph{négative} alors que l'aire est positive.
+On prend donc la valeur absolue :
+\[
+\boxed{\;\mathcal{A}=\left|\int_a^b f(x)\,\dd x\right|.\;}
+\]
+
+\begin{attention}[aire = toujours positif]
+L'erreur classique est d'annoncer une aire négative. Une aire est un nombre \textbf{positif} :
+si votre intégrale vaut $-3$, l'aire vaut $3$.
+\end{attention}
+
+\subsection{Aire quand la fonction change de signe}
+
+Si $f$ s'annule en $b\in[a,c]$, positive sur $[a,b]$ et négative sur $[b,c]$, il faut
+\textbf{couper} l'intégrale à la racine (relation de Chasles) et additionner les valeurs absolues :
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \begin{axis}[
+    width=12cm,height=5.4cm,
+    axis lines=middle,
+    xmin=-0.5,xmax=5,ymin=-2.2,ymax=2.4,
+    xtick={1,2.5,4},xticklabels={$a$,$b$,$c$},
+    ytick=\empty,
+    xlabel={$x$},ylabel={$y$},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+  ]
+    \addplot[domain=0.3:4.7,samples=90,primary,line width=1.3pt]
+       {1.8-0.7*(x-2.5)^2};
+    \addplot[name path=F1,domain=1:2.5,samples=30,draw=none,forget plot]
+       {1.8-0.7*(x-2.5)^2};
+    \addplot[name path=F2,domain=2.5:4,samples=30,draw=none,forget plot]
+       {1.8-0.7*(x-2.5)^2};
+    \path[name path=zero1] (axis cs:1,0) -- (axis cs:2.5,0);
+    \path[name path=zero2] (axis cs:2.5,0) -- (axis cs:4,0);
+    \addplot[areacol!45] fill between[of=F1 and zero1];
+    \addplot[areacol2!45] fill between[of=F2 and zero2];
+    \draw[dvert] (axis cs:1,0)--(axis cs:1,-0.875);
+    \draw[dvert] (axis cs:4,0)--(axis cs:4,-0.875);
+    \node at (axis cs:1.7,1.0) {$\mathcal{A}_1$};
+    \node at (axis cs:3.3,-1.0) {$\mathcal{A}_2$};
+    \node[primary] at (axis cs:4.5,1.5) {$\mathcal{C}_f$};
+    \node[primary,font=\footnotesize] at (axis cs:2.5,0.25) {$f(b)=0$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\[
+\boxed{\;\mathcal{A}_1+\mathcal{A}_2=\int_a^b f(x)\,\dd x+\left|\int_b^c f(x)\,\dd x\right|.\;}
+\]
+
+\subsection{Aire entre deux courbes}
+
+Pour l'aire comprise entre deux courbes $\mathcal{C}_f$ et $\mathcal{C}_g$ qui se coupent en
+$x=a$ et $x=b$ (abscisses solutions de $f(x)=g(x)$), on intègre la \textbf{différence} entre la
+courbe \textbf{supérieure} et la courbe \textbf{inférieure} :
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \begin{axis}[
+    width=12cm,height=5.4cm,
+    axis lines=middle,
+    xmin=-2.6,xmax=2.6,ymin=-5.5,ymax=1.6,
+    xtick={-1.414,1.414},xticklabels={$a$,$b$},
+    ytick=\empty,
+    xlabel={$x$},ylabel={$y$},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+  ]
+    \addplot[domain=-2.2:2.2,samples=80,primary,line width=1.3pt] {x^2-4};
+    \addplot[domain=-2.2:2.2,samples=80,areacol2!90!black,line width=1.3pt] {-x^2};
+    \addplot[name path=F,domain=-1.414:1.414,samples=40,draw=none,forget plot] {x^2-4};
+    \addplot[name path=G,domain=-1.414:1.414,samples=40,draw=none,forget plot] {-x^2};
+    \addplot[areacol!40] fill between[of=G and F];
+    \draw[dvert] (axis cs:-1.414,0)--(axis cs:-1.414,-2);
+    \draw[dvert] (axis cs:1.414,0)--(axis cs:1.414,-2);
+    \node[primary] at (axis cs:2.05,-1.2) {$f:x^2-4$};
+    \node[areacol2!90!black] at (axis cs:-1.7,-2.7) {$g:-x^2$};
+    \node at (axis cs:0,-1.0) {$\mathcal{A}$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\[
+\boxed{\;\mathcal{A}=\int_a^b\bigl(\,f_{\text{sup}}(x)-f_{\text{inf}}(x)\bigr)\,\dd x.\;}
+\]
+La différence est positive par construction : peu importe laquelle des deux fonctions est notée
+$f$ ou $g$, pourvu qu'on mette «\,haut $-$ bas\,».
+
+\subsection{Comment faire : calculer une aire plane}
+
+\begin{methode}[procédure complète de calcul d'aire]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Tracer} (même schématiquement) les courbes et l'axe pour visualiser la zone.
+  \item \textbf{Déterminer les bornes} : intersections avec l'axe (racines $f(x)=0$) ou entre courbes
+        ($f(x)=g(x)$). Ce sont les bornes d'intégration.
+  \item \textbf{Repérer le signe} de la fonction (ou l'ordre des courbes) sur chaque sous-intervalle :
+        \emph{couper} aux racines (Chasles) si le signe change.
+  \item \textbf{Écrire la bonne intégrale} : aire $=\int(\text{haut}-\text{bas})$, avec valeur absolue
+        si nécessaire.
+  \item \textbf{Calculer} la primitive et appliquer Newton--Leibniz. Le résultat est en u.a.
+  \item \textbf{Vérifier} la positivité du résultat.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[aire entre deux paraboles]
+Déterminer l'aire de la partie du plan délimitée par $f(x)=x^2-4$ et $g(x)=-x^2$.
+
+\smallskip
+\textbf{1. Intersection.} $f(x)=g(x)\Leftrightarrow x^2-4=-x^2\Leftrightarrow 2x^2=4
+\Leftrightarrow x=\pm\sqrt2$. Bornes : $a=-\sqrt2$, $b=\sqrt2$.
+
+\textbf{2. Ordre des courbes.} En $x=0$ : $f(0)=-4$ et $g(0)=0$, donc $g\geqslant f$ sur
+$[-\sqrt2,\sqrt2]$. La courbe supérieure est $g$, l'inférieure est $f$.
+
+\textbf{3. Intégrale.}
+\[
+\mathcal{A}=\int_{-\sqrt2}^{\sqrt2}\bigl[g(x)-f(x)\bigr]\,\dd x
+=\int_{-\sqrt2}^{\sqrt2}\bigl(-2x^2+4\bigr)\,\dd x
+=\left[-\frac{2x^3}{3}+4x\right]_{-\sqrt2}^{\sqrt2}.
+\]
+\textbf{4. Calcul.}
+$\left(-\tfrac{2(\sqrt2)^3}{3}+4\sqrt2\right)-\left(-\tfrac{2(-\sqrt2)^3}{3}-4\sqrt2\right)
+=\left(-\tfrac{4\sqrt2}{3}+4\sqrt2\right)-\left(\tfrac{4\sqrt2}{3}-4\sqrt2\right)
+=-\tfrac{8\sqrt2}{3}+8\sqrt2=\dfrac{16\sqrt2}{3}.$
+
+\[
+\boxed{\,\mathcal{A}=\dfrac{16\sqrt2}{3}\ \ua\,\approx 7{,}54\ \text{u.a.}}
+\]
+\end{exemple}
+
+\begin{exemple}[aire entre une parabole et une droite]
+Calculer l'aire délimitée par $f(x)=x^2+4x+5$ et la droite $y=5$.
+
+\smallskip
+\textbf{1. Intersection.} $x^2+4x+5=5\Leftrightarrow x^2+4x=0\Leftrightarrow x(x+4)=0$, d'où
+$x=0$ et $x=-4$. Bornes : $a=-4$, $b=0$.
+
+\textbf{2. Ordre.} En $x=-2$ : $f(-2)=1<5$. Sur $[-4,0]$, la droite $y=5$ est \emph{au-dessus}.
+
+\textbf{3. Calcul.}
+\[
+\mathcal{A}=\int_{-4}^{0}\bigl[5-f(x)\bigr]\,\dd x=\int_{-4}^{0}\bigl(-x^2-4x\bigr)\,\dd x
+=\left[-\frac{x^3}{3}-2x^2\right]_{-4}^{0}
+=0-\left(\frac{64}{3}-32\right)=\boxed{\,\dfrac{32}{3}\ \ua.\,}
+\]
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : formulaire récapitulatif et points-clés}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.9cm} >{\centering\arraybackslash}p{5.2cm} >{\raggedright\arraybackslash}p{4.1cm}}
+\rowcolor{primary!18}
+\textbf{Forme / loi} & \textbf{Formule} & \textbf{À retenir}\\
+\midrule
+Primitive (généralité) & $F'=f\ \Leftrightarrow\ \int f\,\dd x=F+C$ & infinité de primitives\\
+Puissance ($n\neq -1$) & $\int U^n\,\dd U=\dfrac{U^{n+1}}{n+1}+C$ & attention au $\dd U$\\
+Logarithme & $\int\dfrac{\dd U}{U}=\ln|U|+C$ & $n=-1$ $\Rightarrow$ ce cas\\
+Sinus / cosinus & $\int\sin U\,\dd U=-\cos U+C$ ; $\int\cos U\,\dd U=\sin U+C$ & signe « $-$ » devant $\cos$\\
+$1/\cos^2$, $1/\sin^2$ & $\tg U+C$ ; $-\cotg U+C$ & signe « $-$ » devant $\cotg$\\
+Arcsin / Arctan & $\int\dfrac{\dd U}{\sqrt{1-U^2}}=\arcsin U$ ; $\int\dfrac{\dd U}{1+U^2}=\arctan U$ & angle en radians\\
+Exponentielle de base $a$ & $\int a^U\,\dd U=\dfrac{a^U}{\ln a}+C$ & $a=e$ $\Rightarrow$ $e^U+C$\\
+Intégration par parties & $\int U\,\dd V=UV-\int V\,\dd U$ & $U$ = logarithme $>$ polynôme $>$ trigo $>$ $\exp$\\
+Newton--Leibniz & $\int_a^b f\,\dd x=[F(x)]_a^b=F(b)-F(a)$ & $C$ s'élimine\\
+Relation de Chasles & $\int_a^b+\int_b^c=\int_a^c$ & couper aux racines / pôles\\
+Aire sous courbe & $\mathcal{A}=\int_a^b f\,\dd x$ si $f\geqslant 0$ & valeur absolue sinon\\
+Aire entre courbes & $\mathcal{A}=\int_a^b(f_{\text{sup}}-f_{\text{inf}})\,\dd x$ & « haut $-$ bas »\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[stratégie générale face à une intégrale]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Reconnaître une forme directe} du tableau en identifiant $U$ et $\dd U$. Si
+        $\dd U$ diffère d'une \emph{constante} seulement, la compenser (multiplier-diviser).
+  \item \textbf{Sinon}, penser à l'\textbf{intégration par parties} pour les produits, en
+        appliquant la règle de priorité $U$ ($\ln>$ polynôme $>$ trigo $>\exp$).
+  \item \textbf{Sinon}, pour un quotient de polynômes, \textbf{décomposer en fractions simples}.
+  \item \textbf{Pour une aire}, déterminer d'abord bornes et signes, puis appliquer
+        «\,haut $-$ bas\,».
+  \item \textbf{Toujours vérifier} en dérivant la primitive ou en testant la positivité d'une aire.
+\end{enumerate}
+\end{methode}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 7}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Primitive} : $F'=f$ ; il en existe une infinité, différant d'une constante $C$.
+  \item \textbf{Mécanisme central} : reconnaître $U(x)$ et son $\dd U=U'(x)\,\dd x$ ; compenser par
+        une constante si besoin (multiplier-diviser).
+  \item \textbf{Intégration par parties} : $\int U\,\dd V=UV-\int V\,\dd U$ ; choisir $U$ par ordre
+        $\ln>$ polynôme $>$ trigo $>\exp$.
+  \item \textbf{Fractions rationnelles} : décomposer en $\sum A/(x-\alpha)$ puis intégrer en $\ln|U|$.
+  \item \textbf{Intégrale définie} = aire algébrique ; formule de \textbf{Newton--Leibniz}
+        $\int_a^b f=[F]_a^b=F(b)-F(a)$ ; résultat en \textbf{u.a.}
+  \item \textbf{Propriétés} : Chasles, linéarité, positivité, croissance ; inverser les bornes
+        change le signe.
+  \item \textbf{Aire} : toujours positive $\Rightarrow$ valeur absolue et découpe aux racines ;
+        entre deux courbes, «\,haut $-$ bas\,$\,$».
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

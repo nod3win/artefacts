@@ -1,0 +1,1216 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 4
+%  Loi de la gravitation universelle
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+\definecolor{earth}{RGB}{70,110,140}        % bleu Terre
+\definecolor{earthdark}{RGB}{40,70,95}
+\definecolor{forcecol}{RGB}{200,40,55}      % rouge — force gravitationnelle
+\definecolor{normcol}{RGB}{0,114,178}       % bleu — force normale
+\definecolor{velcol}{RGB}{0,135,90}         % vert — vitesse
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} — Loi de la gravitation universelle}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vv}[1]{\vec{#1}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Grav}{\mathcal{G}}        % constante de gravitation
+\newcommand{\Newton}{\si{\newton}}
+\newcommand{\ms}{\si{\metre\per\second}}
+\newcommand{\mss}{\si{\metre\per\second\squared}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Loi de la gravitation}\\[4pt]
+   {\LARGE\bfseries universelle}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,4}}
+
+\vspace{0.7cm}
+
+% --- Petite illustration : la Terre, un satellite et la pomme de Newton ---
+\begin{tikzpicture}[scale=1.0]
+  % Terre
+  \shade[ball color=earth] (0,0) circle (1.4);
+  \node[white] at (0,0) {\small\bfseries Terre};
+  % orbite
+  \draw[primary,dashed,thick] (0,0) circle (2.9);
+  % satellite
+  \fill[forcecol] (2.9,0) circle (0.13);
+  \node[right=2pt of {(2.9,0)},forcecol,font=\scriptsize\bfseries] {satellite};
+  \draw[->,>=Stealth,velcol,line width=1pt] (2.9,0)--(2.9,0.95) node[right,font=\scriptsize]{$\vv v$};
+  \draw[->,>=Stealth,forcecol,line width=1pt] (2.9,0)--(2.0,0) node[midway,above,font=\scriptsize]{$\vv F$};
+  % corps en chute (pomme)
+  \fill[red!70!black] (-2.55,1.4) circle (0.12);
+  \draw[->,>=Stealth,forcecol,line width=1pt] (-2.55,1.4)--(-1.85,0.92);
+\end{tikzpicture}
+
+\vspace{0.7cm}
+\begin{minipage}{0.82\textwidth}\itshape\color{black!75}\centering
+« Tout corps de l'Univers en attire un autre avec une force proportionnelle au produit
+de leurs masses et inversement proportionnelle au carré de la distance qui les sépare. »\\[2pt]
+\normalfont\footnotesize --- Isaac Newton, \textit{Principia Mathematica}, 1687.
+\end{minipage}
+
+\vfill
+{\footnotesize\color{black!60}Cours rédigé d'après la fiche 4 du livre de physique --- figures TikZ originales.}
+\vspace{1cm}
+\endgroup
+
+\newpage
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+{\color{primarydark}\hrule height 1.2pt}
+\vspace{4pt}
+{\Large\bfseries\color{primarydark}Table des matières}
+\vspace{4pt}
+{\color{primarydark}\hrule height 0.6pt}
+\vspace{6pt}
+\renewcommand{\contentsname}{}
+\vspace{-1.2cm}
+\tableofcontents
+\vspace{0.4cm}
+{\color{primary}\hrule height 0.6pt}
+
+\newpage
+
+% =====================================================================
+\section{Introduction : pourquoi une « gravitation universelle » ?}
+% =====================================================================
+
+Pourquoi une pomme tombe-t-elle, alors que la Lune, elle, ne tombe jamais sur
+la Terre ? Pendant des siècles, on a cru que le « ciel » et la « Terre » obéissaient
+à des lois différentes. Le génie d'Isaac \textsc{Newton} (1687) fut de comprendre
+que c'est \emph{la même force} qui fait tomber la pomme et qui maintient la Lune
+sur son orbite : la \textbf{force de gravitation}.
+
+Cette force est dite \emph{universelle} parce qu'elle s'exerce entre \emph{tous} les
+corps possédant une masse, partout dans l'Univers : entre la Terre et vous, entre la
+Terre et la Lune, entre le Soleil et les planètes, entre deux galaxies, et même
+entre deux pommes posées sur une table (mais l'intensité est alors si faible qu'on
+ne la ressent pas).
+
+\begin{remarque}[ce que cette fiche va vous apprendre]
+Nous allons partir de la loi de Newton, puis en déduire successivement :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item la notion de \textbf{poids} et de \textbf{pesanteur} $g$, ainsi que sa
+        variation avec l'altitude ;
+  \item la subtile différence entre \textbf{poids réel} et \textbf{poids apparent}
+        (l'expérience de l'ascenseur) ;
+  \item le mouvement des \textbf{satellites} en orbite circulaire et la notion de
+        satellite \textbf{géostationnaire} ;
+  \item l'\textbf{énergie} d'un satellite sur son orbite.
+\end{itemize}
+Chaque formule est encadrée et chacun de ses symboles est expliqué \emph{avec son
+unité}. De nombreux exemples chiffrés sont entièrement détaillés.
+\end{remarque}
+
+\noindent\textbf{Notations et constantes utilisées dans tout le cours.}
+Pour fixer les idées, on adopte les valeurs de référence suivantes pour la Terre
+(ce sont celles utilisées dans la fiche) :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{>{\bfseries}l c l}
+\toprule
+Grandeur & Symbole & Valeur \\
+\midrule
+Constante de gravitation & $\Grav$ & $\SI{6.67e-11}{\newton\metre\squared\per\kilogram\squared}$ \\
+Masse de la Terre & $M_T$ & $\SI{6.0e24}{\kilogram}$ \\
+Rayon de la Terre & $R_T$ & $\SI{6400}{\kilo\metre}=\SI{6.4e6}{\metre}$ \\
+Pesanteur au sol & $g_0$ & $\approx \SI{9.8}{\metre\per\second\squared}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\section{La loi de la gravitation universelle}
+% =====================================================================
+
+\subsection{Énoncé et caractéristiques des forces}
+
+Considérons deux corps $A$ et $B$, de masses respectives $m_A$ et $m_B$, dont les
+centres sont séparés d'une distance $d$. Ces deux corps exercent l'un sur l'autre
+une force de gravitation.
+
+\begin{definition}[Force de gravitation entre deux corps]
+Deux corps $A$ et $B$ de masses $m_A$ et $m_B$ exercent l'un sur l'autre deux forces
+de gravitation $\vv F_{A/B}$ (force de $A$ sur $B$) et $\vv F_{B/A}$ (force de $B$ sur $A$).
+Ces deux forces possèdent \textbf{quatre caractéristiques} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item elles sont \textbf{attractives} (chaque corps « tire » l'autre vers lui) ;
+  \item elles sont de \textbf{sens opposés} ;
+  \item elles sont \textbf{dirigées suivant la droite $(AB)$} qui relie les centres
+        de gravité des deux masses ;
+  \item elles ont la \textbf{même intensité} : $F_{A/B}=F_{B/A}$.
+\end{itemize}
+\end{definition}
+
+% --- FIGURE 1 : deux corps A et B et leurs forces ---
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % droite (AB) en pointillés
+  \draw[dashed,black!55,line width=0.7pt] (-1.2,-0.8)--(9.0,1.6);
+  % corps A (gauche, bas)
+  \shade[ball color=black!45] (0.4,-0.5) circle (0.45);
+  \fill[black] (0.4,-0.5) circle (0.05);
+  \node[above left=-1pt and -2pt of {(0.4,-0.5)},font=\bfseries] {A};
+  \node[below=10pt of {(0.4,-0.5)},font=\itshape] {$m_A$};
+  % corps B (droite, haut)
+  \shade[ball color=black!45] (7.4,1.1) circle (0.55);
+  \fill[black] (7.4,1.1) circle (0.05);
+  \node[above right=-2pt and -2pt of {(7.4,1.1)},font=\bfseries] {B};
+  \node[below right=2pt and 0pt of {(7.4,1.1)},font=\itshape] {$m_B$};
+  % force F_{B/A} : appliquée en A, dirigée vers B
+  \draw[->,>=Stealth,line width=1.3pt,forcecol]
+        (0.85,-0.34)--(2.7,0.3) node[midway,above,sloped,font=\small]{$\vv F_{B/A}$};
+  % force F_{A/B} : appliquée en B, dirigée vers A
+  \draw[->,>=Stealth,line width=1.3pt,forcecol]
+        (6.9,0.92)--(5.05,0.28) node[midway,above,sloped,font=\small]{$\vv F_{A/B}$};
+  % accolade "forces attractives"
+  \draw[decorate,decoration={brace,amplitude=6pt},black!70]
+        (1.0,0.9)--(6.7,1.95);
+  \node[font=\itshape\small,black!70] at (3.7,2.0) {forces attractives};
+  % distance d
+  \draw[<->,>=Stealth,black!70,line width=0.7pt]
+        (0.4,-1.25)--(7.4,0.35) node[midway,below,sloped,font=\itshape]{$d$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figure 1 --- Les deux forces de gravitation : attractives, opposées,
+portées par $(AB)$, de même intensité.}
+\end{center}
+
+\begin{attention}[« deux forces » et non « une »]
+Ne confondez pas $\vv F_{A/B}$ et $\vv F_{B/A}$ : ce sont \emph{deux} forces distinctes,
+qui s'appliquent sur \emph{deux} corps différents (l'une sur $B$, l'autre sur $A$).
+Elles ne s'annulent donc \emph{jamais} entre elles : ce sont les deux forces d'un
+couple action--réaction (3\textsuperscript{e} loi de Newton). On ne peut additionner
+que des forces appliquées sur le \emph{même} corps.
+\end{attention}
+
+\subsection{L'expression mathématique de la force}
+
+\begin{formule}[Loi de la gravitation universelle (Newton)]
+L'intensité commune des deux forces vaut :
+\[
+\boxed{\;F_{A/B}=F_{B/A}=\Grav\times\dfrac{m_A\times m_B}{d^{\,2}}\;}
+\]
+\begin{ou}
+  \item $F_{A/B}=F_{B/A}$ : intensité de la force de gravitation, en newtons (\si{\newton}) ;
+  \item $\Grav$ : constante de gravitation universelle,
+        $\Grav=\SI{6.67e-11}{\newton\metre\squared\per\kilogram\squared}$ ;
+  \item $m_A,\ m_B$ : masses des deux corps, en kilogrammes (\si{\kilogram}) ;
+  \item $d$ : distance entre les centres de symétrie (centres de gravité) des deux
+        corps, en mètres (\si{\metre}).
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Comment lire cette formule ?} Elle traduit deux proportionnalités :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item $F$ est \textbf{proportionnelle au produit des masses} $m_A\times m_B$ : si on
+        double l'une des masses, la force double ; si on double les deux, la force est
+        multipliée par $4$.
+  \item $F$ est \textbf{inversement proportionnelle au carré de la distance} $d^2$ :
+        si on \emph{double} la distance, la force est divisée par $2^2=4$ ; si on
+        \emph{triple} la distance, elle est divisée par $3^2=9$. C'est la fameuse
+        \emph{loi en $1/d^2$}.
+\end{itemize}
+
+\begin{remarque}[unité de la constante $\Grav$]
+L'unité de $\Grav$ n'est pas choisie au hasard : elle est imposée par l'équation
+elle-même. En isolant $\Grav=\dfrac{F\,d^2}{m_A m_B}$, on obtient pour unité
+$\dfrac{\si{\newton}\times\si{\metre\squared}}{\si{\kilogram}\times\si{\kilogram}}
+ =\si{\newton\metre\squared\per\kilogram\squared}$. La valeur extrêmement petite de
+$\Grav$ (de l'ordre de $10^{-11}$) explique pourquoi la gravitation est imperceptible
+entre objets ordinaires et ne devient sensible que lorsqu'au moins une des masses est
+\emph{astronomique} (planète, étoile\dots).
+\end{remarque}
+
+% --- Exemple détaillé 1 : deux personnes ---
+\begin{exemple}[la gravitation entre deux personnes est-elle perceptible ?]
+Deux amis de masses $m_A=\SI{70}{\kilogram}$ et $m_B=\SI{80}{\kilogram}$ se tiennent à
+$d=\SI{1}{\metre}$ l'un de l'autre. Calculons la force de gravitation qu'ils exercent
+l'un sur l'autre.
+
+\smallskip
+\textbf{Application de la formule :}
+\[
+F=\Grav\,\frac{m_A m_B}{d^2}
+ =\SI{6.67e-11}{}\times\frac{70\times 80}{1^2}
+ =\SI{6.67e-11}{}\times 5600 .
+\]
+\[
+F \approx \SI{3.7e-7}{\newton}=\SI{0.00000037}{\newton}.
+\]
+
+\textbf{Interprétation.} Cette force vaut moins d'un \emph{millionième} de newton :
+elle est totalement imperceptible (à titre de comparaison, le poids d'un cheveu est
+des milliers de fois plus grand). \emph{Conclusion} : entre objets de la vie courante,
+la gravitation existe bel et bien, mais elle est négligeable. Il faut une masse
+gigantesque, comme celle de la Terre, pour qu'elle devienne la force dominante.
+\end{exemple}
+
+% --- Exemple détaillé 2 : Terre-Lune ---
+\begin{exemple}[force d'attraction Terre--Lune]
+Données : $M_T=\SI{6.0e24}{\kilogram}$, masse de la Lune
+$M_L=\SI{7.3e22}{\kilogram}$, distance moyenne Terre--Lune
+$d=\SI{3.84e8}{\metre}$ (soit \SI{384000}{\kilo\metre}).
+
+\smallskip
+\textbf{Étape 1 --- on écrit la formule :} $\displaystyle F=\Grav\,\frac{M_T M_L}{d^2}$.
+
+\textbf{Étape 2 --- on calcule le numérateur :}
+$\Grav\,M_T M_L=\SI{6.67e-11}{}\times \SI{6.0e24}{}\times\SI{7.3e22}{}
+\approx \SI{2.92e37}{}$.
+
+\textbf{Étape 3 --- on calcule le dénominateur :}
+$d^2=(\SI{3.84e8}{})^2\approx \SI{1.47e17}{\metre\squared}$.
+
+\textbf{Étape 4 --- on divise :}
+\[
+F=\frac{\SI{2.92e37}{}}{\SI{1.47e17}{}}\approx\SI{2.0e20}{\newton}.
+\]
+
+\textbf{Interprétation.} La force vaut environ $\SI{2e20}{\newton}$, soit
+$200\,000\,000\,000\,000\,000\,000$ newtons ! C'est cette force colossale qui maintient
+la Lune sur son orbite autour de la Terre. La même formule, les mêmes constantes :
+seule la taille des masses change radicalement le résultat.
+\end{exemple}
+
+% =====================================================================
+\section{Du poids à la pesanteur \texorpdfstring{$g$}{g}}
+% =====================================================================
+
+\subsection{Le poids : un cas particulier de la gravitation}
+
+Le cas le plus important pour nous est celui où l'un des deux corps est la
+\textbf{Terre}. La force que la Terre exerce sur un objet de masse $m$ situé à sa
+surface (ou au-dessus), c'est ce que nous appelons couramment le \textbf{poids} de
+l'objet.
+
+% --- FIGURE 2 : la Terre et un corps à l'altitude h ---
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % Terre
+  \shade[ball color=earth] (0,0) circle (1.5);
+  \node[white,font=\small\bfseries] at (0,-0.15) {$M_T$};
+  \fill[white] (0,0) circle (0.05);
+  % rayon R_T
+  \draw[->,>=Stealth,white,line width=0.8pt] (0,0)--(-1.06,1.06)
+        node[midway,above,sloped,font=\scriptsize,black]{$R_T$};
+  % corps A à l'altitude h, sur une ligne radiale
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (4.6,3.0);
+  \fill[black] (A) circle (0.09);
+  \node[above right=-1pt of A,font=\bfseries] {A};
+  \node[right=1pt of A,font=\itshape] {$m$};
+  % ligne radiale O->A (pointillés) = distance d
+  \draw[dashed,black!60,line width=0.7pt] (O)--(A);
+  % la surface coupe la ligne à distance R_T
+  \coordinate (S) at ($(O)!1.5cm!(A)$);
+  \fill[white] (S) circle (0.04);
+  % distance d (au-dessus de la ligne)
+  \node[above,sloped,font=\itshape] at ($(O)!0.55!(A)$) {$d$};
+  % altitude h (portion S->A)
+  \draw[<->,>=Stealth,primary,line width=0.8pt]
+        ($(S)+(0.25,-0.18)$)--($(A)+(0.25,-0.18)$)
+        node[midway,below,sloped,font=\itshape\small,primary]{$h$};
+  % force m g appliquée en A, vers le centre
+  \draw[->,>=Stealth,forcecol,line width=1.3pt]
+        (A)--($(A)!1.4cm!(O)$) node[midway,above,sloped,font=\small]{$m\,\vv g$};
+  % relation
+  \node[primary,font=\small] at (3.4,0.3) {$d=R_T+h$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figure 2 --- Un corps de masse $m$ à l'altitude $h$ : la Terre l'attire
+avec la force $m\vv g$, dirigée vers le centre. La distance au centre vaut $d=R_T+h$.}
+\end{center}
+
+\begin{theoreme}[le poids est la force de gravitation terrestre]
+Si l'on admet l'approximation que l'intensité de la force de gravitation exercée par la
+Terre sur un corps de masse $m$ correspond au poids $P=mg$, alors :
+\[
+m\times g = F_{Terre/A}=\Grav\times\dfrac{M_T\times m}{d^{\,2}},
+\qquad\text{avec}\qquad d=R_T+h .
+\]
+La masse $m$ se simplifie de part et d'autre, ce qui va nous permettre d'isoler la
+pesanteur $g$ (indépendante de l'objet considéré !).
+\end{theoreme}
+
+\subsection{L'intensité de pesanteur et sa variation avec l'altitude}
+
+En simplifiant la masse $m$ dans l'égalité $mg=\Grav\dfrac{M_T m}{d^2}$, on obtient
+directement l'expression de $g$ :
+
+\begin{formule}[Intensité de pesanteur à l'altitude $h$]
+\[
+\boxed{\;g_h=\dfrac{\Grav\times M_T}{(R_T+h)^2}\;}
+\]
+\begin{ou}
+  \item $g_h$ : intensité du champ de pesanteur à l'altitude $h$, en \si{\metre\per\second\squared}
+        (ou de façon équivalente en \si{\newton\per\kilogram}) ;
+  \item $\Grav$ : constante de gravitation, $\SI{6.67e-11}{\newton\metre\squared\per\kilogram\squared}$ ;
+  \item $M_T$ : masse de la Terre, en \si{\kilogram} ;
+  \item $R_T$ : rayon de la Terre, en \si{\metre} ;
+  \item $h$ : altitude du corps au-dessus de la surface, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[deux unités équivalentes pour $g$]
+On peut exprimer $g$ aussi bien en \si{\metre\per\second\squared} (vu comme une
+\emph{accélération}, celle de la chute libre) qu'en \si{\newton\per\kilogram} (vu comme
+un \emph{champ}, la force par unité de masse). Les deux sont identiques car
+$\si{\newton}=\si{\kilogram}\cdot\si{\metre\per\second\squared}$, donc
+$\si{\newton\per\kilogram}=\si{\metre\per\second\squared}$.
+\end{remarque}
+
+\noindent\textbf{Cas particulier : au niveau du sol $(h=0)$.} On retrouve la pesanteur
+de référence $g_0$ :
+
+\begin{formule}[Pesanteur à la surface de la Terre]
+\[
+\boxed{\;g_0=\dfrac{\Grav\times M_T}{R_T^{\,2}}\;}
+\]
+\begin{ou}
+  \item $g_0$ : pesanteur au niveau du sol (altitude nulle), en \si{\metre\per\second\squared} ;
+  \item les autres symboles sont identiques à la formule précédente.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[on retrouve $g_0\approx\SI{9.8}{\metre\per\second\squared}$ par le calcul]
+Vérifions que la formule redonne bien la valeur connue de la pesanteur au sol.
+\[
+g_0=\frac{\Grav\,M_T}{R_T^2}
+   =\frac{\SI{6.67e-11}{}\times\SI{6.0e24}{}}{(\SI{6.4e6}{})^2}.
+\]
+\textbf{Numérateur :} $\SI{6.67e-11}{}\times\SI{6.0e24}{}=\SI{4.00e14}{}$.\\
+\textbf{Dénominateur :} $(\SI{6.4e6}{})^2=\SI{4.096e13}{}$.\\
+\textbf{Quotient :}
+\[
+g_0=\frac{\SI{4.00e14}{}}{\SI{4.096e13}{}}\approx\SI{9.8}{\metre\per\second\squared}.
+\]
+\textbf{Interprétation.} On retrouve la valeur familière $g_0\approx\SI{9.8}{\metre\per\second\squared}$,
+ce qui valide la cohérence du modèle. C'est cette valeur que l'on utilise pour calculer
+le poids $P=mg$ d'un objet au sol.
+\end{exemple}
+
+% --- FIGURE 3 : graphe g en fonction de l'altitude ---
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11.5cm,height=6.4cm,
+  xlabel={altitude $h$ (km)},ylabel={$g_h$ (m/s$^2$)},
+  xmin=0,xmax=37000,ymin=0,ymax=10.8,
+  axis lines=left,
+  xtick={0,6400,12800,20000,30000,35800},
+  xticklabels={$0$,$6\,400$,$12\,800$,$20\,000$,$30\,000$,$35\,800$},
+  ytick={0,2,4,6,8,9.8},
+  yticklabels={$0$,$2$,$4$,$6$,$8$,$9{,}8$},
+  xlabel style={font=\small,at={(axis description cs:0.5,-0.16)},anchor=north},
+  ylabel style={font=\small,rotate=-90,at={(axis description cs:0.07,1.04)},anchor=south},
+  scaled x ticks=false,
+  grid=both,grid style={black!10},
+  tick label style={font=\footnotesize},
+  samples=200,domain=0:37000,
+]
+  % g(h) = G M / (R+h)^2  avec h en km : (R+h) en m = (6400+h)*1000
+  \addplot[primary,line width=1.4pt]
+    {6.67e-11*6.0e24/((6400+x)*1000)^2};
+  % points remarquables
+  \addplot[only marks,mark=*,forcecol,mark size=1.6pt] coordinates {
+    (0,9.77)(800,7.72)(1520,6.38)(35800,0.225)};
+  \node[forcecol,font=\scriptsize,anchor=south west] at (axis cs:800,7.72) {sol $\to$ ISS};
+  \node[forcecol,font=\scriptsize,anchor=south east] at (axis cs:35000,1.0) {orbite};
+  \node[forcecol,font=\scriptsize,anchor=north east] at (axis cs:35000,1.0) {géostationnaire};
+  \draw[forcecol,->,>=Stealth,line width=0.5pt] (axis cs:35000,0.85) -- (axis cs:35700,0.32);
+\end{axis}
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figure 3 --- Décroissance de la pesanteur $g$ avec l'altitude (loi en
+$1/(R_T+h)^2$). Elle ne devient jamais nulle, mais diminue très vite.}
+\end{center}
+
+\begin{attention}[pourquoi $g$ ne tombe pas brutalement à zéro ?]
+Beaucoup pensent qu'« en orbite, il n'y a pas de gravité ». \emph{C'est faux !} À
+l'altitude de la Station spatiale internationale (\SI{400}{}–\SI{800}{\kilo\metre}),
+$g$ vaut encore environ \SI{7.7}{} à \SI{8.7}{\metre\per\second\squared}, soit près de
+$90\,\%$ de sa valeur au sol. Les astronautes ne flottent pas parce que la gravité
+aurait disparu, mais parce qu'ils sont en \textbf{chute libre permanente} (voir
+section sur les satellites). La gravité reste forte ; c'est la \emph{sensation} de poids
+qui disparaît.
+\end{attention}
+
+\begin{exemple}[calculer $g$ au sommet de l'Everest puis à l'altitude d'un satellite]
+\textbf{(a) Au sommet de l'Everest, $h=\SI{8.8}{\kilo\metre}=\SI{8800}{\metre}$.}
+\[
+g_h=\frac{\SI{4.00e14}{}}{(\SI{6.4e6}{}+\SI{8800}{})^2}
+   =\frac{\SI{4.00e14}{}}{(\SI{6.4088e6}{})^2}
+   =\frac{\SI{4.00e14}{}}{\SI{4.107e13}{}}\approx\SI{9.74}{\metre\per\second\squared}.
+\]
+La variation est minuscule (de $9{,}77$ à $9{,}74$) : à l'échelle d'une montagne,
+$g$ est quasi constante. \emph{C'est pourquoi on prend $g\approx\SI{9.8}{}$ partout
+au voisinage du sol.}
+
+\smallskip
+\textbf{(b) À l'altitude $h=\SI{800}{\kilo\metre}$ (orbite basse).} Ici $d=R_T+h=
+\SI{6400}{}+\SI{800}{}=\SI{7200}{\kilo\metre}=\SI{7.2e6}{\metre}$, donc :
+\[
+g_h=\frac{\SI{4.00e14}{}}{(\SI{7.2e6}{})^2}
+   =\frac{\SI{4.00e14}{}}{\SI{5.184e13}{}}\approx\SI{7.72}{\metre\per\second\squared}.
+\]
+\textbf{Interprétation.} Même à \SI{800}{\kilo\metre} d'altitude, $g$ ne perd qu'environ
+$20\,\%$ : la gravité est encore très présente.
+\end{exemple}
+
+\subsection{Ne pas confondre masse et poids}
+
+\begin{definition}[masse et poids]
+La \textbf{masse} $m$ (en \si{\kilogram}) mesure la quantité de matière d'un corps : elle
+est \emph{invariable}, identique sur la Terre, sur la Lune ou dans l'espace. \\
+Le \textbf{poids} $P=mg$ (en \si{\newton}) est la \emph{force} gravitationnelle subie : il
+\emph{dépend du lieu} via la valeur locale de $g$.
+\end{definition}
+
+\begin{exemple}[votre poids change de la Terre à la Lune, pas votre masse]
+Un astronaute a une masse $m=\SI{80}{\kilogram}$. Sur la Lune,
+$g_{\text{Lune}}\approx\SI{1.6}{\metre\per\second\squared}$ (environ $6$ fois moins que
+sur Terre).
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Sur Terre : $P_T=m\,g_0=80\times 9{,}8=\SI{784}{\newton}$.
+  \item Sur la Lune : $P_L=m\,g_{\text{Lune}}=80\times 1{,}6=\SI{128}{\newton}$.
+\end{itemize}
+\textbf{Interprétation.} Sa \emph{masse} reste $\SI{80}{\kilogram}$ partout, mais son
+\emph{poids} est environ $6$ fois plus faible sur la Lune : il peut y faire des bonds
+spectaculaires. C'est exactement ce que l'on observe sur les images des missions Apollo.
+\end{exemple}
+
+% =====================================================================
+\section{Le poids apparent : l'expérience de l'ascenseur}
+% =====================================================================
+
+\subsection{Définition et principe}
+
+Quand vous montez sur une balance, ce que celle-ci affiche n'est pas \emph{directement}
+votre poids : c'est la force avec laquelle vous appuyez sur elle. La balance mesure en
+réalité la \textbf{force normale} $N$ qu'elle exerce sur vous (qui, par la
+3\textsuperscript{e} loi de Newton, est égale à celle que vous exercez sur elle).
+
+\begin{definition}[poids apparent]
+Le \textbf{poids apparent} d'un individu est la force $N$ exercée par le support sur
+lequel il repose (sol, plancher, balance\dots). On ne « ressent » son poids que s'il
+existe un tel support : sans support, le poids ne se ressent pas. Le poids apparent
+peut être \emph{différent} du poids réel $mg$ selon l'état de mouvement.
+\end{definition}
+
+\begin{remarque}[le poids réel, lui, ne change pas]
+\textbf{Point essentiel à ne jamais oublier :} la force gravitationnelle réelle $mg$
+(due à l'attraction de la Terre) reste \emph{toujours la même} tant que $g$ est constante.
+Ce qui change avec le mouvement, c'est le poids \emph{apparent} $N$ — la sensation de
+lourdeur — et non le poids réel.
+\end{remarque}
+
+\subsection{L'analyse par la 2\texorpdfstring{$^{\text{e}}$}{e} loi de Newton}
+
+Sur l'individu (masse $m$) dans l'ascenseur s'exercent deux forces verticales : le poids
+$mg$ vers le bas et la force normale $N$ du plancher vers le haut. En orientant l'axe
+vertical vers le haut, la 2\textsuperscript{e} loi de Newton s'écrit $N-mg=ma$, où $a$
+est l'accélération de l'ascenseur. On en tire le poids apparent :
+
+\begin{formule}[Poids apparent dans un ascenseur]
+\[
+\boxed{\;N=mg+ma=m\,(g+a)\;}
+\]
+\begin{ou}
+  \item $N$ : poids apparent (valeur lue sur la balance), en \si{\newton} ;
+  \item $m$ : masse de l'individu, en \si{\kilogram} ;
+  \item $g$ : intensité de pesanteur, en \si{\metre\per\second\squared} ;
+  \item $a$ : accélération algébrique de l'ascenseur (comptée $>0$ vers le haut,
+        $<0$ vers le bas), en \si{\metre\per\second\squared}.
+\end{ou}
+\end{formule}
+
+\noindent Cette unique formule contient \emph{tous} les cas. Il suffit de connaître le
+signe de $a$ :
+
+% --- FIGURE 4 : les quatre cas de l'ascenseur ---
+\begin{center}
+\begin{tikzpicture}[scale=0.95,
+   cabin/.style={draw=black!55,line width=0.8pt,rounded corners=1pt},
+   weight/.style={->,>=Stealth,line width=1.1pt,forcecol},
+   normal/.style={->,>=Stealth,line width=1.1pt,normcol},
+   person/.style={black!75,line width=1pt}]
+
+  \foreach \x/\titre/\acc/\rel [count=\i] in {
+     0/{Repos ou MRU}/{$a=0$}/{$N=mg$},
+     4/{MRUA vers le haut}/{$a>0$}/{$N>mg$},
+     8/{MRUA vers le bas}/{$a<0$}/{$N<mg$},
+     12/{Chute libre}/{$a=-g$}/{$N=0$}}
+  {
+    % cabine
+    \draw[cabin] (\x,0) rectangle (\x+2.6,3.0);
+    % balance (rectangle au sol)
+    \fill[black!15] (\x+0.7,0.05) rectangle (\x+1.9,0.35);
+    \draw[black!50] (\x+0.7,0.05) rectangle (\x+1.9,0.35);
+    % personne stylisée : tête + corps
+    \fill[black!75] (\x+1.3,1.9) circle (0.18);
+    \draw[person] (\x+1.3,1.72)--(\x+1.3,0.9);
+    \draw[person] (\x+1.3,1.5)--(\x+1.0,1.15);
+    \draw[person] (\x+1.3,1.5)--(\x+1.6,1.15);
+    \draw[person] (\x+1.3,0.9)--(\x+1.05,0.38);
+    \draw[person] (\x+1.3,0.9)--(\x+1.55,0.38);
+    % poids mg (depuis le centre du corps, vers le bas) -- longueur de réf.
+    \draw[weight] (\x+1.85,1.3)--(\x+1.85,0.55) node[right,font=\scriptsize,pos=0.5]{$mg$};
+    % titre
+    \node[font=\footnotesize\bfseries,align=center] at (\x+1.3,3.45) {\titre};
+    \node[font=\scriptsize,align=center] at (\x+1.3,-0.4) {\acc};
+    \node[font=\scriptsize\bfseries,forcecol,align=center] at (\x+1.3,-0.85) {\rel};
+  }
+  % forces normales N, ajustées par cas (depuis la balance vers le haut)
+  % cas 1 : N = mg
+  \draw[normal] (0.75,0.55)--(0.75,1.30) node[left,font=\scriptsize,pos=0.5]{$N$};
+  % cas 2 : N > mg (plus longue)
+  \draw[normal] (4.75,0.55)--(4.75,1.70) node[left,font=\scriptsize,pos=0.5]{$N$};
+  \draw[->,>=Stealth,velcol,line width=0.9pt] (6.35,1.0)--(6.35,1.9) node[right,font=\scriptsize]{$\vv a$};
+  % cas 3 : N < mg (plus courte)
+  \draw[normal] (8.75,0.55)--(8.75,1.05) node[left,font=\scriptsize,pos=0.5]{$N$};
+  \draw[->,>=Stealth,velcol,line width=0.9pt] (10.35,1.9)--(10.35,1.0) node[right,font=\scriptsize]{$\vv a$};
+  % cas 4 : N = 0 (croix)
+  \node[forcecol,font=\scriptsize] at (12.75,1.0) {$\times$};
+  \draw[->,>=Stealth,velcol,line width=0.9pt] (14.35,1.9)--(14.35,1.0) node[right,font=\scriptsize]{$\vv a=\vv g$};
+\end{tikzpicture}\\[10pt]
+{\footnotesize Figure 4 --- Les quatre situations dans un ascenseur. Le poids réel $mg$
+(rouge) est \emph{toujours le même} ; seul le poids apparent $N$ (bleu) varie.}
+\end{center}
+
+\begin{theoreme}[lecture des quatre cas]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Repos ou MRU} ($a=0$) : $N-mg=0\Rightarrow N=mg$. La balance affiche le
+        poids normal.
+  \item \textbf{MRUA vers le haut} ($a>0$) : $N=m(g+a)>mg$. On se sent \emph{plus lourd}
+        (le plancher doit pousser plus fort pour accélérer le corps vers le haut).
+  \item \textbf{MRUA vers le bas} ($a<0$) : $N=m(g+a)<mg$. On se sent \emph{plus léger}.
+  \item \textbf{Chute libre} ($a=-g$) : $N=m(g-g)=0$. \textbf{Impesanteur} : la balance
+        affiche $0$, on ne ressent plus aucun poids.
+\end{itemize}
+\end{theoreme}
+
+\begin{exemple}[la balance dans un ascenseur qui démarre vers le haut]
+Une personne de masse $m=\SI{70}{\kilogram}$ monte sur une balance dans un ascenseur.
+On prend $g=\SI{9.8}{\metre\per\second\squared}$.
+
+\smallskip
+\textbf{(a) Ascenseur à l'arrêt (ou en MRU).} $a=0$ :
+\[
+N=m(g+a)=70\times(9{,}8+0)=\SI{686}{\newton}.
+\]
+La balance affiche l'équivalent de $\SI{70}{\kilogram}$ ($686/9{,}8=70$).
+
+\smallskip
+\textbf{(b) L'ascenseur démarre vers le haut} avec $a=+\SI{2}{\metre\per\second\squared}$ :
+\[
+N=m(g+a)=70\times(9{,}8+2)=70\times 11{,}8=\SI{826}{\newton}.
+\]
+La balance « voit » une masse apparente de $826/9{,}8\approx\SI{84.3}{\kilogram}$ : la
+personne se sent plus lourde de $\SI{14}{\kilogram}$ ! C'est la sensation de
+« tassement » qu'on éprouve au démarrage vers le haut.
+
+\smallskip
+\textbf{(c) L'ascenseur décélère / descend} avec $a=-\SI{2}{\metre\per\second\squared}$ :
+\[
+N=70\times(9{,}8-2)=70\times 7{,}8=\SI{546}{\newton},
+\]
+soit une masse apparente de $\approx\SI{55.7}{\kilogram}$. La personne se sent plus légère.
+
+\smallskip
+\textbf{(d) Le câble casse — chute libre} avec $a=-g=-\SI{9.8}{\metre\per\second\squared}$ :
+\[
+N=70\times(9{,}8-9{,}8)=\SI{0}{\newton}.
+\]
+\textbf{Interprétation.} En chute libre, la balance affiche $0$ : la personne flotte
+dans la cabine. Son poids \emph{réel} vaut pourtant toujours $mg=\SI{686}{\newton}$ —
+c'est exactement le mécanisme de l'impesanteur ressentie par les astronautes.
+\end{exemple}
+
+\begin{attention}[« impesanteur » ne veut pas dire « plus de gravité »]
+Dans le cas (d), $g$ vaut toujours $\SI{9.8}{\metre\per\second\squared}$ et le poids réel
+$mg$ est intact. Ce qui s'annule, c'est uniquement le poids \emph{apparent} $N$, parce
+que la balance \emph{et} la personne tombent ensemble avec la même accélération $g$ :
+il n'y a plus de force de contact entre eux.
+\end{attention}
+
+% =====================================================================
+\section{Les satellites en orbite circulaire}
+% =====================================================================
+
+\subsection{Pourquoi un satellite « tombe » sans jamais toucher le sol}
+
+Un satellite en orbite circulaire autour de la Terre est en
+\textbf{mouvement circulaire uniforme} (MCU) : sa vitesse garde une valeur constante,
+mais sa \emph{direction} change sans cesse. Or changer de direction, c'est accélérer :
+le satellite possède une \textbf{accélération centripète}, dirigée vers le centre de la
+Terre. La seule force capable de fournir cette accélération est la
+\textbf{force de gravitation}. Autrement dit : \emph{la gravité joue le rôle de force
+centripète}. Le satellite est en chute libre permanente — il « tombe » constamment vers
+la Terre, mais sa vitesse horizontale est telle qu'il « rate » toujours le sol.
+
+% --- FIGURE 5 : satellite en orbite circulaire ---
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % Terre
+  \shade[ball color=earth] (0,0) circle (1.25);
+  \node[white,font=\small\bfseries] at (0,0) {$M_T$};
+  \fill[white] (0,0) circle (0.04);
+  % orbite
+  \draw[primary,dashed,line width=1pt] (0,0) circle (2.8);
+  % satellite à 40°
+  \coordinate (O) at (0,0);
+  \coordinate (S) at (40:2.8);
+  \fill[black] (S) circle (0.10);
+  \node[above right=-2pt of S,font=\bfseries\small] {satellite ($m$)};
+  % rayon r = R_T + h (ligne fine noire) ; étiquette au-dessus de la ligne
+  \draw[->,>=Stealth,black!70,line width=0.8pt] (O)--(S);
+  \node[sloped,above,font=\itshape\small,black] at ($(O)!0.62!(S)$) {$r=R_T+h$};
+  % force gravitationnelle (centripète) vers le centre ; étiquette en dessous
+  \draw[->,>=Stealth,forcecol,line width=1.3pt] (S)--($(S)!1.25cm!(O)$)
+        node[midway,below right=-1pt,sloped,font=\small,forcecol]{$\vv F$};
+  % vitesse tangente (perpendiculaire au rayon, sens trigo)
+  \draw[->,>=Stealth,velcol,line width=1.3pt] (S)--($(S)+(130:1.45)$)
+        node[midway,above left=-2pt,sloped,font=\small,velcol]{$\vv v$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figure 5 --- Orbite circulaire : la vitesse $\vv v$ est tangente à
+l'orbite, la force de gravitation $\vv F$ (centripète) pointe vers le centre $O$ de la
+Terre. Le rayon de l'orbite vaut $r=R_T+h$.}
+\end{center}
+
+\subsection{La vitesse d'un satellite}
+
+On égale la force de gravitation et la force centripète $\frac{mv^2}{r}$ (avec
+$r=R_T+h$) :
+\[
+\underbrace{\Grav\,\frac{M_T\,m}{(R_T+h)^2}}_{\text{force gravitationnelle}}
+=\underbrace{\frac{m\,v^2}{R_T+h}}_{\text{force centripète}} .
+\]
+La masse $m$ du satellite se simplifie, et un facteur $(R_T+h)$ aussi. On obtient :
+
+\begin{formule}[Vitesse d'un satellite en orbite circulaire]
+\[
+\boxed{\;v=\sqrt{\dfrac{\Grav\times M_T}{R_T+h}}\;}
+\]
+\begin{ou}
+  \item $v$ : vitesse (linéaire) du satellite sur son orbite, en \si{\metre\per\second} ;
+  \item $\Grav$ : constante de gravitation, $\SI{6.67e-11}{\newton\metre\squared\per\kilogram\squared}$ ;
+  \item $M_T$ : masse de la Terre, en \si{\kilogram} ;
+  \item $R_T+h$ : rayon de l'orbite (= rayon terrestre + altitude), en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[un résultat capital : $v$ ne dépend pas de la masse du satellite !]
+La masse $m$ du satellite a disparu de la formule. Cela signifie qu'à une altitude
+donnée, \emph{tous} les satellites — qu'ils pèsent \SI{1}{\kilogram} ou \SI{10}{\tonne} —
+doivent aller à la \emph{même} vitesse pour rester sur la même orbite. Plus l'orbite est
+\textbf{haute}, plus la vitesse nécessaire est \textbf{faible} ($v$ décroît quand $h$
+augmente).
+\end{remarque}
+
+\begin{exemple}[vitesse et durée d'une orbite à \SI{800}{\kilo\metre} d'altitude]
+On reprend $\Grav M_T=\SI{4.00e14}{}$ et $r=R_T+h=\SI{7.2e6}{\metre}$.
+
+\smallskip
+\textbf{Vitesse :}
+\[
+v=\sqrt{\frac{\SI{4.00e14}{}}{\SI{7.2e6}{}}}=\sqrt{\SI{5.56e7}{}}
+ \approx\SI{7455}{\metre\per\second}\approx\SI{7.5}{\kilo\metre\per\second}.
+\]
+Un satellite à cette altitude file donc à environ \SI{27000}{\kilo\metre\per\hour} !
+
+\smallskip
+\textbf{Durée d'un tour (période) :} la circonférence de l'orbite vaut
+$2\pi r=2\pi\times\SI{7.2e6}{}\approx\SI{4.52e7}{\metre}$, donc
+\[
+T=\frac{2\pi r}{v}=\frac{\SI{4.52e7}{}}{\SI{7455}{}}\approx\SI{6068}{\second}
+ \approx\SI{101}{\minute}.
+\]
+\textbf{Interprétation.} Le satellite boucle un tour de la Terre en à peine plus
+d'une heure et demie : c'est typiquement le cas de la Station spatiale internationale,
+qui voit ainsi environ $16$ levers de Soleil par jour.
+\end{exemple}
+
+\subsection{La période de révolution — 3\texorpdfstring{$^{\text{e}}$}{e} loi de Kepler}
+
+En remplaçant $v$ par $\dfrac{2\pi(R_T+h)}{T}$ (la vitesse = circonférence / période)
+dans la relation $v^2=\dfrac{\Grav M_T}{R_T+h}$, on isole le carré de la période :
+
+\begin{formule}[Période d'un satellite (3\textsuperscript{e} loi de Kepler)]
+\[
+\boxed{\;T^{2}=\dfrac{4\pi^{2}\,(R_T+h)^{3}}{\Grav\times M_T}\;}
+\]
+\begin{ou}
+  \item $T$ : période de révolution (durée d'un tour complet), en secondes (\si{\second}) ;
+  \item $R_T+h$ : rayon de l'orbite, en \si{\metre} ;
+  \item $\Grav$ : constante de gravitation, en \si{\newton\metre\squared\per\kilogram\squared} ;
+  \item $M_T$ : masse de la Terre, en \si{\kilogram} ;
+  \item $4\pi^2$ : constante numérique sans dimension ($\approx 39{,}48$).
+\end{ou}
+\end{formule}
+
+\begin{theoreme}[3\textsuperscript{e} loi de Kepler]
+Le rapport $\dfrac{T^2}{(R_T+h)^3}=\dfrac{4\pi^2}{\Grav M_T}$ est une \emph{constante}
+identique pour tous les satellites de la Terre. Le carré de la période est
+proportionnel au cube du rayon de l'orbite : \emph{plus un satellite est loin, plus sa
+période est longue} (et de façon très marquée, puisque c'est le cube qui intervient).
+\end{theoreme}
+
+\begin{remarque}[on peut aussi isoler l'altitude]
+En partant de la 3\textsuperscript{e} loi de Kepler, on peut isoler l'altitude $h$ à
+partir de la période $T$ imposée :
+\[
+h=\sqrt[3]{\dfrac{\Grav\,M_T\,T^2}{4\pi^2}}-R_T .
+\]
+C'est cette relation qui permet de calculer à quelle altitude placer un satellite pour
+qu'il ait une période donnée — par exemple un satellite géostationnaire.
+\end{remarque}
+
+\subsection{Le satellite géostationnaire}
+
+\begin{definition}[satellite géostationnaire]
+Un satellite est \textbf{géostationnaire} s'il paraît \emph{immobile} pour un
+observateur au sol. Pour cela, il faut trois conditions :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item son orbite est dans le \textbf{plan de l'équateur} ;
+  \item il tourne dans le \textbf{même sens} que la Terre ;
+  \item sa \textbf{période} est exactement égale à celle de rotation de la Terre sur
+        elle-même ($T\approx\SI{24}{\hour}$, plus précisément \SI{23}{\hour}\,\SI{56}{\minute}).
+\end{itemize}
+Le satellite a alors la même \emph{vitesse angulaire} que la Terre :
+$\omega_{\text{sat}}=\omega_{\text{Terre}}$.
+\end{definition}
+
+\begin{exemple}[à quelle altitude un satellite est-il géostationnaire ?]
+On cherche l'altitude $h$ pour laquelle $T=\SI{86164}{\second}$ (un jour sidéral, soit
+$\approx\SI{24}{\hour}$). On utilise $h=\sqrt[3]{\dfrac{\Grav M_T T^2}{4\pi^2}}-R_T$.
+
+\smallskip
+\textbf{Étape 1 --- numérateur :}
+$\Grav M_T T^2=\SI{4.00e14}{}\times(\SI{86164}{})^2
+=\SI{4.00e14}{}\times\SI{7.42e9}{}=\SI{2.97e24}{}$.
+
+\textbf{Étape 2 --- on divise par $4\pi^2\approx 39{,}48$ :}
+$\dfrac{\SI{2.97e24}{}}{39{,}48}=\SI{7.52e22}{}$.
+
+\textbf{Étape 3 --- racine cubique :}
+$r=\sqrt[3]{\SI{7.52e22}{}}\approx\SI{4.22e7}{\metre}=\SI{42200}{\kilo\metre}$.
+
+\textbf{Étape 4 --- on retire le rayon terrestre :}
+\[
+h=r-R_T=\SI{42200}{}-\SI{6400}{}\approx\SI{35800}{\kilo\metre}.
+\]
+\textbf{Interprétation.} Tout satellite géostationnaire — météo, télévision, GPS relais —
+se trouve nécessairement à environ \SI{35800}{\kilo\metre} d'altitude au-dessus de
+l'équateur. Il n'y a qu'une seule altitude possible : c'est pourquoi cette orbite est
+une « ressource » précieuse et encombrée.
+\end{exemple}
+
+\subsection{Vitesse linéaire et vitesse angulaire}
+
+\begin{formule}[Lien entre vitesse linéaire et vitesse angulaire]
+\[
+\boxed{\;v=\omega\times(R_T+h)\;}
+\]
+\begin{ou}
+  \item $v$ : vitesse linéaire du satellite, en \si{\metre\per\second} ;
+  \item $\omega$ : vitesse angulaire, en \si{\radian\per\second}
+        (avec $\omega=\dfrac{2\pi}{T}$) ;
+  \item $R_T+h$ : rayon de l'orbite, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{attention}[même vitesse angulaire $\ne$ même vitesse linéaire]
+Deux satellites géostationnaires (et une maison sur l'équateur !) ont la \emph{même}
+vitesse angulaire $\omega$, car ils font un tour dans le même temps $T$. Mais ils n'ont
+\emph{pas} la même vitesse linéaire $v$ : celle-ci dépend du rayon ($v=\omega r$). Le
+satellite, plus loin du centre, va beaucoup plus vite que la maison à la surface.
+\end{attention}
+
+\begin{exemple}[classer trois satellites par vitesse]
+Trois satellites sont à des altitudes $h_1>h_2>h_3$ (donc $r_1>r_2>r_3$). Comment se
+classent leurs vitesses ?
+
+\smallskip
+\textbf{Vitesse linéaire} : $v=\sqrt{\dfrac{\Grav M_T}{r}}$ décroît quand $r$ augmente.
+Donc $\boxed{v_3>v_2>v_1}$ : \emph{le plus bas est le plus rapide}.
+
+\smallskip
+\textbf{Vitesse angulaire} : $\omega=\dfrac{v}{r}=\sqrt{\dfrac{\Grav M_T}{r^3}}$ décroît
+aussi quand $r$ augmente. Donc $\boxed{\omega_3>\omega_2>\omega_1}$ : le plus bas tourne
+aussi le plus « vite » angulairement (il boucle son tour en moins de temps).
+
+\smallskip
+\textbf{Interprétation.} Pour un satellite, « plus bas » signifie à la fois plus rapide
+\emph{en vitesse} et plus rapide \emph{en rotation} (période plus courte). C'est cohérent
+avec la 3\textsuperscript{e} loi de Kepler.
+\end{exemple}
+
+\subsection{Comparer deux satellites : la méthode des rapports}
+
+% --- FIGURE 6 : deux satellites à des altitudes différentes ---
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % Terre
+  \shade[ball color=earth] (0,0) circle (1.05);
+  \node[white,font=\small\bfseries] at (0,0) {$M_T$};
+  \fill[white] (0,0) circle (0.04);
+  \coordinate (O) at (0,0);
+  % --- satellite A (haut-gauche, plus loin) ---
+  \coordinate (A) at (140:3.5);
+  \draw[dashed,black!55,line width=0.7pt] (O)--(A);
+  \fill[black] (A) circle (0.10);
+  \node[above=1pt of A,font=\bfseries\small] {A ($m$)};
+  % étiquette de distance, posée sur la ligne, fond blanc (près de la Terre)
+  \node[sloped,fill=white,inner sep=1pt,font=\scriptsize] at ($(O)!0.43!(A)$)
+        {$d_A=R_T+1520$ km};
+  % force gravitationnelle, vers l'extérieur de la ligne
+  \draw[->,>=Stealth,forcecol,line width=1.2pt] (A)--($(A)!1.15cm!(O)$)
+        node[midway,above,sloped,font=\scriptsize,forcecol]{$\vv F_{T/A}$};
+  % --- satellite B (droite, plus proche) ---
+  \coordinate (B) at (20:3.05);
+  \draw[dashed,black!55,line width=0.7pt] (O)--(B);
+  \fill[black] (B) circle (0.10);
+  \node[above right=0pt and -2pt of B,font=\bfseries\small] {B ($m$)};
+  \node[sloped,fill=white,inner sep=1pt,font=\scriptsize] at ($(O)!0.56!(B)$)
+        {$d_B=R_T+800$ km};
+  \draw[->,>=Stealth,forcecol,line width=1.2pt] (B)--($(B)!1.15cm!(O)$)
+        node[midway,above,sloped,font=\scriptsize,forcecol]{$\vv F_{T/B}$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figure 6 --- Deux satellites de \emph{même} masse $m$ à des altitudes
+différentes. Celui qui est le plus bas (B) subit la force la plus intense, car il est
+plus proche du centre.}
+\end{center}
+
+Quand on compare deux situations gouvernées par la même loi en $1/d^2$, la méthode la
+plus efficace est de former le \textbf{rapport} des deux forces : les constantes communes
+($\Grav$, $M_T$, et même $m$ si les masses sont égales) se simplifient.
+
+\begin{exemple}[deux satellites de même masse — comparaison complète]
+Deux satellites $A$ et $B$ de masses identiques (\SI{800}{\kilogram}) sont en orbite
+circulaire : $A$ à l'altitude \SI{1520}{\kilo\metre}, $B$ à \SI{800}{\kilo\metre}. On
+donne $R_T=\SI{6400}{\kilo\metre}$.
+
+\smallskip
+\textbf{Étape 1 --- les distances au centre :}
+\[
+d_A=R_T+\SI{1520}{}=\SI{7920}{\kilo\metre},\qquad
+d_B=R_T+\SI{800}{}=\SI{7200}{\kilo\metre}.
+\]
+
+\textbf{Étape 2 --- on écrit le rapport des forces.} Comme les masses sont égales,
+$\Grav$, $M_T$ et $m$ se simplifient et il ne reste que les distances :
+\[
+\frac{F_{T/A}}{F_{T/B}}
+ =\frac{\Grav\,\dfrac{M_T m}{d_A^2}}{\Grav\,\dfrac{M_T m}{d_B^2}}
+ =\frac{d_B^2}{d_A^2}
+ =\left(\frac{d_B}{d_A}\right)^{2}
+ =\left(\frac{7200}{7920}\right)^{2}
+ =\left(\frac{10}{11}\right)^{2}.
+\]
+
+\textbf{Étape 3 --- on conclut.} La racine carrée du rapport vaut
+$\sqrt{F_{T/A}/F_{T/B}}=\dfrac{10}{11}\approx 0{,}91<1$. Donc $F_{T/A}<F_{T/B}$ :
+\emph{le satellite le plus bas, $B$, subit bien la force la plus intense}. C'est logique :
+plus on est proche du centre de la Terre, plus l'attraction est forte.
+
+\smallskip
+\textbf{Vérification par les valeurs.} Avec $\Grav M_T m=\SI{4.00e14}{}\times 800=
+\SI{3.20e17}{}$ :
+\[
+F_{T/A}=\frac{\SI{3.20e17}{}}{(\SI{7.92e6}{})^2}\approx\SI{5103}{\newton},\qquad
+F_{T/B}=\frac{\SI{3.20e17}{}}{(\SI{7.2e6}{})^2}\approx\SI{6173}{\newton}.
+\]
+On retrouve bien $F_{T/A}/F_{T/B}=5103/6173\approx 0{,}83=(10/11)^2$. \checkmark
+\end{exemple}
+
+\begin{exemple}[effet de « réduire l'altitude de moitié » — un piège classique]
+On entend parfois : « si on réduit l'altitude de moitié, la force est multipliée par
+$4$ ». \textbf{C'est faux}, et voici pourquoi. La force dépend de la distance
+\emph{au centre} $d=R_T+h$, pas de la seule altitude $h$.
+
+\smallskip
+Pour que la force soit multipliée par $4$, il faudrait que $d$ (et non $h$) soit divisé
+par $2$, car $F\propto 1/d^2$ et $1/(d/2)^2=4/d^2$. Or réduire l'altitude de moitié donne
+$d'=R_T+\dfrac{h}{2}$, qui est \emph{bien plus grand} que $\dfrac{d}{2}=\dfrac{R_T+h}{2}$
+(à cause du gros terme $R_T$). Le facteur réel d'augmentation est seulement
+\[
+\frac{F'}{F}=\left(\frac{R_T+h}{\,R_T+\tfrac{h}{2}\,}\right)^{2},
+\]
+nettement inférieur à $4$. \textbf{Interprétation.} Le rayon terrestre $R_T$ « domine »
+souvent l'altitude : il ne faut jamais confondre « distance au centre » et « altitude ».
+\end{exemple}
+
+% =====================================================================
+\section{L'énergie d'un satellite}
+% =====================================================================
+
+Un satellite en orbite possède deux formes d'énergie mécanique : de l'énergie
+\textbf{cinétique} (car il se déplace) et de l'énergie \textbf{potentielle de gravitation}
+(car il est dans le champ de la Terre).
+
+\begin{formule}[Énergie cinétique d'un satellite]
+\[
+\boxed{\;E_c=\tfrac12\,m\,v^2=\dfrac{\Grav\,M_T\,m}{2\,(R_T+h)}\;}
+\]
+\begin{ou}
+  \item $E_c$ : énergie cinétique, en joules (\si{\joule}) ;
+  \item $m$ : masse du satellite, en \si{\kilogram} ;
+  \item $v$ : vitesse du satellite, en \si{\metre\per\second} ;
+  \item $R_T+h$ : rayon de l'orbite, en \si{\metre}
+        (on a utilisé $v^2=\Grav M_T/(R_T+h)$).
+\end{ou}
+\end{formule}
+
+\begin{formule}[Énergie potentielle de gravitation]
+\[
+\boxed{\;E_p=-\,\dfrac{\Grav\,M_T\,m}{R_T+h}\;}
+\]
+\begin{ou}
+  \item $E_p$ : énergie potentielle de gravitation, en joules (\si{\joule}) ;
+  \item le signe « $-$ » traduit le choix d'une référence nulle à l'infini : un corps
+        lié à la Terre a une énergie potentielle \emph{négative} ;
+  \item les autres symboles ont la même signification que ci-dessus.
+\end{ou}
+\end{formule}
+
+\begin{theoreme}[énergie mécanique totale, constante sur l'orbite]
+La somme $E_m=E_c+E_p$ est l'énergie mécanique. Sur une orbite circulaire :
+\[
+E_m=E_c+E_p=\frac{\Grav M_T m}{2(R_T+h)}-\frac{\Grav M_T m}{R_T+h}
+   =-\,\frac{\Grav M_T m}{2(R_T+h)} .
+\]
+Cette énergie reste \textbf{constante} en tout point de l'orbite ($E_c+E_p=\text{cte}$) :
+l'orbite étant circulaire, la vitesse — donc $E_c$ — et la distance — donc $E_p$ — ne
+varient pas. On remarque que $E_m=-E_c$ : l'énergie totale d'un satellite lié est
+négative.
+\end{theoreme}
+
+\begin{exemple}[énergies d'un satellite de \SI{800}{\kilogram} à \SI{800}{\kilo\metre}]
+Reprenons $\Grav M_T=\SI{4.00e14}{}$, $m=\SI{800}{\kilogram}$, $r=\SI{7.2e6}{\metre}$,
+$v\approx\SI{7455}{\metre\per\second}$.
+
+\smallskip
+\textbf{Énergie cinétique :}
+\[
+E_c=\tfrac12 m v^2=\tfrac12\times 800\times(7455)^2
+   \approx\tfrac12\times 800\times\SI{5.56e7}{}\approx\SI{2.22e10}{\joule}.
+\]
+\textbf{Énergie potentielle :}
+\[
+E_p=-\frac{\Grav M_T m}{r}=-\frac{\SI{4.00e14}{}\times 800}{\SI{7.2e6}{}}
+   \approx -\SI{4.44e10}{\joule}.
+\]
+\textbf{Énergie mécanique totale :}
+\[
+E_m=E_c+E_p\approx \SI{2.22e10}{}-\SI{4.44e10}{}=-\SI{2.22e10}{\joule}=-E_c .
+\]
+\textbf{Interprétation.} On vérifie bien $E_m=-E_c<0$. Le signe négatif signifie que le
+satellite est \emph{lié} à la Terre : il faudrait lui fournir de l'énergie
+($+\SI{2.22e10}{\joule}$) pour le « libérer » et l'envoyer à l'infini. C'est la base du
+calcul des coûts énergétiques d'un lancement.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse et formulaire}
+% =====================================================================
+
+\subsection{Tableau récapitulatif des formules}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.7}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.6cm} >{\centering\arraybackslash}p{4.6cm} >{\raggedright\arraybackslash}p{5.2cm}}
+\toprule
+\rowcolor{primary!15}
+\textbf{Grandeur} & \textbf{Formule} & \textbf{Unités / remarque} \\
+\midrule
+Force de gravitation & $F=\Grav\dfrac{m_A m_B}{d^2}$ & $F$ en \si{\newton} ; $d$ = distance entre centres \\
+\rowcolor{primary!7}
+Poids (gravitation terrestre) & $P=mg=\Grav\dfrac{M_T m}{(R_T+h)^2}$ & $P$ en \si{\newton} \\
+Pesanteur à l'altitude $h$ & $g_h=\dfrac{\Grav M_T}{(R_T+h)^2}$ & en \si{\metre\per\second\squared} ; décroît avec $h$ \\
+\rowcolor{primary!7}
+Pesanteur au sol & $g_0=\dfrac{\Grav M_T}{R_T^2}\approx 9{,}8$ & en \si{\metre\per\second\squared} \\
+Poids apparent (ascenseur) & $N=m(g+a)$ & $a>0$ vers le haut ; chute libre $\Rightarrow N=0$ \\
+\rowcolor{primary!7}
+Vitesse d'un satellite & $v=\sqrt{\dfrac{\Grav M_T}{R_T+h}}$ & en \si{\metre\per\second} ; indép.\ de $m$ \\
+Période (Kepler) & $T^2=\dfrac{4\pi^2(R_T+h)^3}{\Grav M_T}$ & $T$ en \si{\second} \\
+\rowcolor{primary!7}
+Vitesse linéaire / angulaire & $v=\omega(R_T+h)$ & $\omega=\dfrac{2\pi}{T}$ en \si{\radian\per\second} \\
+Énergie mécanique & $E_m=-\dfrac{\Grav M_T m}{2(R_T+h)}=-E_c$ & en \si{\joule} ; $<0$ (corps lié) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Les dix idées-clés à retenir}
+
+\begin{enumerate}[leftmargin=2em,topsep=3pt,itemsep=3pt]
+  \item La gravitation est \textbf{universelle} : elle s'exerce entre toutes les masses,
+        partout.
+  \item Les deux forces de gravitation sont \emph{attractives, opposées, sur la droite
+        $(AB)$, de même intensité} (couple action--réaction).
+  \item Loi en $1/d^2$ : doubler la distance \emph{divise la force par $4$}.
+  \item Toujours utiliser la distance \textbf{entre centres} $d=R_T+h$, jamais la seule
+        altitude $h$.
+  \item Le poids $P=mg$ est une \emph{force} (\si{\newton}) ; la masse $m$ (\si{\kilogram})
+        est invariable.
+  \item $g$ \textbf{diminue avec l'altitude} mais ne s'annule pas : en orbite basse,
+        $g$ vaut encore $\sim 90\,\%$ de $g_0$.
+  \item Le \textbf{poids apparent} $N=m(g+a)$ change avec le mouvement ; le poids réel
+        $mg$, lui, ne change pas.
+  \item En \textbf{chute libre} ($a=-g$), $N=0$ : c'est l'impesanteur, sans disparition
+        de la gravité.
+  \item Pour un satellite, la gravité \emph{est} la force centripète :
+        $v=\sqrt{\Grav M_T/(R_T+h)}$, indépendante de sa masse ; plus haut $\Rightarrow$
+        plus lent.
+  \item Un satellite \textbf{géostationnaire} a $T\approx\SI{24}{\hour}$ et se trouve à
+        $\approx\SI{35800}{\kilo\metre}$, dans le plan équatorial.
+\end{enumerate}
+
+\vfill
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=5pt,draw=primary,line width=1pt,
+      fill=primary!8,inner sep=8pt,text width=15cm,align=center]{%
+  \small\color{primarydark}\textbf{En une phrase :} une \emph{seule} force — la gravitation
+  en $1/d^2$ — explique à la fois la chute des corps, la valeur de $g$, la sensation de
+  poids, l'orbite des satellites et leur énergie. Tout le reste n'est qu'application de
+  $F=\Grav\,\dfrac{m_A m_B}{d^2}$.};
+\end{tikzpicture}
+\end{center}
+
+\end{document}

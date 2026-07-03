@@ -1,0 +1,183 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 8 — THÈME 1
+%  Tuto : Premier principe et enthalpie (exo/endothermique)
+%  Compilation : pdflatex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,decorations.markings,angles,quotes,patterns,backgrounds,shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+% ---------- palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{exocol}{RGB}{200,60,40}
+\definecolor{endocol}{RGB}{0,110,180}
+\definecolor{chaleur}{RGB}{214,72,33}
+\definecolor{travail}{RGB}{30,110,180}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{definitionb}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{proprieteb}[1][]{boxbase,colback=thmcol!6,colframe=thmcol,title={\textsc{Propriété}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{formuleb}[1][]{boxbase,colback=formulacol!6,colframe=formulacol,title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{methodeb}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarqueb}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attentionb}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exempleb}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newenvironment{ou}{\par\smallskip\noindent\textbf{où :}\nopagebreak\begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}{\end{itemize}}
+
+\newcommand{\dH}{\Delta H}
+\newcommand{\dHr}{\Delta H^{\circ}_{\text{r}}}
+\newcommand{\dHf}{\Delta H^{\circ}_{\text{f}}}
+\newcommand{\dS}{\Delta S}
+\newcommand{\dU}{\Delta U}
+
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 1 : Premier principe et enthalpie}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,minimum width=16cm,
+      minimum height=1.5cm,align=center,inner sep=8pt]
+  {{\Large\bfseries Thème 1 — Premier principe et enthalpie}\\[2pt]
+   {\small Énergie interne, chaleur, travail, réactions exo\,/\,endothermiques}};
+\end{tikzpicture}
+\end{center}
+
+\section{L'idée générale}
+Une réaction chimique réorganise les liaisons : elle \textbf{échange de l'énergie} avec l'extérieur (chaleur
+$Q$ et travail $W$). Ce thème répond à deux questions : \emph{de quel côté va l'énergie} (signe de $Q$, $W$, $\dH$) et \emph{combien}.
+
+\begin{definitionb}[système ouvert / fermé / isolé]
+Le \textbf{système} est la portion étudiée (le contenu du bécher) ; le reste est le \textbf{milieu
+extérieur}. Un système est \textbf{ouvert} (échange matière \emph{et} énergie), \textbf{fermé} (énergie
+seulement) ou \textbf{isolé} (ni l'un ni l'autre). Un calorimètre parfait est un système isolé, dit
+\emph{adiabatique}.
+\end{definitionb}
+
+\section{Le premier principe et les conventions de signe}
+
+\begin{formuleb}[Premier principe de la thermodynamique]
+\[ \boxed{\;\dU \;=\; Q \;+\; W\;}\qquad\text{(énergies en }\si{\joule}\text{)} \]
+\begin{ou}
+  \item $\dU$ : variation d'\textbf{énergie interne} du système ;
+  \item $Q$ : \textbf{chaleur} échangée ; \quad $W$ : \textbf{travail} échangé.
+\end{ou}
+\end{formuleb}
+
+\begin{methodeb}[le réflexe du signe — point de vue du système]
+Ce que le système \textbf{reçoit} est \textbf{positif} ; ce qu'il \textbf{cède} est \textbf{négatif}.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item chaleur reçue $\Rightarrow Q>0$ \; ; \; chaleur cédée $\Rightarrow Q<0$ ;
+  \item travail reçu $\Rightarrow W>0$ \; ; \; travail cédé $\Rightarrow W<0$.
+\end{itemize}
+Système \textbf{isolé} : $Q=0$ et $W=0$, donc $\dU=0$ ($U$ constante).
+\end{methodeb}
+
+À \textbf{pression constante} (cas usuel : réaction à l'air libre), deux résultats servent tout le temps :
+\begin{center}
+\begin{tabular}{@{}p{7.3cm}p{8.3cm}@{}}
+\textbf{Travail des forces de pression :} \quad $W = -\,p\,\Delta V$ &
+\textbf{Chaleur à pression constante :} \quad $Q_p = \dH$ \\
+($p$ en \si{\pascal}, $\Delta V=V_{\text{f}}-V_{\text{i}}$ en \si{\cubic\metre}) &
+($\dH$ = variation d'\textbf{enthalpie}, en \si{\joule} ou \si{\kilo\joule}) \\
+\end{tabular}
+\end{center}
+Le signe « $-$ » de $W=-p\Delta V$ traduit la convention : si le gaz se \emph{dilate} ($\Delta V>0$) il
+\emph{pousse} l'extérieur, donc il \emph{cède} du travail ($W<0$).
+
+\section{Réactions exothermiques et endothermiques}
+
+Comme $Q_p=\dH$, le \textbf{signe de $\dH$} dit dans quel sens va la chaleur. On le lit sur un
+\textbf{diagramme enthalpique} où l'on porte l'enthalpie $H$ des réactifs et des produits.
+
+\begin{definitionb}[exo / endo / athermique]
+$\dH = H_{\text{produits}} - H_{\text{réactifs}}$. Alors :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{exothermique} : $\dH<0$, la réaction \emph{dégage} de la chaleur ; produits \emph{plus bas} que réactifs ;
+  \item \textbf{endothermique} : $\dH>0$, la réaction \emph{absorbe} de la chaleur ; produits \emph{plus haut} ;
+  \item \textbf{athermique} : $\dH\approx 0$, ni dégagement ni absorption.
+\end{itemize}
+\end{definitionb}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82]
+% exo
+\begin{scope}
+  \draw[->,thick] (0,-0.2) -- (0,3.9) node[above,font=\small]{$H$};
+  \draw[exocol,very thick] (0.4,3.1) -- (2.3,3.1); \node[anchor=south west,font=\scriptsize] at (0.45,3.15){Réactifs};
+  \draw[exocol,very thick] (3.0,1.0) -- (4.9,1.0); \node[anchor=south west,font=\scriptsize] at (3.05,1.05){Produits};
+  \draw[->,exocol,line width=1.1pt] (2.65,3.1) -- (2.65,1.0) node[midway,right,font=\scriptsize]{$\dH<0$};
+  \node[exocol,font=\bfseries\scriptsize] at (2.6,3.65){exothermique};
+\end{scope}
+% endo
+\begin{scope}[xshift=7.2cm]
+  \draw[->,thick] (0,-0.2) -- (0,3.9) node[above,font=\small]{$H$};
+  \draw[endocol,very thick] (0.4,1.0) -- (2.3,1.0); \node[anchor=south west,font=\scriptsize] at (0.45,1.05){Réactifs};
+  \draw[endocol,very thick] (3.0,3.1) -- (4.9,3.1); \node[anchor=south west,font=\scriptsize] at (3.05,3.15){Produits};
+  \draw[->,endocol,line width=1.1pt] (2.65,1.0) -- (2.65,3.1) node[midway,right,font=\scriptsize]{$\dH>0$};
+  \node[endocol,font=\bfseries\scriptsize] at (2.6,3.65){endothermique};
+\end{scope}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure}} : la flèche verticale donne immédiatement le signe de $\dH$.}
+\end{center}
+
+\begin{exempleb}[lire une équation]
+Combustion de l'octane : \;$\ce{C8H18} + \tfrac{25}{2}\,\ce{O2} \rightarrow 8\,\ce{CO2} + 9\,\ce{H2O} + \text{Énergie}$.\;
+Le « $+\,$Énergie » à droite signale une réaction \textbf{exothermique} ($\dH<0$) : les produits sont
+\emph{moins} énergétiques que les réactifs. \emph{Toute combustion est exothermique.}
+\end{exempleb}
+
+\begin{attentionb}
+Ne pas confondre \textbf{athermique} (une \emph{réaction} qui n'échange pas de chaleur, $\dH\approx0$) et
+\textbf{adiabatique} (une \emph{enceinte} qui ne laisse passer aucune chaleur). Et « $\dH<0$ » signifie
+que les produits ont \emph{moins} d'énergie : l'énergie est \emph{libérée} vers l'extérieur (pas « perdue »).
+On ne manipule d'ailleurs jamais $H$ seul, seulement des \emph{variations} $\dH$ — point de départ du
+Thème 2 (loi de Hess).
+\end{attentionb}
+
+\end{document}

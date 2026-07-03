@@ -1,0 +1,91 @@
+% =====================================================================
+%  THÈME 2 — Conversions en quantité de matière
+%  Niveau FACILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\DeclareSIUnit\atm{atm}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{excol}{RGB}{0,135,90}
+\newcommand{\gmol}{\si{\gram\per\mole}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 2 : Conversions}}
+\fancyhead[R]{\small\textcolor{excol}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=excol!5,colframe=excol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 2 — Conversions}\\[1pt]
+{\large\color{excol}\textbf{Niveau Facile}}\\[2pt]
+{\itshape Objectif : utiliser \emph{une seule} porte à la fois vers la mole.}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\textbf{Données (masses molaires atomiques, en \gmol) :}
+\ce{H}=1,0 ; \ce{C}=12,0 ; \ce{O}=16,0 ; \ce{Na}=23,0 ; \ce{S}=32,0 ; \ce{Ca}=40,0.\quad
+$N_A=\SI{6,02e23}{}$ ; \; $\Vm=\SI{22,4}{\litre\per\mole}$ (TPN).
+
+\begin{exo}[calculer une masse molaire]
+Calcule la masse molaire de :\quad
+\textbf{a)} l'acide sulfurique \ce{H2SO4} ;\quad
+\textbf{b)} le carbonate de calcium \ce{CaCO3}.\\
+\emph{(Additionne les masses molaires atomiques de tous les atomes de la formule.)}
+\end{exo}
+
+\begin{exo}[masse $\leftrightarrow$ mole]
+\textbf{a)} Combien de moles y a-t-il dans \SI{20,0}{\gram} d'hydroxyde de sodium \ce{NaOH}
+($M=\SI{40,0}{\gram\per\mole}$) ?\\
+\textbf{b)} Quelle masse de glucose \ce{C6H12O6} ($M=\SI{180}{\gram\per\mole}$) faut-il peser pour
+disposer de \SI{0,25}{\mole} ?
+\end{exo}
+
+\begin{exo}[volume d'un gaz aux TPN]
+Aux conditions TPN ($\Vm=\SI{22,4}{\litre\per\mole}$) :\\
+\textbf{a)} quel volume occupent \SI{0,25}{\mole} de dioxygène gazeux ?\\
+\textbf{b)} combien de moles de gaz contient un volume de \SI{44,8}{\litre} ?
+\end{exo}
+
+\begin{exo}[quantité de matière en solution]
+On prélève \SI{250}{\milli\litre} d'une solution de chlorure de sodium de concentration
+$C=\SI{0,20}{\Molar}$.\\
+\textbf{a)} Convertis d'abord le volume en litres.\quad
+\textbf{b)} Combien de moles de \ce{NaCl} contient ce prélèvement ?
+\end{exo}
+
+\begin{exo}[compter les entités avec $N_A$]
+\textbf{a)} Combien de molécules y a-t-il dans \SI{0,10}{\mole} d'eau ?\\
+\textbf{b)} À combien de moles correspond un échantillon de $\SI{3,01e23}{}$ molécules ?
+\end{exo}
+
+\end{document}

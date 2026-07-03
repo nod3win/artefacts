@@ -1,0 +1,88 @@
+% =====================================================================
+%  FICHE 11 — THEME 4 — Corrigé FACILE — Potentiels standard et prévision
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+\newcommand{\Ered}{\ensuremath{E_{\mathrm{r}}^{\circ}}}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 4} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Corrigé Facile}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[classer les oxydants]
+Le pouvoir oxydant \textbf{croît} avec \Ered. Par \Ered\ croissant :
+\[
+\ce{Zn^{2+}}\ (-0{,}76) \;<\; \ce{Cu^{2+}}\ (+0{,}34) \;<\; \ce{Ag+}\ (+0{,}80) \;<\; \ce{F2}\ (+2{,}87).
+\]
+L'oxydant le plus puissant est donc \textbf{\ce{F2}} (le fluor). \emph{(\ce{Zn^{2+}} est un oxydant très faible.)}
+\end{corr}
+
+\begin{corr}[classer les réducteurs]
+Le pouvoir réducteur \textbf{croît} quand \Ered\ \emph{diminue} (les deux forces varient en sens
+opposés). Par pouvoir réducteur croissant :
+\[
+\ce{F^-}\ (2{,}87) \;<\; \ce{Ag}\ (0{,}80) \;<\; \ce{Cu}\ (0{,}34) \;<\; \ce{Zn}\ (-0{,}76).
+\]
+Le réducteur le plus puissant est donc le \textbf{zinc \ce{Zn}} ; \ce{F^-} est un réducteur quasi nul.
+\end{corr}
+
+\begin{corr}[deux couples face à face]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item $\Ered(\ce{Fe^{3+}}/\ce{Fe^{2+}})=+0{,}77 > +0{,}34$ : le couple \textbf{du fer} a le plus fort
+        pouvoir oxydant.
+  \item L'oxydant du couple le plus haut oxyde le réducteur du couple le plus bas :
+        \textbf{\ce{Fe^{3+}} oxyde \ce{Cu}} : $\ce{2 Fe^{3+} + Cu -> 2 Fe^{2+} + Cu^{2+}}$.
+\end{enumerate}
+\end{corr}
+
+\begin{corr}[oui ou non ?]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item \textbf{Vrai.} $\Delta E^{\circ}=\Ered(\ce{Ag+}/\ce{Ag})-\Ered(\ce{Cu^{2+}}/\ce{Cu})=0{,}80-0{,}34=+0{,}46>0$.
+        \ce{Ag+} oxyde bien \ce{Cu} : $\ce{2 Ag+ + Cu -> 2 Ag + Cu^{2+}}$.
+  \item \textbf{Faux.} Pour que \ce{Cu^{2+}} oxyde \ce{Ag}, il faudrait $\Ered(\ce{Cu^{2+}}/\ce{Cu})>\Ered(\ce{Ag+}/\ce{Ag})$,
+        or $0{,}34<0{,}80$ : $\Delta E^{\circ}<0$. C'est la réaction \emph{inverse} (a) qui est spontanée.
+\end{enumerate}
+\end{corr}
+
+\begin{corr}[les extrêmes du tableau]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item L'oxydant le plus fort est la forme Ox du couple de \Ered\ \emph{maximal} : \textbf{\ce{F2}} ($+2{,}87$\,V).
+  \item Le réducteur le plus fort est la forme Red du couple de \Ered\ \emph{minimal} : \textbf{\ce{Zn}} ($-0{,}76$\,V).
+\end{enumerate}
+\end{corr}
+
+\end{document}

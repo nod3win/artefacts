@@ -1,0 +1,1365 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 11
+%  Électromagnétisme (aimants, champ magnétique, Laplace, Lorentz, induction)
+%  Figures TikZ tracées « from scratch ». Sans section exercices.
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « physique » réutilisées dans les figures
+\definecolor{Bcol}{RGB}{0,90,200}           % vecteur champ magnétique
+\definecolor{Icol}{RGB}{200,40,40}          % courant électrique
+\definecolor{Fcol}{RGB}{0,135,90}           % force (de Laplace / Lorentz)
+\definecolor{vcol}{RGB}{198,93,9}           % vecteur vitesse
+\definecolor{Npcol}{RGB}{200,30,40}         % pôle Nord (rouge)
+\definecolor{Spcol}{RGB}{30,70,200}         % pôle Sud  (bleu)
+\definecolor{fercol}{RGB}{120,120,130}      % métal / fer
+\definecolor{bobcol}{RGB}{170,120,40}       % cuivre / bobine
+\definecolor{coilcol}{RGB}{170,120,40}      % cuivre
+\definecolor{axisgray}{RGB}{100,100,110}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Loi (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  vectB/.style={->,>=Stealth,line width=1.3pt,Bcol},
+  vectI/.style={->,>=Stealth,line width=1.3pt,Icol},
+  vectF/.style={->,>=Stealth,line width=1.3pt,Fcol},
+  vectv/.style={->,>=Stealth,line width=1.3pt,vcol},
+  ligneB/.style={->,>=Stealth,line width=1.0pt,Bcol!85!black},
+  ptn/.style={circle,fill=black,inner sep=1.1pt},
+  sortie/.style={circle,fill=black,inner sep=0.6pt},   % vecteur sortant du plan
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11} — Électromagnétisme}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\Bvec}{\vec{B}}
+\newcommand{\Ivec}{\vec{I}}
+\newcommand{\Fvec}{\vec{F}}
+\newcommand{\vvec}{\vec{v}}
+\newcommand{\Svec}{\vec{S}}
+\newcommand{\Evec}{\vec{E}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Wb}{\,\mathrm{Wb}}
+\newcommand{\Tesla}{\,\mathrm{T}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Électromagnétisme}\\[5pt]
+   {\large\bfseries Aimants, champ magnétique, forces de Laplace et de Lorentz, induction}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,11}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : solénoïde, aimant, fil parcouru par I ---
+\begin{tikzpicture}[scale=0.95]
+  % ====== solénoïde à gauche ======
+  \begin{scope}[xshift=-4.6cm]
+    \foreach \y in {-1.4,-1.0,...,1.4}
+      {\draw[coilcol,line width=1pt] (-0.5,\y) .. controls (-0.15,\y+0.18) and (0.15,\y+0.18) .. (0.5,\y)
+            .. controls (0.15,\y-0.18) and (-0.15,\y-0.18) .. (-0.5,\y);}
+    \draw[fercol!50,fill=fercol!15,line width=0.7pt] (-0.06,-1.55) rectangle (0.06,1.55);
+    % lignes de champ sortant
+    \draw[ligneB,->] (0,1.6) .. controls (1.4,1.7) and (1.7,-1.7) .. (0,-1.6);
+    \draw[ligneB,->] (0,1.55) .. controls (1.1,1.5) and (1.3,-1.5) .. (0,-1.55);
+    \draw[vectB,line width=1.4pt] (-0.1,0) -- (1.3,0) node[right,black,font=\small]{$\Bvec$};
+    \node[Npcol,font=\bfseries] at (0.55,1.75) {N};
+    \node[Spcol,font=\bfseries] at (0.55,-1.75) {S};
+    \node[primarydark,font=\footnotesize] at (0,-2.25) {solénoïde};
+  \end{scope}
+
+  % ====== aimant en U au centre ======
+  \begin{scope}[xshift=0.6cm,yshift=0cm]
+    \fill[Npcol!80] (-1.3,-1.0) rectangle (-0.9,1.0);
+    \fill[Spcol!80] ( 0.9,-1.0) rectangle ( 1.3,1.0);
+    \fill[fercol!55] (-1.3,0.6) rectangle (1.3,1.0);
+    \fill[fercol!55] (-1.3,-1.0) rectangle (1.3,-0.6);
+    \node[white,font=\bfseries] at (-1.1,0) {N};
+    \node[white,font=\bfseries] at ( 1.1,0) {S};
+    % champ uniforme entre les branches
+    \foreach \y in {-0.3,0,0.3}{\draw[vectB,line width=1.1pt] (-0.82,\y) -- (0.82,\y);}
+    \node[primarydark,font=\footnotesize] at (0,-1.45) {aimant en U};
+  \end{scope}
+
+  % ====== fil rectiligne parcouru par I (sortant) à droite ======
+  \begin{scope}[xshift=4.9cm]
+    \draw[Icol,line width=2.2pt] (0,-1.3) -- (0,1.3);
+    \node[Icol,font=\Large\bfseries] at (0,0) {$\odot$};
+    \node[Icol,right,font=\footnotesize] at (0.12,0.7) {$I$};
+    % lignes circulaires autour
+    \foreach \r in {0.55,0.95,1.35}
+      {\draw[Bcol!75,line width=0.7pt,->,>=Stealth] (0,0)+(\r,0) arc (0:300:\r);}
+    \node[primarydark,font=\footnotesize] at (0,-1.7) {fil $\perp$ plan};
+  \end{scope}
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item décrire les \textbf{aimants} (pôles Nord/Sud, attraction/répulsion) et le \textbf{spectre}
+        de leurs lignes de champ ;
+  \item définir le \textbf{vecteur champ magnétique} $\Bvec$, son unité (le \textbf{tesla}) et appliquer
+        le \textbf{principe de superposition} ;
+  \item calculer le champ créé par un \textbf{fil rectiligne}, une \textbf{spire circulaire} et un
+        \textbf{solénoïde} (lois de Biot et Savart) ;
+  \item énoncer et appliquer la \textbf{loi de Laplace} (force sur un conducteur) et la
+        \textbf{loi de Lorentz} (force sur une particule chargée) ;
+  \item manipuler le \textbf{flux magnétique} et la \textbf{loi de Lenz--Faraday} ($e=-N\,\dd\phi/\dd t$) ;
+  \item prévoir le \textbf{sens du courant induit}, comprendre le principe d'un \textbf{alternateur}
+        et distinguer valeurs \emph{instantanée} et \emph{efficace} ;
+  \item interpréter les \textbf{courants de Foucault} et les dispositifs de limitation associés.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 11 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : du magnétisme à l'électromagnétisme}
+% =====================================================================
+Le mot « magnétisme » vient de \emph{Magnésie}, une région de Grèce antique où l'on trouvait
+abondamment une roche noire capable d'attirer de petits morceaux de fer : la \textbf{magnétite},
+un oxyde de fer de formule chimique $\mathrm{Fe_3O_4}$. Cette pierre fut la première manifestation
+naturelle connue du magnétisme : ce sont les \emph{aimants naturels}.
+
+Aujourd'hui, on utilise surtout des \textbf{aimants artificiels} (barreaux aimantés des laboratoires
+de chimie, aiguilles aimantées des boussoles, aimants permanents des haut-parleurs, etc.). Mais le
+phénomène physique sous-jacent est universel : il est \emph{produit par le mouvement des charges
+électriques}. Ce constat, établi au cours du \textsc{xix}\textsuperscript{e} siècle (Ørsted, Ampère,
+Faraday, Maxwell), unit en une seule discipline — l'\textbf{électromagnétisme} — l'électricité et le
+magnétisme, autrefois étudiés séparément.
+
+\begin{remarque}[le fil rouge de la fiche]
+Tout au long de ce cours, une seule idée doit rester présente :
+\begin{center}
+\fcolorbox{primary}{primary!5}{\parbox{0.86\linewidth}{\centering
+\textbf{Un courant électrique produit un champ magnétique, et un champ magnétique variable
+produit un courant électrique.}}}
+\end{center}
+La première proposition (courant $\Rightarrow$ champ) est l'objet des sections~3 et~4 ; la
+seconde (champ variable $\Rightarrow$ courant), l'objet de la section~5 sur l'\emph{induction}.
+\end{remarque}
+
+On retrouvera, comme pour la gravitation (Fiche~4) et l'électrostatique (Fiche~9), un schéma en
+trois temps :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt]
+  \item une \textbf{source} (aimant, courant, charge en mouvement) crée un \textbf{champ} $\Bvec$ ;
+  \item ce champ règne en tout point de l'espace environnant ;
+  \item il \textbf{agit} sur toute autre source qui s'y trouve (force de Laplace sur un conducteur,
+        force de Lorentz sur une particule, induction dans un circuit).
+\end{enumerate}
+
+% =====================================================================
+\section{Aimants et lignes de champ magnétique}
+% =====================================================================
+
+\subsection{Aimants, pôles Nord et Sud}
+
+\begin{definition}[aimant, pôles]
+Un \textbf{aimant} est un objet capable d'exercer, à distance, des forces attractives ou répulsives
+sur d'autres matériaux magnétiques (le fer, le cobalt, le nickel et certains alliages). Tout aimant
+possède \textbf{deux pôles}, notés \emph{Nord} (N) et \emph{Sud} (S), qu'il est
+\textbf{impossible d'isoler} : si l'on coupe un aimant en deux, on obtient \emph{deux nouveaux aimants},
+chacun avec un pôle Nord et un pôle Sud, jamais un pôle seul.
+\end{definition}
+
+\begin{theoreme}[loi d'interaction des pôles]
+\hfill
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Deux pôles de \textbf{noms contraires} (N et S) \textbf{s'attirent}.
+  \item Deux pôles de \textbf{mêmes noms} (N et N, ou S et S) \textbf{se repoussent}.
+\end{itemize}
+\end{theoreme}
+
+\begin{attention}[impossibilité d'isoler un pôle]
+Contrairement aux charges électriques \emph{positives} et \emph{négatives} que l'on peut séparer
+(électrostatique, Fiche~9), il n'existe pas de \emph{monopôle magnétique}. C'est une différence
+essentielle entre l'électricité et le magnétisme : tout fragment de matière magnétique comporte
+toujours \textbf{deux pôles indissociables}.
+\end{attention}
+
+\begin{remarque}[la Terre est un aimant]
+Notre planète se comporte elle-même comme un vaste aimant. Curieusement, le \emph{pôle Nord
+géographique} est proche du \emph{pôle Sud magnétique} de la Terre : c'est précisément parce qu'il
+\textbf{attire} le pôle Nord de l'aiguille d'une boussole que celle-ci s'oriente correctement.
+\end{remarque}
+
+\subsection{Spectre et lignes de champ magnétique}
+
+Pour visualiser le champ magnétique autour d'un aimant, on saupoudre de la \textbf{limaille de fer}
+sur une feuille placée au-dessus : chaque grain s'aimante et s'oriente \textbf{parallèlement} au
+champ $\Bvec$. L'ensemble dessine un réseau de lignes courbes : c'est le \textbf{spectre magnétique}.
+
+\begin{definition}[ligne de champ magnétique]
+Une \textbf{ligne de champ magnétique} est une courbe \emph{orientée} telle qu'en chacun de ses
+points le vecteur champ $\Bvec$ soit \textbf{tangent} à la courbe, dans le sens du vecteur.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % aimant droit
+  \fill[Npcol!80] (-1.6,-0.35) rectangle (0,0.35);
+  \fill[Spcol!80] ( 0  ,-0.35) rectangle (1.6,0.35);
+  \node[white,font=\bfseries] at (-0.8,0) {N};
+  \node[white,font=\bfseries] at ( 0.8,0) {S};
+  % lignes de champ (boucles fermées, du N au S à l'extérieur)
+  \foreach \s in {0.5,0.95,1.4}{
+    \draw[Bcol!75,line width=0.8pt,->,>=Stealth]
+        (-1.6,0.30) .. controls (-1.6-\s,0.5) and (1.6+\s,0.5) .. (1.6,0.30)
+        .. controls (1.6+\s*0.6,-0.5) and (-1.6-\s*0.6,-0.5) .. (-1.6,0.30);
+  }
+  % vecteur B sur une ligne supérieure
+  \draw[vectB,line width=1.5pt] (-0.2,1.18) -- (0.6,1.18);
+  \node[Bcol,font=\footnotesize] at (0.95,1.18) {$\Bvec$};
+  % sens : du N vers le S, à l'extérieur
+  \node[primarydark,font=\scriptsize] at (0,1.55) {à l'extérieur : du N vers le S};
+  \node[primarydark,font=\scriptsize] at (0,-1.55) {à l'intérieur : du S vers le N};
+  \draw[->,>=Stealth,gray,line width=0.6pt] (-0.6,-1.25) -- (0.6,-1.25);
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[propriétés des lignes de champ magnétique]
+\hfill
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Elles sont \textbf{orientées du pôle Nord vers le pôle Sud à l'extérieur} de l'aimant,
+        et du Sud vers le Nord \textbf{à l'intérieur} ;
+  \item Elles \textbf{forment des boucles fermées} (elles ne commencent ni ne finissent nulle part,
+        contrairement aux lignes du champ électrique, qui naissent sur les charges) ;
+  \item Plus les lignes sont \textbf{resserrées}, plus le champ est \textbf{intense} ; plus elles
+        s'écartent, plus il est faible ;
+  \item Elles \textbf{ne se coupent jamais}.
+\end{itemize}
+\end{theoreme}
+
+\subsection{Le vecteur champ magnétique $\Bvec$}
+
+Comme tout champ vectoriel, le champ magnétique est entièrement décrit par son vecteur $\Bvec$,
+caractérisé en chaque point par trois informations : une \textbf{direction}, un \textbf{sens}
+et une \textbf{intensité} (ou norme).
+
+\begin{definition}[vecteur champ magnétique]
+\hfill
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Direction} : tangente à la ligne de champ passant par le point ;
+  \item \textbf{Sens} : celui de la ligne de champ (du N vers le S à l'extérieur d'un aimant) ;
+  \item \textbf{Intensité} $B$ : elle dépend de la source et de la position du point.
+\end{itemize}
+\end{definition}
+
+\begin{formule}[unité de champ magnétique]
+L'unité SI du champ magnétique est le \textbf{tesla}, de symbole \textbf{T} :
+\[ 1\;\text{T} = 1\;\text{N}\,\text{A}^{-1}\,\text{m}^{-1} = 1\;\text{kg}\,\text{A}^{-1}\,\text{s}^{-2}. \]
+\begin{ou}
+  \item $B$ : intensité du champ magnétique, en \textbf{teslas} (\si{\tesla}) ;
+  \item ordre de grandeur : champ magnétique terrestre $B_{\text{Terre}}\approx\SI{e-5}{\tesla}$
+        (\SI{10}{\micro\tesla}) ; un aimant de labo $\sim\SI{e-1}{\tesla}$ ;
+        un aimant au néodyme $\sim\SI{1}{\tesla}$ ; une IRM $\sim\SI{e0}{\tesla}$ à \SI{10}{\tesla}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[champ uniforme]
+Un champ magnétique est dit \textbf{uniforme} lorsque, en tout point d'une région de l'espace, le
+vecteur $\Bvec$ garde les \emph{mêmes} direction, sens et intensité. Visuellement, cela se traduit
+par des \textbf{lignes de champ parallèles} et \emph{également espacées}. C'est ce que l'on trouve
+entre les deux branches d'un aimant en U.
+\end{remarque}
+
+\subsection{Principe de superposition}
+
+\begin{theoreme}[superposition des champs magnétiques]
+Lorsque plusieurs sources créent chacune un champ magnétique en un même point $M$, le champ
+\textbf{résultant} est la \textbf{somme vectorielle} des champs individuels :
+\[ \boxed{\,\Bvec_{\text{total}}(M) = \sum_{i} \Bvec_i(M)\,}. \]
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % deux aimants
+  \fill[Npcol!80] (-3.6,0.9) rectangle (-2.4,1.4);
+  \fill[Spcol!80] (-2.4,0.9) rectangle (-1.2,1.4);
+  \node[white,font=\bfseries\footnotesize] at (-3.0,1.15) {N};
+  \node[white,font=\bfseries\footnotesize] at (-1.8,1.15) {S};
+  \node[primarydark,font=\scriptsize] at (-2.4,1.75) {$A_1$};
+  \fill[Npcol!80] (-3.6,-1.4) rectangle (-2.4,-0.9);
+  \fill[Spcol!80] (-2.4,-1.4) rectangle (-1.2,-0.9);
+  \node[white,font=\bfseries\footnotesize] at (-3.0,-1.15) {N};
+  \node[white,font=\bfseries\footnotesize] at (-1.8,-1.15) {S};
+  \node[primarydark,font=\scriptsize] at (-2.4,-1.75) {$A_2$};
+  % point M
+  \fill[black] (1.4,0) circle (1.6pt);
+  \node[above right,font=\footnotesize] at (1.4,0) {$M$};
+  % contributions
+  \draw[vectB,line width=1.6pt] (1.4,0) -- (2.6,0.9)
+        node[above right,black,font=\footnotesize]{$\Bvec_{A_1}$};
+  \draw[vectB,line width=1.6pt] (1.4,0) -- (2.6,-0.9)
+        node[below right,black,font=\footnotesize]{$\Bvec_{A_2}$};
+  \draw[vectF,line width=1.8pt] (1.4,0) -- (3.6,0)
+        node[above right,black,font=\footnotesize]{$\Bvec_{\text{total}}$};
+  % construction pointillée
+  \draw[gray,dashed,line width=0.6pt] (2.6,0.9) -- (3.6,0);
+  \draw[gray,dashed,line width=0.6pt] (2.6,-0.9) -- (3.6,0);
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[champ résultant de deux aimants perpendiculaires]
+Deux aimants identiques créent au point $M$ deux champs $\Bvec_{A_1}$ et $\Bvec_{A_2}$ d'égale
+intensité $B$ mais de \textbf{directions perpendiculaires}. Quelle est l'intensité du champ total ?
+
+\smallskip
+\textbf{Analyse.} Comme les deux vecteurs sont orthogonaux, on ne peut pas se contenter d'ajouter
+leurs normes : il faut construire la diagonale du \emph{rectangle} qu'ils forment (c'est le théorème
+de Pythagore). La direction du champ résultant est la diagonale, son intensité est
+\[ B_{\text{total}} = \sqrt{B_{A_1}^{\,2}+B_{A_2}^{\,2}} = \sqrt{B^2+B^2} = B\sqrt{2}. \]
+
+\textbf{Application numérique.} Si $B=\SI{2e-4}{\tesla}$ (\SI{200}{\micro\tesla}, soit vingt fois le
+champ terrestre), alors
+\[ B_{\text{total}} = \num{2e-4}\times\sqrt{2}\approx \SI{2.83e-4}{\tesla}. \]
+\textbf{Angle.} Le champ total fait avec $\Bvec_{A_1}$ un angle
+$\tan\theta = B_{A_2}/B_{A_1}=1$, soit $\theta=45^\circ$ : la résultante est exactement la
+\textbf{bissectrice} de l'angle droit, comme on s'y attend pour deux vecteurs de même norme.
+
+\textbf{À retenir.} La \emph{superposition} est une somme \textbf{vectorielle} : deux champs
+\emph{opposés} s'annulent ($B_{\text{total}}=0$), deux champs \emph{orthogonaux} donnent une
+résultante « entre les deux », et deux champs \emph{alignés} et de même sens s'ajoutent simplement.
+\end{exemple}
+
+% =====================================================================
+\section{Champs magnétiques créés par les courants}
+% =====================================================================
+
+\subsection{La découverte d'Ørsted : un courant dévie la boussole}
+
+En 1820, le Danois Hans Christian \textsc{Ørsted} observe qu'une aiguille aimantée placée près d'un
+fil conducteur se \textbf{dévie brusquement} dès qu'un courant parcourt le fil. Première preuve
+directe que \textbf{l'électricité produit du magnétisme} : c'est l'acte de naissance de
+l'électromagnétisme.
+
+\subsection{Fil conducteur rectiligne : loi de Biot et Savart}
+
+Lorsqu'un courant d'intensité $I$ parcourt un fil rectiligne infini, il crée autour de lui un champ
+magnétique dont les \textbf{lignes de champ sont des cercles concentriques} centrés sur le fil, dans
+des plans perpendiculaires au fil.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % fil vu en perspective : un segment vertical et un cercle autour
+  \draw[Icol,line width=2.4pt] (0,-1.6) -- (0,1.6);
+  \draw[Icol,->,>=Stealth,line width=1pt] (0,0.7) -- (0,1.2);
+  \node[Icol,right,font=\footnotesize] at (0.08,1.0) {$I$};
+  % lignes circulaires de champ
+  \foreach \r in {0.8,1.25,1.7}{
+    \draw[Bcol!75,line width=0.9pt] (0,0) circle (\r);
+    \draw[Bcol!75,line width=0.9pt,->,>=Stealth] (\r,0.001) arc (0.001:40:\r);
+  }
+  % point M et vecteur B
+  \fill[black] (1.25,0) circle (1.4pt);
+  \node[below,font=\footnotesize] at (1.25,-0.05) {$M$};
+  \draw[vectB,line width=1.6pt] (1.25,0) -- (1.25,0.9)
+        node[right,black,font=\footnotesize]{$\Bvec$};
+  % distance d
+  \draw[<->,>=Stealth,gray,line width=0.6pt] (0,-0.85) -- (1.25,-0.85);
+  \node[gray,below,font=\footnotesize] at (0.6,-0.88) {$d$};
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[loi de Biot et Savart — fil rectiligne]
+L'intensité du champ magnétique créé à la distance $d$ d'un fil rectiligne parcouru par un courant
+constant $I$ vaut, dans le vide :
+\[ \boxed{\,B = \dfrac{\mu_0\, I}{2\pi\, d} = \dfrac{2\cdot 10^{-7}\, I}{d}\,} \qquad\text{(loi de Biot et Savart).} \]
+\begin{ou}
+  \item $B$ : intensité du champ magnétique, en \textbf{teslas} (\si{\tesla}) ;
+  \item $\mu_0 = 4\pi\times 10^{-7}$ : \textbf{perméabilité magnétique du vide}, en
+        $\si{\tesla\metre\per\ampere}$ (ou \si{\henry\per\metre}) ;
+  \item $I$ : intensité du courant dans le fil, en \textbf{ampères} (\si{\ampere}) ;
+  \item $d$ : distance (orthogonale) du point au fil, en \textbf{mètres} (\si{\metre}).
+\end{ou}
+\end{formule}
+
+\begin{methode}[déterminer le SENS de $\Bvec$ autour d'un fil]
+Deux règles équivalentes :
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Règle du tire-bouchon} : on tourne le tire-bouchon dans le sens de $I$ ; il
+        « s'enfonce » dans le sens de $\Bvec$.
+  \item \textbf{Règle de la main droite} : on prend le fil dans la main droite, le pouce pointé
+        \emph{dans le sens du courant} $I$ ; les doigts \emph{courbés} donnent le sens des lignes
+        de champ, donc de $\Bvec$.
+\end{enumerate}
+\end{methode}
+
+\begin{attention}[le sens dépend du sens de $I$]
+Si l'on \emph{inverse} le sens du courant, \emph{toutes} les lignes de champ changent de sens :
+le champ $\Bvec$ change de signe en chaque point. C'est l'une des principales différences entre le
+magnétisme (polarisé par le sens de $I$) et la gravitation (toujours attractive).
+\end{attention}
+
+\begin{exemple}[champ créé par un fil de ligne électrique]
+Une ligne électrique transporte un courant continu $I=\SI{100}{\ampere}$. À quelle distance $d$
+l'intensité du champ magnétique atteint-elle la valeur du champ magnétique terrestre
+$B_T \approx \SI{5e-5}{\tesla}$ ?
+
+\smallskip
+\textbf{Mise en équation.} On isole $d$ dans la loi de Biot et Savart :
+\[ d = \dfrac{\mu_0\, I}{2\pi\, B_T} = \dfrac{2\cdot 10^{-7}\times I}{B_T}. \]
+
+\textbf{Application numérique.}
+\[ d = \dfrac{2\cdot 10^{-7}\times 100}{5\cdot 10^{-5}}
+     = \dfrac{2\cdot 10^{-5}}{5\cdot 10^{-5}} = 0{,}4\;\text{m} = \SI{40}{\centi\metre}. \]
+
+\textbf{Interprétation.} À \SI{40}{\centi\metre} du fil, le champ dû à la ligne \emph{équivaut} au
+champ terrestre ; plus près il est plus intense, plus loin il décroît en $1/d$. Cette décroissance
+lente explique pourquoi les lignes à haute tension sont placées très haut : à \SI{30}{\metre} sous
+une telle ligne, le champ n'est plus que
+\[ B = \dfrac{2\cdot 10^{-7}\times 100}{30} \approx \SI{6.7e-7}{\tesla}, \]
+soit environ \SI{0{,}7}{\micro\tesla} : comparable à une fraction du champ terrestre, sans danger.
+
+\textbf{À retenir.} Le champ d'un fil rectiligne \emph{décroît en $1/d$} : doubler la distance
+divise le champ par deux.
+\end{exemple}
+
+\subsection{Spire circulaire}
+
+Lorsque le fil est refermé sur lui-même en un cercle de rayon $r$, les lignes de champ \emph{entrent
+par une face} de la spire et \emph{sortent par l'autre}. La spire se comporte ainsi comme un petit
+aimant avec une face Nord et une face Sud.
+
+\begin{formule}[champ au centre d'une spire circulaire]
+Au centre d'une spire circulaire de rayon $r$ parcourue par un courant $I$, le champ s'écrit
+\[ \boxed{\,B = \dfrac{\mu\, I}{2\, r}\,}. \]
+Dans le vide, $\mu=\mu_0=4\pi\times 10^{-7}$, soit
+$B = \dfrac{2\pi\times 10^{-7}\, I}{r}$.
+Si la bobine comporte $N$ spires jointives de même rayon, les champs s'ajoutent :
+$B = N\,\dfrac{\mu\, I}{2\, r}$.
+\begin{ou}
+  \item $B$ : champ magnétique au centre, en \textbf{teslas} (\si{\tesla}) ;
+  \item $\mu$ : perméabilité magnétique du milieu, en $\si{\tesla\metre\per\ampere}$ ;
+  \item $I$ : courant, en \textbf{ampères} (\si{\ampere}) ;
+  \item $r$ : rayon de la spire, en \textbf{mètres} (\si{\metre}) ;
+  \item $N$ : nombre de spires (sans dimension).
+\end{ou}
+\end{formule}
+
+\begin{methode}[sens de $\Bvec$ dans une spire : pouce $=$ champ]
+On applique la \textbf{règle de la main droite} version « spire » : on saisit la spire avec la main
+droite de telle sorte que les doigts soient \emph{courbés dans le sens du courant} ; le \textbf{pouce}
+indique alors le sens du champ $\Bvec$ à l'intérieur de la spire, c'est-à-dire le côté de la face
+\textbf{Nord}.
+\end{methode}
+
+\subsection{Solénoïde (bobine longue)}
+
+Un \textbf{solénoïde} est obtenu en enroulant un fil conducteur sur un cylindre de façon à ce que les
+spires soient \textbf{jointives}. Il peut être vu comme une succession de spires circulaires
+perpendiculaires à l'axe du cylindre.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % cylindre (deux ellipses)
+  \draw[fercol!50,fill=fercol!8] (-3,0.55) ellipse [x radius=0.35, y radius=0.55];
+  \draw[fercol!50] (-3,-0.55) -- (3,-0.55);
+  \draw[fercol!50] ( 3, 0.55) -- (-3,0.55);
+  \draw[fercol!50,fill=fercol!8] (3,0) ellipse [x radius=0.35, y radius=0.55];
+  % spires
+  \foreach \x in {-2.7,-2.4,...,2.7}{
+     \draw[coilcol,line width=0.9pt] (\x,0.55) .. controls (\x+0.08,0) and (\x+0.16,0) .. (\x+0.08,-0.55);
+  }
+  % axe et champ interne uniforme
+  \draw[gray,dash pattern=on 3pt off 2pt] (-3.8,0) -- (3.8,0);
+  \foreach \y in {-0.25,0,0.25}{
+     \draw[vectB,line width=1.4pt] (-2.3,\y) -- (2.3,\y);}
+  % pôles
+  \node[Npcol,font=\bfseries] at (3.35,0) {N};
+  \node[Spcol,font=\bfseries] at (-3.35,0) {S};
+  % lignes externes
+  \draw[ligneB,->] (3.05,0.5) .. controls (4.0,1.2) and (-4.0,1.2) .. (-3.05,0.5);
+  \draw[ligneB,->] (3.05,-0.5) .. controls (4.0,-1.2) and (-4.0,-1.2) .. (-3.05,-0.5);
+  % grandeur L
+  \draw[<->,>=Stealth,gray,line width=0.6pt] (-3,-1.05) -- (3,-1.05);
+  \node[gray,below,font=\footnotesize] at (0,-1.08) {longueur $L$};
+  % courant d'alimentation
+  \draw[Icol,->,>=Stealth,line width=1pt] (-3.5,-0.55) -- (-3.3,-0.55);
+  \node[Icol,font=\footnotesize] at (-3.8,-0.85) {$I$};
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[propriétés du solénoïde]
+\hfill
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item À l'\textbf{intérieur}, le champ est \textbf{uniforme} : les lignes de champ sont
+        \textbf{parallèles} à l'axe du cylindre ;
+  \item À l'\textbf{extérieur}, le spectre est identique à celui d'un aimant droit : le solénoïde
+        possède une face Nord (par où les lignes sortent) et une face Sud (par où elles entrent) ;
+  \item Le champ est d'autant plus \textbf{intense} que l'on a plus de spires par unité de longueur
+        ($N/L$) et que le courant $I$ est plus fort.
+\end{itemize}
+\end{theoreme}
+
+\begin{formule}[champ dans un solénoïde]
+À l'intérieur d'un solénoïde long de $N$ spires, de longueur $L$, parcouru par un courant $I$,
+le champ (dans le vide) vaut
+\[ \boxed{\,B = \dfrac{\mu_0\, N\, I}{L} = \dfrac{4\pi\times 10^{-7}\, N\, I}{L}\,}. \]
+\begin{ou}
+  \item $B$ : intensité du champ à l'intérieur, en \textbf{teslas} (\si{\tesla}) ;
+  \item $\mu_0 = 4\pi\times 10^{-7}$ : perméabilité magnétique du vide
+        ($\si{\tesla\metre\per\ampere}$) ;
+  \item $N$ : nombre total de spires (sans dimension) ;
+  \item $I$ : courant, en \textbf{ampères} (\si{\ampere}) ;
+  \item $L$ : longueur du solénoïde, en \textbf{mètres} (\si{\metre}).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[le noyau de fer : les électroaimants]
+Si l'on glisse un \textbf{noyau de fer} à l'intérieur du solénoïde, le champ est considérablement
+\textbf{renforcé} (jusqu'à des milliers de fois). Le fer est dit « \emph{doux} » : il s'aimante
+sous l'effet de $B$ mais perd cette aimantation dès que le courant est coupé. C'est le principe des
+\textbf{électroaimants} — qui soulèvent des charges métalliques dans les décharges, actionnent les
+sonnettes électriques, font claquer les disjoncteurs, font vibrer la membrane des haut-parleurs, etc.
+\end{remarque}
+
+\begin{exemple}[comparaison de deux bobines, d'après le QCM n\textsuperscript{o}3]
+Deux bobines (1) et (2) sont parcourues par les courants $I_1$ et $I_2$. On donne
+$L_1=\SI{4}{\centi\metre}$, $N_1=100$ ; $L_2=\SI{6}{\centi\metre}$, $N_2=150$. Quel doit être le
+rapport $I_1/I_2$ pour que les champs internes soient égaux ?
+
+\smallskip
+\textbf{Stratégie.} On écrit les deux champs, on écrit $B_1=B_2$, et on isole le rapport des courants.
+Le facteur $\mu_0$ est identique des deux côtés : il se \textbf{simplifie}, ce qui est une excellente
+vérification de cohérence.
+
+\smallskip
+\textbf{Calcul.}
+\[ B_1 = \dfrac{\mu_0 N_1 I_1}{L_1},\qquad B_2 = \dfrac{\mu_0 N_2 I_2}{L_2}. \]
+La condition $B_1=B_2$ donne
+\[ \dfrac{N_1 I_1}{L_1} = \dfrac{N_2 I_2}{L_2}
+   \;\Longrightarrow\;
+   \dfrac{I_1}{I_2} = \dfrac{N_2\, L_1}{N_1\, L_2}. \]
+\textbf{Application numérique.}
+\[ \dfrac{I_1}{I_2} = \dfrac{150\times 4}{100\times 6} = \dfrac{600}{600} = 1. \]
+Les courants doivent être \emph{identiques} : les deux bobines ont en effet la \emph{même densité
+linéique de spires} ($N/L = \SI{2500}{\per\metre}$). Conclusion : \textbf{c'est le rapport $N/L$
+qui pilote le champ}, pas $N$ ou $L$ séparément.
+\end{exemple}
+
+% =====================================================================
+\section{Forces électromagnétiques}
+% =====================================================================
+
+\subsection{Loi de Laplace : force sur un conducteur}
+
+\begin{definition}[force électromagnétique de Laplace]
+Un conducteur parcouru par un courant électrique et plongé dans un champ magnétique subit une force
+$\Fvec$, dite \textbf{force de Laplace}. C'est elle qui fait tourner les moteurs électriques.
+\end{definition}
+
+\begin{theoreme}[loi de Laplace]
+L'intensité de la force de Laplace exercée sur un conducteur rectiligne de longueur $L$, parcouru
+par un courant $I$ et placé dans un champ $\Bvec$ uniforme vaut
+\[ \boxed{\,F = B\, I\, L\, \sin\theta\,} \qquad\text{(en newtons).} \]
+\begin{ou}
+  \item $F$ : intensité de la force de Laplace, en \textbf{newtons} (\si{\newton}) ;
+  \item $B$ : intensité du champ magnétique, en \textbf{teslas} (\si{\tesla}) ;
+  \item $I$ : intensité du courant dans le conducteur, en \textbf{ampères} (\si{\ampere}) ;
+  \item $L$ : longueur du conducteur \emph{effectivement plongée dans le champ}, en \textbf{mètres}
+        (\si{\metre}) ;
+  \item $\theta$ : angle entre la \textbf{direction du conducteur} (donc de $I$) et le vecteur $\Bvec$.
+\end{ou}
+\end{theoreme}
+
+\begin{methode}[règle de la main droite « trois doigts », dite règle de Fleming]
+Pour prévoir la \textbf{direction et le sens} de la force de Laplace, on dispose la main droite
+perpendiculairement au plan du conducteur et de $\Bvec$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item le \textbf{pouce} tendu indique le sens du \textbf{courant} $I$ ;
+  \item l'\textbf{index} tendu indique le sens du champ $\Bvec$ ;
+  \item le \textbf{majeur} replié à angle droit indique le sens de la \textbf{force} $\Fvec$.
+\end{itemize}
+Les trois vecteurs $\Fvec$, $\Bvec$ et le conducteur sont donc deux à deux perpendiculaires.
+\end{methode}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % conducteur horizontal parcouru par I (vers la droite)
+  \draw[->,>=Stealth,Icol,line width=2.2pt] (-2.6,0) -- (2.6,0);
+  \node[Icol,above,font=\footnotesize] at (2.4,0.05) {$I$};
+  % champ B vertical vers le haut => I et B perpendiculaires
+  \draw[vectB,line width=1.6pt] (0.7,-1.4) -- (0.7,1.4);
+  \node[Bcol,above,font=\footnotesize] at (0.7,1.45) {$\Bvec$};
+  % F sort du plan (produit vectoriel I^B = +z) : cercle pointé
+  \draw[Fcol,line width=1.6pt] (-0.7,0) circle (0.20);
+  \fill[Fcol] (-0.7,0) circle (0.06);
+  \node[Fcol,left,font=\footnotesize] at (-1.0,0.30) {$\Fvec$ (sort du plan)};
+  % angle theta = 90° entre I et B
+  \draw[black!70,line width=0.7pt] (1.25,0) arc (90:45:0.55);
+  \draw[black!70,line width=0.7pt] (0.7,0.55) arc (90:0:0.55);
+  \node[font=\footnotesize] at (1.05,0.85) {$\theta=\tfrac{\pi}{2}$};
+  % longueur L du conducteur plongé dans le champ
+  \draw[<->,>=Stealth,gray,line width=0.6pt] (-2.6,-0.45) -- (2.6,-0.45);
+  \node[gray,below,font=\footnotesize] at (0,-0.50) {$L$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}[convention « entrant / sortant du plan »]
+Sur une feuille (un plan), un vecteur \textbf{perpendiculaire au plan} se représente par :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item un cercle avec un \textbf{point} au centre $\odot$ : le vecteur \textbf{sort} de la feuille
+        (on voit la pointe de la flèche) ;
+  \item un cercle avec une \textbf{croix} $\otimes$ : le vecteur \textbf{entre} dans la feuille
+        (on voit l'empennage de la flèche).
+\end{itemize}
+Cette convention est omniprésente en électromagnétisme (lignes de champ $\perp$ à la figure,
+force $\Fvec$ hors du plan, etc.).
+\end{remarque}
+
+\subsubsection{Étude des trois cas particuliers}
+
+\begin{theoreme}[cas 1 : conducteur $\perp$ lignes de champ]
+Si le conducteur est \textbf{perpendiculaire} aux lignes de champ ($\theta=90^\circ=\pi/2$), la
+force est \textbf{maximale} :
+\[ F = B\, I\, L\,\sin\dfrac{\pi}{2} = B\, I\, L. \]
+Le conducteur se met en mouvement \textbf{perpendiculairement} au plan formé par $I$ et $\Bvec$.
+\end{theoreme}
+
+\begin{theoreme}[cas 2 : conducteur $\parallel$ lignes de champ]
+Si le conducteur est \textbf{parallèle} aux lignes de champ ($\theta=0$ ou $\pi$), la force est
+\textbf{nulle} :
+\[ F = B\, I\, L\,\sin 0^\circ = 0\;\text{N}. \]
+Le conducteur ne subit \textbf{aucune} force électromagnétique : il reste immobile.
+\end{theoreme}
+
+\begin{theoreme}[cas 3 : interaction entre deux fils parallèles]
+Deux conducteurs rectilignes parallèles, parcourus par des courants $I_1$ et $I_2$ et distants de
+$d$, exercent l'un sur l'autre une force \textbf{par unité de longueur}
+\[ \boxed{\,\dfrac{F}{L} = \dfrac{\mu_0\, I_1\, I_2}{2\pi\, d}\,}. \]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Si $I_1$ et $I_2$ circulent dans le \textbf{même sens} : les fils \textbf{s'attirent} ;
+  \item Si $I_1$ et $I_2$ sont de \textbf{sens contraires} : les fils \textbf{se repoussent}.
+\end{itemize}
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % deux fils vus « de dessus » : courant sortant du plan
+  \foreach \x/\lbl in {0/1, 2.4/2}{
+    \draw[Icol,line width=2pt] (\x,0) circle (0.10);
+    \fill[Icol] (\x,0) circle (0.03);
+    \node[Icol,above,font=\footnotesize] at (\x,0.2) {$I_{\lbl}$};
+    \node[primarydark,below,font=\footnotesize] at (\x,-0.25) {(\lbl)};
+  }
+  % champ B1 créé par fil 1, au point fil 2 (à droite de fil 1) : vers le haut
+  \draw[vectB,line width=1.4pt] (2.4,0) -- (2.4,1.0);
+  \node[Bcol,right,font=\footnotesize] at (2.4,1.0) {$\Bvec_1$};
+  % force sur le fil 2, vers fil 1
+  \draw[vectF,line width=1.6pt] (2.4,0) -- (1.2,0);
+  \node[Fcol,above,font=\footnotesize] at (1.8,0.05) {$\Fvec_{1\to 2}$};
+  % force sur fil 1
+  \draw[vectF,line width=1.6pt] (0,0) -- (1.2,0);
+  \node[Fcol,above,font=\footnotesize] at (0.6,0.05) {$\Fvec_{2\to 1}$};
+  % distance d
+  \draw[<->,>=Stealth,gray,line width=0.6pt] (0,-0.9) -- (2.4,-0.9);
+  \node[gray,below,font=\footnotesize] at (1.2,-0.92) {$d$};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[deux fils en attraction]
+Deux fils verticaux parallèles, distants de $d=\SI{2}{\centi\metre}$, sont parcourus par un même
+courant $I=\SI{5}{\ampere}$ dans le même sens. Quelle est la force d'attraction par mètre de fil ?
+
+\smallskip
+\textbf{Données.} $\mu_0=4\pi\times 10^{-7}$, $I_1=I_2=\SI{5}{\ampere}$, $d=\SI{0.02}{\metre}$.
+
+\textbf{Calcul.}
+\[ \dfrac{F}{L} = \dfrac{\mu_0\, I^2}{2\pi\, d}
+   = \dfrac{4\pi\times 10^{-7}\times 5^2}{2\pi\times 0{,}02}
+   = \dfrac{2\times 10^{-7}\times 25}{0{,}02}
+   = \dfrac{5\cdot 10^{-6}}{2\cdot 10^{-2}}
+   = \SI{2.5e-4}{\newton\per\metre}. \]
+
+\textbf{Interprétation.} La force est très petite ($\sim\SI{250}{\micro\newton}$ par mètre) —
+insuffisante pour qu'on la voie à l'œil sur des fils rigides. Mais elle devient \emph{dangereuse}
+dans les bobines des électroaimants ou des transformateurs où elle peut tordre ou écraser les
+enroulements : c'est la « \emph{force électrodynamique} » que les constructeurs doivent dimensionner.
+
+\textbf{Déduction du sens.} Au niveau du fil 2, le champ $\Bvec_1$ créé par le fil 1 pointe vers le
+haut (règle de la main droite). Avec $I_2$ sortant du plan et $\Bvec_1$ vers le haut, la force de
+Laplace $\Fvec_{1\to 2}$ pointe vers le fil 1 : attraction. Si l'un des courants change de sens,
+toutes les forces s'inversent : répulsion.
+\end{exemple}
+
+\subsection{Loi de Lorentz : force sur une particule chargée}
+
+\begin{definition}[force de Lorentz]
+Lorsqu'une particule de charge $q$ se déplace à la vitesse $\vvec$ dans un champ magnétique $\Bvec$,
+elle subit une force \textbf{magnétique} appelée \textbf{force de Lorentz}.
+\end{definition}
+
+\begin{formule}[loi de Lorentz]
+L'intensité de la force de Lorentz s'écrit
+\[ \boxed{\,F = B\, |q|\, v\, \sin\alpha\,} \qquad\text{(en newtons),} \]
+où $\alpha$ est l'angle entre $\Bvec$ et $\vvec$.
+\begin{ou}
+  \item $F$ : intensité de la force magnétique, en \textbf{newtons} (\si{\newton}) ;
+  \item $B$ : champ magnétique, en \textbf{teslas} (\si{\tesla}) ;
+  \item $|q|$ : valeur absolue de la charge de la particule, en \textbf{coulombs} (\si{\coulomb}) ;
+  \item $v$ : vitesse de la particule, en \textbf{mètres par seconde} (\si{\metre\per\second}) ;
+  \item $\alpha$ : angle entre $\Bvec$ et $\vvec$.
+\end{ou}
+\end{formule}
+
+\begin{attention}[trois pièges sur la force de Lorentz]
+\hfill
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Si la particule est \textbf{neutre} ($q=0$) ou \textbf{immobile} ($v=0$), la force est
+        \textbf{nulle} : un neutron, même en mouvement, ne « sent » pas $\Bvec$.
+  \item Si $\vvec \parallel \Bvec$ ($\alpha=0$ ou $\pi$), la force est \textbf{nulle} : la particule
+        n'est pas déviée.
+  \item Si $q<0$ (électron, ion négatif), le \textbf{sens} de $\Fvec$ est \textbf{opposé} à celui
+        donné par la règle de la main droite : on l'applique alors avec la main \emph{gauche}, ou
+        on inverse à la fin.
+\end{itemize}
+\end{attention}
+
+\begin{theoreme}[propriété fondamentale de la force de Lorentz]
+La force magnétique $\Fvec$ est \textbf{toujours perpendiculaire} à la vitesse $\vvec$. Elle ne
+\textbf{travaille donc jamais} : elle modifie la \emph{direction} du mouvement, mais pas son
+\emph{énergie cinétique}. Une particule chargée dans un champ $\Bvec$ uniforme décrit donc un
+\textbf{mouvement circulaire uniforme} (si $\vvec\perp\Bvec$), sans changer de vitesse.
+\end{theoreme}
+
+\begin{formule}[rayon de la trajectoire circulaire]
+Dans un champ $\Bvec$ uniforme avec $\vvec\perp\Bvec$, la particule décrit un cercle de rayon
+\[ \boxed{\,R = \dfrac{m\, v}{|q|\, B}\,}. \]
+\begin{ou}
+  \item $R$ : rayon de la trajectoire, en \textbf{mètres} (\si{\metre}) ;
+  \item $m$ : masse de la particule, en \textbf{kilogrammes} (\si{\kilogram}) ;
+  \item $v$ : vitesse, en \textbf{mètres par seconde} (\si{\metre\per\second}) ;
+  \item $|q|$ : charge, en \textbf{coulombs} (\si{\coulomb}) ;
+  \item $B$ : champ, en \textbf{teslas} (\si{\tesla}).
+\end{ou}
+\textit{Démonstration :} la force de Lorentz $F=|q|\,v\,B$ fournit l'accélération centripète
+nécessaire au mouvement circulaire, $F=m\,v^2/R$. En égalant : $|q|vB = mv^2/R$, d'où le résultat.
+\end{formule}
+
+\begin{exemple}[proton dans un champ magnétique, d'après le QCM n\textsuperscript{o}10]
+Un proton (charge $q=+e=\SI{1.6e-19}{\coulomb}$) est lancé avec une vitesse $v=\SI{1e7}{\metre\per\second}$
+perpendiculairement à un champ uniforme $B=\SI{2}{\tesla}$.
+
+\smallskip
+\textbf{(a) Intensité de la force de Lorentz.}
+\[ F = B\,|q|\,v\,\sin 90^\circ = 2\times 1{,}6\cdot 10^{-19}\times 10^{7}
+     = \boxed{\,\SI{3.2e-12}{\newton}\,}. \]
+\textbf{(b) Rayon de la trajectoire.} La masse du proton est $m_p\approx\SI{1.67e-27}{\kilogram}$ :
+\[ R = \dfrac{m_p\, v}{|q|\, B}
+     = \dfrac{1{,}67\cdot 10^{-27}\times 10^7}{1{,}6\cdot 10^{-19}\times 2}
+     \approx \SI{5.2e-2}{\metre} \approx \SI{5.2}{\centi\metre}. \]
+Le proton décrit un cercle de $\sim\SI{5}{\centi\metre}$ de rayon.
+
+\textbf{(c) Que se passe-t-il si l'on double la vitesse ?} $F$ est \emph{doublée} (linéaire en $v$),
+pas quadruplée : l'affirmation « la force est quadruplée » est \textbf{fausse}. En revanche, le rayon
+$R\propto v$ est doublé : la particule fait un cercle deux fois plus grand.
+
+\textbf{(d) Que se passe-t-il si l'on double $B$ ?} La force double et le rayon est \emph{divisé par
+deux}. Mais l'énergie cinétique $\tfrac12 m v^2$ reste \textbf{constante} : la force magnétique ne
+travaille pas, donc la valeur de la vitesse ne change jamais.
+
+\textbf{À retenir.} Trois affirmations simples sur une particule chargée dans $\Bvec$ uniforme :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item elle est \textbf{toujours déviée} (sauf si $v\parallel B$) ;
+  \item sa \textbf{vitesse} (en norme) est \textbf{constante} ;
+  \item sa \textbf{trajectoire} est un cercle de rayon $R=mv/(|q|B)$ si $v\perp B$, une hélice sinon.
+\end{itemize}
+\end{exemple}
+
+\subsection{Compensation des forces électrique et magnétique : le sélecteur de vitesse}
+
+Lorsqu'un conducteur rectiligne se déplace à la vitesse $\vvec$ dans un champ $\Bvec$ uniforme, les
+charges libres qu'il contient subissent une force de Lorentz. Très vite, elles s'accumulent à une
+extrémité, créant un champ électrique $\Evec$ qui \textbf{s'oppose} à leur mouvement. À l'équilibre,
+force électrique et force magnétique se compensent :
+
+\begin{formule}[équilibre force électrique $=$ force magnétique]
+\[ \underbrace{q\, E}_{\text{force électrique}} = \underbrace{q\, v\, B}_{\text{force magnétique}}
+   \;\Longrightarrow\; \boxed{\,v = \dfrac{E}{B} = \dfrac{U}{L\, B}\,} \]
+\begin{ou}
+  \item $v$ : vitesse d'entraînement, en \textbf{mètres par seconde} (\si{\metre\per\second}) ;
+  \item $E$ : champ électrique apparu entre les extrémités, en \si{\volt\per\metre} ;
+  \item $B$ : champ magnétique, en \si{\tesla} ;
+  \item $U=E\,L$ : différence de potentiel (tension) entre les extrémités du conducteur, en
+        \textbf{volts} (\si{\volt}) ;
+  \item $L$ : longueur utile du conducteur, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[sélecteur de vitesse]
+Entre deux plaques parallèles horizontales distantes de $d=\SI{1}{\centi\metre}$, on impose une
+différence de potentiel $U=\SI{200}{\volt}$ et, perpendiculairement, un champ magnétique
+$B=\SI{0.1}{\tesla}$. Un faisceau d'électrons, lancé entre les plaques, n'est dévié que pour une
+certaine vitesse $v$ : laquelle ?
+
+\smallskip
+\textbf{Analyse.} On applique l'égalité des forces :
+\[ v = \dfrac{U}{d\, B} = \dfrac{200}{0{,}01\times 0{,}1} = \dfrac{200}{10^{-3}} = \SI{2e5}{\metre\per\second}. \]
+Tous les électrons \textbf{plus lents} sont déviés par la force électrique dominante ; tous les
+\textbf{plus rapides}, par la force magnétique dominante. Seuls ceux dont la vitesse vaut exactement
+$\SI{2e5}{\metre\per\second}$ ressortent en ligne droite : le dispositif « sélectionne » la vitesse.
+C'est le principe des \textbf{spectromètres de masse}, qui séparent les ions selon leur charge et
+leur masse en jouant sur $v$ et $B$.
+\end{exemple}
+
+% =====================================================================
+\section{Induction électromagnétique}
+% =====================================================================
+
+\subsection{Flux magnétique}
+
+\begin{definition}[flux magnétique]
+Le \textbf{flux magnétique} $\phi$ à travers un circuit plan (une spire, par exemple) mesure la
+\emph{quantité de champ magnétique} qui « traverse » la surface. C'est une grandeur \emph{algébrique}
+(elle peut être positive, négative ou nulle).
+\end{definition}
+
+\begin{formule}[flux magnétique à travers une spire plane]
+\[ \boxed{\,\phi = B\, S\, \cos\alpha\,} \qquad\text{(en webers).} \]
+\begin{ou}
+  \item $\phi$ : flux magnétique, en \textbf{webers} (\si{\weber}, $\si{\weber}=\si{\tesla\metre\squared}$) ;
+  \item $B$ : intensité du champ magnétique, en \textbf{teslas} (\si{\tesla}) ;
+  \item $S$ : aire de la surface, en \textbf{mètres carrés} (\si{\metre\squared}) — on associe à la
+        surface un vecteur $\Svec$ \textbf{perpendiculaire} au plan de la spire (orienté par la règle
+        de la main droite à partir du sens positif choisi pour $I$) ;
+  \item $\alpha$ : angle entre $\Bvec$ et $\Svec$ (et non entre $\Bvec$ et le plan !).
+\end{ou}
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % spire vue en perspective (ellipse)
+  \draw[coilcol,line width=1.1pt,fill=coilcol!8] (0,0) ellipse [x radius=1.5, y radius=0.45];
+  % vecteur S normal
+  \draw[->,>=Stealth,primary,line width=1.4pt] (0,0) -- (0,2.0);
+  \node[primary,right,font=\footnotesize] at (0,2.0) {$\Svec$};
+  % vecteur B incliné
+  \draw[vectB,line width=1.6pt] (0,0) -- (-1.0,2.0);
+  \node[Bcol,left,font=\footnotesize] at (-1.0,2.0) {$\Bvec$};
+  % angle alpha
+  \draw[black!70,line width=0.7pt] (0,0.7) arc (90:116.6:0.7);
+  \node[font=\footnotesize] at (-0.2,0.85) {$\alpha$};
+  % sens positif de I
+  \draw[Icol,->,>=Stealth,line width=1pt] (1.45,0.18) -- (1.42,0.0);
+  \node[Icol,right,font=\footnotesize] at (1.5,0.05) {$I$ (+)};
+  \node[primarydark,font=\footnotesize] at (0,-0.8) {spire de surface $S$};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[angle $\alpha$ : ne pas se tromper de repère]
+L'angle $\alpha$ est celui que fait $\Bvec$ avec le \textbf{vecteur surface} $\Svec$ (la \emph{normale}
+à la spire), \textbf{pas} avec le plan de la spire. Si l'énoncé donne l'angle $\beta$ entre $\Bvec$ et
+le plan, alors $\alpha=90^\circ-\beta$ et $\cos\alpha=\sin\beta$. C'est exactement la même vigilance
+qu'en optique, où l'angle d'incidence se mesure par rapport à la \emph{normale}.
+\end{methode}
+
+\subsubsection{Trois cas particuliers du flux}
+
+\begin{theoreme}[cas 1 : flux maximal, $\Bvec\parallel\Svec$]
+Si les lignes de champ sont \textbf{perpendiculaires} au plan de la spire, c'est-à-dire
+$\Bvec\parallel\Svec$ ($\alpha=0$) :
+\[ \phi = B\,S\,\cos 0 = \boxed{\,B\,S\,}\quad\text{(flux maximal, positif).} \]
+\end{theoreme}
+
+\begin{theoreme}[cas 2 : flux nul, $\Bvec\perp\Svec$]
+Si les lignes de champ sont \textbf{parallèles} au plan de la spire, c'est-à-dire
+$\Bvec\perp\Svec$ ($\alpha=90^\circ=\pi/2$) :
+\[ \phi = B\,S\,\cos\dfrac{\pi}{2} = \boxed{\,0\,}\quad\text{(flux nul).} \]
+Aucune ligne de champ ne traverse effectivement la surface.
+\end{theoreme}
+
+\begin{theoreme}[cas 3 : flux minimal négatif, $\Bvec$ opposé à $\Svec$]
+Si $\Bvec$ est parallèle à $\Svec$ mais de \textbf{sens opposé} ($\alpha=\pi=180^\circ$) :
+\[ \phi = B\,S\,\cos\pi = \boxed{\,-B\,S\,}\quad\text{(flux minimal, négatif).} \]
+\end{theoreme}
+
+\begin{exemple}[flux à travers une spire carrée]
+Une spire carrée de côté $a=\SI{10}{\centi\metre}$ est plongée dans un champ uniforme
+$B=\SI{0{,}5}{\tesla}$. On l'oriente successivement de trois façons et on calcule le flux.
+
+\smallskip
+La surface vaut $S=a^2=(\SI{0{,}1}{\metre})^2=\SI{0{,}01}{\metre\squared}$.
+
+\textbf{(a) Spire perpendiculaire aux lignes de champ} ($\alpha=0$) :
+\[ \phi = B\,S = 0{,}5\times 0{,}01 = \SI{5e-3}{\weber} = \SI{5}{\milli\weber}. \]
+
+\textbf{(b) Spire inclinée à $60^\circ$ par rapport aux lignes} (donc $\alpha=30^\circ$ entre
+$\Bvec$ et $\Svec$) :
+\[ \phi = B\,S\,\cos 30^\circ = 5\cdot 10^{-3}\times 0{,}866 \approx \SI{4{,}3}{\milli\weber}. \]
+
+\textbf{(c) Spire parallèle aux lignes de champ} ($\alpha=90^\circ$) :
+\[ \phi = 0. \]
+
+\textbf{À retenir.} Le flux est maximal lorsque la spire « présente sa face » aux lignes de champ
+(comme une fenêtre ouverte face au vent), et nul lorsqu'elle est « de chant » (comme une fenêtre
+vue par la tranche).
+\end{exemple}
+
+\subsection{Courant induit et tension induite}
+
+\begin{definition}[induction électromagnétique]
+Lorsque le \textbf{flux magnétique} $\phi$ qui traverse un circuit \textbf{varie} au cours du temps,
+il apparaît dans le circuit une \textbf{force électromotrice} (f.é.m.) \textbf{induite} $e$,
+c'est-à-dire une tension capable de faire circuler un courant même \emph{sans générateur}. Ce courant
+est le \textbf{courant induit}.
+\end{definition}
+
+\begin{theoreme}[loi de Lenz--Faraday (loi de Faraday)]
+Pour une bobine de $N$ spires, la f.é.m. induite est l'\textbf{opposée} de la vitesse de variation
+du flux :
+\[ \boxed{\,e = -\, N\, \dfrac{\dd\phi}{\dd t}\,} \qquad\text{(en volts).} \]
+\begin{ou}
+  \item $e$ : force électromotrice induite, en \textbf{volts} (\si{\volt}) ;
+  \item $N$ : nombre de spires de la bobine (sans dimension) ;
+  \item $\dd\phi/\dd t$ : \textbf{vitesse de variation} du flux, en webers par seconde
+        ($\si{\weber\per\second}$), sachant que $\SI{1}{\weber\per\second}=\SI{1}{\volt}$ ;
+  \item le signe « $-$ » traduit la loi de \textsc{Lenz} (le courant induit \emph{s'oppose} à la cause
+        qui lui donne naissance).
+\end{ou}
+\end{theoreme}
+
+\begin{methode}[quatre façons de faire \emph{varier} le flux]
+Le flux $\phi=B\,S\,\cos\alpha$ peut varier si l'on fait varier \emph{l'un quelconque} de ses trois
+facteurs :
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{On fait varier $B$} : on approche/éloigne un aimant, on fait varier le courant dans
+        un solénoïde voisin, on commute le champ ;
+  \item \textbf{On fait varier $S$} : on déforme la spire (on l'écrase, on l'étire) ;
+  \item \textbf{On fait varier $\alpha$} : on fait tourner la spire dans le champ
+        (\emph{alternateur} !) ;
+  \item ou une combinaison des trois.
+\end{enumerate}
+\end{methode}
+
+\begin{remarque}[taille du courant induit]
+Le courant induit dans une bobine de résistance $R$ vaut
+\[ i = \dfrac{e}{R} = -\,\dfrac{N}{R}\,\dfrac{\dd\phi}{\dd t}, \]
+et la \textbf{charge électrique} traversée pendant un intervalle $\Delta t$ vaut
+\[ Q = i\,\Delta t = -\,\dfrac{\Delta\phi}{R}. \]
+Le courant induit est donc d'autant plus \textbf{intense} que la variation $\dd\phi/\dd t$ est
+\textbf{rapide} : c'est pourquoi on « donne des coups » d'aimant pour produire des étincelles dans
+les bobines de cuisine (allumeurs piezo-électriques, bobines de Ruhmkorff, etc.).
+\end{remarque}
+
+\subsection{Loi de Lenz : le sens du courant induit}
+
+\begin{theoreme}[loi de Lenz]
+Le \textbf{sens} du courant induit est tel que, par les effets qu'il produit (champ magnétique
+induit), il \textbf{s'oppose à la cause} qui lui a donné naissance, c'est-à-dire à la \textbf{variation}
+du flux.
+\end{theoreme}
+
+\begin{attention}[« s'opposer à la variation » $\neq$ « s'opposer au flux »]
+La loi de Lenz parle de la \textbf{variation} du flux, pas du flux lui-même. Deux cas se
+rencontrent :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Si le flux \textbf{augmente} : le champ induit $\Bvec_{\text{induit}}$ est de sens
+        \textbf{opposé} à $\Bvec_{\text{inducteur}}$ (pour « freiner » l'augmentation) ;
+  \item Si le flux \textbf{diminue} : le champ induit $\Bvec_{\text{induit}}$ est de
+        \textbf{même sens} que $\Bvec_{\text{inducteur}}$ (pour « soutenir » la diminution).
+\end{itemize}
+\end{attention}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % bobine vue de côté
+  \foreach \x in {-1.4,-1.0,...,1.4}
+     {\draw[coilcol,line width=1pt] (\x,-0.7) .. controls (\x+0.1,0) and (\x+0.2,0) .. (\x+0.1,0.7);}
+  \draw[fercol!50,fill=fercol!8] (-0.05,-0.7) rectangle (0.05,0.7);
+  % ampèremètre
+  \draw[black,line width=0.8pt] (-1.4,1.1) -- (-1.4,1.6) -- (1.6,1.6) -- (1.6,0.7);
+  \draw[black,line width=0.8pt] (-1.4,0.7) -- (-1.4,1.0);
+  \draw[black,fill=white,line width=0.8pt] (0,1.6) circle (0.30);
+  \node[font=\footnotesize] at (0,1.6) {A};
+  % aimant qui s'approche : pôle N à droite (vers la bobine)
+  \fill[Npcol!80] (2.6,-0.4) rectangle (3.2,0.4);
+  \fill[Spcol!80] (3.2,-0.4) rectangle (3.8,0.4);
+  \node[white,font=\bfseries\footnotesize] at (2.9,0) {N};
+  \node[white,font=\bfseries\footnotesize] at (3.5,0) {S};
+  \draw[->,>=Stealth,primary,line width=1.3pt] (4.0,0) -- (2.3,0);
+  \node[primary,above,font=\footnotesize] at (3.1,0.45) {approche};
+  % champ inducteur : pointe vers la gauche (le pôle N de l'aimant est face à la bobine)
+  \draw[vectB,line width=1.6pt] (1.7,0.32) -- (0.7,0.32);
+  \node[Bcol,above,font=\footnotesize] at (1.2,0.38) {$\Bvec_{\text{inducteur}}$ (croît)};
+  % champ induit : opposé à l'augmentation -> pointe vers la droite (loi de Lenz)
+  \draw[->,>=Stealth,attncol,line width=1.6pt] (-1.5,-0.32) -- (-0.5,-0.32);
+  \node[attncol,below,font=\footnotesize] at (-1.0,-0.38) {$\Bvec_{\text{induit}}$ (s'oppose)};
+  % sens du courant induit dans la bobine
+  \node[Icol,font=\footnotesize] at (-1.4,1.85) {$i_{\text{induit}}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[aimant approché / éloigné d'une bobine]
+On imagine une bobine reliée à un ampèremètre et un aimant que l'on manipule à la main. Cinq
+observations expérimentales :
+
+\smallskip
+\textbf{1. Aimant immobile.} Le flux $\phi$ est \textbf{constant} : $\dd\phi/\dd t=0$, donc
+$e=0$ et \textbf{aucun courant} ne circule. L'induction ne se produit que s'il y a
+\emph{variation}.
+
+\textbf{2. Aimant que l'on approche, pôle Nord en avant.} Le flux (positif et dirigé vers la
+bobine) \textbf{augmente}. Pour s'y opposer, la bobine induit un courant qui crée un champ de sens
+\textbf{opposé}, c'est-à-dire qui présente une face \textbf{Nord} à l'aimant pour le \emph{repousser}.
+L'ampèremètre indique un courant $+I$.
+
+\textbf{3. Aimant que l'on éloigne.} Le flux \textbf{diminue}. La bobine « tente » de maintenir le
+flux en induisant un champ de \textbf{même sens} : elle présente une face \textbf{Sud} pour
+\emph{retenir} l'aimant. Le courant change de signe, $-I$.
+
+\textbf{4. On retourne l'aimant (pôle Sud en avant) puis on l'approche.} Le flux \emph{négatif}
+augmente en valeur absolue ; la bobine présente cette fois une face \textbf{Sud} pour repousser le
+pôle Sud. Le sens du courant induit est l'opposé du cas~2.
+
+\textbf{5. On fait tourner l'aimant autour d'un axe vertical face à la bobine.} Le flux oscille
+périodiquement entre un maximum et un minimum : le courant induit \textbf{change de sens à chaque
+demi-tour}. C'est précisément le principe de l'\textbf{alternateur} (voir ci-dessous).
+
+\smallskip
+\textbf{Loi générale (à mémoriser).} Le courant induit \emph{aide} toujours la bobine à
+« résister » à la perturbation : \emph{on approche un pôle Nord $\Rightarrow$ la bobine crée un pôle
+Nord face à lui ; on l'éloigne $\Rightarrow$ elle crée un pôle Sud pour le retenir}. C'est une
+illustration du principe physique plus général de modération (principe de Le Chatelier en chimie,
+effet Lenz en électromagnétisme).
+\end{exemple}
+
+\subsection{L'alternateur : production de courant alternatif}
+
+\begin{formule}[f.é.m. induite par une spire tournante]
+Si l'on fait tourner une spire à la vitesse angulaire $\omega$ dans un champ $\Bvec$ uniforme,
+l'angle devient $\alpha=\omega t$ et le flux varie sinusoïdalement :
+\[ \phi(t) = B\,S\,\cos(\omega t). \]
+La f.é.m. induite vaut alors
+\[ \boxed{\,e(t) = -\,\dfrac{\dd\phi}{\dd t} = \omega\, B\, S\, \sin(\omega t)\,} \quad\text{(en volts).} \]
+\begin{ou}
+  \item $e(t)$ : f.é.m. instantanée, en \textbf{volts} (\si{\volt}) ;
+  \item $\omega$ : vitesse angulaire de rotation, en \si{\radian\per\second} ($\omega=2\pi f$) ;
+  \item $B$ : champ, en \si{\tesla} ; $S$ : surface, en \si{\metre\squared} ;
+  \item $f=\omega/(2\pi)$ : fréquence, en \si{\hertz} ; période $T=1/f$, en \si{\second}.
+\end{ou}
+\end{formule}
+
+\begin{definition}[courant alternatif, valeurs maximale et efficace]
+Un \textbf{courant alternatif} (ou tension alternative) \textbf{sinusoïdal} est de la forme
+\[ i(t) = I_{\max}\,\sin(\omega t). \]
+Sa valeur \textbf{efficace} est la valeur du courant continu qui produirait le \emph{même} effet
+Joule (même énergie dissipée en moyenne) :
+\[ \boxed{\,I_{\text{eff}} = \dfrac{I_{\max}}{\sqrt{2}} \approx 0{,}707\, I_{\max}\,}. \]
+Idem pour la tension : $U_{\text{eff}} = U_{\max}/\sqrt{2}$. Le « \SI{230}{\volt} » de nos prises
+est une \emph{valeur efficace} : la tension crête atteint en réalité
+$U_{\max}=230\times\sqrt{2}\approx\SI{325}{\volt}$.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+      width=12cm,height=5cm,
+      xlabel={temps $t$}, ylabel={$i(t)$},
+      xmin=0, xmax=1, ymin=-1.25, ymax=1.25,
+      xtick={0,0.25,0.5,0.75,1},
+      xticklabels={$0$,$T/4$,$T/2$,$3T/4$,$T$},
+      ytick={-1,0,1},
+      yticklabels={$-I_{\max}$,$0$,$I_{\max}$},
+      axis lines=middle, axis line style={primarydark},
+      tick style={primarydark},
+      every axis label/.append style={primarydark,font=\small},
+      samples=200, domain=0:1, smooth,
+    ]
+    \addplot[Icol,line width=1.4pt] {sin(deg(2*pi*x))};
+    % niveau efficace
+    \addplot[Fcol,dashed,line width=1pt,domain=0:1] {0.707};
+    \addplot[Fcol,dashed,line width=1pt,domain=0:1] {-0.707};
+    \node[Fcol,anchor=west,font=\footnotesize] at (axis cs:0.05,0.78) {$+I_{\text{eff}}=I_{\max}/\sqrt{2}$};
+    \node[Fcol,anchor=west,font=\footnotesize] at (axis cs:0.05,-0.92) {$-I_{\text{eff}}$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[réseau électrique européen]
+Le réseau public européen fournit une tension alternative sinusoïdale de fréquence
+$f=\SI{50}{\hertz}$ et de valeur efficace $U_{\text{eff}}=\SI{230}{\volt}$.
+
+\smallskip
+\textbf{(a) Période.}
+\[ T = \dfrac{1}{f} = \dfrac{1}{50} = \SI{0{,}02}{\second} = \SI{20}{\milli\second}. \]
+La tension change de sens toutes les \SI{10}{\milli\second}.
+
+\textbf{(b) Valeur maximale.}
+\[ U_{\max} = U_{\text{eff}}\,\sqrt{2} = 230\times 1{,}414 \approx \boxed{\,\SI{325}{\volt}\,}. \]
+Une prise « \SI{230}{\volt} » oscille en réalité entre $+\SI{325}{\volt}$ et $-\SI{325}{\volt}$.
+
+\textbf{(c) Vitesse angulaire.}
+\[ \omega = 2\pi f = 100\pi \approx \SI{314}{\radian\per\second}. \]
+
+\textbf{(d) Dans une centrale.} Pour produire une telle tension, l'alternateur doit faire tourner
+une bobine à $f=\SI{50}{\hertz}$, soit $50$ tours par seconde, soit encore
+$50\times 60=\SI{3000}{\per\minute}$ de rotations. C'est précisément la vitesse de rotation des
+turbines des centrales (hydrauliques, thermiques ou nucléaires), calées sur cette fréquence de
+\SI{50}{\hertz} — d'où la « fréquence du réseau », qu'il faut synchroniser à la seconde près sur
+tout le continent européen.
+\end{exemple}
+
+\subsection{Courants de Foucault}
+
+\begin{definition}[courants de Foucault]
+Lorsqu'une \textbf{pièce métallique massive} est plongée dans un champ magnétique \textbf{variable},
+des courants induits — appelés \textbf{courants de Foucault} — prennent naissance \emph{à l'intérieur
+même du métal}. Ils dissipent de l'énergie par \textbf{effet Joule} (échauffement) et créent des
+forces qui \textbf{s'opposent} au mouvement qui les a produits.
+\end{definition}
+
+\begin{remarque}[trois applications typiques]
+\hfill
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Fours à induction} : on exploite l'échauffement pour faire fondre des métaux sans
+        contact ;
+  \item \textbf{Freins à induction} (camions, trains, compteurs anciens) : on exploite les forces de
+        Laplace opposées au mouvement. Un disque métallique plein suspendu à un fil et oscillant
+        entre deux aimants \textbf{s'immobilise presque instantanément} ;
+  \item \textbf{Plaques à induction} : la plaque elle-même reste froide, c'est la casserole (fer)
+        qui chauffe par courants de Foucault.
+\end{itemize}
+\end{remarque}
+
+\begin{attention}[comment \emph{limiter} les courants de Foucault ?]
+Dans les \textbf{transformateurs} et les moteurs, les courants de Foucault sont \emph{parasites}
+(pertes, échauffement). On les réduit en remplaçant les pièces massives par des \textbf{feuillets}
+minces séparés par un \textbf{vernis isolant} : les courants ne peuvent plus boucler sur de grandes
+boucles, et l'échauffement chute considérablement.
+\end{attention}
+
+\begin{exemple}[le pendule de Waltenhofen]
+Un disque métallique plein, suspendu à un fil, oscille librement entre les pôles d'un puissant
+électroaimant. Tant que l'électroaimant est éteint, le pendule oscille longuement (amortissement
+faible, surtout dû à l'air). Dès qu'on alimente l'électroaimant :
+
+\smallskip
+\textbf{Observation.} Le pendule \textbf{s'arrête net} en moins d'une oscillation.
+
+\textbf{Analyse.} Lorsqu'il entre dans la zone de champ, le flux à travers chaque anneau du disque
+\emph{augmente} brutalement : des courants de Foucault apparaissent, dont le sens (loi de Lenz) crée
+une force de Laplace \textbf{opposée au déplacement} du disque. Cette force freine le mouvement de
+manière extrêmement efficace.
+
+\textbf{Expérience complémentaire.} Si l'on remplace le disque plein par un disque \emph{identique
+mais entailé de fentes radiales}, le pendule oscille \emph{presque librement}, même avec
+l'électroaimant alimenté : les fentes interrompent les boucles de courant, les courants de Foucault
+sont quasi inexistants, et le freinage disparaît. Cette expérience illustre parfaitement pourquoi
+les circuits magnétiques des transformateurs sont \textbf{feuilletés}.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : formulaire et points-clés}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.5cm} >{\centering\arraybackslash}p{5.4cm} >{\raggedright\arraybackslash}p{4.3cm}}
+\rowcolor{primary!18}
+\textbf{Loi / grandeur} & \textbf{Formule} & \textbf{À retenir} \\
+\midrule
+Champ d'un fil rectiligne & $B = \dfrac{\mu_0 I}{2\pi d}$ & décroît en $1/d$ \\
+Champ au centre d'une spire & $B = \dfrac{\mu I}{2r}$ & $\propto I$, $\propto 1/r$ \\
+Champ d'un solénoïde & $B = \dfrac{\mu_0 N I}{L}$ & $\propto$ densité $N/L$ \\
+Loi de Laplace (conducteur) & $F = B\,I\,L\,\sin\theta$ & nulle si $I\parallel B$ \\
+Loi de Lorentz (particule) & $F = B\,|q|\,v\,\sin\alpha$ & nulle si $v\parallel B$ \\
+Rayon (trajectoire circulaire) & $R = \dfrac{m\,v}{|q|\,B}$ & $\Fvec\perp\vvec$ : $v$ constante \\
+Égalité $F_{\text{élec}}=F_{\text{mag}}$ & $v = \dfrac{E}{B} = \dfrac{U}{L B}$ & sélecteur de vitesse \\
+Flux magnétique & $\phi = B\,S\,\cos\alpha$ & $\alpha$ entre $\Bvec$ et $\Svec$ \\
+Loi de Lenz--Faraday & $e = -\,N\,\dfrac{\dd\phi}{\dd t}$ & signe $-$ = loi de Lenz \\
+Valeur efficace (alternative) & $I_{\text{eff}}=\dfrac{I_{\max}}{\sqrt 2}$ & $\approx 0{,}707\,I_{\max}$ \\
+Charge traversant un circuit & $Q = -\dfrac{\Delta\phi}{R}$ & ne dépend que de $\Delta\phi$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[démarche universelle pour un problème d'électromagnétisme]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Identifier la source} : aimant, courant dans un fil / une spire / un solénoïde, ou
+        champ $\Bvec$ \emph{imposé} par l'énoncé.
+  \item \textbf{Déterminer $\Bvec$} (direction, sens, intensité) — penser à la \emph{règle de la
+        main droite} et, pour les fils, à la loi de \emph{Biot et Savart}.
+  \item \textbf{Suivre l'effet} recherché : force de Laplace si un conducteur est parcouru,
+        force de Lorentz si une particule se déplace, induction si le flux varie.
+  \item \textbf{Choisir les bons angles} : $\theta$ pour Laplace ($I$ vs $\Bvec$), $\alpha$ pour
+        Lorentz ($v$ vs $\Bvec$) ou pour le flux ($\Bvec$ vs $\Svec$).
+  \item \textbf{Pour l'induction}, déterminer le \emph{sens} par la \emph{loi de Lenz} : « la bobine
+        résiste » ; puis la valeur par $e=-N\,\dd\phi/\dd t$.
+\end{enumerate}
+\end{methode}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 11}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Aimants} : deux pôles N et S \emph{indissociables} ; N–S s'attirent, N–N ou S–S se
+        repoussent. Lignes de champ orientées du N vers le S \emph{à l'extérieur}, en \emph{boucles
+        fermées}.
+  \item \textbf{Champ $\Bvec$} : vecteur tangent aux lignes, unité le \textbf{tesla} (T) ;
+        \textbf{superposition} vectorielle ; \textbf{champ uniforme} = lignes parallèles.
+  \item \textbf{Champs créés par les courants} : fil $B=\mu_0 I/(2\pi d)$ ; spire $B=\mu I/(2r)$ ;
+        solénoïde $B=\mu_0 N I/L$. Règle de la main droite pour le sens.
+  \item \textbf{Loi de Laplace} : $F=BIL\sin\theta$ sur un conducteur ; maximale si $I\perp B$,
+        nulle si $I\parallel B$.
+  \item \textbf{Loi de Lorentz} : $F=B|q|v\sin\alpha$ sur une particule ; $\Fvec\perp\vvec$ donc
+        $v$ \emph{constante}, trajectoire circulaire de rayon $R=mv/(|q|B)$ si $v\perp B$.
+  \item \textbf{Flux magnétique} : $\phi=BS\cos\alpha$ (en \si{\weber}) ; \textbf{loi de
+        Lenz--Faraday} $e=-N\dd\phi/\dd t$ ; sens du courant induit fixé par la \textbf{loi de Lenz}
+        (« la bobine résiste à la variation du flux »).
+  \item \textbf{Alternateur} : spire tournante $\Rightarrow$ tension \emph{sinusoïdale} de fréquence
+        $f=\omega/(2\pi)$ ; valeurs efficace $I_{\text{eff}}=I_{\max}/\sqrt{2}$.
+  \item \textbf{Courants de Foucault} : courants induits dans les métaux massifs, échauffement +
+        forces opposées au mouvement ; combattus par \emph{feuilletage}.
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

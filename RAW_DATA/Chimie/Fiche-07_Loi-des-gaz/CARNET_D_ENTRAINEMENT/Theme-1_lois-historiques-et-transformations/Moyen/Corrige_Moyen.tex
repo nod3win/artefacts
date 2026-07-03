@@ -1,0 +1,104 @@
+% !TEX program = pdflatex
+% THEME 1 — Moyen — Corrigé
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\atm}{atm}
+\DeclareSIUnit{\bar}{bar}
+\DeclareSIUnit{\mmHg}{mmHg}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\newtcolorbox{rep}[1][]{enhanced,breakable,colback=excol!5,colframe=excol,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,title={#1}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Loi des gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 · Moyen · Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcounter{exo}
+\newenvironment{cor}[1][]{\refstepcounter{exo}\medskip
+  \noindent{\color{primarydark}\bfseries Corrigé \theexo.}\ \textit{#1}\par\nopagebreak\smallskip}{\par}
+\newcommand{\rf}[1]{\textbf{\textcolor{attncol}{#1}}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 1 — Niveau Moyen — Corrigé}
+\end{center}
+\textcolor{primary}{\hrule height 1pt}
+\medskip
+
+\begin{cor}[Bombe aérosol rigide]
+\textbf{(a)} La bombe est \emph{rigide} : le volume $V$ ne change pas (transformation \textbf{isochore}),
+et la quantité de gaz est constante. La loi adaptée est $\dfrac{p_1}{T_1}=\dfrac{p_2}{T_2}$.\\
+\textbf{(b)} On convertit d'abord : $T_1=27+273=\qty{300}{\kelvin}$, $T_2=127+273=\qty{400}{\kelvin}$.
+\[ p_2=p_1\frac{T_2}{T_1}=\qty{2.0}{\atm}\times\frac{\qty{400}{\kelvin}}{\qty{300}{\kelvin}}
+     =\rf{\qty{2.67}{\atm}}. \]
+La pression grimpe de $2{,}0$ à $\approx\qty{2.7}{\atm}$ : c'est pourquoi on ne jette jamais une bombe
+aérosol au feu (risque d'explosion).
+\end{cor}
+
+\begin{cor}[Compression avec changement d'unité]
+Température constante $\Rightarrow$ \textbf{Boyle} : $p_1V_1=p_2V_2$. Les volumes étant tous deux en
+\si{\milli\litre}, pas besoin de les convertir (l'unité se simplifie).
+\[ p_2=\frac{p_1V_1}{V_2}=\frac{\qty{100}{\kilo\pascal}\times\qty{500}{\milli\litre}}{\qty{250}{\milli\litre}}
+     =\rf{\qty{200}{\kilo\pascal}}. \]
+En atmosphères : $\dfrac{200}{101}\approx\rf{\qty{1.98}{\atm}}\approx\qty{2}{\atm}$. On a divisé $V$ par
+$2$, donc doublé $p$.
+\end{cor}
+
+\begin{cor}[Le piège des degrés Celsius]
+\textbf{(a)} Pression constante $\Rightarrow$ \textbf{Charles}. On convertit :
+$T_1=27+273=\qty{300}{\kelvin}$, $T_2=87+273=\qty{360}{\kelvin}$.
+\[ V_2=V_1\frac{T_2}{T_1}=\qty{2.0}{\litre}\times\frac{360}{300}=2{,}0\times1{,}2=\rf{\qty{2.4}{\litre}}. \]
+\textbf{(b)} L'erreur est d'avoir utilisé les températures \emph{en degrés Celsius} dans le rapport
+$T_2/T_1$. Le rapport $87/27=3{,}2$ n'a aucun sens physique : l'échelle Celsius a une origine
+arbitraire ($\qty{0}{\degreeCelsius}$ n'est pas « pas de température »). Multiplier par $3{,}2$ un volume
+alors que la température n'a réellement augmenté que de $\qty{300}{\kelvin}$ à $\qty{360}{\kelvin}$
+(soit $+20\,\%$) est absurde. \rf{Seuls les kelvins} permettent des rapports corrects.
+\end{cor}
+
+\begin{cor}[Loi combinée]
+Ici $p$, $V$ et $T$ changent tous, mais $n$ est constant : on utilise la \textbf{loi combinée}
+$\dfrac{p_1V_1}{T_1}=\dfrac{p_2V_2}{T_2}$. On isole $p_2$ :
+\[ p_2=p_1\times\frac{V_1}{V_2}\times\frac{T_2}{T_1}
+     =\qty{1.0}{\atm}\times\frac{10{,}0}{5{,}0}\times\frac{450}{300}
+     =1{,}0\times2\times1{,}5=\rf{\qty{3.0}{\atm}}. \]
+Deux effets se cumulent et augmentent la pression : la compression (volume $\div2$, soit $p\times2$) et
+le chauffage (température $\times1{,}5$, soit $p\times1{,}5$), d'où $p\times3$ au total.
+\end{cor}
+
+\begin{cor}[Raisonner en facteurs]
+\textbf{(a)} De la loi combinée $\dfrac{p_1V_1}{T_1}=\dfrac{p_2V_2}{T_2}$ on tire
+\[ \frac{V_2}{V_1}=\frac{p_1}{p_2}\times\frac{T_2}{T_1}. \]
+Ici $\dfrac{T_2}{T_1}=3$ (température $\times3$) et $\dfrac{p_2}{p_1}=2$ (pression doublée), donc
+$\dfrac{p_1}{p_2}=\dfrac{1}{2}$.\\
+\textbf{(b)} $\dfrac{V_2}{V_1}=\dfrac{1}{2}\times3=\rf{1{,}5}$. Le volume est multiplié par $1{,}5$ :
+le gaz s'est \rf{dilaté} (l'effet du chauffage l'emporte sur celui de la compression).
+\end{cor}
+
+\end{document}

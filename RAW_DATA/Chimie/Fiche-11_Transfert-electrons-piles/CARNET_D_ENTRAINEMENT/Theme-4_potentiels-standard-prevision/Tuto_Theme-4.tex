@@ -1,0 +1,126 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 11 — THEME 4
+%  Tuto : Potentiels standard et prévision des réactions
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage[a4paper,margin=2.0cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{oxcol}{RGB}{200,40,55}
+\definecolor{redcol}{RGB}{0,110,180}
+\definecolor{formulacol}{RGB}{198,93,9}
+
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+\newcommand{\Ered}{\ensuremath{E_{\mathrm{r}}^{\circ}}}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{defi}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{regle}[1][]{boxbase,colback=thmcol!6,colframe=thmcol,title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11} — Tuto Thème 4}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Potentiels standard}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Potentiels standard et prévision des réactions}\\[3pt]
+{\color{primary}\rule{10.5cm}{1.2pt}}\\[4pt]
+{\small\itshape À lire avant les exercices — comment savoir si une réaction redox aura lieu.}
+\end{center}
+
+\vspace{-2pt}
+\section*{1. Le potentiel standard de réduction}
+\begin{defi}[potentiel standard \Ered]
+À chaque couple $\mathrm{Ox}/\mathrm{Red}$ on associe un \textbf{potentiel standard de réduction}
+\Ered\ (en volts), mesuré dans les conditions standard (\SI{1}{mol\per\litre}, \SI{1}{atm},
+\SI{25}{\celsius}) par rapport à l'électrode standard à hydrogène (\ce{H+}/\ce{H2}, \Ered$=0$\,V).
+\end{defi}
+
+\begin{regle}[ce que dit la valeur de \Ered]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item Plus \Ered\ est \textbf{élevé}, plus la forme \textbf{Ox} est un \textbf{\textcolor{oxcol}{oxydant fort}}.
+  \item Plus \Ered\ est \textbf{faible (négatif)}, plus la forme \textbf{Red} est un \textbf{\textcolor{redcol}{réducteur fort}}.
+\end{itemize}
+\end{regle}
+
+\section*{2. L'échelle des potentiels et la règle du « gamma »}
+On classe les couples verticalement, du \Ered\ le plus élevé (en haut) au plus bas (en bas).
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[->,>=Stealth,primarydark,line width=1pt] (0,-2.6) -- (0,0.9);
+  \node[primarydark,rotate=90,font=\footnotesize] at (-0.55,-1) {\Ered\ croissant};
+  \foreach \y/\ox/\red/\v in {0.2/\ce{Ag+}/\ce{Ag}/+0{,}80, -1.0/\ce{Cu^{2+}}/\ce{Cu}/+0{,}34, -2.2/\ce{Zn^{2+}}/\ce{Zn}/-0{,}76}{
+    \draw[formulacol,line width=1pt] (0.3,\y)--(3.7,\y);
+    \node[oxcol,font=\small\bfseries] at (1.2,\y) {\ox};
+    \node[redcol,font=\small\bfseries] at (3.1,\y) {\red};
+    \node[primarydark,font=\scriptsize,left] at (0.2,\y) {\v};}
+  \node[oxcol,font=\scriptsize\bfseries] at (1.2,0.7) {Oxydants};
+  \node[redcol,font=\scriptsize\bfseries] at (3.1,0.7) {Réducteurs};
+  % gamma : oxydant du haut réagit avec réducteur du bas
+  \draw[->,>=Stealth,excol,line width=1.1pt] (1.2,0.0) -- (1.2,-2.0) -- (2.9,-2.1);
+  \node[excol,font=\scriptsize,align=left] at (5.9,-1.0) {L'oxydant \textbf{en haut}\\ oxyde le réducteur \textbf{en bas} :\\ ici \ce{Ag+} oxyde \ce{Zn}.};
+\end{tikzpicture}
+\end{center}
+
+\begin{regle}[prévoir une réaction spontanée]
+Une réaction redox est \textbf{spontanée} (conditions standard) si l'\textbf{oxydant du couple de
+\Ered\ le plus élevé} réagit avec le \textbf{réducteur du couple de \Ered\ le plus faible}.
+De façon quantitative :
+\[
+\Delta E^{\circ} = \Ered(\text{oxydant}) - \Ered(\text{réducteur}) > 0 \ \text{V}.
+\]
+La forme dessinée par la flèche « $\gamma$ » (de l'Ox du haut vers le Red du bas) donne le sens
+spontané.
+\end{regle}
+
+\section*{3. Exemples de prévision}
+\begin{exemple}[\ce{Ag+} oxyde-t-il le cuivre ?]
+$\Ered(\ce{Ag+}/\ce{Ag})=+0{,}80 > \Ered(\ce{Cu^{2+}}/\ce{Cu})=+0{,}34$. \ce{Ag+} (couple haut) oxyde
+donc \ce{Cu} (réducteur du couple bas) : $\ce{2 Ag+ + Cu -> 2 Ag + Cu^{2+}}$.
+\end{exemple}
+
+\begin{exemple}[le fer dans l'acide chlorhydrique]
+$\Ered(\ce{H+}/\ce{H2})=0{,}00 > \Ered(\ce{Fe^{2+}}/\ce{Fe})=-0{,}44$. Le proton \ce{H+} oxyde le fer :
+$\ce{Fe + 2 H+ -> Fe^{2+} + H2 ^}$ (dégagement de \ce{H2}). Le fer s'oxyde en \ce{Fe^{2+}} (et non
+\ce{Fe^{3+}}, car \ce{H+} ne peut pas franchir le couple \ce{Fe^{3+}}/\ce{Fe^{2+}} situé plus haut).
+\end{exemple}
+
+\begin{attention}[le sens des comparaisons]
+On compare \emph{toujours} deux couples. Un oxydant ne peut oxyder un réducteur que si son couple
+est \textbf{plus haut} (\Ered\ plus grand). Si $\Delta E^{\circ}<0$, la réaction proposée \textbf{n'a
+pas lieu} (c'est la réaction \emph{inverse} qui est spontanée).
+\end{attention}
+\end{document}

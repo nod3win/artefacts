@@ -1,0 +1,1370 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 5
+%  Bilans de matière (stœchiométrie)
+%  Figures TikZ tracées « from scratch ». Sans section exercices.
+%  Compilation : pdflatex (2 à 3 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+
+% ---------- Chimie ----------
+\usepackage[version=4]{mhchem}   % formules et équations : \ce{...}
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\DeclareSIUnit\atm{atm}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (mauve / violet — code couleur « Chimie » du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+% couleurs « réactifs / produits » pour les figures
+\definecolor{reacA}{RGB}{0,90,200}
+\definecolor{reacB}{RGB}{210,30,40}
+\definecolor{prodC}{RGB}{0,140,90}
+\definecolor{prodD}{RGB}{198,93,9}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Principe}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Bilans de matière}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths / unités
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\mol}{\si{\mole}}
+\newcommand{\gmol}{\si{\gram\per\mole}}
+\newcommand{\molL}{\si{\mole\per\litre}}
+\newcommand{\Lmol}{\si{\litre\per\mole}}
+\newcommand{\nq}[1]{n_{\text{#1}}}        % quantité de matière
+\newcommand{\Vm}{V_{\mathrm{m}}}          % volume molaire
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Bilans de matière}\\[6pt]
+   {\large\bfseries Stœchiométrie, réactif limitant, avancement \& rendement}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,5}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : la balance de la conservation de la masse ---
+\begin{tikzpicture}[scale=1.0]
+  % fléau de la balance
+  \draw[primary,line width=1.6pt] (-3.4,1.6) -- (3.4,1.6);
+  \draw[primarydark,line width=1.6pt] (0,1.6) -- (0,0.35);
+  \fill[primarydark] (0,0.3) -- (-0.45,-0.2) -- (0.45,-0.2) -- cycle; % pivot
+  \draw[primarydark,line width=1.2pt] (-0.9,-0.2) -- (0.9,-0.2);      % socle
+  % plateau gauche (réactifs)
+  \draw[primary,line width=1pt] (-3.4,1.6) -- (-4.0,0.5);
+  \draw[primary,line width=1pt] (-3.4,1.6) -- (-2.8,0.5);
+  \draw[primary!75!black,line width=1.4pt] (-4.2,0.5) -- (-2.6,0.5);
+  \node[align=center] at (-3.4,1.02) {\small\textbf{Réactifs}};
+  % plateau droit (produits)
+  \draw[primary,line width=1pt] (3.4,1.6) -- (2.8,0.5);
+  \draw[primary,line width=1pt] (3.4,1.6) -- (4.0,0.5);
+  \draw[primary!75!black,line width=1.4pt] (2.6,0.5) -- (4.2,0.5);
+  \node[align=center] at (3.4,1.02) {\small\textbf{Produits}};
+  % équation au centre
+  \node[primarydark] at (0,2.15) {\large $\ce{2A + 3B -> C + 6D}$};
+  % masses égales
+  \node[reacA] at (-3.4,0.25) {\small $m_{\text{réactifs}}$};
+  \node[prodC] at (3.4,0.25) {\small $m_{\text{produits}}$};
+  \node[primarydark] at (0,-0.65) {\small $m_{\text{réactifs}}=m_{\text{produits}}$ \;(Lavoisier)};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{pondérer} (ajuster) une équation chimique en respectant la \textbf{conservation des atomes} ;
+  \item interpréter les \textbf{coefficients stœchiométriques} en molécules \emph{et} en moles ;
+  \item relier masse, quantité de matière et volume gazeux ($n=m/M$,\; $V=n\,\Vm$,\; $n=C\,V$) ;
+  \item construire un \textbf{tableau d'avancement} et calculer l'avancement maximal $\xi_{\max}$ ;
+  \item identifier le \textbf{réactif limitant} et le \textbf{réactif en excès} ;
+  \item calculer le \textbf{rendement} d'une réaction ($R=n_{\text{réel}}/n_{\text{théorique}}$) ;
+  \item résoudre un \textbf{bilan de matière} complet (masses, moles, volumes).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 5 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : qu'est-ce qu'un bilan de matière ?}
+% =====================================================================
+Lorsqu'une réaction chimique se produit, des espèces de départ — les \textbf{réactifs} — se
+transforment en de nouvelles espèces — les \textbf{produits}. Faire le \emph{bilan de matière}
+d'une réaction, c'est répondre à des questions très concrètes : \emph{quelle masse de réactif
+faut-il engager pour obtenir une certaine quantité de produit ? Quel réactif va s'épuiser le
+premier ? Quel volume de gaz va se dégager ?} C'est, en pratique, la comptabilité de la matière
+au cours d'une transformation chimique.
+
+\begin{definition}[bilan de matière]
+Le \textbf{bilan de matière} d'une réaction est le décompte des \textbf{quantités de matière}
+(en moles) de chaque espèce \emph{avant} la réaction (état initial, $t=t_0$) et \emph{après} la
+réaction (état final, $t=t_f$). Il repose entièrement sur les \textbf{proportions} fixées par
+l'équation chimique pondérée. On parle aussi de \textbf{stœchiométrie} (du grec \emph{stoikheîon},
+« élément », et \emph{métron}, « mesure »).
+\end{definition}
+
+\begin{remarque}[l'analogie de la recette de cuisine]
+Une équation chimique est comme une \emph{recette}. La recette « 2 œufs + 3 cuillères de farine
+$\rightarrow$ 1 gâteau »
+indique des \emph{proportions} : pour 1 gâteau il faut 2 œufs et 3 cuillères de farine. Si l'on
+dispose de 4 œufs et de beaucoup de farine, on pourra faire 2 gâteaux, mais les œufs seront
+\emph{épuisés} : ils jouent le rôle de \textbf{réactif limitant}. Si l'on n'utilise que la moitié
+des œufs disponibles, on dira que le \textbf{rendement} de la cuisine fut faible. Tout le
+vocabulaire de cette fiche se retrouve dans cette image.
+\end{remarque}
+
+Pour mener un bilan de matière, il faut trois ingrédients, qui forment le plan de cette fiche :
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item une \textbf{équation chimique pondérée} (section~\ref{sec:equation}), qui donne les proportions ;
+  \item un moyen de \textbf{convertir} masses et volumes en \textbf{quantités de matière} (section~\ref{sec:quantite}) ;
+  \item les \textbf{règles de proportionnalité} stœchiométriques (sections~\ref{sec:propor} à~\ref{sec:rendement}),
+        qui relient les espèces entre elles.
+\end{enumerate}
+
+\begin{remarque}[pour mémoire : les grands types de réactions]
+Avant de quantifier une réaction, il est utile de savoir la \emph{nommer}. On rencontre notamment :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{acide–base} : transfert d'un proton $\ce{H+}$, ex.\ \ce{Al(OH)3 + H2SO4 -> Al2(SO4)3 + H2O} ;
+  \item \textbf{d'oxydoréduction (redox)} : transfert d'électrons, ex.\ \ce{4 Fe + 3 O2 -> 2 Fe2O3} ou une combustion ;
+  \item \textbf{de précipitation} : formation d'un solide peu soluble, ex.\ \ce{AgNO3 + KBr -> AgBr v + KNO3} ;
+  \item \textbf{de décomposition} : une espèce se scinde, ex.\ \ce{CaCO3 -> CaO + CO2 ^} ;
+  \item \textbf{d'hydrogénation} : addition de $\ce{H2}$.
+\end{itemize}
+Quel que soit le type, le bilan de matière s'effectue \emph{toujours} de la même façon : par les
+coefficients stœchiométriques.
+\end{remarque}
+
+% =====================================================================
+\section{L'équation chimique et sa pondération}
+\label{sec:equation}
+% =====================================================================
+\subsection{La conservation de la matière}
+
+Une réaction chimique ne fait que \emph{réorganiser} des atomes : elle casse certaines liaisons et
+en forme d'autres, mais elle ne crée ni ne détruit d'atomes. Tous les atomes présents dans les
+réactifs se retrouvent intégralement dans les produits.
+
+\begin{theoreme}[loi de Lavoisier — conservation de la masse]
+Au cours d'une réaction chimique, \textbf{les atomes se conservent} : il y a, pour chaque élément,
+\emph{autant d'atomes} dans les réactifs que dans les produits. Il en résulte que la
+\textbf{masse totale se conserve} :
+\[
+\boxed{\;m_{\text{réactifs}} = m_{\text{produits}}\;}
+\]
+\og Rien ne se perd, rien ne se crée, tout se transforme \fg{} (Lavoisier, 1789).
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- côté réactifs : une boîte avec atomes ---
+  \draw[rounded corners=3pt,reacA!70!black,line width=1pt,fill=reacA!6]
+        (-5.3,-1.2) rectangle (-1.7,1.6);
+  \node[reacA!70!black,font=\bfseries] at (-3.5,1.9) {Avant ($t_0$)};
+  % molécules de méthane CH4 (1 C + 4 H) et O2
+  \foreach \p/\lab in {{-4.6,0.8}/C,{-2.4,0.9}/O,{-2.4,-0.4}/O}{}
+  % CH4
+  \fill[black!75] (-4.6,0.7) circle (8pt); \node[white,font=\scriptsize] at (-4.6,0.7){C};
+  \foreach \a in {45,135,225,315}{\fill[reacB] ($(-4.6,0.7)+(\a:0.45)$) circle (4pt);}
+  % 2 O2
+  \fill[reacA] (-2.5,0.7) circle (6pt); \fill[reacA] (-2.5,0.7)++(0.36,0) circle (6pt);
+  \fill[reacA] (-2.5,-0.3) circle (6pt); \fill[reacA] (-2.5,-0.3)++(0.36,0) circle (6pt);
+  \node[black!70,font=\scriptsize] at (-3.5,-0.9) {\ce{CH4} + 2 \ce{O2}};
+  % --- flèche ---
+  \draw[->,>=Stealth,primary,line width=1.6pt] (-1.45,0.2) -- (1.45,0.2);
+  \node[primary,font=\bfseries] at (0,0.6) {réaction};
+  % --- côté produits ---
+  \draw[rounded corners=3pt,prodC!70!black,line width=1pt,fill=prodC!6]
+        (1.7,-1.2) rectangle (5.3,1.6);
+  \node[prodC!70!black,font=\bfseries] at (3.5,1.9) {Après ($t_f$)};
+  % CO2
+  \fill[black!75] (2.7,0.8) circle (7pt); \node[white,font=\scriptsize] at (2.7,0.8){C};
+  \fill[reacA] (2.7,0.8)++(-0.45,0) circle (5pt); \fill[reacA] (2.7,0.8)++(0.45,0) circle (5pt);
+  % 2 H2O
+  \fill[reacA] (4.4,0.8) circle (6pt); \foreach \a in {35,145}{\fill[reacB] ($(4.4,0.8)+(\a:0.4)$) circle (3.5pt);}
+  \fill[reacA] (4.4,-0.2) circle (6pt); \foreach \a in {35,145}{\fill[reacB] ($(4.4,-0.2)+(\a:0.4)$) circle (3.5pt);}
+  \node[black!70,font=\scriptsize] at (3.5,-0.9) {\ce{CO2} + 2 \ce{H2O}};
+  % légende des atomes
+  \begin{scope}[shift={(-5.0,-2.35)}]
+     \fill[black!75] (0,0) circle (5pt); \node[black!70,right,font=\scriptsize] at (0.25,0){C\;(carbone)};
+     \fill[reacB] (3.2,0) circle (4pt); \node[black!70,right,font=\scriptsize] at (3.45,0){H\;(hydrogène)};
+     \fill[reacA] (6.4,0) circle (5pt); \node[black!70,right,font=\scriptsize] at (6.65,0){O\;(oxygène)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Conservation des atomes lors de la combustion du méthane \ce{CH4 + 2 O2 -> CO2 + 2 H2O}.
+On compte \emph{de part et d'autre} : 1 atome C, 4 atomes H et 4 atomes O. Aucun atome n'a disparu :
+ils ont seulement été \emph{réarrangés}.}
+\label{fig:lavoisier}
+\end{figure}
+
+\subsection{Coefficients stœchiométriques et équation pondérée}
+
+\begin{definition}[équation chimique pondérée]
+Une équation chimique est \textbf{pondérée} (on dit aussi \textbf{ajustée} ou
+\textbf{équilibrée}) lorsque les nombres entiers placés devant les formules — les
+\textbf{coefficients stœchiométriques} — assurent qu'il y a \emph{le même nombre d'atomes de
+chaque élément} dans les réactifs et dans les produits. On choisit conventionnellement les plus
+petits coefficients entiers possibles.
+\end{definition}
+
+\begin{remarque}[ne jamais toucher aux indices !]
+Pour pondérer, on ajuste \emph{uniquement} les coefficients placés \textbf{devant} les formules,
+jamais les \emph{indices} à l'intérieur des formules. Écrire \ce{O2} (dioxygène) plutôt que
+\ce{O} change la \emph{nature} de l'espèce : on n'a pas le droit de transformer \ce{O2} en
+\ce{O3} pour équilibrer. On peut seulement écrire « $3\,\ce{O2}$ ».
+\end{remarque}
+
+\begin{methode}[pondérer une équation chimique]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item Repérer tous les éléments présents et faire l'\emph{inventaire} des atomes de chaque côté.
+  \item Commencer par l'élément qui n'apparaît que dans \emph{une} espèce de chaque côté
+        (souvent un métal ou le carbone), puis l'hydrogène, et finir par l'oxygène.
+  \item Ajuster un coefficient, puis répercuter sur les autres espèces ; recompter.
+  \item Si l'on obtient des coefficients fractionnaires, \emph{multiplier toute l'équation} par le
+        dénominateur commun pour revenir à des entiers.
+  \item Vérifier : chaque élément doit être \emph{équilibré}, et la charge totale aussi (réactions ioniques).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[pondérer la formation de l'oxyde de fer \ce{Fe2O3}]
+On veut équilibrer l'équation de l'oxydation du fer :
+\[
+\ce{Fe + O2 -> Fe2O3}\qquad\text{(non pondérée).}
+\]
+
+\textbf{Étape 1 — inventaire.} À droite, la formule \ce{Fe2O3} impose 2 atomes de fer et 3 atomes
+d'oxygène par motif. À gauche, le fer arrive seul (\ce{Fe}) et l'oxygène par molécules de \ce{O2}
+(2 atomes chacune).
+
+\textbf{Étape 2 — le fer.} Pour avoir 2 \ce{Fe} à droite, on met le coefficient 2 devant \ce{Fe} :
+$\ce{2 Fe + O2 -> Fe2O3}$.
+
+\textbf{Étape 3 — l'oxygène.} À droite, 3 atomes d'oxygène ; à gauche, des paquets de 2. Le plus
+petit commun multiple de 2 et 3 est 6. On met donc \textbf{6 atomes O} de chaque côté : à gauche
+$3\,\ce{O2}$ (soit $3\times2=6$), à droite $2\,\ce{Fe2O3}$ (soit $2\times3=6$) :
+\[
+\ce{2 Fe + 3 O2 -> 2 Fe2O3}.
+\]
+
+\textbf{Étape 4 — ré-équilibrer le fer.} En passant à $2\,\ce{Fe2O3}$, on a maintenant $2\times2=4$
+atomes de fer à droite. On corrige donc le coefficient du fer à \textbf{4} :
+\[
+\boxed{\ce{4 Fe + 3 O2 -> 2 Fe2O3}}
+\]
+
+\textbf{Vérification.} Fer : $4$ à gauche, $2\times2=4$ à droite \checkmark\; ; oxygène :
+$3\times2=6$ à gauche, $2\times3=6$ à droite \checkmark.
+
+\textbf{Somme des coefficients.} $4+3+2=\boxed{9}$. C'est le plus petit jeu d'entiers possible :
+on ne peut pas diviser $(4,3,2)$ par un même entier $>1$.
+\end{exemple}
+
+\begin{exemple}[pondérer la combustion du kérosène \ce{C14H30}]
+Le kérosène (carburant d'avion) est modélisé par la formule \ce{C14H30}. Sa combustion complète
+dans le dioxygène donne du dioxyde de carbone et de l'eau :
+\[
+\ce{C14H30 + O2 -> CO2 + H2O}\qquad\text{(non pondérée).}
+\]
+
+\textbf{Étape 1 — le carbone.} 14 atomes C à gauche $\Rightarrow$ il faut $14\,\ce{CO2}$ à droite.
+
+\textbf{Étape 2 — l'hydrogène.} 30 atomes H à gauche $\Rightarrow$ il faut $15\,\ce{H2O}$ à droite
+(car $15\times2=30$). On a donc provisoirement
+$\ce{C14H30 + O2 -> 14 CO2 + 15 H2O}$.
+
+\textbf{Étape 3 — l'oxygène.} À droite : $14\times2 + 15\times1 = 28+15 = 43$ atomes O. À gauche,
+des paquets de 2 : il faut $\tfrac{43}{2}\,\ce{O2}$. Coefficient fractionnaire !
+\[
+\ce{C14H30 + 43/2 O2 -> 14 CO2 + 15 H2O}.
+\]
+
+\textbf{Étape 4 — revenir aux entiers.} On multiplie toute l'équation par 2 :
+\[
+\boxed{\ce{2 C14H30 + 43 O2 -> 28 CO2 + 30 H2O}}
+\]
+
+\textbf{Vérification.} C : $2\times14=28$ \checkmark\;; H : $2\times30=60=30\times2$ \checkmark\;;
+O : $43\times2=86$ à gauche, $28\times2+30\times1=56+30=86$ à droite \checkmark.
+\end{exemple}
+
+\begin{exemple}[vérifier qu'une équation ionique est correctement ajustée]
+On propose l'équation de la réaction du cobalt avec le nitrate de potassium en milieu chlorhydrique :
+\[
+\ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 1 KCl + 4 H2O}\quad(?)
+\]
+Est-elle correctement ajustée ?
+
+\smallskip
+\textbf{Inventaire élément par élément} (réactifs $\to$ produits) :
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+Élément & Réactifs & Produits (version proposée)\\
+\midrule
+\ce{Co} & $3$ & $3$ (\ce{CoCl2}) \quad\checkmark\\
+\ce{K}  & $2$ (\ce{KNO3}) & $1$ (\ce{KCl}) \quad\textcolor{attncol}{$\neq$}\\
+\ce{N}  & $2$ & $2$ (\ce{NO}) \quad\checkmark\\
+\ce{O}  & $6$ (\ce{2 KNO3}) & $2+4=6$ (\ce{NO}, \ce{H2O}) \quad\checkmark\\
+\ce{H}  & $8$ (\ce{HCl}) & $8$ (\ce{4 H2O}) \quad\checkmark\\
+\ce{Cl} & $8$ (\ce{HCl}) & $3\times2+1=7$ (\ce{CoCl2}, \ce{KCl}) \quad\textcolor{attncol}{$\neq$}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Diagnostic.} Le potassium ($2\to1$) et le chlore ($8\to7$) ne sont \emph{pas} équilibrés :
+l'équation proposée est \textbf{fausse}. Il manque un \ce{KCl}. En mettant le coefficient
+\textbf{2} devant \ce{KCl}, on rééquilibre simultanément K ($2\to2$) et Cl ($8\to 6+2=8$) :
+\[
+\boxed{\ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 2 KCl + 4 H2O}}
+\]
+\textbf{Leçon.} \emph{Avant tout bilan de matière}, on vérifie systématiquement que l'équation est
+pondérée : un calcul mené sur une équation fausse donne un résultat faux. C'est le réflexe numéro un.
+\end{exemple}
+
+% =====================================================================
+\section{La quantité de matière : le pont entre masse, moles et volume}
+\label{sec:quantite}
+% =====================================================================
+Les coefficients d'une équation comptent des \emph{moles}. Or, dans un laboratoire, on mesure des
+\emph{masses} (avec une balance) et des \emph{volumes} (avec une éprouvette). Il faut donc savoir
+passer des grammes et des litres aux moles. C'est le rôle des trois relations suivantes.
+
+\subsection{De la masse à la quantité de matière}
+
+\begin{formule}[quantité de matière et masse]
+\[
+\boxed{\;n=\dfrac{m}{M}\;}
+\]
+\begin{ou}
+  \item $n$ : quantité de matière de l'espèce, en \textbf{moles} (\si{\mole}) ;
+  \item $m$ : masse de l'échantillon, en \textbf{grammes} (\si{\gram}) ;
+  \item $M$ : masse molaire de l'espèce, en \textbf{grammes par mole} (\gmol).
+\end{ou}
+La masse molaire $M$ d'une molécule se calcule en \emph{additionnant} les masses molaires atomiques
+de tous ses atomes (lues dans la classification périodique).
+\end{formule}
+
+\begin{remarque}[la mole et le nombre d'Avogadro]
+Une \textbf{mole} est un \emph{paquet} contenant $N_A=\SI{6,022e23}{}$ entités (le \textbf{nombre
+d'Avogadro}), exactement comme une « douzaine » désigne 12 objets. Compter en moles permet de
+manipuler des nombres raisonnables : \SI{18}{\gram} d'eau, c'est déjà $\approx6\times10^{23}$
+molécules, soit \SI{1}{\mole}.
+\end{remarque}
+
+\subsection{Du volume gazeux à la quantité de matière}
+
+Pour les gaz, il existe une propriété remarquable (loi d'Avogadro) : \emph{à température et pression
+fixées, une mole de n'importe quel gaz occupe toujours le même volume}, appelé \textbf{volume
+molaire} $\Vm$. Aux conditions \textbf{TPN} (Température et Pression Normales : \SI{0}{\celsius} et
+\SI{1}{\atm}), ce volume vaut \SI{22,4}{\litre\per\mole}.
+
+\begin{formule}[quantité de matière et volume d'un gaz]
+\[
+\boxed{\;n=\dfrac{V}{\Vm}\qquad\Longleftrightarrow\qquad V=n\,\Vm\;}
+\]
+\begin{ou}
+  \item $n$ : quantité de matière de gaz, en \textbf{moles} (\si{\mole}) ;
+  \item $V$ : volume occupé par le gaz, en \textbf{litres} (\si{\litre}) ;
+  \item $\Vm$ : volume molaire, en \textbf{litres par mole} (\Lmol) ; aux \textbf{TPN},
+        $\Vm=\SI{22,4}{\litre\per\mole}$.
+\end{ou}
+\end{formule}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % cube en perspective
+  \def\s{2.6}\def\dx{1.0}\def\dy{0.7}
+  \coordinate (A) at (0,0); \coordinate (B) at (\s,0);
+  \coordinate (C) at (\s,\s); \coordinate (D) at (0,\s);
+  \coordinate (A2) at (\dx,\dy); \coordinate (B2) at (\s+\dx,\dy);
+  \coordinate (C2) at (\s+\dx,\s+\dy); \coordinate (D2) at (\dx,\s+\dy);
+  \fill[primary!10] (A)--(B)--(C)--(D)--cycle;
+  \fill[primary!16] (B)--(B2)--(C2)--(C)--cycle;
+  \fill[primary!22] (D)--(D2)--(C2)--(C)--cycle;
+  \draw[primary!70!black,line width=1pt] (A)--(B)--(C)--(D)--cycle;
+  \draw[primary!70!black,line width=1pt] (B)--(B2)--(C2)--(C);
+  \draw[primary!70!black,line width=1pt] (D)--(D2)--(C2);
+  \draw[primary!40,dashed] (A)--(A2)--(B2); \draw[primary!40,dashed] (A2)--(D2);
+  % particules de gaz
+  \foreach \px/\py in {0.5/0.6,1.4/1.9,2.0/0.9,0.9/2.1,1.8/1.3,0.6/1.4,2.2/2.0,1.2/0.7}
+     {\fill[reacA] (\px,\py) circle (2.4pt);}
+  % étiquettes
+  \node[primarydark,font=\bfseries] at (1.3,-0.55) {$\Vm=\SI{22,4}{\litre}$};
+  \node[reacA,font=\bfseries] at (\s+\dx+1.9,\s+\dy-0.2) {$n=\SI{1}{\mole}$ de gaz};
+  \node[black!65,align=left,font=\small] at (\s+\dx+2.0,\s+\dy-1.0)
+     {aux TPN\\ (\SI{0}{\celsius},\,\SI{1}{\atm})};
+  \draw[->,>=Stealth,reacA] (\s+\dx+0.5,\s+\dy-0.3) -- (2.0,2.0);
+\end{tikzpicture}
+\caption{Le volume molaire : aux conditions TPN, \emph{une} mole de n'importe quel gaz parfait
+(quelle que soit sa nature : \ce{O2}, \ce{CO2}, \ce{NO}\ldots) occupe \SI{22,4}{\litre}. C'est ce
+qui permet de convertir directement un volume de gaz en quantité de matière.}
+\label{fig:volmol}
+\end{figure}
+
+\subsection{De la solution à la quantité de matière}
+
+Pour une espèce dissoute, on utilise la \textbf{concentration molaire} (ou molarité) $C$.
+
+\begin{formule}[quantité de matière et concentration]
+\[
+\boxed{\;n=C\times V\;}
+\]
+\begin{ou}
+  \item $n$ : quantité de matière de soluté, en \textbf{moles} (\si{\mole}) ;
+  \item $C$ : concentration molaire de la solution, en \textbf{moles par litre} (\molL, noté aussi \si{\Molar}) ;
+  \item $V$ : volume de solution prélevé, en \textbf{litres} (\si{\litre}).
+\end{ou}
+La notation $[\ce{X}]$ désigne la concentration molaire de l'espèce \ce{X} en \molL.
+\end{formule}
+
+\begin{remarque}[le triangle des conversions]
+Ces trois relations sont les seules « portes d'entrée » vers les moles. Selon la donnée fournie,
+on choisit la bonne :
+\[
+\underbrace{m\ (\si{\gram})}_{\text{balance}}\ \xrightarrow{\;\div M\;}\ n\ (\si{\mole})\ \xleftarrow{\;\div \Vm\;}\ \underbrace{V_{\text{gaz}}\ (\si{\litre})}_{\text{TPN}},
+\qquad
+n=C\,V\ \text{pour une solution.}
+\]
+\textbf{Toute la chimie quantitative consiste à convertir les données en moles, à appliquer les
+proportions de l'équation, puis à reconvertir le résultat dans l'unité demandée.}
+\end{remarque}
+
+% =====================================================================
+\section{Les proportions stœchiométriques}
+\label{sec:propor}
+% =====================================================================
+\subsection{Double lecture des coefficients}
+
+Considérons l'équation générique de la fiche :
+\[
+\ce{2 A + 3 B -> C + 6 D}.
+\]
+Les coefficients $(2,3,1,6)$ se lisent de \emph{deux} manières équivalentes :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{lecture microscopique} : 2 \emph{molécules} de \ce{A} réagissent avec 3
+        \emph{molécules} de \ce{B} pour donner 1 molécule de \ce{C} et 6 molécules de \ce{D} ;
+  \item \textbf{lecture macroscopique (molaire)} : 2 \emph{moles} de \ce{A} réagissent avec 3
+        \emph{moles} de \ce{B} pour donner 1 mole de \ce{C} et 6 moles de \ce{D}.
+\end{itemize}
+C'est la lecture \emph{molaire} qui rend les coefficients utiles au chimiste, car on travaille
+toujours avec un très grand nombre de molécules.
+
+\begin{theoreme}[proportionnalité stœchiométrique]
+Lorsqu'une réaction se déroule, les quantités de matière \emph{consommées} et \emph{formées} sont
+\textbf{proportionnelles aux coefficients stœchiométriques}. Pour
+$\;a\,\ce{A} + b\,\ce{B} -> c\,\ce{C} + d\,\ce{D}$, les variations de quantité de matière vérifient :
+\[
+\boxed{\;\dfrac{|\Delta n_{\ce{A}}|}{a}=\dfrac{|\Delta n_{\ce{B}}|}{b}=\dfrac{\Delta n_{\ce{C}}}{c}=\dfrac{\Delta n_{\ce{D}}}{d}\;}
+\]
+Ce rapport commun mesure « combien de fois » la réaction s'est produite : c'est l'\emph{avancement}
+(section~\ref{sec:avancement}).
+\end{theoreme}
+
+\begin{ou}
+  \item $\Delta n_{\ce{X}}$ : variation de quantité de matière de \ce{X}, en \si{\mole}
+        (négative pour un réactif consommé, positive pour un produit formé) ;
+  \item $a,b,c,d$ : coefficients stœchiométriques, \emph{sans unité}.
+\end{ou}
+
+\subsection{Le schéma « en escalier » des bilans de matière}
+
+Une façon très visuelle de mener un bilan, utilisée dans le livre, consiste à dresser un
+\textbf{schéma en escalier} : on écrit l'équation, on porte les quantités à $t_0$ et à $t_f$ sous
+chaque espèce, et l'on relie ces quantités par des flèches portant les facteurs $\times a$,
+$\times b$\ldots\ (ou $\div a$ pour remonter).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[font=\small]
+  % positions des colonnes
+  \def\cA{0}\def\cB{3.2}\def\cArr{6.0}\def\cC{8.4}\def\cD{11.0}
+  % ligne équation
+  \node[reacA,font=\bfseries] (A) at (\cA,3) {2\,\ce{A}};
+  \node at (\cA+1.4,3) {$+$};
+  \node[reacB,font=\bfseries] (B) at (\cB,3) {3\,\ce{B}};
+  \draw[->,>=Stealth,line width=1.1pt] (\cArr-1.0,3) -- (\cArr+0.9,3);
+  \node[prodC,font=\bfseries] (C) at (\cC,3) {1\,\ce{C}};
+  \node at (\cC+1.3,3) {$+$};
+  \node[prodD,font=\bfseries] (D) at (\cD,3) {6\,\ce{D}};
+  % t0
+  \node[black!60] at (-2.0,2.1) {$t=t_0$};
+  \node[reacA] at (\cA,2.1) {$0,200$ mol};
+  \node[reacB] at (\cB,2.1) {$0,300$ mol};
+  \node[prodC] at (\cC,2.1) {$0$ mol};
+  \node[prodD] at (\cD,2.1) {$0$ mol};
+  % tf
+  \node[black!60] at (-2.0,0.4) {$t=t_f$};
+  \node[reacA] at (\cA,0.4) {$0$ mol};
+  \node[reacB] at (\cB,0.4) {$0$ mol};
+  \node[prodC,font=\bfseries] at (\cC,0.4) {$\mathbf{0,100}$ mol};
+  \node[prodD] at (\cD,0.4) {$0,600$ mol};
+  % flèches de référence depuis C (0,100) vers A, B, D
+  \draw[->,>=Stealth,primary,line width=1pt] (\cC,0.75) to[bend left=12] node[above,black]{$\times 2$} (\cA,1.75);
+  \draw[->,>=Stealth,primary,line width=1pt] (\cC,0.75) to[bend left=10] node[above,pos=0.6,black]{$\times 3$} (\cB,1.75);
+  \draw[->,>=Stealth,primary,line width=1pt] (\cC,0.7) to[bend right=18] node[below,black]{$\times 6$} (\cD,0.7);
+  % cadre
+  \draw[primary!30,rounded corners=4pt] (-2.8,-0.2) rectangle (12.6,3.6);
+\end{tikzpicture}
+\caption{Schéma « en escalier » de la \textsc{synthèse 1}. On part de la quantité \emph{visée} de
+produit \ce{C} ($0,100$~mol), puis on remonte aux réactifs en multipliant par les coefficients :
+\ce{A} $=2\times0,100=0,200$~mol, \ce{B} $=3\times0,100=0,300$~mol, \ce{D} $=6\times0,100=0,600$~mol.}
+\label{fig:escalier1}
+\end{figure}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[\textsc{synthèse 1} — combien de réactifs pour une quantité visée de produit ?]
+Soit la réaction $\ce{2 A + 3 B -> C + 6 D}$, supposée de \textbf{rendement \SI{100}{\percent}}. On
+souhaite produire $\nq{C}=\SI{0,100}{\mole}$ de \ce{C}. Quelles quantités de \ce{A} et de \ce{B}
+faut-il engager, et quelle quantité de \ce{D} obtient-on ?
+
+\smallskip
+\textbf{Principe.} Les coefficients donnent les proportions : pour 1~mole de \ce{C}, il faut 2~moles
+de \ce{A} et 3~moles de \ce{B}, et l'on forme 6~moles de \ce{D}. On applique le théorème de
+proportionnalité avec le rapport de référence $\dfrac{\nq{C}}{c}=\dfrac{0,100}{1}=0,100$.
+
+\textbf{Calcul de \ce{A}.} \;$\dfrac{\nq{A}}{2}=0,100 \;\Rightarrow\; \nq{A}=2\times0,100=\SI{0,200}{\mole}.$
+
+\textbf{Calcul de \ce{B}.} \;$\dfrac{\nq{B}}{3}=0,100 \;\Rightarrow\; \nq{B}=3\times0,100=\SI{0,300}{\mole}.$
+
+\textbf{Calcul de \ce{D}.} \;$\dfrac{\nq{D}}{6}=0,100 \;\Rightarrow\; \nq{D}=6\times0,100=\SI{0,600}{\mole}.$
+
+\textbf{Conclusion.} Pour obtenir \SI{0,100}{\mole} de \ce{C}, il faut engager
+\boxed{\SI{0,200}{\mole}\ \text{de \ce{A}}} et \boxed{\SI{0,300}{\mole}\ \text{de \ce{B}}}, et l'on
+recueille \SI{0,600}{\mole} de \ce{D} (voir le schéma de la figure~\ref{fig:escalier1}). Ces
+quantités sont engagées \emph{exactement dans les proportions} de l'équation : aucun réactif n'est
+en excès, c'est un mélange dit \textbf{stœchiométrique}.
+\end{exemple}
+
+\begin{exemple}[doser des réactifs pour fabriquer un sel : \ce{Al2(SO4)3}]
+La réaction de l'hydroxyde d'aluminium avec l'acide sulfurique produit du sulfate d'aluminium :
+\[
+\ce{2 Al(OH)3 (aq) + 3 H2SO4 (aq) -> Al2(SO4)3 (aq) + 6 H2O (l)}.
+\]
+On veut obtenir $n(\ce{Al2(SO4)3})=\SI{0,300}{\mole}$, avec un rendement de \SI{100}{\percent}.
+Quelles quantités de \ce{Al(OH)3} et de \ce{H2SO4} faut-il engager ?
+
+\smallskip
+\textbf{Lecture de l'équation.} Le coefficient de \ce{Al2(SO4)3} est~1. Pour 1~mole de sel, il faut
+2~moles de \ce{Al(OH)3} et 3~moles de \ce{H2SO4}. Le rapport de référence est
+$\dfrac{n(\ce{Al2(SO4)3})}{1}=\SI{0,300}{}$.
+
+\textbf{Hydroxyde d'aluminium.} $n(\ce{Al(OH)3})=2\times0,300=\SI{0,600}{\mole}.$
+
+\textbf{Acide sulfurique.} $n(\ce{H2SO4})=3\times0,300=\SI{0,900}{\mole}.$
+
+\textbf{Conclusion.} Il faut engager \boxed{\SI{0,600}{\mole}\ \text{de \ce{Al(OH)3}}} et
+\boxed{\SI{0,900}{\mole}\ \text{de \ce{H2SO4}}}. On remarque que tout est simplement multiplié par
+\SI{0,300}{} par rapport aux coefficients de l'équation : c'est l'essence même d'un bilan
+stœchiométrique.
+
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  \def\cA{0}\def\cB{3.8}\def\cArr{6.6}\def\cC{8.9}\def\cD{11.6}
+  \node[reacA,font=\bfseries] at (\cA,2.6) {2\,\ce{Al(OH)3}};
+  \node at (\cA+1.7,2.6) {$+$};
+  \node[reacB,font=\bfseries] at (\cB,2.6) {3\,\ce{H2SO4}};
+  \draw[->,>=Stealth,line width=1.1pt] (\cArr-0.7,2.6) -- (\cArr+0.7,2.6);
+  \node[prodC,font=\bfseries] at (\cC,2.6) {\ce{Al2(SO4)3}};
+  \node at (\cC+1.55,2.6) {$+$};
+  \node[prodD,font=\bfseries] at (\cD,2.6) {6\,\ce{H2O}};
+  \node[black!60] at (-2.0,1.7) {$t=t_0$};
+  \node[reacA] at (\cA,1.7) {$0,600$ mol};
+  \node[reacB] at (\cB,1.7) {$0,900$ mol};
+  \node[prodC] at (\cC,1.7) {$0$ mol};
+  \node[prodD] at (\cD,1.7) {$0$ mol};
+  \node[black!60] at (-2.0,0.4) {$t=t_f$};
+  \node[reacA] at (\cA,0.4) {$0$ mol};
+  \node[reacB] at (\cB,0.4) {$0$ mol};
+  \node[prodC,font=\bfseries] at (\cC,0.4) {$\mathbf{0,300}$ mol};
+  \node[prodD] at (\cD,0.4) {$1,800$ mol};
+  \draw[->,>=Stealth,primary,line width=1pt] (\cC,0.75) to[bend left=12] node[above,black]{$\times 2$} (\cA,1.35);
+  \draw[->,>=Stealth,primary,line width=1pt] (\cC,0.75) to[bend left=8] node[above,pos=0.6,black]{$\times 3$} (\cB,1.35);
+  \draw[primary!30,rounded corners=4pt] (-2.8,-0.1) rectangle (13.0,3.1);
+\end{tikzpicture}
+\end{center}
+\end{exemple}
+
+% =====================================================================
+\section{Le tableau d'avancement}
+\label{sec:avancement}
+% =====================================================================
+\subsection{Définition de l'avancement}
+
+Pour suivre une réaction « pas à pas », on introduit une variable unique, l'\textbf{avancement}
+$\xi$ (lettre grecque « xi »), qui mesure le nombre de fois où la réaction élémentaire s'est
+produite.
+
+\begin{definition}[avancement d'une réaction]
+L'\textbf{avancement} $\xi$ est la grandeur, exprimée en \textbf{moles}, telle que la quantité de
+chaque espèce à l'instant $t$ s'écrit à partir de sa quantité initiale et de son coefficient
+stœchiométrique. Pour $a\,\ce{A}+b\,\ce{B} \rightarrow c\,\ce{C}+d\,\ce{D}$ :
+\[
+\nq{A}=\nq{A,0}-a\,\xi,\quad \nq{B}=\nq{B,0}-b\,\xi,\quad \nq{C}=\nq{C,0}+c\,\xi,\quad \nq{D}=\nq{D,0}+d\,\xi.
+\]
+Au départ $\xi=0$ ; il augmente à mesure que la réaction progresse.
+\end{definition}
+
+\begin{formule}[tableau d'avancement]
+\renewcommand{\arraystretch}{1.35}
+\[
+\begin{array}{l|cccc}
+ & a\,\ce{A} & b\,\ce{B} & c\,\ce{C} & d\,\ce{D}\\
+\hline
+\text{état initial } (\xi=0) & \nq{A,0} & \nq{B,0} & 0 & 0\\
+\text{état } (\xi) & \nq{A,0}-a\xi & \nq{B,0}-b\xi & c\xi & d\xi\\
+\text{état final } (\xi_{\max}) & \nq{A,0}-a\xi_{\max} & \nq{B,0}-b\xi_{\max} & c\,\xi_{\max} & d\,\xi_{\max}\\
+\end{array}
+\]
+\begin{ou}
+  \item $\nq{X,0}$ : quantité initiale de l'espèce \ce{X}, en \si{\mole} ;
+  \item $\xi$ : avancement à l'instant considéré, en \si{\mole} ;
+  \item $\xi_{\max}$ : avancement maximal (fin de réaction), en \si{\mole} ;
+  \item $a,b,c,d$ : coefficients stœchiométriques, sans unité.
+\end{ou}
+\end{formule}
+
+\begin{theoreme}[avancement maximal]
+L'\textbf{avancement maximal} $\xi_{\max}$ est atteint quand l'un des réactifs s'\emph{annule}
+(il est entièrement consommé). On le détermine en calculant, pour \emph{chaque} réactif, la valeur
+de $\xi$ qui annule sa quantité, et en retenant la \textbf{plus petite} :
+\[
+\boxed{\;\xi_{\max}=\min\!\left(\dfrac{\nq{A,0}}{a},\ \dfrac{\nq{B,0}}{b}\right)\;}
+\]
+Le réactif qui réalise ce minimum est le \textbf{réactif limitant} (section~\ref{sec:limitant}).
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   width=11.5cm,height=6.4cm,
+   xlabel={\small avancement $\xi$ (\si{\mole})},
+   ylabel={\small quantité de matière $n$ (\si{\mole})},
+   xmin=0,xmax=0.075,ymin=0,ymax=0.34,
+   axis lines=left,
+   xtick={0,0.025,0.05,0.075},
+   ytick={0,0.05,0.1,0.15,0.2,0.25,0.3},
+   tick label style={font=\footnotesize},
+   label style={font=\footnotesize},
+   legend style={font=\scriptsize,at={(1.02,1)},anchor=north west,draw=black!30},
+   clip=false,
+]
+  % n(A) = 0,1 - 2xi  (s'annule à xi=0,05)
+  \addplot[reacA,line width=1.2pt] coordinates {(0,0.10)(0.05,0)};
+  \addlegendentry{$\nq{A}=0,1-2\xi$}
+  % n(B) = 0,2 - 3xi  (jusqu'à xi=0,05 : 0,2-0,15=0,05)
+  \addplot[reacB,line width=1.2pt] coordinates {(0,0.20)(0.05,0.05)};
+  \addlegendentry{$\nq{B}=0,2-3\xi$}
+  % n(C) = xi
+  \addplot[prodC,line width=1.2pt] coordinates {(0,0)(0.05,0.05)};
+  \addlegendentry{$\nq{C}=\xi$}
+  % n(D) = 6xi
+  \addplot[prodD,line width=1.2pt] coordinates {(0,0)(0.05,0.30)};
+  \addlegendentry{$\nq{D}=6\xi$}
+  % ligne verticale xi_max
+  \draw[densely dashed,black!55] (axis cs:0.05,0) -- (axis cs:0.05,0.30);
+  \node[black!70,font=\scriptsize,anchor=south] at (axis cs:0.05,0.305) {$\xi_{\max}=0,05$};
+  \fill[reacA] (axis cs:0.05,0) circle (2pt);
+\end{axis}
+\end{tikzpicture}
+\caption{Évolution des quantités de matière en fonction de l'avancement $\xi$, pour
+$\ce{2A + 3B -> C + 6D}$ avec $\nq{A,0}=0,1$~mol et $\nq{B,0}=0,2$~mol. Les réactifs
+\emph{décroissent} (pentes $-2$ et $-3$), les produits \emph{croissent} (pentes $+1$ et $+6$). La
+réaction s'arrête lorsque \ce{A} s'annule, en $\xi_{\max}=0,05$~mol : \ce{A} est le réactif
+limitant.}
+\label{fig:avancement}
+\end{figure}
+
+\begin{exemple}[lire un tableau d'avancement]
+Reprenons $\ce{2A + 3B -> C + 6D}$ avec $\nq{A,0}=\SI{0,100}{\mole}$ et $\nq{B,0}=\SI{0,200}{\mole}$.
+Construisons le tableau d'avancement et trouvons $\xi_{\max}$.
+\renewcommand{\arraystretch}{1.35}
+\[
+\begin{array}{l|cccc}
+ & 2\,\ce{A} & 3\,\ce{B} & \ce{C} & 6\,\ce{D}\\
+\hline
+\xi=0 & 0,100 & 0,200 & 0 & 0\\
+\xi   & 0,100-2\xi & 0,200-3\xi & \xi & 6\xi\\
+\end{array}
+\]
+\textbf{Avancement maximal.} On annule chaque réactif :
+\[
+\nq{A}=0 \Rightarrow \xi=\tfrac{0,100}{2}=0,050 ;\qquad
+\nq{B}=0 \Rightarrow \xi=\tfrac{0,200}{3}\approx0,0667 .
+\]
+Le plus petit est $0,050$, donc $\xi_{\max}=\SI{0,050}{\mole}$ : c'est \ce{A} qui s'annule en
+premier. À l'état final :
+\[
+\nq{A}=0,\quad \nq{B}=0,200-3(0,050)=\SI{0,050}{\mole},\quad
+\nq{C}=0,050\ \text{mol},\quad \nq{D}=6(0,050)=\SI{0,300}{\mole}.
+\]
+On retrouve exactement le graphe de la figure~\ref{fig:avancement}. Il reste \SI{0,050}{\mole} de
+\ce{B} non consommée : \ce{B} est en excès.
+\end{exemple}
+
+% =====================================================================
+\section{Réactif limitant et réactif en excès}
+\label{sec:limitant}
+% =====================================================================
+\subsection{Définitions}
+
+En pratique, on mélange rarement les réactifs dans les proportions exactes de l'équation. L'un
+d'eux s'épuise alors avant les autres et \emph{stoppe} la réaction.
+
+\begin{definition}[réactif limitant et réactif en excès]
+Le \textbf{réactif limitant} (ou réactif en défaut) est celui qui est \textbf{entièrement
+consommé} le premier : sa disparition arrête la réaction et fixe les quantités maximales de
+produits formés. Les autres réactifs, partiellement consommés, sont dits \textbf{en excès} : il en
+\emph{reste} à la fin.
+\end{definition}
+
+\begin{attention}[le réactif limitant n'est pas celui « en plus petite quantité »]
+On ne compare \emph{jamais} directement les quantités de matière brutes ! Il faut tenir compte des
+coefficients. Dans $\ce{2A + 3B -> \ldots}$ avec $0,100$~mol de \ce{A} et $0,200$~mol de \ce{B}, il
+y a \emph{plus} de \ce{B} que de \ce{A}, et pourtant c'est \ce{A} qui est limitant. C'est le
+\textbf{rapport} $n/\text{coefficient}$ qui décide.
+\end{attention}
+
+\begin{theoreme}[critère du réactif limitant]
+Pour identifier le réactif limitant, on calcule pour chaque réactif le rapport de sa quantité
+initiale sur son coefficient stœchiométrique ; le \textbf{plus petit rapport} désigne le réactif
+limitant :
+\[
+\boxed{\;\text{limitant} = \text{réactif de plus petit } \dfrac{n_{\text{initial}}}{\text{coefficient}}\;}
+\]
+\end{theoreme}
+
+\begin{ou}
+  \item $n_{\text{initial}}$ : quantité initiale du réactif, en \si{\mole} ;
+  \item coefficient : coefficient stœchiométrique du réactif dans l'équation pondérée, sans unité ;
+  \item le rapport $n_{\text{initial}}/\text{coefficient}$ s'exprime en \si{\mole} : c'est en fait
+        l'avancement qui annulerait ce réactif (cf. $\xi_{\max}$).
+\end{ou}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[font=\small]
+% Diagramme en barres : disponible vs requis pour 2A + 3B avec 0,1 A et 0,2 B
+  \def\u{16}  % échelle verticale (1 mol -> 16 cm) -> 0,2 mol = 3,2 cm
+  \draw[->,>=Stealth,black!70] (0,0) -- (0,3.7) node[left,black,font=\footnotesize]{$n$ (\si{\mole})};
+  \draw[black!50] (-0.1,{0.1*\u}) -- (0,{0.1*\u}) node[left,black,font=\scriptsize]{$0,1$};
+  \draw[black!50] (-0.1,{0.2*\u}) -- (0,{0.2*\u}) node[left,black,font=\scriptsize]{$0,2$};
+  % barre A disponible
+  \fill[reacA!75] (0.7,0) rectangle (1.7,{0.1*\u});
+  \node[below,font=\scriptsize] at (1.2,-0.05) {\ce{A} dispo.};
+  \node[white,font=\scriptsize] at (1.2,{0.05*\u}) {$0,1$};
+  % barre A requise (pour consommer tout B : besoin 2/3 de B = 0,133) -> requis A = 0,2*2/3=0,133
+  \fill[reacA!30] (1.9,0) rectangle (2.9,{0.1333*\u});
+  \draw[reacA,dashed] (1.9,{0.1333*\u}) rectangle (2.9,{0.1333*\u});
+  \node[below,font=\scriptsize,align=center] at (2.4,-0.05) {\ce{A} requis\\pour tout \ce{B}};
+  \node[reacA!60!black,font=\scriptsize] at (2.4,{0.1333*\u+0.22}) {$0,133$};
+  % séparateur
+  \draw[black!25,densely dotted] (3.6,0) -- (3.6,3.5);
+  % barre B disponible
+  \fill[reacB!75] (4.4,0) rectangle (5.4,{0.2*\u});
+  \node[below,font=\scriptsize] at (4.9,-0.05) {\ce{B} dispo.};
+  \node[white,font=\scriptsize] at (4.9,{0.1*\u}) {$0,2$};
+  % barre B requise (pour consommer tout A 0,1 : besoin 3/2*0,1=0,15)
+  \fill[reacB!30] (5.6,0) rectangle (6.6,{0.15*\u});
+  \node[below,font=\scriptsize,align=center] at (6.1,-0.05) {\ce{B} requis\\pour tout \ce{A}};
+  \node[reacB!60!black,font=\scriptsize] at (6.1,{0.15*\u+0.22}) {$0,15$};
+  % annotations conclusion
+  \node[align=left,font=\footnotesize,reacA!60!black] at (10.0,2.7)
+     {\textbf{\ce{A}} : on en a $0,1$, il en\\ faudrait $0,133$ $\Rightarrow$ \emph{pas assez}\\ \textbf{$\Rightarrow$ \ce{A} est limitant}};
+  \node[align=left,font=\footnotesize,reacB!60!black] at (10.0,1.1)
+     {\textbf{\ce{B}} : on en a $0,2$, il n'en\\ faut que $0,15$ $\Rightarrow$ \emph{de reste}\\ \textbf{$\Rightarrow$ \ce{B} en excès} ($0,05$)};
+\end{tikzpicture}
+\caption{Lecture « disponible \emph{vs} requis ». Pour \ce{A} : on en dispose de $0,1$~mol mais il
+en faudrait $0,133$~mol pour consommer tout le \ce{B} ; \ce{A} manque, il est \textbf{limitant}.
+Pour \ce{B} : on en a $0,2$~mol alors qu'il n'en faut que $0,15$~mol ; il en \emph{reste}, \ce{B}
+est \textbf{en excès}.}
+\label{fig:barres}
+\end{figure}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[\textsc{synthèse 2} — identifier le réactif limitant]
+Pour la même équation $\ce{2A + 3B -> C + 6D}$, les quantités initiales sont
+$\nq{A,0}=\SI{0,100}{\mole}$ et $\nq{B,0}=\SI{0,200}{\mole}$. Quel est le réactif limitant, et quel
+est le bilan final ?
+
+\smallskip
+\textbf{Méthode 1 — par les rapports $n/\text{coefficient}$.}
+\[
+\frac{\nq{A,0}}{2}=\frac{0,100}{2}=0,050 ;\qquad \frac{\nq{B,0}}{3}=\frac{0,200}{3}\approx0,0667 .
+\]
+$0,050<0,0667$ : le plus petit rapport est celui de \ce{A}. \textbf{\ce{A} est le réactif
+limitant}, \ce{B} est en excès.
+
+\textbf{Méthode 2 — par comparaison « requis vs disponible » (raisonnement du livre).} Pour
+transformer \emph{complètement} les \SI{0,100}{\mole} de \ce{A}, il faut, d'après les coefficients
+($2\,\ce{A}$ pour $3\,\ce{B}$), une quantité de \ce{B} égale à
+\[
+\nq{B,\text{requis}}=\nq{A,0}\times\frac{3}{2}=0,100\times\frac{3}{2}=\SI{0,150}{\mole}.
+\]
+Or on \emph{dispose} de \SI{0,200}{\mole} de \ce{B}, soit \emph{plus} que les \SI{0,150}{\mole}
+nécessaires : \ce{B} est donc en excès, et \ce{A} est bien le réactif limitant. Les deux méthodes
+concordent.
+
+\textbf{Bilan final} (tout calculé \emph{à partir du limitant} \ce{A}, qui fixe $\xi_{\max}=0,050$) :
+\[
+\nq{C}=\nq{A,0}\times\frac{1}{2}=\SI{0,050}{\mole};\quad
+\nq{D}=\nq{A,0}\times\frac{6}{2}=\SI{0,300}{\mole};
+\]
+\[
+\nq{B,\text{consommée}}=\SI{0,150}{\mole}\ \Rightarrow\ \nq{B,\text{restante}}=0,200-0,150=\SI{0,050}{\mole}.
+\]
+
+\textbf{Conclusion.} \boxed{\text{\ce{A} limitant, \ce{B} en excès de \SI{0,050}{\mole}}} ; on forme
+\SI{0,050}{\mole} de \ce{C} et \SI{0,300}{\mole} de \ce{D}.
+
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  \def\cA{0}\def\cB{3.2}\def\cArr{6.0}\def\cC{8.4}\def\cD{11.0}
+  \node[reacA,font=\bfseries] at (\cA,3) {2\,\ce{A}};
+  \node[draw=attncol,thick,rounded corners=2pt,attncol,font=\scriptsize] at (\cA,3.6) {réactif limitant};
+  \node at (\cA+1.4,3) {$+$};
+  \node[reacB,font=\bfseries] at (\cB,3) {3\,\ce{B}};
+  \draw[->,>=Stealth,line width=1.1pt] (\cArr-1.0,3) -- (\cArr+0.9,3);
+  \node[prodC,font=\bfseries] at (\cC,3) {\ce{C}};
+  \node at (\cC+1.0,3) {$+$};
+  \node[prodD,font=\bfseries] at (\cD,3) {6\,\ce{D}};
+  \node[black!60] at (-2.0,2.1) {$t=t_0$};
+  \node[reacA] at (\cA,2.1) {$0,100$ mol};
+  \node[reacB] at (\cB,2.1) {$0,200$ mol};
+  \node[prodC] at (\cC,2.1) {$0$};
+  \node[prodD] at (\cD,2.1) {$0$};
+  \node[black!60] at (-2.0,0.4) {$t=t_f$};
+  \node[reacA,font=\bfseries] at (\cA,0.4) {$0,0$ mol};
+  \node[reacB] at (\cB,0.4) {$0,050$ mol};
+  \node[prodC] at (\cC,0.4) {$0,050$ mol};
+  \node[prodD] at (\cD,0.4) {$0,300$ mol};
+  \draw[->,>=Stealth,primary,line width=1pt] (\cA,0.75) to[bend right=10] node[below,pos=0.45,black]{$\times\frac{1}{2}$} (\cC,0.05);
+  \draw[->,>=Stealth,primary,line width=1pt] (\cA,0.75) to[bend right=22] node[below,black]{$\times 3$} (\cD,0.05);
+  \node[reacB!60!black,font=\scriptsize] at (\cB,1.25) {$(0,200-0,100\times\frac{3}{2})$};
+  \draw[primary!30,rounded corners=4pt] (-2.8,-0.5) rectangle (12.6,4.0);
+\end{tikzpicture}
+\end{center}
+\end{exemple}
+
+\begin{exemple}[trois réactifs : le dichromate de potassium]
+Soit l'équation pondérée
+\[
+\ce{2 K2Cr2O7 (aq) + 3 C (s) + 8 H2SO4 (aq) -> 3 CO2 + 2 Cr2(SO4)3 (aq) + 2 K2SO4 (aq) + 8 H2O (l)}.
+\]
+On mélange $n_0(\ce{K2Cr2O7})=\SI{0,10}{\mole}$, $\nq{C,0}=\SI{0,20}{\mole}$ et
+$n_0(\ce{H2SO4})=\SI{0,30}{\mole}$. Quel est le réactif limitant ?
+
+\smallskip
+\textbf{Critère des rapports.} On calcule $n/\text{coefficient}$ pour les trois réactifs :
+\[
+\frac{n(\ce{K2Cr2O7})}{2}=\frac{0,10}{2}=0,050 ;\quad
+\frac{\nq{C}}{3}=\frac{0,20}{3}\approx0,0667 ;\quad
+\frac{n(\ce{H2SO4})}{8}=\frac{0,30}{8}=0,0375 .
+\]
+Le plus petit rapport est celui de l'acide sulfurique :
+\[
+0,0375<0,050<0,0667\quad\Longrightarrow\quad \boxed{\text{\ce{H2SO4} est le réactif limitant}}.
+\]
+
+\textbf{Vérification « requis vs disponible ».} Pour consommer entièrement les \SI{0,10}{\mole} de
+\ce{K2Cr2O7}, il faudrait, d'après le rapport $8\,\ce{H2SO4}$ pour $2\,\ce{K2Cr2O7}$,
+\[
+n_{\text{requis}}(\ce{H2SO4})=0,10\times\frac{8}{2}=\SI{0,40}{\mole}.
+\]
+Or on n'a que \SI{0,30}{\mole} d'acide ($0,30<0,40$) : l'acide manque, il est bien limitant, et le
+dichromate est en excès. \emph{(De même, l'acide est limitant face au carbone, comme le confirment
+les rapports.)}
+
+\textbf{Méthode mémo.} \emph{Le réactif limitant est celui qui donne le plus petit rapport
+$\dfrac{\text{quantité engagée}}{\text{coefficient stœchiométrique}}$.} C'est la traduction directe
+de $\xi_{\max}=\min(n_i/\nu_i)$.
+\end{exemple}
+
+\begin{exemple}[un cas à données mêlées (masse, moles, volume) : \ce{Co + KNO3 + HCl}]
+\label{ex:cobalt}
+Soit la réaction, après pondération (cf.\ section~\ref{sec:equation}) :
+\[
+\ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 2 KCl + 4 H2O}.
+\]
+On introduit \SI{58,93}{\gram} de cobalt, \SI{1,500}{\mole} de \ce{KNO3} et \SI{20}{\milli\litre}
+d'acide chlorhydrique à \SI{6}{\Molar}. On donne $M(\ce{Co})=\SI{58,93}{\gram\per\mole}$. Quel est le
+réactif limitant ?
+
+\smallskip
+\textbf{Étape 1 — tout convertir en moles.}
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Cobalt (masse $\to$ mole) : $n(\ce{Co})=\dfrac{m}{M}=\dfrac{58,93}{58,93}=\SI{1}{\mole}.$
+  \item Nitrate de potassium : donné, $n(\ce{KNO3})=\SI{1,500}{\mole}.$
+  \item Acide chlorhydrique (solution $\to$ mole) : $n(\ce{HCl})=C\times V=6\times0,020=\SI{0,120}{\mole}.$
+        (Attention : \SI{20}{\milli\litre}$=\SI{0,020}{\litre}$.)
+\end{itemize}
+
+\textbf{Étape 2 — appliquer le critère des rapports.}
+\[
+\frac{n(\ce{Co})}{3}=\frac{1}{3}\approx0,333 ;\qquad
+\frac{n(\ce{KNO3})}{2}=\frac{1,5}{2}=0,750 ;\qquad
+\frac{n(\ce{HCl})}{8}=\frac{0,120}{8}=0,015 .
+\]
+Le plus petit est de loin celui de \ce{HCl} ($0,015$) : \boxed{\text{\ce{HCl} est le réactif limitant}}.
+
+\textbf{Étape 3 — interprétation (raisonnement du livre).} Pour faire disparaître tout le cobalt
+(1~mol), il faudrait $n(\ce{HCl})=1\times\dfrac{8}{3}=\SI{2,66}{\mole}$ d'acide ; or on n'en a que
+\SI{0,120}{\mole}. L'acide est donc en très large défaut : il fixe l'avancement. Toutes les
+quantités finales se calculent \textbf{à partir de \ce{HCl}}. C'est l'objet de l'exemple de
+synthèse de la section~\ref{sec:synthese}.
+\end{exemple}
+
+% =====================================================================
+\section{Le rendement d'une réaction}
+\label{sec:rendement}
+% =====================================================================
+\subsection{Rendement théorique et rendement réel}
+
+Jusqu'ici nous avons supposé un rendement de \SI{100}{\percent} : tout le réactif limitant se
+transforme. En réalité, des réactions secondaires, un équilibre non total ou des pertes font qu'on
+obtient \emph{moins} de produit que prévu.
+
+\begin{definition}[rendement d'une réaction]
+Le \textbf{rendement} $R$ d'une réaction est le rapport entre la quantité de produit
+\textbf{réellement} obtenue et la quantité \textbf{théorique} (maximale) que l'on obtiendrait si le
+réactif limitant était entièrement converti. On l'exprime souvent en pourcentage.
+\end{definition}
+
+\begin{formule}[rendement]
+\[
+\boxed{\;R=\dfrac{n_{\text{réel}}}{n_{\text{théorique}}}\times 100\;}\quad(\si{\percent})
+\]
+\begin{ou}
+  \item $R$ : rendement de la réaction, en \textbf{pour cent} (\si{\percent}), compris entre 0 et 100 ;
+  \item $n_{\text{réel}}$ : quantité de produit effectivement obtenue, en \si{\mole} (mesurée
+        expérimentalement) ;
+  \item $n_{\text{théorique}}$ : quantité \emph{maximale} de produit prévue par la stœchiométrie à
+        partir du réactif limitant, en \si{\mole}.
+\end{ou}
+On peut aussi écrire $R$ avec des masses ($R=m_{\text{réel}}/m_{\text{théorique}}$), car
+$m=nM$ et $M$ est commune au numérateur et au dénominateur.
+\end{formule}
+
+\begin{remarque}[le rendement agit comme un facteur multiplicatif]
+Si la réaction a un rendement $R$, la quantité réellement formée vaut
+$n_{\text{réel}}=\dfrac{R}{100}\times n_{\text{théorique}}$. Un rendement de \SI{100}{\percent}
+redonne le cas idéal des sections précédentes ; un rendement de \SI{50}{\percent} divise par deux la
+production.
+\end{remarque}
+
+\subsection{Exemple détaillé}
+
+\begin{exemple}[rendement de la synthèse du chloroéthane]
+On fait réagir \SI{1}{\mole} d'éthanol avec \SI{5}{\mole} de trichlorure de phosphore \ce{PCl3} :
+\[
+\ce{3 CH3CH2OH + PCl3 -> 3 CH3CH2Cl + H3PO3}.
+\]
+
+\textbf{(a) Rendement théorique en chloroéthane \ce{CH3CH2Cl}.}
+D'abord, le \emph{réactif limitant} : rapports $n/\text{coefficient}$ :
+$\dfrac{\nq{éthanol}}{3}=\dfrac{1}{3}\approx0,333$ et $\dfrac{n(\ce{PCl3})}{1}=5$. Le plus petit est
+celui de l'éthanol : \textbf{l'éthanol est limitant} (le \ce{PCl3} est en large excès). Comme les
+coefficients de l'éthanol et du \ce{CH3CH2Cl} sont \emph{tous deux égaux à 3} :
+\[
+n_{\text{théorique}}(\ce{CH3CH2Cl})=\nq{éthanol}\times\frac{3}{3}=1\times1=\SI{1}{\mole}.
+\]
+La quantité \emph{maximale} de chloroéthane est donc \boxed{\SI{1}{\mole}}.
+
+\textbf{(b) Rendement réel.} On mesure que la quantité réellement produite de \ce{H3PO3} est
+$\frac{1}{6}$~mol. Calculons d'abord la quantité \emph{théorique} de \ce{H3PO3}. Le coefficient de
+\ce{H3PO3} est~1, celui de l'éthanol (limitant) est~3 :
+\[
+n_{\text{théorique}}(\ce{H3PO3})=\nq{éthanol}\times\frac{1}{3}=1\times\frac{1}{3}=\frac{1}{3}\ \si{\mole}.
+\]
+Le rendement est alors
+\[
+R=\frac{n_{\text{réel}}(\ce{H3PO3})}{n_{\text{théorique}}(\ce{H3PO3})}\times100
+ =\frac{\tfrac{1}{6}}{\tfrac{1}{3}}\times100
+ =\frac{1}{6}\times\frac{3}{1}\times100
+ =\frac{1}{2}\times100=\boxed{\SI{50}{\percent}}.
+\]
+
+\textbf{Conclusion.} Bien que le \ce{PCl3} soit en grand excès, seule la moitié de l'éthanol s'est
+effectivement convertie : le rendement est de \SI{50}{\percent}. \emph{Remarquez que l'excès de
+\ce{PCl3} ne garantit nullement un rendement de \SI{100}{\percent}} : l'excès d'un réactif permet
+au mieux de consommer tout le limitant, mais n'agit pas sur les pertes et les réactions
+secondaires.
+\end{exemple}
+
+% =====================================================================
+\section{Méthode générale de résolution d'un bilan de matière}
+% =====================================================================
+Tous les exemples précédents suivent le \emph{même} fil. On peut le résumer en un organigramme
+universel, valable pour n'importe quel problème de bilan de matière.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+   node distance=5mm,
+   box/.style={rounded corners=3pt,draw=primary!70!black,fill=primary!8,
+      text width=10.5cm,align=center,inner sep=6pt,font=\small},
+   arr/.style={->,>=Stealth,primary,line width=1pt},
+]
+  \node[box,fill=attncol!10,draw=attncol] (e1)
+    {\textbf{1. Pondérer l'équation chimique.} Vérifier que chaque élément (et la charge) est
+     équilibré. \emph{Aucun calcul n'est valable sur une équation non ajustée.}};
+  \node[box,below=of e1] (e2)
+    {\textbf{2. Convertir toutes les données en moles.} Masse $\to n=m/M$ ; volume de gaz aux TPN
+     $\to n=V/\Vm$ ; solution $\to n=C\,V$.};
+  \node[box,below=of e2] (e3)
+    {\textbf{3. Identifier le réactif limitant.} Calculer $\dfrac{n_i}{\nu_i}$ pour chaque
+     réactif ; le \emph{plus petit} est limitant. C'est lui qui fixe $\xi_{\max}$.};
+  \node[box,below=of e3] (e4)
+    {\textbf{4. Calculer les quantités finales} (produits formés, réactifs restants) à partir du
+     limitant, via les rapports de coefficients (ou un tableau d'avancement).};
+  \node[box,below=of e4] (e5)
+    {\textbf{5. Appliquer le rendement} si $R\neq\SI{100}{\percent}$ :
+     $n_{\text{réel}}=\dfrac{R}{100}\,n_{\text{théorique}}$.};
+  \node[box,below=of e5,fill=excol!10,draw=excol] (e6)
+    {\textbf{6. Reconvertir} le résultat dans l'unité demandée (masse $m=nM$, volume $V=n\Vm$,
+     concentration $C=n/V$\ldots) et conclure.};
+  \draw[arr] (e1) -- (e2);
+  \draw[arr] (e2) -- (e3);
+  \draw[arr] (e3) -- (e4);
+  \draw[arr] (e4) -- (e5);
+  \draw[arr] (e5) -- (e6);
+\end{tikzpicture}
+\caption{Organigramme universel d'un bilan de matière. Les six étapes s'enchaînent toujours dans
+cet ordre ; les étapes 1 et 2 sont les plus souvent négligées… et la source numéro un d'erreurs.}
+\label{fig:methode}
+\end{figure}
+
+% =====================================================================
+\section{Problèmes de synthèse résolus}
+\label{sec:synthese}
+% =====================================================================
+Appliquons l'organigramme à des situations complètes, mêlant masses, volumes gazeux et solutions.
+
+\begin{exemple}[combustion du kérosène : volume de \ce{CO2} produit]
+Le kérosène est modélisé par \ce{C14H30}, de masse volumique $\rho=\SI{0,763}{\gram\per\milli\litre}$.
+On dispose de \SI{224}{\litre} d'air aux TPN. \emph{(a)} Quel volume de \ce{CO2}, aux TPN, obtient-on
+si tout ce dioxygène réagit ? \emph{(b)} Combien de moles de \ce{CO2} obtient-on en brûlant
+\SI{100}{\milli\litre} de kérosène ? On rappelle $\Vm=\SI{22,4}{\litre\per\mole}$ et l'air contient
+\SI{20}{\percent} de \ce{O2} (en moles).
+
+\smallskip
+\textbf{Étape 1 — équation pondérée} (déjà établie) :
+$\ce{2 C14H30 + 43 O2 -> 28 CO2 + 30 H2O}.$
+
+\smallskip
+\textbf{(a) Volume de \ce{CO2} à partir de l'air.}
+
+\emph{Conversion air $\to$ moles de gaz.} \SI{224}{\litre} d'air aux TPN représentent
+\[
+n_{\text{air}}=\frac{V}{\Vm}=\frac{224}{22,4}=\SI{10}{\mole}\ \text{de gaz.}
+\]
+\emph{Part de dioxygène} (\SI{20}{\percent}) : $n(\ce{O2})=10\times\dfrac{20}{100}=\SI{2}{\mole}.$
+
+\emph{Proportion stœchiométrique \ce{O2} $\to$ \ce{CO2}} ($43\,\ce{O2}$ pour $28\,\ce{CO2}$) :
+\[
+n(\ce{CO2})=n(\ce{O2})\times\frac{28}{43}=2\times\frac{28}{43}=\frac{56}{43}\approx\SI{1,302}{\mole}.
+\]
+\emph{Reconversion en volume} (TPN) :
+\[
+V(\ce{CO2})=n(\ce{CO2})\times\Vm=\frac{56}{43}\times22,4\approx\SI{29,2}{\litre}.
+\]
+\textbf{Conclusion (a).} \boxed{V(\ce{CO2})\approx\SI{29,2}{\litre}} (soit $V<\SI{100}{\litre}$).
+
+\smallskip
+\textbf{(b) Moles de \ce{CO2} à partir de \SI{100}{\milli\litre} de kérosène.}
+
+\emph{Masse de kérosène} : $m=\rho\times V=0,763\times100=\SI{76,3}{\gram}.$
+
+\emph{Conversion en moles} : $n(\ce{C14H30})=\dfrac{m}{M(\ce{C14H30})}=\dfrac{76,3}{M(\ce{C14H30})}.$
+
+\emph{Proportion \ce{C14H30} $\to$ \ce{CO2}} ($2\,\ce{C14H30}$ pour $28\,\ce{CO2}$) :
+\[
+n(\ce{CO2})=n(\ce{C14H30})\times\frac{28}{2}=\frac{76,3}{M(\ce{C14H30})}\times 14 .
+\]
+\textbf{Conclusion (b).} \boxed{n(\ce{CO2})=\dfrac{76,3}{M(\ce{C14H30})}\times 14}. Numériquement,
+avec $M(\ce{C14H30})=14\times12,0+30\times1,0\approx\SI{198,4}{\gram\per\mole}$, on obtient
+$n(\ce{CO2})\approx\dfrac{76,3}{198,4}\times14\approx\SI{5,38}{\mole}.$ Cet exemple illustre toute la
+chaîne : \emph{volume$\to$masse$\to$moles$\to$stœchiométrie$\to$moles}.
+\end{exemple}
+
+\begin{exemple}[bilan complet du cobalt (suite de l'exemple~\ref{ex:cobalt})]
+On reprend $\ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 2 KCl + 4 H2O}$ avec le réactif limitant
+\ce{HCl} ($n(\ce{HCl})=\SI{0,120}{\mole}$). Rendement \SI{100}{\percent}. Calculer \emph{(a)} la masse
+de \ce{CoCl2} formée, \emph{(b)} la quantité de \ce{KCl} formée, \emph{(c)} le volume de \ce{NO}
+gazeux dégagé aux TPN. Donnée : $M(\ce{CoCl2})=\SI{129,8}{\gram\per\mole}$.
+
+\smallskip
+\textbf{Tout part du limitant \ce{HCl}} (coefficient 8). On utilise les rapports de coefficients.
+
+\textbf{(a) Chlorure de cobalt(II).} ($8\,\ce{HCl}$ pour $3\,\ce{CoCl2}$) :
+\[
+n(\ce{CoCl2})=n(\ce{HCl})\times\frac{3}{8}=0,120\times\frac{3}{8}=\SI{0,045}{\mole}.
+\]
+\emph{Reconversion en masse} : $m(\ce{CoCl2})=n(\ce{CoCl2})\times M=0,045\times129,8\approx\SI{5,84}{\gram}.$
+\boxed{n(\ce{CoCl2})=\SI{0,045}{\mole}\ \ (\approx\SI{5,84}{\gram})}
+
+\begin{attention}[mole \emph{ou} gramme ?]
+Un piège classique : il se forme \SI{0,045}{\mole} de \ce{CoCl2}, ce qui n'est \emph{pas}
+\SI{0,045}{\gram} ! Pour obtenir une masse, il faut multiplier par la masse molaire :
+$0,045\times129,8\approx\SI{5,84}{\gram}$. \emph{Toujours surveiller l'unité du résultat.}
+\end{attention}
+
+\textbf{(b) Chlorure de potassium.} ($8\,\ce{HCl}$ pour $2\,\ce{KCl}$) :
+\[
+n(\ce{KCl})=n(\ce{HCl})\times\frac{2}{8}=0,120\times\frac{1}{4}=\boxed{\SI{0,030}{\mole}}.
+\]
+
+\textbf{(c) Monoxyde d'azote gazeux.} ($8\,\ce{HCl}$ pour $2\,\ce{NO}$) :
+\[
+n(\ce{NO})=n(\ce{HCl})\times\frac{2}{8}=0,120\times\frac{1}{4}=\SI{0,030}{\mole}.
+\]
+\emph{Reconversion en volume} (TPN) :
+\[
+V(\ce{NO})=n(\ce{NO})\times\Vm=0,030\times22,4=\boxed{\SI{0,672}{\litre}}.
+\]
+
+\textbf{Conclusion.} À partir des seules \SI{0,120}{\mole} d'acide (le limitant), on forme
+\SI{0,045}{\mole} de \ce{CoCl2} ($\approx\SI{5,84}{\gram}$), \SI{0,030}{\mole} de \ce{KCl} et
+\SI{0,672}{\litre} de \ce{NO} gazeux. Les grandes quantités de \ce{Co} et de \ce{KNO3} engagées ne
+servent à rien au-delà de ce que l'acide permet de consommer : \emph{c'est toujours le réactif
+limitant qui commande le bilan}.
+\end{exemple}
+
+\begin{exemple}[dosage par titrage : concentration d'une solution de dichromate]
+On dose les ions dichromate \ce{Cr2O7^2-} (de concentration inconnue) par des ions ferreux
+\ce{Fe^2+} (sel de Mohr) de concentration $[\ce{Fe^2+}]=\SI{0,6}{\Molar}$. L'équation est :
+\[
+\ce{Cr2O7^2- + 14 H3O+ + 6 Fe^2+ -> 2 Cr^3+ + 21 H2O + 6 Fe^3+}.
+\]
+On titre un volume $V(\ce{Cr2O7^2-})=\SI{10}{\milli\litre}$ ; l'équivalence est atteinte lorsqu'on
+a ajouté $V(\ce{Fe^2+})=\SI{10}{\milli\litre}$ de solution ferreuse. Quelle est la concentration
+$[\ce{Cr2O7^2-}]$ ?
+
+\smallskip
+\textbf{Étape 1 — relation à l'équivalence.} À l'équivalence, les réactifs sont \emph{exactement}
+dans les proportions stœchiométriques. Le coefficient de \ce{Cr2O7^2-} est 1 et celui de
+\ce{Fe^2+} est 6, donc :
+\[
+\frac{n(\ce{Cr2O7^2-})}{1}=\frac{n(\ce{Fe^2+})}{6}\qquad\Longrightarrow\qquad n(\ce{Cr2O7^2-})=\frac{n(\ce{Fe^2+})}{6}.
+\]
+
+\textbf{Étape 2 — quantité d'ions ferreux ajoutée} ($n=C\,V$) :
+\[
+n(\ce{Fe^2+})=[\ce{Fe^2+}]\times V(\ce{Fe^2+})=0,6\times0,010=\SI{0,006}{\mole}.
+\]
+
+\textbf{Étape 3 — quantité de dichromate dosée :}
+\[
+n(\ce{Cr2O7^2-})=\frac{0,006}{6}=\SI{1e-3}{\mole}.
+\]
+
+\textbf{Étape 4 — reconvertir en concentration} ($C=n/V$, avec $V=\SI{10}{\milli\litre}=\SI{0,010}{\litre}$) :
+\[
+[\ce{Cr2O7^2-}]=\frac{n(\ce{Cr2O7^2-})}{V}=\frac{10^{-3}}{0,010}=\boxed{\SI{0,1}{\Molar}}.
+\]
+
+\textbf{Conclusion.} La solution de dichromate a une concentration de \SI{0,1}{\mole\per\litre}. Ce
+problème illustre le \textbf{principe du titrage} : la stœchiométrie à l'équivalence relie la
+quantité \emph{inconnue} à la quantité \emph{connue} de réactif titrant.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % burette
+  \draw[black!70,line width=1pt] (0,1.4) rectangle (0.5,4.4);
+  \fill[reacB!30] (0.02,1.42) rectangle (0.48,3.9);
+  \node[black!70,font=\scriptsize,align=center,anchor=west] at (0.7,4.0)
+     {burette :\\ \ce{Fe^2+} à $0,6$ \si{\Molar}};
+  \draw[black!70,line width=1pt] (0.18,1.4) -- (0.18,1.0) -- (0.32,1.0) -- (0.32,1.4);
+  \draw[reacB,line width=1pt,->,>=Stealth] (0.25,1.0) -- (0.25,0.55);
+  % bécher
+  \draw[black!70,line width=1.1pt] (-0.9,0.5) -- (-0.7,-0.6) -- (1.2,-0.6) -- (1.4,0.5);
+  \fill[primary!22] (-0.78,0.1) -- (-0.7,-0.6) -- (1.2,-0.6) -- (1.28,0.1) -- cycle;
+  \node[primarydark,font=\scriptsize,align=center] at (0.25,-0.3) {\ce{Cr2O7^2-}\\ ($V=10$ mL)};
+  \node[black!70,font=\scriptsize,align=center,anchor=west] at (1.7,-0.1)
+     {à l'équivalence :\\ $n(\ce{Cr2O7^2-})=\dfrac{n(\ce{Fe^2+})}{6}$};
+\end{tikzpicture}
+\end{center}
+\end{exemple}
+
+% =====================================================================
+\section{Récapitulatif et erreurs fréquentes}
+% =====================================================================
+\subsection{Formulaire essentiel}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.6cm} >{\centering\arraybackslash}p{4.4cm} >{\raggedright\arraybackslash}p{5.6cm}}
+\toprule
+\rowcolor{primary!12}
+\textbf{Grandeur / relation} & \textbf{Formule} & \textbf{Unités}\\
+\midrule
+Conservation de la masse & $m_{\text{réactifs}}=m_{\text{produits}}$ & \si{\gram}\\
+Quantité de matière (masse) & $n=\dfrac{m}{M}$ & \si{\mole}, \si{\gram}, \gmol\\
+Quantité de matière (gaz, TPN) & $n=\dfrac{V}{\Vm}$,\; $\Vm=\SI{22,4}{\litre\per\mole}$ & \si{\mole}, \si{\litre}, \Lmol\\
+Quantité de matière (solution) & $n=C\,V$ & \si{\mole}, \molL, \si{\litre}\\
+Proportions stœchiométriques & $\dfrac{|\Delta n_i|}{\nu_i}=\text{Cte}=\xi$ & \si{\mole}\\
+Quantité à l'avancement $\xi$ & $n_i=n_{i,0}\pm\nu_i\,\xi$ & \si{\mole}\\
+Avancement maximal & $\xi_{\max}=\min\!\big(n_{i,0}/\nu_i\big)$ & \si{\mole}\\
+Réactif limitant & plus petit $n_{i,0}/\nu_i$ & ---\\
+Rendement & $R=\dfrac{n_{\text{réel}}}{n_{\text{théorique}}}\times100$ & \si{\percent}\\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent\footnotesize ($\nu_i$ désigne le coefficient stœchiométrique de l'espèce $i$.)
+\normalsize
+
+\subsection{Les pièges à éviter}
+
+\begin{attention}[les cinq erreurs les plus fréquentes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Oublier de pondérer l'équation.} Un bilan sur une équation non ajustée est faux dès
+        le départ. \emph{Toujours} vérifier l'équilibre des atomes (et des charges) en premier.
+  \item \textbf{Confondre quantité brute et rapport $n/\nu$.} Le réactif limitant n'est pas celui
+        dont la quantité est la plus faible, mais celui dont le rapport
+        $n_{\text{initial}}/\text{coefficient}$ est le plus petit.
+  \item \textbf{Confondre moles et grammes (ou litres).} Un résultat en moles n'est pas une masse :
+        il faut multiplier par $M$ ; ni un volume : il faut multiplier par $\Vm$.
+  \item \textbf{Mauvaises conversions d'unités.} \SI{20}{\milli\litre}$=\SI{0,020}{\litre}$,
+        \SI{1}{\milli\litre}$\neq\SI{1}{\litre}$ ; la concentration est en \molL, le volume en
+        litres.
+  \item \textbf{Croire qu'un excès de réactif donne \SI{100}{\percent} de rendement.} L'excès
+        permet seulement de consommer tout le limitant ; il n'agit pas sur les pertes. Le rendement
+        réel se mesure et peut être bien inférieur à \SI{100}{\percent}.
+\end{enumerate}
+\end{attention}
+
+\begin{remarque}[le mot de la fin]
+Un bilan de matière n'est jamais qu'une \emph{règle de trois} appliquée avec rigueur, à condition
+d'avoir d'abord (i) pondéré l'équation et (ii) tout converti en moles. Le réactif limitant fixe
+l'avancement maximal ; les coefficients donnent ensuite toutes les autres quantités ; le rendement
+corrige enfin pour la réalité expérimentale. Maîtriser ces trois idées, c'est maîtriser toute la
+chimie quantitative de ce niveau.
+\end{remarque}
+
+\end{document}

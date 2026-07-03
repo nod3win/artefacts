@@ -1,0 +1,92 @@
+% =====================================================================
+%  THÈME 4 — Logarithmes, pH & incertitude — EXERCICES — Niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Exercices · Facile · Thème 4}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
+  colback=primary!4,colframe=primary,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Exercices — Niveau Facile}\\[1pt]
+{\color{primary} Thème 4 : pH, justesse, fidélité, incertitude}
+\end{center}
+\vspace{1mm}
+\textit{On applique la règle du logarithme et le vocabulaire de la précision (sans calcul de log ici).}
+\vspace{2mm}
+
+\begin{exo}[Combien de décimales pour le pH ?]
+Sans calculer le pH, indique \emph{seulement} combien de décimales il doit comporter, d'après le
+nombre de \CS\ de la concentration.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $[\ce{H3O+}]=\num{2,5e-4}\,\si{\mol\per\litre}$ \qquad b) $[\ce{H3O+}]=\num{1,00e-5}\,\si{\mol\per\litre}$
+  \item[] c) $[\ce{H3O+}]=\num{6,3e-9}\,\si{\mol\per\litre}$ \qquad d) $[\ce{H3O+}]=\num{4,0e-2}\,\si{\mol\per\litre}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Du pH à la concentration (valeurs simples)]
+Donne $[\ce{H3O+}]=10^{-\mathrm{pH}}$ avec le bon nombre de \CS\ (déduit du nombre de décimales du pH).
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\mathrm{pH}=\num{2,00}$ \qquad b) $\mathrm{pH}=\num{5,00}$ \qquad c) $\mathrm{pH}=\num{7,000}$ \qquad d) $\mathrm{pH}=\num{11,0}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Incertitude absolue sous-entendue]
+Par convention, le dernier \cs\ écrit fixe l'incertitude absolue $\Delta x$. Donne $\Delta x$ pour
+chaque mesure.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $m=\qty{13,02}{\gram}$ \qquad b) $V=\qty{20,96}{\milli\litre}$ \qquad c) $m=\qty{5,0}{\gram}$ \qquad d) $L=\qty{1,250}{\metre}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Justesse ou fidélité ?]
+On répète $4$ fois une même mesure et on représente les résultats comme des tirs sur une cible (le
+centre = vraie valeur). Pour chaque situation, dis si les mesures sont \emph{justes}, \emph{fidèles},
+les deux, ou aucune.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item les $4$ tirs sont groupés, mais loin du centre ;
+  \item les $4$ tirs sont dispersés, mais répartis tout autour du centre ;
+  \item les $4$ tirs sont groupés au centre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Encadrer une mesure]
+Pour chaque écriture $x = x_{\text{mes}} \pm \Delta x$, donne l'intervalle $[\,x_{\text{mes}}-\Delta x\,;\ x_{\text{mes}}+\Delta x\,]$
+dans lequel se trouve la vraie valeur.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $m = \qty{13,02\pm0,01}{\gram}$ \qquad b) $V = \qty{20,96\pm0,01}{\milli\litre}$
+\end{enumerate}
+\end{exo}
+
+\end{document}

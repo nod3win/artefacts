@@ -1,0 +1,116 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 5 (Bilans de matière)
+%  THÈME 2 — Conversions : le pont entre masse, moles et volume
+%  Fiche TUTO
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\DeclareSIUnit\atm{atm}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,top=1.6cm,bottom=1.6cm,left=1.9cm,right=1.9cm,headheight=24pt,headsep=6pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{formulacol}{RGB}{198,93,9}
+
+\newcommand{\Vm}{V_{\mathrm m}}
+\DeclareSIUnit\Lmol{\litre\per\mole}
+\newcommand{\gmol}{\si{\gram\per\mole}}
+\newcommand{\molL}{\si{\mole\per\litre}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Bilans de matière}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto — Thème 2}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox{tutobox}[2][]{enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2mm,bottom=2mm,colback=#2!6,colframe=#2,
+  fonttitle=\bfseries,coltitle=white,title={#1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 2 — Convertir en quantité de matière}\\[1pt]
+{\color{primary}\rule{0.5\linewidth}{1.2pt}}\\[2pt]
+{\itshape Les coefficients comptent des \textbf{moles} ; le labo mesure des grammes et des litres. Voici le pont.}
+\end{center}
+\vspace{-3pt}
+
+\begin{tutobox}[L'idée maîtresse]{thmcol}
+Une équation chimique compte en \textbf{moles}. Mais on pèse des \textbf{masses} (balance) et on
+mesure des \textbf{volumes} (éprouvette). \emph{Toute} la chimie quantitative consiste à
+\textbf{convertir les données en moles}, appliquer la stœchiométrie, puis \textbf{reconvertir} le
+résultat dans l'unité demandée. Il n'existe que \textbf{trois portes d'entrée} vers la mole.
+\end{tutobox}
+
+\begin{tutobox}[Les 3 portes vers la mole (+ Avogadro)]{formulacol}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}p{4.9cm} p{3.3cm} p{7.7cm}@{}}
+\toprule
+\textbf{Donnée de départ} & \textbf{Formule} & \textbf{Unités \& mémo}\\ \midrule
+Masse (balance) & $n=\dfrac{m}{M}$ & $n$ en \si{\mole}, $m$ en \si{\gram}, $M$ en \gmol\\
+Volume de gaz (TPN) & $n=\dfrac{V}{\Vm}$ & $\Vm=\SI{22,4}{\litre\per\mole}$ à \SI{0}{\celsius}, \SI{1}{\atm}\\
+Solution (soluté dissous) & $n=C\times V$ & $C$ en \molL, $V$ en \si{\litre} \textbf{(pas mL !)}\\
+Nombre d'entités & $N=n\times N_A$ & $N_A=\SI{6,02e23}{}$ entités par mole\\
+\bottomrule
+\end{tabular}
+\end{tutobox}
+
+\begin{tutobox}[Calculer une masse molaire $M$]{defcol}
+$M$ d'une molécule $=$ \textbf{somme} des masses molaires atomiques de tous ses atomes (lues dans la
+classification). Ex.\ : $M(\ce{H2SO4})=2\times1{,}0 + 32{,}0 + 4\times16{,}0 = \SI{98}{\gram\per\mole}$.
+Pour un \textbf{hydrate} \ce{X.\mathnormal{p}H2O} (ex.\ \ce{CuSO4.5H2O}), on ajoute
+$p\times\SI{18}{\gram\per\mole}$ (la masse de l'eau de cristallisation).
+\end{tutobox}
+
+\textbf{\color{primarydark}Le triangle des conversions.}
+\[
+\underbrace{m\ (\si{\gram})}_{\text{balance}}\ \xrightarrow{\;\div M\;}\ \boxed{n\ (\si{\mole})}\ \xleftarrow{\;\div \Vm\;}\ \underbrace{V_{\text{gaz}}\ (\si{\litre})}_{\text{TPN}},
+\qquad n=C\,V\ (\text{solution}),\qquad N=n\,N_A .
+\]
+On lit chaque flèche dans les \emph{deux} sens : $m=nM$, \; $V=n\Vm$, \; $C=n/V$, \; $n=N/N_A$.
+
+\begin{tutobox}[Exemple guidé — les trois portes sur un même problème]{methcol}
+\textbf{(1) Masse $\to$ mole.} \SI{80}{\gram} de \ce{NaOH} ($M=\SI{40}{\gram\per\mole}$) :
+$n=\dfrac{80}{40}=\SI{2}{\mole}$.\\
+\textbf{(2) Gaz $\to$ mole.} \SI{11,2}{\litre} de \ce{CO2} aux TPN :
+$n=\dfrac{11,2}{22,4}=\SI{0,5}{\mole}$.\\
+\textbf{(3) Solution $\to$ mole.} \SI{250}{\milli\litre} d'une solution à \SI{0,20}{\Molar} :
+attention \SI{250}{\milli\litre}$=\SI{0,250}{\litre}$, donc $n=0,20\times0,250=\SI{0,050}{\mole}$.
+\end{tutobox}
+
+\begin{tutobox}[Pièges d'unités — les plus fréquents en concours]{primary}
+\begin{itemize}[leftmargin=1.3em,topsep=0pt,itemsep=0pt]
+  \item \textbf{mL $\to$ L} : \SI{20}{\milli\litre}$=\SI{0,020}{\litre}$ (diviser par 1000) — erreur n\textsuperscript{o}1.
+  \item \textbf{mole $\neq$ gramme $\neq$ litre} : une mole n'est ni une masse ni un volume ; il faut $\times M$ ou $\times\Vm$.
+  \item \textbf{densité $d$} d'un liquide : $\rho = d\times\SI{1}{\gram\per\milli\litre}$, donc $m=\rho\,V$ avant $n=m/M$.
+  \item \textbf{TPN uniquement} : $\Vm=\SI{22,4}{\litre\per\mole}$ vaut à \SI{0}{\celsius} et \SI{1}{\atm} ; à d'autres conditions, $\Vm$ change.
+\end{itemize}
+\end{tutobox}
+
+\end{document}

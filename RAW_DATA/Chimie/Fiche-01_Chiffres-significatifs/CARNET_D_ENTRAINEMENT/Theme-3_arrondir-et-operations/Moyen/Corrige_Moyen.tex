@@ -1,0 +1,94 @@
+% =====================================================================
+%  THÈME 3 — Arrondir & opérations — CORRIGÉ — Niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Moyen · Thème 3}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
+  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,
+  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Corrigé — Niveau Moyen}\\[1pt]
+{\color{primary} Thème 3 : les deux règles des opérations}
+\end{center}
+\vspace{2mm}
+
+\begin{cor}[Addition : la règle des décimales]
+Valeur brute : $\num{12,4}+\num{7,25}+\num{103,682}=\num{123,332}$. La donnée la moins précise est
+$\qty{12,4}{\milli\litre}$ ($1$ décimale) ; on arrondit donc à \textbf{1 décimale} :
+\[ \boxed{V \approx \qty{123,3}{\milli\litre}}. \]
+Inutile d'écrire les chiffres $3$ et $2$ finaux : $\num{12,4}$ ignore déjà tout au-delà du dixième.
+\end{cor}
+
+\begin{cor}[Soustraction : la perte de chiffres significatifs]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\num{12,47}-\num{12,3}=\num{0,17}$ ; la donnée à $1$ décimale ($\num{12,3}$) impose $1$
+        décimale : $\boxed{\qty{0,2}{\gram}}$. On passe de $4$ et $3$~CS à \textbf{1}~CS.
+  \item $\num{5,624}-\num{5,60}=\num{0,024}$ ; $\num{5,60}$ ($2$ décimales) impose $2$ décimales :
+        $\boxed{\qty{0,02}{\gram}}$. On passe de $4$ et $3$~CS à \textbf{1}~CS.
+\end{enumerate}
+\textbf{Constat :} soustraire deux nombres \emph{voisins} détruit les CS. C'est le piège de la
+« perte de chiffres significatifs », à fuir en chimie analytique.
+\end{cor}
+
+\begin{cor}[Multiplication et division : la règle des \CS]
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{6,3}\times\num{2,1}=\num{13,23}$ ; min $=2$~CS $\Rightarrow \boxed{\num{13}}$.
+  \item b) $\num{2,50}\times\num{3,142}=\num{7,855}$ ; min $=3$~CS ($\num{2,50}$) ; supprimé $5\,(\ge5)
+        \Rightarrow \boxed{\num{7,86}}$.
+  \item c) $\num{45,0}\div\num{1,2}=\num{37,5}$ ; min $=2$~CS ($\num{1,2}$) ; supprimé $5\,(\ge5)
+        \Rightarrow \boxed{\num{38}}$.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[Quelle règle s'applique ?]
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{2,5}+\num{13,42}$ : règle des \textbf{décimales} ; min $=1$ décimale $\to$ résultat à $1$ décimale.
+  \item b) $\num{2,5}\times\num{13,42}$ : règle des \textbf{\CS} ; min $=2$~CS $\to$ résultat à $2$~CS.
+  \item c) $\num{100,0}-\num{2,555}$ : règle des \textbf{décimales} ; min $=1$ décimale ($\num{100,0}$) $\to$ $1$ décimale.
+  \item d) $\num{8,20}\div\num{4,1}$ : règle des \textbf{\CS} ; min $=2$~CS ($\num{4,1}$) $\to$ $2$~CS.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[Concentration massique]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $c_m=\dfrac{\qty{4,80}{\gram}}{\qty{15,0}{\milli\litre}}=\num{0,32}\ \si{\gram\per\milli\litre}$.
+        Les deux données ont $3$~CS ; on garde $3$~CS : $\boxed{c_m=\qty{0,320}{\gram\per\milli\litre}}$
+        (le zéro de queue est obligatoire).
+  \item $c_m=\qty{0,320}{\gram\per\milli\litre}\times\num{1000}=\qty{320}{\gram\per\litre}
+        =\num{3,20e2}\ \si{\gram\per\litre}$ ($3$~CS).
+\end{enumerate}
+\end{cor}
+
+\end{document}

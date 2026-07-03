@@ -1,0 +1,1519 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 6
+%  Liaisons et structures de Lewis
+%  (liaison covalente / ionique / de coordination, règle de l'octet,
+%   méthode de construction des structures de Lewis, charge formelle,
+%   théorie VSEPR de Gillespie, géométries moléculaires, résonance)
+%  Figures TikZ tracées « from scratch ». Sans section exercices.
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Chimie ----------
+\usepackage[version=4]{mhchem}   % \ce{...} pour les formules et équations
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (violet — couleur de la section « Chimie » du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,160}      % violet/mauve (section Chimie)
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% ---- Couleurs « atomes » (style CPK) réutilisées dans les figures ----
+\definecolor{atomC}{RGB}{80,80,88}          % carbone — gris foncé
+\definecolor{atomH}{RGB}{235,235,235}       % hydrogène — blanc
+\definecolor{atomO}{RGB}{220,55,45}         % oxygène — rouge
+\definecolor{atomN}{RGB}{48,80,200}         % azote — bleu
+\definecolor{atomCl}{RGB}{70,170,80}        % chlore — vert
+\definecolor{atomF}{RGB}{150,210,120}       % fluor — vert clair
+\definecolor{atomS}{RGB}{225,190,40}        % soufre — jaune
+\definecolor{atomP}{RGB}{225,140,40}        % phosphore — orange
+\definecolor{atomNa}{RGB}{150,90,210}       % sodium — violet
+\definecolor{atomXe}{RGB}{60,180,200}       % xénon — cyan
+\definecolor{atomBr}{RGB}{150,70,40}        % brome — brun
+\definecolor{atomB}{RGB}{230,160,160}       % bore — rose
+\definecolor{atomSn}{RGB}{120,130,140}      % étain — gris bleuté
+\definecolor{lonepair}{RGB}{120,94,200}     % doublets non liants
+\definecolor{bondcol}{RGB}{60,60,70}        % liaisons
+\definecolor{piecol}{RGB}{198,93,9}         % charges / mise en évidence
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété / Loi / Règle (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Règle / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Liaisons et structures de Lewis}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths / chimie
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\nmax}{n_{\max}(e^{-})}
+\newcommand{\nv}{n_{v}(e^{-})}
+\newcommand{\nl}{n_{l}(e^{-})}
+\newcommand{\nnl}{n_{nl}(e^{-})}
+\newcommand{\CF}{\ensuremath{\mathrm{C.F.}}}
+
+% ----- Notation VSEPR AXnEm -----------------------------------------
+\newcommand{\AX}[2]{\ensuremath{\mathrm{AX_{#1}E_{#2}}}}
+
+% ----- Macros de tracé pour les figures de géométrie moléculaire -----
+% \ball{coord}{ballcolor}{radius}{textcolor}{label}
+\newcommand{\ball}[5]{\shade[ball color=#2] (#1) circle (#3);%
+  \node[font=\footnotesize\bfseries,text=#4] at (#1){#5};}
+% liaison « pleine » (dans le plan)
+\newcommand{\pbond}[2]{\draw[bondcol,line width=1.6pt] (#1)--(#2);}
+% liaison « wedge » (vers l'avant) : triangle plein, apex = atome central #1
+\newcommand{\wbond}[2]{\draw[bondcol,fill=bondcol,draw=none]
+  let \p1=($(#2)-(#1)$), \n1={atan2(\y1,\x1)} in
+  (#1) -- ($(#2)+(\n1+90:0.12)$) -- ($(#2)+(\n1-90:0.12)$) -- cycle;}
+% liaison « hash » (vers l'arrière) : trait pointillé
+\newcommand{\hbond}[2]{\draw[bondcol,line width=1pt,
+  dash pattern=on 1.4pt off 1.8pt] (#1)--(#2);}
+% lobe de doublet non liant (orbitale) : centre #1, angle #2, taille #3
+\newcommand{\lobe}[3]{\begin{scope}[shift={(#1)},rotate=#2]
+  \shade[ball color=lonepair!55,opacity=0.9] (#3,0) ellipse (0.34 and 0.20);
+  \end{scope}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.8cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Liaisons et structures}\\[5pt]
+   {\Huge\bfseries de Lewis}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,6}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : la molécule d'eau (modèle coudé) ---
+\begin{tikzpicture}[scale=1.0]
+  % atome central O
+  \coordinate (O) at (0,0);
+  % deux liaisons O–H à 104,5° (coudée)
+  \coordinate (H1) at (-1.9,-1.45);
+  \coordinate (H2) at ( 1.9,-1.45);
+  % liaisons
+  \draw[bondcol,line width=3.5pt] (O) -- (H1);
+  \draw[bondcol,line width=3.5pt] (O) -- (H2);
+  % doublets non liants de O (en haut)
+  \foreach \a in {68,112}{
+     \fill[lonepair] ($(O)+(\a:1.15)$) circle (3pt);
+     \fill[lonepair] ($(O)+(\a:1.45)$) circle (3pt);}
+  % atomes (par-dessus les liaisons)
+  \shade[ball color=atomO] (O) circle (0.62);
+  \node[white,font=\large\bfseries] at (O) {O};
+  \shade[ball color=atomH] (H1) circle (0.40);
+  \node[black,font=\small\bfseries] at (H1) {H};
+  \shade[ball color=atomH] (H2) circle (0.40);
+  \node[black,font=\small\bfseries] at (H2) {H};
+  % angle
+  \draw[primarydark,thick] ($(O)+(H1)!0.32!(H2)$) ;
+  \node[primarydark,font=\footnotesize] at (0,-0.95) {$\approx 104{,}5^\circ$};
+  % étiquette type VSEPR
+  \node[draw=primarydark,rounded corners=3pt,fill=white,font=\footnotesize,align=center]
+        at (4.6,0.2) {\ce{H2O} : type \AX{2}{2}\\ géométrie \textbf{coudée}};
+  \draw[->,>=Stealth,primarydark] (3.0,0.05) -- (0.95,-0.15);
+\end{tikzpicture}
+
+\vspace{0.5cm}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15.2cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item distinguer les trois grands types de liaisons — \textbf{covalente},
+        \textbf{ionique} et \textbf{covalente de coordination} (dative) ;
+  \item énoncer et appliquer la \textbf{règle de l'octet} (et du \textbf{duet}) et reconnaître ses exceptions ;
+  \item construire une \textbf{structure de Lewis} par la méthode des cinq étapes
+        ($\nmax$, $\nv$, $\nl$, $\nnl$) ;
+  \item calculer une \textbf{charge formelle} et l'utiliser pour choisir la meilleure structure ;
+  \item appliquer la \textbf{théorie VSEPR (Gillespie)} pour prédire la \textbf{géométrie de répulsion} et la \textbf{géométrie moléculaire} ;
+  \item classer une molécule dans la notation \AX{n}{m} et en déduire sa forme (linéaire, coudée, tétraédrique, etc.) ;
+  \item décrire le phénomène de \textbf{résonance} et écrire des formes limites équivalentes.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.35cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 6 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Les liaisons chimiques}
+% =====================================================================
+
+\subsection{Pourquoi les atomes se lient-ils ?}
+
+Dans la nature, les atomes isolés sont rares : on les rencontre presque toujours
+\emph{associés} les uns aux autres pour former des \textbf{molécules} ou des \textbf{cristaux}.
+La raison est énergétique : un atome isolé possède en général une couche électronique externe
+\emph{incomplète}, donc une réserve d'énergie élevée. En partageant ou en échangeant des
+électrons, les atomes atteignent une configuration plus stable — celle des \textbf{gaz rares}
+(\ce{He}, \ce{Ne}, \ce{Ar}\ldots), dont la couche externe est pleine. Une \textbf{liaison
+chimique} est précisément la force qui maintient deux atomes ensemble une fois cet abaissement
+d'énergie réalisé.
+
+\begin{definition}[liaison chimique]
+Une \textbf{liaison chimique} est une interaction stabilisante qui assure la cohésion entre deux
+atomes (ou ions). Elle se forme parce que l'édifice lié possède une énergie \emph{plus basse}
+que celle des atomes séparés : c'est cette différence d'énergie qu'il faudrait fournir pour
+« casser » la liaison (énergie de liaison).
+\end{definition}
+
+\begin{remarque}
+Une molécule est donc \emph{composée d'atomes liés entre eux}. Selon la façon dont les électrons
+de la couche externe (les \textbf{électrons de valence}) sont mis en jeu, on distingue trois
+grands types de liaisons, présentés ci-dessous : la liaison \textbf{covalente}, la liaison
+\textbf{ionique} et la liaison \textbf{covalente de coordination}.
+\end{remarque}
+
+\subsection{La liaison covalente}
+
+\begin{definition}[liaison covalente]
+Une \textbf{liaison covalente} résulte de la \textbf{mise en commun d'une paire d'électrons}
+(un \emph{doublet liant}) entre deux atomes. Chaque atome fournit en général un électron : le
+doublet ainsi formé « appartient » simultanément aux deux atomes, ce qui leur permet à tous deux
+de compléter leur octet. Une, deux ou trois paires partagées donnent respectivement une liaison
+\textbf{simple}, \textbf{double} ou \textbf{triple}.
+\end{definition}
+
+On distingue, autour de chaque atome, deux sortes de doublets d'électrons :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item les \textbf{doublets liants} : paires partagées entre deux atomes (les liaisons) ;
+  \item les \textbf{doublets non liants} (ou \textbf{paires électroniques libres}) : paires qui
+        restent \emph{propres} à un seul atome et ne participent pas à une liaison.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- molécule de dichlore Cl2 ---
+  \coordinate (Cl1) at (0,0);
+  \coordinate (Cl2) at (3.0,0);
+  % liaison simple (doublet liant partagé)
+  \draw[bondcol,line width=1.6pt] (Cl1)++(0.62,0) -- ($(Cl2)+(-0.62,0)$);
+  % atomes
+  \shade[ball color=atomCl] (Cl1) circle (0.55);
+  \node[white,font=\large\bfseries] at (Cl1) {Cl};
+  \shade[ball color=atomCl] (Cl2) circle (0.55);
+  \node[white,font=\large\bfseries] at (Cl2) {Cl};
+  % Cl1 : paires en haut, bas, gauche
+  \foreach \ang in {70,110}{\fill[lonepair] ($(Cl1)+(\ang:0.80)$) circle (2.2pt);}
+  \foreach \ang in {250,290}{\fill[lonepair] ($(Cl1)+(\ang:0.80)$) circle (2.2pt);}
+  \foreach \ang in {170,190}{\fill[lonepair] ($(Cl1)+(\ang:0.80)$) circle (2.2pt);}
+  % Cl2 : paires en haut, bas, droite
+  \foreach \ang in {70,110}{\fill[lonepair] ($(Cl2)+(\ang:0.80)$) circle (2.2pt);}
+  \foreach \ang in {250,290}{\fill[lonepair] ($(Cl2)+(\ang:0.80)$) circle (2.2pt);}
+  \foreach \ang in {-10,10}{\fill[lonepair] ($(Cl2)+(\ang:0.80)$) circle (2.2pt);}
+  % légendes
+  \node[lonepair,font=\footnotesize,align=center] at (1.5,1.55)
+       {doublets non liants\\(paires électroniques libres)};
+  \draw[lonepair,->,>=Stealth] (0.7,1.25) -- ($(Cl1)+(95:0.92)$);
+  \draw[lonepair,->,>=Stealth] (2.3,1.25) -- ($(Cl2)+(85:0.92)$);
+  \node[bondcol,font=\footnotesize] at (1.5,-1.35) {doublet liant (liaison covalente)};
+  \draw[bondcol,->,>=Stealth] (1.5,-1.1) -- (1.5,-0.12);
+\end{tikzpicture}
+\caption{Molécule de dichlore \ce{Cl2}. Les deux atomes partagent \emph{un} doublet liant
+(la liaison covalente simple, notée \ce{Cl-Cl}). Chaque atome conserve en plus \textbf{trois}
+doublets non liants. Chacun s'entoure ainsi de $8$ électrons : la règle de l'octet est respectée.}
+\label{fig:covalente}
+\end{figure}
+
+\begin{exemple}[décompte des électrons dans \ce{Cl2}]
+Chaque atome de chlore apporte $7$ électrons de valence. Dans \ce{Cl2}, on partage un doublet
+(2 électrons) : autour de chaque \ce{Cl} on compte alors les $6$ électrons de ses trois doublets
+non liants \emph{plus} les $2$ électrons du doublet liant, soit $6+2 = 8$ électrons — l'octet.
+C'est exactement la configuration de l'argon, le gaz rare voisin : la molécule est stable.
+\end{exemple}
+
+\subsection{La liaison ionique}
+
+\begin{definition}[liaison ionique]
+Une \textbf{liaison ionique} est une \textbf{interaction électrostatique} entre des ions de
+signes opposés. Elle résulte du \textbf{transfert complet d'un ou plusieurs électrons} d'un atome
+(peu électronégatif, qui devient un \textbf{cation} positif) vers un autre (très électronégatif,
+qui devient un \textbf{anion} négatif). Aucune paire n'est partagée : c'est l'attraction entre
+charges $+$ et $-$ qui assure la cohésion.
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- AVANT : Na• + •Cl: ---
+  \begin{scope}
+    \shade[ball color=atomNa] (0,0) circle (0.55);
+    \node[white,font=\bfseries] at (0,0) {Na};
+    \fill[piecol] (0.78,0) circle (2.4pt);                 % électron de valence de Na
+    % Cl avec 7 e
+    \shade[ball color=atomCl] (2.5,0) circle (0.55);
+    \node[white,font=\bfseries] at (2.5,0) {Cl};
+    \foreach \ang in {70,110}{\fill[lonepair] ($(2.5,0)+(\ang:0.80)$) circle (2.2pt);}
+    \foreach \ang in {250,290}{\fill[lonepair] ($(2.5,0)+(\ang:0.80)$) circle (2.2pt);}
+    \foreach \ang in {10,-10}{\fill[lonepair] ($(2.5,0)+(\ang:0.80)$) circle (2.2pt);}
+    \fill[lonepair] ($(2.5,0)+(180:0.80)$) circle (2.2pt);  % 1 électron célibataire
+    % flèche de transfert
+    \draw[piecol,->,>=Stealth,line width=1pt,bend left=25] (0.95,0.12) to (1.62,0.30);
+    \node[piecol,font=\footnotesize] at (1.3,0.85) {transfert $e^-$};
+  \end{scope}
+  % flèche réaction
+  \node[font=\Large] at (3.9,0) {$\longrightarrow$};
+  % --- APRÈS : Na+ [Cl]- ---
+  \begin{scope}[xshift=5.1cm]
+    \shade[ball color=atomNa] (0,0) circle (0.50);
+    \node[white,font=\bfseries] at (0,0) {Na};
+    \node[piecol,font=\footnotesize\bfseries] at (0.42,0.55) {$+$};
+    % Cl- avec octet complet (8 e)
+    \shade[ball color=atomCl] (2.4,0) circle (0.55);
+    \node[white,font=\bfseries] at (2.4,0) {Cl};
+    \foreach \ang in {70,110}{\fill[lonepair] ($(2.4,0)+(\ang:0.80)$) circle (2.2pt);}
+    \foreach \ang in {250,290}{\fill[lonepair] ($(2.4,0)+(\ang:0.80)$) circle (2.2pt);}
+    \foreach \ang in {10,-10}{\fill[lonepair] ($(2.4,0)+(\ang:0.80)$) circle (2.2pt);}
+    \foreach \ang in {170,190}{\fill[lonepair] ($(2.4,0)+(\ang:0.80)$) circle (2.2pt);}
+    \node[piecol,font=\footnotesize\bfseries] at (2.95,0.62) {$-$};
+    % attraction
+    \draw[<->,>=Stealth,primarydark,thick] (0.55,-0.78) -- (1.85,-0.78);
+    \node[primarydark,font=\footnotesize] at (1.2,-1.1) {attraction électrostatique};
+  \end{scope}
+\end{tikzpicture}
+\caption{Formation de la liaison ionique dans le chlorure de sodium \ce{NaCl}. Le sodium
+\emph{cède} son unique électron de valence au chlore : il se forme un cation \ce{Na+} et un
+anion \ce{Cl-} (octet complet). Les deux ions, de charges opposées, s'attirent.}
+\label{fig:ionique}
+\end{figure}
+
+\begin{attention}
+La liaison ionique n'est pas un partage mais un \emph{don}. On reconnaît un composé ionique au
+fort écart d'électronégativité entre ses atomes (typiquement un métal et un non-métal). À
+l'opposé, deux atomes \emph{identiques} (comme dans \ce{Cl2}) ne peuvent former qu'une liaison
+covalente, puisqu'aucun des deux n'est plus avide d'électrons que l'autre.
+\end{attention}
+
+\subsection{La liaison covalente de coordination (dative)}
+
+\begin{definition}[liaison covalente de coordination]
+Une \textbf{liaison covalente de coordination} (ou liaison \textbf{dative}) est une liaison
+covalente particulière : c'est encore un partage d'un doublet, mais ici \textbf{les deux
+électrons partagés proviennent d'un seul et même atome}. L'atome qui apporte le doublet est le
+\emph{donneur} ; celui qui le reçoit (et qui possède une case vide) est l'\emph{accepteur}. Une
+fois formée, cette liaison est en tout point semblable à une liaison covalente ordinaire.
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- NH3 (avec doublet non liant) ---
+  \coordinate (N) at (0,0);
+  \coordinate (Ha) at (-1.1,-0.95);
+  \coordinate (Hb) at (0,-1.25);
+  \coordinate (Hc) at (1.1,-0.95);
+  \draw[bondcol,line width=1.5pt] (N)--(Ha);
+  \draw[bondcol,line width=1.5pt] (N)--(Hb);
+  \draw[bondcol,line width=1.5pt] (N)--(Hc);
+  \shade[ball color=atomN] (N) circle (0.50); \node[white,font=\bfseries] at (N){N};
+  \foreach \p in {Ha,Hb,Hc}{\shade[ball color=atomH] (\p) circle (0.34);
+       \node[black,font=\footnotesize\bfseries] at (\p){H};}
+  % doublet non liant en haut de N
+  \foreach \ang in {78,102}{\fill[lonepair] ($(N)+(\ang:0.78)$) circle (2.3pt);}
+  \node[lonepair,font=\footnotesize] at (0,1.15) {doublet libre};
+  \node[font=\footnotesize] at (0,-1.85) {\ce{NH3} (ammoniac)};
+  % --- + H+ ---
+  \node[font=\Large] at (2.4,-0.2) {$+$};
+  \shade[ball color=atomH] (3.1,-0.2) circle (0.30);
+  \node[black,font=\footnotesize\bfseries] at (3.1,-0.2){H};
+  \node[piecol,font=\footnotesize\bfseries] at (3.45,0.18){$+$};
+  \node[font=\footnotesize] at (3.1,-1.0) {proton (case vide)};
+  % flèche réaction
+  \node[font=\Large] at (4.4,-0.2) {$\longrightarrow$};
+  % --- NH4+ ---
+  \begin{scope}[xshift=6.6cm,yshift=-0.1cm]
+    \coordinate (N2) at (0,0);
+    \coordinate (Ha2) at (-1.05,-0.9);
+    \coordinate (Hb2) at (-0.35,-1.25);
+    \coordinate (Hc2) at (1.05,-0.9);
+    \coordinate (Hd2) at (0,1.0);          % H apporté (liaison dative)
+    \draw[bondcol,line width=1.5pt] (N2)--(Ha2);
+    \draw[bondcol,line width=1.5pt] (N2)--(Hb2);
+    \draw[bondcol,line width=1.5pt] (N2)--(Hc2);
+    \draw[piecol,line width=1.7pt] (N2)--(Hd2);     % liaison dative en couleur
+    \shade[ball color=atomN] (N2) circle (0.50); \node[white,font=\bfseries] at (N2){N};
+    \foreach \p in {Ha2,Hb2,Hc2}{\shade[ball color=atomH] (\p) circle (0.32);
+        \node[black,font=\footnotesize\bfseries] at (\p){H};}
+    \shade[ball color=atomH] (Hd2) circle (0.32); \node[black,font=\footnotesize\bfseries] at (Hd2){H};
+    \node[piecol,font=\bfseries] at (0.95,1.0) {$+$};
+    \node[piecol,font=\footnotesize,align=center] at (2.05,0.55) {liaison\\dative};
+    \draw[piecol,->,>=Stealth] (1.7,0.7) to[bend right=15] (0.25,0.65);
+    \node[font=\footnotesize] at (0,-1.75) {\ce{NH4+} (ion ammonium)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Formation de l'ion ammonium \ce{NH4+}. L'azote de \ce{NH3} possède un doublet non liant ;
+il le « prête » au proton \ce{H+} (qui n'a aucun électron) pour former une quatrième liaison
+\ce{N-H} : c'est une liaison covalente de coordination (en orange). Les quatre liaisons \ce{N-H}
+sont ensuite rigoureusement \emph{identiques}.}
+\label{fig:dative}
+\end{figure}
+
+\begin{exemple}[équation de formation de l'ion ammonium]
+La réaction s'écrit, le doublet non liant de l'azote (noté « \,:\,») capturant le proton :
+\[ \ce{H3N{:} + H+ -> NH4+}\qquad\text{soit}\qquad \ce{NH3 + H+ -> NH4+}. \]
+L'azote passe de $3$ à $4$ liaisons ; il porte alors une charge formelle $+1$ (voir
+section~\ref{sec:cf}), ce qui explique la charge globale $+$ de l'ion. Une fois l'ion formé, rien
+ne distingue la liaison dative des trois autres : l'ion \ce{NH4+} est parfaitement
+\emph{tétraédrique} et symétrique.
+\end{exemple}
+
+\begin{theoreme}[bilan des trois types de liaisons]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Covalente} : mise en commun d'un doublet, \emph{un} électron de chaque atome.
+        Typique entre non-métaux d'électronégativités voisines.
+  \item \textbf{Ionique} : transfert total d'électron(s), puis attraction électrostatique entre
+        ions. Typique entre un métal et un non-métal (fort écart d'électronégativité).
+  \item \textbf{Coordination (dative)} : mise en commun d'un doublet, mais \emph{les deux}
+        électrons proviennent du même atome (un donneur + un accepteur à case vide).
+\end{itemize}
+\end{theoreme}
+
+% =====================================================================
+\section{La règle de l'octet (et du duet)}
+% =====================================================================
+\label{sec:octet}
+
+\subsection{Énoncé et signification}
+
+Tout l'art des structures de Lewis repose sur une idée directrice unique : chaque atome cherche
+à s'entourer du \emph{bon nombre} d'électrons pour imiter le gaz rare le plus proche. Pour la
+plupart des atomes, ce « bon nombre » est huit ; pour l'hydrogène et l'hélium, c'est deux.
+
+\begin{theoreme}[règle de l'octet et du duet]
+Lors de la formation des liaisons, les atomes tendent à s'entourer de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{huit électrons} de valence (\textbf{octet}) — ils adoptent alors la configuration
+        stable d'un gaz rare comme \ce{Ne} ou \ce{Ar} ;
+  \item \textbf{deux électrons} (\textbf{duet}) pour l'\textbf{hydrogène} \ce{H} et l'hélium
+        \ce{He}, qui visent la configuration de \ce{He}.
+\end{itemize}
+On compte, autour de chaque atome, à la fois ses \emph{doublets non liants} et les \emph{doublets
+liants} qu'il partage. C'est le \textbf{point fondamental} des structures de Lewis : assurer
+l'octet (ou le duet) de chaque atome, gage de stabilité.
+\end{theoreme}
+
+\begin{remarque}
+« S'entourer de huit électrons » ne veut pas dire « posséder huit électrons en propre » : les
+électrons des doublets liants sont \emph{comptés deux fois}, une fois pour chaque atome de la
+liaison. C'est ce double comptage qui permet à deux atomes de compléter simultanément leur octet
+en ne partageant qu'un seul doublet.
+\end{remarque}
+
+\subsection{Choisir entre plusieurs structures possibles}
+
+Une même formule brute peut souvent s'écrire de plusieurs manières. Lorsque c'est le cas, on
+retient les structures qui satisfont, dans l'ordre, les critères suivants.
+
+\begin{theoreme}[critères de choix d'une bonne structure de Lewis]
+Si un composé admet plusieurs structures, on privilégie celles dont :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item les atomes de la \textbf{première et de la deuxième période} (\ce{H}, \ce{C}, \ce{N},
+        \ce{O}, \ce{F}\ldots) \textbf{respectent l'octet} (ou le duet) — ces atomes ne peuvent
+        \emph{jamais} le dépasser ;
+  \item les \textbf{densités de charges} sont réparties en respectant les
+        \textbf{électronégativités} (les charges négatives sur les atomes les plus
+        électronégatifs) ;
+  \item les \textbf{charges formelles} sont \textbf{minimales} (les plus proches de zéro) et,
+        à valeur égale, les plus \textbf{éloignées} les unes des autres.
+\end{enumerate}
+\end{theoreme}
+
+\begin{attention}
+Les éléments de la \textbf{troisième période et au-delà} (\ce{P}, \ce{S}, \ce{Cl}, \ce{Br},
+\ce{Xe}\ldots) possèdent des orbitales $d$ accessibles : ils \emph{peuvent dépasser l'octet}
+(on parle d'\textbf{octet étendu} ou d'hypervalence). C'est ce qui rend possibles des édifices
+comme \ce{PCl5}, \ce{SF6} ou l'ion \ce{ClO4-}. En revanche, \ce{C}, \ce{N}, \ce{O}, \ce{F} sont
+\textbf{strictement} limités à huit électrons.
+\end{attention}
+
+\begin{exemple}[octet, duet et octet étendu sur trois cas]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=3pt]
+  \item Dans \ce{H2O}, l'oxygène s'entoure de $8$ électrons (2 liaisons + 2 doublets libres) :
+        \textbf{octet} respecté ; chaque \ce{H} s'entoure de $2$ électrons : \textbf{duet}
+        respecté.
+  \item Dans \ce{CH4}, le carbone forme $4$ liaisons, soit $4\times 2 = 8$ électrons :
+        \textbf{octet} parfait, sans aucun doublet libre.
+  \item Dans \ce{SF6}, le soufre (3\textsuperscript{e} période) forme $6$ liaisons, soit
+        $12$ électrons autour de lui : c'est un \textbf{octet étendu}, permis car \ce{S} dispose
+        d'orbitales $d$.
+\end{itemize}
+\end{exemple}
+
+% =====================================================================
+\section{Construire une structure de Lewis : la méthode des cinq étapes}
+% =====================================================================
+\label{sec:methode}
+
+La \textbf{structure de Lewis} d'une molécule (ou d'un ion) est la représentation qui montre
+\emph{tous} les électrons de valence : doublets liants (les liaisons) et doublets non liants. Le
+livre propose une méthode systématique en cinq étapes, fondée sur un petit jeu de quatre
+grandeurs. Cette méthode est très efficace, même si elle ne couvre pas absolument toutes les
+structures exotiques.
+
+\subsection{Les quatre grandeurs clés}
+
+\begin{formule}[nombre maximum d'électrons de valence $\nmax$]
+\[ \boxed{\,\nmax = 8\,a + 2\,b\,} \]
+\begin{ou}
+  \item $\nmax$ : nombre d'électrons qu'il faudrait pour que \emph{tous} les atomes aient leur
+        octet (ou duet) \emph{indépendamment} les uns des autres, sans unité (c'est un comptage
+        d'électrons) ;
+  \item $a$ : nombre d'atomes qui visent l'\textbf{octet} (tous sauf \ce{H} et \ce{He}), d'où le
+        facteur $8$ ;
+  \item $b$ : nombre d'atomes qui visent le \textbf{duet} (les \ce{H}), d'où le facteur $2$.
+\end{ou}
+C'est le nombre d'électrons « idéal » : la somme des octets et des duets visés par chaque atome
+pris séparément.
+\end{formule}
+
+\begin{formule}[nombre total d'électrons de valence $\nv$]
+\[ \boxed{\,\nv = \Big(\textstyle\sum_i N_i^{\text{val}}\Big) - q\,} \]
+\begin{ou}
+  \item $\nv$ : nombre d'électrons de valence \emph{réellement disponibles} dans l'édifice, sans
+        unité ;
+  \item $N_i^{\text{val}}$ : nombre d'électrons de valence de l'atome $i$ (égal à son numéro de
+        colonne dans le tableau périodique : \ce{H}{=}1, \ce{C}{=}4, \ce{N}{=}5, \ce{O}{=}6,
+        \ce{Cl}{=}7\ldots) ;
+  \item $q$ : \textbf{charge} algébrique de l'édifice. On \emph{retranche} $q$ : un cation
+        ($q>0$) a \emph{perdu} des électrons, un anion ($q<0$) en a \emph{gagné} (le $-q$ en
+        ajoute alors).
+\end{ou}
+\textbf{Astuce de signe.} Pour un anion de charge $-1$ on fait $\;\dots + 1$ ; pour un cation
+$+1$ on fait $\;\dots - 1$. Le nombre de \textbf{paires} (doublets) disponibles vaut $\nv/2$.
+\end{formule}
+
+\begin{formule}[nombre d'électrons liants $\nl$ et nombre de liaisons]
+\[ \boxed{\,\nl = \nmax - \nv\,}\qquad\Longrightarrow\qquad
+   \boxed{\,\text{nombre de liaisons} = \dfrac{\nl}{2}\,} \]
+\begin{ou}
+  \item $\nl$ : nombre d'électrons \emph{engagés dans les liaisons} (les doublets liants), sans
+        unité ;
+  \item $\nmax - \nv$ : l'écart entre les électrons « souhaités » et ceux « disponibles » ;
+        comme chaque liaison fait gagner $2$ électrons à \emph{deux} atomes à la fois (soit un
+        bénéfice de $2$ par liaison), cet écart mesure exactement les électrons mis en commun ;
+  \item $\nl/2$ : nombre de \textbf{doublets liants}, c'est-à-dire le nombre total de liaisons
+        (une simple compte pour $1$, une double pour $2$, une triple pour $3$).
+\end{ou}
+\textbf{Cas impair.} Si $\nmax$ (ou $\nv$) est impair — molécule à nombre impair d'électrons,
+dite \emph{radicalaire} — on corrige par $\nl = \nmax - \nv - 1$.
+\end{formule}
+
+\begin{formule}[nombre d'électrons non liants $\nnl$]
+\[ \boxed{\,\nnl = \nv - \nl\,}\qquad\Longrightarrow\qquad
+   \boxed{\,\text{nombre de doublets libres} = \dfrac{\nnl}{2}\,} \]
+\begin{ou}
+  \item $\nnl$ : nombre d'électrons \emph{non liants}, restés sous forme de doublets libres, sans
+        unité ;
+  \item $\nv - \nl$ : ce sont simplement les électrons disponibles auxquels on a retiré ceux,
+        déjà placés, des liaisons ;
+  \item $\nnl/2$ : nombre de \textbf{doublets non liants} à répartir sur les atomes (en priorité
+        sur les plus électronégatifs, jusqu'à compléter chaque octet).
+\end{ou}
+\end{formule}
+
+\begin{methode}[les cinq étapes, dans l'ordre]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Écrire la \textbf{formule brute} et repérer l'\textbf{atome central} (le moins
+        électronégatif, souvent unique ; \ce{H} n'est \emph{jamais} central).
+  \item Calculer $\nmax = 8a + 2b$.
+  \item Calculer $\nv = \sum N_i^{\text{val}} - q$.
+  \item Calculer $\nl = \nmax - \nv$, puis $\nl/2 =$ nombre de liaisons. Les placer.
+  \item Calculer $\nnl = \nv - \nl$, puis $\nnl/2 =$ nombre de doublets libres. Les répartir
+        pour compléter les octets, et vérifier les charges formelles.
+\end{enumerate}
+\end{methode}
+
+\subsection{Exemple guidé n\texorpdfstring{$^{\circ}$}{o}1 : l'ammoniac \ce{NH3}}
+
+\begin{exemple}[structure de Lewis de \ce{NH3}, pas à pas]
+\textbf{Étape 1 — formule brute.}\quad \ce{NH3}. L'atome central est l'azote \ce{N} (l'hydrogène
+ne peut pas l'être). On a $a=1$ atome visant l'octet (\ce{N}) et $b=3$ atomes visant le duet
+(les \ce{H}).
+
+\smallskip
+\textbf{Étape 2 — électrons maximaux.}\quad
+$\nmax = 8a + 2b = 8\times 1 + 2\times 3 = \mathbf{14}.$
+
+\smallskip
+\textbf{Étape 3 — électrons disponibles.}\quad
+$\nv = \underbrace{5}_{\ce{N}} + \underbrace{3\times 1}_{3\,\ce{H}} - \underbrace{0}_{q} = \mathbf{8}.$
+(La molécule est neutre, $q=0$.) Cela fait $\nv/2 = 4$ doublets disponibles.
+
+\smallskip
+\textbf{Étape 4 — liaisons.}\quad
+$\nl = \nmax - \nv = 14 - 8 = \mathbf{6}\;\Rightarrow\;\dfrac{\nl}{2} = 3$ \textbf{liaisons
+covalentes} (3 doublets liants). Ce sont les trois liaisons \ce{N-H}.
+
+\smallskip
+\textbf{Étape 5 — doublets libres.}\quad
+$\nnl = \nv - \nl = 8 - 6 = \mathbf{2}\;\Rightarrow\;1$ \textbf{doublet non liant}, porté par
+l'azote. Vérification de l'octet de \ce{N} : $3$ liaisons ($6\,e^-$) $+\,1$ doublet libre
+($2\,e^-$) $= 8\,e^-$. \checkmark
+\end{exemple}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % structure de Lewis « à plat » de NH3
+  \coordinate (N) at (0,0);
+  \coordinate (Hh) at (0,1.5);
+  \coordinate (Hl) at (-1.5,-0.9);
+  \coordinate (Hr) at (1.5,-0.9);
+  \draw[bondcol,line width=1.4pt] (N)--($(Hh)+(0,-0.32)$);
+  \draw[bondcol,line width=1.4pt] (N)--($(Hl)+(0.28,0.17)$);
+  \draw[bondcol,line width=1.4pt] (N)--($(Hr)+(-0.28,0.17)$);
+  \node[font=\large\bfseries] at (N) {N};
+  \node[font=\large\bfseries] at (Hh) {H};
+  \node[font=\large\bfseries] at (Hl) {H};
+  \node[font=\large\bfseries] at (Hr) {H};
+  % doublet non liant de N (à gauche-haut, hors des liaisons : on le met derrière, vers le bas-gauche libre)
+  \foreach \ang in {200,160}{\fill[lonepair] ($(N)+(\ang:0.62)$) circle (2.4pt);}
+  % en fait plaçons-le clairement à l'opposé, en bas n'est pas libre ; mettons-le horizontalement à gauche
+  \node[lonepair,font=\footnotesize,align=center] at (-2.3,0.55) {doublet\\non liant};
+  \draw[lonepair,->,>=Stealth] (-1.75,0.5) -- ($(N)+(178:0.66)$);
+  % cartouche bilan
+  \node[draw=excol,rounded corners=3pt,fill=excol!6,font=\footnotesize,align=left,anchor=west]
+    at (2.2,0.2)
+    {$\nmax = 14$\\[1pt] $\nv = 8$\\[1pt]
+     $\nl = 6 \Rightarrow 3$ liaisons\\[1pt]
+     $\nnl = 2 \Rightarrow 1$ doublet libre\\[2pt]
+     type \AX{3}{1} $\Rightarrow$ \textbf{pyramide trigonale}};
+\end{tikzpicture}
+\caption{Structure de Lewis de l'ammoniac \ce{NH3} : trois liaisons \ce{N-H} et un doublet non
+liant sur l'azote. L'atome central \ce{N} est lié à $3$ atomes (\ce{H}) et porte $1$ doublet
+libre : c'est le type \AX{3}{1}, de géométrie \textbf{pyramidale à base triangulaire}.}
+\label{fig:nh3lewis}
+\end{figure}
+
+\subsection{Exemple guidé n\texorpdfstring{$^{\circ}$}{o}2 : l'ion carbonate \ce{CO3^2-}}
+
+\begin{exemple}[structure de Lewis de \ce{CO3^2-}, pas à pas]
+\textbf{Étape 1 — formule brute.}\quad \ce{CO3^2-}, atome central : le carbone \ce{C} (moins
+électronégatif que \ce{O}). Tous les atomes visent l'octet : $a=4$ (un \ce{C} et trois \ce{O}),
+$b=0$.
+
+\smallskip
+\textbf{Étape 2.}\quad $\nmax = 8\times 4 + 2\times 0 = \mathbf{32}.$
+
+\smallskip
+\textbf{Étape 3.}\quad La charge de l'ion est $q=-2$, donc on \emph{ajoute} $2$ électrons :
+\[ \nv = \underbrace{4}_{\ce{C}} + \underbrace{3\times 6}_{3\,\ce{O}} + \underbrace{2}_{-q}
+   = 4 + 18 + 2 = \mathbf{24}. \]
+
+\smallskip
+\textbf{Étape 4.}\quad $\nl = 32 - 24 = \mathbf{8}\;\Rightarrow\;\dfrac{8}{2}=4$ \textbf{liaisons
+covalentes} : autour du carbone, on a donc $3$ liaisons \ce{C-O}\ldots dont \emph{une} est double
+(une simple $\times 2$ + une double $\times 1 = 4$). Le carbone respecte ainsi son octet
+($4$ liaisons $= 8\,e^-$).
+
+\smallskip
+\textbf{Étape 5.}\quad $\nnl = 24 - 8 = \mathbf{16}\;\Rightarrow\;8$ \textbf{doublets non liants},
+répartis sur les trois oxygènes. L'oxygène doublement lié porte $2$ doublets libres ; chaque
+oxygène simplement lié en porte $3$ et une charge formelle $-1$ (d'où la charge $-2$ de l'ion).
+L'atome central \ce{C} ne porte \emph{aucun} doublet libre : type \AX{3}{0}, géométrie
+\textbf{trigonale plane}.
+\end{exemple}
+
+% =====================================================================
+\section{La charge formelle}
+% =====================================================================
+\label{sec:cf}
+
+Une fois la structure dessinée, on attribue à chaque atome une \textbf{charge formelle}. C'est un
+outil de comptabilité qui répond à la question : « cet atome a-t-il, dans cette structure,
+\emph{plus} ou \emph{moins} d'électrons que lorsqu'il est neutre et isolé ? » Elle sert surtout à
+\emph{départager} les structures concurrentes (critère 3 de la section~\ref{sec:octet}).
+
+\begin{definition}[charge formelle]
+La \textbf{charge formelle} (\CF) d'un atome dans une structure de Lewis est la charge fictive
+qu'il porterait si tous les doublets liants étaient partagés \emph{équitablement} (un électron
+pour chacun des deux atomes). On la calcule en comparant ses électrons de valence « de référence »
+au nombre d'électrons qu'on lui attribue dans la structure.
+\end{definition}
+
+\begin{formule}[charge formelle d'un atome]
+\[ \boxed{\;\CF = N_{v}^{\text{atome}} - \Big(n_{\text{libres}} + \tfrac{1}{2}\,n_{\text{liants}}\Big)
+   = N_{v}^{\text{atome}} - n_{\text{propres}}\;} \]
+\begin{ou}
+  \item $\CF$ : charge formelle de l'atome (un entier : $\dots,-1,0,+1,\dots$), sans unité ;
+  \item $N_{v}^{\text{atome}}$ : nombre d'électrons de valence de l'atome \emph{neutre et isolé}
+        (son numéro de colonne) ;
+  \item $n_{\text{libres}}$ : nombre d'électrons des doublets \emph{non liants} portés par
+        l'atome (ils lui appartiennent en entier) ;
+  \item $n_{\text{liants}}$ : nombre d'électrons des doublets \emph{liants} qui l'entourent ; on
+        n'en compte que la \textbf{moitié} ($\tfrac12 n_{\text{liants}}$), car l'autre moitié est
+        attribuée au partenaire de liaison ;
+  \item $n_{\text{propres}} = n_{\text{libres}} + \tfrac12 n_{\text{liants}}$ : « le nombre
+        d'électrons autour de l'atome et propres à l'atome ».
+\end{ou}
+En pratique : \textbf{\CF{} = (électrons de valence) $-$ (doublets libres comptés $\times 2$) $-$
+(nombre de liaisons)}, puisqu'une liaison apporte un seul électron « propre » à l'atome.
+\end{formule}
+
+\begin{theoreme}[propriétés de la charge formelle]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item La \textbf{somme} des charges formelles de tous les atomes est égale à la \textbf{charge
+        globale} de l'édifice ($0$ pour une molécule neutre, $q$ pour un ion).
+  \item La meilleure structure est celle dont les charges formelles sont les plus \textbf{proches
+        de zéro} ; les charges négatives doivent se trouver sur les atomes les plus
+        \textbf{électronégatifs}.
+\end{itemize}
+\end{theoreme}
+
+\begin{exemple}[charges formelles dans l'ion carbonate \ce{CO3^2-}]
+Reprenons la structure de \ce{CO3^2-} (un \ce{O} doublement lié, deux \ce{O} simplement liés).
+
+\smallskip
+\textbf{Oxygène doublement lié} (\ce{O=C}) : il porte $2$ doublets libres ($4$ électrons) et $2$
+liaisons. \;
+$\CF = 6 - \big(4 + \tfrac12\times 4\big) = 6 - (4+2) = 6 - 6 = \mathbf{0}.$
+
+\smallskip
+\textbf{Oxygène simplement lié} (\ce{O-C}) : il porte $3$ doublets libres ($6$ électrons) et $1$
+liaison. \;
+$\CF = 6 - \big(6 + \tfrac12\times 2\big) = 6 - (6+1) = 6 - 7 = \mathbf{-1}.$
+
+\smallskip
+\textbf{Carbone central} : $0$ doublet libre, $4$ liaisons. \;
+$\CF = 4 - \big(0 + \tfrac12\times 8\big) = 4 - 4 = \mathbf{0}.$
+
+\smallskip
+\textbf{Bilan.}\quad $\CF$ totale $= 0 + (-1) + (-1) + 0 = -2$ : on retrouve bien la charge de
+l'ion \ce{CO3^2-}, et les charges négatives sont portées par les oxygènes (les plus
+électronégatifs). La structure est cohérente.
+\end{exemple}
+
+\begin{exemple}[charge formelle de l'azote dans \ce{NH4+}]
+Dans l'ion ammonium, l'azote forme $4$ liaisons et ne porte aucun doublet libre :
+\[ \CF(\ce{N}) = 5 - \big(0 + \tfrac12\times 8\big) = 5 - 4 = +1. \]
+Les quatre \ce{H} ont chacun $\CF = 1 - \tfrac12\times 2 = 0$. La somme $+1 + 4\times 0 = +1$
+correspond à la charge de \ce{NH4+}. C'est l'azote, devenu « tétravalent », qui porte la charge
+positive de l'ion — alors même que c'est lui qui avait fourni le doublet de la liaison dative.
+\end{exemple}
+
+% =====================================================================
+\section{La théorie VSEPR (modèle de Gillespie)}
+% =====================================================================
+\label{sec:vsepr}
+
+La structure de Lewis dit \emph{quels} atomes sont liés et \emph{combien} de doublets entourent
+l'atome central — mais elle est plane. Pour prévoir la \textbf{forme dans l'espace} de la
+molécule, on utilise la théorie VSEPR.
+
+\begin{definition}[théorie VSEPR]
+La théorie \textbf{VSEPR} (\emph{Valence Shell Electron Pair Repulsion}, « répulsion des paires
+d'électrons de la couche de valence »), ou modèle de \textbf{Gillespie}, prédit l'arrangement
+spatial des doublets autour d'un atome central à partir d'un principe simple : \emph{les paires
+d'électrons de la couche de valence se repoussent mutuellement et se placent donc le plus
+\textbf{loin} possible les unes des autres}.
+\end{definition}
+
+\begin{theoreme}[principe de répulsion et hiérarchie]
+Les doublets s'écartent au maximum pour minimiser leur répulsion. Toutes les répulsions ne se
+valent pas ; elles décroissent dans l'ordre :
+\[ \text{(non liant -- non liant)} \;>\; \text{(non liant -- liant)} \;>\; \text{(liant -- liant)}. \]
+Un doublet \emph{non liant}, plus proche du noyau et plus « volumineux », repousse donc plus fort
+qu'un doublet liant : il \textbf{comprime} légèrement les angles entre les liaisons voisines.
+\end{theoreme}
+
+\begin{definition}[géométrie de répulsion et géométrie moléculaire]
+On distingue soigneusement deux descriptions :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item la \textbf{géométrie de répulsion} (ou \emph{figure de répulsion}) : l'arrangement de
+        \emph{tous} les domaines électroniques autour de l'atome central — liaisons \emph{et}
+        doublets non liants. Elle dépend du \textbf{nombre total} de domaines.
+  \item la \textbf{géométrie moléculaire} : l'arrangement des seuls \textbf{noyaux} (les atomes).
+        Elle s'obtient à partir de la géométrie de répulsion en \emph{masquant} les doublets non
+        liants — qui occupent l'espace mais ne sont pas « visibles » comme des atomes.
+\end{itemize}
+Quand l'atome central ne porte \emph{aucun} doublet libre, les deux géométries
+\textbf{coïncident}.
+\end{definition}
+
+\begin{formule}[notation \AX{n}{m}]
+\[ \boxed{\;\mathrm{A}\,\mathrm{X}_n\,\mathrm{E}_m\;}\qquad
+   \text{nombre de domaines (sites de répulsion)} = n + m. \]
+\begin{ou}
+  \item $\mathrm{A}$ : l'\textbf{atome central} ;
+  \item $\mathrm{X}$ : un atome (ou groupe) \textbf{lié} à $\mathrm{A}$ ; $n$ est leur nombre ;
+  \item $\mathrm{E}$ : un \textbf{doublet non liant} (ou un électron célibataire) porté par
+        $\mathrm{A}$ ; $m$ est leur nombre ;
+  \item $n+m$ : nombre total de \textbf{sites de répulsion}, qui fixe la géométrie de répulsion
+        (2 : linéaire ; 3 : triangulaire ; 4 : tétraédrique ; 5 : bipyramide trigonale ;
+        6 : octaédrique).
+\end{ou}
+\end{formule}
+
+\begin{attention}
+Ne confondez jamais la \emph{géométrie de répulsion} (qui compte les doublets libres) et la
+\emph{géométrie moléculaire} (qui les ignore). Par exemple \ce{H2O} et \ce{CH4} ont tous deux une
+géométrie de répulsion \textbf{tétraédrique} ($4$ domaines), mais des géométries moléculaires
+différentes : \textbf{coudée} pour \ce{H2O} (\AX{2}{2}) et \textbf{tétraédrique} pour \ce{CH4}
+(\AX{4}{0}).
+\end{attention}
+
+% =====================================================================
+\section{Les cinq arrangements et les géométries moléculaires}
+% =====================================================================
+\label{sec:geometries}
+
+Le nombre de sites de répulsion $n+m$ détermine la \textbf{géométrie de répulsion}. Pour chaque
+arrangement, les doublets non liants (les $\mathrm{E}$) se logent aux positions les moins
+contraintes, et l'on « masque » ensuite ces doublets pour lire la \textbf{géométrie moléculaire}.
+Passons en revue les cinq arrangements, du plus simple au plus complexe.
+
+% ---------------------------------------------------------------------
+\subsection{Arrangement linéaire (2 sites)}
+% ---------------------------------------------------------------------
+
+C'est la famille \AX{2}{0} : deux sites de répulsion, qui se placent à $180^\circ$ l'un de
+l'autre. Comme il n'y a aucun doublet libre ($m=0$), géométrie de répulsion et géométrie
+moléculaire sont \textbf{identiques} : toutes deux \textbf{linéaires}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (C) at (0,0);
+  \coordinate (O1) at (-2.2,0);
+  \coordinate (O2) at ( 2.2,0);
+  % doubles liaisons O=C=O
+  \draw[bondcol,line width=1.5pt] ($(C)+(-0.55,0.09)$)--($(O1)+(0.55,0.09)$);
+  \draw[bondcol,line width=1.5pt] ($(C)+(-0.55,-0.09)$)--($(O1)+(0.55,-0.09)$);
+  \draw[bondcol,line width=1.5pt] ($(C)+(0.55,0.09)$)--($(O2)+(-0.55,0.09)$);
+  \draw[bondcol,line width=1.5pt] ($(C)+(0.55,-0.09)$)--($(O2)+(-0.55,-0.09)$);
+  \ball{O1}{atomO}{0.5}{white}{O}
+  \ball{O2}{atomO}{0.5}{white}{O}
+  \ball{C}{atomC}{0.5}{white}{C}
+  % doublets non liants des O (2 chacun)
+  \foreach \ang in {120,150}{\fill[lonepair] ($(O1)+(\ang:0.75)$) circle (2pt);}
+  \foreach \ang in {210,240}{\fill[lonepair] ($(O1)+(\ang:0.75)$) circle (2pt);}
+  \foreach \ang in {60,30}{\fill[lonepair] ($(O2)+(\ang:0.75)$) circle (2pt);}
+  \foreach \ang in {-30,-60}{\fill[lonepair] ($(O2)+(\ang:0.75)$) circle (2pt);}
+  % angle 180
+  \draw[primarydark,thick,<->,>=Stealth] (-1.0,-0.95) -- (1.0,-0.95);
+  \node[primarydark,font=\footnotesize,fill=white,inner sep=1pt] at (0,-0.95) {$180^\circ$};
+  \node[font=\footnotesize] at (0,1.15) {\ce{CO2} : \AX{2}{0} — \textbf{linéaire}};
+\end{tikzpicture}
+\caption{Le dioxyde de carbone \ce{CO2} (\ce{O=C=O}). Le carbone central porte deux doublets
+liants (deux doubles liaisons, comptées chacune comme \emph{un} site de répulsion) et aucun
+doublet libre : type \AX{2}{0}. Les deux liaisons s'écartent à $180^\circ$ : molécule
+\textbf{linéaire}.}
+\label{fig:lineaire}
+\end{figure}
+
+\begin{remarque}
+Une liaison multiple (double ou triple) ne compte que pour \textbf{un seul} site de répulsion :
+c'est la \emph{direction} de liaison qui compte, pas le nombre de doublets qu'elle contient. C'est
+pourquoi \ce{CO2}, avec ses deux doubles liaisons, est traité comme \AX{2}{0}.
+\end{remarque}
+
+% ---------------------------------------------------------------------
+\subsection{Arrangement triangulaire (3 sites)}
+% ---------------------------------------------------------------------
+
+Trois sites de répulsion se disposent aux sommets d'un triangle équilatéral (angles de
+$120^\circ$). Deux familles existent : \AX{3}{0} (sans doublet libre) et \AX{2}{1} (un doublet
+libre).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % ---- AX3 : BH3 (triangulaire plane) ----
+  \begin{scope}
+    \coordinate (B) at (0,0);
+    \coordinate (Ha) at (90:1.5);
+    \coordinate (Hb) at (210:1.5);
+    \coordinate (Hc) at (330:1.5);
+    \pbond{B}{Ha}\pbond{B}{Hb}\pbond{B}{Hc}
+    \ball{Ha}{atomH}{0.34}{black}{H}
+    \ball{Hb}{atomH}{0.34}{black}{H}
+    \ball{Hc}{atomH}{0.34}{black}{H}
+    \ball{B}{atomB}{0.45}{black}{B}
+    \draw[primarydark] (90:0.65) arc (90:210:0.65);
+    \node[primarydark,font=\scriptsize] at (150:0.95) {$120^\circ$};
+    \node[font=\footnotesize,align=center] at (0,-2.1)
+      {\ce{BH3} : \AX{3}{0}\\\textbf{triangulaire plane}};
+  \end{scope}
+  % ---- AX2E : SnCl2 (coudée) ----
+  \begin{scope}[xshift=7.0cm]
+    \coordinate (Sn) at (0,-0.3);
+    \coordinate (Cl1) at (-1.45,-1.15);
+    \coordinate (Cl2) at ( 1.45,-1.15);
+    \pbond{Sn}{Cl1}\pbond{Sn}{Cl2}
+    % doublet non liant en haut (lobe)
+    \lobe{Sn}{90}{0.92}
+    \node[lonepair,font=\scriptsize] at (0,1.15) {doublet libre};
+    \ball{Cl1}{atomCl}{0.42}{white}{Cl}
+    \ball{Cl2}{atomCl}{0.42}{white}{Cl}
+    \ball{Sn}{atomSn}{0.46}{white}{Sn}
+    \draw[primarydark] ($(Sn)+(240:0.62)$) arc (240:300:0.62);
+    \node[primarydark,font=\scriptsize] at ($(Sn)+(270:0.95)$) {$<120^\circ$};
+    \node[font=\footnotesize,align=center] at (0,-2.1)
+      {\ce{SnCl2} : \AX{2}{1}\\\textbf{coudée (angulaire)}};
+  \end{scope}
+\end{tikzpicture}
+\caption{Arrangement triangulaire. \textbf{À gauche}, \ce{BH3} (\AX{3}{0}) : trois liaisons à
+$120^\circ$, géométrie \textbf{triangulaire plane}. \textbf{À droite}, \ce{SnCl2} (\AX{2}{1}) :
+le doublet libre (lobe violet) occupe un sommet du triangle ; en le masquant, il ne reste que
+deux liaisons et la molécule est \textbf{coudée}. La répulsion du doublet libre referme un peu
+l'angle (un peu moins que $120^\circ$).}
+\label{fig:triangulaire}
+\end{figure}
+
+\begin{exemple}[de \AX{3}{0} à \AX{2}{1} : même triangle, formes différentes]
+\ce{BH3} et \ce{SnCl2} ont tous deux \emph{trois} sites de répulsion, donc la même figure de
+répulsion triangulaire. Mais \ce{BH3} n'a aucun doublet libre (le bore se contente de $6$
+électrons, exception à l'octet) : ses trois liaisons dessinent un triangle plan parfait. Dans
+\ce{SnCl2}, l'étain porte un doublet libre qui prend la place d'un sommet ; on ne « voit » alors
+que deux liaisons, formant un \textbf{V} : la molécule est coudée, exactement comme l'eau le sera
+dans la famille tétraédrique.
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Arrangement tétraédrique (4 sites)}
+% ---------------------------------------------------------------------
+
+Quatre sites de répulsion pointent vers les sommets d'un \textbf{tétraèdre} (angles de
+$109{,}5^\circ$). C'est l'arrangement le plus fréquent en chimie organique. Trois familles en
+découlent selon le nombre de doublets libres : \AX{4}{0}, \AX{3}{1} et \AX{2}{2}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  % ===== AX4 : CH4 (tétraédrique) =====
+  \begin{scope}
+    \coordinate (C) at (0,0);
+    \coordinate (Ha) at (0,1.5);          % haut (plein)
+    \coordinate (Hb) at (-1.35,-0.75);    % bas-gauche (plein)
+    \coordinate (Hc) at (1.25,-0.55);     % bas-droite (avant, wedge)
+    \coordinate (Hd) at (0.35,-1.35);     % arrière (hash)
+    \hbond{C}{Hd}\pbond{C}{Ha}\pbond{C}{Hb}\wbond{C}{Hc}
+    \ball{Ha}{atomH}{0.32}{black}{H}
+    \ball{Hb}{atomH}{0.32}{black}{H}
+    \ball{Hc}{atomH}{0.32}{black}{H}
+    \ball{Hd}{atomH}{0.32}{black}{H}
+    \ball{C}{atomC}{0.45}{white}{C}
+    \node[font=\footnotesize,align=center] at (0,-2.25)
+      {\ce{CH4} : \AX{4}{0}\\\textbf{tétraédrique}\\$109{,}5^\circ$};
+  \end{scope}
+  % ===== AX3E : NH3 (pyramidale) =====
+  \begin{scope}[xshift=5.2cm]
+    \coordinate (N) at (0,0);
+    \coordinate (Ha) at (-1.3,-0.85);
+    \coordinate (Hb) at (1.2,-0.65);
+    \coordinate (Hc) at (0.15,-1.4);
+    \pbond{N}{Ha}\wbond{N}{Hb}\hbond{N}{Hc}
+    \lobe{N}{90}{0.95}
+    \node[lonepair,font=\scriptsize] at (0,1.25) {doublet libre};
+    \ball{Ha}{atomH}{0.32}{black}{H}
+    \ball{Hb}{atomH}{0.32}{black}{H}
+    \ball{Hc}{atomH}{0.32}{black}{H}
+    \ball{N}{atomN}{0.45}{white}{N}
+    \node[font=\footnotesize,align=center] at (0,-2.25)
+      {\ce{NH3} : \AX{3}{1}\\\textbf{pyramide trigonale}\\$\approx 107^\circ$};
+  \end{scope}
+  % ===== AX2E2 : H2O (coudée) =====
+  \begin{scope}[xshift=10.4cm]
+    \coordinate (O) at (0,0);
+    \coordinate (Ha) at (-1.3,-0.85);
+    \coordinate (Hb) at (1.3,-0.85);
+    \pbond{O}{Ha}\pbond{O}{Hb}
+    \lobe{O}{68}{0.95}\lobe{O}{112}{0.95}
+    \node[lonepair,font=\scriptsize] at (0,1.3) {2 doublets};
+    \ball{Ha}{atomH}{0.32}{black}{H}
+    \ball{Hb}{atomH}{0.32}{black}{H}
+    \ball{O}{atomO}{0.45}{white}{O}
+    \node[font=\footnotesize,align=center] at (0,-2.25)
+      {\ce{H2O} : \AX{2}{2}\\\textbf{coudée}\\$\approx 104{,}5^\circ$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Les trois familles tétraédriques. Toutes ont \emph{quatre} sites de répulsion (figure de
+répulsion tétraédrique), mais leur géométrie \emph{moléculaire} diffère selon le nombre de
+doublets libres : \ce{CH4} (\AX{4}{0}) est tétraédrique, \ce{NH3} (\AX{3}{1}) est une pyramide à
+base triangulaire, \ce{H2O} (\AX{2}{2}) est coudée. Les liaisons « pleines » sont dans le plan,
+les liaisons en triangle plein \emph{(wedge)} pointent vers l'avant, les liaisons pointillées
+vers l'arrière.}
+\label{fig:tetraedrique}
+\end{figure}
+
+\begin{exemple}[la fermeture progressive de l'angle : $109{,}5^\circ \to 107^\circ \to 104{,}5^\circ$]
+La comparaison \ce{CH4}, \ce{NH3}, \ce{H2O} est l'illustration parfaite de la hiérarchie des
+répulsions. Tous trois ont quatre domaines tétraédriques, donc en théorie un angle de
+$109{,}5^\circ$. Mais :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=3pt]
+  \item \ce{CH4} (\AX{4}{0}) : aucun doublet libre, l'angle \ce{H-C-H} reste exactement
+        $109{,}5^\circ$ ;
+  \item \ce{NH3} (\AX{3}{1}) : \emph{un} doublet libre repousse plus fort que les liaisons et
+        comprime l'angle \ce{H-N-H} à environ $107^\circ$ ;
+  \item \ce{H2O} (\AX{2}{2}) : \emph{deux} doublets libres compriment encore plus, l'angle
+        \ce{H-O-H} tombe à $\approx 104{,}5^\circ$.
+\end{itemize}
+Plus il y a de doublets libres, plus les liaisons sont « tassées » : l'angle diminue
+régulièrement. C'est une prédiction directe et vérifiable du modèle VSEPR.
+\end{exemple}
+
+\begin{exemple}[le difluorure de soufre \ce{SF2} : un \AX{2}{2} de plus]
+Appliquons la méthode complète à \ce{SF2}. Atome central : \ce{S}.
+\[ \nmax = 8\times 3 = 24,\qquad \nv = \underbrace{6}_{\ce{S}} + \underbrace{2\times 7}_{2\,\ce{F}} = 20,
+   \qquad \nl = 24-20 = 4 \;\Rightarrow\; 2 \text{ liaisons}. \]
+\[ \nnl = 20 - 4 = 16 \;\Rightarrow\; 8 \text{ doublets libres} : \;2 \text{ sur \ce{S}, } 3
+   \text{ sur chaque \ce{F}}. \]
+L'atome de soufre est lié à $2$ atomes et porte $2$ doublets libres : type \AX{2}{2}. Sa figure
+de répulsion est \textbf{tétraédrique}, sa géométrie moléculaire est \textbf{coudée} — comme
+l'eau. (\ce{S} pourrait dépasser l'octet, mais ici il n'en a pas besoin : $2+2 = 4$ domaines
+suffisent.)
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Arrangement bipyramidal trigonal (5 sites)}
+% ---------------------------------------------------------------------
+
+Cinq sites de répulsion se répartissent en \textbf{bipyramide à base triangulaire} : deux
+positions \textbf{axiales} (en haut et en bas, à $180^\circ$) et trois positions
+\textbf{équatoriales} (dans un plan, à $120^\circ$). Les positions ne sont pas équivalentes :
+les \textbf{doublets libres se logent toujours en position équatoriale}, où ils sont le moins
+gênés. On rencontre quatre édifices : \AX{5}{0}, \AX{4}{1}, \AX{3}{2} et \AX{2}{3}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.82]
+  % ================= AX5 : PCl5 (bipyramide) =================
+  \begin{scope}
+    \coordinate (A) at (0,0);
+    \coordinate (aU) at (0,1.7); \coordinate (aD) at (0,-1.7);
+    \coordinate (eR) at (1.55,0.0);
+    \coordinate (eLb) at (-1.3,0.62); \coordinate (eLf) at (-1.3,-0.62);
+    \pbond{A}{aU}\pbond{A}{aD}\pbond{A}{eR}\hbond{A}{eLb}\wbond{A}{eLf}
+    \foreach \c in {aU,aD,eR,eLb,eLf}{\ball{\c}{atomCl}{0.34}{white}{Cl}}
+    \ball{A}{atomP}{0.42}{white}{P}
+    \node[font=\footnotesize,align=center] at (0,-2.5)
+      {\ce{PCl5} : \AX{5}{0}\\\textbf{bipyramide}\\\textbf{trigonale}};
+  \end{scope}
+  % ================= AX4E : SF4 (à bascule) =================
+  \begin{scope}[xshift=4.4cm]
+    \coordinate (A) at (0,0);
+    \coordinate (aU) at (0,1.7); \coordinate (aD) at (0,-1.7);
+    \coordinate (eR) at (1.55,0.0);
+    \coordinate (eLf) at (-1.3,-0.62);
+    \pbond{A}{aU}\pbond{A}{aD}\pbond{A}{eR}\wbond{A}{eLf}
+    \lobe{A}{152}{0.95}                       % doublet équatorial (gauche-haut)
+    \foreach \c in {aU,aD,eR,eLf}{\ball{\c}{atomF}{0.32}{black}{F}}
+    \ball{A}{atomS}{0.42}{black}{S}
+    \node[font=\footnotesize,align=center] at (0,-2.5)
+      {\ce{SF4} : \AX{4}{1}\\\textbf{à bascule}\\\textbf{(papillon)}};
+  \end{scope}
+  % ================= AX3E2 : ClF3 (en T) =================
+  \begin{scope}[xshift=8.8cm]
+    \coordinate (A) at (0,0);
+    \coordinate (aU) at (0,1.7); \coordinate (aD) at (0,-1.7);
+    \coordinate (eR) at (1.55,0.0);
+    \pbond{A}{aU}\pbond{A}{aD}\pbond{A}{eR}
+    \lobe{A}{152}{0.95}\lobe{A}{208}{0.95}    % 2 doublets équatoriaux
+    \foreach \c in {aU,aD,eR}{\ball{\c}{atomF}{0.32}{black}{F}}
+    \ball{A}{atomCl}{0.42}{white}{Cl}
+    \node[font=\footnotesize,align=center] at (0,-2.5)
+      {\ce{ClF3} : \AX{3}{2}\\\textbf{forme en T}};
+  \end{scope}
+  % ================= AX2E3 : XeF2 (linéaire) =================
+  \begin{scope}[xshift=13.2cm]
+    \coordinate (A) at (0,0);
+    \coordinate (aU) at (0,1.7); \coordinate (aD) at (0,-1.7);
+    \pbond{A}{aU}\pbond{A}{aD}
+    \lobe{A}{0}{1.0}\lobe{A}{152}{1.0}\lobe{A}{208}{1.0}  % 3 doublets équatoriaux
+    \foreach \c in {aU,aD}{\ball{\c}{atomF}{0.32}{black}{F}}
+    \ball{A}{atomXe}{0.42}{black}{Xe}
+    \node[font=\footnotesize,align=center] at (0,-2.5)
+      {\ce{XeF2} : \AX{2}{3}\\\textbf{linéaire}};
+  \end{scope}
+\end{tikzpicture}
+\caption{Les quatre édifices de la bipyramide trigonale. Les doublets libres (lobes violets)
+occupent systématiquement les positions \emph{équatoriales}. En les masquant, on lit la géométrie
+moléculaire : \ce{PCl5} bipyramide trigonale (\AX{5}{0}), \ce{SF4} « à bascule » (\AX{4}{1}),
+\ce{ClF3} en T (\AX{3}{2}), \ce{XeF2} linéaire (\AX{2}{3}).}
+\label{fig:bipyramide}
+\end{figure}
+
+\begin{remarque}
+Pourquoi les doublets libres préfèrent-ils l'\textbf{équatorial} ? Parce qu'en position axiale, un
+doublet aurait \emph{trois} voisins à $90^\circ$ (très proches, forte répulsion), tandis qu'en
+position équatoriale il n'a que \emph{deux} voisins à $90^\circ$. La nature « choisit » donc la
+configuration de moindre répulsion : les doublets vont à l'équateur, et les liaisons restantes se
+réorganisent en bascule, en T ou en ligne.
+\end{remarque}
+
+% ---------------------------------------------------------------------
+\subsection{Arrangement octaédrique (6 sites)}
+% ---------------------------------------------------------------------
+
+Six sites de répulsion pointent vers les sommets d'un \textbf{octaèdre} (toutes les positions
+sont équivalentes, à $90^\circ$ de leurs voisines). Trois édifices sont courants : \AX{6}{0},
+\AX{5}{1} et \AX{4}{2}. Lorsqu'il y a \emph{deux} doublets libres, ils se placent à $180^\circ$
+l'un de l'autre (positions opposées), pour minimiser leur répulsion mutuelle.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.86]
+  % ================= AX6 : SF6 (octaèdre) =================
+  \begin{scope}
+    \coordinate (A) at (0,0);
+    \coordinate (oU) at (0,1.7); \coordinate (oD) at (0,-1.7);
+    \coordinate (oL) at (-1.7,0); \coordinate (oR) at (1.7,0);
+    \coordinate (oF) at (0.75,-0.6); \coordinate (oB) at (-0.75,0.6);
+    \pbond{A}{oU}\pbond{A}{oD}\pbond{A}{oL}\pbond{A}{oR}
+    \hbond{A}{oB}\wbond{A}{oF}
+    \foreach \c in {oU,oD,oL,oR,oF,oB}{\ball{\c}{atomF}{0.30}{black}{F}}
+    \ball{A}{atomS}{0.42}{black}{S}
+    \node[font=\footnotesize,align=center] at (0,-2.5)
+      {\ce{SF6} : \AX{6}{0}\\\textbf{octaèdre}};
+  \end{scope}
+  % ================= AX5E : BrF5 (pyramide base carrée) =================
+  \begin{scope}[xshift=6.0cm]
+    \coordinate (A) at (0,0);
+    \coordinate (oU) at (0,1.7);
+    \coordinate (oL) at (-1.7,0); \coordinate (oR) at (1.7,0);
+    \coordinate (oF) at (0.75,-0.6); \coordinate (oB) at (-0.75,0.6);
+    \pbond{A}{oU}\pbond{A}{oL}\pbond{A}{oR}\hbond{A}{oB}\wbond{A}{oF}
+    \lobe{A}{270}{0.95}                       % doublet en bas (axial opposé à oU)
+    \foreach \c in {oU,oL,oR,oF,oB}{\ball{\c}{atomF}{0.30}{black}{F}}
+    \ball{A}{atomBr}{0.42}{white}{Br}
+    \node[font=\footnotesize,align=center] at (0,-2.5)
+      {\ce{BrF5} : \AX{5}{1}\\\textbf{pyramide à}\\\textbf{base carrée}};
+  \end{scope}
+  % ================= AX4E2 : XeF4 (plan carré) =================
+  \begin{scope}[xshift=12.0cm]
+    \coordinate (A) at (0,0);
+    \coordinate (oL) at (-1.7,0); \coordinate (oR) at (1.7,0);
+    \coordinate (oF) at (0.78,-0.62); \coordinate (oB) at (-0.78,0.62);
+    \pbond{A}{oL}\pbond{A}{oR}\hbond{A}{oB}\wbond{A}{oF}
+    \lobe{A}{90}{0.95}\lobe{A}{270}{0.95}     % 2 doublets axiaux opposés
+    \foreach \c in {oL,oR,oF,oB}{\ball{\c}{atomF}{0.30}{black}{F}}
+    \ball{A}{atomXe}{0.42}{black}{Xe}
+    \node[font=\footnotesize,align=center] at (0,-2.5)
+      {\ce{XeF4} : \AX{4}{2}\\\textbf{plan carré}};
+  \end{scope}
+\end{tikzpicture}
+\caption{Les trois édifices octaédriques. \ce{SF6} (\AX{6}{0}) est un octaèdre parfait. Dans
+\ce{BrF5} (\AX{5}{1}), un doublet libre occupe une position : il reste une \textbf{pyramide à base
+carrée}. Dans \ce{XeF4} (\AX{4}{2}), les deux doublets libres se placent en positions opposées
+(haut et bas) : la molécule est \textbf{plane carrée}.}
+\label{fig:octaedrique}
+\end{figure}
+
+\begin{exemple}[octet étendu : \ce{SF6}, pas à pas]
+\ce{SF6} illustre l'octet étendu permis aux éléments de la 3\textsuperscript{e} période.
+\[ \nmax = 8\times 7 = 56,\qquad \nv = \underbrace{6}_{\ce{S}} + \underbrace{6\times 7}_{6\,\ce{F}} = 48,
+   \qquad \nl = 56 - 48 = 8\;? \]
+La méthode « brute » donnerait $4$ liaisons, mais l'expérience montre $6$ liaisons \ce{S-F} : c'est
+justement un des cas où la méthode simplifiée atteint sa limite (signalée dans le livre). En
+réalité le soufre forme $6$ liaisons et s'entoure de $12$ électrons. Chaque \ce{F} porte $3$
+doublets libres et le soufre aucun : type \AX{6}{0}, géométrie \textbf{octaédrique} parfaite, avec
+des angles \ce{F-S-F} de $90^\circ$.
+\end{exemple}
+
+% ---------------------------------------------------------------------
+\subsection{Tableau de synthèse VSEPR}
+% ---------------------------------------------------------------------
+
+Le tableau~\ref{tab:vsepr} rassemble toutes les familles \AX{n}{m} rencontrées, avec leur
+géométrie de répulsion, leur géométrie moléculaire et un exemple type. C'est l'outil à mémoriser.
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{5pt}
+\footnotesize
+\begin{tabular}{>{\centering\arraybackslash}m{1.35cm} c c >{\raggedright\arraybackslash}m{3.6cm} c}
+\toprule
+\rowcolor{primary!22}
+\textbf{Sites} & \textbf{Type} & \textbf{Géom. de répulsion} & \textbf{Géométrie moléculaire} & \textbf{Exemple}\\
+\midrule
+\rowcolor{primary!5} 2 & \AX{2}{0} & linéaire & linéaire & \ce{CO2}\\
+3 & \AX{3}{0} & triangulaire & triangulaire plane & \ce{BH3}\\
+\rowcolor{primary!5} 3 & \AX{2}{1} & triangulaire & coudée (angulaire) & \ce{SnCl2}\\
+4 & \AX{4}{0} & tétraédrique & tétraédrique & \ce{CH4}\\
+\rowcolor{primary!5} 4 & \AX{3}{1} & tétraédrique & pyramide trigonale & \ce{NH3}\\
+4 & \AX{2}{2} & tétraédrique & coudée & \ce{H2O}\\
+\rowcolor{primary!5} 5 & \AX{5}{0} & bipyramide trig. & bipyramide trigonale & \ce{PCl5}\\
+5 & \AX{4}{1} & bipyramide trig. & à bascule (papillon) & \ce{SF4}\\
+\rowcolor{primary!5} 5 & \AX{3}{2} & bipyramide trig. & forme en T & \ce{ClF3}\\
+5 & \AX{2}{3} & bipyramide trig. & linéaire & \ce{XeF2}\\
+\rowcolor{primary!5} 6 & \AX{6}{0} & octaédrique & octaédrique & \ce{SF6}\\
+6 & \AX{5}{1} & octaédrique & pyramide à base carrée & \ce{BrF5}\\
+\rowcolor{primary!5} 6 & \AX{4}{2} & octaédrique & plan carré & \ce{XeF4}\\
+\bottomrule
+\end{tabular}
+\caption{Synthèse VSEPR : géométries de répulsion et géométries moléculaires en fonction du
+nombre de sites $n+m$ et du nombre de doublets libres $m$.}
+\label{tab:vsepr}
+\end{table}
+
+\begin{methode}[trouver la géométrie d'une molécule en pratique]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Construire la structure de Lewis (méthode des 5 étapes, section~\ref{sec:methode}).
+  \item Compter, \emph{autour de l'atome central}, le nombre $n$ d'atomes liés et le nombre $m$ de
+        doublets libres $\Rightarrow$ écrire \AX{n}{m}.
+  \item Le total $n+m$ donne la \textbf{géométrie de répulsion} ; lire la \textbf{géométrie
+        moléculaire} dans le tableau~\ref{tab:vsepr} (ou en masquant les doublets libres).
+\end{enumerate}
+\end{methode}
+
+% =====================================================================
+\section{Application complète : l'ion perchlorate \texorpdfstring{\ce{ClO4-}}{ClO4-}}
+% =====================================================================
+\label{sec:perchlorate}
+
+L'ion \textbf{perchlorate} \ce{ClO4-} est un perturbateur endocrinien de l'axe
+hypothalamo-hypophyso-thyroïdien : il est toxique pour la glande thyroïde chez l'Homme. C'est
+aussi un cas d'école qui réunit \emph{tout} ce que nous avons vu : méthode de Lewis, octet
+étendu, charge formelle, VSEPR et résonance. Déroulons-le entièrement.
+
+\subsection{Décompte électronique (les cinq étapes)}
+
+\begin{exemple}[\ce{ClO4-} : application de la méthode]
+\textbf{Étape 1.}\quad Formule brute \ce{ClO4-}, atome central \ce{Cl} (moins électronégatif que
+\ce{O}). Tous les atomes visent l'octet : $a=5$, $b=0$.
+
+\smallskip
+\textbf{Étape 2.}\quad $\nmax = 8\times 5 = \mathbf{40}.$
+
+\smallskip
+\textbf{Étape 3.}\quad Charge $q=-1$, donc on ajoute $1$ électron :
+$\nv = \underbrace{7}_{\ce{Cl}} + \underbrace{4\times 6}_{4\,\ce{O}} + \underbrace{1}_{-q}
+ = 7 + 24 + 1 = \mathbf{32}.$ \;
+Nombre de paires : $\nv/2 = 16$ doublets.
+
+\smallskip
+\textbf{Étape 4.}\quad $\nl = 40 - 32 = \mathbf{8}\;\Rightarrow\;\dfrac{8}{2} = 4$ \textbf{liaisons
+covalentes} $\sigma$ (les quatre liaisons \ce{Cl-O}).
+
+\smallskip
+\textbf{Étape 5.}\quad $\nnl = 32 - 8 = \mathbf{24}\;\Rightarrow\;12$ \textbf{doublets non liants},
+répartis sur les quatre oxygènes ($3$ chacun).
+\end{exemple}
+
+\subsection{Charges formelles et octet étendu}
+
+Avec quatre \emph{simples} liaisons, le chlore ne s'entoure que de $8$ électrons (octet
+respecté), mais sa charge formelle est élevée :
+\[ \CF(\ce{Cl}) = 7 - 4 = +3, \qquad \CF(\ce{O}_{\text{simple}}) = 6 - 7 = -1\ \text{(sur chaque O)}. \]
+La somme $+3 + 4\times(-1) = -1$ redonne bien la charge de l'ion. Mais une charge $+3$ sur le
+chlore est \emph{défavorable} (critère 3). Or le chlore est en 3\textsuperscript{e} période : il
+\textbf{peut dépasser l'octet}. En transformant trois liaisons simples en \textbf{doubles
+liaisons} (une liaison $\pi$ s'ajoute à chaque liaison $\sigma$), on annule les charges :
+\[ \CF(\ce{Cl}) = 7 - 7 = 0, \qquad \CF(\ce{O}_{\text{double}}) = 6 - 6 = 0, \qquad
+   \CF(\ce{O}_{\text{simple}}) = -1. \]
+Cette seconde structure, aux charges formelles \emph{minimales}, est la plus représentative.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % ===================== Structure A : 4 simples liaisons =====================
+  \begin{scope}
+    \coordinate (Cl) at (0,0);
+    \coordinate (Ot) at (0,1.55); \coordinate (Ob) at (0,-1.55);
+    \coordinate (Olf) at (-1.55,0); \coordinate (Ort) at (1.55,0);
+    \foreach \o in {Ot,Ob,Olf,Ort}{\draw[bondcol,line width=1.4pt] (Cl)--(\o);}
+    \node[font=\large\bfseries] at (Cl) {Cl};
+    \node[piecol,font=\footnotesize] at (0.55,0.40) {$\scriptstyle +3$};
+    \foreach \o in {Ot,Ob,Olf,Ort}{\node[font=\large\bfseries] at (\o) {O};}
+    % petites charges -1 sur chaque O
+    \node[piecol,font=\scriptsize] at ($(Ot)+(0.42,0.30)$) {$\ominus$};
+    \node[piecol,font=\scriptsize] at ($(Ob)+(0.42,-0.30)$) {$\ominus$};
+    \node[piecol,font=\scriptsize] at ($(Olf)+(-0.42,0.30)$) {$\ominus$};
+    \node[piecol,font=\scriptsize] at ($(Ort)+(0.42,0.30)$) {$\ominus$};
+    \node[font=\footnotesize,align=center] at (0,-2.4)
+       {4 liaisons simples\\$\CF(\ce{Cl})=+3$ (octet)};
+  \end{scope}
+  % flèche
+  \node[align=center,font=\footnotesize] at (3.5,0.2)
+     {\ce{Cl} (3\textsuperscript{e} pér.)\\peut dépasser\\l'octet\\[2pt]$\Longrightarrow$};
+  % ===================== Structure B : 3 doubles + 1 simple =====================
+  \begin{scope}[xshift=7.0cm]
+    \coordinate (Cl) at (0,0);
+    \coordinate (Ot) at (0,1.55); \coordinate (Ob) at (0,-1.55);
+    \coordinate (Olf) at (-1.55,0); \coordinate (Ort) at (1.55,0);
+    % doubles : haut, gauche, droite ; simple : bas
+    \draw[bondcol,line width=1.3pt] ($(Cl)+(-0.09,0.2)$)--($(Ot)+(-0.09,-0.2)$);
+    \draw[bondcol,line width=1.3pt] ($(Cl)+(0.09,0.2)$)--($(Ot)+(0.09,-0.2)$);
+    \draw[bondcol,line width=1.3pt] ($(Cl)+(-0.2,0.09)$)--($(Olf)+(0.2,0.09)$);
+    \draw[bondcol,line width=1.3pt] ($(Cl)+(-0.2,-0.09)$)--($(Olf)+(0.2,-0.09)$);
+    \draw[bondcol,line width=1.3pt] ($(Cl)+(0.2,0.09)$)--($(Ort)+(-0.2,0.09)$);
+    \draw[bondcol,line width=1.3pt] ($(Cl)+(0.2,-0.09)$)--($(Ort)+(-0.2,-0.09)$);
+    \draw[bondcol,line width=1.4pt] (Cl)--(Ob);          % simple liaison (O chargé)
+    \node[font=\large\bfseries] at (Cl) {Cl};
+    \node[piecol,font=\scriptsize] at (0.5,0.45) {$\scriptstyle 0$};
+    \foreach \o in {Ot,Ob,Olf,Ort}{\node[font=\large\bfseries] at (\o) {O};}
+    \node[piecol,font=\scriptsize] at ($(Ob)+(0.42,-0.28)$) {$\ominus$};
+    \node[piecol,font=\footnotesize] at (-1.0,-1.15) {\,liaison $\pi$ + $\sigma$};
+    \node[font=\footnotesize,align=center] at (0,-2.4)
+       {3 doubles + 1 simple\\$\CF(\ce{Cl})=0$ (octet étendu)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Deux structures de Lewis de \ce{ClO4-}. \textbf{À gauche}, quatre liaisons simples :
+l'octet du chlore est respecté, mais sa charge formelle vaut $+3$. \textbf{À droite}, le chlore
+(3\textsuperscript{e} période) dépasse l'octet grâce à trois doubles liaisons : les charges
+formelles deviennent minimales ($\CF(\ce{Cl})=0$), ce qui en fait la structure la plus
+représentative. (Les doublets non liants des \ce{O} ne sont pas tous dessinés, pour la
+lisibilité.)}
+\label{fig:perchlorate}
+\end{figure}
+
+\subsection{Géométrie de l'ion}
+
+Quelle que soit la structure retenue, le chlore central est lié à \textbf{4} atomes d'oxygène et
+ne porte \textbf{aucun} doublet libre : c'est un type \AX{4}{0}. Sa géométrie de répulsion et sa
+géométrie moléculaire sont donc toutes deux \textbf{tétraédriques} (comme \ce{CH4}), avec des
+angles \ce{O-Cl-O} de $109{,}5^\circ$.
+
+\begin{remarque}
+Si l'on s'intéresse cette fois à un \textbf{atome d'oxygène} doublement lié, on le décrit comme
+\AX{1}{2} (un voisin, le \ce{Cl}, et deux doublets libres). Sa propre figure de répulsion est
+\textbf{trigonale plane}. Cela montre que la notation \AX{n}{m} peut s'appliquer autour de
+\emph{n'importe quel} atome, pas seulement de l'atome central.
+\end{remarque}
+
+% =====================================================================
+\section{La résonance}
+% =====================================================================
+\label{sec:resonance}
+
+Dans l'ion \ce{ClO4-}, rien ne distingue physiquement les quatre oxygènes : ils sont strictement
+équivalents, et les quatre liaisons \ce{Cl-O} ont la même longueur. Pourtant, notre « meilleure »
+structure de Lewis place la charge $-1$ sur \emph{un} oxygène précis et trois doubles liaisons sur
+les autres. Cette contradiction apparente se résout par la notion de \textbf{résonance}.
+
+\begin{definition}[résonance et hybride de résonance]
+La \textbf{résonance} est la \textbf{délocalisation} d'électrons $\pi$ (de liaisons multiples) et de
+paires libres au sein d'un édifice, lorsqu'une seule structure de Lewis ne suffit pas à le décrire.
+On écrit alors plusieurs \textbf{structures limites} (ou \emph{formes de résonance}), reliées par
+une double flèche $\leftrightarrow$. La molécule réelle n'est aucune d'elles : c'est un
+\textbf{hybride de résonance}, sorte de « moyenne » de toutes les formes limites.
+\end{definition}
+
+\begin{theoreme}[règles de la résonance]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item D'une forme limite à l'autre, \textbf{seuls les électrons changent de place} : les
+        \emph{noyaux} (la position des atomes) ne bougent pas.
+  \item La \textbf{géométrie} de la molécule et son \textbf{orientation} dans l'espace ne sont
+        \emph{pas} affectées par la résonance.
+  \item Les formes limites \emph{équivalentes} (de même énergie) contribuent à parts égales :
+        l'hybride est alors parfaitement symétrique.
+  \item La double flèche $\leftrightarrow$ de résonance ne doit \emph{jamais} être confondue avec
+        la double flèche d'équilibre $\rightleftharpoons$ : il n'y a pas deux espèces qui
+        s'interconvertissent, mais \emph{une seule} espèce mal décrite par une formule unique.
+\end{itemize}
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.92]
+  % ============ crochet gauche ============
+  \node[font=\Huge] at (-0.4,0) {$\Bigg[$};
+  % ============ forme limite 1 ============
+  \begin{scope}[xshift=2.3cm]
+    \coordinate (Cl) at (0,0);
+    \coordinate (Ot) at (0,1.35); \coordinate (Ob) at (0,-1.35);
+    \coordinate (Ol) at (-1.35,0); \coordinate (Or) at (1.35,0);
+    % doubles : haut, gauche, bas ; simple : droite (O- )
+    % haut double
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(-0.08,0.2)$)--($(Ot)+(-0.08,-0.2)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(0.08,0.2)$)--($(Ot)+(0.08,-0.2)$);
+    % gauche double
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(-0.2,0.08)$)--($(Ol)+(0.2,0.08)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(-0.2,-0.08)$)--($(Ol)+(0.2,-0.08)$);
+    % bas double
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(-0.08,-0.2)$)--($(Ob)+(-0.08,0.2)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(0.08,-0.2)$)--($(Ob)+(0.08,0.2)$);
+    % droite simple
+    \draw[bondcol,line width=1.3pt] (Cl)--(Or);
+    \node[font=\bfseries] at (Cl) {Cl};
+    \foreach \o in {Ot,Ob,Ol,Or}{\node[font=\bfseries] at (\o) {O};}
+    \node[piecol,font=\scriptsize] at ($(Or)+(0.4,0.32)$) {$\ominus$};
+    % flèche courbe : doublet de O(droite) -> forme une double, et une double (haut) -> O
+    \draw[piecol,->,>=Stealth,line width=0.8pt] ($(Or)+(0.05,0.42)$) to[bend right=40] ($(Ot)+(0.45,0.05)$);
+  \end{scope}
+  % ============ double flèche de résonance ============
+  \node[font=\Large] at (4.6,0) {$\longleftrightarrow$};
+  % ============ forme limite 2 ============
+  \begin{scope}[xshift=6.9cm]
+    \coordinate (Cl) at (0,0);
+    \coordinate (Ot) at (0,1.35); \coordinate (Ob) at (0,-1.35);
+    \coordinate (Ol) at (-1.35,0); \coordinate (Or) at (1.35,0);
+    % doubles : droite, gauche, bas ; simple : haut (O- )
+    \draw[bondcol,line width=1.3pt] (Cl)--(Ot);                       % haut simple (O-)
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(0.2,0.08)$)--($(Or)+(-0.2,0.08)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(0.2,-0.08)$)--($(Or)+(-0.2,-0.08)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(-0.2,0.08)$)--($(Ol)+(0.2,0.08)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(-0.2,-0.08)$)--($(Ol)+(0.2,-0.08)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(-0.08,-0.2)$)--($(Ob)+(-0.08,0.2)$);
+    \draw[bondcol,line width=1.2pt] ($(Cl)+(0.08,-0.2)$)--($(Ob)+(0.08,0.2)$);
+    \node[font=\bfseries] at (Cl) {Cl};
+    \foreach \o in {Ot,Ob,Ol,Or}{\node[font=\bfseries] at (\o) {O};}
+    \node[piecol,font=\scriptsize] at ($(Ot)+(0.4,0.32)$) {$\ominus$};
+  \end{scope}
+  % ============ crochet droit + charge ============
+  \node[font=\Huge] at (9.3,0) {$\Bigg]$};
+  \node[font=\large] at (9.75,0.95) {$\ominus$};
+\end{tikzpicture}
+\caption{Deux formes limites \emph{équivalentes} de l'ion perchlorate \ce{ClO4-}. En déplaçant un
+doublet de l'oxygène chargé (à droite) vers le chlore et un doublet $\pi$ du chlore vers un autre
+oxygène (flèches courbes oranges), on passe d'une forme à l'autre. La charge $-1$ « tourne » d'un
+oxygène à l'autre : dans la réalité, elle est en fait \textbf{délocalisée} également sur les quatre
+oxygènes. La géométrie tétraédrique, elle, ne change pas.}
+\label{fig:resonance}
+\end{figure}
+
+\begin{exemple}[d'autres édifices à résonance]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=3pt]
+  \item \textbf{L'ozone \ce{O3}} : on peut écrire \ce{O=O-O} ou \ce{O-O=O}. La molécule réelle a
+        ses deux liaisons \ce{O-O} \emph{identiques}, de longueur intermédiaire entre simple et
+        double : c'est l'hybride des deux formes.
+  \item \textbf{L'ion carbonate \ce{CO3^2-}} : la double liaison \ce{C=O} peut se placer sur
+        chacun des trois oxygènes, d'où \emph{trois} formes limites équivalentes. Les trois
+        liaisons \ce{C-O} sont en réalité identiques, et la charge $-2$ est répartie sur les trois
+        oxygènes (soit $-\tfrac{2}{3}$ chacun).
+  \item \textbf{Règle générale.} Dès qu'une double liaison est \emph{conjuguée} à une paire
+        d'électrons non liante (ou à une autre double liaison), au moins deux formes de résonance
+        existent.
+\end{itemize}
+\end{exemple}
+
+\begin{remarque}[ce qu'il faut retenir de la fiche]
+La démarche est toujours la même : (1)~liaison(s) en jeu $\to$ (2)~structure de Lewis par les cinq
+étapes $\to$ (3)~charges formelles pour choisir la meilleure structure $\to$ (4)~comptage des
+domaines \AX{n}{m} $\to$ (5)~géométrie de répulsion puis géométrie moléculaire (VSEPR) $\to$
+(6)~résonance si une seule formule ne suffit pas. Maîtriser cet enchaînement permet de prévoir la
+forme et la polarité de la plupart des petites molécules et ions.
+\end{remarque}
+
+\end{document}

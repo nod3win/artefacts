@@ -1,0 +1,102 @@
+% =====================================================================
+%  FICHE 11 — THEME 2 — Corrigé MOYEN — Oxydant, réducteur, demi-équations
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 2} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 2 — Corrigé Moyen}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[compter les électrons de trois couples]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{NO3^-}/\ce{NO} : N passe de $+\mathrm{V}$ à $+\mathrm{II}$, $n=5-2=3$.
+        Demi-équation : $\ce{NO3^- + 3 e^- <=> NO}$.
+  \item \ce{MnO4^-}/\ce{Mn^{2+}} : Mn passe de $+\mathrm{VII}$ à $+\mathrm{II}$, $n=7-2=5$.
+        Demi-équation : $\ce{MnO4^- + 5 e^- <=> Mn^{2+}}$.
+  \item \ce{Cr2O7^{2-}}/\ce{Cr^{3+}} : chaque Cr passe de $+\mathrm{VI}$ à $+\mathrm{III}$ ($\Delta=3$),
+        mais \ce{Cr2O7^{2-}} contient \textbf{2} Cr : $n=2\times3=\mathbf{6}$.
+        Demi-équation : $\ce{Cr2O7^{2-} + 6 e^- <=> 2 Cr^{3+}}$.
+\end{enumerate}
+\textbf{Piège :} en (c), oublier le facteur 2 est l'erreur la plus fréquente du concours.
+\end{corr}
+
+\begin{corr}[trier les réactions redox]
+On cherche un élément dont le \NO\ change.
+\begin{enumerate}[label=\arabic*),leftmargin=2.2em,topsep=1pt,itemsep=1.5pt]
+  \item Précipitation \ce{AgCl} : Ag reste $+\mathrm{I}$, Cl reste $-\mathrm{I}$\ldots aucun changement $\Rightarrow$ \textbf{non redox}.
+  \item Échange acide-base (hydrogénosulfite / carbonate) : aucun \NO\ ne change $\Rightarrow$ \textbf{non redox}.
+  \item Co : $+\mathrm{III}\to+\mathrm{II}$ (réduit) ; Mn : $+\mathrm{IV}\to+\mathrm{VII}$ (oxydé) $\Rightarrow$ \textbf{redox}. \checkmark
+  \item Précipitation \ce{Ba3(PO4)2} : aucun \NO\ ne change $\Rightarrow$ \textbf{non redox}.
+  \item Mn : $+\mathrm{II}\to+\mathrm{IV}$ (oxydé) ; O de \ce{H2O2} : $-\mathrm{I}\to-\mathrm{II}$ (réduit) $\Rightarrow$ \textbf{redox}. \checkmark
+\end{enumerate}
+Réactions redox : \textbf{3 et 5} (réponse D des annales 2024-Q1).
+\end{corr}
+
+\begin{corr}[oxydant et réducteur dans une équation globale]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Manganèse : dans \ce{MnO2}, $\NO=+\mathrm{IV}$ ; dans \ce{MnCl2}, $\NO=+\mathrm{II}$ $\Rightarrow$ \textbf{réduit}.
+        Chlore : dans \ce{HCl}, $\NO=-\mathrm{I}$ ; dans \ce{Cl2}, $\NO=0$ $\Rightarrow$ \textbf{oxydé}.
+  \item L'espèce réduite est \ce{MnO2} : c'est l'\textbf{oxydant}.
+        L'espèce oxydée est \ce{HCl} (l'ion \ce{Cl^-}) : c'est le \textbf{réducteur}.
+\end{enumerate}
+\emph{(Cohérent avec le livre QCM~9, où \ce{Cl^-} est le réducteur et \ce{MnO2} l'oxydant.)}
+\end{corr}
+
+\begin{corr}[ne pas oublier de multiplier les électrons]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{I2}/\ce{I^-} : I passe de $0$ à $-\mathrm{I}$ ($\Delta=1$), mais \ce{I2} a 2 atomes :
+        $\ce{I2 + 2 e^- <=> 2 I^-}$, $n=\mathbf{2}$.
+  \item \ce{O2}/\ce{H2O} : O passe de $0$ à $-\mathrm{II}$ ($\Delta=2$), et \ce{O2} a 2 atomes :
+        $\ce{O2 + 4 e^- <=> 2 H2O}$, $n=\mathbf{4}$.
+  \item \ce{S4O6^{2-}}/\ce{S2O3^{2-}} : le tétrathionate ($\NO$ moyen $+2{,}5$) donne 2 thiosulfates ($+\mathrm{II}$) :
+        $\ce{S4O6^{2-} + 2 e^- <=> 2 S2O3^{2-}}$, $n=\mathbf{2}$.
+\end{itemize}
+\end{corr}
+
+\begin{corr}[les ions spectateurs]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Ions présents : \ce{Na+}, \ce{NO3^-}, \ce{Fe^{2+}}, \ce{Cl^-}, \ce{H+} (côté réactifs) ;
+        \ce{Fe^{3+}}, \ce{Cl^-}, \ce{Na+} (côté produits), plus \ce{NO} et \ce{H2O} moléculaires.
+  \item Couples redox : \ce{NO3^-}/\ce{NO} (N : $+\mathrm{V}\to+\mathrm{II}$) et \ce{Fe^{3+}}/\ce{Fe^{2+}}
+        (Fe : $+\mathrm{II}\to+\mathrm{III}$).
+  \item Les ions qui ne changent pas de \NO\ sont \ce{Na+} et \ce{Cl^-} : ce sont les \textbf{ions spectateurs}
+        (réponse D, livre QCM~10).
+\end{enumerate}
+\end{corr}
+
+\end{document}

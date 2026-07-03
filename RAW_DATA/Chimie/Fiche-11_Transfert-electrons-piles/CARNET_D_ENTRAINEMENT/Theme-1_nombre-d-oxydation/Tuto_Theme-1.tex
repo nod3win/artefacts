@@ -1,0 +1,130 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 11 — THEME 1
+%  Tuto : Le nombre d'oxydation
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{defi}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{regle}[1][]{boxbase,colback=thmcol!6,colframe=thmcol,title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11} — Tuto Thème 1}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Le nombre d'oxydation}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Le nombre d'oxydation}\\[3pt]
+{\color{primary}\rule{6cm}{1.2pt}}\\[4pt]
+{\small\itshape À lire avant les exercices — la « comptabilité électronique » du redox.}
+\end{center}
+
+\vspace{-2pt}
+\section*{1. À quoi sert le nombre d'oxydation ?}
+Une réaction d'oxydo-réduction est un \textbf{transfert d'électrons}. Pour repérer \emph{qui}
+perd et \emph{qui} gagne des électrons, on a besoin d'un compteur : le \textbf{nombre
+d'oxydation} (\NO). C'est l'outil de base de toute la Fiche~11 : on ne peut identifier une
+oxydation, écrire une demi-équation ou l'équilibrer sans savoir calculer un \NO.
+
+\begin{defi}[le \NO\ en une phrase]
+Le \NO\ d'un atome est la \textbf{charge fictive} qu'il porterait si toutes ses liaisons étaient
+\emph{ioniques}, c'est-à-dire si chaque doublet de liaison était attribué \emph{entièrement} à
+l'atome le plus \textbf{électronégatif}. On l'écrit en \textbf{chiffres romains} avec son signe :
+$+\mathrm{II}$, $-\mathrm{III}$, \ldots
+\end{defi}
+
+Ce n'est pas une charge réelle (sauf pour un ion monoatomique) : dans \ce{H2O}, les électrons ne
+sont pas vraiment transférés, ils restent partagés. Le \NO\ n'est qu'un \emph{compteur}.
+
+\section*{2. Les règles d'attribution (à connaître par cœur)}
+\begin{regle}[règles conventionnelles]
+\begin{enumerate}[label=\textbf{R\arabic*.},leftmargin=2.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Corps simple} (élément seul : \ce{O2}, \ce{H2}, \ce{Fe}, \ce{Cl2}, \ce{S}, \ce{P4}\ldots) : $\NO=0$.
+  \item \textbf{Ion monoatomique} : $\NO=$ charge de l'ion ($\NO(\ce{Ca^{2+}})=+\mathrm{II}$, $\NO(\ce{Cl^-})=-\mathrm{I}$).
+  \item \textbf{Hydrogène} dans un composé : $+\mathrm{I}$ \emph{sauf} dans les \textbf{hydrures métalliques} (\ce{NaH}, \ce{CaH2}) où il vaut $-\mathrm{I}$.
+  \item \textbf{Oxygène} dans un composé : $-\mathrm{II}$ \emph{sauf} dans les \textbf{peroxydes} (\ce{H2O2}, \ce{Na2O2}) où il vaut $-\mathrm{I}$.
+  \item \textbf{Halogènes} (groupe 17) : $-\mathrm{I}$ dans les composés (sauf combinés à O ou à un halogène plus électronégatif).
+  \item \textbf{Alcalins} (groupe 1) : toujours $+\mathrm{I}$ ; \textbf{alcalino-terreux} (groupe 2) : toujours $+\mathrm{II}$.
+\end{enumerate}
+\end{regle}
+
+\begin{regle}[la clé de tout calcul : conservation de la charge]
+\[
+\sum_{\text{atomes}}\NO \;=\; \text{charge globale de l'espèce.}
+\]
+Pour une \textbf{molécule neutre}, cette somme vaut \textbf{0}. Pour un \textbf{ion}, elle vaut
+sa charge. C'est cette égalité qui permet de trouver le \NO\ d'un atome inconnu.
+\end{regle}
+
+\section*{3. La méthode de calcul (toujours la même)}
+\begin{methode}[calculer le \NO\ d'un atome $X$]
+\textbf{(1)} Noter la charge globale de l'espèce. \quad
+\textbf{(2)} Placer les \NO\ « évidents » (O, H, alcalins\ldots). \quad
+\textbf{(3)} Poser $x=\NO(X)$ et écrire $\sum\NO=\text{charge}$. \quad
+\textbf{(4)} Résoudre pour $x$.
+\end{methode}
+
+\begin{exemple}[le chrome dans le dichromate \ce{K2Cr2O7}]
+Espèce neutre $\Rightarrow \sum\NO=0$. On sait $\NO(\ce{K})=+\mathrm{I}$ et $\NO(\ce{O})=-\mathrm{II}$.
+Soit $x=\NO(\ce{Cr})$ ; il y a 2~K, 2~Cr, 7~O :
+\[
+2(+1)+2x+7(-2)=0 \;\Longrightarrow\; 2+2x-14=0 \;\Longrightarrow\; x=+6.
+\]
+Donc $\NO(\ce{Cr})=+\mathrm{VI}$. \emph{(Un même élément peut prendre des \NO\ très différents selon le composé.)}
+\end{exemple}
+
+\begin{exemple}[oxygène et hydrogène : ne pas tomber dans le piège]
+Dans \ce{H2O} : $\NO(\ce{O})=-\mathrm{II}$ ; dans le \emph{peroxyde} \ce{H2O2} : $\NO(\ce{O})=-\mathrm{I}$.\\
+Dans \ce{H2O} : $\NO(\ce{H})=+\mathrm{I}$ ; dans l'\emph{hydrure} \ce{NaH} : $\NO(\ce{H})=-\mathrm{I}$ (car H y est l'élément le plus électronégatif).
+\end{exemple}
+
+\begin{attention}[les trois pièges du concours]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Le \NO\ de H n'est \textbf{pas toujours} $+\mathrm{I}$ ($-\mathrm{I}$ dans les hydrures, $0$ dans \ce{H2}).
+  \item Le \NO\ de O n'est \textbf{pas toujours} $-\mathrm{II}$ ($-\mathrm{I}$ dans les peroxydes).
+  \item Un \NO\ peut être \textbf{non entier} : c'est alors une \emph{moyenne} sur des atomes non équivalents
+        (ex. le fer dans \ce{Fe3O4} vaut $+8/3$). Le concours attend souvent ce \NO\ « moyen ».
+\end{itemize}
+\end{attention}
+
+\begin{center}
+\small\itshape Objectif du thème : savoir attribuer par règles et calculer par la somme des \NO\ dans
+n'importe quelle molécule ou ion — c'est le socle des thèmes 2 à 5.
+\end{center}
+\end{document}

@@ -1,0 +1,142 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 2 — Reconnaissance et classification des groupements fonctionnels
+%  TUTO   —   Compilation : pdflatex Tuto_Theme-2.tex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=1.9em,bond length=0.85em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=1.9cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{Rcol}{RGB}{150,98,162}
+
+\newcommand{\runtitle}{Thème 2 — Tuto}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{2.5pt}
+
+\titleformat{\section}{\normalsize\bfseries\color{primarydark}}{\thesection.}{0.5em}{}
+\titlespacing{\section}{0pt}{4pt}{1pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.8pt,arc=2pt,
+   left=2.4mm,right=2.4mm,top=1.4mm,bottom=1.4mm,fonttitle=\bfseries\small,coltitle=white,
+   toptitle=0.3mm,bottomtitle=0.3mm}}
+\newtcolorbox{defn}[1][]{boxbase,colback=defcol!5,colframe=defcol,
+   title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=primary!7,colframe=primary,
+   title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newcommand{\R}{\textcolor{Rcol}{\textbf{R}}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=primary,colframe=primary,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{1pt}}
+
+\begin{document}
+
+\banner{Thème 2 — Reconnaissance et classification des groupements fonctionnels}{%
+Tuto à lire avant les exercices — Fiche 12, Chimie organique}
+
+% =====================================================================
+\section{Le principe : la fonction gouverne la molécule}
+Sur le squelette carboné se greffent des \textbf{groupements fonctionnels} (contenant souvent un \textbf{hétéroatome} : O, N, S). C'est le groupement, bien plus que la longueur de la chaîne, qui fixe la \textbf{réactivité}. Savoir \emph{lire une structure et y recenser les fonctions} est \emph{la} compétence-reine du concours. Le \textbf{suffixe} du nom trahit la fonction principale.
+
+% =====================================================================
+\section{Le tableau des fonctions ($\R$ = reste carboné)}
+\begin{center}\small\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\linewidth}{>{\bfseries\color{primarydark}}l c c X}
+\toprule
+Fonction & Motif & Suffixe & À reconnaître \\
+\midrule
+Alcool & \chemfig{-[:30]OH} & \textit{-ol} & O--H sur un C \emph{saturé} \\
+Éther & \chemfig{-[:30]O-[:-30]\R} & oxyde d'alkyle & O \emph{entre deux} C \\
+Aldéhyde & \chemfig{-[:30](=[:90]O)-[:-30]H} & \textit{-al} & C=O en \emph{bout} de chaîne (porte un H) \\
+Cétone & \chemfig{-[:30](=[:90]O)-[:-30]\R} & \textit{-one} & C=O \emph{entre deux} C \\
+Acide carboxylique & \chemfig{-[:30](=[:90]O)-[:-30]OH} & \textit{acide -oïque} & C=O portant un O--H \\
+Ester & \chemfig{-[:30](=[:90]O)-[:-30]O-[:30]\R} & \textit{-oate d'alkyle} & C=O portant un O--\R \\
+Amide & \chemfig{-[:30](=[:90]O)-[:-30]NH_2} & \textit{-amide} & C=O portant un N \\
+Amine & \chemfig{-[:30]NH_2} & \textit{-amine} & N sur C saturé (\emph{pas} de C=O) \\
+Nitrile & \chemfig{-[:30]C~[:30]N} & \textit{-nitrile} & triple liaison C$\equiv$N \\
+Thiol & \chemfig{-[:30]SH} & \textit{-thiol} & S--H (le S remplace le O de l'alcool) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+(S'ajoutent la double $\ce{C=C}$ « \textit{-ène} », la triple $\ce{C#C}$ « \textit{-yne} », et l'\textbf{imine} $\ce{C=NH}$ « \textit{-imine} ».)
+
+% =====================================================================
+\section{Les cinq visages du carbonyle C=O}
+Le groupe \textbf{carbonyle} $\ce{C=O}$ est le même dans cinq fonctions : \textbf{tout se joue sur ses voisins}. C'est LA question-piège du concours.
+\begin{center}\small\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{ll}
+C=O + \textbf{H} (bout de chaîne) $\to$ \textbf{aldéhyde} &\quad C=O + \textbf{O--H} $\to$ \textbf{acide carboxylique} \\
+C=O + \textbf{2 C} (entouré de carbones) $\to$ \textbf{cétone} &\quad C=O + \textbf{O--\R} $\to$ \textbf{ester} \\
+\multicolumn{2}{c}{C=O + \textbf{N} $\to$ \textbf{amide}} \\
+\end{tabular}
+\end{center}
+
+\begin{astuce}[Méthode « chercher les C=O d'abord »]
+Face à une structure : \textbf{(1)} repère tous les $\ce{C=O}$ et demande « qu'y a-t-il de l'autre côté ? » (H / 2 C / OH / OR / N) ; \textbf{(2)} repère ensuite les hétéroatomes \emph{isolés} : O--H sur C saturé $=$ alcool, C--O--C $=$ éther, N sans C=O $=$ amine, S--H $=$ thiol, C$\equiv$N $=$ nitrile.
+\end{astuce}
+
+% =====================================================================
+\section{Les deux confusions à ne jamais faire}
+\begin{piege}[Alcool / éther — et ester / éther]
+Alcool $=$ O--H terminal ; éther $=$ O \emph{pontant} deux C. L'éthanol $\ce{CH3CH2OH}$ et le diméthyléther $\ce{CH3OCH3}$ ont la \emph{même} formule brute $\ce{C2H6O}$ : ce sont des \textbf{isomères de fonction}. \textbf{Attention aussi} : dans un \emph{ester} $\ce{-C(=O)-O-C}$, l'oxygène pontant fait partie de l'ester — ce n'est \textbf{pas} un éther (erreur classique de l'aspirine !).
+\end{piege}
+\begin{piege}[Amine / amide]
+\textbf{Amine} : l'azote est lié à un carbone \emph{saturé} ($\ce{C-N}$, sans carbonyle voisin). \textbf{Amide} : l'azote est lié à un \emph{carbonyle} ($\ce{C(=O)-N}$). Voir un enchaînement $\ce{C-N}$ ne suffit pas : \textbf{s'il y a un C=O accolé au N, c'est une amide, jamais une amine.}
+\end{piege}
+
+% =====================================================================
+\section{Classer alcools et amines : I / II / III}
+On classe un alcool (ou une amine) selon le \textbf{carbone qui porte} le $\ce{-OH}$ (ou selon le nombre de C portés par le N) :
+\begin{center}\small\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{lll}
+\toprule
+Classe & Alcool : le C--OH est\dots & Amine : l'azote porte\dots \\
+\midrule
+\textbf{primaire (I)} & lié à 1 autre C & 1 groupe carboné ($\ce{R-NH2}$) \\
+\textbf{secondaire (II)} & lié à 2 autres C & 2 groupes carbonés ($\ce{R2NH}$) \\
+\textbf{tertiaire (III)} & lié à 3 autres C & 3 groupes carbonés ($\ce{R3N}$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{astuce}[« Compter \emph{et} classer »]
+Une erreur fréquente : compter les fonctions sans les classer. Si une molécule a « 3 fonctions alcools » dont \emph{deux} tertiaires et \emph{une} secondaire, dire « deux alcools secondaires » est \textbf{faux}. Donne toujours le \emph{nombre} \textbf{et} la \emph{classe} de chaque fonction.
+\end{astuce}
+
+\end{document}

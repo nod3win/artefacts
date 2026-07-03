@@ -1,0 +1,107 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{acidecol}{RGB}{205,60,45}
+\definecolor{basecol}{RGB}{40,110,200}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{corrbox}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{astuce}{boxbase,colback=attncol!6,colframe=attncol,sharp corners}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 10} — Thème 1 : couples acide/base}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 --- Corrigé Facile}
+\end{center}
+
+\begin{corrbox}[base conjuguée d'un acide]
+On retire \textbf{un \ce{H} et une charge $+$} (la charge diminue de 1).
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item \ce{HCl} $\to$ \ce{Cl-}
+  \item \ce{CH3COOH} $\to$ \ce{CH3COO-}
+  \item \ce{NH4+} $\to$ \ce{NH3} \quad(la charge passe de $+1$ à $0$)
+  \item \ce{H2CO3} $\to$ \ce{HCO3-} \quad(on n'enlève qu'\emph{un} \ce{H})
+  \item \ce{HSO4-} $\to$ \ce{SO4^{2-}} \quad(la charge passe de $-1$ à $-2$)
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[acide conjugué d'une base]
+On ajoute \textbf{un \ce{H} et une charge $+$} (la charge augmente de 1).
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item \ce{OH-} $\to$ \ce{H2O}
+  \item \ce{NH3} $\to$ \ce{NH4+}
+  \item \ce{CO3^{2-}} $\to$ \ce{HCO3-} \quad(la charge passe de $-2$ à $-1$)
+  \item \ce{HCO3-} $\to$ \ce{H2CO3}
+  \item \ce{F-} $\to$ \ce{HF}
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[qui donne, qui capte ?]
+L'\textcolor{acidecol}{\textbf{acide}} cède le \ce{H+}, la \textcolor{basecol}{\textbf{base}} le capte.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=2pt]
+  \item $\ce{HCl}$ (\textcolor{acidecol}{acide}, il perd \ce{H+}) et $\ce{H2O}$ (\textcolor{basecol}{base},
+        elle devient \ce{H3O+}).
+  \item $\ce{H2O}$ (\textcolor{acidecol}{acide}, elle devient \ce{OH-}) et $\ce{NH3}$
+        (\textcolor{basecol}{base}, elle devient \ce{NH4+}). Ici l'eau joue l'acide !
+  \item $\ce{CH3COOH}$ (\textcolor{acidecol}{acide}) et $\ce{H2O}$ (\textcolor{basecol}{base}).
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[demi-équations de couple]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\ce{HNO2 <=> NO2- + H+}$
+  \item $\ce{NH4+ <=> NH3 + H+}$
+  \item $\ce{HCO3- <=> CO3^{2-} + H+}$ \quad(l'acide du couple est bien \ce{HCO3-})
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[acide ou base de Lewis ?]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item \ce{NH3} : \textbf{base de Lewis} (donne son doublet non liant).
+  \item \ce{BF3} : \textbf{acide de Lewis} (orbitale vide sur le bore, il accepte un doublet).
+  \item \ce{H+} : \textbf{acide de Lewis} (accepteur de doublet ; c'est aussi l'acide de Brønsted par excellence).
+  \item \ce{H2O} : \textbf{base de Lewis} (donne un de ses doublets, par exemple à \ce{H+} pour former \ce{H3O+}).
+\end{enumerate}
+\end{corrbox}
+
+\begin{astuce}
+\textbf{Piège de charge.} L'erreur la plus fréquente est d'oublier de faire varier la charge en même temps que
+le \ce{H}. Vérification systématique : la base conjuguée est \emph{toujours} une charge plus négative que son
+acide.
+\end{astuce}
+
+\end{document}

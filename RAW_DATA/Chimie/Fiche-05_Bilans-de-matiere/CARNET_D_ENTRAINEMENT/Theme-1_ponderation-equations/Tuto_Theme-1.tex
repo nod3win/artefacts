@@ -1,0 +1,129 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 5 (Bilans de matière)
+%  THÈME 1 — Pondération des équations chimiques
+%  Fiche TUTO (à lire avant les exercices)
+%  Compilation : pdflatex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,top=1.6cm,bottom=1.6cm,left=1.9cm,right=1.9cm,headheight=24pt,headsep=6pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{reacA}{RGB}{0,90,200}
+\definecolor{reacB}{RGB}{210,30,40}
+\definecolor{prodC}{RGB}{0,140,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Bilans de matière}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto — Thème 1}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox{tutobox}[2][]{enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,colback=#2!6,colframe=#2,
+  fonttitle=\bfseries,coltitle=white,title={#1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Pondérer une équation chimique}\\[1pt]
+{\color{primary}\rule{0.5\linewidth}{1.2pt}}\\[2pt]
+{\itshape La toute première étape de tout bilan de matière : ajuster les coefficients.}
+\end{center}
+\vspace{-3pt}
+
+% ---------------------------------------------------------------------
+\begin{tutobox}[Pourquoi pondérer ? La règle d'or]{thmcol}
+Une réaction chimique ne fait que \textbf{réarranger des atomes} : elle n'en crée ni n'en détruit
+(\textbf{loi de Lavoisier}). Une équation est \textbf{pondérée} (ajustée / équilibrée) quand il y a
+\emph{le même nombre d'atomes de chaque élément} à gauche (réactifs) et à droite (produits). On
+ajuste \textbf{uniquement les coefficients} placés \emph{devant} les formules — \textbf{jamais les
+indices} à l'intérieur : écrire \ce{O3} au lieu de \ce{O2} changerait la nature de l'espèce !
+\end{tutobox}
+
+\textbf{Coefficient vs indice — le piège n\textsuperscript{o}1 :}
+dans « $3\,\ce{H2O}$ », le \textbf{3} est le \emph{coefficient} (ajustable, il multiplie toute la
+molécule : $3\times2=6$ atomes H et $3\times1=3$ atomes O) ; le \textbf{2} de \ce{H2O} est un
+\emph{indice} (intouchable, il fait partie de la formule de l'eau).
+
+% ---------------------------------------------------------------------
+\begin{tutobox}[La méthode en 5 temps]{methcol}
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1.5pt]
+  \item \textbf{Inventaire} : lister les éléments et compter les atomes de chaque côté.
+  \item \textbf{Ordre malin} : commencer par l'élément qui n'apparaît que dans \emph{une seule}
+        espèce de chaque côté (souvent un métal, ou le carbone), puis l'\textbf{hydrogène},
+        et \textbf{finir par l'oxygène}.
+  \item \textbf{Ajuster} un coefficient, puis \emph{répercuter} sur les autres espèces ; recompter.
+  \item \textbf{Fractions} : si un coefficient tombe fractionnaire (ex.\ $\tfrac{43}{2}$),
+        \emph{multiplier toute l'équation} par le dénominateur pour revenir à des entiers.
+  \item \textbf{Vérifier} : chaque élément équilibré, \emph{et} la charge totale (réactions ioniques).
+        On garde les \textbf{plus petits entiers} possibles.
+\end{enumerate}
+\end{tutobox}
+
+% ---------------------------------------------------------------------
+\textbf{\color{primarydark}Exemple guidé — l'oxydation du fer.}
+On part de $\ce{Fe + O2 -> Fe2O3}$ (non pondérée).
+
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item \emph{Fer} : la formule \ce{Fe2O3} impose 2 Fe à droite $\Rightarrow$ on met $2\,\ce{Fe}$ à gauche.
+  \item \emph{Oxygène} : 3 O à droite, mais l'oxygène arrive par paquets de 2 (\ce{O2}). Le plus petit
+        commun multiple de 2 et 3 est \textbf{6} : donc $3\,\ce{O2}$ (=6 O) à gauche et $2\,\ce{Fe2O3}$ (=6 O) à droite.
+  \item \emph{Ré-équilibrer le fer} : $2\,\ce{Fe2O3}$ contient $2\times2=4$ Fe $\Rightarrow$ on corrige à $4\,\ce{Fe}$.
+\end{itemize}
+\[
+\boxed{\ce{4 Fe + 3 O2 -> 2 Fe2O3}}\qquad\text{Vérif : Fe } 4=4,\ \text{O } 6=6.\quad\text{Somme des coefficients } 4+3+2=9.
+\]
+
+% ---------------------------------------------------------------------
+\begin{tutobox}[Cas des groupements et des ions]{defcol}
+\textbf{Groupements polyatomiques} (comme \ce{SO4}, \ce{NO3}, \ce{OH}) : s'ils traversent la
+réaction \emph{intacts}, on les équilibre \textbf{en bloc}, comme une « super-lettre ».
+Ex.\ dans \ce{Al2(SO4)3}, le motif \ce{SO4} apparaît 3 fois.\\[2pt]
+\textbf{Équations ioniques} : en plus des atomes, la \textbf{charge électrique totale} doit être la
+même des deux côtés. On vérifie donc une ligne « charge » dans l'inventaire.
+\end{tutobox}
+
+\textbf{\color{primarydark}Réflexe « annales ».} On demande très souvent la \textbf{somme des
+coefficients stœchiométriques} entiers et minimaux (coefficient~1 compris). Pour
+\ce{4 Fe + 3 O2 -> 2 Fe2O3}, cette somme vaut $4+3+2=9$.
+
+% ---------------------------------------------------------------------
+\begin{tutobox}[Mémo : nommer le type de réaction]{primary}
+\begin{itemize}[leftmargin=1.4em,topsep=0pt,itemsep=0pt]
+  \item \textbf{acide--base} : transfert d'un proton \ce{H+} ;\quad
+        \textbf{redox} : transfert d'électrons (ex.\ combustions) ;
+  \item \textbf{précipitation} : formation d'un solide (\ce{v}) ;\quad
+        \textbf{décomposition} : une espèce se scinde ;\quad
+        \textbf{hydrogénation} : addition de \ce{H2}.
+\end{itemize}
+Le \emph{type} ne change rien à la pondération : on équilibre \textbf{toujours} par les coefficients.
+\end{tutobox}
+
+\end{document}

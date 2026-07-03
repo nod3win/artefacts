@@ -1,0 +1,100 @@
+% =====================================================================
+%  FICHE 4 — THEME 2 — Exercices niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{M}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox{donnees}{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Données}}}
+\newcounter{exo}
+\newenvironment{exo}[1][]{%
+  \par\medskip\refstepcounter{exo}%
+  \noindent\begin{tcolorbox}[boxbase,colback=primary!7,colframe=primary,
+     title={\textsc{Exercice \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
+  {\end{tcolorbox}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\NA}{N_{\!\text{A}}}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- Niveau Facile}\\[2pt]
+{\color{primary}\itshape Masse volumique, densité et volume molaire}
+\end{center}
+
+\begin{donnees}
+$V_m=\SI{22.4}{\litre\per\mole}$ aux CNTP.\quad $\rho_{\text{eau}}=\SI{1}{\gram\per\milli\litre}$.\quad
+$M(\ce{H2})=\SI{2}{\gram\per\mole}$.
+\end{donnees}
+
+\begin{exo}[masse volumique à partir d'une pesée]
+Au laboratoire, on prélève $\SI{30}{\milli\litre}$ d'urine à l'aide d'une seringue pesant
+initialement $\SI{50.00}{\gram}$. Après le prélèvement, la seringue pèse $\SI{80.36}{\gram}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Quelle est la masse d'urine prélevée ?
+  \item En déduire la masse volumique de l'urine, exprimée en \si{\gram\per\milli\litre}, puis en
+        \si{\gram\per\litre}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[de la masse volumique à la densité]
+Le mercure a une masse volumique $\rho=\SI{13.6}{\gram\per\milli\litre}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Quelle est la densité du mercure ?
+  \item Quelle est la masse d'un litre de mercure ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[du volume à la masse]
+On verse $\SI{250}{\milli\litre}$ d'éthanol, de masse volumique $\rho=\SI{0.79}{\gram\per\milli\litre}$,
+dans un bécher. Quelle est la masse d'éthanol versée ?
+\end{exo}
+
+\begin{exo}[volume molaire d'un gaz]
+Tous les gaz sont considérés aux CNTP.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Quel volume occupent $\SI{0.250}{\mole}$ de dioxyde de carbone \ce{CO2} ?
+  \item Quel volume occupent $\SI{2.0}{\gram}$ de dihydrogène \ce{H2} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[conversions d'unités de masse volumique]
+Un solide a une masse volumique $\rho=\SI{2.0}{\gram\per\cubic\centi\metre}$. Exprimer cette valeur :
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item en \si{\gram\per\milli\litre} ;
+  \item en \si{\gram\per\litre} ;
+  \item en \si{\kilo\gram\per\litre}.
+\end{enumerate}
+\end{exo}
+
+\end{document}

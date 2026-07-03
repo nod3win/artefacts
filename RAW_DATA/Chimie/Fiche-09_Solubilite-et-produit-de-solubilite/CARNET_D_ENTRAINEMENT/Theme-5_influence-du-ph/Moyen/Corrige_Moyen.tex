@@ -1,0 +1,191 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 5 — Influence du pH}%
+{Corrigé — Niveau Moyen}%
+{Réponses détaillées et justifications}
+
+\begin{correction}[pH de précipitation de \ce{Al(OH)3}]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $[\ce{OH-}]=\sqrt[3]{\dfrac{\Kps}{[\ce{Al^3+}]}}=\sqrt[3]{\dfrac{\num{2{,}0e-32}}{\num{1{,}0e-3}}}
+        =\sqrt[3]{\num{2{,}0e-29}}\approx\qty{2{,}7e-10}{\molar}$.
+  \item $\mathrm{pH}=14+\log(\num{2{,}7e-10})=14-9{,}57\approx\boxed{4{,}4}$.
+  \item C'est \textbf{acide} (pH $<7$) : \ce{Al(OH)3} précipite dès que l'eau cesse d'être franchement
+        acide — d'où la floculation de l'aluminium en traitement des eaux potables.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[pH de précipitation de \ce{Mg(OH)2}]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $[\ce{OH-}]=\sqrt{\dfrac{\Kps}{[\ce{Mg^2+}]}}=\sqrt{\dfrac{\num{9{,}0e-12}}{0{,}06}}
+        =\sqrt{\num{1{,}5e-10}}\approx\qty{1{,}2e-5}{\molar}$.
+  \item $\mathrm{pH}=14+\log(\num{1{,}2e-5})=14-4{,}91\approx\boxed{9{,}1}$.
+        Il faut donc rendre l'eau nettement \textbf{basique} pour précipiter le magnésium (cf. l'ajout
+        de chaux au Thème 3).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[pH de précipitation de \ce{Fe(OH)3}]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $[\ce{OH-}]=\sqrt[3]{\dfrac{\num{2{,}0e-39}}{\num{1{,}0e-2}}}=\sqrt[3]{\num{2{,}0e-37}}
+        \approx\qty{5{,}9e-13}{\molar}$, d'où
+        $\mathrm{pH}=14+\log(\num{5{,}9e-13})\approx\boxed{1{,}8}$.
+  \item Oui : \ce{Fe(OH)3} précipite dès $\mathrm{pH}\approx 1{,}8$, c'est-à-dire en milieu
+        \textbf{franchement acide}. Il est donc \textbf{très difficile} de conserver du fer(III) en
+        solution : il faut un pH extrêmement bas (son $\Kps$ minuscule le rend quasi insoluble).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[le calcaire et l'acide]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\ce{CaCO3(s) + 2 H3O+ -> Ca^{2+}(aq) + CO2(g) + 3 H2O}$.
+  \item L'anion \ce{CO3^2-} (base faible) est \textbf{consommé} par \ce{H3O+}. En retirant un produit de
+        la dissolution $\ce{CaCO3 <=> Ca^2+ + CO3^2-}$, on déplace l'équilibre vers la \textbf{droite}
+        (Le Chatelier) : plus de \ce{CaCO3} se dissout, la solubilité \textbf{augmente}.
+  \item L'effervescence vient du dégagement de \ce{CO2} gazeux. L'eau pure (neutre) ne fournit pas
+        assez de \ce{H3O+} pour attaquer le carbonate : \textbf{pas d'effervescence}. Ce mécanisme
+        explique aussi l'érosion des roches calcaires par les pluies acides.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[classer trois hydroxydes]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Par pH de précipitation croissant : \boxed{\ce{Fe(OH)3}\,(1{,}8) < \ce{Al(OH)3}\,(4{,}4) < \ce{Mg(OH)2}\,(9{,}1)}.
+        C'est l'ordre dans lequel ils précipitent quand on monte le pH.
+  \item Le fer précipite dès $\mathrm{pH}\approx 1{,}8$, le magnésium seulement vers $\mathrm{pH}\approx 9{,}1$.
+        En maintenant le pH dans un intervalle intermédiaire, par exemple \textbf{$4 \lesssim \mathrm{pH}
+        \lesssim 8$}, on précipite \textbf{tout le fer} sous forme de \ce{Fe(OH)3} tout en gardant le
+        \ce{Mg^{2+}} en solution : c'est une \textbf{séparation sélective} par le pH.
+\end{enumerate}
+\end{correction}
+
+\end{document}

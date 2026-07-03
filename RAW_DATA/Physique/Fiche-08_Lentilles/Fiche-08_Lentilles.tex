@@ -1,0 +1,1382 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 8
+%  Lentilles et instruments d'optique simples
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.markings,angles,quotes,
+  patterns,backgrounds,shapes.geometric,intersections,fit}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « physique » réutilisées dans les figures
+\definecolor{rayinc}{RGB}{20,20,20}         % rayon incident (noir)
+\definecolor{rayimg}{RGB}{0,90,200}         % rayon image (bleu)
+\definecolor{rayvirt}{RGB}{160,90,190}      % rayons virtuels (violet)
+\definecolor{verrecol}{RGB}{175,180,185}    % verre
+\definecolor{verreblue}{RGB}{120,170,205}   % verre teinté
+\definecolor{objcol}{RGB}{200,55,55}        % objet (rouge)
+\definecolor{imgcol}{RGB}{0,135,90}         % image réelle (vert)
+\definecolor{imgvirtcol}{RGB}{160,90,190}   % image virtuelle (violet)
+\definecolor{axecol}{RGB}{90,90,100}        % axe optique
+\definecolor{retinacol}{RGB}{230,150,150}   % rétine
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Loi (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  axopt/.style={dash pattern=on 3pt off 2pt,axecol,line width=0.7pt},
+  axoptfull/.style={axecol,line width=0.7pt},
+  inc/.style={->,>=Stealth,line width=1.1pt,rayinc},
+  rayo/.style={->,>=Stealth,line width=1.1pt,rayimg},
+  virt/.style={dash pattern=on 3pt off 2pt,rayvirt,line width=0.9pt},
+  virtarr/.style={->,>=Stealth,dash pattern=on 3pt off 2pt,rayvirt,line width=0.9pt},
+  objfleche/.style={objcol,line width=2pt,->,>=Stealth},
+  imgfleche/.style={imgcol,line width=2pt,->,>=Stealth},
+  imgvirtfleche/.style={imgvirtcol,line width=2pt,->,>=Stealth},
+  ptn/.style={circle,fill=black,inner sep=1.1pt},
+  foy/.style={circle,fill=primary,inner sep=1.4pt},
+}
+
+% Symboles de lentilles (à appeler DANS un tikzpicture, centre en (0,0))
+% #1 = abscisse du centre optique, #2 = demi-hauteur de la lentille
+\newcommand{\LentilleConv}[2]{%
+  \draw[verrecol,line width=1.8pt,<->,>=Stealth] (#1,-#2)--(#1,#2);}
+\newcommand{\LentilleDiv}[2]{%
+  \draw[verrecol,line width=1.8pt,>-<,>=Stealth] (#1,-#2)--(#1,#2);}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Lentilles et instruments d'optique simples}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\gamm}{\gamma}             % grandissement
+\newcommand{\angi}{\hat{\imath}}        % angle d'incidence
+\newcommand{\angr}{\hat{r}}             % angle de réfraction
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Lentilles}\\[5pt]
+   {\Huge\bfseries et instruments d'optique simples}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,8}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : lentille convergente focalisant des rayons ---
+\begin{tikzpicture}[scale=1.0]
+  % axe optique
+  \draw[axopt] (-4.8,0) -- (5.4,0);
+  \node[axecol,right,font=\footnotesize] at (5.4,0) {axe optique};
+  % rayons incidents parallèles à l'axe
+  \foreach \y in {1.4,0.8,0,-0.8,-1.4}{
+     \draw[inc] (-4.6,\y) -- (0,\y);}
+  \node[rayinc,left,font=\footnotesize] at (-4.6,1.4) {rayons incidents};
+  \node[rayinc,left,font=\footnotesize] at (-4.6,1.05) {parallèles};
+  % lentille convergente
+  \LentilleConv{0}{2.0}
+  % rayons réfractés convergeant vers F'
+  \foreach \y in {1.4,0.8,-0.8,-1.4}{
+     \draw[rayo] (0,\y) -- (3.6,0);}
+  % rayon passant par O non dévié (déjà tracé horizontal)
+  \draw[rayo] (0,0) -- (3.6,0);
+  \node[rayimg,above right,font=\footnotesize] at (3.0,0.35) {convergent en $F'$};
+  % foyer image F'
+  \fill[foy] (3.6,0) circle (1.5pt);
+  \node[primary,below right,font=\footnotesize] at (3.6,0) {$F'$};
+  % centre optique O
+  \fill[ptn] (0,0) circle (1.3pt);
+  \node[below right,font=\footnotesize] at (0,0) {$O$};
+  % distance focale
+  \draw[<->,>=Stealth,primary,line width=0.6pt] (0,-2.5) -- (3.6,-2.5);
+  \node[primary,below,font=\footnotesize] at (1.8,-2.5) {distance focale $f$};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir une \textbf{lentille} et distinguer \textbf{lentilles convergentes} (bords minces)
+        et \textbf{divergentes} (bords épais) ;
+  \item situer le \textbf{centre optique} $O$, les \textbf{foyers} $F$ et $F'$ et la \textbf{distance focale} $f$ ;
+  \item tracer l'\textbf{image} d'un objet à l'aide des \textbf{trois rayons particuliers} ;
+  \item appliquer la \textbf{relation de conjugaison} $\dfrac{1}{f}=\dfrac{1}{u}+\dfrac{1}{v}$ et le
+        \textbf{grandissement} $\;\gamm=\dfrac{i}{o}=-\dfrac{v}{u}$\, avec leurs conventions de signe ;
+  \item définir la \textbf{vergence} (en dioptries) et l'utiliser pour des lentilles accolées ;
+  \item modéliser l'\textbf{œil} et corriger ses \textbf{défauts} (myopie, hypermétropie, presbytie) ;
+  \item expliquer le principe de la \textbf{loupe}, de l'\textbf{appareil photo}, du \textbf{projecteur}
+        et du \textbf{microscope optique}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 8 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : de la réfraction à la lentille}
+% =====================================================================
+La \textbf{Fiche 7} a montré qu'à la surface de séparation entre deux milieux transparents (le
+\emph{dioptre}), un rayon lumineux est à la fois réfléchi et \textbf{réfracté}, et que la réfraction
+obéit à la \emph{loi de Snell--Descartes} $n_1\sin\angi=n_2\sin\angr$. Une \textbf{lentille} exploite
+précisément ce phénomène : elle est taillée de telle sorte que les \emph{deux faces} courbes
+réfractent successivement les rayons et les \emph{focalisent} (ou les \emph{écartent}) de façon
+cohérente. Comprendre les lentilles, c'est donc mettre la réfraction « au service » de la formation
+d'images.
+
+\subsection{Qu'est-ce qu'une lentille ?}
+
+\begin{definition}[lentille]
+Une \textbf{lentille} est un milieu transparent et \emph{homogène} (verre, plexiglas\ldots) limité par
+\textbf{deux faces} dont \emph{au moins une est courbe} (en pratique, des portions de sphère). En
+traversant les deux dioptres, un rayon lumineux subit deux réfractions successives qui le dévient.
+\end{definition}
+
+Toute lentille possède les éléments géométriques suivants :
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item un \textbf{rayon de courbure} pour chaque face, noté $R$ et $R'$ ;
+  \item un \textbf{centre de courbure} pour chaque face, noté $C$ et $C'$ ;
+  \item un \boldmath{}axe de symétrie\unboldmath{}, appelé \textbf{axe optique} (ou axe principal),
+        qui passe par les deux centres de courbure.
+\end{itemize}
+
+\begin{definition}[centre optique]
+Le \textbf{centre optique} $O$ est le point de l'axe optique tel que tout rayon le traversant
+\textbf{ressort sans déviation}. Pour une lentille \emph{mince} dont les deux faces ont le même rayon
+de courbure, $O$ est le milieu du segment $[CC']$.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % axe optique
+  \draw[axopt] (-4.6,0) -- (4.8,0);
+  \node[axecol,right,font=\footnotesize] at (4.8,0) {axe optique};
+  % une lentille biconvexe stylisée (forme épaisse)
+  \fill[verreblue!30] (0,0) .. controls (0.5,1.8) and (0.5,-1.8) .. (0,0)
+                       .. controls (-0.5,-1.8) and (-0.5,1.8) .. (0,0);
+  \draw[verreblue!70,line width=0.7pt] (0,0) .. controls (0.5,1.8) and (0.5,-1.8) .. (0,0);
+  \draw[verreblue!70,line width=0.7pt] (0,0) .. controls (-0.5,-1.8) and (-0.5,1.8) .. (0,0);
+  \node[primarydark,font=\footnotesize] at (0,0.55) {verre};
+  % centres de courbure
+  \fill[ptn] (0,0) circle (1.3pt); \node[below,font=\footnotesize] at (0,-0.05) {$O$};
+  \fill[ptn] (-3.2,0) circle (1.2pt); \node[below,font=\footnotesize] at (-3.2,-0.05) {$C$};
+  \fill[ptn] (3.2,0) circle (1.2pt); \node[below,font=\footnotesize] at (3.2,-0.05) {$C'$};
+  \draw[<->,>=Stealth,black!55,line width=0.5pt] (-3.2,1.1) -- (0,1.1);
+  \node[above,font=\scriptsize,black!60] at (-1.6,1.1) {$R$};
+  \draw[<->,>=Stealth,black!55,line width=0.5pt] (0,1.1) -- (3.2,1.1);
+  \node[above,font=\scriptsize,black!60] at (1.6,1.1) {$R'$};
+  % rayon passant par O non dévié
+  \draw[inc] (-4.2,0.85) -- (-0.05,0.02);
+  \draw[rayo] (0.05,0.02) -- (4.2,-0.85);
+  \node[rayinc,above,font=\scriptsize] at (-2.4,0.6) {par $O$ : non dévié};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Deux familles : bords minces et bords épais}
+
+On classe les lentilles selon l'\emph{épaisseur de leurs bords}, ce qui décide de leur comportement.
+
+\begin{definition}[lentilles convergentes et divergentes]
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item Une lentille \textbf{convergente} a des \textbf{bords minces} (plus épaisse au centre qu'aux
+        bords). Elle fait \emph{converger} un faisceau de rayons parallèles en un point.
+  \item Une lentille \textbf{divergente} a des \textbf{bords épais} (plus mince au centre). Elle fait
+        \emph{diverger} les rayons, comme s'ils provenaient d'un point situé \emph{avant} la lentille.
+\end{itemize}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % ===== Ligne du haut : 3 convergentes (bords minces) =====
+  \node[primarydark,font=\footnotesize\bfseries,anchor=west] at (-6.8,1.7)
+     {Convergentes (bords minces) :};
+  % biconvexe
+  \begin{scope}[shift={(-4.0,1.5)}]
+    \fill[verreblue!35] plot[smooth cycle] coordinates {(0,0.8) (0.28,0) (0,-0.8) (-0.28,0)};
+    \draw[verreblue!80,line width=0.5pt] plot[smooth cycle] coordinates {(0,0.8) (0.28,0) (0,-0.8) (-0.28,0)};
+    \node[font=\scriptsize] at (0,-1.15) {(a) biconvexe};
+  \end{scope}
+  % plan-convexe
+  \begin{scope}[shift={(-1.6,1.5)}]
+    \fill[verreblue!35] plot[smooth cycle] coordinates {(0,0.8) (0.30,0) (0,-0.8) (-0.16,0.4) (-0.16,-0.4)};
+    \draw[verreblue!80,line width=0.5pt] plot[smooth cycle] coordinates {(0,0.8) (0.30,0) (0,-0.8) (-0.16,0.4) (-0.16,-0.4)};
+    \node[font=\scriptsize] at (0.05,-1.15) {(b) plan-convexe};
+  \end{scope}
+  % ménisque convergent
+  \begin{scope}[shift={(0.8,1.5)}]
+    \fill[verreblue!35] plot[smooth cycle] coordinates {(0,0.8) (0.34,0) (0,-0.8) (-0.20,0.4) (-0.20,-0.4)};
+    \draw[verreblue!80,line width=0.5pt] plot[smooth cycle] coordinates {(0,0.8) (0.34,0) (0,-0.8) (-0.20,0.4) (-0.20,-0.4)};
+    \node[font=\scriptsize] at (0.05,-1.15) {(c) convergent};
+  \end{scope}
+  % symbole convergente à droite
+  \begin{scope}[shift={(4.2,1.5)}]
+    \draw[axopt] (-0.9,0)--(1.4,0);
+    \draw[verrecol,line width=1.6pt,<->,>=Stealth] (0,-0.8)--(0,0.8);
+    \node[font=\scriptsize] at (0.25,-1.15) {symbole schéma};
+  \end{scope}
+  % ===== Ligne du bas : 3 divergentes (bords épais) =====
+  \node[primarydark,font=\footnotesize\bfseries,anchor=west] at (-6.8,-1.4)
+     {Divergentes (bords épais) :};
+  % biconcave
+  \begin{scope}[shift={(-4.0,-1.5)}]
+    \fill[verreblue!35] (-0.40,-0.8)--(0.40,-0.8)--(0.10,0)--(0.40,0.8)--(-0.40,0.8)--(-0.10,0)--cycle;
+    \draw[verreblue!80,line width=0.5pt] (-0.40,-0.8)--(0.40,-0.8)--(0.10,0)--(0.40,0.8)--(-0.40,0.8)--(-0.10,0)--cycle;
+    \node[font=\scriptsize] at (0,-1.15) {(d) biconcave};
+  \end{scope}
+  % plan-concave
+  \begin{scope}[shift={(-1.6,-1.5)}]
+    \fill[verreblue!35] (-0.40,-0.8)--(0.0,-0.8)--(0.0,0.8)--(-0.40,0.8)--(-0.10,0)--cycle;
+    \draw[verreblue!80,line width=0.5pt] (-0.40,-0.8)--(0.0,-0.8)--(0.0,0.8)--(-0.40,0.8)--(-0.10,0)--cycle;
+    \node[font=\scriptsize] at (-0.2,-1.15) {(e) plan-concave};
+  \end{scope}
+  % ménisque divergent
+  \begin{scope}[shift={(0.8,-1.5)}]
+    \fill[verreblue!35] (-0.40,-0.8)--(0.20,-0.8)--(0.05,0)--(0.20,0.8)--(-0.40,0.8)--(-0.34,0)--cycle;
+    \draw[verreblue!80,line width=0.5pt] (-0.40,-0.8)--(0.20,-0.8)--(0.05,0)--(0.20,0.8)--(-0.40,0.8)--(-0.34,0)--cycle;
+    \node[font=\scriptsize] at (-0.1,-1.15) {(f) divergent};
+  \end{scope}
+  % symbole divergente à droite
+  \begin{scope}[shift={(4.2,-1.5)}]
+    \draw[axopt] (-0.9,0)--(1.4,0);
+    \draw[verrecol,line width=1.6pt,>-<,>=Stealth] (0,-0.8)--(0,0.8);
+    \node[font=\scriptsize] at (0.25,-1.15) {symbole schéma};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{attention}[le critère infaillible]
+Le seul \textbf{critère visuel} qui distingue les deux familles est l'\emph{épaisseur des bords} :
+\textbf{bords minces $\Rightarrow$ convergente} ; \textbf{bords épais $\Rightarrow$ divergente}.
+Le nom (biconvexe, ménisque\ldots) importe moins que cette simple observation. Sur les schémas, on
+représente les convergentes par un segment à \emph{flèches vers l'extérieur} et les divergentes par
+un segment à \emph{flèches vers l'intérieur}.
+\end{attention}
+
+\begin{exemple}[reconnaître une lentille]
+Vous tenez trois verres :
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item un verre \textbf{biconvexe} (bombé des deux côtés) ;
+  \item un verre \textbf{plan-concave} (une face plate, l'autre creusée) ;
+  \item un \textbf{ménisque} dont le bord est plus épais que le centre.
+\end{enumerate}
+\textbf{Verre 1 (biconvexe).} Plus épais au centre qu'aux bords : bords \emph{minces}
+$\Rightarrow$ \textbf{convergente}.
+
+\textbf{Verre 2 (plan-concave).} Une face est plate, l'autre est creusée : le centre est plus fin que
+le bord $\Rightarrow$ bords \emph{épais} $\Rightarrow$ \textbf{divergente}.
+
+\textbf{Verre 3 (ménisque à bord épais).} Malgré ses deux faces courbes de même sens, son bord est
+plus épais que son centre $\Rightarrow$ \textbf{divergente}. Cet exemple montre qu'on ne peut pas se
+fier au \emph{nom} « ménisque » (qui peut être convergent \emph{ou} divergent) : seul compte le
+\emph{rapport bord/centre}.
+\end{exemple}
+
+\subsection{Foyers, distance focale et signe de $f$}
+
+\begin{definition}[foyer image $F'$ et foyer objet $F$]
+\hfill
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item Le \textbf{foyer image} $F'$ est le point où convergent (réellement ou en apparence) les rayons
+        qui arrivaient \textbf{parallèlement à l'axe optique}.
+  \item Le \textbf{foyer objet} $F$ est le point symétrique : tout rayon passant par $F$ ressort
+        \textbf{parallèlement} à l'axe.
+\end{itemize}
+Pour une lentille mince, $F$ et $F'$ sont symétriques par rapport au centre optique $O$.
+\end{definition}
+
+\begin{definition}[distance focale et vergence]
+La \textbf{distance focale} $f=\overline{OF'}$ est la distance algébrique du centre optique au foyer
+image. On adopte la convention :
+\[ f>0 \text{ pour une \textbf{convergente}}, \qquad f<0 \text{ pour une \textbf{divergente}}. \]
+La \textbf{vergence} $C$ est l'\emph{inverse} de la distance focale (voir section~3).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % axe
+  \draw[axopt] (-5.0,0) -- (5.6,0);
+  % lentille convergente
+  \LentilleConv{0}{1.9}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below left,font=\footnotesize] at (0,0) {$O$};
+  % F' a droite
+  \fill[foy] (3.2,0) circle (1.4pt); \node[below right,font=\footnotesize] at (3.2,0) {$F'$};
+  % F a gauche
+  \fill[foy] (-3.2,0) circle (1.4pt); \node[below left,font=\footnotesize] at (-3.2,0) {$F$};
+  % rayons paralleles -> F'
+  \draw[inc] (-4.6,1.2) -- (0,1.2);
+  \draw[inc] (-4.6,-1.2) -- (0,-1.2);
+  \draw[rayo] (0,1.2) -- (3.2,0);
+  \draw[rayo] (0,-1.2) -- (3.2,0);
+  \node[rayinc,above,font=\scriptsize] at (-3.0,1.2) {parallèles à l'axe};
+  \node[rayimg,right,font=\scriptsize] at (3.3,0.45) {convergent en $F'$};
+  \draw[<->,>=Stealth,primary,line width=0.6pt] (0,1.55) -- (3.2,1.55);
+  \node[primary,above,font=\scriptsize] at (1.6,1.55) {$f=\overline{OF'}>0$};
+  % titre
+  \node[primarydark,font=\footnotesize] at (0,-2.4) {Lentille convergente : $f>0$};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[distance focale d'une lentille convergente]
+Une lentille convergente fait converger un faisceau de lumière solaire (rayons quasi parallèles) en
+une tache lumineuse située à \SI{12}{\centi\metre} derrière elle. Cette tache est le foyer image
+$F'$ : on a donc directement
+\[ f=\overline{OF'}=\SI{12}{\centi\metre}=\SI{0.12}{\metre}. \]
+Comme la lentille est convergente, $f>0$. C'est l'\textbf{expérience la plus simple} pour mesurer une
+distance focale : éclairer la lentille avec une source lointaine (le Soleil = « objet à l'infini »)
+et repérer où se forme l'image. (La tache est assez chaude pour enflamer un papier : c'est le
+principe du « briquet solaire ».)
+\end{exemple}
+
+% =====================================================================
+\section{Les trois rayons particuliers et la construction des images}
+% =====================================================================
+Pour construire l'image d'un objet par une lentille mince, on n'a jamais besoin que de \textbf{trois
+rayons particuliers}, dont deux suffisent. Leur tracé est la clef de toute la fiche.
+
+\begin{theoreme}[les trois rayons particuliers d'une lentille mince]
+Soit un objet (en général une petite flèche verticale $AB$, $A$ sur l'axe). Pour construire son image
+$A'B'$ par une lentille mince de centre $O$ et de foyers $F$, $F'$, on utilise :
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,topsep=2pt]
+  \item le rayon qui passe par le \textbf{centre optique $O$} n'est \textbf{pas dévié} ;
+  \item le rayon \textbf{incident parallèle à l'axe optique} émerge en passant par le \textbf{foyer
+        image $F'$} ;
+  \item le rayon incident passant par le \textbf{foyer objet $F$} émerge \textbf{parallèlement à l'axe}.
+\end{enumerate}
+Le point de \emph{convergence} (réelle ou virtuelle) des rayons émergents donne le point image $B'$ ;
+le pied $A'$ se déduit en projetant sur l'axe.
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.92]
+  % Géométrie exacte : f=2, objet au-delà de 2f (u=5) -> image réelle réduite (v=3.33, gamma=-0.667)
+  \draw[axopt] (-6.2,0) -- (5.6,0);
+  \LentilleConv{0}{2.0}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (2.0,0) {$F'$};
+  \fill[foy] (-2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (-2.0,0) {$F$};
+  \fill[foy] (4.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (4.0,0) {$2F'$};
+  \fill[foy] (-4.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (-4.0,0) {$2F$};
+  % objet AB (au-dela de 2F, en u=5)
+  \draw[objfleche] (-5.0,0) -- (-5.0,1.4);
+  \node[objcol,left,font=\footnotesize] at (-5.0,0.7) {$AB$};
+  \node[objcol,below,font=\scriptsize] at (-5.0,0) {$A$};
+  % image A'B' (en v=3.33, renversee, reduite : hauteur -0.93)
+  \draw[imgfleche] (3.33,0) -- (3.33,-0.93);
+  \node[imgcol,right,font=\footnotesize] at (3.33,-0.47) {$A'B'$};
+  % rayon 1 : par O non devie (passe par O : (-5,1.4)->(0,0)->(3.33,-0.93))
+  \draw[rayinc!70,line width=0.9pt] (-5.0,1.4) -- (3.33,-0.93);
+  % rayon 2 : parallele a l'axe puis par F'
+  \draw[rayinc!70,line width=0.9pt] (-5.0,1.4) -- (0,1.4);
+  \draw[rayimg!80,line width=0.9pt] (0,1.4) -- (3.33,-0.93);
+  \node[rayimg!80,above right,font=\scriptsize] at (1.6,0.55) {(ii) parallèle $\to$ par $F'$};
+  \node[black!70,above,font=\scriptsize] at (-1.7,0.95) {(i) par $O$ : non dévié};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[construire une image en quatre étapes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item Tracer l'\textbf{axe optique}, placer $O$, $F$, $F'$, $2F$, $2F'$ et l'objet $AB$ (flèche vers
+        le haut, $A$ sur l'axe).
+  \item Choisir \textbf{deux} rayons particuliers parmi les trois (souvent (i) et (ii)).
+  \item Leur \textbf{intersection} après la lentille donne $B'$ ; $A'$ est la projection de $B'$ sur l'axe.
+  \item \textbf{Caractériser} l'image : \emph{réelle} (à droite, $\neq$ côté objet) ou \emph{virtuelle}
+        (à gauche, prolongements) ; \emph{droite} (même sens que $AB$) ou \emph{renversée} ;
+        \emph{agrandie}, \emph{réduite} ou \emph{de même taille}.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[construction pas à pas, objet au-delà de $2f$]
+\textbf{Énoncé.} Une lentille convergente a $f=\SI{2}{\centi\metre}$. Un objet $AB$ de hauteur
+$o=\SI{1}{\centi\metre}$ est placé à $u=\overline{OA}=\SI{6}{\centi\metre}=3f$ devant la lentille.
+Construire et calculer l'image.
+
+\smallskip
+\textbf{Étape 1 — placer les éléments.} À l'échelle, on gradue l'axe en unités de $f$ : $O$ au centre,
+$F$ à $-2$\,cm, $F'$ à $+2$\,cm, $2F'$ à $+4$\,cm, l'objet en $-6$\,cm.
+
+\smallskip
+\textbf{Étape 2 — deux rayons suffisent.} On trace (i) le rayon par $O$ (non dévié) et (ii) le rayon
+parallèle à l'axe qui émerge par $F'$. Ils se croisent en $B'$ \emph{en dessous} de l'axe et
+\emph{entre $F'$ et $2F'$}.
+
+\smallskip
+\textbf{Étape 3 — calcul par la relation de conjugaison} (voir section~4) :
+\[ \frac{1}{f}=\frac{1}{u}+\frac{1}{v}\;\Longrightarrow\;\frac{1}{v}=\frac{1}{f}-\frac{1}{u}
+   =\frac{1}{2}-\frac{1}{6}=\frac{3-1}{6}=\frac{1}{3}\;\;(en\;\si{\per\centi\metre}). \]
+Donc $v=+3$\,cm : image \textbf{réelle} ($v>0$), située à \SI{3}{\centi\metre} après la lentille,
+soit à $1{,}5\,f$.
+
+\smallskip
+\textbf{Étape 4 — grandissement.}
+\[ \gamm=\frac{i}{o}=-\frac{v}{u}=-\frac{3}{6}=-0{,}5 \;\Longrightarrow\; i=\gamm\times o=-0{,}5\ \text{cm}. \]
+\textbf{Bilan :} image \textbf{réelle} ($v>0$), \textbf{renversée} ($i<0$) et \textbf{réduite} de
+moitié ($|\gamm|=0{,}5<1$). C'est exactement le rôle de l'\textbf{objectif d'un appareil photo} :
+réduire un objet lointain sur le capteur.
+\end{exemple}
+
+% =====================================================================
+\section{Vergence et dioptries}
+% =====================================================================
+\begin{definition}[vergence et dioptrie]
+La \textbf{vergence} $C$ d'une lentille est l'\textbf{inverse de sa distance focale} exprimée en
+mètres :
+\[ \boxed{\,C=\dfrac{1}{f}\,}\qquad(f\ \text{en mètres}). \]
+Elle s'exprime en \textbf{dioptries} (symbole $\delta$), c'est-à-dire en \si{\per\metre}.
+\end{definition}
+
+\begin{formule}[vergence et signe]
+\[ \boxed{\,C=\dfrac{1}{f_{(\mathrm{m})}}\,}\qquad
+   \begin{cases} C>0 & \text{lentille convergente (}\,f>0\,\text{)} \\ C<0 & \text{lentille divergente (}\,f<0\,\text{)} \end{cases} \]
+\begin{ou}
+  \item $C$ : vergence, en dioptries $\delta=\si{\per\metre}$ ;
+  \item $f$ : distance focale \emph{exprimée en mètres} (\si{\metre}).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[« vergence » vs « convergence »]
+Le terme général est \textbf{vergence}. Lorsqu'elle est \emph{positive} on parle de \textbf{convergence},
+lorsqu'elle est \emph{négative} de \textbf{divergence}. Une lentille est d'autant plus convergente que
+sa vergence est \emph{grande} : grand $C$ $\Leftrightarrow$ petit $f$ $\Leftrightarrow$ lentille qui
+« plie » fortement la lumière.
+\end{remarque}
+
+\begin{attention}[l'unité cache le piège des centimètres]
+La formule $C=1/f$ n'est valable que si $f$ est en \textbf{mètres}. Une lentille de
+$f=\SI{20}{\centi\metre}$ n'a pas une vergence de $\tfrac{1}{20}$ : il faut d'abord convertir,
+$f=\SI{0{,}20}{\metre}$, d'où $C=\tfrac{1}{0{,}20}=\SI{5}{\delta}$.
+\end{attention}
+
+\begin{exemple}[vergences de quelques lentilles]
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item Loupe convergente, $f=+\SI{10}{\centi\metre}=+\SI{0{,}10}{\metre}$ :
+        $C=\dfrac{1}{0{,}10}=+10\,\delta$ (convergente).
+  \item Verre correcteur divergent, $f=-\SI{50}{\centi\metre}=-\SI{0{,}50}{\metre}$ :
+        $C=\dfrac{1}{-0{,}50}=-2\,\delta$ (divergente).
+  \item Objectif « puissant », $f=+\SI{5}{\centi\metre}$ : $C=\dfrac{1}{0{,}05}=+20\,\delta$.
+\end{itemize}
+On remarque qu'une lentille \emph{très convergente} (qui focalise de très près) a une \emph{grande}
+vergence : $+20\,\delta$ correspond à une lentille plus « forte » que $+10\,\delta$.
+\end{exemple}
+
+\begin{theoreme}[lentilles minces accolées]
+Lorsque plusieurs lentilles minces sont \textbf{accolées} (centres optiques confondus), leurs vergences
+s'\textbf{ajoutent} :
+\[ \boxed{\,C_{\text{éq}}=C_1+C_2+\cdots=\sum_k C_k\,}
+   \qquad\Longleftrightarrow\qquad \frac{1}{f_{\text{éq}}}=\sum_k\frac{1}{f_k}. \]
+\begin{ou}
+  \item $C_{\text{éq}}$ : vergence du système équivalent, en dioptries ;
+  \item $C_k$ : vergence de chaque lentille accolée, en dioptries.
+\end{ou}
+\end{theoreme}
+
+\begin{exemple}[associer une convergente et une divergente]
+On accole une lentille convergente $C_1=+6\,\delta$ et une lentille divergente $C_2=-2\,\delta$. La
+vergence du système est
+\[ C_{\text{éq}}=C_1+C_2=+6-2=+4\,\delta\;>0. \]
+Le système reste \textbf{convergent}, avec une distance focale équivalente
+$f_{\text{éq}}=1/C_{\text{éq}}=\tfrac{1}{4}\,\si{\metre}=\SI{25}{\centi\metre}$. C'est le principe de
+l'\textbf{orthokeratologie} et des \textbf{lunettes modernes} : on associe plusieurs verres pour
+obtenir la correction souhaitée. Si l'on avait accolé $+2\,\delta$ et $-2\,\delta$, on aurait
+$C_{\text{éq}}=0$ : le système est alors équivalent à une \emph{verre plat} (afocal).
+\end{exemple}
+
+% =====================================================================
+\section{Relations de conjugaison et de grandissement}
+% =====================================================================
+Pour connaître la position et la taille de l'image \emph{sans avoir à dessiner}, on dispose de deux
+formules. La fiche adopte une \textbf{convention de signe algébrique} très pratique : il suffit de
+respecter le tableau ci-dessous pour que les deux formules fonctionnent dans \emph{tous} les cas
+(convergente/divergente, image réelle/virtuelle).
+
+\subsection{Les deux formules et leurs conventions}
+
+\begin{formule}[relation de conjugaison (lentilles minces)]
+\[ \boxed{\;\dfrac{1}{f}=\dfrac{1}{u}+\dfrac{1}{v}\;} \]
+\begin{ou}
+  \item $f$ : distance focale de la lentille (\si{\metre}) — \textbf{$f>0$ convergente, $f<0$ divergente} ;
+  \item $u=\overline{OA}$ : distance \textbf{objet--lentille} (\si{\metre}) — \textbf{$u>0$} pour un
+        objet réel ;
+  \item $v=\overline{OA'}$ : distance \textbf{image--lentille} (\si{\metre}) — $v>0$ image réelle,
+        $v<0$ image virtuelle.
+\end{ou}
+\end{formule}
+
+\begin{formule}[grandissement]
+\[ \boxed{\;\gamm=\dfrac{i}{o}=-\dfrac{v}{u}\;} \]
+\begin{ou}
+  \item $\gamm$ : grandissement (sans dimension) ;
+  \item $o$ : hauteur de l'\textbf{objet} (\si{\metre}), en général $o>0$ (flèche vers le haut) ;
+  \item $i$ : hauteur de l'\textbf{image} (\si{\metre}) — $i>0$ image \textbf{droite}, $i<0$ image
+        \textbf{renversée} ;
+  \item $u$, $v$ : distances objet/image--lentille, même convention qu ci-dessus.
+\end{ou}
+\end{formule}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{primary!5}{white}
+\begin{tabular}{>{\bfseries}lcl}
+\rowcolor{primary!18}
+Grandeur & Signe $+$ & Signe $-$ \\
+\midrule
+$u$ (objet) & objet réel (cas usuel) & --- (objet virtuel, rare) \\
+$v$ (image) & image \textbf{réelle} (après la lentille) & image \textbf{virtuelle} (avant la lentille) \\
+$f$ & lentille \textbf{convergente} & lentille \textbf{divergente} \\
+$i$ (hauteur image) & image \textbf{droite} & image \textbf{renversée} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}[trois pièges classiques sur les signes]
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Toujours convertir en mètres} avant d'injecter dans $1/f=1/u+1/v$, sinon le résultat
+        est faux d'un facteur $100$.
+  \item Ne pas oublier le « \textbf{moins} » dans $\gamm=-v/u$ : c'est lui qui rend l'image
+        \emph{renversée} ($i<0$) quand elle est réelle ($v>0$, $u>0$).
+  \item Une image \textbf{virtuelle} donne $v<0$ ; on obtient alors $\gamm>0$ (image droite) :
+        c'est le cas de la \emph{loupe}.
+\end{itemize}
+\end{attention}
+
+\begin{remarque}[lien avec la formule « origine au centre »]
+La relation ci-dessus, $1/f=1/u+1/v$, est une écriture compacte de la \textbf{relation de conjugaison
+de Descartes} avec origine au centre optique, $\dfrac{1}{\overline{OA'}}-\dfrac{1}{\overline{OA}}
+=\dfrac{1}{\overline{OF'}}$, où toutes les grandeurs sont \emph{algébriques} (orientées dans le sens
+de propagation de la lumière). L'avantage de la convention « $u,v$ signés » adoptée par la fiche est
+qu'elle dispense de manipuler des barres algébriques : il suffit d'appliquer le tableau ci-dessus.
+\end{remarque}
+
+\subsection{Lire la nature de l'image à partir des signes}
+
+Les deux formules livrent immédiatement la nature de l'image :
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item \textbf{$v>0$} $\Rightarrow$ image \textbf{réelle} (recueillable sur un écran) ; \textbf{$v<0$}
+        $\Rightarrow$ image \textbf{virtuelle} (non projetable).
+  \item \textbf{$\gamm<0$} $\Rightarrow$ image \textbf{renversée} ; \textbf{$\gamm>0$}
+        $\Rightarrow$ image \textbf{droite}.
+  \item \textbf{$|\gamm|>1$} $\Rightarrow$ image \textbf{agrandie} ; \textbf{$|\gamm|<1$}
+        $\Rightarrow$ image \textbf{réduite} ; \textbf{$|\gamm|=1$} $\Rightarrow$ image de même taille.
+\end{itemize}
+
+\begin{exemple}[objet au foyer $F$ : l'image part à l'infini]
+Plaçons l'objet \emph{exactement} au foyer objet : $u=f$. Alors
+\[ \frac{1}{v}=\frac{1}{f}-\frac{1}{u}=\frac{1}{f}-\frac{1}{f}=0\;\Longrightarrow\;v\to\infty. \]
+L'image se forme « à l'infini » : les rayons émergents sont \textbf{parallèles} entre eux, l'œil les
+reçoit sans accommoder. Réciproquement, un objet à l'infini ($u\to\infty$) donne une image en $F'$
+($v=f$). Cette \textbf{réciprocité} $\big(u=f \Leftrightarrow v=\infty\big)$ est utilisée dans le
+microscope (image intermédiaire placée dans le plan focal de l'oculaire, voir section~7).
+\end{exemple}
+
+% =====================================================================
+\section{La lentille convergente : étude exhaustive des cas}
+% =====================================================================
+Selon la position de l'objet par rapport à $f$, une lentille convergente produit \textbf{six
+situations types}. Toutes se déduisent des mêmes formules : on récapitule ci-dessous chaque cas,
+avec sa construction géométrique, son calcul et son application.
+
+\subsection{Cas 1 — Objet à l'infini ($u\to\infty$)}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[axopt] (-3.0,0) -- (5.5,0);
+  \LentilleConv{0}{1.9}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (3.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (3.0,0) {$F'$};
+  % rayons paralleles
+  \foreach \y in {1.2,-1.2}{ \draw[inc] (-2.8,\y)--(0,\y); \draw[rayo] (0,\y)--(3.0,0); }
+  \draw[imgfleche] (3.0,0)--(3.0,-0.55);
+  \node[objcol,left,font=\scriptsize] at (-2.8,1.2) {objet à l'infini};
+  \node[imgcol,below,font=\scriptsize] at (3.0,-0.6) {$F'$ : image ponctuelle};
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[objet à l'infini]
+\[ u\to\infty \;\Longrightarrow\; \frac{1}{v}=\frac{1}{f} \;\Longrightarrow\; \boxed{v=f}\quad(\text{image en }F'). \]
+L'image est \textbf{réelle}, ponctuelle, située \emph{exactement} au foyer image $F'$.
+\end{formule}
+
+\begin{exemple}[mesurer $f$ avec une source lointaine]
+C'est la méthode du paragraphe~1.3 : le Soleil étant « à l'infini », son image par une lentille
+convergente se forme en $F'$. On en déduit $f$ en mesurant la distance lentille--tache lumineuse.
+Pour une lentille de $+5\,\delta$, on doit trouver $f=\tfrac{1}{5}\,\si{\metre}=\SI{20}{\centi\metre}$.
+\end{exemple}
+
+\subsection{Cas 2 — Objet au-delà de $2f$ ($u>2f$) : image réelle réduite}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[axopt] (-6.2,0) -- (5.6,0);
+  \LentilleConv{0}{2.0}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (1.8,0) circle (1.4pt); \node[below,font=\footnotesize] at (1.8,0) {$F'$};
+  \fill[foy] (3.6,0) circle (1.4pt); \node[below,font=\footnotesize] at (3.6,0) {$2F'$};
+  \fill[foy] (-1.8,0) circle (1.4pt); \node[below,font=\footnotesize] at (-1.8,0) {$F$};
+  \fill[foy] (-3.6,0) circle (1.4pt); \node[below,font=\footnotesize] at (-3.6,0) {$2F$};
+  % objet en -5 (= ~2.8 f)
+  \draw[objfleche] (-5.0,0)--(-5.0,1.5);
+  \node[objcol,left,font=\footnotesize] at (-5.0,0.75) {$AB$};
+  % image entre F' et 2F'
+  \draw[imgfleche] (2.6,0)--(2.6,-0.78);
+  % rayon par O
+  \draw[rayinc!70,line width=0.9pt] (-5.0,1.5)--(2.6,-0.78);
+  % rayon parallele puis par F'
+  \draw[rayinc!70,line width=0.9pt] (-5.0,1.5)--(0,1.5);
+  \draw[rayimg!80,line width=0.9pt] (0,1.5)--(2.6,-0.78);
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[objet au-delà de $2f$]
+Pour $u>2f$ : image \textbf{réelle}, \textbf{renversée}, \textbf{réduite} ($|\gamm|<1$), située
+entre $F'$ et $2F'$. C'est le principe de l'\textbf{objectif photographique}.
+\end{theoreme}
+
+\begin{exemple}[appareil photo : un immeuble sur le capteur]
+Un appareil photo a un objectif de focale $f=\SI{50}{\milli\metre}=\SI{0{,}050}{\metre}$. Un immeuble
+de hauteur \SI{20}{\metre} se trouve à $u=\SI{50}{\metre}$.
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Position de l'image} :
+        $\dfrac{1}{v}=\dfrac{1}{0{,}050}-\dfrac{1}{50}=20-0{,}02=19{,}98\;\si{\per\metre}$,
+        soit $v=\SI{0{,}05005}{\metre}\approx\SI{50{,}1}{\milli\metre}$. L'image se forme \emph{à
+        peine} au-delà de $F'$ : pour un objet lointain, $v\approx f$.
+  \item \textbf{Taille de l'image} :
+        $\gamm=-v/u=-0{,}05005/50\approx -1{,}0\times 10^{-3}$,
+        $i=\gamm\times o=-10^{-3}\times 20=\SI{-0{,}020}{\metre}=\SI{-20}{\milli\metre}$.
+\end{itemize}
+L'image de l'immeuble (hauteur \SI{20}{\metre}) mesure \SI{20}{\milli\metre} sur le capteur, est
+\textbf{renversée} (le signe $-$) et \textbf{réduite} d'un facteur $1000$. C'est exactement ce que
+fait l'objectif : projeter un grand objet lointain sur un tout petit capteur.
+\end{exemple}
+
+\subsection{Cas 3 — Objet en $2f$ ($u=2f$) : image de même taille}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[axopt] (-5.6,0) -- (5.6,0);
+  \LentilleConv{0}{2.0}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (2.0,0) {$F'$};
+  \fill[foy] (4.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (4.0,0) {$2F'$};
+  \fill[foy] (-2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (-2.0,0) {$F$};
+  \fill[foy] (-4.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (-4.0,0) {$2F$};
+  \draw[objfleche] (-4.0,0)--(-4.0,1.4);
+  \draw[imgfleche] (4.0,0)--(4.0,-1.4);
+  \draw[rayinc!70,line width=0.9pt] (-4.0,1.4)--(4.0,-1.4);
+  \draw[rayinc!70,line width=0.9pt] (-4.0,1.4)--(0,1.4);
+  \draw[rayimg!80,line width=0.9pt] (0,1.4)--(4.0,-1.4);
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[objet en $2f$]
+Pour $u=2f$ : $v=2f$ et $\gamm=-1$. L'image est \textbf{réelle}, \textbf{renversée}, de
+\textbf{même taille} que l'objet ($|i|=o$). Ce cas est l'exacte \textbf{symétrie} $2F\leftrightarrow 2F'$.
+\end{theoreme}
+
+\begin{exemple}[vérification par le calcul]
+Avec $u=2f$ :
+\[ \frac{1}{v}=\frac{1}{f}-\frac{1}{2f}=\frac{2-1}{2f}=\frac{1}{2f}\;\Longrightarrow\;v=2f, \qquad
+   \gamm=-\frac{v}{u}=-\frac{2f}{2f}=-1. \]
+L'image est renversée et \emph{autant grande} que l'objet. Ce résultat sert de « point pivot » : pour
+$u>2f$, l'image est plus petite ; pour $f<u<2f$, elle est plus grande. La position $2F/2F'$ sépare
+donc les deux régimes.
+\end{exemple}
+
+\subsection{Cas 4 — Objet entre $f$ et $2f$ ($f<u<2f$) : image réelle agrandie}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[axopt] (-5.6,0) -- (6.2,0);
+  \LentilleConv{0}{2.0}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (1.8,0) circle (1.4pt); \node[below,font=\footnotesize] at (1.8,0) {$F'$};
+  \fill[foy] (3.6,0) circle (1.4pt); \node[below,font=\footnotesize] at (3.6,0) {$2F'$};
+  \fill[foy] (-1.8,0) circle (1.4pt); \node[below,font=\footnotesize] at (-1.8,0) {$F$};
+  \fill[foy] (-3.6,0) circle (1.4pt); \node[below,font=\footnotesize] at (-3.6,0) {$2F$};
+  % objet en -2.7 (entre F=-1.8 et 2F=-3.6)
+  \draw[objfleche] (-2.7,0)--(-2.7,0.9);
+  % image au-dela de 2F' (vers 5.4)
+  \draw[imgfleche] (5.4,0)--(5.4,-1.8);
+  \draw[rayinc!70,line width=0.9pt] (-2.7,0.9)--(5.4,-1.8);
+  \draw[rayinc!70,line width=0.9pt] (-2.7,0.9)--(0,0.9);
+  \draw[rayimg!80,line width=0.9pt] (0,0.9)--(5.4,-1.8);
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[objet entre $f$ et $2f$]
+Pour $f<u<2f$ : image \textbf{réelle}, \textbf{renversée}, \textbf{agrandie} ($|\gamm|>1$), située
+\textbf{au-delà de $2F'$}. C'est le principe du \textbf{projecteur} et du \textbf{vidéoprojecteur}.
+\end{theoreme}
+
+\begin{exemple}[le projecteur de diapositives]
+Un projecteur doit agrandir une diapositive de hauteur $o=\SI{2{,}4}{\centi\metre}$ pour obtenir une
+image de hauteur $|i|=\SI{120}{\centi\metre}=\SI{1{,}20}{\metre}$ sur un écran. Quel grandissement et
+quelle focale si la diapositive est à \SI{6}{\centi\metre} de l'objectif ?
+
+\smallskip
+\textbf{Grandissement.} $|\gamm|=|i|/o=120/2{,}4=50$. L'image est agrandie \SI{50}{} fois ; elle est
+\textbf{renversée}, d'où $\gamm=-50$ (les projecteurs retournent d'ailleurs la diapositive pour que
+l'image apparaisse droite à l'écran).
+
+\smallskip
+\textbf{Position de l'image.} De $\gamm=-v/u$ :
+\[ v=-\gamm\,u=50\times\SI{6}{\centi\metre}=\SI{300}{\centi\metre}=\SI{3{,}0}{\metre}. \]
+L'écran doit être à \SI{3}{\metre} de l'objectif.
+
+\smallskip
+\textbf{Focale.} De $1/f=1/u+1/v$ (en mètres) :
+\[ \frac{1}{f}=\frac{1}{0{,}06}+\frac{1}{3{,}0}=16{,}67+0{,}33=17{,}0\;\si{\per\metre}
+   \;\Longrightarrow\; f=\SI{0{,}0588}{\metre}\approx\SI{5{,}9}{\centi\metre}. \]
+On vérifie que la diapositive ($u=\SI{6}{\centi\metre}$) est bien \emph{légèrement au-delà du foyer}
+$f=\SI{5{,}9}{\centi\metre}$, c'est-à-dire dans la zone $f<u<2f$ : c'est la condition requise pour une
+image réelle agrandie. Cohérent.
+\end{exemple}
+
+\subsection{Cas 5 — Objet entre $O$ et $F$ ($u<f$) : image virtuelle agrandie (la loupe)}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % Géométrie exacte : f=2, objet en u=1.2 (entre O et F) -> image virtuelle en v=-3, gamma=+2.5
+  \draw[axopt] (-5.2,0) -- (4.6,0);
+  \LentilleConv{0}{2.0}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (2.0,0) {$F'$};
+  \fill[foy] (-2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (-2.0,0) {$F$};
+  % objet entre O et F (en -1.2)
+  \draw[objfleche] (-1.2,0)--(-1.2,0.6);
+  \node[objcol,left,font=\footnotesize] at (-1.2,0.3) {$AB$};
+  % image virtuelle plus grande, droite, a gauche (en -3.0)
+  \draw[imgvirtfleche] (-3.0,0)--(-3.0,1.5);
+  \node[imgvirtcol,left,font=\footnotesize] at (-3.0,0.75) {$A'B'$};
+  % rayon 1 : par O non devie (solid reelle + prolongement pointille vers image)
+  \draw[rayinc!70,line width=0.9pt] (-1.2,0.6)--(0,0);
+  \draw[rayimg!80,line width=0.9pt] (0,0)--(3.0,-1.5);
+  \draw[virt] (0,0)--(-3.0,1.5);
+  % rayon 2 : parallele a l'axe sort par F' puis prolonge vers l'arriere
+  \draw[rayinc!70,line width=0.9pt] (-1.2,0.6)--(0,0.6);
+  \draw[rayimg!80,line width=0.9pt] (0,0.6)--(3.0,-0.3);
+  \draw[virt] (0,0.6)--(-3.0,1.5);
+  % oeil
+  \node[font=\Large] at (3.4,-0.9) {$\bullet\!\!<$};
+  \node[right,font=\scriptsize] at (3.4,-0.9) {œil};
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[objet entre le centre optique et le foyer]
+Pour $0<u<f$ : image \textbf{virtuelle} ($v<0$), \textbf{droite} ($\gamm>0$) et \textbf{agrandie}
+($|\gamm|>1$), située du \textbf{même côté que l'objet}. La lentille joue le rôle de \textbf{loupe}.
+\end{theoreme}
+
+\begin{exemple}[la loupe : calcul complet]
+Une loupe a une focale $f=\SI{10}{\centi\metre}=\SI{0{,}10}{\metre}$. Un texte (lettre de hauteur
+$o=\SI{2}{\milli\metre}=\SI{0{,}002}{\metre}$) est placé à $u=\SI{6}{\centi\metre}=\SI{0{,}06}{\metre}$
+de la loupe (donc $u<f$, bien dans le régime « loupe »).
+
+\smallskip
+\textbf{Position de l'image} :
+\[ \frac{1}{v}=\frac{1}{f}-\frac{1}{u}=\frac{1}{0{,}10}-\frac{1}{0{,}06}=10-16{,}67=-6{,}67\;\si{\per\metre}
+   \;\Longrightarrow\; v=\SI{-0{,}15}{\metre}=\SI{-15}{\centi\metre}. \]
+Le signe \textbf{négatif} confirme que l'image est \textbf{virtuelle}, située \SI{15}{\centi\metre}
+\emph{avant} la loupe (même côté que l'objet).
+
+\smallskip
+\textbf{Grandissement et taille} :
+\[ \gamm=-\frac{v}{u}=-\frac{-0{,}15}{0{,}06}=+2{,}5>0 \;\Rightarrow\; i=\gamm\times o=2{,}5\times 0{,}002=\SI{0{,}005}{\metre}=\SI{5}{\milli\metre}. \]
+\textbf{Bilan :} image \textbf{virtuelle} (non projetable), \textbf{droite} ($\gamm>0$) et
+\textbf{agrandie} ($2{,}5\times$). L'œil placé derrière la loupe perçoit une lettre de \SI{5}{\milli\metre}
+alors qu'elle n'en mesure que \SI{2}{\milli\metre} : c'est tout l'intérêt de la loupe. Plus on
+rapproche l'objet de $F$ (c'est-à-dire $u\to f^-$), plus $|\gamm|$ augmente et plus l'image grossit.
+\end{exemple}
+
+\begin{attention}[une image virtuelle ne se projette \emph{pas} sur un écran]
+Dans le cas de la loupe, l'image est \emph{virtuelle} : les rayons émergents ne se croisent pas
+réellement, seul leur \emph{prolongement} (en pointillés) le fait. Placez un écran derrière la
+lentille : vous n'y verrez \emph{jamais} l'image agrandie. Il \textbf{faut l'œil} (ou un appareil
+photo) pour « reconstruire » cette image. C'est la différence fondamentale entre image \emph{réelle}
+(projetable) et image \emph{virtuelle}.
+\end{attention}
+
+\subsection{Récapitulatif des six cas}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{5pt}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\bfseries}p{3.0cm}>{\centering\arraybackslash}p{1.5cm}cccp{2.7cm}}
+\rowcolor{primary!18}
+Position de l'objet & $v$ & Nature & Sens & Taille & Application \\
+\midrule
+À l'infini ($u\to\infty$) & $f$ & réelle & --- & ponctuelle & mesure de $f$, œil au repos \\
+$u>2f$ & $f<v<2f$ & réelle & renversée & réduite & appareil photo \\
+$u=2f$ & $2f$ & réelle & renversée & même taille & reproducteur 1:1 \\
+$f<u<2f$ & $v>2f$ & réelle & renversée & agrandie & projecteur \\
+$u=f$ & $\infty$ & --- & --- & --- & phare, microscope (oculaire) \\
+$0<u<f$ & $v<0$ & virtuelle & droite & agrandie & loupe \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{exemple}[un même objet déplacé : que devient l'image ?]
+On déplace un objet réel depuis l'infini jusqu'à la lentille convergente. Suivons l'image (cf.
+tableau) :
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{De l'infini jusqu'à $2F$} : l'image part de $F'$ et \emph{s'éloigne} jusqu'à $2F'$.
+        Elle reste \textbf{réelle, renversée}, de taille \textbf{croissante} mais toujours
+        \textbf{inférieure} à celle de l'objet.
+  \item \textbf{De $2F$ jusqu'à $F$} : l'image part de $2F'$ et file vers l'infini. Elle est
+        \textbf{réelle, renversée} et désormais \textbf{plus grande} que l'objet.
+  \item \textbf{En $F$} : l'image « saute » à l'infini (rayons parallèles).
+  \item \textbf{De $F$ jusqu'à $O$} : l'image \emph{réapparaît} du côté objet, \textbf{virtuelle,
+        droite et agrandie}, de plus en plus proche de l'objet à mesure qu'on approche de la lentille
+        (à la limite $u\to 0$, $\gamm\to 1$ : l'image se confond avec l'objet).
+\end{itemize}
+Ce \emph{déplacement continu} est l'explication des questions « que se passe-t-il si\ldots » :
+l'image et l'objet se déplacent \emph{en sens opposés} tant que l'image est réelle.
+\end{exemple}
+
+% =====================================================================
+\section{La lentille divergente}
+% =====================================================================
+\begin{definition}[comportement d'une lentille divergente]
+Une lentille \textbf{divergente} ($f<0$) \emph{écarte} les rayons les uns des autres : un faisceau
+incident parallèle à l'axe semble provenir du foyer image $F'$ situé \emph{du côté objet}
+($F'$ est donc à gauche de $O$).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % Géométrie exacte : rayons // incidents a y=+-1, emergents dont le prolongement passe par F'(-2,0)
+  \draw[axopt] (-5.0,0) -- (4.6,0);
+  \LentilleDiv{0}{2.0}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (-2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (-2.0,0) {$F'$};
+  \fill[foy] (2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (2.0,0) {$F$};
+  % rayons incidents paralleles
+  \foreach \y in {1.0,-1.0}{ \draw[inc] (-4.6,\y)--(0,\y); }
+  % rayons emergents : prolongement arriere passe par F' (pente +-0.5)
+  \draw[rayo] (0,1.0)--(3.6,2.8); \draw[virt] (0,1.0)--(-2.0,0);
+  \draw[rayo] (0,-1.0)--(3.6,-2.8); \draw[virt] (0,-1.0)--(-2.0,0);
+  \node[rayinc,left,font=\scriptsize] at (-4.6,1.0) {parallèles};
+  \node[rayvirt,above right,font=\scriptsize] at (2.2,2.0) {s'écartent};
+  \node[rayvirt,below left,font=\scriptsize] at (-2.3,0.15) {semblent venir de $F'$};
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[image par une lentille divergente]
+Pour un objet réel ($u>0$), une lentille divergente donne \textbf{toujours} une image :
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{virtuelle} ($v<0$) ;
+  \item \textbf{droite} ($\gamm>0$) ;
+  \item \textbf{plus petite} que l'objet ($0<\gamm<1$).
+\end{itemize}
+Cette image est située entre l'objet et la lentille, du \textbf{même côté} que l'objet.
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % Géométrie exacte : f=-2, objet u=3.5 -> image virtuelle v=-1.27, gamma=+0.364
+  \draw[axopt] (-5.6,0) -- (4.6,0);
+  \LentilleDiv{0}{2.0}
+  \fill[ptn] (0,0) circle (1.3pt); \node[below right,font=\footnotesize] at (0,0) {$O$};
+  \fill[foy] (-2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (-2.0,0) {$F'$};
+  \fill[foy] (2.0,0) circle (1.4pt); \node[below,font=\footnotesize] at (2.0,0) {$F$};
+  % objet en -3.5
+  \draw[objfleche] (-3.5,0)--(-3.5,1.0);
+  \node[objcol,left,font=\footnotesize] at (-3.5,0.5) {$AB$};
+  % image virtuelle plus petite droite vers -1.27
+  \draw[imgvirtfleche] (-1.27,0)--(-1.27,0.36);
+  \node[imgvirtcol,above,font=\scriptsize] at (-1.27,0.38) {$A'B'$};
+  % rayon 1 : par O (passe exactement par O, pente -1/3.5 = -0.286)
+  \draw[rayinc!70,line width=0.9pt] (-3.5,1.0)--(0,0);
+  \draw[rayimg!80,line width=0.9pt] (0,0)--(2.6,-0.74);
+  \draw[virt] (0,0)--(-1.27,0.36);
+  % rayon 2 : parallele incident, emerge comme venant de F' (pente +0.5)
+  \draw[rayinc!70,line width=0.9pt] (-3.5,1.0)--(0,1.0);
+  \draw[rayimg!80,line width=0.9pt] (0,1.0)--(2.6,2.3);
+  \draw[virt] (0,1.0)--(-1.27,0.36);
+  \node[font=\Large] at (3.0,-0.5) {$\bullet\!\!<$};
+  \node[right,font=\scriptsize] at (3.0,-0.5) {œil};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[image par une lentille divergente]
+Une lentille divergente a $f=-\SI{30}{\centi\metre}=-\SI{0{,}30}{\metre}$. Un objet de hauteur
+$o=\SI{4}{\centi\metre}$ est placé à $u=\SI{45}{\centi\metre}=\SI{0{,}45}{\metre}$ devant la lentille.
+
+\smallskip
+\textbf{Position de l'image} :
+\[ \frac{1}{v}=\frac{1}{f}-\frac{1}{u}=\frac{1}{-0{,}30}-\frac{1}{0{,}45}=-3{,}33-2{,}22=-5{,}56\;\si{\per\metre}
+   \;\Longrightarrow\; v=\SI{-0{,}18}{\metre}=\SI{-18}{\centi\metre}. \]
+$v<0$ : l'image est bien \textbf{virtuelle}, à \SI{18}{\centi\metre} devant la lentille (entre l'objet
+et $O$).
+
+\smallskip
+\textbf{Grandissement et taille} :
+\[ \gamm=-\frac{v}{u}=-\frac{-0{,}18}{0{,}45}=+0{,}40>0,\qquad i=\gamm\times o=0{,}40\times 4=\SI{1{,}6}{\centi\metre}. \]
+\textbf{Bilan :} image \textbf{virtuelle}, \textbf{droite} ($\gamm>0$) et \textbf{réduite} à $40\,\%$
+de l'objet. Ce comportement — \emph{toujours} virtuelle, droite, réduite — est exactement celui qu'on
+attend d'un verre correcteur de \textbf{myope} (voir section~7).
+\end{exemple}
+
+% =====================================================================
+\section{Les instruments d'optique}
+% =====================================================================
+Les lentilles, seules ou associées, sont à l'origine de tous les instruments d'optique : projection,
+photographie, vision (l'œil), observation rapprochée (microscope) ou lointaine (lunette).
+
+\subsection{L'appareil photographique et le projecteur}
+
+\begin{definition}[objectif, projecteur]
+\hfill
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item Un \textbf{objectif} est un ensemble d'une ou plusieurs lentilles \textbf{convergentes} qui
+        forme une image \textbf{réelle} d'un objet sur un capteur (appareil photo) ou un écran
+        (projecteur).
+  \item Un \textbf{projecteur} utilise un objectif convergent pour projeter une image \textbf{réelle,
+        agrandie} : l'objet (diapositive,Transparent) est donc placé entre $F$ et $2F$ (cas~4).
+  \item Un \textbf{appareil photographique} réalise l'inverse : l'objet est \emph{lointain} ($u>2f$),
+        l'image est \textbf{réelle, réduite} sur le capteur (cas~2).
+\end{itemize}
+\end{definition}
+
+Dans un appareil photo moderne, la \textbf{pellicule} argentique est remplacée par un \textbf{capteur
+électronique} (CCD ou CMOS) qui convertit les photons en charges électriques. La sensibilité du
+capteur dépend de la taille de ses pixels (typiquement \SI{40}{\micro\metre} pour un capteur
+professionnel).
+
+\begin{exemple}[mise au point d'un appareil photo]
+L'objet se rapproche de l'appareil : $u$ diminue. D'après $1/v=1/f-1/u$, lorsque $u$ diminue, $1/u$
+augmente donc \textbf{$v$ augmente} : l'image se forme \emph{plus loin} derrière l'objectif. Pour
+garder une image nette sur le capteur fixe, il faut donc \textbf{éloigner l'objectif du capteur}
+(c'est la « mise au point » : l'objectif sort de l'appareil quand on photographie un objet proche).
+À l'inverse, pour un objet à l'infini, $v=f$ : l'objectif est au plus près du capteur.
+\end{exemple}
+
+\subsection{L'œil : un instrument biologique}
+
+\begin{definition}[modèle optique de l'œil]
+L'\textbf{œil} est modélisé par une \textbf{lentille convergente} (le couple \emph{cornée +
+cristallin}) dont le centre optique est $O$, qui forme une image sur un \textbf{écran} : la
+\textbf{rétine}, membrane photosensible. L'\textbf{iris} joue le rôle de diaphragme et règle la
+quantité de lumière entrante (pupille).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % axe optique
+  \draw[axopt] (-5.0,0) -- (4.4,0);
+  % "lentille" = cornée + cristallin
+  \LentilleConv{0}{1.6}
+  \node[primarydark,below,font=\scriptsize] at (0.0,-1.7) {cornée $+$ cristallin};
+  \fill[ptn] (0,0) circle (1.2pt); \node[below left,font=\footnotesize] at (0,0) {$O$};
+  % rétine (écran) à droite
+  \fill[retinacol!60] (3.4,-1.1) rectangle (3.7,1.1);
+  \draw[retinacol!90!black,line width=0.8pt] (3.4,-1.1)--(3.4,1.1);
+  \node[retinacol!60!black,right,font=\scriptsize] at (3.7,0.7) {rétine};
+  \node[retinacol!60!black,right,font=\scriptsize] at (3.7,0.35) {(écran)};
+  % objet lointain à gauche (flèche)
+  \draw[objfleche] (-4.6,0)--(-4.6,0.9);
+  \node[objcol,left,font=\scriptsize] at (-4.6,0.45) {objet éloigné};
+  % image renversée sur la rétine
+  \draw[imgfleche] (3.4,0)--(3.4,-0.55);
+  \node[imgcol,right,font=\scriptsize] at (3.4,-0.3) {};
+  % rayons: parallèles incidents -> convergent en F' sur la rétine
+  \draw[inc] (-4.6,0.9)--(0,0.9); \draw[rayo] (0,0.9)--(3.4,0);
+  \draw[inc] (-4.6,-0.5)--(0,-0.5); \draw[rayo] (0,-0.5)--(3.4,-0.08);
+  % distance focale = OR
+  \draw[<->,>=Stealth,primary,line width=0.5pt] (0,-1.95) -- (3.4,-1.95);
+  \node[primary,below,font=\scriptsize] at (1.7,-1.95) {$f=\overline{O\text{Rétine}}$};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{L'accommodation}
+
+Pour un objet \textbf{éloigné} (à l'infini), l'image se forme en $F'$ : la rétine doit donc coïncider
+avec le \textbf{plan focal image}. Lorsque l'objet se \textbf{rapproche} ($u$ diminue), l'image se
+forme \emph{plus loin} que $F'$ (cas $u>2f$ ou $f<u<2f$). Pour qu'elle reste sur la rétine, l'œil
+\textbf{modifie sa distance focale} en déformant le cristallin : c'est l'\textbf{accommodation}.
+
+\begin{definition}[accommodation]
+L'\textbf{accommodation} est la capacité du cristallin à \textbf{varier sa courbure} (donc sa distance
+focale $f$) afin de maintenir une image nette sur la rétine quelle que soit la distance de l'objet.
+Pour un objet proche, le cristallin \emph{bombit} ($f$ diminue, vergence $C$ augmente) ; au repos
+(objet lointain), il se \emph{détend} ($f$ maximale).
+\end{definition}
+
+\begin{exemple}[vergence de l'œil au repos]
+Au repos, un œil normal forme l'image d'un objet à l'infini \emph{sur la rétine} : la rétine est donc
+au foyer image. Si la distance $O$\,--\,rétine vaut \SI{16}{\milli\metre}=\SI{0{,}016}{\metre}, alors
+$f=\SI{0{,}016}{\metre}$ et la vergence au repos vaut
+\[ C_{\text{repos}}=\frac{1}{f}=\frac{1}{0{,}016}=\SI{62{,}5}{\delta}. \]
+C'est une vergence \emph{énorme} comparée à celle d'une lunette ($\sim$ quelques dioptries) :
+l'œil est un système optique très puissant. (C'est ce que calcule le QCM de la fiche, réponse
+$\approx \SI{62{,}5}{\delta}$.)
+\end{exemple}
+
+\begin{exemple}[vergence en accommodation]
+L'œil précédent fixe un objet situé à \SI{17}{\centi\metre}=\SI{0{,}17}{\metre}. L'image devant se
+former sur la rétine ($v=\SI{0{,}017}{\metre}$ si l'on prend une rétine à \SI{17}{\milli\metre}), la
+loi de conjugaison impose une \emph{nouvelle} focale :
+\[ \frac{1}{f}=\frac{1}{u}+\frac{1}{v}=\frac{1}{0{,}17}+\frac{1}{0{,}017}=5{,}88+58{,}8=64{,}7\;\si{\per\metre}, \]
+soit une vergence $C=\SI{64{,}7}{\delta}$. L'œil a donc \emph{augmenté} sa vergence de
+$64{,}7-62{,}5\approx \SI{2}{\delta}$ pour accommoder : le cristallin a bombé. Plus l'objet est proche,
+plus l'œil doit « forcer » ; d'où la \emph{fatigue visuelle} en lecture prolongée.
+\end{exemple}
+
+\subsubsection{Les trois défauts de l'œil et leurs corrections}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\setlength{\tabcolsep}{5pt}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\bfseries}l>{\centering\arraybackslash}p{2.6cm}>{\centering\arraybackslash}p{3.8cm}l}
+\rowcolor{primary!18}
+Défaut & Où se forme l'image ? & Cause & Correction \\
+\midrule
+Myopie & en \textbf{avant} de la rétine & œil trop long (ou $f$ trop courte) & lentille \textbf{divergente} \\
+Hypermétropie & en \textbf{arrière} de la rétine & œil trop court (ou $f$ trop longue) & lentille \textbf{convergente} \\
+Presbytie & en \textbf{arrière} de la rétine (objet proche) & cristallin durci, accommodation faible & lentille \textbf{convergente} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  % --- oeil myope ---
+  \begin{scope}
+    \node[attncol,font=\footnotesize\bfseries] at (0.5,2.4) {\oe il myope (image en avant)};
+    \draw[axopt] (-3.2,0)--(3.2,0);
+    \LentilleConv{0}{1.0}
+    \draw[retinacol!60!black,line width=0.8pt] (2.6,-1.0)--(2.6,1.0);
+    \node[font=\scriptsize] at (2.85,-0.7) {rétine};
+    % image en avant (1.6)
+    \fill[attncol] (1.6,0) circle (1.4pt);
+    \draw[imgfleche] (1.6,0)--(1.6,-0.4);
+    % rayons paralleles convergent avant la retine puis re-divergent
+    \foreach \y in {0.7,-0.7}{ \draw[inc] (-3.0,\y)--(0,\y); \draw[rayo] (0,\y)--(1.6,0); \draw[rayo] (1.6,0)--(2.6,{0.7*(2.6-1.6)/1.6*sign(\y)});}
+    \node[attncol,above,font=\scriptsize] at (1.6,0.0) {image nette};
+  \end{scope}
+  % --- oeil hypermétrope ---
+  \begin{scope}[shift={(8.2,0)}]
+    \node[attncol,font=\footnotesize\bfseries] at (0.5,2.4) {\oe il hypermétrope (image en arrière)};
+    \draw[axopt] (-3.2,0)--(3.6,0);
+    \LentilleConv{0}{1.0}
+    \draw[retinacol!60!black,line width=0.8pt] (2.4,-1.0)--(2.4,1.0);
+    \node[font=\scriptsize] at (2.15,-0.7) {rétine};
+    \fill[attncol] (3.2,0) circle (1.4pt);
+    \draw[imgfleche] (3.2,0)--(3.2,-0.4);
+    \foreach \y in {0.7,-0.7}{ \draw[inc] (-3.0,\y)--(0,\y); \draw[rayo] (0,\y)--(3.2,0);}
+    \node[attncol,above,font=\scriptsize] at (3.2,0.0) {image};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[correction de la myopie]
+Un myope ne voit pas nettement au-delà de \SI{90}{\centi\metre} (« punctum remotum » à
+$D=\SI{90}{\centi\metre}$). Pour qu'il voie nettement un objet \textbf{à l'infini}, on place devant
+l'œil une lentille divergente qui doit donner de cet objet lointain une image \textbf{située à
+$D=\SI{90}{\centi\metre}$ devant l'œil} (donc à la limite de sa vision nette).
+
+\smallskip
+\textbf{Application de la relation de conjugaison.} L'objet est à l'infini ($u\to\infty$) ; l'image
+virtuelle doit être à $v=-\SI{0{,}90}{\metre}$ (négatif, virtuelle, du même côté que l'objet). On a
+donc
+\[ \frac{1}{f}=\frac{1}{u}+\frac{1}{v}=0+\frac{1}{-0{,}90}=-1{,}11\;\si{\per\metre}
+   \;\Longrightarrow\; f=-\SI{0{,}90}{\metre}=\SI{-90}{\centi\metre}. \]
+\textbf{La lentille correctrice est divergente, de distance focale \SI{-90}{\centi\metre}}
+(vergence $C=-1{,}11\,\delta$). On retrouve bien la règle du tableau : \emph{un myope porte des
+verres divergents}. Plus la myopie est forte (punctum remotum proche), plus $|f|$ est petit et la
+vergence négative importante.
+\end{exemple}
+
+\begin{exemple}[correction de l'hypermétropie]
+Un hypermétrope voit flou de près : son œil est trop court, l'image d'un objet proche se formerait en
+\emph{arrière} de la rétine. On le corrige avec une lentille \textbf{convergente} ($f>0$) qui
+« avance » le plan image. Concrètement, le verre ajouté augmente la vergence globale (œil $+$ verre),
+rapprochant le foyer image de la rétine. Le même principe corrige la \textbf{presbytie} : le
+cristallin vieillissant n'accommode plus suffisamment, on compense par un verre convergent (souvent
+« progressif », convergent dans la partie basse pour la lecture).
+\end{exemple}
+
+\subsection{Le microscope optique}
+
+\begin{definition}[microscope optique]
+Le \textbf{microscope optique} sert à observer de petits objets. Il comporte deux lentilles
+convergentes alignées :
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item l'\textbf{objectif} (près de l'objet), de courte focale $f_1$, qui donne de l'objet une image
+        intermédiaire \textbf{réelle, agrandie et renversée} ;
+  \item l'\textbf{oculaire} (près de l'œil), de focale $f_2$, qui joue le rôle de \textbf{loupe} sur
+        cette image intermédiaire et en donne une image \textbf{virtuelle, droite (par rapport à
+        l'intermédiaire) et agrandie}, observée par l'œil.
+\end{itemize}
+L'objet est placé \textbf{légèrement au-delà du foyer de l'objectif} ($f_1<u_1<2f_1$), de sorte que
+l'image intermédiaire soit réelle et très agrandie. Cette image intermédiaire est placée dans le
+\textbf{plan focal objet de l'oculaire}, de sorte que l'image finale soit \textbf{à l'infini} (œil
+sans accommodation).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.92]
+  \draw[axopt] (-5.4,0)--(8.4,0);
+  % objectif
+  \LentilleConv{0}{1.7}
+  \node[primarydark,below,font=\scriptsize] at (0,-1.85) {objectif ($f_1$)};
+  % oculaire
+  \LentilleConv{5.5}{1.7}
+  \node[primarydark,below,font=\scriptsize] at (5.5,-1.85) {oculaire ($f_2$)};
+  % foyers
+  \fill[foy] (-0.9,0) circle (1.3pt); \node[below,font=\scriptsize] at (-0.9,-0.05) {$F_1$};
+  \fill[foy] (0.9,0) circle (1.3pt); \node[above,font=\scriptsize] at (0.9,0.05) {$F'_1$};
+  \fill[foy] (4.6,0) circle (1.3pt); \node[below,font=\scriptsize] at (4.6,-0.05) {$F_2$};
+  \fill[foy] (6.4,0) circle (1.3pt); \node[above,font=\scriptsize] at (6.4,0.05) {$F'_2$};
+  % objet AB legerement au-dela de F1
+  \draw[objfleche] (-1.3,0)--(-1.3,0.55);
+  \node[objcol,left,font=\scriptsize] at (-1.3,0.28) {$AB$};
+  % image intermediaire A1B1 (reelle, renversee, agrandie) au voisinage de F2
+  \draw[imgfleche] (4.7,0)--(4.7,-1.6);
+  \node[imgcol,right,font=\scriptsize] at (4.7,-0.8) {$A_1B_1$};
+  % rayon 1 (par O1) continue vers A1B1 puis vers oculaire
+  \draw[rayinc!70,line width=0.8pt] (-1.3,0.55)--(4.7,-1.6);
+  % rayon 2 (parallele -> F'1)
+  \draw[rayinc!70,line width=0.8pt] (-1.3,0.55)--(0,0.55);
+  \draw[rayimg!80,line width=0.8pt] (0,0.55)--(4.7,-1.6);
+  % apres l'oculaire : rayons paralleles (image a l'infini)
+  \draw[rayimg!80,line width=0.8pt] (4.7,-1.6)--(5.5,-1.6);
+  \draw[rayo,line width=0.8pt] (5.5,-1.6)--(8.0,-1.6);
+  \draw[rayo,line width=0.8pt] (5.5,0.0)--(8.0,0.0);
+  \node[primary,font=\scriptsize] at (7.4,-0.9) {image finale};
+  \node[primary,font=\scriptsize] at (7.4,-1.2) {à l'infini};
+  % oeil
+  \node[font=\Large] at (8.2,-0.8) {$\bullet\!\!<$};
+  \node[below,font=\scriptsize] at (8.2,-0.8) {œil};
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[grandissement et grossissement du microscope]
+Le grandissement transversal de l'objectif est $\gamm_1=-v_1/u_1$ (très négatif : image très agrandie
+et renversée). L'oculaire, agissant comme une loupe sur $A_1B_1$, apporte un grossissement
+supplémentaire. Le \textbf{grossissement commercial} du microscope vaut, en première approximation,
+\[ G \approx \left|\gamm_1\right|\times G_{\text{oculaire}}, \]
+où $G_{\text{oculaire}}\propto 1/f_2$. \textbf{Conséquence :} si l'on remplace l'oculaire par un autre
+de focale \emph{double}, $G_{\text{oculaire}}$ est \emph{divisé par deux}, donc le grossissement total
+aussi. D'où l'intérêt d'oculaires de courte focale.
+\end{theoreme}
+
+\begin{exemple}[image finale par le microscope]
+Un objet microscopique de taille $o=\SI{0{,}01}{\milli\metre}=\SI{1e-5}{\metre}$ est observé avec un
+objectif de grandissement $|\gamm_1|=40$. L'image intermédiaire a donc pour taille
+\[ |i_1|=|\gamm_1|\times o=40\times 10^{-5}=\SI{4e-4}{\metre}=\SI{0{,}4}{\milli\metre}, \]
+soit $40$ fois plus grande que l'objet (et renversée). Cette image intermédiaire, placée dans le plan
+focal de l'oculaire (lui-même jouant le rôle de loupe, par exemple de grossissement $\times 10$),
+donne une image finale virtuelle « à l'infini » que l'œil observe sans fatigue. Au total, l'objet de
+\SI{0{,}01}{\milli\metre} est perçu comme s'il mesurait environ
+$40\times 10=\SI{400}{}$ fois sa taille, soit l'équivalent de \SI{4}{\milli\metre} à une distance de
+lecture confortable.
+\end{exemple}
+
+\begin{remarque}[microscope « réglé pour l'infini »]
+La condition « image intermédiaire dans le plan focal objet de l'oculaire » ($A_1B_1$ en $F_2$) fait
+sortir les rayons de l'oculaire \emph{parallèles} entre eux : l'image finale est à l'infini. C'est le
+réglage le plus reposant pour l'œil, qui n'a pas à accommoder. C'est aussi ce qu'exprime l'énoncé :
+« pour avoir une image à l'infini, l'image donnée par l'objectif doit être dans le plan focal de
+l'oculaire ».
+\end{remarque}
+
+% =====================================================================
+\section{Synthèse : formulaire, méthode et points-clés}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.5cm} >{\centering\arraybackslash}p{5.4cm} >{\raggedright\arraybackslash}p{4.5cm}}
+\rowcolor{primary!18}
+\textbf{Grandeur / loi} & \textbf{Formule} & \textbf{À retenir} \\
+\midrule
+Vergence & $C=\dfrac{1}{f_{(\mathrm{m})}}$ en $\delta=\si{\per\metre}$ & $C>0$ convergente, $C<0$ divergente \\
+Lentilles accolées & $C_{\text{éq}}=\sum_k C_k$ & vergences additives \\
+Conjugaison & $\dfrac{1}{f}=\dfrac{1}{u}+\dfrac{1}{v}$ & toujours en mètres \\
+Grandissement & $\gamm=\dfrac{i}{o}=-\dfrac{v}{u}$ & $\gamm<0$ renversée, $\gamm>0$ droite \\
+Objet $\to\infty$ & $v=f$ & image au foyer $F'$ \\
+Objet en $2f$ & $v=2f$, $\gamm=-1$ & image même taille, renversée \\
+Objet en $f$ & $v\to\infty$ & rayons parallèles en sortie \\
+Convergente $0<u<f$ & $v<0$, $\gamm>1$ & loupe (virtuelle, droite, agrandie) \\
+Divergente (objet réel) & toujours virtuelle, droite, réduite & verre de myope \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[analyser un problème de lentille en six réflexes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Identifier la lentille} : convergente ($f>0$, bords minces) ou divergente ($f<0$, bords épais).
+  \item \textbf{Convertir toutes les longueurs en mètres} et noter les signes de $u$, $v$, $f$, $i$.
+  \item \textbf{Prévoir la nature} de l'image d'après la position de l'objet (tableau de la section~5).
+  \item \textbf{Appliquer} $1/f=1/u+1/v$ pour trouver $v$, puis $\gamm=-v/u$ pour la taille.
+  \item \textbf{Interpréter les signes} : $v>0$ réelle, $v<0$ virtuelle ; $i>0$ droite, $i<0$ renversée ;
+        $|\gamm|$ agrandit ou réduit.
+  \item \textbf{Vérifier la cohérence} : une image virtuelle ne se projette pas ; une lentille divergente
+        ne donne jamais d'image réelle d'un objet réel, etc.
+\end{enumerate}
+\end{methode}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 8}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Deux familles :} convergentes (bords \emph{minces}, $f>0$) et divergentes
+        (bords \emph{épais}, $f<0$). Un rayon passant par le \textbf{centre optique $O$} n'est jamais dévié.
+  \item \textbf{Trois rayons particuliers} suffisent à construire toute image : par $O$, parallèle à
+        l'axe ($\to$ passe par $F'$), et passant par $F$ ($\to$ ressort parallèle).
+  \item \textbf{Vergence} $C=1/f$ en dioptries (\si{\per\metre}) ; les vergences de lentilles accolées
+        s'ajoutent.
+  \item \textbf{Deux formules :} $\dfrac{1}{f}=\dfrac{1}{u}+\dfrac{1}{v}$ et
+        $\gamm=\dfrac{i}{o}=-\dfrac{v}{u}$, avec conventions de signe ($u>0$, $v>0$ réelle,
+        $v<0$ virtuelle, $f>0$ convergente, $i>0$ droite).
+  \item \textbf{Lentille convergente :} 6 cas selon la position de l'objet --- loupe si $u<f$ (image
+        virtuelle, droite, agrandie), projecteur si $f<u<2f$ (réelle, agrandie), appareil photo si
+        $u>2f$ (réelle, réduite).
+  \item \textbf{Lentille divergente :} image \emph{toujours} virtuelle, droite, réduite.
+  \item \textbf{Instruments :} l'\textbf{œil} est une lentille convergente (cornée $+$ cristallin)
+        formant une image sur la \textbf{rétine} ; l'\textbf{accommodation} ajuste $f$. La
+        \textbf{myopie} se corrige par une divergente, l'\textbf{hypermétropie} et la \textbf{presbytie}
+        par une convergente. Le \textbf{microscope} associe un objectif (image intermédiaire agrandie)
+        et un oculaire (loupe).
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

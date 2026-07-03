@@ -1,0 +1,95 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 3 — Nomenclature et priorité des fonctions
+%  NIVEAU DIFFICILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=2em,bond length=0.9em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\newcommand{\runtitle}{Thème 3 — Difficile — Corrigé}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox[auto counter]{corr}[1]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Corrigé}~\thetcbcounter\ \textmd{--- \itshape #1}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=excol,colframe=excol,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{2pt}}
+
+\begin{document}
+
+\banner{Thème 3 — Nomenclature et priorité des fonctions}{Niveau \textbf{Difficile} — Corrigé détaillé \quad$\vert$\quad Fiche 12, Chimie organique}
+
+% ---------------------------------------------------------------------
+\begin{corr}{nomenclature complète d'une molécule trifonctionnelle}
+\textbf{a)} Fonctions : un $\ce{-COOH}$ (\rep{acide carboxylique}), un $\ce{-OH}$ (\rep{alcool}), un $\ce{-NH2}$ (\rep{amine}).\\
+\textbf{b)} Priorité : $\ce{-COOH} > \ce{-OH} > \ce{-NH2}$. Fonction principale $=$ \rep{acide} (suffixe \textit{-oïque}). L'alcool $\to$ préfixe \textbf{hydroxy-} ; l'amine $\to$ préfixe \textbf{amino-}.\\
+\textbf{c)} Chaîne principale : \textbf{5 carbones} contenant le $\ce{-COOH}$ $\Rightarrow$ acide \emph{pentanoïque}. Le C du $\ce{-COOH}$ porte le n\textsuperscript{o}1 (imposé) :
+\[ \underset{1}{\ce{COOH}}-\underset{2}{\ce{CH2}}-\underset{3}{\ce{CH}}(\ce{OH})-\underset{4}{\ce{CH}}(\ce{NH2})-\underset{5}{\ce{CH3}} \]
+donc $\ce{-OH}$ en 3, $\ce{-NH2}$ en 4.\\
+\textbf{d)} Préfixes par ordre alphabétique (\emph{amino} avant \emph{hydroxy}) : \rep{acide 4-amino-3-hydroxypentanoïque}.
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{du nom à la structure (sens inverse)}
+\textbf{a)} « acide \dots-oïque » $\Rightarrow$ fonction principale acide carboxylique ; « propan- » $\Rightarrow$ 3 carbones ; le $\ce{-COOH}$ est le C1 ; « 2-amino » $\Rightarrow$ un $\ce{-NH2}$ sur le C2. Structure :
+\begin{center}\chemfig{CH_3-[:30]CH(-[:90]NH_2)-[:-30](=[:-90]O)-[:30]OH}\qquad soit \ce{CH3-CH(NH2)-COOH}\end{center}
+\textbf{b)} Deux fonctions : \rep{acide carboxylique} et \rep{amine primaire}. Priorité $\ce{-COOH} > \ce{-NH2}$ : l'acide donne le suffixe, l'amine devient le préfixe \emph{amino-} $\Rightarrow$ cohérent avec le nom. (C'est bien l'alanine.)
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{alcool + double liaison : locants et suffixe -èn-ol}
+\textbf{a)} Fonctions : un $\ce{-OH}$ (\rep{alcool}) et une double liaison $\ce{C=C}$ (\rep{alcène}). Priorité : $\ce{-OH} > \text{C=C}$ $\Rightarrow$ l'alcool est prioritaire (il fixe le suffixe \textit{-ol} et le sens de numérotation).\\
+\textbf{b)} En partant de la \textbf{gauche} : $\ce{-OH}$ en 4, double liaison en 1. En partant de la \textbf{droite} : $\ce{-OH}$ en 2, double liaison en 4.\\
+\textbf{c)} On retient le sens donnant à l'alcool (prioritaire) le plus petit indice, soit \textbf{2}. La chaîne fait 5 C. Nom : \rep{pent-4-én-2-ol} (double liaison entre C4 et C5 : locant 4 ; alcool en 2).
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{nommer un ester}
+\textbf{a)} Le carbonyle $\ce{C=O}$ est lié à un $\ce{-O-CH3}$ (un O prolongé par un carbone) $\Rightarrow$ \rep{fonction ester}.\\
+\textbf{b)} La partie \textbf{acide} est $\ce{CH3CH2CH2-C(=O)-}$, dérivée de l'acide \emph{butanoïque} (4 C) $\Rightarrow$ « butanoate ». La partie \textbf{alcool} est le $\ce{-O-CH3}$, dérivée du méthanol $\Rightarrow$ « de méthyle ».\\
+\textbf{c)} Nom : \rep{butanoate de méthyle}.
+\end{corr}
+
+\end{document}

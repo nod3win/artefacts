@@ -1,0 +1,96 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 8 — THÈME 1 — NIVEAU DIFFICILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{exocol}{RGB}{200,60,40}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\dH}{\Delta H}
+\newcommand{\dU}{\Delta U}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 1 : Premier principe et enthalpie}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile — corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=excol,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 1 — Premier principe et enthalpie}\\[1pt]{\small Niveau \textsc{Difficile} — corrigé détaillé}};
+\end{tikzpicture}
+\end{center}
+
+\begin{correction}[détente d'un gaz dans un piston — bilan complet]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=3pt]
+  \item $\Delta V = (3{,}0-1{,}0)=\SI{2.0}{\litre}=\SI{2.0e-3}{\cubic\metre}$.
+        \[ W = -p\,\Delta V = -(\SI{1.0e5}{\pascal})(\SI{2.0e-3}{\cubic\metre}) = \rep{\SI{-200}{\joule}}. \]
+        $W<0$ : en se dilatant, le gaz \rep{cède} du travail (il pousse le piston).
+  \item $\dU = Q + W = (+250) + (-200) = \rep{\SI{+50}{\joule}}$.
+  \item $\dU>0$ : l'énergie interne a \rep{augmenté} de \SI{50}{\joule}. Interprétation : sur les
+        \SI{250}{\joule} de chaleur reçue, \SI{200}{\joule} sont \emph{restitués} au milieu sous forme de
+        travail (le piston monte), et seuls \SI{50}{\joule} restent stockés dans le gaz. \emph{La chaleur
+        reçue ne sert donc pas entièrement à augmenter $U$.}
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[combustion du carbone — énergie et quantité de matière]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\dH<0$ : les \rep{réactifs} ($\ce{C}+\ce{O2}$) sont \emph{plus haut} que le produit ($\ce{CO2}$).
+        La réaction est \rep{exothermique}.
+  \item Énergie dégagée $= n\,|\dH| = 3{,}0 \times 394 = \rep{\SI{1182}{\kilo\joule}}$.
+  \item $n = \dfrac{1970}{394} = \SI{5.0}{\mol}$, \; d'où $m = n\,M = 5{,}0 \times 12 = \rep{\SI{60}{\gram}}$
+        de carbone.
+  \item Par mole de carbone, la combustion \emph{complète} dégage \SI{394}{\kilo\joule}, contre seulement
+        \SI{111}{\kilo\joule} pour la combustion \emph{incomplète}. La \rep{combustion complète} dégage
+        beaucoup plus d'énergie : brûler jusqu'au \ce{CO2} exploite toute l'énergie du carbone, alors que
+        s'arrêter au \ce{CO} en « gaspille » une grande partie (et produit un gaz toxique).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[distinguer $\dU$ et $\dH$ — l'ordre de grandeur du travail]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\Delta V = \SI{+2.0}{\litre} = \SI{2.0e-3}{\cubic\metre}$, d'où
+        \[ W = -p\,\Delta V = -(\SI{1.0e5}{\pascal})(\SI{2.0e-3}{\cubic\metre}) = \SI{-200}{\joule}
+             = \rep{\SI{-0.2}{\kilo\joule}}. \]
+  \item $\dU = \dH + W = -180 + (-0{,}2) = \rep{\SI{-180.2}{\kilo\joule}}$.
+  \item $\dU \approx \dH$ : le travail (\SI{0.2}{\kilo\joule}) est \rep{négligeable} devant la chaleur de
+        réaction (\SI{180}{\kilo\joule}), soit environ $0{,}1\,\%$. \emph{À retenir :} pour une réaction
+        chimique, $\dU$ et $\dH$ sont très proches ; c'est pourquoi la thermochimie raisonne
+        commodément sur $\dH$ (la chaleur à pression constante).
+\end{enumerate}
+\end{correction}
+
+\end{document}

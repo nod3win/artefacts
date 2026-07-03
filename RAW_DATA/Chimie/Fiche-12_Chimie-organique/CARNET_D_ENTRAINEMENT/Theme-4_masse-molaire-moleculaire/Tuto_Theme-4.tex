@@ -1,0 +1,122 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 4 — Masse molaire d'une molécule organique
+%  TUTO   —   Compilation : pdflatex Tuto_Theme-4.tex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=1.9em,bond length=0.85em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=1.9cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{formulacol}{RGB}{198,93,9}
+
+\newcommand{\runtitle}{Thème 4 — Tuto}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{2.5pt}
+
+\titleformat{\section}{\normalsize\bfseries\color{primarydark}}{\thesection.}{0.5em}{}
+\titlespacing{\section}{0pt}{4pt}{1pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.8pt,arc=2pt,
+   left=2.4mm,right=2.4mm,top=1.4mm,bottom=1.4mm,fonttitle=\bfseries\small,coltitle=white,
+   toptitle=0.3mm,bottomtitle=0.3mm}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+   title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exmp}[1][]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=primary!7,colframe=primary,
+   title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=primary,colframe=primary,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{1pt}}
+
+\begin{document}
+
+\banner{Thème 4 — Masse molaire d'une molécule organique}{%
+Tuto à lire avant les exercices — Fiche 12, Chimie organique}
+
+% =====================================================================
+\section{La formule de la masse molaire}
+\begin{formule}[Masse molaire moléculaire]
+\[ \boxed{\,M = \sum_i n_i\,M_i\,} \]
+\textbf{où} : $M$ = masse molaire de la molécule (en $\si{\g\per\mol}$) ; $n_i$ = nombre d'atomes de l'élément $i$ dans la formule brute ; $M_i$ = masse molaire atomique de l'élément $i$ (en $\si{\g\per\mol}$).
+\end{formule}
+Autrement dit : on \textbf{multiplie} la masse molaire de chaque élément par le \textbf{nombre de ses atomes}, puis on \textbf{additionne} le tout.
+
+\begin{center}\small\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{lcccccc}
+\toprule
+Élément & H & C & N & O & S & Cl \\
+$M$ ($\si{\g\per\mol}$) & 1 & 12 & 14 & 16 & 32 & 35,5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{exmp}[Le calcul modèle]
+Pour $\ce{C6H14N2}$ (avec $M_\text{C}=12$, $M_\text{H}=1$, $M_\text{N}=14$) :
+\[ M = \underbrace{6\times12}_{72} + \underbrace{14\times1}_{14} + \underbrace{2\times14}_{28} = \qty{114}{\g\per\mol}. \]
+On détaille toujours contribution par contribution pour éviter les erreurs de comptage.
+\end{exmp}
+
+% =====================================================================
+\section{Le piège des unités : $M$ vs masse moléculaire relative}
+\begin{piege}[Une réponse « en $\si{\g\per\mol}$ » peut être fausse !]
+La \textbf{masse molaire} $M$ s'exprime en $\si{\g\per\mol}$. La \textbf{masse moléculaire relative} $M_r$ est le \emph{même nombre} mais \textbf{sans unité} (c'est un rapport à $\tfrac{1}{12}$ de la masse d'un $\ce{^{12}C}$). Si un énoncé demande la « \emph{masse moléculaire relative} », répondre «\,$114\ \si{\g\per\mol}$\,» est \textbf{faux} : il faut «\,$114$\,», sans unité. \textbf{Toujours lire la grandeur demandée.}
+\end{piege}
+
+% =====================================================================
+\section{Ce qu'on fait ensuite avec $M$}
+La masse molaire est la charnière entre la \textbf{masse} $m$, la \textbf{quantité de matière} $n$ et le \textbf{nombre de molécules} $N$ :
+\begin{formule}[Relations à connaître]
+\[ n = \dfrac{m}{M}, \qquad N = n\,N_A, \qquad C = \dfrac{n}{V} \]
+avec $N_A = \qty{6,02e23}{\per\mol}$ (constante d'Avogadro), $V$ le volume de solution (en $\si{\L}$), $C$ la concentration (en $\si{\mol\per\L}$).
+\end{formule}
+
+\begin{exmp}[Chaîne complète masse $\to$ nombre de molécules]
+Combien de molécules dans $\qty{360}{\mg}$ d'aspirine ($\ce{C9H8O4}$, $M=\qty{180}{\g\per\mol}$) ?
+\[ n=\frac{m}{M}=\frac{\qty{0,360}{\g}}{\qty{180}{\g\per\mol}}=\qty{2,0e-3}{\mol},\quad
+N=n\,N_A=\qty{2,0e-3}{}\times\qty{6,02e23}{}\approx\qty{1,2e21}{}. \]
+\end{exmp}
+
+\begin{astuce}[Méthode-réflexe]
+\textbf{1.} Formule brute (au besoin, la lire sur la structure en comptant C, H, O, N\dots). \textbf{2.} $M=\sum n_i M_i$ (contribution par contribution). \textbf{3.} Convertir les masses en grammes et les volumes en litres \emph{avant} tout calcul. \textbf{4.} Vérifier l'unité demandée (piège $M$ vs $M_r$).
+\end{astuce}
+
+\end{document}

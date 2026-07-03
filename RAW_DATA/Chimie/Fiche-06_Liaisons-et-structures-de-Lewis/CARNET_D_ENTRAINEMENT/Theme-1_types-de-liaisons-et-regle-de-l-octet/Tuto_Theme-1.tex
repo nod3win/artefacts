@@ -1,0 +1,203 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 : Liaisons et structures de Lewis
+%  THÈME 1 — Types de liaisons et règle de l'octet
+%  Fiche TUTO (à lire avant les exercices)
+%  Compilation : pdflatex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,fit,backgrounds}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=8pt]{geometry}
+
+% -------- palette --------
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{astucecol}{RGB}{198,93,9}
+\definecolor{atomCl}{RGB}{70,170,80}
+\definecolor{atomNa}{RGB}{150,90,210}
+\definecolor{atomN}{RGB}{48,80,200}
+\definecolor{atomH}{RGB}{235,235,235}
+\definecolor{lonepair}{RGB}{120,94,200}
+\definecolor{bondcol}{RGB}{60,60,70}
+\definecolor{piecol}{RGB}{198,93,9}
+
+% -------- boîtes --------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{defbox}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+   title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methbox}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+   title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exbox}[1][]{boxbase,colback=excol!6,colframe=excol,
+   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attnbox}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Piège à éviter}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
+   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\AX}[2]{\ensuremath{\mathrm{AX_{#1}E_{#2}}}}
+
+% -------- en-tête --------
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Carnet d'entraînement — Fiche 6}}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 · Tuto}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large Thème 1 — Types de liaisons et règle de l'octet}]
+\textbf{Objectif du thème.} Savoir \emph{nommer} une liaison (covalente, ionique ou dative),
+\emph{compter} les électrons de valence d'un atome, et \emph{décider} si un atome respecte,
+dépasse ou n'atteint pas l'octet. Ce sont les réflexes de base : tout le reste de la fiche
+(structures de Lewis, charges formelles, VSEPR) s'appuie dessus.
+\end{tcolorbox}
+
+\section*{1. Les électrons de valence : le point de départ}
+
+Les \textbf{électrons de valence} sont les électrons de la \emph{couche externe} d'un atome.
+Ce sont les seuls qui participent aux liaisons. Pour un élément des grandes colonnes
+(« familles a »), leur nombre est simplement égal au \textbf{numéro de colonne} du tableau
+périodique.
+
+\begin{astucebox}[lire la valence directement dans le tableau]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|c c c c c c c c}
+\toprule
+Atome & \ce{H} & \ce{Be} & \ce{B} & \ce{C} & \ce{N} & \ce{O} & \ce{F},\,\ce{Cl},\,\ce{Br} & \ce{Ne} \\
+$N_v$ (valence) & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\footnotesize Même logique pour la 3\textsuperscript{e} période : \ce{Na}=1, \ce{Al}=3,
+\ce{Si}=4, \ce{P}=5, \ce{S}=6.
+\end{astucebox}
+
+\section*{2. Trois façons de se lier}
+
+Autour de chaque atome, on distingue deux sortes de doublets d'électrons : les \textbf{doublets
+liants} (paires \emph{partagées} = les liaisons) et les \textbf{doublets non liants} (paires
+\emph{propres} à un seul atome, aussi appelées paires libres).
+
+\begin{defbox}[les trois types de liaisons]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=3pt]
+  \item \textbf{Liaison covalente} — mise en commun d'un doublet, avec \emph{un} électron
+        apporté par \emph{chaque} atome. Typique entre non-métaux (ex. \ce{Cl2}, \ce{H2O}).
+  \item \textbf{Liaison ionique} — \emph{transfert complet} d'un ou plusieurs électrons d'un
+        atome vers un autre, puis \textbf{attraction électrostatique} entre le cation $+$ et
+        l'anion $-$. Typique entre un métal et un non-métal (ex. \ce{NaCl}).
+  \item \textbf{Liaison covalente de coordination (dative)} — encore un partage d'un doublet,
+        mais \emph{les deux} électrons proviennent du \emph{même} atome (le donneur), l'autre
+        (l'accepteur) offrant une case vide (ex. la 4\textsuperscript{e} liaison \ce{N-H} de
+        \ce{NH4+}).
+\end{itemize}
+\end{defbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  % covalente Cl-Cl
+  \node[bondcol,font=\footnotesize\bfseries] at (0,1.4){covalente};
+  \shade[ball color=atomCl](-0.6,0)circle(0.32);\node[white,font=\scriptsize\bfseries]at(-0.6,0){Cl};
+  \shade[ball color=atomCl](0.6,0)circle(0.32);\node[white,font=\scriptsize\bfseries]at(0.6,0){Cl};
+  \draw[bondcol,line width=1.3pt](-0.28,0)--(0.28,0);
+  \node[font=\scriptsize] at (0,-0.7){partage 1+1};
+  % ionique Na+ Cl-
+  \begin{scope}[xshift=3.6cm]
+  \node[bondcol,font=\footnotesize\bfseries] at (0,1.4){ionique};
+  \shade[ball color=atomNa](-0.6,0)circle(0.32);\node[white,font=\scriptsize\bfseries]at(-0.6,0){Na};
+  \node[piecol,font=\scriptsize]at(-0.25,0.35){$+$};
+  \shade[ball color=atomCl](0.7,0)circle(0.32);\node[white,font=\scriptsize\bfseries]at(0.7,0){Cl};
+  \node[piecol,font=\scriptsize]at(1.05,0.35){$-$};
+  \draw[<->,>=Stealth,primarydark](-0.3,-0.45)--(0.4,-0.45);
+  \node[font=\scriptsize] at (0.05,-0.85){attraction};
+  \end{scope}
+  % dative
+  \begin{scope}[xshift=7.4cm]
+  \node[bondcol,font=\footnotesize\bfseries] at (0.1,1.4){dative};
+  \shade[ball color=atomN](-0.6,0)circle(0.32);\node[white,font=\scriptsize\bfseries]at(-0.6,0){N};
+  \shade[ball color=atomH](0.6,0)circle(0.26);\node[black,font=\scriptsize\bfseries]at(0.6,0){H};
+  \node[piecol,font=\scriptsize]at(0.95,0.35){$+$};
+  \draw[piecol,line width=1.5pt](-0.3,0)--(0.36,0);
+  \node[font=\scriptsize,align=center] at (0.0,-0.75){les 2 e$^-$\\viennent de N};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\section*{3. La règle de l'octet (et du duet)}
+
+\begin{defbox}[le « bon nombre » d'électrons]
+En se liant, chaque atome cherche à s'entourer de :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{8 électrons} (\textbf{octet}) — configuration d'un gaz rare comme \ce{Ne}, \ce{Ar} ;
+  \item \textbf{2 électrons} (\textbf{duet}) pour \ce{H} et \ce{He}, qui visent la configuration de \ce{He}.
+\end{itemize}
+On compte \emph{ensemble} les doublets non liants \textbf{et} les doublets liants. Les électrons
+d'une liaison sont comptés \textbf{pour les deux} atomes à la fois : c'est ce double comptage qui
+permet à deux atomes de compléter leur octet en ne partageant qu'un doublet.
+\end{defbox}
+
+\begin{exbox}[compter les 8 électrons]
+Dans \ce{Cl2}, chaque \ce{Cl} porte 3 doublets libres ($6\,e^-$) \emph{plus} le doublet liant
+($2\,e^-$) : $6+2=8$, l'octet est atteint. Dans \ce{CH4}, le carbone forme 4 liaisons :
+$4\times 2 = 8$, octet parfait, sans aucun doublet libre. Chaque \ce{H} y voit $2\,e^-$ : duet.
+\end{exbox}
+
+\section*{4. Les exceptions à connaître}
+
+\begin{attnbox}[qui a le droit de sortir de l'octet ?]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=2pt]
+  \item \textbf{Octet étendu (hypervalence)} — les éléments de la \textbf{3\textsuperscript{e}
+        période et au-delà} (\ce{P}, \ce{S}, \ce{Cl}, \ce{Br}, \ce{I}, \ce{Xe}\ldots) disposent
+        d'orbitales $d$ : ils \emph{peuvent} s'entourer de \emph{plus} de 8 électrons.
+        Exemples : \ce{PCl5} (10), \ce{SF6} (12), \ce{IF5}, \ce{ClO4-}.
+  \item \textbf{Octet incomplet} — le \textbf{bore} \ce{B} (et \ce{Be}) se contente souvent de
+        \emph{moins} de 8 électrons : \ce{BH3} et \ce{BF3} n'ont que 6 électrons autour du bore
+        (un « sextet »).
+  \item \textbf{Interdiction absolue} — \ce{C}, \ce{N}, \ce{O}, \ce{F} (1\textsuperscript{re} et
+        2\textsuperscript{e} périodes) ne peuvent \textbf{jamais dépasser} 8 électrons : ils n'ont
+        pas d'orbitales $d$.
+\end{itemize}
+\end{attnbox}
+
+\begin{methbox}[réflexe « exception ou pas ? »]
+Pour dire si un composé peut sortir de l'octet, regarde l'\textbf{atome central} :
+\begin{enumerate}[leftmargin=1.7em,topsep=1pt,itemsep=1pt]
+  \item Est-il en \textbf{période $\geq 3$} (\ce{P}, \ce{S}, \ce{Cl}, \ce{Xe}\ldots) ? $\to$ il
+        \emph{peut} dépasser l'octet (octet étendu).
+  \item Est-ce \ce{B} ou \ce{Be} ? $\to$ il peut rester en \emph{dessous} (6 ou 4 électrons).
+  \item Est-ce \ce{C}, \ce{N}, \ce{O}, \ce{F} ? $\to$ octet \textbf{strict}, jamais plus de 8.
+\end{enumerate}
+\end{methbox}
+
+\end{document}

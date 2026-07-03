@@ -1,0 +1,114 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 3
+%  Niveau FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corcol}{RGB}{0,114,178}
+\definecolor{astucecol}{RGB}{198,93,9}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
+   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
+   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 3} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 3 — Corrigé du niveau Facile}
+\end{center}
+\medskip
+
+\begin{cor}[appliquer la formule]
+On applique $q_{\mathrm{f}} = N_v - 2\times(\text{doublets libres}) - (\text{nb liaisons})$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item $q_{\mathrm{f}} = 6 - 2\times 2 - 2 = 6 - 4 - 2 = \mathbf{0}$.
+  \item $q_{\mathrm{f}} = 6 - 2\times 3 - 1 = 6 - 6 - 1 = \mathbf{-1}$.
+  \item $q_{\mathrm{f}} = 4 - 2\times 0 - 4 = 4 - 0 - 4 = \mathbf{0}$.
+  \item $q_{\mathrm{f}} = 5 - 2\times 0 - 4 = 5 - 0 - 4 = \mathbf{+1}$.
+\end{enumerate}
+\rep a) $0$ ; \; b) $-1$ ; \; c) $0$ ; \; d) $+1$.
+\end{cor}
+
+\begin{cor}[la charge formelle de l'hydrogène]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item $q_{\mathrm{f}}(\ce{H}) = 1 - 2\times 0 - 1 = 1 - 0 - 1 = \mathbf{0}$.
+  \item \rep Tout hydrogène « normal », engagé dans \textbf{une seule liaison simple} et sans
+        doublet libre, a une charge formelle \textbf{nulle}. C'est pourquoi, en pratique, on ne se
+        préoccupe que des atomes lourds (\ce{C}, \ce{N}, \ce{O}\ldots) : les \ce{H} ne contribuent pas.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[la somme des charges formelles donne la charge]
+La somme des charges formelles vaut la charge globale de l'édifice.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item \ce{NH4+} : $(+1) + 4\times 0 = \mathbf{+1}$ \; $\Rightarrow$ ion de charge $+1$. \checkmark
+  \item \ce{CO3^2-} : $0 + 0 + (-1) + (-1) = \mathbf{-2}$ \; $\Rightarrow$ ion de charge $-2$. \checkmark
+  \item \ce{OH^-} : $(-1) + 0 = \mathbf{-1}$ \; $\Rightarrow$ ion de charge $-1$. \checkmark
+\end{enumerate}
+\rep a) $+1$ ; \; b) $-2$ ; \; c) $-1$.
+\end{cor}
+
+\begin{cor}[la charge formelle de l'oxygène selon sa situation]
+Toujours avec $N_v = 6$ :
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item $q_{\mathrm{f}} = 6 - 2\times 2 - 2 = 6 - 4 - 2 = \mathbf{0}$ (oxygène « normal », neutre).
+  \item $q_{\mathrm{f}} = 6 - 2\times 3 - 1 = 6 - 6 - 1 = \mathbf{-1}$.
+  \item $q_{\mathrm{f}} = 6 - 2\times 1 - 3 = 6 - 2 - 3 = \mathbf{+1}$ (l'oxygène de \ce{H3O+}).
+\end{enumerate}
+\rep a) $0$ ; \; b) $-1$ ; \; c) $+1$. On retient : un \ce{O} qui \emph{gagne} une liaison
+(et perd un doublet libre) voit sa charge formelle \emph{augmenter} de $+1$.
+\end{cor}
+
+\begin{cor}[vrai ou faux ?]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
+  \item \rep \textbf{Faux}. La charge formelle est une charge \emph{fictive} de comptabilité, obtenue
+        en partageant les liaisons à parts égales ; elle ne mesure pas la charge réelle de l'atome.
+  \item \rep \textbf{Vrai}. La somme des charges formelles est toujours égale à la charge globale de
+        l'édifice — c'est le test de cohérence d'une structure.
+  \item \rep \textbf{Vrai}. À octet respecté, la meilleure structure est celle dont les charges
+        formelles sont les plus proches de zéro (charges minimales).
+\end{enumerate}
+\end{cor}
+
+\begin{astucebox}[le réflexe de la charge formelle]
+$q_{\mathrm{f}} = N_v - 2\times(\text{doublets non liants}) - (\text{nb de liaisons})$, et
+\textbf{une double liaison compte pour 2 liaisons}. Vérifie toujours : la somme des $q_{\mathrm{f}}$
+doit redonner la charge de l'édifice.
+\end{astucebox}
+
+\end{document}

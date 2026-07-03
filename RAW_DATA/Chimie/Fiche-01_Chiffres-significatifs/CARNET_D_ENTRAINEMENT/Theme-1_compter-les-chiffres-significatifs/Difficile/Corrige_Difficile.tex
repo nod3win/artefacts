@@ -1,0 +1,108 @@
+% =====================================================================
+%  THÈME 1 — Compter les chiffres significatifs — CORRIGÉ — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Difficile · Thème 1}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
+  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,
+  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Corrigé — Niveau Difficile}\\[1pt]
+{\color{primary} Thème 1 : compter les chiffres significatifs}
+\end{center}
+\vspace{2mm}
+
+\begin{cor}[Décomposition complète d'une mesure]
+$m = \qty{0,0068040}{\kilo\gram}$, lu de gauche à droite : $0,\;0\;0\;\mathbf{6}\;\mathbf{8}\;\mathbf{0}\;\mathbf{4}\;\mathbf{0}$.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item Zéros de tête : le $0$ des unités et les deux zéros $0{,}00$ avant le $6$. Ils ne font que
+        placer la virgule (ordre de grandeur) $\rightarrow$ \emph{non} significatifs.
+  \item Le zéro entre le $8$ et le $4$ est \textbf{captif} $\rightarrow$ significatif. Le zéro final,
+        situé après la virgule et après le dernier chiffre non nul, est un zéro \textbf{de queue}
+        $\rightarrow$ significatif.
+  \item Chiffres significatifs : $6,\,8,\,0,\,4,\,0 \Rightarrow \boxed{\mathbf{5}\ \text{CS}}$.
+  \item Notation scientifique : on place la virgule après le $6$ (virgule avancée de $3$ rangs) :
+        \[ m = \num{6,8040e-3}\ \si{\kilo\gram}\qquad (5\ \text{CS, inchangé}). \]
+        Les zéros de tête ont disparu ; le captif et celui de queue sont conservés.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Le grand tableau à compléter]
+\begin{center}\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c c c c}
+\toprule
+\textbf{Nombre} & \textbf{Décimales} & \textbf{CS} & \textbf{Notation scientifique}\\
+\midrule
+$\num{0,003080}$ & $6$ & $4$          & $\num{3,080e-3}$\\
+$\num{60,0}$     & $1$ & $3$          & $\num{6,00e1}$\\
+$\num{0,0500}$   & $4$ & $3$          & $\num{5,00e-2}$\\
+$\num{40080}$    & $0$ & $4$ (ambigu) & $\num{4,008e4}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Remarques : pour $\num{0,003080}$, les zéros de tête ne comptent pas mais le zéro de queue si
+$\Rightarrow 4$~CS. Pour $\num{40080}$, le zéro captif est sûr, mais le zéro de queue de cet entier
+est ambigu ; l'interprétation \og la plus riche \fg{} le prend comme significatif $\rightarrow 5$~CS
+serait alors écrit $\num{4,0080e4}$. En le comptant comme cadrage, on a $4$~CS et $\num{4,008e4}$ :
+c'est bien l'ambiguïté que la notation scientifique doit lever.
+\end{cor}
+
+\begin{cor}[Un désaccord entre deux étudiants]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Les deux peuvent avoir raison} : $\num{12000}$ est un entier dont les trois zéros de
+        queue sont ambigus. On sait seulement que le $1$ et le $2$ sont sûrs (au moins $2$~CS) ; les
+        zéros peuvent être mesurés ou de cadrage. La question est mal posée : il manque la précision.
+  \item Interprétation de Léa ($2$~CS) : $\num{1,2e4}$~mm. \quad
+        Interprétation de Tom ($5$~CS) : $\num{1,2000e4}$~mm.
+  \item \og À la centaine près \fg{} : les chiffres fiables sont $1$ (dizaine de milliers), $2$
+        (millier) et $0$ (centaine) $\Rightarrow \mathbf{3}$~CS, soit $\boxed{\num{1,20e4}\ \text{mm}}$.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Construire un nombre à volonté]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item Toutes ces écritures valent $300$ mais affichent un nombre de CS différent :
+        \[ 1\ \text{CS} : \num{3e2}\ ;\qquad 2\ \text{CS} : \num{3,0e2}\ ;\qquad 3\ \text{CS} : \num{3,00e2}. \]
+        Chaque zéro de queue ajouté à la mantisse est un zéro \emph{mesuré} de plus.
+  \item \og $300$ \fg{} laisse indéterminé le statut des deux zéros (mesurés ou cadrage) : l'écriture
+        décimale d'un entier ne permet pas de dire jusqu'où la mesure est fiable. La notation
+        scientifique, elle, rend chaque CS explicite.
+\end{enumerate}
+\end{cor}
+
+\end{document}

@@ -1,0 +1,109 @@
+% =====================================================================
+%  THÈME 1 — Compter les chiffres significatifs — CORRIGÉ — Niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Moyen · Thème 1}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
+  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,
+  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Corrigé — Niveau Moyen}\\[1pt]
+{\color{primary} Thème 1 : compter les chiffres significatifs}
+\end{center}
+\vspace{2mm}
+
+\begin{cor}[L'ambiguïté des zéros de queue d'un entier]
+Un zéro de queue d'un entier (sans virgule) peut être soit mesuré, soit un simple cadrage : on ne
+peut pas trancher sans convention. Les zéros \emph{captifs}, eux, restent toujours significatifs.
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{100}$ : aucun chiffre non nul après le $1$ n'est garanti $\Rightarrow$ $1$, $2$ ou
+        $3$~CS possibles.
+  \item b) $\num{2030}$ : le $2$, le zéro \emph{captif} et le $3$ sont sûrs (3~CS) ; le zéro de queue
+        est ambigu $\Rightarrow$ $3$ ou $4$~CS.
+  \item c) $\num{4500}$ : le $4$ et le $5$ sont sûrs ; les deux zéros de queue sont ambigus
+        $\Rightarrow$ $2$, $3$ ou $4$~CS.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[La notation scientifique lève l'ambiguïté]
+« Certain jusqu'à la dizaine » signifie que le dernier chiffre \emph{fiable} est celui des dizaines.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item Chiffres fiables : $2$ (milliers), $5$ (centaines), $0$ (dizaines) $\Rightarrow \mathbf{3}$~CS.
+  \item On place la virgule après le premier chiffre non nul et on ne garde que les $3$~CS :
+        \[ \boxed{\num{2,50e3}\ \text{m}}. \]
+        Le zéro de queue de la mantisse est ici \emph{obligatoire} : il porte l'information « connu à
+        la dizaine ».
+  \item À $\pm\,\num{1}$~m près, le chiffre des unités devient fiable : $4$~CS, soit
+        $\num{2,500e3}$~m.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Compter sur une écriture scientifique]
+En notation scientifique, la puissance de dix ne porte aucun CS : tout se lit dans la mantisse.
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{6,022e23}$ : $\mathbf{4}$~CS. \quad b) $\num{1,0e-7}$ : $\mathbf{2}$~CS. \quad
+        c) $\num{3,050e2}$ : $\mathbf{4}$~CS.
+  \item d) $\num{9e5}$ : $\mathbf{1}$~CS. \quad e) $\num{2,4000e-3}$ : $\mathbf{5}$~CS.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[Lecture d'une balance de laboratoire]
+$m = \qty{0,02050}{\gram}$.
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item Le comptage démarre au $2$ : chiffres significatifs $2,\,0,\,5,\,0 \Rightarrow \boxed{\mathbf{4}\ \text{CS}}$.
+  \item Rôle des trois zéros :
+  \begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=0pt]
+    \item le premier ($0{,}0$) est un zéro \textbf{de tête} $\rightarrow$ non significatif (cadrage) ;
+    \item le zéro entre le $2$ et le $5$ est \textbf{captif} $\rightarrow$ significatif ;
+    \item le dernier zéro est un zéro \textbf{de queue après la virgule} $\rightarrow$ significatif
+          (c'est le chiffre incertain affiché).
+  \end{itemize}
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[Sur une étiquette d'eau minérale]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\qty{90,0}{\milli\gram\per\litre}$ : le zéro de queue après la virgule est significatif
+        $\Rightarrow \mathbf{3}$~CS. \quad $\qty{122}{\milli\gram\per\litre}$ : trois chiffres non nuls
+        $\Rightarrow \mathbf{3}$~CS.
+  \item Les deux valeurs ont le \emph{même} nombre de CS ($3$) : elles sont annoncées avec la
+        \textbf{même} précision relative d'écriture (de l'ordre de $\num{0,1}\,\%$). Le nombre de CS,
+        et non la longueur du nombre, est l'indicateur de précision.
+\end{enumerate}
+\end{cor}
+
+\end{document}

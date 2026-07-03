@@ -1,0 +1,1269 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 4
+%  Masse molaire, mole, concentration massique, molarité, ...
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Chimie ----------
+\usepackage[version=4]{mhchem}   % \ce{...} pour les formules et équations
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\molar{\mole\per\litre}
+\DeclareSIUnit\Molar{M}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (violet — couleur de la section « Chimie » du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,160}      % violet/mauve (section Chimie)
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « chimie » réutilisées dans les figures
+\definecolor{verre}{RGB}{205,225,232}       % verrerie
+\definecolor{liquide}{RGB}{182,150,205}     % solution (mauve clair)
+\definecolor{liquidefonce}{RGB}{150,110,185}
+\definecolor{eaucol}{RGB}{150,195,225}      % eau
+\definecolor{cation}{RGB}{210,60,60}        % cation (rouge)
+\definecolor{anion}{RGB}{40,110,200}        % anion (bleu)
+\definecolor{gazcol}{RGB}{120,205,180}      % gaz
+\definecolor{ortext}{RGB}{198,93,9}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété / Loi (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété / Loi}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} — Masse molaire, mole, concentrations}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\NA}{N_{\!\text{A}}}
+\newcommand{\dd}{\mathrm{d}}
+
+% flèche « fl » utilisée dans plusieurs figures — définie globalement
+\tikzset{fl/.style={-{Stealth[length=2.2mm]},line width=0.9pt}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.8cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Masse molaire, mole,}\\[5pt]
+   {\Huge\bfseries concentrations et molarité}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,4}}
+
+\vspace{0.8cm}
+
+% --- Illustration de couverture : une fiole jaugée contenant une solution ---
+\begin{tikzpicture}[scale=1.0]
+  % --- fiole jaugée ---
+  \def\cx{0}
+  % col
+  \draw[verre,line width=2pt] (\cx-0.28,3.4) -- (\cx-0.28,1.7);
+  \draw[verre,line width=2pt] (\cx+0.28,3.4) -- (\cx+0.28,1.7);
+  % épaule (du col vers la panse)
+  \draw[verre,line width=2pt] (\cx-0.28,1.7) -- (\cx-1.55,0.2);
+  \draw[verre,line width=2pt] (\cx+0.28,1.7) -- (\cx+1.55,0.2);
+  % panse (base arrondie)
+  \draw[verre,line width=2pt] (\cx-1.55,0.2) arc (160:380:1.65 and 0.95);
+  % trait de jauge
+  \draw[primarydark,line width=0.8pt] (\cx-0.28,2.5) -- (\cx+0.28,2.5);
+  \node[primarydark,right,font=\scriptsize] at (\cx+0.30,2.5) {trait de jauge};
+  % liquide (panse remplie)
+  \begin{scope}
+    \clip (\cx-1.55,0.2) arc (160:380:1.65 and 0.95) -- (\cx+1.55,0.2)
+          -- (\cx+0.28,1.7) -- (\cx-0.28,1.7) -- (\cx-1.55,0.2) -- cycle;
+    \fill[liquide] (\cx-2,-1.4) rectangle (\cx+2,1.4);
+    % entités dissoutes (points)
+    \foreach \p in {(-0.9,-0.5),(-0.3,0.1),(0.4,-0.3),(0.9,-0.7),(-0.6,-0.9),
+                    (0.1,-0.8),(0.6,0.2),(-1.0,-0.1),(0.0,-0.4),(-0.4,-0.6),
+                    (0.8,-0.2),(-0.7,0.0)}{
+       \fill[liquidefonce] \p circle (0.07);}
+  \end{scope}
+  % bouchon
+  \draw[primarydark,fill=primary!40,rounded corners=1pt] (\cx-0.20,3.4) rectangle (\cx+0.20,3.75);
+  % étiquette concentration
+  \node[draw=primarydark,rounded corners=3pt,fill=white,font=\footnotesize,align=center]
+        at (\cx+3.7,1.4) {solution de\\ concentration\\ $C=\dfrac{n}{V}$};
+  \draw[->,>=Stealth,primarydark] (\cx+2.5,1.2) -- (\cx+1.2,0.4);
+  % grandeurs autour
+  \node[font=\footnotesize,liquidefonce] at (\cx-3.6,1.5) {$n$ (mol)};
+  \node[font=\footnotesize,liquidefonce] at (\cx-3.6,0.9) {$m$ (g)};
+  \node[font=\footnotesize,liquidefonce] at (\cx-3.6,0.3) {$N$ entités};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir la \textbf{mole} et le \textbf{nombre d'Avogadro}, et relier quantité de matière et nombre d'entités ;
+  \item calculer une \textbf{masse molaire} $M$ à partir des masses atomiques et l'employer dans $n=m/M$ ;
+  \item distinguer \textbf{masse volumique}, \textbf{concentration massique} et \textbf{concentration molaire (molarité)} ;
+  \item utiliser le \textbf{volume molaire} d'un gaz parfait ($\SI{22.4}{\litre\per\mole}$ aux CNTP) ;
+  \item naviguer sans erreur dans le \textbf{tableau de synthèse} des conversions ($\times M$, $\div V$, $\times \NA$\ldots) ;
+  \item déterminer la concentration des \textbf{ions} issus d'un électrolyte fort et appliquer la \textbf{dilution} ($C_1V_1=C_2V_2$) ;
+  \item calculer une \textbf{fraction molaire}, une \textbf{fraction massique}, un \textbf{pourcentage massique} et une \textbf{molalité}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 4 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : pourquoi « compter » la matière ?}
+% =====================================================================
+La chimie est la science des \textbf{transformations de la matière}. Or une réaction chimique
+met en jeu des \emph{atomes}, des \emph{molécules} ou des \emph{ions} qui réagissent dans des
+proportions bien précises : « une molécule de ceci réagit avec deux molécules de cela ». Pour
+\emph{prévoir} et \emph{doser} ces transformations, il faudrait donc pouvoir \textbf{compter} les
+entités présentes dans un échantillon.
+
+Le problème est que ces entités sont d'une \textbf{petitesse extrême} : un simple verre d'eau
+($\SI{18}{\gram}$) contient environ $6\times10^{23}$ molécules d'eau. Compter ces molécules une à une,
+à raison d'une par seconde, demanderait des milliers de milliards d'années. On ne peut donc pas
+manipuler les entités \emph{individuellement} ; en revanche on sait très bien mesurer une
+\textbf{masse} (avec une balance) ou un \textbf{volume} (avec de la verrerie graduée).
+
+\medskip
+Toute la Fiche~4 répond à une seule grande question :
+
+\begin{center}
+\begin{tikzpicture}
+\node[draw=primary,rounded corners=4pt,fill=primary!8,inner sep=8pt,font=\itshape\large,
+      text width=13.5cm,align=center]
+  {« Comment passer d'une grandeur que je sais \textbf{mesurer} (une masse, un volume,
+    une masse volumique) à une grandeur que je veux \textbf{connaître}
+    (un nombre d'entités, une quantité de matière, une concentration) ? »};
+\end{tikzpicture}
+\end{center}
+
+\noindent
+La réponse tient dans quelques \textbf{définitions} (mole, masse molaire, concentration), quelques
+\textbf{formules} de conversion (toutes réunies dans le \emph{tableau de synthèse} de la
+section~\ref{sec:synthese}), et beaucoup de \textbf{méthode}. Nous allons construire tout cela pas à
+pas, en détaillant chaque exemple.
+
+\begin{remarque}[fil rouge de la fiche]
+La grandeur \emph{centrale}, vers laquelle tout converge et d'où tout repart, est la
+\textbf{quantité de matière} $n$ (en moles). Si l'on retient une seule idée de cette fiche, c'est
+celle-ci : \emph{pour relier deux grandeurs quelconques, on passe presque toujours par les moles.}
+\end{remarque}
+
+% =====================================================================
+\section{La mole et le nombre d'Avogadro}
+% =====================================================================
+\subsection{L'idée du « paquet » : regrouper pour compter}
+
+Lorsqu'un objet est trop petit ou trop nombreux pour être compté à l'unité, on le regroupe en
+\textbf{paquets de taille fixe}. Un commerçant ne compte pas les feuilles de papier une à une : il
+parle de \emph{rames} de $500$ feuilles. De même, le chimiste regroupe les atomes et molécules en
+paquets géants appelés \textbf{moles}. Compter en moles, c'est compter par paquets de
+$6{,}02\times10^{23}$.
+
+\begin{definition}[la mole]
+La \textbf{mole} (symbole : \si{\mole}) est l'unité de \textbf{quantité de matière}. Une mole est
+la quantité de matière d'un système contenant \textbf{autant d'entités élémentaires} (atomes,
+molécules, ions, électrons\ldots) qu'il y a d'atomes dans $\SI{12}{\gram}$ de carbone~12 ($\ce{^{12}C}$),
+soit environ $6{,}02\times10^{23}$ entités.
+
+\smallskip
+Quand on emploie la mole, on doit \textbf{toujours préciser la nature de l'entité} : une mole
+\emph{d'atomes} de fer, une mole \emph{de molécules} d'eau, une mole \emph{d'ions} chlorure, etc.
+\end{definition}
+
+\begin{definition}[nombre d'Avogadro]
+Le \textbf{nombre d'Avogadro} $\NA$ est le nombre d'entités élémentaires contenues dans une mole :
+\[ \NA \approx 6{,}02\times10^{23}\ \text{entités par mole}. \]
+C'est un \emph{facteur de conversion} entre le monde microscopique (le nombre d'entités, qu'on ne
+peut pas mesurer directement) et le monde macroscopique (la quantité de matière en moles, qu'on
+manipule au laboratoire).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % monde microscopique
+  \draw[anion,rounded corners=4pt,line width=1pt,fill=anion!6] (-0.2,-1.3) rectangle (3.2,1.3);
+  \node[anion,font=\footnotesize\bfseries] at (1.5,1.05) {1 entité};
+  \fill[liquidefonce] (1.5,-0.1) circle (0.16);
+  \node[font=\scriptsize] at (1.5,-0.7) {1 atome / molécule / ion};
+  % flèche
+  \draw[->,>=Stealth,line width=1.4pt,primarydark] (3.4,0) -- node[above,font=\footnotesize]{$\times\,\NA$}
+        node[below,font=\scriptsize]{$\times\,6{,}02\times10^{23}$} (5.6,0);
+  % monde macroscopique : un "paquet" rempli de points
+  \draw[primary,rounded corners=4pt,line width=1pt,fill=primary!6] (5.8,-1.3) rectangle (9.6,1.3);
+  \node[primary,font=\footnotesize\bfseries] at (7.7,1.05) {1 mole};
+  \foreach \x in {6.2,6.55,...,9.3}{
+    \foreach \y in {-0.95,-0.6,...,0.55}{
+      \fill[liquidefonce] (\x,\y) circle (0.045);}}
+  \node[font=\scriptsize] at (7.7,-1.62) {$6{,}02\times10^{23}$ entités identiques};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Quantité de matière et nombre d'entités}
+
+\begin{formule}[nombre d'entités $\leftrightarrow$ quantité de matière]
+Le nombre d'entités $N$ et la quantité de matière $n$ sont liés par le nombre d'Avogadro :
+\[ \boxed{\,N = n \times \NA\,}\qquad\Longleftrightarrow\qquad n = \dfrac{N}{\NA} \]
+\begin{ou}
+  \item $N$ : nombre d'entités élémentaires (atomes, molécules, ions\ldots), \textbf{nombre pur} (sans unité) ;
+  \item $n$ : quantité de matière, en moles (\si{\mole}) ;
+  \item $\NA$ : nombre d'Avogadro, $\NA \approx \SI{6.02e23}{\per\mole}$ (entités par mole).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[lecture « dans les deux sens »]
+On passe des \emph{moles} aux \emph{entités} en \textbf{multipliant} par $\NA$, et des \emph{entités}
+aux \emph{moles} en \textbf{divisant} par $\NA$. C'est la toute première paire de flèches du tableau
+de synthèse (section~\ref{sec:synthese}) : « \emph{Quantité (mol)} $\xrightarrow{\times\,6{,}02\cdot10^{23}}$
+\emph{Nombre d'entités} ».
+\end{remarque}
+
+\begin{exemple}[d'un nombre d'entités à une quantité de matière]
+\textbf{Énoncé.} Un échantillon contient $3{,}01\times10^{23}$ molécules de dioxygène \ce{O2}. Quelle
+est la quantité de matière correspondante ?
+
+\smallskip
+\textbf{Raisonnement.} On connaît le nombre d'entités $N$ et l'on cherche la quantité $n$ : on
+\emph{divise} donc par $\NA$.
+\[ n = \frac{N}{\NA} = \frac{3{,}01\times10^{23}}{6{,}02\times10^{23}} = \SI{0.500}{\mole}. \]
+\[ \boxed{n = \SI{0.500}{\mole}\ \text{de \ce{O2}}} \]
+On trouve une \emph{demi-mole}, ce qui est cohérent puisque $3{,}01\times10^{23}$ est bien la moitié
+de $6{,}02\times10^{23}$.
+
+\smallskip
+\textbf{Attention à l'entité.} Cette demi-mole de \emph{molécules} \ce{O2} contient
+$2\times0{,}500 = \SI{1.00}{\mole}$ d'\emph{atomes} d'oxygène, car chaque molécule \ce{O2} renferme
+deux atomes. Toujours se demander : « une mole \emph{de quoi} ? »
+\end{exemple}
+
+\begin{exemple}[d'une quantité de matière à un nombre d'entités]
+\textbf{Énoncé.} Combien d'ions chlorure \ce{Cl-} y a-t-il dans $\SI{0.20}{\mole}$ d'ions chlorure ?
+
+\smallskip
+\textbf{Raisonnement.} On part des moles et l'on veut le nombre d'entités : on \emph{multiplie} par $\NA$.
+\[ N = n\times\NA = 0{,}20 \times 6{,}02\times10^{23} = 1{,}204\times10^{23}\ \text{ions}. \]
+\[ \boxed{N \approx 1{,}20\times10^{23}\ \text{ions \ce{Cl-}}} \]
+soit environ cent vingt mille milliards de milliards d'ions\ldots\ d'où l'intérêt de raisonner en
+moles plutôt qu'en entités !
+\end{exemple}
+
+% =====================================================================
+\section{La masse molaire}
+% =====================================================================
+La mole permet de \emph{compter}, mais au laboratoire on \emph{pèse}. Il nous faut donc le pont
+entre la masse (en grammes) et la quantité de matière (en moles) : c'est la \textbf{masse molaire}.
+
+\subsection{Masse atomique relative}
+
+Avant de parler de masse molaire, fixons l'origine des valeurs que l'on lit dans la classification
+périodique. Les atomes étant beaucoup trop légers pour être pesés un à un en grammes, on a choisi de
+comparer leur masse à celle d'un atome de référence : le carbone~12.
+
+\begin{definition}[masse atomique relative]
+La \textbf{masse atomique relative} $A_r$ d'un élément est le rapport de la masse moyenne d'un atome
+de cet élément (\emph{compte tenu de tous ses isotopes}, dans leurs proportions naturelles) au
+$\frac{1}{12}$ de la masse d'un atome de l'isotope carbone~12 ($\ce{^{12}C}$) :
+\[ A_r = \frac{m_{\text{atome moyen}}}{\frac{1}{12}\,m(\ce{^{12}C})}. \]
+C'est un \textbf{nombre sans dimension} (sans unité), car c'est un rapport de deux masses.
+\end{definition}
+
+\begin{remarque}[« moyenne » sur les isotopes]
+Un même élément existe sous forme de plusieurs \textbf{isotopes} : des atomes de même numéro
+atomique $Z$ (même nombre de protons) mais de nombre de neutrons différent, donc de masse différente.
+La masse atomique relative est une \emph{moyenne pondérée} par l'abondance naturelle de chaque
+isotope. C'est pourquoi le chlore a une valeur non entière, $A_r(\ce{Cl})\approx 35{,}5$ : il est un
+mélange d'environ $75\%$ de $\ce{^{35}Cl}$ et $25\%$ de $\ce{^{37}Cl}$.
+\end{remarque}
+
+\begin{attention}[« uma » : une unité qui n'est pas celle de la masse molaire]
+On rencontre parfois l'\textbf{unité de masse atomique} (uma, ou u), définie comme $\frac{1}{12}$ de
+la masse d'un atome de $\ce{^{12}C}$ : la masse d'\emph{un} atome peut s'exprimer en uma. Mais
+\textbf{la masse molaire, elle, ne s'exprime jamais en uma} : son unité est le
+\textbf{gramme par mole} (\si{\gram\per\mole}). Confondre les deux est une erreur classique.
+\end{attention}
+
+\subsection{De la masse atomique relative à la masse molaire}
+
+\begin{definition}[masse molaire]
+La \textbf{masse molaire} $M$ d'une substance est la \textbf{masse d'une mole} de cette substance.
+Elle s'exprime en \textbf{grammes par mole} (\si{\gram\per\mole}).
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Masse molaire atomique} : masse d'une mole d'atomes d'un élément. Numériquement, elle
+        est \emph{égale à la masse atomique relative}, mais exprimée en \si{\gram\per\mole}. Ainsi
+        $A_r(\ce{O}) = 16 \Rightarrow M(\ce{O}) = \SI{16}{\gram\per\mole}$.
+  \item \textbf{Masse molaire moléculaire} : masse d'une mole de molécules. On l'obtient en
+        \textbf{additionnant les masses molaires atomiques} de tous les atomes de la formule.
+\end{itemize}
+\end{definition}
+
+\noindent
+C'est ici qu'intervient la cellule du tableau périodique. Pour chaque élément, on y lit le symbole,
+le numéro atomique $Z$ (nombre de protons) et le nombre de masse / la masse atomique relative :
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % cellule
+  \draw[primary,line width=1.2pt,rounded corners=3pt,fill=primary!7] (0,0) rectangle (3.0,3.0);
+  \node[font=\Huge\bfseries,primarydark] at (1.5,1.45) {O};
+  \node[anchor=west,font=\footnotesize] at (0.15,2.65) {$\overset{\text{nombre de}}{\text{masse}}\ \to$};
+  \node[font=\small,primarydark] at (2.55,2.62) {16};
+  \node[anchor=west,font=\footnotesize] at (0.15,0.55) {$Z=8$};
+  \node[font=\footnotesize] at (1.5,0.22) {oxygène};
+  % légende à droite
+  \node[anchor=west,font=\footnotesize,align=left] at (3.6,2.3)
+     {$A_r(\ce{O}) = 16$ \ (sans unité)};
+  \node[anchor=west,font=\footnotesize,align=left] at (3.6,1.5)
+     {$\Downarrow$ \ \emph{même nombre,}};
+  \node[anchor=west,font=\footnotesize,align=left] at (3.6,0.9)
+     {\emph{on change d'unité}};
+  \node[anchor=west,font=\footnotesize\bfseries,align=left,formulacol] at (3.6,0.2)
+     {$M(\ce{O}) = \SI{16}{\gram\per\mole}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[masse molaire d'un composé]
+La masse molaire d'une molécule (ou d'un composé) est la somme des masses molaires atomiques de tous
+les atomes qui la composent :
+\[ \boxed{\,M(\text{composé}) = \sum_i \nu_i \, M(\text{élément}_i)\,} \]
+\begin{ou}
+  \item $M(\text{composé})$ : masse molaire de la molécule, en \si{\gram\per\mole} ;
+  \item $\nu_i$ : nombre d'atomes de l'élément $i$ dans la formule (indice de la formule brute), sans unité ;
+  \item $M(\text{élément}_i)$ : masse molaire atomique de l'élément $i$, en \si{\gram\per\mole}.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[masse molaire de l'eau \ce{H2O}]
+On donne $M(\ce{H}) = \SI{1}{\gram\per\mole}$ et $M(\ce{O}) = \SI{16}{\gram\per\mole}$. La molécule
+d'eau contient $2$ atomes d'hydrogène et $1$ atome d'oxygène :
+\[ M(\ce{H2O}) = 2\times M(\ce{H}) + 1\times M(\ce{O}) = 2\times 1 + 16 = \SI{18}{\gram\per\mole}. \]
+\[ \boxed{M(\ce{H2O}) = \SI{18}{\gram\per\mole}} \]
+Une mole d'eau (soit $6{,}02\times10^{23}$ molécules) pèse donc $\SI{18}{\gram}$ : c'est environ le
+contenu d'une petite gorgée d'eau.
+\end{exemple}
+
+\begin{exemple}[masse molaire de l'hydrogénosulfite de sodium \ce{NaHSO3} et pourcentage massique]
+\textbf{Énoncé.} On donne $M(\ce{Na})=23$, $M(\ce{H})=1$, $M(\ce{S})=32$ et $M(\ce{O})=16$
+(en \si{\gram\per\mole}). Calculer $M(\ce{NaHSO3})$, puis le \emph{pourcentage massique} d'oxygène
+dans cette molécule.
+
+\smallskip
+\textbf{Étape 1 — masse molaire.} On additionne, atome par atome :
+\[ M(\ce{NaHSO3}) = \underbrace{23}_{\ce{Na}} + \underbrace{1}_{\ce{H}} + \underbrace{32}_{\ce{S}}
+   + \underbrace{3\times 16}_{3\,\ce{O}} = 23+1+32+48 = \SI{104}{\gram\per\mole}. \]
+
+\textbf{Étape 2 — pourcentage massique de l'oxygène.} Le pourcentage massique d'un élément est la
+part de la masse molaire due à cet élément :
+\[ \%\,\ce{O} = \frac{\text{masse de l'oxygène dans 1 mol}}{\text{masse molaire totale}}\times 100
+   = \frac{3\times 16}{104}\times 100 = \frac{48}{104}\times 100. \]
+\[ \boxed{\%\,\ce{O} = \frac{48}{104}\times 100 \approx 46{,}2\,\%} \]
+On peut aussi l'écrire de façon équivalente
+$\%\,\ce{O} = 100 - 100\times\left(\frac{23}{104}+\frac{1}{104}+\frac{32}{104}\right)$, c'est-à-dire
+« $100\%$ moins la part de tous les \emph{autres} atomes » : les deux écritures donnent le même résultat.
+\end{exemple}
+
+\subsection{La relation centrale : masse $\leftrightarrow$ quantité de matière}
+
+\begin{formule}[quantité de matière à partir de la masse]
+\[ \boxed{\,n = \dfrac{m}{M}\,}\qquad\Longleftrightarrow\qquad m = n\times M \]
+\begin{ou}
+  \item $n$ : quantité de matière, en moles (\si{\mole}) ;
+  \item $m$ : masse de l'échantillon, en grammes (\si{\gram}) ;
+  \item $M$ : masse molaire de la substance, en grammes par mole (\si{\gram\per\mole}).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[une formule, une analyse dimensionnelle]
+La cohérence des unités confirme la formule : $\dfrac{m}{M} = \dfrac{\si{\gram}}{\si{\gram\per\mole}}
+= \si{\gram}\times\dfrac{\si{\mole}}{\si{\gram}} = \si{\mole}$. On retrouve bien des moles. Cette
+vérification rapide (« est-ce que mes unités donnent bien des moles ? ») évite la plupart des
+inversions $\times M$ / $\div M$.
+\end{remarque}
+
+\begin{exemple}[de la masse à la quantité de matière]
+\textbf{Énoncé.} Quelle quantité de matière représente $\SI{36}{\gram}$ d'eau ?
+($M(\ce{H2O}) = \SI{18}{\gram\per\mole}$.)
+
+\smallskip
+On part d'une masse et l'on veut des moles : on \emph{divise} par $M$.
+\[ n = \frac{m}{M} = \frac{36}{18} = \SI{2.00}{\mole}. \]
+\[ \boxed{n(\ce{H2O}) = \SI{2.00}{\mole}} \]
+Ces $\SI{36}{\gram}$ d'eau contiennent donc $2{,}00\times 6{,}02\times10^{23} = 1{,}204\times10^{24}$
+molécules — on enchaîne ici les deux conversions vues jusqu'ici : $m\xrightarrow{\div M} n
+\xrightarrow{\times\NA} N$.
+\end{exemple}
+
+\begin{exemple}[de la quantité de matière à la masse]
+\textbf{Énoncé.} Quelle est la masse de $\SI{0.25}{\mole}$ de glucose \ce{C6H12O6} ?
+On donne $M(\ce{C})=12$, $M(\ce{H})=1$, $M(\ce{O})=16\ \si{\gram\per\mole}$.
+
+\smallskip
+\textbf{Étape 1 — masse molaire du glucose.}
+\[ M(\ce{C6H12O6}) = 6\times 12 + 12\times 1 + 6\times 16 = 72 + 12 + 96 = \SI{180}{\gram\per\mole}. \]
+\textbf{Étape 2 — masse.} On part des moles et l'on veut une masse : on \emph{multiplie} par $M$.
+\[ m = n\times M = 0{,}25 \times 180 = \SI{45}{\gram}. \]
+\[ \boxed{m = \SI{45}{\gram}} \]
+\end{exemple}
+
+% =====================================================================
+\section{La masse volumique et la densité}
+% =====================================================================
+Pour les liquides et les solutions, on ne pèse pas toujours : on mesure souvent un \emph{volume}.
+Le pont entre masse et volume est la \textbf{masse volumique}.
+
+\begin{definition}[masse volumique]
+La \textbf{masse volumique} $\rho$ (lettre grecque « rho ») d'un corps est la masse d'une unité de
+volume de ce corps. Elle \emph{caractérise} la matière (l'eau, le mercure, une solution donnée\ldots).
+\end{definition}
+
+\begin{formule}[masse volumique]
+\[ \boxed{\,\rho = \dfrac{m}{V}\,}\qquad\Longleftrightarrow\qquad m = \rho\, V \]
+\begin{ou}
+  \item $\rho$ : masse volumique, en \si{\gram\per\milli\litre}, \si{\gram\per\cubic\centi\metre} ou
+        \si{\kilo\gram\per\cubic\metre} (ces deux premières unités sont identiques : $\SI{1}{\milli\litre}=\SI{1}{\cubic\centi\metre}$) ;
+  \item $m$ : masse de l'échantillon, en grammes (\si{\gram}) ;
+  \item $V$ : volume occupé, en millilitres (\si{\milli\litre}) ou litres (\si{\litre}).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[traduire une masse volumique en « phrase »]
+Dire que $\rho = x\,\si{\gram\per\milli\litre}$ \textbf{revient à dire} que :
+\[ \text{\og }\SI{1}{\milli\litre}\text{ de solution pèse } x\ \text{g\fg{}}\qquad\text{ou encore}\qquad
+   \text{\og }\SI{1}{\litre}\text{ de solution pèse } 1000\times x\ \text{g\fg{}.} \]
+Cette traduction est l'\textbf{astuce numéro~1} des exercices sur les solutions concentrées :
+on part toujours « d'un litre de solution » dont on connaît alors la masse totale.
+\end{remarque}
+
+\begin{definition}[densité]
+La \textbf{densité} $d$ d'un corps est le rapport de sa masse volumique à celle d'un corps de
+référence (l'\emph{eau} pour les liquides et solides, à $\SI{4}{\celsius}$) :
+\[ d = \frac{\rho_{\text{corps}}}{\rho_{\text{eau}}}, \qquad \rho_{\text{eau}} = \SI{1}{\gram\per\milli\litre}. \]
+La densité est un \textbf{nombre sans unité}. Comme $\rho_{\text{eau}} = \SI{1}{\gram\per\milli\litre}$,
+la densité d'un liquide a \emph{la même valeur} que sa masse volumique exprimée en \si{\gram\per\milli\litre}
+(par exemple, densité $0{,}8$ $\Leftrightarrow$ $\rho = \SI{0.8}{\gram\per\milli\litre}$).
+\end{definition}
+
+\begin{exemple}[comparer deux liquides : méthanol et eau]
+\textbf{Énoncé.} À $\SI{4}{\celsius}$, le méthanol \ce{CH3OH} a une densité $0{,}8$ et l'eau une
+densité $1$. On donne $M(\ce{CH3OH}) = \SI{32}{\gram\per\mole}$ et $M(\ce{H2O}) = \SI{18}{\gram\per\mole}$.
+Comparons un même volume des deux liquides.
+
+\smallskip
+\textbf{(a) Quel liquide est le plus lourd à volume égal ?} La densité du méthanol ($0{,}8$) est
+\emph{inférieure} à celle de l'eau ($1$). Donc $\SI{1}{\gram}$ de méthanol occupe \emph{plus} de
+volume que $\SI{1}{\gram}$ d'eau ; et à volume égal, le méthanol est \emph{plus léger}. Autrement
+dit, $\SI{1}{\gram}$ de méthanol « pèse plus lourd que $\SI{0.8}{\gram}$ d'eau » est \textbf{faux}
+sur le volume mais l'affirmation se vérifie en repassant par les volumes — d'où l'intérêt de toujours
+revenir aux définitions $\rho = m/V$.
+
+\smallskip
+\textbf{(b) Nombre de moles dans $\SI{100}{\milli\litre}$ de méthanol.}
+\[ m = \rho\,V = 0{,}8 \times 100 = \SI{80}{\gram} \ \text{de méthanol}, \qquad
+   n = \frac{m}{M} = \frac{80}{32} = \SI{2.5}{\mole}. \]
+Or $\SI{80}{\gram}$ d'eau donnent $n = \frac{80}{18} \approx \SI{4.44}{\mole}$ : à \emph{masse} égale,
+l'eau (plus légère molécule par molécule) fournit \emph{plus} de moles que le méthanol.
+
+\smallskip
+Cet exemple montre la chaîne complète des conversions pour un liquide :
+\[ V \ \xrightarrow{\ \times\,\rho\ }\ m \ \xrightarrow{\ \div\,M\ }\ n
+   \ \xrightarrow{\ \times\,\NA\ }\ N. \]
+\end{exemple}
+
+% =====================================================================
+\section{Les concentrations}
+% =====================================================================
+Une \textbf{solution} est obtenue en dissolvant un \textbf{soluté} (le composé que l'on dissout) dans
+un \textbf{solvant} (le plus souvent l'eau). La \textbf{concentration} mesure « combien de soluté »
+se trouve dans un volume donné de solution. Il en existe deux variantes, qu'il ne faut surtout pas
+confondre car \emph{elles n'ont pas la même unité}.
+
+\subsection{Concentration molaire (molarité)}
+
+\begin{definition}[concentration molaire]
+La \textbf{concentration molaire} (ou \textbf{molarité}) $C$ d'un soluté est la \emph{quantité de
+matière} de soluté dissoute par litre de solution.
+\end{definition}
+
+\begin{formule}[concentration molaire]
+\[ \boxed{\,C = \dfrac{n}{V}\,}\qquad\Longleftrightarrow\qquad n = C\times V \]
+\begin{ou}
+  \item $C$ : concentration molaire, en moles par litre (\si{\mole\per\litre}), aussi notée \textbf{M} (\og molaire\fg{}) ;
+  \item $n$ : quantité de matière de soluté \emph{dissous}, en moles (\si{\mole}) ;
+  \item $V$ : volume \emph{de la solution} (et non du solvant seul), en litres (\si{\litre}).
+\end{ou}
+On note souvent la concentration d'une espèce \ce{X} entre crochets : $[\ce{X}]$.
+\end{formule}
+
+\begin{attention}[« M », « molaire » et le piège de l'énoncé]
+$\SI{1}{\Molar} = \SI{1}{\mole\per\litre}$ : le symbole \textbf{M} (\og molaire\fg{}) est seulement
+une autre écriture de \si{\mole\per\litre}. Une solution \og $1{,}50$~M en \ce{HClO4} \fg{} contient
+donc $\SI{1.50}{\mole}$ de \ce{HClO4} par litre. Ne pas confondre ce \textbf{M} (unité, molaire) avec
+le \emph{M} masse molaire : le contexte les distingue toujours.
+\end{attention}
+
+\subsection{Concentration massique}
+
+\begin{definition}[concentration massique]
+La \textbf{concentration massique} $C_m$ d'un soluté est la \emph{masse} de soluté dissoute par
+litre de solution.
+\end{definition}
+
+\begin{formule}[concentration massique]
+\[ \boxed{\,C_m = \dfrac{m}{V}\,}\qquad\Longleftrightarrow\qquad m = C_m\times V \]
+\begin{ou}
+  \item $C_m$ : concentration massique, en grammes par litre (\si{\gram\per\litre}) ;
+  \item $m$ : masse de soluté \emph{dissous}, en grammes (\si{\gram}) ;
+  \item $V$ : volume de la solution, en litres (\si{\litre}).
+\end{ou}
+\end{formule}
+
+\begin{attention}[ne pas confondre les deux concentrations]
+La concentration \textbf{massique} s'exprime en \si{\gram\per\litre} ; la concentration
+\textbf{molaire} (molarité) s'exprime en \si{\mole\per\litre} (M). Affirmer que « la concentration
+massique s'exprime en \si{\mole\per\litre} ou en M » est \textbf{faux}. De même, $C_m$ et $\rho$ se
+ressemblent (toutes deux en g par unité de volume) mais sont différentes : $\rho$ rapporte la masse
+\emph{totale} de la solution à son volume, alors que $C_m$ rapporte la seule masse \emph{du soluté}.
+\end{attention}
+
+\begin{formule}[lien entre les deux concentrations]
+En divisant la quantité de matière par le volume dans $n = m/M$, on relie directement les deux
+concentrations par la masse molaire :
+\[ \boxed{\,C_m = C \times M\,}\qquad\Longleftrightarrow\qquad C = \dfrac{C_m}{M} \]
+\begin{ou}
+  \item $C_m$ : concentration massique, en \si{\gram\per\litre} ;
+  \item $C$ : concentration molaire (molarité), en \si{\mole\per\litre} ;
+  \item $M$ : masse molaire du soluté, en \si{\gram\per\mole}.
+\end{ou}
+\textbf{Vérification dimensionnelle :} $C\times M = \si{\mole\per\litre}\times\si{\gram\per\mole}
+= \si{\gram\per\litre}$. Cohérent.
+\end{formule}
+
+\begin{exemple}[concentration massique du bromure de sodium \ce{NaBr}]
+\textbf{Énoncé.} Une solution aqueuse contient $\SI{10.29}{\gram}$ de \ce{NaBr} par litre de solution.
+Quelle est sa concentration massique ? (Donnée : $M(\ce{NaBr}) = \SI{102.9}{\gram\per\mole}$.)
+
+\smallskip
+La concentration massique se lit \emph{directement} : c'est la masse de soluté par litre.
+\[ C_m = \frac{m}{V} = \frac{10{,}29}{1} = \SI{10.29}{\gram\per\litre}. \]
+\[ \boxed{C_m(\ce{NaBr}) = \SI{10.29}{\gram\per\litre}} \]
+\textbf{Le piège :} si l'on propose des réponses en \si{\mole\per\litre}, aucune ne convient, car la
+question demande une concentration \emph{massique} (en \si{\gram\per\litre}). Pour information, la
+molarité correspondante vaudrait $C = \dfrac{C_m}{M} = \dfrac{10{,}29}{102{,}9} = \SI{0.100}{\mole\per\litre}$.
+\end{exemple}
+
+\begin{exemple}[reconnaître la solution la plus concentrée]\label{ex:hcl}
+\textbf{Énoncé.} On dispose de quatre solutions de chlorure d'hydrogène \ce{HCl}
+($M(\ce{HCl}) = \SI{36.46}{\gram\per\mole}$). Laquelle est la plus concentrée (en molarité) ?
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item[(A)] $\SI{72.92}{\gram}$ de \ce{HCl} dissous dans $\SI{2}{\litre}$ d'eau ;
+  \item[(B)] $\SI{2}{\mole}$ de \ce{HCl} dissoutes dans $\SI{3}{\litre}$ d'eau ;
+  \item[(C)] $\SI{2}{\mole}$ de \ce{HCl} ajoutées à $\SI{1}{\litre}$ d'une solution \emph{molaire} de \ce{HCl} (donc $\SI{1}{\mole}$ déjà présente) ;
+  \item[(D)] $\SI{7.5}{\mole}$ de \ce{HCl} dissoutes dans $\SI{3}{\litre}$ d'eau.
+\end{itemize}
+
+\smallskip
+\textbf{Méthode :} on ramène tout à la \emph{molarité} $C = n/V$. Pour (A), il faut d'abord convertir
+la masse en moles.
+\[ \text{(A)}\quad n = \frac{72{,}92}{36{,}46} = \SI{2}{\mole}\ \Rightarrow\ C = \frac{2}{2} = \SI{1.00}{\Molar}. \]
+\[ \text{(B)}\quad C = \frac{2}{3} = \SI{0.667}{\Molar}. \qquad
+   \text{(D)}\quad C = \frac{7{,}5}{3} = \SI{2.50}{\Molar}. \]
+\[ \text{(C)}\quad n_{\text{total}} = 1 + 2 = \SI{3}{\mole}\ \text{dans}\ \SI{1}{\litre}\ \Rightarrow\
+   C = \frac{3}{1} = \SI{3.00}{\Molar}. \]
+\[ \boxed{\text{La plus concentrée est (C), à } \SI{3.00}{\Molar}.} \]
+\textbf{Le point délicat} est la solution (C) : on ajoute le soluté à une solution \emph{qui en
+contient déjà}, il faut donc \emph{cumuler} les quantités de matière avant de diviser par le volume.
+\end{exemple}
+
+% =====================================================================
+\section{Le cas des gaz : le volume molaire}
+% =====================================================================
+Pour un \textbf{gaz}, il existe un raccourci remarquable : à température et pression fixées,
+\textbf{une mole de n'importe quel gaz parfait occupe toujours le même volume}, quelle que soit la
+nature du gaz. Ce volume s'appelle le \textbf{volume molaire}.
+
+\begin{definition}[volume molaire d'un gaz parfait]
+Le \textbf{volume molaire} $V_m$ est le volume occupé par une mole de gaz dans des conditions de
+température et de pression données. Sa valeur dépend de ces conditions :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item aux \textbf{CNTP} (Conditions Normales de Température et de Pression : $\SI{0}{\celsius}$ et
+        $\SI{1}{\atm}$) : $\;V_m = \SI{22.4}{\litre\per\mole}$ ;
+  \item dans les \textbf{conditions standard} ($\SI{25}{\celsius}$ et $\SI{1}{\bar}$) :
+        $\;V_m \approx \SI{24.4}{\litre\per\mole}$.
+\end{itemize}
+\end{definition}
+
+\begin{attention}[CNTP $\neq$ conditions standard]
+La valeur célèbre $\SI{22.4}{\litre\per\mole}$ n'est valable qu'aux \textbf{CNTP}
+($\SI{0}{\celsius}$). Affirmer qu'« à $\SI{25}{\celsius}$ une mole de gaz parfait occupe
+$\SI{22.4}{\litre}$ » est \textbf{faux} : à $\SI{25}{\celsius}$ le gaz s'est dilaté et le volume
+molaire vaut environ $\SI{24.4}{\litre\per\mole}$. Toujours vérifier les conditions données par
+l'énoncé avant d'utiliser $\SI{22.4}{\litre\per\mole}$.
+\end{attention}
+
+\begin{formule}[volume d'un gaz $\leftrightarrow$ quantité de matière]
+\[ \boxed{\,V = n\times V_m\,}\qquad\Longleftrightarrow\qquad n = \dfrac{V}{V_m} \]
+\begin{ou}
+  \item $V$ : volume du gaz, en litres (\si{\litre}) ;
+  \item $n$ : quantité de matière de gaz, en moles (\si{\mole}) ;
+  \item $V_m$ : volume molaire, en litres par mole (\si{\litre\per\mole}) — soit $\SI{22.4}{\litre\per\mole}$ aux CNTP.
+\end{ou}
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % cube de gaz (perspective simple)
+  \def\s{2.6}
+  \fill[gazcol!25] (0,0) rectangle (\s,\s);
+  \draw[gazcol!70!black,line width=1pt] (0,0) rectangle (\s,\s);
+  % face supérieure et latérale (3D)
+  \fill[gazcol!40] (0,\s) -- (0.7,\s+0.7) -- (\s+0.7,\s+0.7) -- (\s,\s) -- cycle;
+  \fill[gazcol!15] (\s,0) -- (\s+0.7,0.7) -- (\s+0.7,\s+0.7) -- (\s,\s) -- cycle;
+  \draw[gazcol!70!black,line width=1pt] (0,\s) -- (0.7,\s+0.7) -- (\s+0.7,\s+0.7) -- (\s,\s);
+  \draw[gazcol!70!black,line width=1pt] (\s,0) -- (\s+0.7,0.7) -- (\s+0.7,\s+0.7);
+  % molécules de gaz
+  \foreach \p in {(0.6,0.7),(1.6,1.9),(2.1,0.6),(1.0,2.0),(2.0,2.1),(1.3,1.0),(0.5,1.7)}{
+     \fill[gazcol!60!black] \p circle (0.08);}
+  \node[font=\footnotesize\bfseries,gazcol!50!black] at (\s/2,-0.45) {$V_m = \SI{22.4}{\litre}$ (aux CNTP)};
+  % légende
+  \node[anchor=west,font=\footnotesize,align=left] at (\s+1.2,\s/2+0.4)
+     {\textbf{1 mole} de \emph{n'importe quel}\\ gaz parfait};
+  \node[anchor=west,font=\footnotesize,align=left] at (\s+1.2,\s/2-0.4)
+     {$= 6{,}02\times10^{23}$ molécules\\ $\Rightarrow \SI{22.4}{\litre}$ aux CNTP};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[volume d'un gaz aux CNTP]
+\textbf{Énoncé.} Quel volume occupent, aux CNTP, $\SI{0.250}{\mole}$ de dioxyde de carbone \ce{CO2} ?
+
+\smallskip
+On part des moles et l'on veut un volume de gaz : on \emph{multiplie} par $V_m$.
+\[ V = n\times V_m = 0{,}250 \times 22{,}4 = \SI{5.60}{\litre}. \]
+\[ \boxed{V = \SI{5.60}{\litre}} \]
+Remarquons que la \emph{nature} du gaz n'intervient pas : $\SI{0.250}{\mole}$ de \ce{H2}, de \ce{O2}
+ou de \ce{CO2} occuperaient \emph{le même} volume de $\SI{5.60}{\litre}$ aux CNTP. C'est toute la
+force du volume molaire.
+\end{exemple}
+
+% =====================================================================
+\section{Le tableau de synthèse : la « carte » des conversions}\label{sec:synthese}
+% =====================================================================
+Toutes les grandeurs et toutes les formules vues jusqu'ici se rangent dans un \textbf{unique schéma},
+véritable carte routière des conversions. Au centre trône la \textbf{quantité de matière} $n$ (en
+moles) : c'est le carrefour obligé. Pour passer d'une case à l'autre, on suit une flèche et on
+applique l'opération indiquée ($\times M$, $\div V$, $\times\NA$\ldots).
+
+\begin{center}
+\begin{tikzpicture}[
+   box/.style={draw,rounded corners=3pt,align=center,font=\footnotesize,
+               minimum height=1.05cm,minimum width=2.9cm,line width=0.9pt},
+   massb/.style={box,draw=formulacol,fill=formulacol!8},
+   molb/.style={box,draw=thmcol,fill=thmcol!8},
+   concb/.style={box,draw=primary,fill=primary!10},
+   gasb/.style={box,draw=gazcol!60!black,fill=gazcol!18},
+   entb/.style={box,draw=remarkcol,fill=remarkcol!10},
+   op/.style={font=\scriptsize,inner sep=1.5pt},
+   fl/.style={-{Stealth[length=2.2mm]},line width=0.9pt},
+   scale=1.0]
+
+  % --- positions des cases ---
+  \node[concb] (cmass) at (0,3.2)  {Concentration\\ massique\\ ($\si{\gram\per\litre}$)};
+  \node[massb] (masse) at (5.2,3.2) {Masse\\ ($\si{\gram}$)};
+  \node[concb] (cmol)  at (0,0)    {Concentration\\ molaire\\ ($\si{\mole\per\litre}$ ou M)};
+  \node[molb]  (qte)   at (5.2,0)  {Quantité\\ de matière\\ ($\si{\mole}$)};
+  \node[gasb]  (vol)   at (10.0,0) {Volume\\ (si \emph{gaz})\\ ($\si{\litre}$)};
+  \node[entb]  (ent)   at (5.2,-3.0) {Nombre\\ d'entités};
+
+  % --- liens horizontaux haut : conc massique <-> masse ---
+  \draw[fl] ([yshift=4pt]masse.west) -- node[op,above]{$\div V\,(\si{\litre})$} ([yshift=4pt]cmass.east);
+  \draw[fl] ([yshift=-6pt]cmass.east) -- node[op,below]{$\times V\,(\si{\litre})$} ([yshift=-6pt]masse.west);
+
+  % --- liens verticaux gauche : conc massique <-> conc molaire ---
+  \draw[fl] ([xshift=-6pt]cmass.south) -- node[op,left]{$\div M$} ([xshift=-6pt]cmol.north);
+  \draw[fl] ([xshift=8pt]cmol.north) -- node[op,right]{$\times M$} ([xshift=8pt]cmass.south);
+
+  % --- liens verticaux droite : masse <-> quantité ---
+  \draw[fl] ([xshift=-8pt]masse.south) -- node[op,left]{$\div M$} ([xshift=-8pt]qte.north);
+  \draw[fl] ([xshift=8pt]qte.north) -- node[op,right]{$\times M$} ([xshift=8pt]masse.south);
+
+  % --- liens horizontaux bas : conc molaire <-> quantité ---
+  \draw[fl] ([yshift=4pt]qte.west) -- node[op,above]{$\div V\,(\si{\litre})$} ([yshift=4pt]cmol.east);
+  \draw[fl] ([yshift=-6pt]cmol.east) -- node[op,below]{$\times V\,(\si{\litre})$} ([yshift=-6pt]qte.west);
+
+  % --- quantité <-> volume gaz ---
+  \draw[fl] ([yshift=4pt]qte.east) -- node[op,above,align=center]{$\times 22{,}4$\\ \scriptsize si gaz, CNTP} ([yshift=4pt]vol.west);
+  \draw[fl] ([yshift=-8pt]vol.west) -- node[op,below]{$\div 22{,}4$} ([yshift=-8pt]qte.east);
+
+  % --- quantité <-> nombre d'entités ---
+  \draw[fl] ([xshift=-8pt]qte.south) -- node[op,left,align=right]{$\times 6{,}02\cdot10^{23}$} ([xshift=-8pt]ent.north);
+  \draw[fl] ([xshift=10pt]ent.north) -- node[op,right]{$\div 6{,}02\cdot10^{23}$} ([xshift=10pt]qte.south);
+
+  % --- masse volumique (annotation sur conc massique <-> masse, via solution) ---
+  \node[op,formulacol,align=center] at (2.6,4.35) {\emph{masse volumique} $\rho$ :};
+  \node[op,align=center] at (2.6,3.95) {$\SI{1}{\litre}$ de solution pèse $1000\rho$ g};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[lire le tableau de synthèse en 3 réflexes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Repérer le départ et l'arrivée} parmi les cases (qu'est-ce que je connais ? qu'est-ce
+        que je cherche ?).
+  \item \textbf{Tracer le chemin} de case en case, en passant par la \emph{Quantité de matière}
+        (centre) si nécessaire.
+  \item \textbf{Appliquer les opérations} rencontrées le long des flèches, dans l'ordre. Le sens de
+        la flèche donne le sens de l'opération ($\times$ ou $\div$).
+\end{enumerate}
+\end{methode}
+
+\begin{remarque}[les six conversions à mémoriser]
+Tout le tableau se résume à six paires d'opérations réciproques :
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{ll}
+\toprule
+\textbf{Passage} & \textbf{Opération (et réciproque)} \\
+\midrule
+masse $\to$ quantité & $\div M$ \quad($\times M$ en sens inverse) \\
+quantité $\to$ nombre d'entités & $\times \NA$ \quad($\div\NA$) \\
+quantité $\to$ volume de gaz (CNTP) & $\times\SI{22.4}{\litre\per\mole}$ \quad($\div 22{,}4$) \\
+quantité $\to$ concentration molaire & $\div V$ \quad($\times V$) \\
+masse $\to$ concentration massique & $\div V$ \quad($\times V$) \\
+concentration molaire $\to$ massique & $\times M$ \quad($\div M$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{remarque}
+
+\begin{exemple}[un parcours complet dans le tableau]
+\textbf{Énoncé.} On veut connaître le \emph{nombre de molécules} contenues dans $\SI{250}{\milli\litre}$
+d'une solution de glucose \ce{C6H12O6} de concentration massique $C_m = \SI{18}{\gram\per\litre}$.
+($M(\ce{C6H12O6}) = \SI{180}{\gram\per\mole}$.)
+
+\smallskip
+Le chemin dans le tableau est : \emph{concentration massique} $\to$ \emph{masse} $\to$ \emph{quantité}
+$\to$ \emph{nombre d'entités}.
+\[ \text{(1)}\quad m = C_m\times V = 18 \times 0{,}250 = \SI{4.5}{\gram}, \]
+\[ \text{(2)}\quad n = \frac{m}{M} = \frac{4{,}5}{180} = \SI{0.025}{\mole}, \]
+\[ \text{(3)}\quad N = n\times\NA = 0{,}025 \times 6{,}02\times10^{23} \approx 1{,}51\times10^{22}\ \text{molécules}. \]
+\[ \boxed{N \approx 1{,}51\times10^{22}\ \text{molécules de glucose}} \]
+On aurait aussi pu emprunter le raccourci \emph{concentration massique} $\to$ \emph{concentration
+molaire} ($\div M$) puis $\times V$ : $C = 18/180 = \SI{0.10}{\mole\per\litre}$, $n = 0{,}10\times0{,}250
+= \SI{0.025}{\mole}$ — même résultat. \emph{Plusieurs chemins, une seule destination.}
+\end{exemple}
+
+% =====================================================================
+\section{Dissociation des électrolytes et concentration des ions}
+% =====================================================================
+Beaucoup de solutés sont des \textbf{électrolytes} : en se dissolvant dans l'eau, ils se
+\emph{dissocient} en ions. La concentration des \emph{ions} produits n'est alors pas forcément égale
+à celle du soluté de départ : tout dépend de la \textbf{stœchiométrie} de la dissociation.
+
+\begin{definition}[électrolyte fort]
+Un \textbf{électrolyte fort} est un soluté qui, dans l'eau, se dissocie \textbf{totalement} en ions.
+Les sels solubles (comme \ce{NaCl}, \ce{CaCl2}), les acides forts (\ce{HCl}, \ce{HClO4}) et les bases
+fortes (\ce{NaOH}, \ce{Ba(OH)2}) en sont des exemples. C'est la présence de ces ions mobiles qui rend
+la solution \textbf{conductrice du courant électrique} : plus une solution est riche en ions, plus
+elle conduit. L'eau pure, très peu dissociée, conduit extrêmement mal.
+\end{definition}
+
+\begin{theoreme}[concentration des ions issus d'un électrolyte fort]
+Lors de la dissociation \emph{totale} d'un électrolyte de concentration $C$, la concentration de
+chaque ion produit est égale à $C$ \textbf{multipliée par son coefficient stœchiométrique} dans
+l'équation de dissociation. Par exemple, pour \ce{A_xB_y -> x A + y B} :
+\[ [\ce{A}] = x\,C \qquad\text{et}\qquad [\ce{B}] = y\,C. \]
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+   ion/.style={circle,inner sep=0pt,minimum size=0.62cm,font=\scriptsize\bfseries,text=white}]
+  % avant : une "unité" de CaCl2
+  \node[font=\footnotesize\bfseries] at (1.1,2.2) {avant (solide)};
+  \node[ion,fill=cation] (ca0) at (1.1,1.1) {Ca};
+  \node[ion,fill=anion] (cl1) at (0.45,0.4) {Cl};
+  \node[ion,fill=anion] (cl2) at (1.75,0.4) {Cl};
+  \draw[black!50] (ca0)--(cl1); \draw[black!50] (ca0)--(cl2);
+  \node[font=\footnotesize] at (1.1,-0.3) {1 \ce{CaCl2}};
+  % flèche dissolution
+  \draw[fl,-{Stealth[length=2.5mm]},line width=1pt,primarydark] (2.6,0.7)
+        -- node[above,font=\scriptsize]{eau} node[below,font=\scriptsize]{dissolution} (4.4,0.7);
+  % après : 1 Ca2+ et 2 Cl-
+  \node[font=\footnotesize\bfseries] at (6.6,2.2) {après (dissous)};
+  \node[ion,fill=cation] (ca1) at (5.5,1.3) {Ca};
+  \node[font=\scriptsize,cation] at (6.05,1.6) {$2{+}$};
+  \node[ion,fill=anion] (cla) at (6.6,0.2) {Cl};
+  \node[font=\scriptsize,anion] at (7.05,0.5) {$-$};
+  \node[ion,fill=anion] (clb) at (7.8,1.2) {Cl};
+  \node[font=\scriptsize,anion] at (8.25,1.5) {$-$};
+  \node[font=\footnotesize] at (6.6,-0.3) {1 \ce{Ca^2+} \ + \ 2 \ce{Cl-}};
+  % equation
+  \node[font=\small] at (4.7,-1.2) {\ce{CaCl2 ->[\ce{H2O}] Ca^2+ + 2 Cl-}};
+  \node[font=\scriptsize,align=center,primarydark] at (4.7,-1.9)
+     {pour une concentration $C$ en \ce{CaCl2} : $[\ce{Ca^2+}]=C$, $\ [\ce{Cl-}]=2C$};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[base forte : concentration en ions hydroxyde de \ce{Ba(OH)2}]
+\textbf{Énoncé.} On dissout $\SI{0.0171}{\gram}$ d'hydroxyde de baryum \ce{Ba(OH)2} dans
+$\SI{250}{\milli\litre}$ d'eau pure. Quelle est la concentration molaire en ions hydroxyde \ce{OH-} ?
+($M(\ce{Ba(OH)2}) = \SI{171}{\gram\per\mole}$.)
+
+\smallskip
+\textbf{Étape 1 — quantité de matière de soluté.}
+\[ n = \frac{m}{M} = \frac{0{,}0171}{171} = \SI{1.00e-4}{\mole}. \]
+\textbf{Étape 2 — concentration molaire du soluté.}
+\[ C = \frac{n}{V} = \frac{1{,}00\times10^{-4}}{0{,}250} = \SI{4.00e-4}{\mole\per\litre}. \]
+\textbf{Étape 3 — dissociation et concentration des ions.} Une molécule de \ce{Ba(OH)2} libère
+\emph{deux} ions hydroxyde :
+\[ \ce{Ba(OH)2 -> Ba^2+ + 2 OH-} \quad\Longrightarrow\quad [\ce{OH-}] = 2\times C. \]
+\[ [\ce{OH-}] = 2\times 4{,}00\times10^{-4} = \SI{8.00e-4}{\mole\per\litre}. \]
+\[ \boxed{[\ce{OH-}] = \SI{8.00e-4}{\mole\per\litre}} \]
+La concentration en \ce{OH-} est \emph{double} de celle du soluté : oublier le facteur $2$ donnerait
+$4{,}00\times10^{-4}$, une erreur très fréquente.
+\end{exemple}
+
+\begin{exemple}[mélange de deux sources d'un même ion]\label{ex:melange}
+\textbf{Énoncé.} Dans une fiole de $\SI{200}{\milli\litre}$, on introduit $\SI{50}{\milli\litre}$ de
+\ce{NaCl} à $\SI{1}{\Molar}$ et $\SI{150}{\milli\litre}$ de \ce{CaCl2} à $\SI{1}{\Molar}$ ; le volume
+total est $\SI{200}{\milli\litre} = \SI{0.200}{\litre}$. Quelle est la concentration en ions chlorure
+\ce{Cl-} ?
+
+\smallskip
+\textbf{Idée maîtresse :} les ions \ce{Cl-} proviennent des \emph{deux} sels ; on additionne donc les
+quantités de matière de \ce{Cl-} apportées par chacun, puis on divise par le volume \emph{total}.
+
+\smallskip
+\textbf{Source 1 — le chlorure de sodium} (\ce{NaCl -> Na+ + Cl-}, $1$ \ce{Cl-} par \ce{NaCl}) :
+\[ n_1(\ce{Cl-}) = \underbrace{0{,}050}_{V\,(\si{\litre})}\times \underbrace{1}_{C}\times \underbrace{1}_{\text{coeff.}} = \SI{0.050}{\mole}. \]
+\textbf{Source 2 — le chlorure de calcium} (\ce{CaCl2 -> Ca^2+ + 2 Cl-}, $2$ \ce{Cl-} par \ce{CaCl2}) :
+\[ n_2(\ce{Cl-}) = 0{,}150\times 1\times 2 = \SI{0.300}{\mole}. \]
+\textbf{Concentration totale en \ce{Cl-} :}
+\[ [\ce{Cl-}] = \frac{n_1+n_2}{V_{\text{total}}} = \frac{0{,}050+0{,}300}{0{,}200}
+   = \frac{0{,}350}{0{,}200} = \frac{35}{20} = \SI{1.75}{\mole\per\litre}. \]
+\[ \boxed{[\ce{Cl-}] = \SI{1.75}{\mole\per\litre}} \]
+\textbf{Les deux pièges} : (i) compter $2$ ions \ce{Cl-} par \ce{CaCl2} ; (ii) diviser par le volume
+\emph{total} ($\SI{0.200}{\litre}$), pas par les volumes initiaux.
+\end{exemple}
+
+\begin{exemple}[ions nitrate : \ce{Ba(NO3)2} vs \ce{Ca(NO3)2}]
+\textbf{Énoncé.} Une solution de volume $\SI{200}{\milli\litre}$ contient $\SI{0.050}{\mole}$ de
+nitrate de baryum \ce{Ba(NO3)2}. Quelle est la molarité en ions nitrate \ce{NO3-} ?
+
+\smallskip
+Le nitrate de baryum est un électrolyte fort : \ce{Ba(NO3)2 -> Ba^2+ + 2 NO3-}. Une mole de
+\ce{Ba(NO3)2} libère \emph{deux} moles de \ce{NO3-} :
+\[ n(\ce{NO3-}) = 2\times 0{,}050 = \SI{0.100}{\mole},\qquad
+   [\ce{NO3-}] = \frac{0{,}100}{0{,}200} = \SI{0.500}{\mole\per\litre}. \]
+\[ \boxed{[\ce{NO3-}] = \SI{0.500}{\Molar}} \]
+
+\smallskip
+\textbf{Variante instructive.} Si l'on avait écrit que la solution contient $\SI{0.050}{\mole\per\litre}$
+de \ce{Ca(NO3)2} (une \emph{concentration}, et non une \emph{quantité}), alors directement
+$[\ce{NO3-}] = 2\times 0{,}050 = \SI{0.100}{\mole\per\litre}$, \emph{sans} diviser par le volume. La
+leçon : bien distinguer une \emph{quantité} ($\si{\mole}$, qu'il faut diviser par $V$) d'une
+\emph{concentration} ($\si{\mole\per\litre}$, déjà ramenée au litre).
+\end{exemple}
+
+% =====================================================================
+\section{La dilution}
+% =====================================================================
+\textbf{Diluer} une solution, c'est lui \emph{ajouter du solvant} (en général de l'eau) sans toucher
+au soluté. On obtient une solution \emph{moins concentrée} mais de \emph{plus grand volume}. L'idée
+clé est qu'au cours de l'opération, \textbf{la quantité de matière de soluté ne change pas} : on n'a
+fait qu'ajouter de l'eau.
+
+\begin{theoreme}[conservation de la quantité de matière]
+Lors d'une dilution, la \textbf{quantité de matière de soluté est conservée}. En notant l'indice $1$
+pour la solution \emph{mère} (concentrée, avant) et $2$ pour la solution \emph{fille} (diluée, après) :
+\[ n_1 = n_2. \]
+Seuls le volume et la concentration changent ; la matière dissoute, elle, est la même.
+\end{theoreme}
+
+\begin{formule}[relation de dilution]
+En écrivant $n = C\,V$ pour chaque solution et en égalant les quantités de matière ($n_1 = n_2$) :
+\[ \boxed{\,C_1 \, V_1 = C_2 \, V_2\,} \]
+\begin{ou}
+  \item $C_1$, $V_1$ : concentration et volume \emph{prélevés} de la solution mère, en \si{\mole\per\litre} et \si{\litre} ;
+  \item $C_2$, $V_2$ : concentration et volume \emph{finals} de la solution fille (après ajout d'eau), en \si{\mole\per\litre} et \si{\litre}.
+\end{ou}
+\textbf{Conséquence :} comme on ajoute de l'eau, $V_2 > V_1$, donc $C_2 < C_1$ : on ne peut
+\emph{jamais} obtenir par dilution une solution \emph{plus} concentrée que la solution de départ.
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.92]
+  % ---- fiole 1 (mère) ----
+  \begin{scope}[shift={(0,0)}]
+    \draw[verre,line width=1.6pt] (-0.22,2.6)--(-0.22,1.3) -- (-1.1,0.1);
+    \draw[verre,line width=1.6pt] (0.22,2.6)--(0.22,1.3) -- (1.1,0.1);
+    \draw[verre,line width=1.6pt] (-1.1,0.1) arc (160:380:1.18 and 0.66);
+    \begin{scope}
+      \clip (-1.1,0.1) arc (160:380:1.18 and 0.66) -- (1.1,0.1) -- (0.22,1.3) -- (-0.22,1.3) -- cycle;
+      \fill[liquidefonce] (-1.4,-1) rectangle (1.4,1);
+      \foreach \p in {(-0.6,-0.4),(-0.1,-0.55),(0.45,-0.3),(0.0,-0.15),(-0.45,-0.7),(0.55,-0.6),(0.2,-0.65),(-0.25,-0.35)}{\fill[white] \p circle (0.055);}
+    \end{scope}
+    \node[font=\footnotesize] at (0,-1.05) {solution \textbf{mère}};
+    \node[font=\scriptsize,primarydark] at (0,-1.5) {$C_1$, on prélève $V_1$};
+  \end{scope}
+  % ---- ajout d'eau ----
+  \draw[->,>=Stealth,line width=1pt,eaucol!60!black] (1.6,0.6) -- node[above,font=\scriptsize]{$+\,\ce{H2O}$} (3.4,0.6);
+  \node[font=\scriptsize,align=center,eaucol!60!black] at (2.5,0.05) {on ajoute\\ de l'eau};
+  % ---- fiole 2 (fille) plus grande ----
+  \begin{scope}[shift={(5.8,0)}]
+    \draw[verre,line width=1.6pt] (-0.26,2.9)--(-0.26,1.5) -- (-1.5,0.0);
+    \draw[verre,line width=1.6pt] (0.26,2.9)--(0.26,1.5) -- (1.5,0.0);
+    \draw[verre,line width=1.6pt] (-1.5,0.0) arc (160:380:1.6 and 0.9);
+    \begin{scope}
+      \clip (-1.5,0.0) arc (160:380:1.6 and 0.9) -- (1.5,0.0) -- (0.26,1.5) -- (-0.26,1.5) -- cycle;
+      \fill[liquide] (-1.9,-1.3) rectangle (1.9,1.3);
+      \foreach \p in {(-0.7,-0.5),(0.2,-0.7),(0.7,-0.4),(-0.2,-0.3),(-0.9,-0.2),(0.5,-0.9)}{\fill[white] \p circle (0.055);}
+    \end{scope}
+    \node[font=\footnotesize] at (0,-1.35) {solution \textbf{fille}};
+    \node[font=\scriptsize,primarydark] at (0,-1.8) {$C_2 < C_1$, volume $V_2 > V_1$};
+  \end{scope}
+  % egalite centrale
+  \node[draw=primarydark,rounded corners=3pt,fill=primarydark!6,font=\small\bfseries] at (2.5,2.4)
+       {$C_1 V_1 = C_2 V_2$ \ (même quantité de soluté)};
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}[facteur de dilution]
+Le \textbf{facteur de dilution} $F$ est le rapport entre le volume final et le volume prélevé (ou, de
+façon équivalente, entre la concentration de départ et celle d'arrivée) :
+\[ F = \frac{V_2}{V_1} = \frac{C_1}{C_2}. \]
+« Diluer $5$ fois » signifie $F = 5$ : le volume est multiplié par $5$ et la concentration divisée
+par $5$.
+\end{definition}
+
+\begin{exemple}[préparer une solution diluée précise]\label{ex:dil}
+\textbf{Énoncé.} On dispose d'une solution mère de \ce{NaOH} à $C_1 = \SI{5.50}{\mole\per\litre}$.
+On veut préparer $V_2 = \SI{100}{\milli\litre}$ de solution à $C_2 = \SI{0.275}{\mole\per\litre}$.
+Quel volume $V_1$ de solution mère faut-il prélever, et comment procéder ?
+
+\smallskip
+\textbf{Étape 1 — volume à prélever.} D'après $C_1V_1 = C_2V_2$ :
+\[ V_1 = \frac{C_2\,V_2}{C_1} = \frac{0{,}275 \times 0{,}100}{5{,}50}
+       = \frac{0{,}0275}{5{,}50} = \SI{5.00e-3}{\litre} = \SI{5.00}{\milli\litre}. \]
+\[ \boxed{V_1 = \SI{5.00}{\milli\litre}} \]
+\textbf{Étape 2 — protocole.} On prélève \textbf{$\SI{5.00}{\milli\litre}$} de solution mère que l'on
+verse dans une fiole jaugée de $\SI{100}{\milli\litre}$, puis on \emph{complète avec de l'eau} jusqu'au
+trait de jauge (on ajoute donc environ $\SI{95.0}{\milli\litre}$ d'eau). On obtient bien
+$\SI{100}{\milli\litre}$ de solution à $\SI{0.275}{\mole\per\litre}$.
+
+\smallskip
+\textbf{Vérification.} Quantité de soluté prélevée : $n_1 = C_1V_1 = 5{,}50\times 0{,}00500
+= \SI{0.0275}{\mole}$. Quantité dans la fille : $n_2 = C_2V_2 = 0{,}275\times 0{,}100 = \SI{0.0275}{\mole}$.
+Bien $n_1 = n_2$ : la matière est conservée.
+\end{exemple}
+
+\begin{exemple}[dilution impossible : on ne concentre pas en ajoutant de l'eau]
+\textbf{Énoncé.} On dispose d'une solution mère de \ce{NaOH} à $C_1 = \SI{5.50}{\mole\per\litre}$.
+Peut-on, \emph{par dilution}, préparer $\SI{100}{\milli\litre}$ d'une solution à $\SI{11.0}{\mole\per\litre}$ ?
+
+\smallskip
+\textbf{Analyse.} La concentration souhaitée ($\SI{11.0}{\mole\per\litre}$) est \emph{supérieure} à
+celle de la solution mère ($\SI{5.50}{\mole\per\litre}$). Or une dilution \emph{abaisse} toujours la
+concentration ($C_2 < C_1$). L'opération est donc \textbf{impossible}.
+\[ \boxed{\text{Impossible : diluer ne peut pas augmenter la concentration.}} \]
+Formellement, $C_1V_1 = C_2V_2$ donnerait $V_1 = \dfrac{11{,}0\times 0{,}100}{5{,}50} = \SI{0.200}{\litre}
+= \SI{200}{\milli\litre}$ : il faudrait prélever $\SI{200}{\milli\litre}$ de mère pour préparer
+$\SI{100}{\milli\litre}$ de fille, ce qui n'a aucun sens physique.
+\end{exemple}
+
+\begin{exemple}[chaîne complète : du pourcentage massique à la solution diluée]\label{ex:naoh}
+\textbf{Énoncé.} On dispose de \ce{NaOH} à $20{,}0\%$ (masse/masse), de masse volumique
+$\rho = \SI{1.10}{\gram\per\milli\litre}$, avec $M(\ce{NaOH}) = \SI{40}{\gram\per\mole}$
+($\ce{Na}=23$, $\ce{H}=1$, $\ce{O}=16$). \textbf{(a)} Quelle est sa molarité ? \textbf{(b)} Quel
+volume prélever pour préparer $\SI{100}{\milli\litre}$ de \ce{NaOH} à $\SI{11.0}{\mole\per\litre}$ ?
+
+\smallskip
+\textbf{(a) Molarité de la solution mère.} On part « d'un litre de solution » (astuce de la masse
+volumique) :
+\[ \SI{1}{\litre}\ \text{de solution pèse}\ m_{\text{sol}} = \rho\times V = 1{,}10 \times 1000 = \SI{1100}{\gram}. \]
+La fraction $20{,}0\%$ massique donne la masse de soluté pur :
+\[ m(\ce{NaOH}) = 1100 \times \frac{20}{100} = \SI{220}{\gram}\ \xrightarrow{\ \div M\ }\
+   n = \frac{220}{40} = \SI{5.50}{\mole}. \]
+Cette quantité étant contenue dans $\SI{1}{\litre}$, la molarité vaut :
+\[ \boxed{C_1 = \SI{5.50}{\mole\per\litre}} \]
+
+\textbf{(b) Volume à prélever.} On retombe sur l'exemple précédent : préparer $\SI{11.0}{\mole\per\litre}$
+à partir de $\SI{5.50}{\mole\per\litre}$ est \textbf{impossible par dilution} (concentration voulue
+supérieure à celle de la mère). C'est l'un des intérêts de calculer d'abord la molarité de la mère :
+elle révèle aussitôt ce qui est faisable, ou non.
+\end{exemple}
+
+% =====================================================================
+\section{Fractions, pourcentages et molalité}
+% =====================================================================
+Pour décrire un \emph{mélange}, on dispose enfin de plusieurs grandeurs \og relatives \fg{} qui
+comparent un constituant à l'ensemble. Elles reviennent souvent quand une solution contient
+\textbf{plusieurs solutés} (notés $\ce{A}$, $\ce{B}$\ldots).
+
+\subsection{Fraction molaire}
+
+\begin{definition}[fraction molaire]
+La \textbf{fraction molaire} $\chi_{\ce{A}}$ (lettre grecque « chi ») d'un constituant \ce{A} est la
+part de sa quantité de matière dans la quantité de matière \emph{totale} du mélange.
+\end{definition}
+
+\begin{formule}[fraction molaire]
+\[ \boxed{\,\chi_{\ce{A}} = \dfrac{n(\ce{A})}{n(\ce{A}) + n(\ce{B}) + \cdots}\,} \]
+\begin{ou}
+  \item $\chi_{\ce{A}}$ : fraction molaire de \ce{A}, \textbf{nombre sans unité}, compris entre $0$ et $1$ ;
+  \item $n(\ce{A})$ : quantité de matière du constituant \ce{A}, en \si{\mole} ;
+  \item $n(\ce{A})+n(\ce{B})+\cdots$ : quantité de matière totale du mélange, en \si{\mole}.
+\end{ou}
+\textbf{Propriété :} la somme de toutes les fractions molaires vaut $1$ : $\chi_{\ce{A}}+\chi_{\ce{B}}+\cdots = 1$.
+\end{formule}
+
+\subsection{Fraction massique et pourcentage massique}
+
+\begin{definition}[fraction massique]
+La \textbf{fraction massique} $w_{\ce{B}}$ d'un constituant \ce{B} est la part de sa masse dans la
+masse \emph{totale} du mélange. Multipliée par $100$, elle donne le \textbf{pourcentage massique}.
+\end{definition}
+
+\begin{formule}[fraction massique]
+\[ \boxed{\,w_{\ce{B}} = \dfrac{m(\ce{B})}{m(\ce{A}) + m(\ce{B}) + \cdots}\,}\qquad
+   \%\,\text{massique de \ce{B}} = w_{\ce{B}}\times 100 \]
+\begin{ou}
+  \item $w_{\ce{B}}$ : fraction massique de \ce{B}, sans unité, entre $0$ et $1$ ;
+  \item $m(\ce{B})$ : masse du constituant \ce{B}, en \si{\gram} ;
+  \item $m(\ce{A})+m(\ce{B})+\cdots$ : masse totale du mélange, en \si{\gram}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[fraction volumique]
+On définit de la même façon une \textbf{fraction volumique} : le volume d'un constituant rapporté au
+volume total de la solution. C'est l'analogue \og en volume \fg{} des fractions molaire et massique.
+\end{remarque}
+
+\begin{exemple}[fractions molaires d'un mélange eau / glycérol]\label{ex:frac}
+\textbf{Énoncé.} Une solution de masse $\SI{128}{\gram}$ contient $\SI{36}{\gram}$ d'eau et
+$\SI{92}{\gram}$ de glycérol \ce{C3H8O3} (\ce{HOCH2-CHOH-CH2OH}). Calculer la fraction molaire de
+chaque constituant. ($\ce{H}=1$, $\ce{C}=12$, $\ce{O}=16\ \si{\gram\per\mole}$.)
+
+\smallskip
+\textbf{Étape 1 — masses molaires.}
+\[ M(\ce{H2O}) = 2(1)+16 = \SI{18}{\gram\per\mole}, \qquad
+   M(\ce{C3H8O3}) = 3(12)+8(1)+3(16) = 36+8+48 = \SI{92}{\gram\per\mole}. \]
+\textbf{Étape 2 — quantités de matière.}
+\[ n(\ce{eau}) = \frac{36}{18} = \SI{2}{\mole}, \qquad n(\text{glycérol}) = \frac{92}{92} = \SI{1}{\mole}. \]
+\textbf{Étape 3 — fractions molaires} (quantité totale $= 2+1 = \SI{3}{\mole}$) :
+\[ \chi_{\ce{eau}} = \frac{2}{3} \approx 0{,}667, \qquad \chi_{\text{glycérol}} = \frac{1}{3} \approx 0{,}333. \]
+\[ \boxed{\chi_{\ce{eau}} \approx 0{,}667 \quad ; \quad \chi_{\text{glycérol}} \approx 0{,}333} \]
+\textbf{Vérification.} $0{,}667 + 0{,}333 = 1$ : la somme des fractions molaires vaut bien $1$.
+Notons que, bien que le glycérol soit \emph{plus lourd en masse} ($\SI{92}{\gram}$ contre
+$\SI{36}{\gram}$), il est \emph{minoritaire en moles}, car ses molécules sont bien plus massives.
+\end{exemple}
+
+\subsection{Molalité}
+
+\begin{definition}[molalité]
+La \textbf{molalité} $m$ d'une solution est le nombre de moles de soluté par \textbf{kilogramme de
+solvant} (et non par litre de solution). Attention à la lettre $m$, ici employée pour la molalité.
+\end{definition}
+
+\begin{formule}[molalité]
+\[ \boxed{\,m = \dfrac{n(\text{soluté})}{m_{\text{solvant}}\ (\text{en kg})}\,} \]
+\begin{ou}
+  \item $m$ : molalité, en moles par kilogramme (\si{\mole\per\kilo\gram}) ;
+  \item $n(\text{soluté})$ : quantité de matière de soluté, en \si{\mole} ;
+  \item $m_{\text{solvant}}$ : masse de \emph{solvant} (pas la solution entière), en kilogrammes (\si{\kilo\gram}).
+\end{ou}
+\end{formule}
+
+\begin{attention}[molalité $\neq$ molarité]
+La \textbf{molarité} (concentration molaire) se rapporte au \emph{volume de solution} (\si{\mole\per\litre}) ;
+la \textbf{molalité} se rapporte à la \emph{masse de solvant} (\si{\mole\per\kilo\gram}). Définir la
+molalité comme « le nombre de moles par \emph{gramme} de solvant » est \textbf{faux} : c'est par
+\emph{kilogramme}. L'avantage de la molalité est qu'elle ne dépend pas de la température (une masse ne
+se dilate pas, contrairement à un volume).
+\end{attention}
+
+% =====================================================================
+\section{Synthèse de la Fiche 4}
+% =====================================================================
+Toutes les grandeurs de cette fiche gravitent autour de la \textbf{quantité de matière} $n$. Le
+tableau ci-dessous rassemble les définitions et formules essentielles ; la carte de la
+section~\ref{sec:synthese} en donne la version « chemins ».
+
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\rowcolors{2}{primary!5}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.5cm} >{\centering\arraybackslash}p{4.3cm} >{\raggedright\arraybackslash}p{5.3cm}}
+\rowcolor{primary!20}
+\textbf{Grandeur} & \textbf{Formule} & \textbf{Unité \& remarque} \\
+\midrule
+Nombre d'entités & $N = n\,\NA$ & sans unité ; $\NA = \SI{6.02e23}{\per\mole}$ \\
+Masse molaire & $M = \sum \nu_i M_i$ & \si{\gram\per\mole} (jamais en uma) \\
+Quantité de matière & $n = \dfrac{m}{M}$ & \si{\mole} ; le carrefour central \\
+Masse volumique & $\rho = \dfrac{m}{V}$ & \si{\gram\per\milli\litre} ; \SI{1}{\litre} pèse $1000\rho$ g \\
+Concentration molaire & $C = \dfrac{n}{V}$ & \si{\mole\per\litre} = M (molarité) \\
+Concentration massique & $C_m = \dfrac{m}{V} = C\,M$ & \si{\gram\per\litre} \\
+Volume molaire (gaz) & $V = n\,V_m$ & $V_m=\SI{22.4}{\litre\per\mole}$ aux CNTP \\
+Ions (électrolyte fort) & $[\text{ion}] = (\text{coeff.})\times C$ & ex. \ce{CaCl2}: $[\ce{Cl-}]=2C$ \\
+Dilution & $C_1V_1 = C_2V_2$ & $n$ conservée ; $C_2<C_1$ \\
+Fraction molaire & $\chi_{\ce{A}} = \dfrac{n_{\ce{A}}}{n_{\text{tot}}}$ & sans unité ; $\sum\chi = 1$ \\
+Fraction massique & $w_{\ce{B}} = \dfrac{m_{\ce{B}}}{m_{\text{tot}}}$ & $\times 100 \Rightarrow \%$ massique \\
+Molalité & $m = \dfrac{n}{m_{\text{solvant}}}$ & \si{\mole\per\kilo\gram} (par \emph{kg}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[la stratégie universelle de la Fiche 4]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Lister} ce qui est connu et ce qui est cherché, \emph{avec leurs unités}.
+  \item \textbf{Convertir} d'abord toute masse volumique / tout pourcentage en partant de
+        \og $\SI{1}{\litre}$ de solution \fg{}.
+  \item \textbf{Passer par les moles} : c'est presque toujours l'étape pivot ($n = m/M$ ou $n = CV$).
+  \item \textbf{Tenir compte de la dissociation} pour les ions (coefficient stœchiométrique).
+  \item \textbf{Conserver la quantité de matière} dans toute dilution ($C_1V_1 = C_2V_2$).
+  \item \textbf{Vérifier les unités et l'ordre de grandeur} du résultat final.
+\end{enumerate}
+\end{methode}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 4}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{La mole} compte par paquets de $\NA = 6{,}02\times10^{23}$ : $N = n\,\NA$.
+  \item \textbf{Masse molaire} $M$ en \si{\gram\per\mole} ; le lien masse–moles est $n = m/M$.
+  \item \textbf{Deux concentrations} à ne pas confondre : molaire $C$ (\si{\mole\per\litre}, M) et
+        massique $C_m$ (\si{\gram\per\litre}), reliées par $C_m = C\,M$.
+  \item \textbf{Gaz} : une mole occupe $\SI{22.4}{\litre}$ \emph{aux CNTP} ($\SI{24.4}{\litre}$ à $\SI{25}{\celsius}$).
+  \item \textbf{Électrolytes forts} : la concentration d'un ion = coefficient $\times$ concentration du sel.
+  \item \textbf{Dilution} : la quantité de soluté se conserve, $C_1V_1 = C_2V_2$, et l'on ne peut que
+        \emph{diminuer} la concentration.
+  \item \textbf{Mélanges} : fractions molaire $\chi$ et massique $w$ (sans unité), molalité par \emph{kg} de solvant.
+  \item Et surtout : \textbf{tout passe par la quantité de matière $n$} — la boussole du tableau de synthèse.
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}
+

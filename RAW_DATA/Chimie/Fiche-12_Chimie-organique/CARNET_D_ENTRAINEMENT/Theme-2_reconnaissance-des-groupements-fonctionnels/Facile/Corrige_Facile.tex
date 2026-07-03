@@ -1,0 +1,108 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 2 — Reconnaissance et classification des groupements fonctionnels
+%  NIVEAU FACILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=2em,bond length=0.9em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\newcommand{\runtitle}{Thème 2 — Facile — Corrigé}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox[auto counter]{corr}[1]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Corrigé}~\thetcbcounter\ \textmd{--- \itshape #1}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=excol,colframe=excol,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{2pt}}
+
+\begin{document}
+
+\banner{Thème 2 — Reconnaissance des groupements fonctionnels}{Niveau \textbf{Facile} — Corrigé détaillé \quad$\vert$\quad Fiche 12, Chimie organique}
+
+% ---------------------------------------------------------------------
+\begin{corr}{nommer la fonction de chaque molécule}
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{(A)} $\ce{CH3-OH}$ : O--H sur un C saturé $\Rightarrow$ \rep{alcool} (méthanol) ;
+  \item \textbf{(B)} $\ce{CH3-CO-CH3}$ : carbonyle entre deux C $\Rightarrow$ \rep{cétone} (propanone) ;
+  \item \textbf{(C)} $\ce{CH3-CHO}$ : carbonyle en bout de chaîne (porte un H) $\Rightarrow$ \rep{aldéhyde} (éthanal) ;
+  \item \textbf{(D)} $\ce{CH3-NH2}$ : azote sur C saturé, sans carbonyle $\Rightarrow$ \rep{amine} (méthylamine) ;
+  \item \textbf{(E)} $\ce{CH3-COOH}$ : carbonyle portant un O--H $\Rightarrow$ \rep{acide carboxylique} (acide éthanoïque).
+\end{itemize}
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{aldéhyde ou cétone ?}
+On regarde ce qui entoure le carbonyle $\ce{C=O}$ :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{(A)} le $\ce{C=O}$ est en \emph{bout} de chaîne : il porte un \textbf{H} d'un côté, un C de l'autre $\Rightarrow$ \rep{aldéhyde} (propanal) ;
+  \item \textbf{(B)} le $\ce{C=O}$ est encadré par \textbf{deux carbones} $\Rightarrow$ \rep{cétone} (propanone).
+\end{itemize}
+Même groupe carbonyle, deux fonctions différentes : \emph{tout est dans le voisinage}.
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{alcool ou éther ?}
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{(A)} $\ce{CH3CH2-OH}$ : l'oxygène porte un H (O--H terminal) $\Rightarrow$ \rep{alcool} (éthanol) ;
+  \item \textbf{(B)} $\ce{CH3-O-CH3}$ : l'oxygène ponte deux carbones $\Rightarrow$ \rep{éther} (diméthyléther).
+\end{itemize}
+Les deux ont la formule brute $\ce{C2H6O}$ mais des \emph{fonctions} différentes : ce sont des \rep{isomères de fonction} (mêmes atomes, propriétés chimiques très différentes).
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{amine ou amide ?}
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{(A)} $\ce{CH3-NH2}$ : l'azote est lié à un carbone \emph{saturé}, \textbf{sans} carbonyle voisin $\Rightarrow$ \rep{amine} (primaire) ;
+  \item \textbf{(B)} $\ce{CH3-CO-NH2}$ : l'azote est lié à un \textbf{carbonyle} $\ce{C=O}$ $\Rightarrow$ \rep{amide} (éthanamide).
+\end{itemize}
+La présence (ou non) d'un $\ce{C=O}$ accolé à l'azote fait toute la différence.
+\end{corr}
+
+% ---------------------------------------------------------------------
+\begin{corr}{classer un alcool (I / II / III)}
+Dans le butan-2-ol, le carbone porteur du $\ce{-OH}$ est lié à \textbf{deux} autres carbones (le $\ce{CH3}$ à sa gauche et le $\ce{CH2}$ à sa droite). Un C--OH lié à 2 autres C $\Rightarrow$ \rep{alcool secondaire}.
+\end{corr}
+
+\end{document}

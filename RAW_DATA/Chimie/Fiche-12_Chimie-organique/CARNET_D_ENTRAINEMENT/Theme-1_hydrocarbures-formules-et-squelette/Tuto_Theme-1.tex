@@ -1,0 +1,143 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 12 (Chimie organique)
+%  THÈME 1 — Hydrocarbures, formules brutes et squelette carboné
+%  TUTO   —   Compilation : pdflatex Tuto_Theme-1.tex
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\providecommand{\degree}{^\circ}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+\setchemfig{atom sep=1.9em,bond length=0.85em,cram width=2.5pt}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=1.9cm,headheight=26pt,headsep=8pt]{geometry}
+
+% ---------- Palette (mauve = section Chimie) ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+
+% ---------- En-tête / pied ----------
+\newcommand{\runtitle}{Thème 1 — Tuto}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 12} — Chimie organique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\runtitle}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{2.5pt}
+
+% ---------- Titres ----------
+\titleformat{\section}{\normalsize\bfseries\color{primarydark}}{\thesection.}{0.5em}{}
+\titlespacing{\section}{0pt}{4pt}{1pt}
+
+% ---------- Boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.8pt,arc=2pt,
+   left=2.4mm,right=2.4mm,top=1.4mm,bottom=1.4mm,fonttitle=\bfseries\small,coltitle=white,
+   toptitle=0.3mm,bottomtitle=0.3mm}}
+\newtcolorbox{defn}[1][]{boxbase,colback=defcol!5,colframe=defcol,
+   title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exmp}[1][]{boxbase,colback=excol!5,colframe=excol,
+   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+   title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=primary!7,colframe=primary,
+   title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---------- Bandeau de titre ----------
+\newcommand{\banner}[2]{%
+\begin{tcolorbox}[enhanced,colback=primary,colframe=primary,arc=5pt,boxrule=0pt,
+   left=5mm,right=5mm,top=2.5mm,bottom=2.5mm,coltext=white]
+{\large\bfseries #1}\\[1pt]{\small #2}
+\end{tcolorbox}\vspace{1pt}}
+
+\begin{document}
+
+\banner{Thème 1 — Hydrocarbures, formules brutes et squelette carboné}{%
+Tuto à lire avant les exercices — Fiche 12, Chimie organique}
+
+% =====================================================================
+\section{L'idée maîtresse : le carbone fait toujours 4 liaisons}
+Le carbone est \textbf{tétravalent} : dans \emph{toute} molécule organique, la somme des liaisons portées par un atome de C vaut \textbf{4} (une double compte pour 2, une triple pour 3). Sur un carbone qui ne fait que des liaisons simples : \textbf{nb de H $= 4 -$ (nombre de voisins C ou hétéroatomes)}. Savoir « combien de H porte tel carbone » — donc compléter chaque C jusqu'à 4 liaisons — est \emph{la} mécanique de base des QCM.
+
+% =====================================================================
+\section{Les trois familles d'hydrocarbures}
+Un \textbf{hydrocarbure} ne contient que C et H. Selon les liaisons C--C, trois familles \textbf{acycliques} (sans cycle) :
+
+\begin{center}\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{>{\bfseries\color{primarydark}}l c c X}
+\toprule
+Famille & Liaison & Formule générale & Exemple \\
+\midrule
+Alcane & simples uniquement & $\ce{C_nH_{2n+2}}$ & propane \ce{C3H8}, \chemfig{CH_3-[:30]CH_2-[:-30]CH_3} \\
+Alcène & une double C$=$C & $\ce{C_nH_{2n}}$ & éthène \ce{C2H4}, \chemfig{CH_2=[:30]CH_2} \\
+Alcyne & une triple C$\equiv$C & $\ce{C_nH_{2n-2}}$ & éthyne \ce{C2H2}, \chemfig{HC~[:30]CH} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Chaque \textbf{double} liaison retire 2 H par rapport à l'alcane, chaque \textbf{triple} en retire 4 : on passe de $2n+2$ à $2n$ puis $2n-2$.
+
+\begin{piege}[« \ce{C_nH_{2n}} » ne veut pas forcément dire alcène !]
+Un \textbf{cycloalcane} (alcane refermé en cycle, ex.\ cyclohexane \ce{C6H12}) a lui aussi la formule \ce{C_nH_{2n}} : fermer un cycle retire 2 H, comme une double liaison. Ne jamais conclure « \ce{C_nH_{2n}} donc alcène » sans regarder la structure.
+\end{piege}
+
+% =====================================================================
+\section{Le degré d'insaturation : compter liaisons multiples + cycles}
+\begin{defn}[Indice de déficience en hydrogène $I$]
+Pour $\ce{C_nH_mN_pX_q O_r}$ (X = halogène ; O sans effet) :\quad $I=\dfrac{2n+2+p-m-q}{2}$.\\
+$I$ = nombre de \textbf{liaisons $\pi$ + cycles}. Double liaison ou cycle $\to I{=}1$ ; triple $\to I{=}2$ ; noyau benzénique $\to I{=}4$ (3 doubles + 1 cycle).
+\end{defn}
+\textbf{Exemple :} \ce{C5H12} : $I=\frac{2\cdot5+2-12}{2}=0 \Rightarrow$ \textbf{alcane}.\quad \ce{C5H10} : $I=1 \Rightarrow$ un alcène \emph{ou} un cycle.\quad \ce{C5H8} : $I=2 \Rightarrow$ alcyne, diène, ou cycle + double liaison.
+
+% =====================================================================
+\section{Isomères et classification des carbones}
+Une même formule brute peut donner plusieurs \textbf{isomères de constitution} (mêmes atomes, agencement différent) : \ce{C5H12} en donne \textbf{3}. On classe chaque carbone selon le nombre \emph{d'autres carbones} auxquels il est lié :
+
+\begin{center}\renewcommand{\arraystretch}{1.05}\small
+\begin{tabular}{c c c}
+\toprule
+\textbf{Type de C} & lié à \dots\ autres C & nb de H (liaisons simples) \\
+\midrule
+primaire (I) & 1 C & 3 H ($\ce{CH3}$) \qquad secondaire (II) : 2 C, 2 H ($\ce{CH2}$) \\
+tertiaire (III) & 3 C & 1 H ($>$CH) \qquad quaternaire (IV) : 4 C, 0 H \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{astuce}[Le lien « type de C $\leftrightarrow$ nombre de H »]
+Sur un carbone saturé : \textbf{nb de H $=4-$(nb de liaisons vers d'autres C)}. Donc « un C lié à 3 H » $=$ un $\ce{CH3}$ $=$ carbone \textbf{primaire}. C'est le raccourci qui débloque les questions « combien de C sont liés à 3 H (ou 2 H) ? ».
+\end{astuce}
+
+\begin{exmp}[Le néopentane, lu « à l'envers »]
+« 4 atomes de C liés chacun à 3 H » $\Rightarrow$ \textbf{4 groupements $\ce{CH3}$} (4 carbones primaires). Le 5\up{e} carbone qui complète $\ce{C5}$ n'a plus aucun H : c'est un \textbf{carbone quaternaire}. La molécule est le \textbf{2,2-diméthylpropane} (néopentane) : \raisebox{-0.9em}{\scalebox{0.62}{\chemfig{C(-[:30]CH_3)(-[:-30]CH_3)(-[:90]CH_3)-[:-90]CH_3}}}
+\end{exmp}
+
+% =====================================================================
+\section{Écrire une molécule + réflexe de résolution}
+Quatre représentations (ex.\ butan-1-ol \ce{C4H10O}) : \textbf{brute} \ce{C4H10O} $\to$ \textbf{développée} (toutes liaisons, y compris C--H) $\to$ \textbf{semi-développée} \ce{CH3-CH2-CH2-CH2-OH} (C--H sous-entendus) $\to$ \textbf{topologique} \raisebox{-0.6em}{\scalebox{0.75}{\chemfig{CH_3-[:30]CH_2-[:-30]CH_2-[:30]CH_2-[:-30]OH}}} (zigzag ; chaque sommet/extrémité $=$ 1 C, H implicites). Le zigzag reflète la géométrie \textbf{tétraédrique} ($\approx 109{,}5\degree$) du carbone saturé.
+
+\begin{astuce}[Réflexe face à une formule brute d'hydrocarbure]
+\textbf{1.} Calculer $I=\frac{2n+2-m}{2}$. \textbf{2.} $I{=}0\Rightarrow$ alcane saturé acyclique ; $I{=}1\Rightarrow$ alcène \emph{ou} cycle ; $I{=}2\Rightarrow$ alcyne / diène / etc. \textbf{3.} Pour classer les C ou compter les H, compléter chaque carbone jusqu'à 4 liaisons.
+\end{astuce}
+
+\end{document}

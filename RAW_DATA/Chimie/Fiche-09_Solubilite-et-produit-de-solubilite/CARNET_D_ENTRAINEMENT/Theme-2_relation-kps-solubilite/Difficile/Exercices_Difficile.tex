@@ -1,0 +1,194 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 2 — Relation $\Kps \leftrightarrow s$}%
+{Exercices — Niveau Difficile}%
+{Dérivations complètes, applications médicales, sels moins classiques}
+
+\noindent\textit{Consigne : les sous-questions se construisent. Donne les valeurs numériques avec un
+ordre de grandeur cohérent.}
+\medskip
+
+\begin{exercice}[dérivation complète d'un sel $3{:}2$]
+On étudie le phosphate de calcium \ce{Ca3(PO4)2}, de produit de solubilité $\Kps=\num{1{,}3e-32}$ à
+\qty{25}{\degreeCelsius}. On note $s$ sa solubilité molaire dans l'eau pure.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item Écris l'équation de dissolution.
+  \item Complète le tableau d'avancement ci-dessous (concentrations à l'équilibre en fonction de $s$) :
+  \begin{center}
+  \begin{tikzpicture}
+    \node[anchor=north west,font=\footnotesize] at (0,0){%
+      \begin{tabular}{|l|c|c|c|}
+        \hline
+        \rowcolor{primary!15}
+         & $\ce{Ca3(PO4)2(s)}$ & $\ce{Ca^{2+}}$ & $\ce{PO4^{3-}}$\\
+        \hline
+        État initial  & excès & $0$ & $0$\\
+        \hline
+        À l'équilibre & excès & $\cdots$ & $\cdots$\\
+        \hline
+      \end{tabular}};
+  \end{tikzpicture}
+  \end{center}
+  \item En déduis l'expression de $\Kps$ en fonction de $s$.
+  \item Calcule la valeur numérique de $s$, puis de $[\ce{PO4^3-}]$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[oxalate de calcium — application médicale]
+L'oxalate de calcium \ce{CaC2O4} est le composé principal des « calculs » rénaux. Sa solubilité molaire
+vaut $s=\qty{3{,}0e-6}{\molar}$ à \qty{37}{\degreeCelsius}. On donne $M(\ce{CaC2O4})=\qty{128}{\gram\per\mole}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item Écris l'équation de dissolution et l'expression de $\Kps$ en fonction de $s$ (type $1{:}1$).
+  \item Interprète en une phrase la valeur $s=\qty{3{,}0e-6}{\molar}$ (que signifie-t-elle
+        concrètement pour \qty{1}{\litre} d'eau ?).
+  \item Quel volume $V$ d'eau pure faut-il pour dissoudre $n=\qty{6{,}0e-3}{\mole}$ (\qty{6}{mmol})
+        de ce composé ? Utilise la relation $n=s\times V$.
+  \item Calcule la solubilité massique $s_m$ (en \si{\gram\per\litre}) et commente sa très faible valeur.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[un sel des annales : l'iodate de strontium]
+On dissout de l'iodate de strontium \ce{Sr(IO3)2} dans l'eau pure. On mesure une solubilité molaire
+$s=\qty{9{,}0e-4}{\molar}$ à \qty{25}{\degreeCelsius}.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item Écris l'équation de dissolution. Quel est le rapport entre le nombre d'ions \ce{Sr^{2+}} et le
+        nombre d'ions \ce{IO3-} produits ? (compare à l'affirmation d'annales : « la solution contient
+        autant d'ions strontium que d'ions iodate »).
+  \item Exprime $[\ce{Sr^2+}]$ et $[\ce{IO3-}]$ en fonction de $s$, et donne leurs valeurs numériques.
+  \item Établis $\Kps=f(s)$ puis calcule la valeur numérique de $\Kps$.
+  \item La solution est-elle électriquement neutre ? Vérifie en comparant la charge totale des cations
+        et celle des anions.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

@@ -1,0 +1,88 @@
+% !TEX program = pdflatex
+% THEME 2 — Facile — Exercices
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\atm}{atm}
+\DeclareSIUnit{\bar}{bar}
+\DeclareSIUnit{\mmHg}{mmHg}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+
+\newtcolorbox{enonce}[1][]{enhanced,breakable,colback=primary!4,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,title={#1}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Loi des gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 · Facile · Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcounter{exo}
+\newenvironment{exo}[1][]{\refstepcounter{exo}\medskip
+  \noindent{\color{primarydark}\bfseries Exercice \theexo.}\ \textit{#1}\par\nopagebreak\smallskip}{\par}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 2 — Niveau Facile}\\[2pt]
+{\color{primary}\itshape Isoler chaque variable de $pV=nRT$ en une étape}
+\end{center}
+\textcolor{primary}{\hrule height 1pt}
+\medskip
+
+\begin{enonce}[Rappels utiles]
+$pV=nRT$ avec $T$ en \textbf{kelvins} ($T=\theta+273$). \\
+Constante : $R=\qty{0.082}{\atm\litre\per\mole\per\kelvin}$ (avec $p$ en \si{\atm}, $V$ en \si{\litre}) ;
+ou $R=\qty{8.314}{\kilo\pascal\litre\per\mole\per\kelvin}$ (avec $p$ en \si{\kilo\pascal}, $V$ en \si{\litre}).
+\end{enonce}
+
+\begin{exo}[Combien de moles ?]
+Un récipient de volume $V=\qty{10.0}{\litre}$ contient un gaz sous une pression $p=\qty{2.0}{\atm}$ à la
+température $T=\qty{300}{\kelvin}$. Détermine la quantité de matière $n$ de gaz présente.
+\end{exo}
+
+\begin{exo}[Quelle pression ?]
+On enferme $n=\qty{0.50}{\mole}$ de dioxygène \ce{O2} dans une bouteille rigide de volume
+$V=\qty{5.0}{\litre}$ portée à $\theta=\qty{27}{\degreeCelsius}$. Quelle pression $p$ règne à l'intérieur ?
+\end{exo}
+
+\begin{exo}[Quel volume ?]
+Quel volume $V$ occupent $n=\qty{2.0}{\mole}$ de gaz sous une pression $p=\qty{1.0}{\atm}$ à une
+température $T=\qty{273}{\kelvin}$ ?
+\end{exo}
+
+\begin{exo}[Quelle température ?]
+Un gaz constitué de $n=\qty{1.0}{\mole}$ occupe un volume $V=\qty{22.4}{\litre}$ sous une pression
+$p=\qty{1.0}{\atm}$. Quelle est sa température $T$ (en kelvins, puis en degrés Celsius) ?
+\end{exo}
+
+\begin{exo}[Choisir le bon $R$]
+Un gaz occupe $V=\qty{2.0}{\litre}$ sous une pression $p=\qty{101.3}{\kilo\pascal}$ à
+$T=\qty{273}{\kelvin}$.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt]
+  \item La pression est ici en \si{\kilo\pascal} : quelle valeur de $R$ dois-tu utiliser ?
+  \item Calcule la quantité de matière $n$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,1308 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 8
+%  Statistiques descriptives
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}            % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.markings,angles,quotes,
+  patterns,backgrounds,shapes.geometric,intersections,fit}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+\definecolor{howcol}{RGB}{176,74,0}         % brun-orange — comment faire
+
+% couleurs pour les figures de statistiques
+\definecolor{barcol}{RGB}{0,151,169}        % barres de l'histogramme
+\definecolor{barcold}{RGB}{0,110,124}       % barres foncées
+\definecolor{modecol}{RGB}{200,55,55}       % barre du mode
+\definecolor{meancol}{RGB}{0,90,200}        % ligne de la moyenne
+\definecolor{medcol}{RGB}{160,90,190}       % ligne de la médiane
+\definecolor{quartcol}{RGB}{0,135,90}       % quartiles
+\definecolor{ogivecol}{RGB}{176,74,0}       % courbe cumulée
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Comment faire (procédure pas à pas) ----
+\newtcolorbox{commentfaire}[1][]{%
+  boxbase,colback=howcol!6,colframe=howcol,
+  title={\textsc{Comment faire}\ifx\relax#1\relax\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Statistiques descriptives}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vcentrex}{\bar{x}}          % moyenne d'un échantillon (non utilisé)
+\newcommand{\ecm}{\sigma_m}              % écart moyen
+\newcommand{\ect}{\sigma}                % écart type
+\newcommand{\med}{M\!e}                  % médiane
+\newcommand{\pourcent}{\,\%}
+
+% =====================================================================
+\begin{document}
+\sloppy
+\setlength{\emergencystretch}{2em}   % absorbe les micro-débordements (minipages côte à côte)
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Statistiques}\\[5pt]
+   {\Huge\bfseries descriptives}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,8}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : histogramme + moyenne + médiane ---
+\begin{tikzpicture}[scale=0.92]
+  % axe vertical
+  \draw[->,>=Stealth,line width=0.7pt] (0,0)--(0,4.6);
+  \node[rotate=90,font=\footnotesize,primarydark] at (-0.55,2.3) {Effectif $n_i$};
+  % axe horizontal
+  \draw[->,>=Stealth,line width=0.7pt] (0,0)--(10.8,0);
+  \node[font=\footnotesize,primarydark] at (5.3,-0.55) {Taille des poissons (mm)};
+  % graduations y
+  \foreach \y/\v in {1/5,2/10,3/15,4/20}{
+     \draw (0.05,\y)--(-0.05,\y) node[left,font=\scriptsize]{\v};
+     \draw[black!12,dashed] (0,\y)--(10.4,\y);}
+  % barres (largeur 1.2 cm = 10 mm ; hauteurs proportionnelles a n_i/5)
+  \foreach \x/\h/\lab/\coul in {0.4/0.8/60/barcol,1.6/0.4/70/barcol,2.8/1.2/80/barcol,
+     4.0/3.6/90/modecol,5.2/2.8/100/barcol,6.4/2.0/110/barcol,
+     7.6/1.2/120/barcol,8.8/1.0/130/barcol}{
+     \fill[\coul,opacity=0.85] (\x,0) rectangle (\x+1.2,\h);
+     \draw[\coul!70!black,line width=0.5pt] (\x,0) rectangle (\x+1.2,\h);
+     \node[font=\scriptsize,white] at (\x+0.6,\h-0.28) {};}
+  % centres de classe sous l'axe
+  \foreach \x/\lab in {1.0/60,2.2/70,3.4/80,4.6/90,5.8/100,7.0/110,8.2/120,9.4/130}
+     \node[font=\scriptsize,below] at (\x,0){\lab};
+  % ligne moyenne m = 97,69 mm  -> x = 0.4 + (97,69-55)/10*1.2 = 5.523
+  \draw[meancol,line width=1.3pt,dashed] (5.52,0)--(5.52,4.2);
+  \node[meancol,font=\scriptsize,rotate=90,above] at (5.52,3.2){moyenne $m=97{,}69$};
+  % ligne médiane Me = 97,14 mm -> x = 0.4 + (97,14-55)/10*1.2 = 5.457
+  \draw[medcol,line width=1.3pt] (5.46,0)--(5.46,4.4);
+  \node[medcol,font=\scriptsize,rotate=90,above] at (5.46,3.7){médiane $\med=97{,}14$};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item manier le \textbf{vocabulaire statistique} (population, caractère, effectif, modalité,
+        classe, centre de classe) et distinguer caractère \textbf{qualitatif} / \textbf{quantitatif}
+        (discret ou continu) ;
+  \item construire un \textbf{tableau statistique complet} : effectifs $n_i$, effectif total $N$,
+        fréquences $f_i$, effectifs et fréquences \textbf{cumulés} ;
+  \item calculer et interpréter les \textbf{indicateurs de position} : \textbf{mode} $M$,
+        \textbf{moyenne} $m$, \textbf{médiane} $\med$ et \textbf{quartiles} $Q_1$, $Q_3$ ;
+  \item déterminer une médiane par \textbf{interpolation linéaire} (méthode des triangles semblables)
+        ou par lecture graphique de la \textbf{courbe des fréquences cumulées} ;
+  \item calculer et interpréter les \textbf{indicateurs de dispersion} : \textbf{étendue},
+        \textbf{écart moyen} $\ecm$, \textbf{variance} $V$ (formule directe \emph{et} théorème de
+        \textbf{König--Huygens}), \textbf{écart type} $\ect=\sqrt{V}$ ;
+  \item lire et tracer les représentations graphiques : \textbf{diagramme en bâtons},
+        \textbf{histogramme}, \textbf{polygone des fréquences}, \textbf{polygone cumulé (ogive)} ;
+  \item commenter, \emph{en français}, la signification concrète de chaque résultat chiffré.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 8 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : à quoi sert la statistique descriptive ?}
+% =====================================================================
+Chaque jour, on est noyé sous des \emph{nombres} : la taille des élèves d'une classe, les notes à un
+examen, la tension artérielle de 200 patients, le nombre de globules blancs par mm$^3$ de sang,
+le prix d'un médicament dans dix pharmacies\ldots Pris individuellement, ces nombres ne disent pas
+grand-chose. La \textbf{statistique descriptive} est l'ensemble des outils qui permettent de
+\textbf{résumer} une grande masse de données par quelques chiffres parlants et par quelques
+graphiques.
+
+Concrètement, décrire une série statistique, c'est répondre à trois familles de questions :
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Quel est le « centre » de la série ?} autour de quelle valeur les données
+        se regroupent-elles ? $\rightarrow$ indicateurs de \textbf{position}
+        (\emph{mode}, \emph{moyenne}, \emph{médiane}) ;
+  \item \textbf{Les données sont-elles resserrées ou étalées ?} $\rightarrow$ indicateurs de
+        \textbf{dispersion} (\emph{étendue}, \emph{écart moyen}, \emph{variance}, \emph{écart type}) ;
+  \item \textbf{Comment visualiser tout cela d'un coup d'œil ?} $\rightarrow$ représentations
+        \textbf{graphiques} (diagramme en bâtons, histogramme, courbe cumulée).
+\end{itemize}
+
+\begin{remarque}[l'objet de la fiche]
+Cette fiche ne traite que de la statistique \textbf{descriptive} (résumer des données que l'on
+possède). Elle ne fait \emph{pas} de statistique \textbf{inférentielle} (tirer des conclusions sur
+une population entière à partir d'un échantillon, tests, probabilités). On reste du côté
+\emph{descriptif} : tout ce que l'on calcule, on le calcule sur les données elles-mêmes.
+\end{remarque}
+
+% =====================================================================
+\section{Le vocabulaire de base de la statistique}
+% =====================================================================
+Avant tout calcul, il faut fixer le vocabulaire : un mot = une idée précise. Toute la fiche
+réutilisera ces termes.
+
+\subsection{Population, individu, caractère, modalité}
+
+\begin{definition}[population et individu]
+La \textbf{population} est l'\emph{ensemble} de tous les éléments sur lesquels porte l'étude
+statistique. Chaque élément de cet ensemble est un \textbf{individu} (ou \emph{unité statistique}).
+Le \textbf{nombre d'individus} de la population est l'\textbf{effectif total}, noté $N$.
+\end{definition}
+
+\begin{definition}[caractère et modalité]
+Le \textbf{caractère} (ou \emph{variable}) est la \emph{propriété} que l'on étudie sur chaque
+individu. Les \textbf{valeurs} que peut prendre ce caractère sont les \textbf{modalités}, en général
+notées $x_i$ (l'indice $i$ numérote les modalités : $i=1,2,\ldots,k$).
+\end{definition}
+
+\begin{exemple}[fil rouge de la fiche]
+On étudie la \textbf{taille} (en millimètres) de $N=65$ poissons élevés dans un aquarium.
+\begin{itemize}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Population} : les 65 poissons de l'aquarium.
+  \item \textbf{Individu} : un poisson.
+  \item \textbf{Caractère} : la taille (en mm).
+  \item \textbf{Effectif total} : $N=65$.
+\end{itemize}
+Cet exemple nous accompagnera du début à la fin : on y calculera \emph{tous} les indicateurs.
+\end{exemple}
+
+\subsection{Les trois types de caractères}
+
+\begin{definition}[types de caractère]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item Un caractère est \textbf{qualitatif} si ses modalités ne sont pas des nombres
+        (groupe sanguin, couleur des yeux, sexe).
+  \item Un caractère est \textbf{quantitatif} si ses modalités sont des nombres. On distingue :
+    \begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=0pt]
+      \item \textbf{discret} : il prend des valeurs \emph{isolées} (le nombre d'enfants par famille :
+            $0,1,2,\ldots$) ;
+      \item \textbf{continu} : il peut prendre \emph{toute} valeur d'un intervalle (taille, masse,
+            température). On le découpe alors en \textbf{classes} $[a,b[$.
+    \end{itemize}
+\end{itemize}
+\end{definition}
+
+\begin{attention}[caractère continu $\Rightarrow$ classes]
+Dès qu'un caractère est continu (ou qu'il prend beaucoup de valeurs différentes), on \textbf{regroupe}
+les données en \textbf{classes} de la forme $[a,b[$, par tranches de même \emph{amplitude}. Chaque
+classe est ensuite représentée par un seul nombre, son \textbf{centre}.
+\end{attention}
+
+\subsection{Classe, amplitude et centre de classe}
+
+\begin{definition}[classe et centre de classe]
+Une \textbf{classe} est un intervalle $[a,b[$ qui regroupe les valeurs d'un caractère continu.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Son \textbf{amplitude} (ou largeur) vaut $b-a$.
+  \item Son \textbf{centre} (ou \emph{valeur centrale}) est le milieu de l'intervalle :
+\end{itemize}
+\end{definition}
+
+\begin{formule}[centre de classe]
+\[
+x_i=\dfrac{a+b}{2}
+\]
+\begin{ou}
+  \item $a$ : borne \emph{inférieure} de la classe (comprise) ;
+  \item $b$ : borne \emph{supérieure} de la classe (exclue) ;
+  \item $x_i$ : centre de la classe --- c'est lui que l'on utilisera dans \emph{tous} les calculs.
+\end{ou}
+\textbf{Unité :} celle du caractère (ici des mm). Le centre n'a \emph{pas} de dimension propre :
+il hérite de celle du caractère.
+\end{formule}
+
+\begin{exemple}[centres des classes du fichier « poissons »]
+Les tailles sont découpées en classes d'amplitude $10$\,mm : $[55,65[$, $[65,75[$, etc.
+Le centre de la première classe est
+$x_1=\dfrac{55+65}{2}=60$\,mm, celui de la quatrième est $x_4=\dfrac{85+95}{2}=90$\,mm, et ainsi de
+suite (voir le tableau de la section~3).
+\end{exemple}
+
+\begin{remarque}[caractère discret $\Rightarrow$ pas de classe]
+Pour un caractère \textbf{discret}, il n'y a \emph{pas} de colonne « classes » : la colonne des
+centres est remplacée directement par les valeurs entières $x_i$. \textbf{Toutes les formules
+restent strictement les mêmes}, on remplace simplement « centre de classe » par « valeur de la
+modalité ».
+\end{remarque}
+
+% =====================================================================
+\section{La série statistique et le tableau d'effectifs}
+% =====================================================================
+Le point de départ obligatoire de tout calcul est un \textbf{tableau statistique} propre et complet.
+C'est lui qui contient les données « brutes » transformées en colonnes exploitables.
+
+\subsection{Effectif, effectif total et effectif cumulé}
+
+\begin{definition}[effectif]
+L'\textbf{effectif} $n_i$ d'une modalité (ou d'une classe) est le \textbf{nombre d'individus} qui
+présentent cette valeur du caractère. C'est un entier naturel.
+\end{definition}
+
+\begin{formule}[effectif total]
+\[
+N=\sum_{i=1}^{k} n_i = n_1+n_2+\cdots+n_k
+\]
+\begin{ou}
+  \item $n_i$ : effectif de la $i^{\text{e}}$ classe ;
+  \item $k$ : nombre total de classes (ou de modalités) ;
+  \item $N$ : effectif total de la population (somme de toutes les lignes).
+\end{ou}
+\textbf{Unité :} ce sont des \textbf{effectifs} (des \emph{comptes} d'individus), donc sans unité
+physique. Vérification indispensable : la somme de la colonne $n_i$ \emph{doit} redonner $N$.
+\end{formule}
+
+\begin{definition}[effectif cumulé $n_c$]
+L'\textbf{effectif cumulé} $n_c$ d'une classe est le nombre d'individus dont la valeur du caractère
+est \emph{inférieure ou égale} à la borne supérieure de cette classe. Il s'obtient en additionnant
+les effectifs de toutes les classes \emph{précédentes}, y compris celle-ci.
+\end{definition}
+
+\begin{exemple}[effectifs cumulés des poissons]
+Pour la série de $66$ poissons (variante), la colonne $n_c$ se construit de proche en proche :
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{c c c c}
+\rowcolor{primary!18}
+Classes (mm) & $x_i$ & $n_i$ & $n_c$ \\
+$[55,65[$ & 60 & 4 & 4 \\
+$[65,75[$ & 70 & 2 & $4+2=6$ \\
+$[75,85[$ & 80 & 6 & $6+6=12$ \\
+$[85,95[$ & 90 & 18 & $12+18=\mathbf{30}$ \\
+$[95,105[$ & 100 & 14 & $30+14=\mathbf{44}$ \\
+\end{tabular}
+\end{center}
+\emph{Lecture :} $30$ poissons mesurent moins de $95$\,mm ; $44$ poissons mesurent moins de
+$105$\,mm. On verra que ces cumuls servent à localiser la \textbf{médiane} et les \textbf{quartiles}.
+\end{exemple}
+
+\subsection{Fréquence et fréquence cumulée}
+
+\begin{definition}[fréquence]
+La \textbf{fréquence} $f_i$ de la $i^{\text{e}}$ classe est la \emph{proportion} d'individus qui
+appartiennent à cette classe. C'est un nombre compris entre $0$ et $1$ ; multiplié par $100$, elle
+donne le \textbf{pourcentage}.
+\end{definition}
+
+\begin{formule}[fréquence et fréquence cumulée]
+\[
+\boxed{\,f_i=\dfrac{n_i}{N}\,} \qquad\text{et}\qquad
+f_c=\sum_{j=1}^{i} f_j = f_1+f_2+\cdots+f_i
+\]
+\begin{ou}
+  \item $n_i$ : effectif de la classe ;
+  \item $N$ : effectif total ;
+  \item $f_i$ : fréquence de la classe (en décimal) ; $f_i\times 100$ = pourcentage ;
+  \item $f_c$ : fréquence \emph{cumulée} jusqu'à la classe $i$ (la dernière vaut toujours $1=100\,\%$).
+\end{ou}
+\textbf{Unité :} aucune, $f_i$ est un nombre sans dimension (souvent écrit en \,\%\,). Propriété de
+contrôle : $\displaystyle\sum_{i=1}^{k} f_i = 1$.
+\end{formule}
+
+\begin{exemple}[calcul d'une fréquence]
+Sur la série de $N=65$ poissons, la classe $[65,75[$ contient $n_2=2$ poissons. Sa fréquence vaut
+$f_2=\dfrac{n_2}{N}=\dfrac{2}{65}=0{,}03$, c'est-à-dire \textbf{$3\,\%$} des poissons.
+La fréquence cumulée après les quatre premières classes vaut
+$f_c=f_1+f_2+f_3+f_4=0{,}06+0{,}03+0{,}09+0{,}28=0{,}46$ : \textbf{$46\,\%$} des poissons mesurent
+moins de $95$\,mm.
+\end{exemple}
+
+\subsection{Le tableau statistique complet}
+
+\begin{commentfaire}[construire un tableau statistique complet]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item Lister les \textbf{classes} $[a,b[$ (ou les valeurs $x_i$ si discret) en ligne, $i=1\ldots k$.
+  \item Compter l'\textbf{effectif} $n_i$ de chaque classe, puis vérifier $N=\sum n_i$.
+  \item Calculer chaque \textbf{centre de classe} $x_i=(a+b)/2$.
+  \item Calculer chaque \textbf{fréquence} $f_i=n_i/N$ (arrondir à $0{,}01$).
+  \item Construire la colonne \textbf{fréquence cumulée} $f_c$ en sommant de proche en proche ;
+        la dernière ligne doit valoir $1{,}00$.
+\end{enumerate}
+\end{commentfaire}
+
+Voici le tableau complet de notre exemple fil rouge (65 poissons), tel qu'il servira de base à tous
+les calculs de la fiche :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\rowcolor{primary!18}
+\textbf{Ligne $i$} & \textbf{Classes (mm)} & \textbf{Centre $x_i$} & \textbf{Effectif $n_i$} & \textbf{Fréq. $f_i$} & \textbf{Fréq. cum. $f_c$} \\
+\hline
+1 & $[55,65[$  & 60  & 4  & 0{,}06 & 0{,}06 \\
+2 & $[65,75[$  & 70  & 2  & 0{,}03 & 0{,}09 \\
+3 & $[75,85[$  & 80  & 6  & 0{,}09 & 0{,}18 \\
+4 & $[85,95[$  & 90  & 18 & 0{,}28 & 0{,}46 \\
+5 & $[95,105[$ & 100 & 14 & 0{,}22 & 0{,}68 \\
+6 & $[105,115[$& 110 & 10 & 0{,}15 & 0{,}83 \\
+7 & $[115,125[$& 120 & 6  & 0{,}09 & 0{,}92 \\
+8 & $[125,135[$& 130 & 5  & 0{,}08 & 1{,}00 \\
+\hline
+\multicolumn{2}{|r|}{\textbf{Totaux}} & \textbf{—} & $\boldsymbol{N=65}$ & $\boldsymbol{1{,}00}$ & \\
+\hline
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\section{Les indicateurs de position (tendance centrale)}
+% =====================================================================
+Les indicateurs de position résument la série par une valeur « typique » autour de laquelle les
+données se répartissent. Il en existe trois, complémentaires : le \textbf{mode}, la \textbf{moyenne}
+et la \textbf{médiane}.
+
+\subsection{Le mode $M$}
+
+\begin{definition}[mode]
+Le \textbf{mode} $M$ est la \textbf{modalité} (ou la \textbf{classe}, ou la \emph{valeur du
+caractère}) dont l'\textbf{effectif est le plus grand}. C'est la valeur « la plus fréquente »,
+celle qui apparaît le plus souvent. Le mode n'est \emph{pas} forcément unique.
+\end{definition}
+
+\begin{exemple}[mode du fichier poissons]
+La classe $[85,95[$ (ligne 4) a l'effectif maximal $n_4=18$. C'est donc le mode :
+$M=[85,95[$ \,(ou $M=90$\,mm si l'on parle du centre de la classe modale). En d'autres termes,
+la taille \emph{la plus représentée} chez ces 65 poissons se situe entre 85 et 95\,mm.
+\end{exemple}
+
+\begin{attention}[mode d'une série discrète]
+Pour un caractère discret, le mode est une \emph{valeur}, pas une classe. Par exemple, dans la série
+« note/10 : $2$ ($15$ élèves), $5$ ($10$ élèves), $8$ ($5$ élèves) », le plus grand effectif est $15$,
+donc le mode est $M=2$.
+\end{attention}
+
+\subsection{La moyenne arithmétique $m$}
+
+La moyenne est l'indicateur de position le plus utilisé. Attention : avec des classes, ce n'est
+\emph{pas} une moyenne simple, car chaque valeur $x_i$ représente plusieurs individus : c'est une
+\textbf{moyenne pondérée} (pondérée par les effectifs $n_i$).
+
+\begin{formule}[moyenne arithmétique d'une série regroupée]
+\[
+\boxed{\;m=\dfrac{1}{N}\sum_{i=1}^{k} n_i\,x_i
+      =\dfrac{n_1 x_1+n_2 x_2+\cdots+n_k x_k}{N}\;}
+\]
+\begin{ou}
+  \item $x_i$ : centre de la $i^{\text{e}}$ classe (ou valeur de la modalité si discret) ;
+  \item $n_i$ : effectif de cette classe (le « poids » de la valeur $x_i$) ;
+  \item $N=\sum n_i$ : effectif total ;
+  \item $m$ : moyenne arithmétique de la série.
+\end{ou}
+\textbf{Unité :} la \emph{même} que le caractère (ici des \textbf{mm}). La moyenne se calcule
+\emph{toujours} avec les centres de classe, jamais avec les bornes.
+\end{formule}
+
+\begin{theoreme}[la moyenne est linéaire]
+Si l'on \textbf{ajoute} une constante $a$ à toutes les valeurs d'une série, la moyenne augmente de
+$a$. Si l'on \textbf{multiplie} toutes les valeurs par un facteur $\lambda$, la moyenne est
+multipliée par $\lambda$. Formellement : $\overline{x+a}=m+a$ et $\overline{\lambda x}=\lambda m$.
+\end{theoreme}
+
+\begin{exemple}[calcul complet de la moyenne — poissons, 65 individus]
+On applique la formule avec les centres et les effectifs du tableau de la section~3 :
+\[
+m=\dfrac{4\times 60+2\times 70+6\times 80+18\times 90+14\times 100+10\times 110+6\times 120+5\times 130}{65}.
+\]
+\textbf{Numérateur} (somme des produits $n_i x_i$) :
+{\small
+\[
+\begin{aligned}
+&4\times60=240,\;2\times70=140,\;6\times80=480,\;18\times90=1620,\\
+&14\times100=1400,\;10\times110=1100,\;6\times120=720,\;5\times130=650,
+\end{aligned}
+\]}
+soit un total de $240+140+480+1620+1400+1100+720+650=\mathbf{6350}$.
+\[
+m=\dfrac{6350}{65}=\mathbf{97{,}69\;\text{mm}}.
+\]
+\textbf{Interprétation :} « En moyenne, un poisson de cet aquarium mesure $97{,}69$\,mm. »
+\end{exemple}
+
+\begin{exemple}[moyenne d'une petite série discrète]
+Notes sur $10$ d'un groupe d'élèves : la note $2$ est obtenue par $15$ élèves, la note $5$ par $10$
+élèves, la note $8$ par $5$ élèves. Effectif total $N=15+10+5=30$.
+\[
+m=\dfrac{2\times 15+5\times 10+8\times 5}{30}
+  =\dfrac{30+50+40}{30}=\dfrac{120}{30}=\mathbf{4{,}00/10}.
+\]
+On retrouve bien la moyenne \emph{pondérée} : la note $2$, très fréquente ($15$ élèves), tire la
+moyenne vers le bas.
+\end{exemple}
+
+\begin{commentfaire}[manipuler la moyenne par changement d'échelle]
+\textbf{Problème :} comment modifier une série pour atteindre une moyenne cible ?
+\emph{Procédé} (très utile au concours) : grâce à la linéarité de la moyenne, il suffit de tester
+l'effet d'une translation $\lambda\mapsto \lambda x + c$.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item On part de la série $x_i$ de moyenne connue $m$.
+  \item La nouvelle moyenne après $x_i\mapsto \alpha x_i+\beta$ vaut $\alpha\,m+\beta$.
+  \item On résout $\alpha\,m+\beta=m_{\text{cible}}$ pour trouver le bon $\alpha,\beta$.
+\end{itemize}
+\emph{Application.} Avec la série précédente ($m=4$), on veut atteindre une moyenne de $5{,}00/10$.
+Si l'on ajoute $1$ point à chaque note ($x_i\mapsto x_i+1$, donc $\alpha=1,\beta=1$), la nouvelle
+moyenne vaut $4+1=5$. \textbf{C'est donc « ajouter $1$ point à chaque valeur » qui convient.}
+(Vérification : $\dfrac{3\times15+6\times10+9\times5}{30}=\dfrac{45+60+45}{30}=\dfrac{150}{30}=5$.)
+\end{commentfaire}
+
+\subsection{La médiane $\med$}
+
+\begin{definition}[médiane]
+La \textbf{médiane} $\med$ est la valeur du caractère qui \textbf{partage l'effectif en deux groupes
+de même taille} : environ la moitié des individus ont une valeur \emph{inférieure ou égale} à $\med$,
+l'autre moitié une valeur \emph{supérieure ou égale}. C'est la valeur qui correspond à une
+\textbf{fréquence cumulée de $50\,\%$}.
+\end{definition}
+
+La médiane se détermine différemment selon que la série est \textbf{discrète} (valeurs rangées une
+à une) ou \textbf{regroupée en classes}.
+
+\subsubsection{Médiane d'une série discrète (valeurs listées)}
+
+\begin{formule}[médiane d'une série de $n$ valeurs rangées par ordre croissant]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Si $n$ est \textbf{impair} : la médiane est la valeur située au rang
+        $\dfrac{n+1}{2}$.
+  \item Si $n$ est \textbf{pair} : la médiane est la \textbf{moyenne arithmétique} des valeurs
+        situées aux rangs $\dfrac{n}{2}$ et $\dfrac{n}{2}+1$.
+\end{itemize}
+\end{formule}
+
+\begin{exemple}[médiane, $n$ impair]
+Série : $1;\;4;\;2;\;16;\;8;\;10;\;5;\;20;\;3$ \,($n=9$ valeurs).
+\smallskip
+
+\textbf{1\textsuperscript{re}} étape, \emph{indispensable} : on \textbf{range par ordre croissant} :
+\[ 1;\;2;\;3;\;4;\;\underbrace{5}_{\text{rang }5};\;8;\;10;\;16;\;20. \]
+\textbf{2\textsuperscript{e}} étape : $n=9$ est impair, donc la médiane est la valeur de rang
+$\dfrac{n+1}{2}=\dfrac{10}{2}=5$, soit la valeur $\mathbf{5}$.
+\smallskip
+
+\textbf{Interprétation :} $4$ valeurs sont $\leqslant 5$ et $4$ valeurs sont $\geqslant 5$.
+\end{exemple}
+
+\begin{exemple}[médiane, $n$ pair]
+Série : $1;\;4;\;2;\;17;\;7;\;10;\;5;\;20;\;3;\;6$ \,($n=10$ valeurs).
+\smallskip
+
+On range par ordre croissant :
+\[ 1;\;2;\;3;\;4;\;\underbrace{5}_{\text{rang }5};\;\underbrace{6}_{\text{rang }6};\;7;\;10;\;17;\;20. \]
+$n=10$ est pair : la médiane est la moyenne des valeurs de rang $\dfrac{n}{2}=5$ et
+$\dfrac{n}{2}+1=6$, c'est-à-dire
+$\med=\dfrac{5+6}{2}=\mathbf{5{,}5}$.
+\end{exemple}
+
+\begin{attention}[la première étape est toujours le tri]
+Tant que la série n'est pas rangée par ordre croissant, la notion de médiane n'a \emph{aucun} sens.
+C'est l'erreur n\textsuperscript{o}\,1 : oublier de trier.
+\end{attention}
+
+\subsubsection{Médiane d'une série regroupée en classes : l'interpolation linéaire}
+
+Lorsque les données sont groupées en classes, on ne connaît plus les valeurs individuelles : on sait
+seulement \emph{combien} d'individus tombent dans chaque classe. La médiane se calcule alors par
+\textbf{interpolation linéaire} à l'intérieur de la « classe médiane » --- celle qui contient le
+$\left(\tfrac{N}{2}\right)^{\text{e}}$ individu. La méthode repose sur la \emph{similitude des
+triangles} (on suppose les individus répartis \emph{uniformément} dans la classe médiane).
+
+\begin{formule}[médiane par interpolation linéaire (méthode des triangles semblables)]
+\[
+\boxed{\;\dfrac{\med-a}{r}\;=\;\dfrac{b-a}{n_{\text{classe}}}
+\quad\Longrightarrow\quad
+\med=a+\dfrac{r}{n_{\text{classe}}}\,(b-a)\;}
+\]
+\begin{ou}
+  \item $[a,b[$ : la \textbf{classe médiane}, c'est-à-dire la classe qui contient le
+        $\left(\tfrac{N}{2}\right)^{\text{e}}$ individu (repérée grâce aux effectifs cumulés) ;
+  \item $a$ : borne inférieure de cette classe ;
+  \item $b$ : borne supérieure de cette classe ;
+  \item $n_{\text{classe}}$ : effectif total de la classe médiane (largeur « verticale ») ;
+  \item $r$ : \textbf{rang} du $\left(\tfrac{N}{2}\right)^{\text{e}}$ individu \emph{à l'intérieur}
+        de la classe médiane, soit $r=\dfrac{N}{2}-n_{c}^{\text{préc}}$
+        où $n_{c}^{\text{préc}}$ est l'effectif cumulé de la classe \emph{précédente} ;
+  \item $\med$ : médiane cherchée.
+\end{ou}
+\textbf{Unité :} celle du caractère (mm). Le rapport $\dfrac{r}{n_{\text{classe}}}\in[0,1]$ est la
+\emph{proportion} du chemin parcouru dans la classe.
+\end{formule}
+
+\begin{commentfaire}[calculer une médiane par interpolation linéaire en 4 étapes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Calculer} le rang visé : $\dfrac{N}{2}$ (la moitié de l'effectif total).
+  \item \textbf{Localiser la classe médiane} à l'aide des effectifs cumulés $n_c$ : c'est la
+        première classe dont l'effectif cumulé \emph{dépasse} (ou atteint) $\dfrac{N}{2}$.
+  \item \textbf{Calculer le rang intérieur} $r=\dfrac{N}{2}-n_{c}^{\text{préc}}$
+        (ce qui « reste » à parcourir dans la classe médiane).
+  \item \textbf{Appliquer} $\med=a+\dfrac{r}{n_{\text{classe}}}\,(b-a)$.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[médiane par interpolation — série de 66 poissons]
+Voici la série (\textbf{attention}, $N=66$ ici, légèrement différente de l'exemple 65) :
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{c c c c}
+\rowcolor{primary!18}
+Classes (mm) & $x_i$ & $n_i$ & $n_c$ \\
+$[55,65[$  & 60  & 4  & 4 \\
+$[65,75[$  & 70  & 2  & 6 \\
+$[75,85[$  & 80  & 6  & 12 \\
+$[85,95[$  & 90  & 18 & $\mathbf{30}$ \\
+$[95,105[$ & 100 & 14 & $\mathbf{44}$ \\
+$[105,115[$& 110 & 10 & 54 \\
+$[115,125[$& 120 & 6  & 60 \\
+$[125,135[$& 130 & 6  & 66 \\
+\end{tabular}
+\end{center}
+
+\textbf{Étape 1.} Le rang visé est $\dfrac{N}{2}=\dfrac{66}{2}=\mathbf{33}$. On cherche donc le
+$33^{\text{e}}$ poisson (rangé du plus petit au plus grand).
+
+\textbf{Étape 2.} Dans les effectifs cumulés, on cherche la première classe dont le cumul atteint ou
+dépasse $33$ : la classe $[85,95[$ s'arrête à $30$ (trop tôt), la classe $[95,105[$ monte à $44$
+(assez). La \textbf{classe médiane} est donc $[95,105[$, soit $a=95$, $b=105$.
+
+\textbf{Étape 3.} Le $33^{\text{e}}$ poisson occupe, à l'intérieur de la classe médiane, le rang
+$r=33-30=\mathbf{3}$ (il est le $3^{\text{e}}$ poisson de la classe). L'effectif de la classe médiane
+est $n_{\text{classe}}=14$.
+
+\textbf{Étape 4.} Interpolation :
+\[
+\frac{\med-95}{3}=\frac{105-95}{14}=\frac{10}{14}
+\quad\Longrightarrow\quad
+\med=95+3\times\frac{10}{14}=95+\frac{30}{14}=95+2{,}14=\mathbf{97{,}14\;\text{mm}}.
+\]
+\textbf{Interprétation :} \emph{« $50\,\%$ des poissons mesurent moins de $97{,}14$\,mm, et $50\,\%$
+mesurent plus de $97{,}14$\,mm. »}
+\end{exemple}
+
+\subsubsection{Lecture graphique de la médiane sur l'ogive}
+
+\begin{minipage}{0.50\textwidth}
+La médiane peut aussi se \textbf{lire directement} sur le \textbf{polygone des fréquences cumulées}
+(ou \emph{ogive}) : on cherche la valeur du caractère qui correspond à une fréquence cumulée de
+$50\,\%$. Graphiquement, on part de $f_c=0{,}50$ sur l'axe vertical, on rejoint la courbe, puis on
+redescend sur l'axe horizontal : on lit la médiane. C'est exactement la même information que le
+calcul par interpolation.
+\end{minipage}\hfill
+\begin{minipage}{0.47\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->,>=Stealth] (0,0)--(9.3,0) node[below left,font=\scriptsize]{taille (mm)};
+  \draw[->,>=Stealth] (0,0)--(0,5.4) node[left,font=\scriptsize]{$f_c$};
+  \foreach \y/\v in {1/0{,}2,2/0{,}4,3/0{,}6,4/0{,}8,5/1{,}0}
+     {\draw[black!15,dashed] (0,\y)--(8.8,\y);
+      \draw (0.05,\y)--(-0.05,\y) node[left,font=\tiny]{\v};}
+  % points cumules (borne sup; fc)  65:.06 75:.09 85:.18 95:.46 105:.68 115:.83 125:.92 135:1.0
+  \draw[ogivecol,line width=1.2pt] (0,0)
+     -- (0.7,0.30) (0.7,0.30)--(1.7,0.45) (1.7,0.45)--(2.7,0.90) (2.7,0.90)--(3.7,2.30)
+     (3.7,2.30)--(4.7,3.40) (4.7,3.40)--(5.7,4.15) (5.7,4.15)--(6.7,4.60) (6.7,4.60)--(7.7,5.00);
+  \fill[ogivecol] (0.7,0.30)circle(1.2pt) (1.7,0.45)circle(1.2pt) (2.7,0.90)circle(1.2pt)
+     (3.7,2.30)circle(1.2pt) (4.7,3.40)circle(1.2pt) (5.7,4.15)circle(1.2pt)
+     (6.7,4.60)circle(1.2pt) (7.7,5.00)circle(1.2pt);
+  % lecture mediane a fc=0.5 -> y=2.5
+  \draw[medcol,dashed,line width=1pt] (0,2.5)--(4.55,2.5)--(4.55,0);
+  \node[medcol,font=\tiny,left] at (0,2.5){$0{,}50$};
+  \node[medcol,font=\tiny,below] at (4.55,0){$\med$};
+  \fill[medcol] (4.55,2.5) circle (1.6pt);
+  \node[medcol,font=\tiny] at (5.6,2.8){lecture};
+  \node[ogivecol,font=\tiny] at (6.0,2.1){ogive};
+\end{tikzpicture}
+\end{minipage}
+
+\medskip
+
+\begin{remarque}[moyenne $\neq$ médiane]
+La moyenne ($97{,}69$) et la médiane ($97{,}14$) sont \emph{proches} mais \emph{distinctes} :
+la moyenne est sensible aux valeurs extrêmes, la médiane ne l'est pas. Quand une série est
+\textbf{dissymétrique} (quelques très grandes valeurs, par exemple), la moyenne est tirée vers ces
+valeurs alors que la médiane reste stable : il faut alors regarder les deux.
+\end{remarque}
+
+\subsection{Les quartiles $Q_1$, $Q_2$, $Q_3$}
+
+La médiane coupe la série en \emph{deux} ; les \textbf{quartiles} la coupent en \emph{quatre} parts
+égales. Ils affinent la description de la répartition.
+
+\begin{definition}[quartiles]
+Les \textbf{quartiles} sont les trois valeurs qui partagent la série (rangée par ordre croissant) en
+\textbf{quatre groupes d'effectifs égaux} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item $Q_1$ : \textbf{premier quartile} --- la plus petite valeur pour laquelle au moins
+        $25\,\%$ des données lui sont inférieures ou égales ;
+  \item $Q_2$ : \textbf{deuxième quartile} = la \textbf{médiane} $\med$ ($50\,\%$) ;
+  \item $Q_3$ : \textbf{troisième quartile} --- la plus petite valeur pour laquelle au moins
+        $75\,\%$ des données lui sont inférieures ou égales.
+\end{itemize}
+\end{definition}
+
+\begin{formule}[quartiles par interpolation linéaire]
+On applique la \emph{même} méthode que pour la médiane, mais en visant le rang $\dfrac{N}{4}$ (pour
+$Q_1$) ou $\dfrac{3N}{4}$ (pour $Q_3$) au lieu de $\dfrac{N}{2}$ :
+\[
+Q_1=a+\frac{r_1}{n_{\text{classe}}}(b-a),\qquad
+Q_3=a+\frac{r_3}{n_{\text{classe}}}(b-a),
+\]
+où $[a,b[$ est la classe contenant le $\left(\tfrac{N}{4}\right)^{\text{e}}$ (resp.
+$\left(\tfrac{3N}{4}\right)^{\text{e}}$) individu, et $r_1$ (resp. $r_3$) est son rang intérieur.
+\end{formule}
+
+\begin{exemple}[calcul de $Q_1$ — test noté sur 20, $N=40$ élèves]
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{c c c c}
+\rowcolor{primary!18}
+Classes (/20) & $x_i$ & $n_i$ & $n_c$ \\
+$[0,4[$   & 2  & 4  & 4 \\
+$[4,8[$   & 6  & 8  & $\mathbf{12}$ \\
+$[8,12[$  & 10 & 10 & 22 \\
+$[12,16[$ & 14 & 12 & 34 \\
+$[16,20[$ & 18 & 6  & 40 \\
+\end{tabular}
+\end{center}
+\textbf{Étape 1.} Rang visé pour $Q_1$ : $\dfrac{N}{4}=\dfrac{40}{4}=\mathbf{10}$.
+
+\textbf{Étape 2.} La première classe s'arrête à $4$ (trop tôt), la deuxième monte à $12$ : la classe
+de $Q_1$ est $[4,8[$, donc $a=4$, $b=8$, $n_{\text{classe}}=8$.
+
+\textbf{Étape 3.} Rang intérieur $r_1=10-4=\mathbf{6}$.
+
+\textbf{Étape 4.}
+\[
+Q_1=4+\frac{6}{8}\,(8-4)=4+\frac{6}{8}\times 4=4+3=\mathbf{7/20}.
+\]
+\textbf{Interprétation :} « $25\,\%$ des élèves ont eu moins de $7/20$, $75\,\%$ ont eu plus. »
+\end{exemple}
+
+\begin{theoreme}[les quartiles encadrent la dispersion centrale]
+L'\textbf{écart interquartile} $Q_3-Q_1$ mesure la dispersion des $50\,\%$ « centraux » des données :
+plus il est petit, plus les données du milieu sont resserrées. Contrairement à l'étendue, il est
+\emph{peu sensible} aux valeurs extrêmes.
+\end{theoreme}
+
+% =====================================================================
+\section{Les indicateurs de dispersion}
+% =====================================================================
+Deux séries peuvent avoir la \emph{même moyenne} mais des dispersions \emph{très différentes}
+(pensez à $[10\,;10\,;10]$ et $[0\,;10\,;20]$ : moyenne $10$ dans les deux cas !). Les indicateurs
+de dispersion mesurent donc \textbf{l'étalement} des données autour du centre.
+
+\subsection{L'étendue}
+
+\begin{definition}[étendue]
+L'\textbf{étendue} d'une série est la différence entre la plus grande et la plus petite valeur du
+caractère :
+\[ \text{étendue}=x_{\max}-x_{\min}. \]
+C'est l'indicateur de dispersion le plus \emph{simple} mais aussi le plus \emph{grossier} (il ne
+tient compte que des deux extrêmes).
+\end{definition}
+
+\begin{exemple}[étendue des poissons]
+La plus petite classe commence à $55$\,mm, la plus grande finit à $135$\,mm : l'étendue vaut
+$135-55=\mathbf{80\;\text{mm}}$. Les tailles s'étalent sur $80$\,mm.
+\end{exemple}
+
+\subsection{L'écart à la moyenne et l'écart moyen $\ecm$}
+
+\begin{definition}[écart à la moyenne]
+Pour chaque classe, l'\textbf{écart à la moyenne} est la \textbf{valeur absolue} de l'écart entre le
+centre de classe et la moyenne :
+\[ |m-x_i|. \]
+C'est la « distance » (positive) entre la valeur $x_i$ et la moyenne $m$.
+\end{definition}
+
+\begin{formule}[écart moyen $\ecm$]
+\[
+\boxed{\;\ecm=\dfrac{1}{N}\sum_{i=1}^{k} n_i\,|m-x_i|
+      =\dfrac{n_1|m-x_1|+n_2|m-x_2|+\cdots+n_k|m-x_k|}{N}\;}
+\]
+\begin{ou}
+  \item $x_i$ : centre de la classe ;
+  \item $m$ : moyenne de la série ;
+  \item $n_i$ : effectif de la classe ;
+  \item $N$ : effectif total ;
+  \item $\ecm$ : écart moyen (moyenne des écarts, pondérée par les effectifs).
+\end{ou}
+\textbf{Unité :} la même que le caractère (mm). On utilise la \textbf{valeur absolue} car la somme
+« naïve » des écarts $(m-x_i)$, pondérée, vaut toujours $0$ (les écarts positifs et négatifs se
+compensent exactement) : il faut donc prendre leurs valeurs absolues pour qu'ils ne s'annulent pas.
+\end{formule}
+
+\begin{exemple}[calcul de l'écart moyen — poissons, $m=97{,}69$]
+On dresse la colonne $|m-x_i|$ puis $n_i\,|m-x_i|$ :
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{c c c c c}
+\rowcolor{primary!18}
+$x_i$ & $n_i$ & $|m-x_i|$ & $n_i\,|m-x_i|$ \\
+60  & 4  & 37{,}69 & 150{,}76 \\
+70  & 2  & 27{,}69 & 55{,}38 \\
+80  & 6  & 17{,}69 & 106{,}14 \\
+90  & 18 & 7{,}69  & 138{,}42 \\
+100 & 14 & 2{,}31  & 32{,}34 \\
+110 & 10 & 12{,}31 & 123{,}10 \\
+120 & 6  & 22{,}31 & 133{,}86 \\
+130 & 5  & 32{,}31 & 161{,}55 \\
+\hline
+\multicolumn{2}{r}{$N=65$} & \textbf{Total} & $\mathbf{901{,}55}$ \\
+\end{tabular}
+\end{center}
+\[
+\ecm=\dfrac{901{,}55}{65}=\mathbf{13{,}87\;\text{mm}}.
+\]
+\textbf{Interprétation :} « En moyenne, la taille d'un poisson s'écarte, de part et d'autre de la
+moyenne ($97{,}69$\,mm), de $13{,}87$\,mm. »
+\end{exemple}
+
+\subsection{La variance $V$}
+
+L'écart moyen utilise la valeur absolue, peu pratique algébriquement (non dérivable en $0$). Pour
+avoir une mesure de dispersion \emph{meilleure}, on élève les écarts \textbf{au carré} avant de les
+moyenner : c'est la \textbf{variance}.
+
+\begin{formule}[variance $V$ (formule directe, « moyenne des carrés des écarts »)]
+\[
+\boxed{\;V=\dfrac{1}{N}\sum_{i=1}^{k} n_i\,(m-x_i)^2\;}
+\]
+\begin{ou}
+  \item $x_i$ : centre de classe ; $m$ : moyenne ; $n_i$ : effectif ; $N$ : effectif total ;
+  \item $V$ : variance.
+\end{ou}
+\textbf{Unité :} le \textbf{carré} de l'unité du caractère (ici des $\text{mm}^2$). Comme $V$ est
+une somme de termes \emph{positifs}, on a toujours $V\geqslant 0$, et $V=0$ \emph{ssi} toutes les
+valeurs sont égales à la moyenne (aucune dispersion).
+\end{formule}
+
+\begin{exemple}[calcul de la variance — poissons]
+On élève la colonne $|m-x_i|$ au carré :
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{c c c c c}
+\rowcolor{primary!18}
+$x_i$ & $n_i$ & $(m-x_i)^2$ & $n_i\,(m-x_i)^2$ \\
+60  & 4  & $1420{,}54$ & $5682{,}14$ \\
+70  & 2  & $766{,}74$  & $1533{,}47$ \\
+80  & 6  & $312{,}94$  & $1877{,}62$ \\
+90  & 18 & $59{,}14$   & $1064{,}45$ \\
+100 & 14 & $5{,}34$    & $74{,}71$ \\
+110 & 10 & $151{,}54$  & $1515{,}36$ \\
+120 & 6  & $497{,}74$  & $2986{,}42$ \\
+130 & 5  & $1043{,}94$ & $5219{,}68$ \\
+\hline
+\multicolumn{2}{r}{$N=65$} & \textbf{Total} & $\mathbf{19\,953{,}85}$ \\
+\end{tabular}
+\end{center}
+\[
+V=\dfrac{19\,953{,}85}{65}=\mathbf{306{,}98\;\text{mm}^2}.
+\]
+\end{exemple}
+
+\begin{theoreme}[théorème de König--Huygens : formule de calcul de la variance]
+La variance peut aussi se calculer \emph{sans} soustraire la moyenne à chaque ligne, ce qui évite
+les arrondis intermédiaires :
+\[
+\boxed{\;V=\dfrac{1}{N}\sum_{i=1}^{k} n_i\,x_i^{\,2}\;-\;m^{2}
+      =\left(\dfrac{n_1 x_1^{\,2}+\cdots+n_k x_k^{\,2}}{N}\right)-m^{2}\;}
+\]
+Autrement dit : \emph{la variance est égale à la moyenne des carrés, moins le carré de la moyenne}.
+\begin{ou}
+  \item $\sum n_i x_i^{\,2}$ : somme des « carrés pondérés » (une seule colonne à calculer) ;
+  \item $m$ : moyenne de la série ;
+  \item $V$ : variance (même résultat qu'avec la formule directe, souvent \emph{plus précis}).
+\end{ou}
+\end{theoreme}
+
+\begin{remarque}[pourquoi König--Huygens est plus précis]
+La formule directe demande de calculer chaque $(m-x_i)$ puis de l'élever au carré : si $m$ a été
+arrondi, l'erreur se propage dans \emph{chaque} ligne. La formule de König--Huygens ne fait
+intervenir $m$ qu'une seule fois (à la fin, via $m^2$) : elle est donc numériquement plus fiable.
+Les deux formules donnent rigoureusement le \emph{même} résultat si l'on garde tous les chiffres.
+\end{remarque}
+
+\begin{exemple}[König--Huygens sur les poissons — vérification]
+On calcule la colonne $n_i x_i^{\,2}$ :
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{c c c c}
+\rowcolor{primary!18}
+$x_i$ & $n_i$ & $x_i^{\,2}$ & $n_i x_i^{\,2}$ \\
+60  & 4  & $3600$  & $14\,400$ \\
+70  & 2  & $4900$  & $9800$ \\
+80  & 6  & $6400$  & $38\,400$ \\
+90  & 18 & $8100$  & $145\,800$ \\
+100 & 14 & $10\,000$ & $140\,000$ \\
+110 & 10 & $12\,100$ & $121\,000$ \\
+120 & 6  & $14\,400$ & $86\,400$ \\
+130 & 5  & $16\,900$ & $84\,500$ \\
+\hline
+\multicolumn{2}{r}{$N=65$} & \textbf{Total} & $\mathbf{640\,300}$ \\
+\end{tabular}
+\end{center}
+\[
+V=\dfrac{640\,300}{65}-\left(\dfrac{6350}{65}\right)^{2}
+  =9850{,}77-9543{,}79=\mathbf{306{,}98\;\text{mm}^2}.
+\]
+On retrouve \emph{exactement} le même résultat : $306{,}98$\,mm$^2$.
+\end{exemple}
+
+\subsection{L'écart type $\ect$}
+
+La variance s'exprime dans une unité « au carré » (mm$^2$), peu intuitive. On revient à l'unité
+d'origine en prenant la \textbf{racine carrée} de la variance : c'est l'\textbf{écart type}.
+
+\begin{formule}[écart type $\ect$]
+\[
+\boxed{\;\ect=\sqrt{V}\;}
+\]
+\begin{ou}
+  \item $V$ : variance de la série ;
+  \item $\ect$ : écart type.
+\end{ou}
+\textbf{Unité :} la \emph{même} que le caractère (mm), puisque $\sqrt{\text{mm}^2}=\text{mm}$.
+L'écart type est l'indicateur de dispersion le plus utilisé car il s'exprime dans la bonne unité et
+se prête aux calculs (la variance, elle, s'additionne).
+\end{formule}
+
+\begin{exemple}[écart type des poissons]
+\[
+\ect=\sqrt{V}=\sqrt{306{,}98}=\mathbf{17{,}5\;\text{mm}}.
+\]
+\textbf{Interprétation :} « La taille d'un poisson s'écarte, de part et d'autre de la moyenne
+($97{,}69$\,mm), d'environ $17{,}5$\,mm. » Remarquer que $\ect=17{,}5>\ecm=13{,}87$ : c'est
+\emph{normal}, car la variance \emph{surpondère} les grands écarts (effet du carré).
+\end{exemple}
+
+\begin{attention}[comparer $\ecm$ et $\ect$]
+L'écart type est \emph{toujours} supérieur ou égal à l'écart moyen ($\ect\geqslant\ecm$) : c'est une
+conséquence de l'inégalité entre la moyenne quadratique et la moyenne arithmétique. Ne pas s'en
+étonner, ni confondre les deux indicateurs.
+\end{attention}
+
+% =====================================================================
+\section{Représentations graphiques}
+% =====================================================================
+Un graphique parle souvent plus qu'un tableau de nombres. Le choix du graphique dépend du type de
+caractère.
+
+\subsection{Diagramme en bâtons (caractère discret)}
+
+Pour un caractère \textbf{discret}, on représente chaque modalité $x_i$ par un \textbf{bâton} dont la
+hauteur est proportionnelle à l'effectif $n_i$ (ou à la fréquence $f_i$). Les bâtons sont
+\emph{séparés} (il n'y a pas de valeurs entre deux modalités entières).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[->,>=Stealth] (0,0)--(0,4.6) node[above,font=\footnotesize,primarydark]{Effectif};
+  \draw[->,>=Stealth] (0,0)--(7.0,0) node[right,font=\footnotesize,primarydark]{Note /10};
+  \foreach \y/\v in {1/5,2/10,3/15}{
+     \draw[black!12,dashed] (0,\y)--(6.6,\y);
+     \draw (0,\y)--(-0.05,\y) node[left,font=\scriptsize]{\v};}
+  \foreach \x/\h/\v in {1/3/2,3/2/5,5/1/8}{
+     \fill[barcol] (\x-0.22,0) rectangle (\x+0.22,\h);
+     \draw[barcold] (\x-0.22,0) rectangle (\x+0.22,\h);
+     \node[below,font=\scriptsize] at (\x,0){\v};
+     \node[above,font=\scriptsize,primarydark] at (\x,\h){\ifnum\x=1 15\fi\ifnum\x=3 10\fi\ifnum\x=5 5\fi};}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[lecture du diagramme]
+Le diagramme ci-dessus représente la série « notes/10 » ($2$ : $15$ élèves, $5$ : $10$ élèves,
+$8$ : $5$ élèves). Le plus haut bâton ($x=2$) désigne immédiatement le \textbf{mode} ($M=2$).
+\end{exemple}
+
+\subsection{Histogramme (caractère continu, regroupé en classes)}
+
+Pour un caractère \textbf{continu}, les classes étant contiguës, on colle les barres : on obtient un
+\textbf{histogramme}. Chaque classe est une barre de largeur $b-a$ ; la hauteur est proportionnelle
+à l'effectif $n_i$ (ici toutes les classes ont la même amplitude, donc la hauteur $\propto n_i$).
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82]
+  \draw[->,>=Stealth] (0,0)--(0,8.4) node[above,font=\footnotesize,primarydark]{Effectif $n_i$};
+  \draw[->,>=Stealth] (0,0)--(10.8,0) node[right,font=\footnotesize,primarydark]{Taille (mm)};
+  \foreach \y/\v in {2/5,4/10,6/15,8/20}{
+     \draw[black!12,dashed] (0,\y)--(10.4,\y);
+     \draw (0,\y)--(-0.05,\y) node[left,font=\scriptsize]{\v};}
+  % barres : 8 classes d'amplitude 10 -> largeur 1.2 ; hauteur = n_i/5*2
+  \foreach \x/\h/\col/\n in {0.4/1.6/barcol/4,1.6/0.8/barcol/2,2.8/2.4/barcol/6,
+     4.0/7.2/modecol/18,5.2/5.6/barcol/14,6.4/4.0/barcol/10,
+     7.6/2.4/barcol/6,8.8/2.0/barcol/5}{
+     \fill[\col,opacity=0.82] (\x,0) rectangle (\x+1.2,\h);
+     \draw[\col!70!black] (\x,0) rectangle (\x+1.2,\h);
+     \node[font=\scriptsize,white] at (\x+0.6,\h-0.5){\n};}
+  \foreach \x/\lab in {1.0/60,2.2/70,3.4/80,4.6/90,5.8/100,7.0/110,8.2/120,9.4/130}
+     \node[font=\scriptsize,below] at (\x,0){\lab};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[lecture de l'histogramme]
+La barre la plus haute (rouge) est la classe $[85,95[$ : on lit directement le \textbf{mode}. La
+distribution est \emph{dissymétrique} (étalée vers les grandes tailles) : la moyenne ($97{,}69$) est
+donc \emph{légèrement supérieure} à la médiane ($97{,}14$), ce que l'on avait constaté par le calcul.
+\end{exemple}
+
+\subsection{Polygone des fréquences et polygone cumulé (ogive)}
+
+En reliant les \emph{sommets} des barres de l'histogramme (prises aux centres de classe), on obtient
+le \textbf{polygone des fréquences}. En reliant les points $(b_i,\,f_c)$ --- borne supérieure de
+chaque classe en abscisse, fréquence cumulée en ordonnée --- on obtient le \textbf{polygone des
+fréquences cumulées}, ou \textbf{ogive}.
+
+\begin{minipage}{0.49\textwidth}
+\centering
+\textbf{\small Polygone des fréquences}\\[2pt]
+\begin{tikzpicture}[scale=0.6]
+  \draw[->,>=Stealth] (0,0)--(9.3,0) node[below,font=\scriptsize]{taille (mm)};
+  \draw[->,>=Stealth] (0,0)--(0,4.6) node[left,font=\scriptsize]{$f_i$};
+  \foreach \y/\v in {1/0{,}05,2/0{,}10,3/0{,}15,4/0{,}20}
+     {\draw[black!12,dashed] (0,\y)--(8.8,\y);
+      \draw (0.05,\y)--(-0.05,\y) node[left,font=\tiny]{\v};}
+  \fill[barcol,opacity=0.5] (1,0.6) -- (2,0.3) -- (3,0.9) -- (4,2.8) -- (5,2.2) -- (6,1.5)
+       -- (7,0.9) -- (8,0.75) -- cycle;
+  \draw[barcold,line width=1pt] (1,0.6)--(2,0.3)--(3,0.9)--(4,2.8)--(5,2.2)
+       --(6,1.5)--(7,0.9)--(8,0.75);
+  \foreach \x/\y in {1/0.6,2/0.3,3/0.9,4/2.8,5/2.2,6/1.5,7/0.9,8/0.75}
+     \fill[barcold] (\x,\y) circle (1.4pt);
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.49\textwidth}
+\centering
+\textbf{\small Ogive (fréquences cumulées)}\\[2pt]
+\begin{tikzpicture}[scale=0.6]
+  \draw[->,>=Stealth] (0,0)--(9.3,0) node[below,font=\scriptsize]{taille (mm)};
+  \draw[->,>=Stealth] (0,0)--(0,4.6) node[left,font=\scriptsize]{$f_c$};
+  \foreach \y/\v in {1/0{,}25,2/0{,}50,3/0{,}75,4/1{,}00}
+     {\draw[black!12,dashed] (0,\y)--(8.8,\y);
+      \draw (0.05,\y)--(-0.05,\y) node[left,font=\tiny]{\v};}
+  \draw[ogivecol,line width=1.1pt] (0,0)--(1,0.30)--(2,0.45)--(3,0.90)--(4,2.30)
+       --(5,3.40)--(6,4.15)--(7,4.60)--(8,5.00);
+  \foreach \x/\y in {1/0.30,2/0.45,3/0.90,4/2.30,5/3.40,6/4.15,7/4.60,8/5.00}
+     \fill[ogivecol] (\x,\y) circle (1.4pt);
+  \draw[medcol,dashed] (0,2.5)--(8,2.5);
+  \node[medcol,font=\tiny,left] at (0,2.5){$0{,}50$};
+\end{tikzpicture}
+\end{minipage}
+
+\medskip
+
+\begin{commentfaire}[lire la médiane et les quartiles sur l'ogive]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item Repérer l'ordonnée $0{,}50$ ($50\,\%$) sur l'axe vertical.
+  \item Suivre la ligne horizontale jusqu'à rencontrer l'ogive.
+  \item Redescendre verticalement vers l'axe horizontal : on lit la \textbf{médiane} $\med$.
+  \item Recommencer à $0{,}25$ pour lire $Q_1$, et à $0{,}75$ pour lire $Q_3$.
+\end{enumerate}
+La précision est limitée par la lecture graphique (arrondie au mm près) : le calcul par
+interpolation linéaire est plus exact mais donne la \emph{même} information.
+\end{commentfaire}
+
+\subsection{Boîte à moustaches (récapitulative)}
+
+La \textbf{boîte à moustaches} (ou \emph{box-plot}) résume en un seul dessin les cinq valeurs-clés
+d'une série : $x_{\min}$, $Q_1$, $\med$, $Q_3$, $x_{\max}$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[->,>=Stealth] (0,0)--(11.2,0) node[right,font=\footnotesize,primarydark]{taille (mm)};
+  \foreach \x/\v in {1/55,3.2/85,5.4/95,7.8/115,9.5/130}
+     \draw (\x,0.05)--(\x,-0.05) node[below,font=\scriptsize]{\v};
+  % moustaches
+  \draw[line width=1pt] (1,0.5)--(3.2,0.5);
+  \draw[line width=1pt] (7.8,0.5)--(9.5,0.5);
+  \draw[line width=1pt] (1,0.3)--(1,0.7);   % min
+  \draw[line width=1pt] (9.5,0.3)--(9.5,0.7);% max
+  % boite
+  \fill[primary!20,draw=primary,line width=1pt] (3.2,0.1) rectangle (7.8,0.9);
+  \draw[medcol,line width=1.5pt] (5.4,0.1)--(5.4,0.9);  % mediane
+  % etiquettes
+  \node[font=\scriptsize,below=4pt] at (1,0){$x_{\min}$};
+  \node[font=\scriptsize,above] at (3.2,0.9){$Q_1$};
+  \node[font=\scriptsize,above] at (5.4,0.9){$\med$};
+  \node[font=\scriptsize,above] at (7.8,0.9){$Q_3$};
+  \node[font=\scriptsize,below=4pt] at (9.5,0){$x_{\max}$};
+\end{tikzpicture}
+\end{center}
+
+La largeur de la boîte ($Q_3-Q_1$) est l'\textbf{écart interquartile} : elle montre d'un coup d'œil
+où se concentrent les $50\,\%$ centraux des données.
+
+% =====================================================================
+\section{Méthodologie complète : étudier une série de A à Z}
+% =====================================================================
+Pour fixer les idées, voici \emph{l'enchaînement complet} des calculs sur un second exemple, traité
+de bout en bout.
+
+\begin{exemple}[notes d'un test sur 20, $N=40$ élèves --- fiche]
+Un professeur répartit les notes (/20) de ses $40$ élèves en cinq classes :
+\begin{center}
+\renewcommand{\arraystretch}{1.18}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{c c c c c c}
+\rowcolor{primary!18}
+$i$ & Classes (/20) & $x_i$ & $n_i$ & $f_i$ & $f_c$ \\
+1 & $[0,4[$   & 2  & 4  & 0{,}10 & 0{,}10 \\
+2 & $[4,8[$   & 6  & 8  & 0{,}20 & 0{,}30 \\
+3 & $[8,12[$  & 10 & 10 & 0{,}25 & 0{,}55 \\
+4 & $[12,16[$ & 14 & 12 & 0{,}30 & 0{,}85 \\
+5 & $[16,20[$ & 18 & 6  & 0{,}15 & 1{,}00 \\
+\end{tabular}
+\end{center}
+
+\textbf{(a) Effectif total et vérification.}
+$N=4+8+10+12+6=\mathbf{40}$ \,(et $\sum f_i=1$ : cohérent).
+
+\textbf{(b) Mode.} Plus grand effectif $n_4=12$ sur la ligne 4, donc $M=[12,16[$ \,(ou $M=14/20$).
+
+\textbf{(c) Moyenne.}
+\[
+\begin{aligned}
+m &= \dfrac{4\times2+8\times6+10\times10+12\times14+6\times18}{40}
+   =\dfrac{8+48+100+168+108}{40} \\
+  &= \dfrac{432}{40}=\mathbf{10{,}8/20}.
+\end{aligned}
+\]
+
+\textbf{(d) Médiane} (rang $\tfrac{N}{2}=20$). Effectifs cumulés : $4,12,22,\ldots$ : le
+$20^{\text{e}}$ élève est dans la classe $[8,12[$, au rang intérieur $r=20-12=8$ :
+\[
+\med=8+\frac{8}{10}\,(12-8)=8+\frac{8}{10}\times4=8+3{,}2=\mathbf{11{,}2/20}.
+\]
+
+\textbf{(e) Premier quartile $Q_1$} (rang $\tfrac{N}{4}=10$). Le $10^{\text{e}}$ élève est dans
+$[4,8[$, au rang intérieur $r_1=10-4=6$ :
+\[
+Q_1=4+\frac{6}{8}\,(8-4)=4+3=\mathbf{7/20}.
+\]
+
+\textbf{(f) Variance} (par König--Huygens). On calcule $\sum n_i x_i^{\,2}$ :
+\[
+4(2)^2+8(6)^2+10(10)^2+12(14)^2+6(18)^2
+=16+288+1000+2352+1944=\mathbf{5600}.
+\]
+\[ V=\dfrac{5600}{40}-(10{,}8)^2=140-116{,}64=\mathbf{23{,}36}\;(\text{points}/20)^2. \]
+
+\textbf{(g) Écart type.}
+\(\ect=\sqrt{23{,}36}=\mathbf{4{,}83/20}\).
+
+\medskip
+\textbf{Bilan commenté :} la moyenne de la classe est $10{,}8/20$ ; la moitié des élèves a eu une note
+comprise entre $Q_1=7$ et $Q_3$, et les notes s'écartent de la moyenne d'environ $4{,}83$ points.
+Notons que la médiane ($\med=11{,}2$) est \emph{légèrement supérieure} à la moyenne ($m=10{,}8$) :
+cela traduit un léger étalement \emph{vers les petites notes} (quelques très mauvaises copies tirent
+la moyenne vers le bas sans déplacer beaucoup la médiane).
+\end{exemple}
+
+\begin{attention}[règle de lecture : comparer $m$ et $\med$]
+La position relative de la moyenne et de la médiane renseigne sur la \textbf{symétrie} de la
+distribution :
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item si $m\approx\med$, la distribution est à peu près \textbf{symétrique} ;
+  \item si $m>\med$, elle est \textbf{étalée vers le haut} (quelques très grandes valeurs tirent la
+        moyenne vers le haut) ;
+  \item si $m<\med$, elle est \textbf{étalée vers le bas} (quelques très petites valeurs tirent la
+        moyenne vers le bas).
+\end{itemize}
+Toujours \textbf{comparer} $m$ et $\med$ : leur écart est un indicateur rapide de dissymétrie.
+\end{attention}
+
+% =====================================================================
+\section{Synthèse : formulaire, méthodes et points-clés}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.55}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.7cm} >{\centering\arraybackslash}p{5.6cm} >{\raggedright\arraybackslash}p{5.0cm}}
+\rowcolor{primary!18}
+\textbf{Indicateur} & \textbf{Formule} & \textbf{À retenir} \\
+\midrule
+Effectif total & $N=\displaystyle\sum_{i=1}^{k} n_i$ & somme de la colonne des effectifs \\
+Fréquence & $f_i=\dfrac{n_i}{N}$ & en décimal ($\times 100\,$ = \,\%) ; $\sum f_i=1$ \\
+Centre de classe & $x_i=\dfrac{a+b}{2}$ & utilisé dans tous les calculs \\
+Mode $M$ & classe d'effectif maximal & le plus fréquent ; valeur si discret \\
+Moyenne $m$ & $m=\dfrac{1}{N}\sum n_i x_i$ & pondérée par les effectifs ; unité du caractère \\
+Médiane $\med$ & valeur à $f_c=50\,\%$ & partage l'effectif en deux \\
+Médiane (classes) & $\med=a+\dfrac{r}{n_{\text{classe}}}(b-a)$ & interpolation linéaire, $r=\tfrac{N}{2}-n_c^{\text{préc}}$ \\
+Quartile $Q_1$ & $Q_1=a+\dfrac{r_1}{n_{\text{classe}}}(b-a)$ & rang visé $\tfrac{N}{4}$ \\
+Étendue & $x_{\max}-x_{\min}$ & le plus simple, le plus grossier \\
+Écart moyen $\ecm$ & $\ecm=\dfrac{1}{N}\sum n_i|m-x_i|$ & valeur absolue ; unité du caractère \\
+Variance $V$ & $V=\dfrac{1}{N}\sum n_i(m-x_i)^2$ & unité au \textbf{carré} ; $V\geqslant 0$ \\
+König--Huygens & $V=\dfrac{1}{N}\sum n_i x_i^{\,2}-m^2$ & plus précis (une seule soustraction) \\
+Écart type $\ect$ & $\ect=\sqrt{V}$ & même unité que le caractère ; $\ect\geqslant\ecm$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[analyser une série statistique en six réflexes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Construire} un tableau propre : classes $\rightarrow$ centres $x_i$ $\rightarrow$
+        effectifs $n_i$ $\rightarrow$ vérifier $N$ $\rightarrow$ fréquences $f_i$ $\rightarrow$
+        fréquences cumulées $f_c$.
+  \item \textbf{Position} : lire le mode, calculer la moyenne $m=\tfrac{1}{N}\sum n_i x_i$,
+        déterminer la médiane (interpolation linéaire sur les classes, ou tri + formule de rang
+        sur une série discrète).
+  \item \textbf{Dispersion} : étendue, puis variance (préférer König--Huygens) et écart type
+        $\ect=\sqrt{V}$.
+  \item \textbf{Vérifier la cohérence} : $\sum n_i=N$, $\sum f_i=1$, $V\geqslant 0$,
+        $\ect\geqslant\ecm$, et comparer $m$ et $\med$ (symétrie).
+  \item \textbf{Conserver les unités} : $m,\med,\ecm,\ect$ dans l'unité du caractère ; $V$ au
+        carré ; $f_i$ sans unité.
+  \item \textbf{Interpréter en français} : une moyenne ou un écart type sans phrase de conclusion
+        ne vaut rien --- dire \emph{ce que le nombre signifie concrètement}.
+\end{enumerate}
+\end{methode}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 8}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Vocabulaire :} \emph{population} ($N$ individus), \emph{caractère} (qualitatif, ou
+        quantitatif discret / continu $\rightarrow$ \emph{classes} de centre $x_i=(a+b)/2$),
+        \emph{effectif} $n_i$, \emph{fréquence} $f_i=n_i/N$.
+  \item \textbf{Trois indicateurs de position :} le \textbf{mode} (valeur la plus fréquente), la
+        \textbf{moyenne} $m=\frac{1}{N}\sum n_i x_i$ (pondérée), la \textbf{médiane} (valeur à
+        $50\,\%$). Sur des classes, la médiane se calcule par \textbf{interpolation linéaire} :
+        $\med=a+\frac{r}{n_{\text{classe}}}(b-a)$.
+  \item \textbf{Quartiles} $Q_1,Q_3$ : même méthode, rangs visés $\tfrac{N}{4}$ et $\tfrac{3N}{4}$ ;
+        $Q_2=\med$.
+  \item \textbf{Dispersion :} \textbf{écart moyen} $\ecm=\frac{1}{N}\sum n_i|m-x_i|$, \textbf{variance}
+        $V=\frac{1}{N}\sum n_i(m-x_i)^2$ (ou König--Huygens $V=\frac{1}{N}\sum n_i x_i^{\,2}-m^2$),
+        \textbf{écart type} $\ect=\sqrt{V}$.
+  \item \textbf{Unités :} $m,\med,\ecm,\ect$ ont l'unité du caractère ; $V$ l'a au carré ; les
+        fréquences sont sans unité.
+  \item \textbf{Graphiques :} diagramme en bâtons (discret), histogramme (continu), ogive
+        (cumulée) sur laquelle on lit $\med$, $Q_1$, $Q_3$.
+  \item \textbf{Toujours interpréter} un résultat par une phrase concrète en français.
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

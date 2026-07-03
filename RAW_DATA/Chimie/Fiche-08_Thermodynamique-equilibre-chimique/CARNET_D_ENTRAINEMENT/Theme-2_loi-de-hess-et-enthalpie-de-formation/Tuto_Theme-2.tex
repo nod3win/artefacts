@@ -1,0 +1,135 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 8 — THÈME 2
+%  Tuto : Enthalpie de formation et loi de Hess
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{exocol}{RGB}{200,60,40}
+\definecolor{endocol}{RGB}{0,110,180}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{definitionb}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{formuleb}[1][]{boxbase,colback=formulacol!6,colframe=formulacol,title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{methodeb}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attentionb}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exempleb}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\dH}{\Delta H}
+\newcommand{\dHr}{\Delta H^{\circ}_{\text{r}}}
+\newcommand{\dHf}{\Delta H^{\circ}_{\text{f}}}
+
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 2 : Enthalpie de formation et loi de Hess}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,minimum width=16cm,
+      minimum height=1.5cm,align=center,inner sep=8pt]
+  {{\Large\bfseries Thème 2 — Enthalpie de formation et loi de Hess}\\[2pt]
+   {\small Calculer $\dHr$ sans mesurer : additionner des étapes}};
+\end{tikzpicture}
+\end{center}
+
+\section{L'enthalpie standard de formation}
+
+\begin{definitionb}[enthalpie standard de formation $\dHf$]
+$\dHf$ est la variation d'enthalpie de la réaction qui forme \textbf{une mole} d'un composé \emph{à partir
+des corps purs simples} pris dans leur état le plus stable, dans les conditions standard. Unité :
+\si{\kilo\joule\per\mol}.
+\end{definitionb}
+
+\begin{formuleb}[convention fondamentale]
+\[ \boxed{\;\dHf(\text{corps pur simple, état le plus stable}) = \SI{0}{\kilo\joule\per\mol}\;} \]
+Exemples : $\dHf(\ce{O2})=\dHf(\ce{N2})=\dHf(\ce{H2})=\dHf(\ce{Fe}(s))=\dHf(\ce{Ar})=0$. \\
+On ne « forme » pas un élément à partir de lui-même : cela ne coûte aucune énergie.
+\end{formuleb}
+
+\section{La loi de Hess}
+
+Comme $H$ est une \textbf{fonction d'état}, $\dHr$ ne dépend que des états initial et final : on peut donc
+décomposer une réaction en étapes dont les enthalpies s'\textbf{additionnent}.
+
+\begin{formuleb}[loi de Hess]
+\[ \boxed{\;\dHr \;=\; \sum n_i\,\dHf(\text{produits}) \;-\; \sum n_j\,\dHf(\text{réactifs})\;} \]
+Chaque $\dHf$ est \emph{pondérée par le coefficient stœchiométrique} de l'espèce.
+\end{formuleb}
+
+\begin{methodeb}[deux techniques équivalentes]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Par les $\dHf$} : « produits $-$ réactifs », chacun $\times$ son coefficient (les corps
+        purs simples comptent pour $0$).
+  \item \textbf{Par combinaison d'équations} (cycle) : on additionne des réactions connues ; si l'on
+        \emph{inverse} une réaction, on \emph{change le signe} de son $\dH$ ; si on la \emph{multiplie}
+        par $k$, on multiplie $\dH$ par $k$.
+\end{itemize}
+\end{methodeb}
+
+\begin{exempleb}[cycle de Hess]
+$2\,\ce{SO2}(g) + \ce{O2}(g) \rightarrow 2\,\ce{SO3}(g)$, avec $\dHf(\ce{SO2})=-300$ et $\dHf(\ce{SO3})=-400$ (\si{\kilo\joule\per\mol}).
+\begin{center}
+\begin{tikzpicture}[scale=0.86]
+  \draw[->,thick] (0,-0.2) -- (0,4.4) node[above,font=\small]{$H$ (kJ)};
+  \draw[primarydark,very thick] (0.4,3.9) -- (7.3,3.9);
+  \node[anchor=west,font=\scriptsize] at (0.5,4.15){$2\,\ce{S}(s)+3\,\ce{O2}(g)$ \ (éléments, $0$)};
+  \draw[exocol,very thick] (0.4,2.2) -- (4.2,2.2);
+  \node[anchor=west,font=\scriptsize] at (1.1,2.45){$2\,\ce{SO2}(g)+\ce{O2}(g)$};
+  \draw[endocol,very thick] (2.6,0.7) -- (7.3,0.7);
+  \node[anchor=west,font=\scriptsize] at (5.0,0.95){$2\,\ce{SO3}(g)$};
+  \draw[->,exocol,line width=1pt] (0.9,3.9) -- (0.9,2.2) node[midway,fill=white,font=\scriptsize]{$2(-300)$};
+  \draw[->,endocol,line width=1pt] (6.6,3.9) -- (6.6,0.7) node[midway,fill=white,font=\scriptsize]{$2(-400)$};
+  \draw[->,attncol,line width=1pt] (3.4,2.2) -- (3.4,0.7) node[midway,right,font=\scriptsize,attncol]{$\dHr=?$};
+\end{tikzpicture}
+\end{center}
+Les deux chemins depuis les éléments donnent la même enthalpie :
+$2(-300)+\dHr = 2(-400)$, d'où $\dHr = 2(-400)-2(-300) = \SI{-200}{\kilo\joule}$ (pour \SI{2}{\mol} de $\ce{SO3}$).
+\end{exempleb}
+
+\begin{attentionb}
+Bien lire les \textbf{coefficients} (le « $2$ » multiplie le $\dHf$) et le \textbf{sens} des flèches
+(une flèche parcourue à l'envers change le signe). Une valeur de $\dHr$ n'a de sens que \emph{rapportée
+à une équation précise}.
+\end{attentionb}
+
+\end{document}

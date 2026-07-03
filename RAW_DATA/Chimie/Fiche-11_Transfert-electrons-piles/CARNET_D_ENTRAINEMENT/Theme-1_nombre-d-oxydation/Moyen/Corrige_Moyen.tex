@@ -1,0 +1,98 @@
+% =====================================================================
+%  FICHE 11 — THEME 1 — Corrigé MOYEN — Le nombre d'oxydation
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Corrigé Moyen}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[le chrome dans deux espèces]
+$\NO(\ce{O})=-\mathrm{II}$ partout.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{K2Cr2O7} (neutre) : $2(+1)+2x+7(-2)=0 \Rightarrow 2+2x-14=0 \Rightarrow x=+6$.
+        Donc $\NO(\ce{Cr})=+\mathrm{VI}$.
+  \item \ce{CrO4^{2-}} (charge $-2$) : $x+4(-2)=-2 \Rightarrow x=+6$. Donc $\NO(\ce{Cr})=+\mathrm{VI}$.
+\end{enumerate}
+\textbf{Oui}, le chrome vaut $+\mathrm{VI}$ dans les deux : le dichromate et le chromate sont deux formes
+du chrome $(+\mathrm{VI})$. \emph{(Réf. livre QCM~2.)}
+\end{corr}
+
+\begin{corr}[le manganèse dans toute sa gamme]
+$\NO(\ce{O})=-\mathrm{II}$, $\NO(\ce{K})=+\mathrm{I}$.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{MnO4^-} : $x+4(-2)=-1 \Rightarrow x=+\mathrm{VII}$.
+  \item \ce{Mn^{2+}} : ion monoatomique $\Rightarrow +\mathrm{II}$.
+  \item \ce{MnO2} : $x+2(-2)=0 \Rightarrow x=+\mathrm{IV}$.
+  \item \ce{Mn(s)} : corps simple $\Rightarrow 0$.
+  \item \ce{KMnO4} : $(+1)+x+4(-2)=0 \Rightarrow x=+\mathrm{VII}$.
+\end{itemize}
+Ordre croissant : $\ce{Mn}(0) < \ce{Mn^{2+}}(+\mathrm{II}) < \ce{MnO2}(+\mathrm{IV}) < \ce{MnO4^-}(+\mathrm{VII}) = \ce{KMnO4}(+\mathrm{VII})$.
+\emph{(Réf. livre QCM~7 ; annales 2025-Q10, 2020-Q1.)}
+\end{corr}
+
+\begin{corr}[l'azote sous plusieurs formes]
+$\NO(\ce{H})=+\mathrm{I}$, $\NO(\ce{O})=-\mathrm{II}$.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{N2H4} (neutre) : $2x+4(+1)=0 \Rightarrow 2x=-4 \Rightarrow x=-2$, soit $\NO(\ce{N})=-\mathrm{II}$. \emph{(livre QCM~3.)}
+  \item \ce{NO3^-} (charge $-1$) : $x+3(-2)=-1 \Rightarrow x=+5$, soit $\NO(\ce{N})=+\mathrm{V}$.
+  \item \ce{NH4+} (charge $+1$) : $x+4(+1)=+1 \Rightarrow x=-3$, soit $\NO(\ce{N})=-\mathrm{III}$.
+\end{enumerate}
+L'azote couvre ici de $-\mathrm{III}$ à $+\mathrm{V}$ : c'est ce qui en fait un acteur majeur du redox.
+\end{corr}
+
+\begin{corr}[le soufre dans les oxoanions]
+$\NO(\ce{O})=-\mathrm{II}$, charge $-2$ à chaque fois.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{SO4^{2-}} : $x+4(-2)=-2 \Rightarrow x=+6$, soit $\NO(\ce{S})=+\mathrm{VI}$.
+  \item \ce{SO3^{2-}} : $x+3(-2)=-2 \Rightarrow x=+4$, soit $\NO(\ce{S})=+\mathrm{IV}$.
+  \item \ce{S2O3^{2-}} : $2x+3(-2)=-2 \Rightarrow 2x=4 \Rightarrow x=+2$, soit $\NO(\ce{S})=+\mathrm{II}$ (moyenne des deux S).
+\end{itemize}
+\end{corr}
+
+\begin{corr}[une somme de deux nombres d'oxydation]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{CH4} : $x+4(+1)=0 \Rightarrow \NO(\ce{C})=-\mathrm{IV}$. \quad
+        \ce{CO2} : $x+2(-2)=0 \Rightarrow \NO(\ce{C})=+\mathrm{IV}$.
+  \item Somme : $(-4)+(+4)=\mathbf{0}$. \emph{(Réf. livre QCM~6.)}
+  \item Le carbone passe de $-\mathrm{IV}$ à $+\mathrm{IV}$ : son \NO\ \textbf{augmente} $\Rightarrow$ c'est une
+        \textbf{oxydation} (le carbone perd des électrons). C'est le principe de toute combustion du carbone.
+\end{enumerate}
+\end{corr}
+
+\end{document}

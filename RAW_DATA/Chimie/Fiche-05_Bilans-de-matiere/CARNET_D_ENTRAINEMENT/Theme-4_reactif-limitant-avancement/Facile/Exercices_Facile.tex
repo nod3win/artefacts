@@ -1,0 +1,86 @@
+% =====================================================================
+%  THÈME 4 — Réactif limitant et avancement
+%  Niveau FACILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{excol}{RGB}{0,135,90}
+\newcommand{\nq}[1]{n_{\text{#1}}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 4 : Limitant}}
+\fancyhead[R]{\small\textcolor{excol}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=excol!5,colframe=excol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Réactif limitant \& avancement}\\[1pt]
+{\large\color{excol}\textbf{Niveau Facile}}\\[2pt]
+{\itshape Objectif : identifier le réactif limitant par le critère du plus petit rapport $n/\nu$.}\\
+{\color{primary}\rule{0.62\linewidth}{1pt}}
+\end{center}
+
+\begin{exo}[la synthèse générique]
+Pour $\ce{2 A + 3 B -> C + 6 D}$, on mélange $\nq{A,0}=\SI{0,100}{\mole}$ et $\nq{B,0}=\SI{0,200}{\mole}$.
+\textbf{a)} Calcule le rapport $n/\nu$ pour \ce{A} et pour \ce{B}.\quad
+\textbf{b)} Quel est le réactif limitant ? Quelle est la valeur de $\xi_{\max}$ ?
+\end{exo}
+
+\begin{exo}[synthèse de l'ammoniac]
+Pour $\ce{N2 + 3 H2 -> 2 NH3}$, on introduit \SI{2,0}{\mole} de \ce{N2} et \SI{9,0}{\mole} de \ce{H2}.
+Quel est le réactif limitant ?
+\end{exo}
+
+\begin{exo}[formation de l'eau]
+Pour $\ce{2 H2 + O2 -> 2 H2O}$, on dispose de \SI{5,0}{\mole} de \ce{H2} et \SI{2,0}{\mole} de \ce{O2}.
+Quel est le réactif limitant ?
+\end{exo}
+
+\begin{exo}[le piège : « plus petite quantité » $\neq$ limitant]
+On fait réagir le zinc avec l'acide chlorhydrique : $\ce{Zn + 2 HCl -> ZnCl2 + H2}$.
+On introduit \SI{0,50}{\mole} de \ce{Zn} et \SI{0,80}{\mole} de \ce{HCl}.
+\textbf{a)} Quel réactif est présent en plus grande quantité de matière ?\quad
+\textbf{b)} En appliquant le critère $n/\nu$, quel est le réactif \emph{limitant} ? Commente.
+\end{exo}
+
+\begin{exo}[vrai ou faux ? notions de limitant et d'excès]
+Pour une réaction où un réactif est limitant, indique si chaque affirmation est \textbf{vraie}
+ou \textbf{fausse}, et justifie brièvement :
+\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item « Le réactif limitant est toujours celui dont la quantité de matière est la plus faible. »
+  \item « À la fin de la réaction, il reste du réactif en excès. »
+  \item « Le réactif limitant est entièrement consommé. »
+  \item « Tous les réactifs sont entièrement consommés. »
+\end{enumerate}
+\end{exo}
+
+\end{document}

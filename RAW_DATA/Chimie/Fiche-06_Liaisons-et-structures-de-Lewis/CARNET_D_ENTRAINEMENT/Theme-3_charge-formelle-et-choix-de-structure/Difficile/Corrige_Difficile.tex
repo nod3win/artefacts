@@ -1,0 +1,133 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 3
+%  Niveau DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corcol}{RGB}{0,114,178}
+\definecolor{astucecol}{RGB}{198,93,9}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
+   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
+   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 3} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 3 — Corrigé du niveau Difficile}
+\end{center}
+\medskip
+
+\begin{cor}[ion perchlorate \ce{ClO4-} : deux structures concurrentes]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item \textbf{Structure A} (4 simples liaisons).\\
+        Chlore : $0$ doublet libre, $4$ liaisons $\Rightarrow
+        q_{\mathrm{f}}(\ce{Cl}) = 7 - 2\times 0 - 4 = \mathbf{+3}$.\\
+        Chaque \ce{O} simplement lié : $3$ doublets libres, $1$ liaison $\Rightarrow
+        q_{\mathrm{f}}(\ce{O}) = 6 - 2\times 3 - 1 = \mathbf{-1}$.\\
+        Somme $= (+3) + 4\times(-1) = 3 - 4 = \mathbf{-1}$. \checkmark
+  \item \textbf{Structure B} (octet étendu : 3 doubles $+$ 1 simple).\\
+        Chlore : $0$ doublet libre, $7$ liaisons (3 doubles $=6$, $+1$ simple) $\Rightarrow
+        q_{\mathrm{f}}(\ce{Cl}) = 7 - 2\times 0 - 7 = \mathbf{0}$.\\
+        Chaque \ce{O} doublement lié : $2$ doublets libres, $2$ liaisons $\Rightarrow
+        q_{\mathrm{f}} = 6 - 2\times 2 - 2 = \mathbf{0}$.\\
+        L'\ce{O} simplement lié : $3$ doublets libres, $1$ liaison $\Rightarrow
+        q_{\mathrm{f}} = 6 - 2\times 3 - 1 = \mathbf{-1}$.\\
+        Somme $= 0 + 3\times 0 + (-1) = \mathbf{-1}$. \checkmark
+  \item \rep La structure \textbf{B} est la plus représentative. Critère : à octet respecté (ou
+        étendu par un atome qui en a le droit), on retient la structure aux \textbf{charges
+        formelles minimales}. La structure B ramène le chlore de $+3$ à $0$ et annule les charges de
+        trois oxygènes : ses charges formelles sont bien plus proches de zéro que celles de A.
+  \item \rep Passer de A à B, c'est ajouter $3$ liaisons $\pi$ au chlore, qui s'entoure alors de
+        $14$ électrons ($7$ liaisons $\times 2$) : c'est un \textbf{octet étendu}. Seuls les
+        éléments de \textbf{période $\geq 3$} (comme \ce{Cl}, qui dispose d'orbitales $d$
+        accessibles) peuvent dépasser $8$ électrons. La structure B serait \emph{interdite} pour un
+        atome central de 2\textsuperscript{e} période.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[choisir la bonne structure : l'acide nitrique \ce{HNO3}]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item L'azote forme \textbf{une double} \ce{N=O} $+$ \textbf{deux simples} \ce{N-O}, soit
+        $2 + 1 + 1 = \mathbf{4}$ liaisons et aucun doublet libre. Il s'entoure de
+        $4\times 2 = \mathbf{8}$ électrons : \rep son octet est \emph{exactement} respecté.
+  \item \rep L'azote est en \textbf{2\textsuperscript{e} période} : il ne possède pas d'orbitales
+        $d$ et ne peut donc \textbf{jamais} dépasser $8$ électrons. Une structure à $5$ liaisons lui
+        ferait porter $10$ électrons — impossible. Toute structure « à azote pentavalent » est
+        à rejeter (critère 1 : octet obligatoire pour la 2\textsuperscript{e} période).
+  \item Charges formelles dans la bonne structure :\\
+        Azote : $0$ doublet libre, $4$ liaisons $\Rightarrow
+        q_{\mathrm{f}}(\ce{N}) = 5 - 2\times 0 - 4 = \mathbf{+1}$.\\
+        \ce{O} doublement lié : $2$ doublets libres, $2$ liaisons $\Rightarrow q_{\mathrm{f}} = 6-4-2 = 0$.\\
+        \ce{O} du groupe \ce{O-H} : $2$ doublets libres, $2$ liaisons (\ce{N-O} et \ce{O-H})
+        $\Rightarrow q_{\mathrm{f}} = 6-4-2 = 0$.\\
+        \ce{O} simplement lié \emph{sans} \ce{H} : $3$ doublets libres, $1$ liaison $\Rightarrow
+        q_{\mathrm{f}} = 6 - 2\times 3 - 1 = \mathbf{-1}$.\\
+        Chaque \ce{H} : $q_{\mathrm{f}} = 0$.\\
+        \rep Somme $= (+1) + 0 + 0 + (-1) + 0 = \mathbf{0}$. \checkmark\; Cohérent avec une molécule
+        neutre : la charge $+$ (sur \ce{N}) et la charge $-$ (sur l'\ce{O} terminal) se compensent.
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[ion nitrate \ce{NO3^-} : pourquoi l'azote garde-t-il sa charge ?]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item \rep Azote central, \textbf{une double} \ce{N=O} $+$ \textbf{deux simples} \ce{N-O^-},
+        sans doublet libre : l'azote forme $2 + 1 + 1 = \mathbf{4}$ liaisons (soit $8$ électrons,
+        octet strict).
+  \item Azote : $q_{\mathrm{f}}(\ce{N}) = 5 - 2\times 0 - 4 = \mathbf{+1}$.\\
+        \ce{O} doublement lié : $q_{\mathrm{f}} = 6 - 2\times 2 - 2 = \mathbf{0}$.\\
+        Chaque \ce{O} simplement lié : $q_{\mathrm{f}} = 6 - 2\times 3 - 1 = \mathbf{-1}$.\\
+        \rep Somme $= (+1) + 0 + 2\times(-1) = 1 - 2 = \mathbf{-1}$. \checkmark\; C'est bien la charge
+        de l'ion.
+  \item \rep La structure est « bonne » parce que l'azote, en 2\textsuperscript{e} période,
+        \textbf{respecte strictement l'octet} ($4$ liaisons $= 8$ électrons) : c'est le maximum
+        permis. Contrairement au chlore de \ce{ClO4-} (3\textsuperscript{e} période), l'azote
+        \textbf{ne peut pas} former de doubles liaisons supplémentaires pour annuler sa charge
+        $+1$ : cela dépasserait l'octet, ce qui lui est interdit. Le $+1$ sur l'azote est donc
+        \emph{inévitable} et parfaitement acceptable ici.
+\end{enumerate}
+\end{cor}
+
+\begin{astucebox}[le réflexe de la charge formelle]
+$q_{\mathrm{f}} = N_v - 2\times(\text{doublets non liants}) - (\text{nb de liaisons})$, et
+\textbf{une double liaison compte pour 2 liaisons}. L'octet étendu (pour abaisser une charge) n'est
+permis qu'aux atomes de \textbf{période $\geq 3$}. Vérifie toujours : la somme des $q_{\mathrm{f}}$
+doit redonner la charge de l'édifice.
+\end{astucebox}
+
+\end{document}

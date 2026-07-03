@@ -1,0 +1,98 @@
+% =====================================================================
+%  FICHE 11 — THEME 5 — Exercices MOYEN — Piles, Nernst, Faraday
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+\newcommand{\Ered}{\ensuremath{E_{\mathrm{r}}^{\circ}}}
+\newcommand{\fem}{\ensuremath{\Delta E}}
+\newcommand{\cc}[1]{\left[#1\right]}
+
+\newcounter{exo}
+\newtcolorbox{exo}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=primary!4,
+  colframe=primary,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Exercice~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+\newtcolorbox{donnees}{enhanced,boxrule=0.7pt,arc=2pt,colback=black!3,colframe=black!45,
+  left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries\small,coltitle=black!70,title={Données}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 5} — Piles, Nernst, Faraday}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Niveau Moyen}\\[2pt]
+{\small\itshape Nernst appliqué aux demi-piles et loi de Faraday chiffrée. Rappel : $\frac{RT}{F}\ln 10 \simeq 0{,}06$~V.}\\[-4pt]
+{\color{primary}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{donnees}
+\centering\small
+$\Ered(\ce{Ag+}/\ce{Ag})=+0{,}80$\,V ; $\Ered(\ce{Zn^{2+}}/\ce{Zn})=-0{,}76$\,V ;
+$\Ered(\ce{Cu^{2+}}/\ce{Cu})=+0{,}34$\,V ; $\Ered(\ce{MnO4^-}/\ce{Mn^{2+}})=+1{,}51$\,V.\\
+$F=\SI{96485}{C\per mol}$ ; $M(\ce{Cu})=\SI{63.5}{g\per mol}$ ; $M(\ce{Ag})=\SI{107.9}{g\per mol}$.
+\end{donnees}
+
+\begin{exo}[la pile zinc--argent en conditions standard — d'après annales 2022]
+On construit la pile associant les couples \ce{Zn^{2+}}/\ce{Zn} et \ce{Ag+}/\ce{Ag} (concentrations
+standard \SI{1}{mol\per\litre}).
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item Identifie l'anode et la cathode, et écris les deux demi-réactions.
+  \item Calcule la f.é.m. standard $\fem^{\circ}$ de la pile.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[potentiel d'une demi-pile de cuivre — d'après livre QCM 23]
+On plonge une électrode de cuivre dans une solution où $\cc{\ce{Cu^{2+}}}=\SI{0.01}{mol\per\litre}$,
+à \SI{25}{\celsius}. Le couple est \ce{Cu^{2+}}/\ce{Cu} ($n=2$, $\Ered=+0{,}34$\,V). Calcule le
+potentiel de réduction $E$ de cette demi-pile par la formule de Nernst. Diluer \ce{Cu^{2+}}
+augmente-t-il ou diminue-t-il le pouvoir oxydant ?
+\end{exo}
+
+\begin{exo}[potentiel de la demi-pile permanganate — d'après livre QCM 24]
+Pour la demi-équation $\ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O}$, toutes les concentrations
+valent \SI{0.01}{mol\per\litre} et le pH vaut $0$ (donc $\cc{\ce{H+}}=\SI{1}{mol\per\litre}$).
+Sachant que $\Ered=+1{,}51$\,V et que
+\[
+E = \Ered + \frac{0{,}06}{5}\log\frac{\cc{\ce{MnO4^-}}\,\cc{\ce{H+}}^{8}}{\cc{\ce{Mn^{2+}}}},
+\]
+calcule le potentiel $E$ de cette demi-pile.
+\end{exo}
+
+\begin{exo}[dépôt de cuivre par électrolyse — d'après le cours]
+On électrolyse une solution de sulfate de cuivre \ce{CuSO4} avec $I=\SI{2.0}{A}$ pendant
+$t=\SI{30}{min}$. À la cathode se produit $\ce{Cu^{2+} + 2 e^- -> Cu}$.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item Convertis la durée en secondes, puis calcule la masse de cuivre déposée par la loi de Faraday.
+  \item Retrouve le résultat en passant par les moles d'électrons ($Q/F$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[durée d'une argenture — d'après le cours]
+On veut déposer $m=\SI{10}{g}$ d'argent à la cathode d'une solution de nitrate d'argent \ce{AgNO3},
+avec un courant $I=\SI{5.0}{A}$. La réduction est $\ce{Ag+ + e^- -> Ag}$ ($n=1$).
+Combien de temps faut-il ? (Exprime le résultat en secondes puis en minutes.)
+\end{exo}
+
+\end{document}

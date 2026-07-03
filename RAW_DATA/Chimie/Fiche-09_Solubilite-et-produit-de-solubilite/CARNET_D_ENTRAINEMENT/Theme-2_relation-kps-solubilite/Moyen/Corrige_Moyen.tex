@@ -1,0 +1,195 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 2 — Relation $\Kps \leftrightarrow s$}%
+{Corrigé — Niveau Moyen}%
+{Réponses détaillées et justifications}
+
+\begin{correction}[de $\Kps$ à $s$]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{\ce{AgCl}} ($1{:}1$, $\Kps=s^{2}$) :
+        $s=\sqrt{\Kps}=\sqrt{\num{1{,}8e-10}}=\boxed{\qty{1{,}3e-5}{\molar}}$.
+  \item \textbf{\ce{CaF2}} ($1{:}2$, $\Kps=4\,s^{3}$) :
+        $s=\sqrt[3]{\dfrac{\Kps}{4}}=\sqrt[3]{\dfrac{\num{3{,}9e-11}}{4}}
+        =\sqrt[3]{\num{9{,}75e-12}}\approx\boxed{\qty{2{,}1e-4}{\molar}}$.
+\end{enumerate}
+\textbf{Vérification (b)} : $4\,(2{,}1\times10^{-4})^{3}=4\times\num{9{,}3e-12}\approx\num{3{,}7e-11}$,
+cohérent avec $\Kps=\num{3{,}9e-11}$.
+\end{correction}
+
+\begin{correction}[solubilité massique $\to \Kps$ — \ce{PbBr2}]
+$\ce{PbBr2(s) <=> Pb^{2+} + 2 Br-}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\Kps=[\ce{Pb^2+}][\ce{Br-}]^{2}=(s)(2s)^{2}=4\,s^{3}$.
+  \item Avec $s=s_m/M$ : $\boxed{\ \Kps=4\left(\dfrac{s_m}{M}\right)^{3}
+        =4\left(\dfrac{\num{4{,}84}}{M_{\ce{PbBr2}}}\right)^{3}\ }$ \emph{(réponse A du \textsc{qcm}\,n\textsuperscript{o}\,4).}
+  \item $s=\dfrac{4{,}84}{367{,}0}=\qty{1{,}32e-2}{\molar}$, donc
+        $\Kps=4\,(1{,}32\times10^{-2})^{3}=4\times\num{2{,}30e-6}\approx\boxed{\num{9{,}2e-6}}$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[concentration imposée — \ce{Mn(OH)2}]
+$\ce{Mn(OH)2(s) <=> Mn^{2+} + 2 OH-}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item La solubilité est la concentration du cation produit : $s=[\ce{Mn^2+}]=\dfrac{x}{2}$.
+  \item $[\ce{OH-}]=2s=2\times\dfrac{x}{2}=x$.
+  \item $\Kps=[\ce{Mn^2+}][\ce{OH-}]^{2}=\left(\dfrac{x}{2}\right)(x)^{2}=\boxed{\dfrac{x^{3}}{2}}$.
+\end{enumerate}
+\emph{Cohérent avec $\Kps=4s^{3}=4(x/2)^{3}=x^{3}/2$ — réponse C du \textsc{qcm}\,n\textsuperscript{o}\,5.}
+\end{correction}
+
+\begin{correction}[comparer des sels de même type]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Type $3{:}2$ : $[\ce{PO4^3-}]=2s$ et $\Kps=108\,s^{5}$, d'où $s=\sqrt[5]{\Kps/108}$. La fonction
+        $\Kps\mapsto s$ est \textbf{croissante}.
+  \item Les quatre sels ayant \textbf{la même} relation $\Kps=108\,s^{5}$, on peut comparer directement :
+        le plus grand $\Kps$ donne le plus grand $s$, donc le plus grand $[\ce{PO4^3-}]=2s$. C'est
+        \boxed{\ce{Sr3(PO4)2}} ($\Kps=\num{1{,}0e-31}$, le plus élevé). \emph{(Réponse C du
+        \textsc{qcm}\,n\textsuperscript{o}\,7.)} La comparaison directe n'est légitime que \emph{parce que}
+        les sels sont de même type.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[comparer des types différents — le piège]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Non}, il a tort : \ce{AgCl} ($1{:}1$) et \ce{Ag2CrO4} ($2{:}1$) ne suivent pas la même
+        loi $\Kps=f(s)$ ($s^2$ contre $4s^3$). On \textbf{ne peut pas} comparer les $\Kps$ directement :
+        il faut repasser par $s$.
+  \item $s(\ce{AgCl})=\sqrt{\num{1{,}8e-10}}=\qty{1{,}3e-5}{\molar}$ ; \\
+        $s(\ce{Ag2CrO4})=\sqrt[3]{\dfrac{\num{1{,}1e-12}}{4}}=\sqrt[3]{\num{2{,}75e-13}}
+        =\qty{6{,}5e-5}{\molar}$.\\
+        Comme $\qty{6{,}5e-5}{}>\qty{1{,}3e-5}{}$, c'est \boxed{\ce{Ag2CrO4}} qui est le \textbf{plus
+        soluble}, alors même que son $\Kps$ est plus petit. Le piège est déjoué.
+\end{enumerate}
+\end{correction}
+
+\end{document}

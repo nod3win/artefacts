@@ -1,0 +1,206 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 1 — Équation de dissolution \& produit de solubilité}%
+{Tuto — la mécanique de base}%
+{Écrire l'équation de dissolution, puis l'expression littérale du $\Kps$}
+
+\noindent Tout problème de solubilité commence par \textbf{deux gestes purement mécaniques} (aucun
+calcul, aucune donnée numérique) : \textbf{(1)} écrire l'\emph{équation de dissolution} du sel, puis
+\textbf{(2)} en déduire l'\emph{expression du $\Kps$}. Les maîtriser, c'est faire « la moitié du
+travail » de tout exercice de la fiche.
+
+\section*{1. L'équation de dissolution}
+Un composé ionique solide plongé dans l'eau se sépare en ses ions hydratés. Pour un sel
+$\mathrm{M}_p\mathrm{X}_q$ (cation $\mathrm{M}^{q+}$, anion $\mathrm{X}^{p-}$) :
+\[ \boxed{\ \ce{M_{p}X_{q}(s) <=> p\,M^{q+}(aq) + q\,X^{p-}(aq)}\ } \]
+
+\begin{methode}[3 réflexes]
+\textbf{(i)} solide $(s)$ à gauche, double flèche $\ce{<=>}$ ; \textbf{(ii)} ions $(aq)$ à droite, avec
+leur charge ; \textbf{(iii)} reporter les \emph{indices} de la formule en \emph{coefficients}
+($p$ cations, $q$ anions), puis \textbf{vérifier la neutralité} des charges.
+\end{methode}
+
+\begin{attention}[l'erreur n\textsuperscript{o}\,1 : oublier les coefficients]
+\ce{Ag3PO4} libère \textbf{3} ions \ce{Ag+} et \textbf{1} ion \ce{PO4^{3-}}. Un groupement polyatomique
+(\ce{PO4^{3-}}, \ce{CO3^{2-}}, \ce{SO4^{2-}}, \ce{OH-}\dots) reste \textbf{entier} : il ne se casse pas.
+Le « 3 » deviendra un \textbf{exposant} dans le $\Kps$ — d'où son importance.
+\end{attention}
+
+\section*{2. L'expression du produit de solubilité $\Kps$}
+Le $\Kps$ est la \textbf{constante d'équilibre} de la dissolution : produit des concentrations des ions,
+chacune \textbf{élevée à son coefficient}.
+\[ \boxed{\ \Kps = [\mathrm{M}^{q+}]^{\,p}\,[\mathrm{X}^{p-}]^{\,q}\ } \]
+
+\begin{astuce}[la règle d'or]
+\emph{L'exposant de chaque ion dans le $\Kps$ = son coefficient dans l'équation.} Le \textbf{solide
+n'apparaît jamais} (activité $=1$ : que l'on ait \qty{1}{\milli\gram} ou \qty{1}{\kilo\gram} de solide,
+sa contribution est la même).
+\end{astuce}
+
+\begin{exemple}[les deux gestes, sel par sel]
+\begin{center}\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l l c l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Sel} & \textbf{Équation de dissolution} & \textbf{Type} & \textbf{$\Kps$}\\
+\midrule
+\ce{AgCl}     & $\ce{AgCl(s) <=> Ag+ + Cl-}$              & $1{:}1$ & $\Ce{Ag+}\Ce{Cl-}$\\
+\ce{CaF2}     & $\ce{CaF2(s) <=> Ca^{2+} + 2 F-}$        & $1{:}2$ & $\Ce{Ca^2+}\Ce{F-}^{2}$\\
+\ce{Ag2CrO4}  & $\ce{Ag2CrO4(s) <=> 2 Ag+ + CrO4^{2-}}$ & $2{:}1$ & $\Ce{Ag+}^{2}\Ce{CrO4^2-}$\\
+\ce{Fe(OH)3}  & $\ce{Fe(OH)3(s) <=> Fe^{3+} + 3 OH-}$   & $1{:}3$ & $\Ce{Fe^3+}\Ce{OH-}^{3}$\\
+\ce{Ag3PO4}   & $\ce{Ag3PO4(s) <=> 3 Ag+ + PO4^{3-}}$   & $3{:}1$ & $\Ce{Ag+}^{3}\Ce{PO4^3-}$\\
+\ce{Ca3(PO4)2}& $\ce{Ca3(PO4)2(s) <=> 3 Ca^{2+} + 2 PO4^{3-}}$ & $3{:}2$ & $\Ce{Ca^2+}^{3}\Ce{PO4^3-}^{2}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Le \textbf{type} $p{:}q$ (cations $:$ anions) résume tout : il fixe la forme du $\Kps$ et, plus tard, la
+relation avec la solubilité (Thème 2).
+\end{exemple}
+
+\begin{attention}[le $\Kps$ est \emph{sans unité}, mais dépend de $T$]
+Les concentrations sont en \si{\mole\per\litre}, mais le $\Kps$ (constante d'équilibre) s'écrit
+\textbf{sans unité} : $\Kps(\ce{AgCl})=\num{1{,}8e-10}$. En revanche il \textbf{dépend de la
+température} : la dissolution étant souvent endothermique, $\Kps$ croît en général avec $T$.
+\end{attention}
+
+\begin{remarque}[cas particulier $MX_n$ (formule du livre)]
+Pour un sel $\mathrm{MX}_n$ (un cation, $n$ anions) : $\ce{MX_{n}(s) <=> M^{n+} + n X-}$ et
+$\Kps=[\mathrm{M}^{n+}][\mathrm{X}^-]^{n}$. La forme générale
+$\Kps=[\mathrm{M}^{q+}]^{p}[\mathrm{X}^{p-}]^{q}$ couvre en plus \ce{Ag2CrO4}, \ce{Ca3(PO4)2}, etc.
+\medskip
+
+\noindent\emph{Objectif : lire un nom ou une formule $\to$ écrire l'équation $\to$ écrire le $\Kps$,
+sans hésitation et sans calcul.}
+\end{remarque}
+
+\end{document}

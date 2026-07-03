@@ -1,0 +1,1404 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 3
+%  Statique
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+\definecolor{forceA}{RGB}{0,90,200}         % force bleue
+\definecolor{forceB}{RGB}{210,30,40}        % force rouge
+\definecolor{forceG}{RGB}{198,93,9}         % poids (orange)
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  fA/.style={->,>=Stealth,line width=1.2pt,forceA},
+  fB/.style={->,>=Stealth,line width=1.2pt,forceB},
+  fG/.style={->,>=Stealth,line width=1.2pt,forceG},
+  fR/.style={->,>=Stealth,line width=1.4pt,black},
+  ligne/.style={dashed,black!55,line width=0.6pt},
+  cote/.style={<->,>=Stealth,black!70,line width=0.5pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 3} — Statique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vv}[1]{\vec{#1}}
+\newcommand{\Mom}{\mathcal{M}}      % moment de force
+\newcommand{\N}{\si{\newton}}
+\newcommand{\Nm}{\si{\newton\metre}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.5cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Statique}\\[6pt]
+   {\large\bfseries Équilibre des solides, centre de gravité et moment de force}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,3}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : un levier en équilibre ---
+\begin{tikzpicture}[scale=1.0]
+  % pivot triangulaire
+  \fill[primary!75] (0,0) -- (-0.55,-0.9) -- (0.55,-0.9) -- cycle;
+  \draw[black!60] (-0.9,-0.9) -- (0.9,-0.9);
+  % barre
+  \draw[line width=2.2pt,primarydark] (-4.2,0.18) -- (4.2,0.18);
+  \fill[primary] (0,0.18) circle (2.2pt);
+  % masses
+  \draw[fill=forceA!75,draw=forceA!60] (-3.5,0.18) rectangle (-2.9,0.78);
+  \draw[fill=forceB!70,draw=forceB!60] (2.7,0.18) rectangle (3.6,1.0);
+  % forces
+  \draw[fG] (-3.2,0.18) -- (-3.2,-1.0) node[below]{$\vv G_1$};
+  \draw[fG] (3.15,0.18) -- (3.15,-1.0) node[below]{$\vv G_2$};
+  \draw[cote] (-3.2,-1.75) -- (0,-1.75) node[midway,fill=white,inner sep=1pt]{\small $d_1$};
+  \draw[cote] (0,-2.15) -- (3.15,-2.15) node[midway,fill=white,inner sep=1pt]{\small $d_2$};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir la \emph{statique} et la notion d'\textbf{équilibre} d'un solide ;
+  \item énoncer et appliquer la condition d'\textbf{équilibre de translation} ($\sum \vv F = \vv 0$) ;
+  \item composer des \textbf{forces parallèles} (de même sens et de sens opposé) : intensité et point d'application de la résultante ;
+  \item localiser le \textbf{centre de gravité} d'un corps, théoriquement et expérimentalement ;
+  \item définir le \textbf{moment d'une force}, le \emph{bras de levier} et le \emph{couple de forces} ;
+  \item énoncer et appliquer la condition d'\textbf{équilibre de rotation} ($\sum \Mom = 0$) ;
+  \item résoudre des problèmes de leviers, de balances et de corps suspendus.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.6cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 3 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : qu'est-ce que la statique ?}
+% =====================================================================
+La \textbf{mécanique} est la partie de la physique qui étudie le mouvement et l'équilibre
+des corps sous l'action des forces. On la divise traditionnellement en trois grandes branches :
+
+\begin{itemize}[leftmargin=1.6em,topsep=3pt,itemsep=2pt]
+  \item la \textbf{cinématique}, qui décrit le mouvement (positions, vitesses, accélérations)
+        \emph{sans} se préoccuper de ses causes ;
+  \item la \textbf{dynamique}, qui relie le mouvement à ses causes, c'est-à-dire aux \emph{forces}
+        (lois de Newton) ;
+  \item la \textbf{statique}, objet de cette fiche, qui est en réalité un \emph{cas particulier} de la
+        dynamique : celui où le corps reste \emph{immobile} ou en \emph{équilibre}.
+\end{itemize}
+
+\begin{definition}[la statique]
+La \textbf{statique} est la partie de la mécanique qui étudie les \textbf{forces s'exerçant sur un
+objet en équilibre ou au repos} (par exemple : l'étude des leviers, des ponts, des balances,
+des structures de bâtiment).
+\end{definition}
+
+Pourquoi un solide peut-il rester parfaitement immobile alors que plusieurs forces s'exercent
+sur lui (son poids, la réaction d'un support, la tension de fils\dots) ? La réponse tient en une
+phrase, qui est le fil conducteur de toute la fiche : \emph{un corps est en équilibre lorsque toutes
+les actions qu'il subit se compensent exactement}, aussi bien celles qui tendent à le
+\textbf{déplacer} (translation) que celles qui tendent à le \textbf{faire tourner} (rotation).
+
+\begin{remarque}[deux types d'équilibre, deux conditions]
+Nous verrons qu'il faut distinguer et vérifier \emph{deux} conditions indépendantes :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item l'\textbf{équilibre de translation} : la somme (vectorielle) des forces est nulle
+        $\Rightarrow$ le corps ne se déplace pas ;
+  \item l'\textbf{équilibre de rotation} : la somme des moments des forces est nulle
+        $\Rightarrow$ le corps ne tourne pas.
+\end{enumerate}
+Un solide n'est en \textbf{équilibre complet} que si \emph{les deux} conditions sont satisfaites
+\emph{en même temps}.
+\end{remarque}
+
+\subsection{Rappel indispensable : la notion de force}
+Une \textbf{force} modélise une action mécanique exercée sur un corps (une poussée, une traction,
+une attraction\dots). C'est une grandeur \textbf{vectorielle} : pour la décrire complètement, il faut
+préciser \emph{quatre} caractéristiques.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{>{\bfseries}p{3.3cm} p{10.2cm}}
+\rowcolor{primary!12}
+Caractéristique & Signification \\
+\hline
+Point d'application & l'endroit précis où la force s'exerce sur le corps. \\
+Direction & la droite (ou « ligne d'action ») le long de laquelle elle agit. \\
+Sens & l'orientation sur cette droite (vers la gauche/droite, le haut/bas\dots). \\
+Intensité & la « valeur » de la force, sa norme, mesurée en \textbf{newtons} (\si{\newton}). \\
+\end{tabular}
+\end{center}
+
+\begin{remarque}[notation]
+Le \emph{vecteur} force se note avec une flèche, $\vv F$ ; son \emph{intensité} (un nombre positif,
+avec une unité) se note sans flèche, $F$. Ainsi $\vv F$ contient la direction et le sens, tandis
+que $F = \lVert \vv F\rVert$ n'en est que la « longueur ». Cette distinction est capitale en statique :
+deux forces peuvent avoir la \emph{même intensité} $F$ tout en étant des vecteurs \emph{opposés}.
+\end{remarque}
+
+% =====================================================================
+\section{Équilibre de translation d'un solide}
+% =====================================================================
+Commençons par le cas le plus simple : un solide soumis à \textbf{deux forces seulement}.
+
+\begin{definition}[équilibre de translation sous deux forces]
+Soit $A$ un solide \textbf{indéformable} posé sur une table horizontale et soumis à l'action de
+deux forces $\vv F$ et $\vv F'$. On dit qu'il est maintenu en \textbf{équilibre de translation}
+lorsque ces deux forces ont :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item la \textbf{même direction} (même ligne d'action) ;
+  \item la \textbf{même intensité} ($F = F'$) ;
+  \item des \textbf{sens opposés}.
+\end{itemize}
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % table en perspective
+  \draw[black!55,line width=0.8pt]
+        (-3.2,0) -- (3.2,0) -- (4.4,1.1) -- (-2.0,1.1) -- cycle;
+  % pieds
+  \draw[black!55,line width=0.8pt] (-2.7,0) -- (-2.7,-1.6);
+  \draw[black!55,line width=0.8pt] (2.7,0) -- (2.7,-1.6);
+  \draw[black!55,line width=0.8pt] (3.9,1.1) -- (3.9,-0.5);
+  % solide (étoile/plaque) au centre
+  \fill[primary!25,draw=primary!70]
+        (0.7,0.55) -- (0.0,0.75) -- (-0.7,0.55) -- (-0.4,0.45)
+        -- (-0.9,0.30) -- (-0.2,0.35) -- (0.0,0.18) -- (0.2,0.35)
+        -- (0.9,0.30) -- (0.4,0.45) -- cycle;
+  % ligne d'action commune
+  \draw[ligne] (-2.4,0.5) -- (2.6,0.5);
+  \fill (0,0.5) circle (1.3pt);
+  % les deux forces opposées et de même longueur
+  \draw[fR] (0,0.5) -- (-2.0,0.5) node[above=1pt]{$\vv F$};
+  \draw[fR] (0,0.5) -- (2.0,0.5) node[above=1pt]{$\vv F'$};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 1}} : Solide en équilibre sous l'action de deux forces
+dont la résultante est équivalente à une force nulle.}
+\end{figure}
+
+\begin{remarque}[pourquoi une table horizontale ?]
+Le solide est posé sur une table horizontale \textbf{afin de ne pas devoir tenir compte de la force
+d'attraction terrestre} (le poids). Sur une table horizontale, le poids du solide (vertical, vers le
+bas) est exactement compensé par la \emph{réaction} de la table (verticale, vers le haut). On peut
+alors raisonner uniquement sur les forces $\vv F$ et $\vv F'$ appliquées horizontalement.
+\end{remarque}
+
+\begin{theoreme}[invariance le long de la ligne d'action]
+On peut \textbf{déplacer le point d'application} d'une force le long de sa ligne d'action
+\textbf{sans modifier l'équilibre} du système (pour un solide indéformable). Une force « glisse »
+donc sur sa propre droite : c'est ce qu'on appelle un \emph{vecteur glissant}.
+\end{theoreme}
+
+Ce cas à deux forces n'est qu'une illustration. La condition générale, valable quel que soit le
+nombre de forces, s'énonce ainsi :
+
+\begin{theoreme}[condition d'équilibre de translation]
+Un système soumis à plusieurs forces $\vv F_1, \vv F_2, \dots, \vv F_n$ \textbf{n'est en équilibre de
+translation que si la résultante (somme vectorielle) de ces forces est nulle}.
+\end{theoreme}
+
+\begin{formule}[résultante nulle — équilibre de translation]
+\[
+\boxed{\;\sum_{i} \vv F_i = \vv F_1 + \vv F_2 + \dots + \vv F_n = \vv 0\;}
+\]
+\begin{ou}
+  \item $\vv F_i$ : chacune des forces appliquées au solide, en newtons (\si{\newton}) ;
+  \item $\vv 0$ : le vecteur nul (intensité nulle, pas de direction privilégiée) ;
+  \item le symbole $\sum$ (« somme ») signifie que l'on additionne \emph{vectoriellement}
+        toutes les forces, en tenant compte de leur direction et de leur sens.
+\end{ou}
+\end{formule}
+
+\begin{attention}[somme vectorielle, pas somme des intensités !]
+$\sum \vv F_i = \vv 0$ \emph{ne veut pas dire} que la somme des intensités $\sum F_i$ est nulle
+(une intensité est toujours positive). Cela veut dire que les forces se compensent : projetées sur
+un axe, les contributions « vers la droite » égalent celles « vers la gauche », et de même
+verticalement. En pratique, dans un plan, $\sum \vv F = \vv 0$ équivaut à \emph{deux} équations
+scalaires : $\sum F_x = 0$ \textbf{et} $\sum F_y = 0$.
+\end{attention}
+
+\begin{exemple}[lecture de la condition sur un cas concret]
+Un livre est posé, immobile, sur une table horizontale. Il subit deux forces : son \textbf{poids}
+$\vv G$ (vertical, vers le bas, $G=\SI{8}{\newton}$ par exemple) et la \textbf{réaction normale}
+$\vv R$ de la table (verticale, vers le haut). Le livre est en équilibre, donc
+\[
+\vv G + \vv R = \vv 0 \quad\Longrightarrow\quad \vv R = -\,\vv G .
+\]
+En intensité : $R = G = \SI{8}{\newton}$. La réaction de la table a donc \emph{exactement} la même
+intensité que le poids, la même direction (verticale), mais le \emph{sens opposé}. C'est très
+exactement la situation de la Figure 1, appliquée à la verticale. Si l'on retirait la table, la condition
+ne serait plus satisfaite ($\vv G \neq \vv 0$ tout seul) et le livre tomberait : il ne serait plus en
+équilibre.
+\end{exemple}
+
+\subsection{Le principe d'action et de réaction}
+\begin{theoreme}[3\textsuperscript{e} loi de Newton — action/réaction]
+Si un corps $A$ exerce une force $\vv F$ (\textbf{action}) sur un autre corps $B$, alors,
+\textbf{simultanément}, $B$ exerce sur $A$ une force $\vv F'$ (\textbf{réaction}) :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item d'\textbf{égale intensité} : $F' = F$ ;
+  \item de \textbf{même direction} ;
+  \item de \textbf{sens opposé} : $\vv F' = -\,\vv F$.
+\end{itemize}
+\end{theoreme}
+
+\begin{attention}[ne pas confondre avec l'équilibre]
+Les forces d'action et de réaction sont opposées \emph{mais elles ne se compensent jamais entre
+elles}, car \textbf{elles s'appliquent sur deux corps différents} ($\vv F$ sur $B$, $\vv F'$ sur $A$).
+Pour étudier l'équilibre d'\emph{un} corps, on ne retient que les forces qui s'exercent
+\emph{sur lui}. C'est le piège classique : action/réaction $\neq$ équilibre.
+\end{attention}
+
+% =====================================================================
+\section{Le poids : la force d'attraction terrestre}
+% =====================================================================
+La force omniprésente en statique est le \textbf{poids}, c'est-à-dire la force d'attraction que la
+Terre exerce sur tout corps. Avant d'aller plus loin, fixons cette formule, car presque tous les
+exemples de la fiche l'utilisent.
+
+\begin{formule}[poids d'un corps]
+\[
+\boxed{\;\vv G = m\,\vv g \qquad\text{en intensité :}\qquad G = m\,g\;}
+\]
+\begin{ou}
+  \item $G$ : intensité du poids (force de gravitation exercée par la Terre), en newtons (\si{\newton}) ;
+  \item $m$ : masse du corps, en kilogrammes (\si{\kilogram}) ;
+  \item $g$ : intensité du champ de pesanteur (ou « constante de pesanteur »).
+        On la mesure en \si{\newton\per\kilogram} ou, de façon équivalente, en
+        \si{\metre\per\second\squared} : $g \approx \SI{9.81}{\newton\per\kilogram}$, valeur
+        souvent arrondie à $\SI{10}{\newton\per\kilogram}$ dans les exercices.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[\si{\newton\per\kilogram} et \si{\metre\per\second\squared}, la même chose]
+Pourquoi $g$ peut-il se mesurer en \si{\newton\per\kilogram} \emph{ou} en \si{\metre\per\second\squared} ?
+Parce qu'un newton est défini par $\SI{1}{\newton}=\SI{1}{\kilogram\metre\per\second\squared}$
+(c'est la 2\textsuperscript{e} loi de Newton, $F=ma$). Donc
+\[
+\si{\newton\per\kilogram}
+= \frac{\si{\kilogram\metre\per\second\squared}}{\si{\kilogram}}
+= \si{\metre\per\second\squared}.
+\]
+Les deux écritures $g=\SI{10}{\newton\per\kilogram}$ et $g=\SI{10}{\metre\per\second\squared}$
+désignent \emph{exactement} la même grandeur ; on choisit l'une ou l'autre selon que l'on raisonne
+en termes de force ou d'accélération.
+\end{remarque}
+
+\begin{attention}[piège des unités : convertir la masse en kilogrammes]
+La formule $G=m\,g$ n'est correcte que si $m$ est en \textbf{kilogrammes}. Une masse donnée en
+grammes doit \emph{impérativement} être convertie. Exemple : pour $m=\SI{200}{\gram}=\SI{0.200}{\kilogram}$
+et $g=\SI{10}{\newton\per\kilogram}$,
+\[
+G = 0{,}200 \times 10 = \SI{2}{\newton}\quad(\text{et non } \SI{200}{\newton}!).
+\]
+Écrire « $G = 200 \times 10 = \SI{2000}{\newton}$ » serait une faute d'un facteur 1000.
+\end{attention}
+
+\begin{exemple}[poids sur la Terre et sur la Lune]
+Considérons un corps de masse $m = \SI{200}{\gram} = \SI{0.200}{\kilogram}$.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Sur la Terre}, avec $g_{\text{T}}=\SI{10}{\newton\per\kilogram}$ :
+        \[ G_{\text{T}} = m\,g_{\text{T}} = 0{,}200 \times 10 = \SI{2}{\newton}. \]
+  \item \textbf{Sur la Lune}, le champ de pesanteur est environ \textbf{six fois plus faible} :
+        $g_{\text{L}} = \dfrac{g_{\text{T}}}{6} \approx \SI{1.67}{\newton\per\kilogram}$. Donc
+        \[ G_{\text{L}} = m\,g_{\text{L}} = 0{,}200 \times 1{,}67 \approx \SI{0.33}{\newton}. \]
+\end{itemize}
+\textbf{Conclusion :} la \emph{masse} $m$ ne change pas (c'est une quantité de matière, la même
+partout), mais le \emph{poids} est \textbf{six fois plus petit} sur la Lune que sur la Terre. Dire que la
+force de gravité serait « six fois plus \emph{grande} » sur la Lune est donc faux : c'est l'inverse.
+\end{exemple}
+
+% =====================================================================
+\section{Équilibre sous des forces parallèles de même sens}
+% =====================================================================
+Étudions maintenant un solide soumis à deux forces \textbf{parallèles} et de \textbf{même sens},
+$\vv F_1$ et $\vv F_2$. Seules, ces deux forces ne peuvent pas le maintenir en équilibre : leur
+somme n'est pas nulle. Il faut leur ajouter une troisième force $\vv F$.
+
+\begin{theoreme}[équilibre sous deux forces parallèles de même sens]
+Soit $S$ un solide indéformable soumis à deux forces parallèles et de même sens $\vv F_1$ et
+$\vv F_2$. Le solide n'est en équilibre que si on lui applique une \textbf{troisième force} $\vv F$
+dont les caractéristiques sont :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Coplanarité} : les trois forces $\vv F$, $\vv F_1$ et $\vv F_2$ sont \emph{coplanaires}
+        (situées dans le même plan) ;
+  \item \textbf{Intensité} : $\;F = F_1 + F_2\;$ ;
+  \item \textbf{Sens} : $\vv F$ est de sens \emph{opposé} à $\vv F_1$ et $\vv F_2$ ;
+  \item \textbf{Point d'application} : $\vv F$ s'applique en un point $O$ situé sur la droite $(AB)$,
+        tel que $\;F_1\times \overline{AO} = F_2\times \overline{BO}\;$.
+\end{itemize}
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % corps allongé irrégulier
+  \fill[primary!22,draw=primary!65,line width=0.8pt]
+    (-4,0.0) -- (-2,0.18) -- (-0.6,0.05) -- (0,0.22) -- (0.7,0.05)
+    -- (2.2,0.20) -- (4,0.0) -- (2.2,-0.20) -- (0.7,-0.05)
+    -- (0,-0.22) -- (-0.6,-0.05) -- (-2,-0.18) -- cycle;
+  % ligne AB
+  \draw[ligne] (-3.4,0) -- (3.4,0);
+  % points
+  \fill (-2.4,0) circle (1.3pt) node[above left=0pt]{$A$};
+  \fill (2.4,0) circle (1.3pt) node[above right=0pt]{$B$};
+  \fill (0.9,0) circle (1.3pt) node[above=2pt]{$O$};
+  % F1 (à gauche, vers le bas)
+  \draw[fA] (-2.4,0) -- (-2.4,-1.4) node[below]{$\vv F_1$};
+  % F2 (à droite, vers le bas, plus grande)
+  \draw[fB] (2.4,0) -- (2.4,-2.4) node[below]{$\vv F_2$};
+  % F (au point O, vers le haut, = F1+F2)
+  \draw[fR] (0.9,0) -- (0.9,2.2) node[above]{$\vv F$};
+  % cotes
+  \draw[cote] (-2.4,0.55) -- (0.9,0.55) node[midway,fill=white,inner sep=1pt]{\small $\overline{AO}$};
+  \draw[cote] (0.9,1.0) -- (2.4,1.0) node[midway,fill=white,inner sep=1pt]{\small $\overline{BO}$};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 2}} : Solide en équilibre ($\vv F = \vv F_1 + \vv F_2$, de sens opposé). Le point $O$ est plus proche de la force la plus intense ($\vv F_2$).}
+\end{figure}
+
+\begin{formule}[intensité de la résultante de deux forces parallèles de même sens]
+\[
+\boxed{\;F = F_1 + F_2\;}
+\]
+\begin{ou}
+  \item $F$ : intensité de la résultante (et donc aussi de la force d'équilibre, en sens opposé), en \si{\newton} ;
+  \item $F_1,\ F_2$ : intensités des deux forces parallèles de même sens, en \si{\newton}.
+\end{ou}
+Les forces étant de \emph{même sens}, leurs intensités \textbf{s'ajoutent} : c'est la traduction de la
+somme vectorielle quand les vecteurs sont parallèles et orientés pareillement.
+\end{formule}
+
+\begin{formule}[point d'application de la résultante (règle des moments)]
+\[
+\boxed{\;F_1\times \overline{AO} = F_2\times \overline{BO}\;}
+\]
+\begin{ou}
+  \item $\overline{AO}$ : distance du point $A$ (où s'applique $\vv F_1$) au point $O$, en mètres (\si{\metre}) ;
+  \item $\overline{BO}$ : distance du point $B$ (où s'applique $\vv F_2$) au point $O$, en mètres (\si{\metre}) ;
+  \item $F_1,\ F_2$ : intensités des deux forces, en \si{\newton}.
+\end{ou}
+Cette égalité dit que le point $O$ partage le segment $[AB]$ \emph{en proportion inverse} des
+intensités : $\dfrac{\overline{AO}}{\overline{BO}} = \dfrac{F_2}{F_1}$. Le point $O$ est donc toujours
+\textbf{plus proche de la force la plus intense}. (On reconnaît ici le « principe du levier » : un
+grand bras de levier compense une petite force.)
+\end{formule}
+
+\begin{exemple}[résultante de deux forces parallèles de même sens — calcul complet]
+Sur un solide plan, deux forces parallèles de \textbf{même sens} sont appliquées en deux points $A$
+et $B$ distants de $\overline{AB}=\SI{70}{\centi\metre}$. Leurs intensités sont $F_1 = \SI{1}{\newton}$
+(en $A$) et $F_2 = \SI{2.5}{\newton}$ (en $B$). \textbf{Déterminons la résultante.}
+
+\smallskip
+\textbf{1) Intensité.} Forces de même sens $\Rightarrow$ les intensités s'ajoutent :
+\[
+R = F_1 + F_2 = 1 + 2{,}5 = \SI{3.5}{\newton}.
+\]
+
+\textbf{2) Direction et sens.} La résultante est \textbf{parallèle} à $\vv F_1$ et $\vv F_2$, et de
+\emph{même sens} qu'elles (puisqu'elles « tirent » dans le même sens).
+
+\textbf{3) Point d'application $O$.} Il est situé \emph{entre} $A$ et $B$, donc $\overline{AO}+\overline{BO}=\SI{70}{\centi\metre}$.
+La règle des moments donne :
+\[
+F_1\times\overline{AO} = F_2\times\overline{BO}
+\;\Longrightarrow\; 1\times\overline{AO} = 2{,}5\times\overline{BO}
+\;\Longrightarrow\; \overline{AO} = 2{,}5\,\overline{BO}.
+\]
+On reporte dans $\overline{AO}+\overline{BO}=70$ :
+\[
+2{,}5\,\overline{BO} + \overline{BO} = 70
+\;\Longrightarrow\; 3{,}5\,\overline{BO} = 70
+\;\Longrightarrow\; \overline{BO} = \SI{20}{\centi\metre},
+\quad \overline{AO} = 70-20 = \SI{50}{\centi\metre}.
+\]
+
+\textbf{Conclusion :} la résultante vaut $R=\SI{3.5}{\newton}$, elle est parallèle aux deux forces et de
+même sens, et s'applique \textbf{entre $A$ et $B$, à \SI{20}{\centi\metre} de $B$} (donc à
+\SI{50}{\centi\metre} de $A$). On vérifie qu'elle est bien plus proche de $B$, c'est-à-dire de la
+force la plus intense $F_2$, comme annoncé.
+\end{exemple}
+
+% =====================================================================
+\section{Forces parallèles de sens opposé}
+% =====================================================================
+Lorsque les deux forces parallèles sont de \textbf{sens opposé} (mais ne forment pas un couple,
+c'est-à-dire $F_1 \neq F_2$), la situation change : les intensités ne s'ajoutent plus, elles se
+\emph{retranchent}, et le point d'application de la résultante sort du segment $[AB]$.
+
+\begin{theoreme}[résultante de deux forces parallèles de sens contraire]
+La résultante $\vv F_r$ de deux forces parallèles et de sens contraire (avec $F_2 > F_1$) est :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item de \textbf{même sens} que la force la plus grande ;
+  \item d'\textbf{intensité} $\;F_r = F_2 - F_1\;$ ;
+  \item de \textbf{point d'application} $O$ situé \emph{à l'extérieur} du segment $[AB]$,
+        \textbf{du côté de la plus grande force}.
+\end{itemize}
+La règle $F_1\times\overline{AO} = F_2\times\overline{BO}$ reste valable pour situer $O$.
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % ligne d'action support
+  \draw[ligne] (-3.6,0) -- (4.6,0);
+  % barre
+  \fill[primary!22,draw=primary!65,line width=0.7pt] (-3,-0.12) rectangle (3,0.12);
+  % points A, B et O (extérieur, côté B)
+  \fill (-2.2,0) circle (1.3pt) node[above=3pt]{$A$};
+  \fill (2.2,0) circle (1.3pt) node[above=3pt]{$B$};
+  \fill (3.7,0) circle (1.3pt) node[above=3pt]{$O$};
+  % F1 en A vers le bas (petite)
+  \draw[fA] (-2.2,0) -- (-2.2,-1.1) node[below]{$\vv F_1$};
+  % F2 en B vers le haut (grande)
+  \draw[fB] (2.2,0) -- (2.2,2.3) node[above]{$\vv F_2$};
+  % résultante Fr en O, même sens que F2 (haut), intensité F2-F1
+  \draw[fR] (3.7,0) -- (3.7,1.2) node[above]{$\vv F_r$};
+  % équilibrant F3 (opposé à Fr)
+  \draw[fG] (3.7,0) -- (3.7,-1.2) node[below]{$\vv F_3$ (équilibrant)};
+  \draw[cote] (2.2,-0.5) -- (3.7,-0.5) node[midway,fill=white,inner sep=1pt]{\small $\overline{BO}$};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 3}} : Deux forces parallèles de sens opposé. La résultante $\vv F_r$ (de même sens que $\vv F_2$, la plus grande) s'applique \emph{hors} de $[AB]$, du côté de $\vv F_2$. La force $\vv F_3$, opposée à $\vv F_r$, rétablit l'équilibre.}
+\end{figure}
+
+\begin{formule}[intensité de la résultante de deux forces parallèles opposées]
+\[
+\boxed{\;F_r = F_2 - F_1 \quad (\text{avec } F_2 > F_1)\;}
+\]
+\begin{ou}
+  \item $F_r$ : intensité de la résultante, en \si{\newton} ;
+  \item $F_2$ : intensité de la \emph{plus grande} force, en \si{\newton} ;
+  \item $F_1$ : intensité de la \emph{plus petite} force, en \si{\newton}.
+\end{ou}
+Comme les forces tirent en sens contraire, leurs effets se \textbf{soustraient} : il ne reste qu'un
+« excédent » $F_2 - F_1$, orienté comme la force dominante.
+\end{formule}
+
+\begin{remarque}[rétablir l'équilibre — la force équilibrante]
+Pour rendre le système à l'équilibre, il suffit d'appliquer \emph{au point $O$} une force $\vv F_3$
+(« équilibrante ») de \textbf{même intensité que $\vv F_r$ mais de sens opposé}. On a alors bien
+$\vv F_1 + \vv F_2 + \vv F_3 = \vv 0$.
+\end{remarque}
+
+\begin{exemple}[résultante de deux forces parallèles de sens opposé]
+Reprenons le solide précédent : $A$ et $B$ distants de $\overline{AB}=\SI{70}{\centi\metre}$,
+$F_1=\SI{1}{\newton}$ en $A$ et $F_2=\SI{2.5}{\newton}$ en $B$, mais cette fois les forces sont de
+\textbf{sens contraire}.
+
+\smallskip
+\textbf{1) Intensité.} Sens opposés $\Rightarrow$ on soustrait :
+\[
+F_r = F_2 - F_1 = 2{,}5 - 1 = \SI{1.5}{\newton}.
+\]
+
+\textbf{2) Sens.} La résultante a le sens de $\vv F_2$ (la plus grande).
+
+\textbf{3) Point d'application $O$.} Il est \emph{à l'extérieur} de $[AB]$, du côté de $B$ (force la plus
+intense). Notons $\overline{BO}=x$ ; alors $\overline{AO}=\overline{AB}+x = 70+x$. La règle des moments donne :
+\[
+F_1\times\overline{AO} = F_2\times\overline{BO}
+\;\Longrightarrow\; 1\times(70+x) = 2{,}5\times x
+\;\Longrightarrow\; 70 + x = 2{,}5\,x.
+\]
+D'où $70 = 1{,}5\,x$, soit
+\[
+x = \overline{BO} = \frac{70}{1{,}5} \approx \SI{46.7}{\centi\metre}\approx\SI{0.47}{\metre}.
+\]
+
+\textbf{Conclusion :} la résultante vaut $F_r = \SI{1.5}{\newton}$, de même sens que $\vv F_2$, et
+s'applique à $\approx\SI{46.7}{\centi\metre}$ \emph{au-delà} de $B$ — donc \emph{hors} du segment
+$[AB]$, du côté de la plus grande force, et non du côté de $A$. Sa distance au point $A$ vaut
+$\overline{AO}=70+46{,}7 = \SI{116.7}{\centi\metre}\approx\SI{1.17}{\metre}$.
+
+\smallskip
+\textbf{Comparaison des deux cas (même sens / sens opposé).} Avec les mêmes forces :
+$R_{\text{même sens}} = \SI{3.5}{\newton} > F_{r,\text{opposé}} = \SI{1.5}{\newton}$. La résultante de
+deux forces de même sens est donc \emph{plus intense} que celle des mêmes forces en sens
+contraire : un résultat qui tombe sous le sens, puisque dans un cas les forces coopèrent et dans
+l'autre elles se contrarient.
+\end{exemple}
+
+\begin{remarque}[composer plus de deux forces parallèles]
+Pour un système soumis à plusieurs forces parallèles $\vv F_1, \vv F_2, \dots, \vv F_n$, on procède
+\textbf{de proche en proche} : on associe d'abord deux forces quelconques pour déterminer leur
+point d'application $O_1$ et leur résultante ; on associe cette résultante avec une troisième force
+pour déterminer $O_2$ ; et ainsi de suite jusqu'à la résultante globale. C'est exactement cette idée
+qui conduit, au paragraphe suivant, à la notion de \emph{centre de gravité}.
+\end{remarque}
+
+% =====================================================================
+\section{Centre de gravité d'un corps}
+% =====================================================================
+Un corps réel est un \textbf{assemblage de très nombreuses particules}. Chacune subit la force
+d'attraction terrestre : le corps est donc soumis à une multitude de petites forces verticales,
+toutes parallèles et dirigées vers le centre de la Terre.
+
+En composant ces forces parallèles deux à deux (comme à la remarque précédente), on
+obtient finalement \emph{une seule} force résultante — le \textbf{poids} du corps — qui s'applique
+en un point bien précis : le \textbf{centre de gravité}.
+
+\begin{definition}[centre de gravité $G$]
+Le \textbf{centre de gravité} $G$ d'un corps est le point d'application de la \textbf{résultante de
+toutes les forces de pesanteur} qui s'exercent sur ses particules. La force totale qui s'y applique
+est le \textbf{poids} du corps, $\vv G = m\,\vv g$.
+\end{definition}
+
+\begin{theoreme}[la ligne d'action du poids passe toujours par $G$]
+La ligne d'action de la force de gravitation passe \textbf{toujours par $G$}, qui est un \emph{point
+fixe} du corps, \textbf{quelle que soit l'orientation} du solide. (Suspendu librement, un corps
+n'est d'ailleurs pas en équilibre tant que $G$ n'est pas à la verticale du point de suspension :
+il pivote jusqu'à ce que ce soit le cas.)
+\end{theoreme}
+
+\begin{methode}[détermination expérimentale de $G$ — méthode des suspensions]
+Pour un solide d'\textbf{épaisseur négligeable} (plaque mince, feuille d'arbre\dots) :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item suspendre l'objet par un point quelconque $P_1$ ; à l'équilibre, tracer la \textbf{verticale}
+        passant par $P_1$ ;
+  \item recommencer en suspendant l'objet par un \emph{autre} point $P_2$ ; tracer la nouvelle verticale ;
+  \item le \textbf{centre de gravité $G$} est le \textbf{point d'intersection} des deux droites tracées.
+\end{enumerate}
+\end{methode}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.05]
+  % ---- Suspension 1 ----
+  \begin{scope}[shift={(-3.4,0)}]
+    \draw[black!55,line width=1pt] (-1.3,2.6) -- (1.3,2.6); % plafond
+    \foreach \x in {-1.1,-0.7,...,1.2} \draw[black!45] (\x,2.6) -- (\x-0.22,2.85);
+    % point de suspension
+    \fill (0,2.6) circle (1.6pt) node[above right=-1pt]{$P_1$};
+    \draw[black!60] (0,2.6) -- (0,2.1);
+    % plaque irrégulière
+    \fill[primary!22,draw=primary!70,line width=0.8pt]
+      (0,2.1) -- (1.1,1.5) -- (1.4,0.2) -- (0.5,-0.7) -- (-0.8,-0.5)
+      -- (-1.2,0.7) -- (-0.6,1.7) -- cycle;
+    % verticale par P1
+    \draw[forceB,line width=1pt,dashed] (0,2.1) -- (0,-0.9);
+    \node[forceB,right] at (0.02,-1.15) {\small verticale 1};
+    \node at (0,-1.7) {\small Suspension en $P_1$};
+  \end{scope}
+  % ---- Suspension 2 ----
+  \begin{scope}[shift={(3.4,0)}]
+    \draw[black!55,line width=1pt] (-1.3,2.6) -- (1.3,2.6);
+    \foreach \x in {-1.1,-0.7,...,1.2} \draw[black!45] (\x,2.6) -- (\x-0.22,2.85);
+    \fill (0.9,2.6) circle (1.6pt) node[above right=-1pt]{$P_2$};
+    \draw[black!60] (0.9,2.6) -- (0.9,2.25);
+    % même plaque, tournée
+    \fill[primary!22,draw=primary!70,line width=0.8pt]
+      (0.9,2.25) -- (1.5,1.0) -- (0.9,-0.3) -- (-0.4,-0.7) -- (-1.3,0.2)
+      -- (-1.0,1.5) -- (0.1,2.1) -- cycle;
+    % verticale par P2
+    \draw[forceA,line width=1pt,dashed] (0.9,2.25) -- (0.9,-0.9);
+    \node[forceA,right] at (0.92,-1.15) {\small verticale 2};
+    \node at (0.1,-1.7) {\small Suspension en $P_2$};
+  \end{scope}
+  % flèche d'intersection conceptuelle
+  \node[excol] at (0,-2.4) {\small $G$ = intersection des deux verticales tracées};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 4}} : Détermination du centre de gravité par la méthode des deux suspensions. $G$ se trouve à l'intersection des verticales tracées depuis $P_1$ et $P_2$.}
+\end{figure}
+
+\begin{remarque}[centres de gravité de formes usuelles]
+Pour un corps \textbf{homogène} (même matière partout) et présentant des symétries, $G$ se trouve
+« au centre » :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item le centre de gravité d'une \textbf{surface triangulaire} est le point d'intersection de ses
+        \emph{médianes} (le « centre de gravité » du triangle au sens géométrique) ;
+  \item le centre de gravité d'un \textbf{cube} (ou d'un parallélépipède) est son \emph{centre} ;
+  \item le centre de gravité d'un \textbf{cylindre} est le \emph{milieu du segment} qui joint les
+        centres de ses deux bases ;
+  \item plus généralement, le centre de gravité d'un solide \textbf{symétrique et homogène} est
+        situé sur son (ses) \emph{axe(s) de symétrie}, c'est-à-dire en son centre.
+\end{itemize}
+\end{remarque}
+
+\begin{attention}[$G$ peut se trouver hors de la matière]
+Le centre de gravité n'est pas nécessairement \emph{dans} le corps : pour un anneau, un fer à
+cheval ou un boomerang, $G$ se situe dans le « vide » entouré par la matière. C'est pourtant bien
+là que s'applique, fictivement, tout le poids du corps.
+\end{attention}
+
+% =====================================================================
+\section{Moment d'une force et équilibre de rotation}
+% =====================================================================
+Jusqu'ici, nous nous sommes intéressés à la \emph{translation}. Mais une force peut aussi faire
+\textbf{tourner} un solide. La grandeur qui mesure cet « effet de rotation » est le \textbf{moment de
+la force}.
+
+\subsection{Le couple de forces}
+\begin{definition}[couple de forces]
+Un \textbf{couple de forces} est l'ensemble de deux forces \textbf{parallèles}, de \textbf{même
+intensité} et de \textbf{sens opposé}, dont les lignes d'action sont \emph{distinctes}. Leur résultante
+est nulle ($\vv F + (-\vv F) = \vv 0$) — elles ne provoquent donc aucune translation — mais elles
+font \textbf{tourner} le solide autour d'un axe perpendiculaire au plan des deux forces.
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % disque vu en perspective (ellipse)
+  \draw[forceA!70,line width=1pt] (0,0) ellipse (2.6 and 0.9);
+  % barre diamétrale
+  \draw[black!75,line width=1.4pt] (-2.3,-0.45) -- (2.3,0.45);
+  % forces du couple (parallèles, sens opposés)
+  \draw[fR] (-2.3,-0.45) -- (-3.4,-0.05) node[left]{$\vv F$};
+  \draw[fR] (2.3,0.45) -- (3.4,0.05) node[right]{$\vv F$};
+  % distance d
+  \draw[cote] (-1.6,0.55) -- (1.6,0.55) node[midway,fill=white,inner sep=1pt]{\small $d$};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 5}} : Système soumis à un couple de forces. Le moment associé vaut $\Mom = F\times d$ (\si{\newton\metre}).}
+\end{figure}
+
+\begin{formule}[moment d'un couple de forces]
+\[
+\boxed{\;\Mom = F\times d\;}
+\]
+\begin{ou}
+  \item $\Mom$ : moment (« intensité ») du couple, en newtons-mètres (\si{\newton\metre}) ;
+  \item $F$ : intensité commune des deux forces du couple, en newtons (\si{\newton}) ;
+  \item $d$ : distance \emph{entre les deux lignes d'action} des forces (le « bras du couple »), en mètres (\si{\metre}).
+\end{ou}
+\end{formule}
+
+Sous l'effet d'un couple, le solide tourne jusqu'à atteindre une position d'équilibre : celle où les
+deux forces \textbf{s'opposent directement}, c'est-à-dire deviennent \emph{colinéaires} (même ligne
+d'action). Le bras $d$ s'annule, le moment aussi, et la rotation cesse.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[forceA!70,line width=1pt] (0,0) circle (1.3);
+  % forces colinéaires opposées (équilibre)
+  \draw[fR] (0,0) -- (0,1.9) node[above]{$\vv F$};
+  \draw[fR] (0,0) -- (0,-1.9) node[below]{$\vv F$};
+  \fill (0,0) circle (1.4pt);
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 6}} : Position d'équilibre du couple. Les deux forces sont colinéaires et opposées ($d=0$) : le moment résultant est nul, la rotation cesse.}
+\end{figure}
+
+\subsection{Moment d'une force et bras de levier}
+Pour faire tourner un objet au repos, ou modifier la vitesse de rotation d'un corps en mouvement,
+il faut appliquer un \textbf{moment de force}. Son intensité dépend de deux choses : la force
+appliquée \emph{et} la distance à laquelle on l'applique.
+
+\begin{definition}[moment d'une force par rapport à un axe]
+Le \textbf{moment} d'une force, par rapport à un axe de rotation $\Delta$, est le \textbf{produit de
+l'intensité de la force} par la \textbf{longueur du bras de levier}. Le \textbf{bras de levier} est la
+\emph{distance la plus courte} (la distance perpendiculaire) entre l'axe de rotation et la ligne
+d'action de la force.
+\end{definition}
+
+\begin{formule}[moment d'une force]
+\[
+\boxed{\;\Mom_{\Delta}(\vv F) = \pm\, F\times b\;}
+\]
+\begin{ou}
+  \item $\Mom_{\Delta}(\vv F)$ : moment de la force $\vv F$ par rapport à l'axe $\Delta$, en newtons-mètres (\si{\newton\metre}) ;
+  \item $F$ : intensité de la force, en newtons (\si{\newton}) ;
+  \item $b$ : bras de levier = distance perpendiculaire de l'axe $\Delta$ à la ligne d'action de $\vv F$, en mètres (\si{\metre}) ;
+  \item le signe $\pm$ traduit le \textbf{sens de rotation} (voir la convention ci-dessous).
+\end{ou}
+\end{formule}
+
+\begin{attention}[le bras de levier est la distance \emph{perpendiculaire}]
+Le bras de levier $b$ n'est pas la distance « de l'axe au point d'application », mais la distance
+\emph{la plus courte} de l'axe à la \emph{ligne d'action} de la force, mesurée \textbf{perpendiculairement}
+à celle-ci. Une force dont la ligne d'action \emph{passe par l'axe} a un bras de levier nul
+($b=0$) : son moment est nul, elle ne fait pas tourner le solide (c'est le cas de la réaction $\vv R$
+au pivot, ci-dessous).
+\end{attention}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --------- Cas A : couple symétrique ---------
+  \begin{scope}[shift={(-4.2,0)}]
+    \node[forceB,above] at (0,2.2) {\small Axe $\Delta$};
+    \draw[->,>=Stealth,forceB,line width=1pt] (0,1.0) -- (0,2.1);
+    \fill[forceB] (0,0) circle (1.6pt);
+    % barre
+    \draw[black!75,line width=1.4pt] (-2.4,0) -- (2.4,0);
+    % forces (couple)
+    \draw[fR] (-2.4,0) -- (-3.3,0) node[left]{$\vv F$};
+    \draw[fR] (2.4,0) -- (3.3,0) node[right]{$\vv F$};
+    % bras a de chaque côté
+    \draw[cote] (-2.4,-0.4) -- (0,-0.4) node[midway,fill=white,inner sep=1pt]{\small $a$};
+    \draw[cote] (0,-0.4) -- (2.4,-0.4) node[midway,fill=white,inner sep=1pt]{\small $a$};
+    % flèche de rotation
+    \draw[->,>=Stealth,black,line width=0.9pt] (-0.55,0.55) arc (150:30:0.62);
+    \node at (0,-1.3) {\textbf{Cas A}};
+  \end{scope}
+  % --------- Cas B : trois forces ---------
+  \begin{scope}[shift={(4.2,0)}]
+    \node[forceB,above] at (0,2.2) {\small Axe $\Delta$};
+    \draw[->,>=Stealth,forceB,line width=1pt] (0,1.0) -- (0,2.1);
+    \fill[forceB] (0,0) circle (1.6pt);
+    \draw[black!75,line width=1.4pt] (-2.7,0) -- (2.7,0);
+    % F1 à droite (vers la droite)
+    \draw[fA] (2.4,0) -- (3.4,0) node[right]{$\vv F_1$};
+    % F3 à gauche (vers la gauche)
+    \draw[fA] (-2.4,0) -- (-3.4,0) node[left]{$\vv F_3$};
+    % F2 vers le bas, à mi-gauche
+    \draw[fB] (-1.2,0) -- (-1.2,-1.2) node[below]{$\vv F_2$};
+    % bras b (axe -> F1) , a (axe -> F3), c (axe -> F2)
+    \draw[cote] (0,0.45) -- (2.4,0.45) node[midway,fill=white,inner sep=1pt]{\small $b$};
+    \draw[cote] (-2.4,0.8) -- (0,0.8) node[midway,fill=white,inner sep=1pt]{\small $a$};
+    \draw[cote] (-1.2,-0.55) -- (0,-0.55) node[midway,fill=white,inner sep=1pt]{\small $c$};
+    \node at (0,-1.3) {\textbf{Cas B}};
+  \end{scope}
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 7}} : Bras de levier. Cas A : un couple symétrique de bras $a$ de part et d'autre de l'axe. Cas B : trois forces de bras respectifs $a$, $b$, $c$ par rapport à l'axe $\Delta$.}
+\end{figure}
+
+\subsection{Convention de signe}
+\begin{remarque}[signe du moment = sens de rotation]
+On choisit (par convention) un sens positif. Dans la fiche, on adopte :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item moment \textbf{positif} ($+$) si la force tend à faire tourner le solide dans le
+        \textbf{sens des aiguilles d'une montre} ;
+  \item moment \textbf{négatif} ($-$) si elle le fait tourner dans le \textbf{sens contraire}.
+\end{itemize}
+(Le choix inverse est tout aussi valable ; l'essentiel est de rester \emph{cohérent} dans tout le
+problème.) Par exemple, pour la Figure 7 :
+\[
+\Mom_{\Delta}(\vv F_1) = +\,F_1\times b, \qquad
+\Mom_{\Delta}(\vv F_2) = -\,F_2\times c, \qquad
+\Mom_{\Delta}(\vv R) = R\times 0 = 0 .
+\]
+La réaction $\vv R$ de l'axe a un moment nul car son bras de levier est nul (sa ligne d'action passe
+par l'axe).
+\end{remarque}
+
+\subsection{La condition d'équilibre de rotation}
+\begin{theoreme}[équilibre de rotation]
+Un solide est en \textbf{équilibre de rotation} (autour d'un axe fixe) si la \textbf{somme algébrique
+des moments} de toutes les forces qui s'y appliquent est \textbf{nulle}. Autrement dit, la somme des
+moments qui tendent à le faire tourner dans un sens est \emph{égale} à celle des moments qui
+tendent à le faire tourner dans le sens opposé.
+\end{theoreme}
+
+\begin{formule}[somme des moments nulle — équilibre de rotation]
+\[
+\boxed{\;\sum_i \Mom_{\Delta}(\vv F_i) = 0\;}
+\qquad\Longleftrightarrow\qquad
+\sum \Mom_{\text{(sens horaire)}} = \sum \Mom_{\text{(sens anti-horaire)}}
+\]
+\begin{ou}
+  \item $\Mom_{\Delta}(\vv F_i)$ : moment \emph{algébrique} (avec son signe) de chaque force par
+        rapport à l'axe $\Delta$, en \si{\newton\metre} ;
+  \item l'addition est \textbf{algébrique} : les moments positifs et négatifs se compensent.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[application de la condition au « Cas B » de la Figure 7]
+Pour le Cas~B, comptons les moments par rapport à l'axe $\Delta$ avec la convention ci-dessus.
+$\vv F_1$ fait tourner dans un sens (moment $+F_1 b$), tandis que $\vv F_2$ et $\vv F_3$ tournent
+dans l'autre (moments $-F_2 c$ et $-F_3 a$). L'équilibre s'écrit :
+\[
+F_1\times b - F_2\times c - F_3\times a = 0
+\quad\Longrightarrow\quad
+\boxed{\,F_1\times b = F_2\times c + F_3\times a\,}.
+\]
+Cette relation est l'outil de base de tous les problèmes de \emph{leviers} et de \emph{balances} :
+\textbf{le moment « moteur » est équilibré par la somme des moments « résistants »}.
+\end{exemple}
+
+% =====================================================================
+\section{Les conditions générales de l'équilibre mécanique}
+% =====================================================================
+Nous pouvons à présent rassembler les deux conditions, qui constituent le cœur de la statique.
+
+\begin{theoreme}[équilibre mécanique complet]
+Un solide est en \textbf{équilibre mécanique} si, et seulement si, \emph{simultanément} :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item l'\textbf{accélération} de son centre de masse est nulle ($\vv a = \vv 0$) — il ne se met pas en
+        mouvement de translation ;
+  \item la \textbf{somme des forces} qui agissent sur lui est nulle : $\displaystyle\sum \vv F = \vv 0$
+        (équilibre de \emph{translation}) ;
+  \item la \textbf{somme des moments} des forces par rapport à un axe de rotation est nulle :
+        $\displaystyle\sum \Mom_{\Delta}(\vv F) = 0$ (équilibre de \emph{rotation}).
+\end{enumerate}
+\end{theoreme}
+
+\begin{attention}[les deux conditions sont indépendantes]
+Un système peut vérifier $\sum\vv F = \vv 0$ \emph{sans} être en équilibre : c'est exactement le cas
+du \textbf{couple de forces} (Figure 5), dont la résultante est nulle mais qui fait tourner le solide
+($\sum\Mom \neq 0$). Inversement, on peut avoir $\sum\Mom = 0$ autour d'un point sans que
+$\sum\vv F = \vv 0$. \textbf{Il faut donc toujours vérifier les deux conditions.}
+\end{attention}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{4.0cm} >{\centering\arraybackslash}p{4.3cm} p{5.0cm}}
+\rowcolor{primary!15}
+\textbf{Type d'équilibre} & \textbf{Condition} & \textbf{Empêche\dots} \\
+\hline
+\rowcolor{primary!4}
+Translation & $\displaystyle\sum \vv F = \vv 0$ & que le corps ne \emph{glisse} / ne tombe. \\
+Rotation & $\displaystyle\sum \Mom_{\Delta}(\vv F) = 0$ & que le corps ne \emph{pivote} / bascule. \\
+\rowcolor{primary!4}
+Complet & les \emph{deux} en même temps & tout mouvement (translation \emph{et} rotation). \\
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\section{Formulaire de synthèse}
+% =====================================================================
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{p{5.6cm} p{5.0cm} p{3.0cm}}
+\rowcolor{primary!15}
+\textbf{Grandeur / loi} & \textbf{Formule} & \textbf{Unité} \\
+\hline
+Poids d'un corps & $G = m\,g$ & \si{\newton} \\
+\rowcolor{primary!4}
+Équilibre de translation & $\sum \vv F = \vv 0$ & — \\
+Résultante (forces $\parallel$ de même sens) & $F = F_1 + F_2$ & \si{\newton} \\
+\rowcolor{primary!4}
+Résultante (forces $\parallel$ de sens opposé) & $F_r = F_2 - F_1$ & \si{\newton} \\
+Point d'application (règle des moments) & $F_1\,\overline{AO} = F_2\,\overline{BO}$ & \si{\metre} \\
+\rowcolor{primary!4}
+Moment d'un couple & $\Mom = F\times d$ & \si{\newton\metre} \\
+Moment d'une force & $\Mom_{\Delta}(\vv F) = \pm F\times b$ & \si{\newton\metre} \\
+\rowcolor{primary!4}
+Équilibre de rotation & $\sum \Mom_{\Delta}(\vv F) = 0$ & — \\
+\end{tabular}
+\end{center}
+
+\begin{remarque}[ne pas confondre travail et moment, malgré la même unité]
+Le \textbf{travail} d'une force et le \textbf{moment} d'une force se mesurent tous deux en
+$\si{\newton}\times\si{\metre}=\si{\newton\metre}$, mais ce sont des grandeurs \emph{physiquement
+différentes} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item le \textbf{travail} $W = F\times d$ utilise un déplacement $d$ \emph{parallèle} à la force ; c'est
+        une \emph{énergie}, et on l'exprime plutôt en \textbf{joules} ($\SI{1}{\joule}=\SI{1}{\newton\metre}$) ;
+  \item le \textbf{moment} $\Mom = F\times b$ utilise un bras de levier $b$ \emph{perpendiculaire} à la
+        force ; ce n'est \emph{pas} une énergie, et on le laisse en \si{\newton\metre} (jamais en joules).
+\end{itemize}
+Avoir la même unité ne signifie donc pas être la même grandeur : c'est un piège fréquent.
+\end{remarque}
+
+% =====================================================================
+\section{Exemples résolus en détail}
+% =====================================================================
+Cette section applique pas à pas, sur des situations concrètes, toutes les notions précédentes.
+
+% ------------------------------------------------------------------
+\subsection{Objet suspendu par deux fils : cas symétrique et asymétrique}
+\begin{exemple}[répartition de la tension entre deux fils]
+Un objet de masse $m=\SI{10}{\kilogram}$ est suspendu par \textbf{deux fils} à des dynamomètres
+(on néglige la masse des fils ; $g=\SI{10}{\newton\per\kilogram}$). On compare trois montages : $A$ et
+$C$ \textbf{symétriques}, $B$ \textbf{asymétrique}.
+
+\smallskip
+\textbf{Poids de l'objet.}
+\[
+G = m\,g = 10 \times 10 = \SI{100}{\newton}.
+\]
+Comme l'objet reste en équilibre (immobile), les fils doivent ensemble « porter » exactement ce
+poids : la somme des composantes verticales des tensions vaut \SI{100}{\newton}.
+\end{exemple}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- Cas A symétrique ---
+  \begin{scope}[shift={(-4.6,0)}]
+    \draw[black!55,line width=1pt] (-1.4,2.2)--(1.4,2.2);
+    \foreach \x in {-1.2,-0.8,...,1.3} \draw[black!45](\x,2.2)--(\x-0.2,2.42);
+    \coordinate (m) at (0,0);
+    \draw[forceA,line width=1.1pt] (-1.0,2.2)--(m);
+    \draw[forceA,line width=1.1pt] (1.0,2.2)--(m);
+    \fill[primary!30,draw=primary!70] (-0.4,-0.55) rectangle (0.4,0);
+    \node at (0,-0.3) {\scriptsize $m$};
+    \draw[fG] (0,-0.55)--(0,-1.5) node[below]{\scriptsize $G=\SI{100}{\newton}$};
+    \node at (0,-2.45) {\textbf{Cas A} (symétrique)};
+    \node[forceA] at (-1.5,1.3){\scriptsize $T$};
+    \node[forceA] at (1.5,1.3){\scriptsize $T$};
+  \end{scope}
+  % --- Cas B asymétrique ---
+  \begin{scope}[shift={(0,0)}]
+    \draw[black!55,line width=1pt] (-1.4,2.2)--(1.4,2.2);
+    \foreach \x in {-1.2,-0.8,...,1.3} \draw[black!45](\x,2.2)--(\x-0.2,2.42);
+    \coordinate (m) at (0,0);
+    \draw[forceB,line width=1.1pt] (-1.25,2.2)--(m);
+    \draw[forceB,line width=1.1pt] (0.55,2.2)--(m);
+    \fill[primary!30,draw=primary!70] (-0.4,-0.55) rectangle (0.4,0);
+    \node at (0,-0.3) {\scriptsize $m$};
+    \draw[fG] (0,-0.55)--(0,-1.5) node[below]{\scriptsize $G=\SI{100}{\newton}$};
+    \node at (0,-2.45) {\textbf{Cas B} (asymétrique)};
+    \node[forceB] at (-1.35,1.4){\scriptsize $T_3$};
+    \node[forceB] at (0.95,1.45){\scriptsize $T_4$};
+  \end{scope}
+  % --- Cas C symétrique ---
+  \begin{scope}[shift={(4.6,0)}]
+    \draw[black!55,line width=1pt] (-1.4,2.2)--(1.4,2.2);
+    \foreach \x in {-1.2,-0.8,...,1.3} \draw[black!45](\x,2.2)--(\x-0.2,2.42);
+    \coordinate (m) at (0,0);
+    \draw[forceA,line width=1.1pt] (-0.7,2.2)--(m);
+    \draw[forceA,line width=1.1pt] (0.7,2.2)--(m);
+    \fill[primary!30,draw=primary!70] (-0.4,-0.55) rectangle (0.4,0);
+    \node at (0,-0.3) {\scriptsize $m$};
+    \draw[fG] (0,-0.55)--(0,-1.5) node[below]{\scriptsize $G=\SI{100}{\newton}$};
+    \node at (0,-2.45) {\textbf{Cas C} (symétrique)};
+  \end{scope}
+\end{tikzpicture}
+\caption*{\small Trois montages d'un même objet de \SI{10}{\kilogram}. La somme des forces verticales fournies par les fils vaut toujours \SI{100}{\newton}.}
+\end{figure}
+
+\begin{exemple}[analyse détaillée des trois cas]
+\textbf{Cas symétriques ($A$ et $C$).} Les deux fils sont identiques et inclinés de la même façon :
+par symétrie, ils se partagent le poids \emph{également}. Chaque dynamomètre indique
+\[
+T = \frac{G}{2} = \frac{100}{2} = \SI{50}{\newton}.
+\]
+C'est vrai dans le cas $A$ comme dans le cas $C$ : l'intensité lue sur un dynamomètre du cas $C$ est
+\emph{identique} à celle lue dans le cas $A$, soit \SI{50}{\newton}.
+
+\smallskip
+\textbf{Cas asymétrique ($B$).} Les fils ne sont plus inclinés de la même façon : le \textbf{fil le moins
+incliné} (le plus proche de la verticale) supporte la \emph{plus grande} part du poids. Donc les deux
+dynamomètres \emph{n'indiquent plus la même valeur}, et celui du fil le plus « vertical » affiche
+\emph{plus} que \SI{50}{\newton}, l'autre \emph{moins}. (Une construction du parallélogramme des
+forces le confirme : la tension portée par le fil le plus redressé est la plus grande.)
+
+\smallskip
+\textbf{Le point commun aux trois cas.} Quelle que soit l'inclinaison, l'objet reste suspendu, donc
+son poids est toujours intégralement supporté :
+\[
+T_{\text{gauche}} + T_{\text{droite, vertical}} = G = \SI{100}{\newton}
+\quad\text{(somme des contributions verticales)}.
+\]
+La \textbf{somme} des intensités utiles est la \emph{même} dans les trois montages ; seul le
+\emph{partage} entre les deux fils change avec la symétrie. \emph{Erreur classique à éviter :} croire
+que chaque dynamomètre afficherait \SI{100}{\newton} — cela doublerait le poids réellement porté.
+\end{exemple}
+
+% ------------------------------------------------------------------
+\subsection{Plaque suspendue par deux tiges : déplacement de la charge}
+\begin{exemple}[lecture et conservation de la charge totale]
+Une plaque rigide de \SI{120}{\centi\metre} est suspendue par \textbf{deux tiges} ($D_1$ et $D_2$)
+placées à ses extrémités. Un objet de masse $\SI{20}{\kilogram}$ est posé \textbf{au milieu}. Les deux
+dynamomètres indiquent alors chacun \SI{300}{\newton} ($g=\SI{10}{\newton\per\kilogram}$).
+
+\smallskip
+\textbf{Charge totale supportée.} La somme des deux indications correspond au poids total du
+système (objet + plaque + tiges) :
+\[
+G_{\text{total}} = D_1 + D_2 = 300 + 300 = \SI{600}{\newton}.
+\]
+On en déduit que la force d'attraction terrestre s'exerçant sur \emph{tout} l'ensemble vaut
+\SI{600}{\newton}, appliquée (par symétrie, objet au centre) au milieu de la plaque.
+
+\textbf{Une affirmation fausse à débusquer.} « La masse de la plaque vaut \SI{300}{\kilogram}. »
+Ce serait un poids de $300\times 10 = \SI{3000}{\newton}$, ce qui dépasse largement la charge totale
+mesurée (\SI{600}{\newton}) : c'est \emph{impossible}. L'affirmation est donc fausse.
+
+\smallskip
+\textbf{Déplacement de la charge.} Si l'on déplace l'objet \emph{vers la droite}, le côté droit
+supporte davantage et le côté gauche moins, \emph{mais la charge totale ne change pas} : la somme
+$D_1 + D_2$ reste égale à \SI{600}{\newton} (le poids total est conservé). Ainsi, si $D_1$ tombe à
+\SI{200}{\newton}, alors nécessairement
+\[
+D_2 = 600 - D_1 = 600 - 200 = \SI{400}{\newton}.
+\]
+\textbf{Conclusion (règle de la balance) :} tant que le système reste en équilibre,
+\textbf{si l'indication d'un dynamomètre augmente de $x$, celle de l'autre diminue de $x$} —
+leur somme demeure constante (\SI{600}{\newton}).
+\end{exemple}
+
+% ------------------------------------------------------------------
+\subsection{Tige en équilibre : recherche de la masse et du rapport des bras}
+\begin{exemple}[tige horizontale soutenue, masse suspendue]
+Une tige horizontale rigide, de masse négligeable, est soumise à ses extrémités $A$ et $B$
+(distantes de \SI{100}{\centi\metre}) à deux forces parallèles de \textbf{même sens} :
+$F_1 = \SI{1}{\newton}$ (en $A$) et $F_2 = \SI{2.5}{\newton}$ (en $B$). Pour la maintenir horizontale,
+on suspend un objet de masse $m$ en un point $O$. ($g=\SI{10}{\newton\per\kilogram}$.)
+
+\smallskip
+\textbf{1) Masse de l'objet suspendu.} Les deux forces $F_1$ et $F_2$ « tirent » la tige (disons vers le
+haut) ; le poids de l'objet la tire vers le bas. À l'équilibre de translation, le poids $G$ équilibre la
+résultante des deux forces :
+\[
+G = F_1 + F_2 = 1 + 2{,}5 = \SI{3.5}{\newton}.
+\]
+On en déduit la masse :
+\[
+m = \frac{G}{g} = \frac{3{,}5}{10} = \SI{0.35}{\kilogram} = \SI{350}{\gram}.
+\]
+\emph{(Attention au piège : la réponse est \SI{350}{\gram}, et non \SI{35}{\gram}.)}
+
+\textbf{2) Position du point $O$ — rapport des bras.} Le point $O$ est celui de la résultante des deux
+forces parallèles ; la règle des moments donne :
+\[
+F_1\times\overline{AO} = F_2\times\overline{BO}
+\;\Longrightarrow\;
+\frac{\overline{AO}}{\overline{BO}} = \frac{F_2}{F_1} = \frac{2{,}5}{1} = 2{,}5.
+\]
+Le rapport $\dfrac{\overline{AO}}{\overline{BO}}$ vaut donc \textbf{2,5} : le point $O$ est 2,5 fois plus
+loin de $A$ que de $B$ — il est nettement plus proche de $B$, c'est-à-dire de la force la plus
+intense $F_2$.
+
+\textbf{3) Valeurs des bras.} Avec $\overline{AO}+\overline{BO}=\SI{100}{\centi\metre}$ et
+$\overline{AO}=2{,}5\,\overline{BO}$ :
+\[
+3{,}5\,\overline{BO}=100\;\Rightarrow\;\overline{BO}\approx\SI{28.6}{\centi\metre},\quad
+\overline{AO}\approx\SI{71.4}{\centi\metre}.
+\]
+Enfin, l'axe d'action de la résultante des forces $F_1$ et $F_2$ est \emph{le même} que celui du poids
+$\vv G$ de l'objet (tous deux passent par $O$) : c'est précisément pour cela que la tige reste
+horizontale, en équilibre.
+\end{exemple}
+
+% ------------------------------------------------------------------
+\subsection{Tige avec deux forces : position du centre de masse}
+\begin{exemple}[centre de masse de deux forces parallèles]
+Une tige horizontale de masse négligeable subit à ses extrémités $A$ et $B$ (distantes de
+\SI{60}{\centi\metre}) deux forces parallèles de \textbf{même sens} : $F_1 = \SI{10}{\newton}$ (en $A$) et
+$F_2 = \SI{20}{\newton}$ (en $B$). Où se trouve le \textbf{centre de masse} (point d'application de la
+résultante) ?
+
+\smallskip
+On cherche $O$ tel que $F_1\times\overline{AO} = F_2\times\overline{BO}$, avec
+$\overline{AO}+\overline{BO}=\SI{60}{\centi\metre}$. Notons $\overline{BO}=d_2$ la distance à $F_2$.
+\[
+10\times\overline{AO} = 20\times d_2 \;\Longrightarrow\; \overline{AO} = 2\,d_2 .
+\]
+Or $\overline{AO}+d_2 = 60$, donc $2 d_2 + d_2 = 60 \Rightarrow 3 d_2 = 60 \Rightarrow d_2 = \SI{20}{\centi\metre}$.
+
+\smallskip
+\textbf{Conclusion :} le centre de masse est à \textbf{\SI{20}{\centi\metre} de $F_2$} (et à
+\SI{40}{\centi\metre} de $F_1$). Cohérent : il est deux fois plus proche de $F_2$, la force deux fois
+plus intense.
+\end{exemple}
+
+% ------------------------------------------------------------------
+\subsection{Table à deux pieds : répartition des réactions (problème de moments)}
+\begin{exemple}[charge supportée par chaque pied]
+Une table homogène de masse $\SI{4}{\kilogram}$ repose sur deux pieds $A$ et $C$. On dépose une
+masse de $\SI{2}{\kilogram}$ au point $B$. On cherche la force supportée par \emph{chaque} pied
+($g=\SI{10}{\newton\per\kilogram}$). On prend la géométrie suivante : pieds $A$ et $C$ distants de
+$\SI{1}{\metre}$ ; le poids de la table s'applique en son centre (milieu, à \SI{0.5}{\metre} de chaque
+pied) ; la charge de \SI{2}{\kilogram} est posée près de $A$, à \SI{0.25}{\metre} de $A$.
+
+\smallskip
+\textbf{Bilan des poids.}
+\[
+G_{\text{table}} = 4\times 10 = \SI{40}{\newton}\ (\text{au centre}),\qquad
+G_{\text{charge}} = 2\times 10 = \SI{20}{\newton}\ (\text{près de } A).
+\]
+Notons $R_A$ et $R_C$ les forces (réactions) supportées par les pieds $A$ et $C$.
+
+\textbf{Équilibre de translation (forces verticales).}
+\[
+R_A + R_C = G_{\text{table}} + G_{\text{charge}} = 40 + 20 = \SI{60}{\newton}. \tag{1}
+\]
+
+\textbf{Équilibre de rotation (moments par rapport au pied $A$).} Le pied $A$ a un bras de levier nul
+($R_A$ ne crée pas de moment autour de $A$). Les poids font tourner dans un sens, $R_C$ dans
+l'autre :
+\[
+R_C \times \overline{AC} = G_{\text{table}}\times 0{,}5 + G_{\text{charge}}\times 0{,}25 .
+\]
+\[
+R_C \times 1 = 40\times 0{,}5 + 20\times 0{,}25 = 20 + 5 = 25
+\;\Longrightarrow\; R_C = \SI{25}{\newton}.
+\]
+
+\textbf{Retour à (1) :} $R_A = 60 - R_C = 60 - 25 = \SI{35}{\newton}$.
+
+\smallskip
+\textbf{Conclusion :} le pied $C$ (loin de la charge) supporte \SI{25}{\newton}, le pied $A$ (proche de
+la charge) supporte \SI{35}{\newton}. C'est logique : \emph{le pied le plus proche de la charge en
+supporte la plus grande part}. On vérifie la cohérence : $35 + 25 = \SI{60}{\newton}$, bien égal au
+poids total. \emph{(Remarque : l'énoncé d'origine attribuait \SI{25}{\newton} au pied $A$ et
+\SI{35}{\newton} au pied $C$ ; c'est l'inverse — d'où l'intérêt de toujours refaire le bilan des
+moments soi-même.)}
+\end{exemple}
+
+% ------------------------------------------------------------------
+\subsection{Levier à pivot central : équilibre de deux charges}
+\begin{exemple}[balance / levier à deux bras]
+Un levier (tige solide) à deux bras, de masse \SI{50}{\kilogram} répartie de façon homogène, repose
+sur un pivot placé \textbf{en son milieu}. Comme la masse est homogène et le pivot central, le poids
+de la tige s'applique \emph{au pivot} : son bras de levier est nul, il ne crée \textbf{aucun moment}.
+Deux objets $A$ et $B$ sont posés sur le levier, qui reste en équilibre horizontal
+($g=\SI{10}{\newton\per\kilogram}$).
+\end{exemple}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % pivot
+  \fill[primary!75] (0,0)--(-0.45,-0.8)--(0.45,-0.8)--cycle;
+  \draw[black!60](-0.8,-0.8)--(0.8,-0.8);
+  % barre
+  \draw[line width=2pt,primarydark] (-4,0.15)--(4,0.15);
+  \fill[primary](0,0.15) circle (2pt);
+  % objet A (gauche, plus loin)
+  \draw[fill=forceA!70,draw=forceA] (-3.2,0.15) rectangle (-2.6,0.7);
+  \node at (-2.9,0.43){\scriptsize $A$};
+  \draw[fG] (-2.9,0.15)--(-2.9,-1.0) node[below]{\scriptsize $G_A$};
+  % objet B (droite, plus proche, plus lourd)
+  \draw[fill=forceB!70,draw=forceB] (1.7,0.15) rectangle (2.5,0.95);
+  \node at (2.1,0.55){\scriptsize $B$};
+  \draw[fG] (2.1,0.15)--(2.1,-1.25) node[below]{\scriptsize $G_B$};
+  % bras
+  \draw[cote] (-2.9,1.0)--(0,1.0) node[midway,fill=white,inner sep=1pt]{\scriptsize $d_A$};
+  \draw[cote] (0,1.35)--(2.1,1.35) node[midway,fill=white,inner sep=1pt]{\scriptsize $d_B$};
+\end{tikzpicture}
+\caption*{\small Levier à pivot central. À l'équilibre, le moment de $\vv G_A$ (anti-horaire) compense celui de $\vv G_B$ (horaire) : $G_A\times d_A = G_B\times d_B$.}
+\end{figure}
+
+\begin{exemple}[raisonnement sur les moments du levier]
+\textbf{Condition d'équilibre de rotation.} Autour du pivot, l'objet $A$ (à gauche) tend à faire
+tourner dans un sens, l'objet $B$ (à droite) dans l'autre. L'équilibre impose l'égalité des moments :
+\[
+\Mom(A) = \Mom(B)\quad\Longleftrightarrow\quad G_A\times d_A = G_B\times d_B,
+\]
+où $d_A$ et $d_B$ sont les distances de $A$ et $B$ au pivot. Plusieurs conséquences \emph{très
+utiles} en découlent :
+\begin{itemize}[leftmargin=1.6em,topsep=3pt,itemsep=3pt]
+  \item \textbf{Si les deux moments sont égaux, le moment résultant est nul} : le levier est en
+        équilibre de rotation. (C'est la définition même de l'équilibre ici.)
+  \item \textbf{Rôle de la distance au pivot.} À masse fixée, $\Mom = G\times d$ : le moment d'un
+        objet \emph{augmente} quand il \emph{s'éloigne} du pivot, et \emph{diminue} quand il s'en
+        rapproche. Éloigner $A$ du pivot accroît son effet de rotation.
+  \item \textbf{Rôle de la masse.} À distance fixée, $\Mom = G\times d = (m\,g)\,d$ : le moment
+        \emph{augmente} avec la masse. Un objet plus lourd, au même endroit, fait tourner davantage.
+  \item \textbf{Lecture inverse.} Si, d'après le schéma, $A$ est à $d_A$ et $B$ à $d_B$ du pivot avec
+        $d_A = 1{,}5\,d_B$, alors l'équilibre $G_A d_A = G_B d_B$ donne
+        $G_A = G_B\,\dfrac{d_B}{d_A} = \dfrac{G_B}{1{,}5}$. Autrement dit, dans cette configuration,
+        c'est $G_B$ qui doit valoir \textbf{1,5 fois} $G_A$ (et non l'inverse) pour qu'aucune rotation
+        n'ait lieu : le bras le plus court exige la force la plus grande.
+\end{itemize}
+\textbf{Synthèse :} sur un levier, un \emph{petit} poids placé \emph{loin} du pivot peut équilibrer un
+\emph{grand} poids placé \emph{près} du pivot. C'est tout le principe du levier — « donnez-moi un
+point d'appui\dots ».
+\end{exemple}
+
+% ------------------------------------------------------------------
+\subsection{Vrai / faux commentés : pièges classiques}
+\begin{exemple}[quelques affirmations à trancher]
+Reprenons, pour finir, des affirmations typiques et justifions-les rigoureusement.
+
+\smallskip
+\textbf{(a) « À l'équilibre, la somme vectorielle des forces \emph{et} la somme des moments sont
+nulles. »} \quad\textbf{VRAI}. C'est exactement la définition de l'équilibre mécanique complet :
+$\sum\vv F = \vv 0$ \emph{et} $\sum\Mom = 0$. Les deux conditions doivent être vérifiées ensemble.
+
+\smallskip
+\textbf{(b) « Le travail d'une force est la même chose que le moment de cette force, puisqu'ils ont
+la même unité (\si{\newton\metre}). »} \quad\textbf{FAUX}. Avoir la même unité n'entraîne pas l'égalité
+des grandeurs : le travail $W=F\,d$ (déplacement \emph{parallèle} à la force, une énergie en joules)
+et le moment $\Mom = F\,b$ (bras de levier \emph{perpendiculaire}, pas une énergie) décrivent des
+phénomènes différents.
+
+\smallskip
+\textbf{(c) « Un corps de masse \SI{200}{\gram} a un poids de \SI{200}{\newton} (avec
+$g=\SI{10}{\newton\per\kilogram}$). »} \quad\textbf{FAUX}. Il faut convertir la masse en kilogrammes :
+$G = 0{,}200\times 10 = \SI{2}{\newton}$, et non \SI{200}{\newton}. Oublier la conversion fait une
+erreur d'un facteur 1000.
+
+\smallskip
+\textbf{(d) « Sur la Lune, où $g$ est six fois plus faible, le poids d'un corps est six fois plus
+\emph{grand} que sur Terre. »} \quad\textbf{FAUX}. Puisque $G=m\,g$ et que $g$ est six fois plus
+\emph{petit}, le poids est six fois plus \emph{petit}, pas plus grand. La \emph{masse}, elle, reste
+inchangée.
+
+\smallskip
+\textbf{(e) « Un solide tel que $\sum\vv F=\vv 0$ est forcément en équilibre. »} \quad\textbf{FAUX}.
+Un couple de forces vérifie $\sum\vv F=\vv 0$ mais fait \emph{tourner} le solide ($\sum\Mom\neq 0$) :
+l'équilibre n'est pas atteint. Il faut aussi $\sum\Mom = 0$.
+\end{exemple}
+
+% =====================================================================
+\section{Carte mentale : l'essentiel de la statique}
+% =====================================================================
+\begin{center}
+\begin{tikzpicture}[
+  every node/.style={font=\small},
+  racine/.style={rectangle,rounded corners=4pt,fill=primary,text=white,
+     align=center,inner sep=5pt,font=\bfseries},
+  noeud/.style={rectangle,rounded corners=3pt,draw=primary!70,fill=primary!8,
+     align=center,inner sep=4pt},
+  feuille/.style={rectangle,rounded corners=2pt,draw=black!30,fill=black!3,
+     align=center,inner sep=3pt,font=\scriptsize},
+  fl/.style={->,>=Stealth,primary!70,line width=0.8pt},
+]
+  \node[racine] (r) at (0,0) {STATIQUE\\[-1pt]\scriptsize équilibre des solides};
+
+  \node[noeud] (tr) at (-5,-2) {Équilibre de\\translation};
+  \node[noeud] (rot) at (5,-2) {Équilibre de\\rotation};
+  \node[noeud] (g) at (0,-2) {Centre de\\gravité $G$};
+
+  \node[feuille] (f1) at (-6.2,-3.9) {$\sum\vv F=\vv 0$};
+  \node[feuille] (f2) at (-3.4,-3.9) {Forces $\parallel$ :\\ $F{=}F_1{+}F_2$\\ $F_r{=}F_2{-}F_1$};
+  \node[feuille] (f3) at (0,-3.9) {$G=m\,g$\\ méthode des\\ suspensions};
+  \node[feuille] (f4) at (3.4,-3.9) {Moment :\\ $\Mom=\pm F\,b$};
+  \node[feuille] (f5) at (6.3,-3.9) {$\sum\Mom=0$\\ couple : $F\,d$};
+
+  \draw[fl] (r)--(tr); \draw[fl] (r)--(rot); \draw[fl] (r)--(g);
+  \draw[fl] (tr)--(f1); \draw[fl] (tr)--(f2);
+  \draw[fl] (g)--(f3);
+  \draw[fl] (rot)--(f4); \draw[fl] (rot)--(f5);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\itshape\small Fin du cours — Fiche 3 : Statique.
+\end{center}
+
+\end{document}

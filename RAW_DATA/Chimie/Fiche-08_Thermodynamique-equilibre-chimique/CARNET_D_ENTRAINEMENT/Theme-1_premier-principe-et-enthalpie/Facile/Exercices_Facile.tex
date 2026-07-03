@@ -1,0 +1,131 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 8 — THÈME 1 — NIVEAU FACILE — ÉNONCÉS
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{exocol}{RGB}{200,60,40}
+\definecolor{endocol}{RGB}{0,110,180}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\dH}{\Delta H}
+\newcommand{\dU}{\Delta U}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 1 : Premier principe et enthalpie}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 1 — Premier principe et enthalpie}\\[1pt]{\small Niveau \textsc{Facile} — énoncés}};
+\end{tikzpicture}
+\end{center}
+
+\begin{exercice}[conventions de signe]
+Pour chaque situation, du \textbf{point de vue du système}, indiquer le signe (positif ou négatif) de la
+grandeur demandée, en justifiant en une phrase.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Le système \textbf{reçoit} \SI{300}{\joule} de chaleur du milieu extérieur. Signe de $Q$ ?
+  \item Un gaz se \textbf{dilate} et pousse l'atmosphère en fournissant \SI{120}{\joule} de travail. Signe de $W$ ?
+  \item Une réaction \textbf{exothermique} se déroule à pression constante. Signe de $\dH$ ?
+  \item Le système est \textbf{isolé}. Que valent $Q$, $W$, puis $\dU$ ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[appliquer $\dU = Q + W$]
+Un système fermé subit une transformation. Dans chaque cas, écrire d'abord $Q$ et $W$ \emph{avec leur signe},
+puis calculer $\dU$ en joules.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Il \textbf{reçoit} \SI{500}{\joule} de chaleur et \textbf{reçoit} \SI{150}{\joule} de travail.
+  \item Il \textbf{reçoit} \SI{400}{\joule} de chaleur et \textbf{cède} \SI{250}{\joule} de travail.
+  \item Il \textbf{cède} \SI{600}{\joule} de chaleur et \textbf{reçoit} \SI{600}{\joule} de travail.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[exo ou endo à partir du signe de $\dH$]
+Pour chacune des transformations suivantes, dont on donne la variation d'enthalpie, indiquer si elle est
+\textbf{exothermique} ou \textbf{endothermique}, et préciser si les produits ont une enthalpie
+\emph{plus haute} ou \emph{plus basse} que celle des réactifs.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\ce{N2}(g) + 3\,\ce{H2}(g) \rightarrow 2\,\ce{NH3}(g)$, \quad $\dH = \SI{-92}{\kilo\joule}$.
+  \item $2\,\ce{H2O}(l) \rightarrow 2\,\ce{H2}(g) + \ce{O2}(g)$, \quad $\dH = \SI{+572}{\kilo\joule}$.
+  \item $\ce{CH4}(g) + 2\,\ce{O2}(g) \rightarrow \ce{CO2}(g) + 2\,\ce{H2O}(l)$, \quad $\dH = \SI{-890}{\kilo\joule}$.
+  \item $\ce{CaCO3}(s) \rightarrow \ce{CaO}(s) + \ce{CO2}(g)$, \quad $\dH = \SI{+178}{\kilo\joule}$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[lire un diagramme enthalpique]
+On donne ci-dessous le diagramme enthalpique d'une réaction $\ce{A} \rightarrow \ce{B}$, avec les
+enthalpies exprimées en \si{\kilo\joule}.
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[->,thick] (0,-0.2) -- (0,4.4) node[above,font=\small]{$H$ (kJ)};
+  \draw[thick] (0,0) -- (7.6,0) node[right,font=\small]{avancement};
+  % Réactifs à 120
+  \draw[exocol,very thick] (0.6,3.6) -- (2.7,3.6);
+  \node[anchor=south west,font=\small] at (0.65,3.65){Réactifs (A)};
+  \node[anchor=east,font=\scriptsize] at (0.55,3.6){$120$};
+  \draw[dashed,gray] (2.7,3.6) -- (4.2,3.6);
+  % Produits à 40
+  \draw[exocol,very thick] (4.2,1.2) -- (6.9,1.2);
+  \node[anchor=south west,font=\small] at (4.25,1.25){Produits (B)};
+  \node[anchor=east,font=\scriptsize] at (0.55,1.2){$40$};
+  \draw[dashed,gray] (0,1.2) -- (4.2,1.2);
+  % flèche
+  \draw[->,exocol,line width=1.2pt] (3.6,3.6) -- (3.6,1.2) node[midway,right,font=\small]{$\dH$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Calculer $\dH$ de la réaction (donner sa valeur et son signe).
+  \item La réaction est-elle exothermique ou endothermique ?
+  \item La chaleur est-elle \emph{dégagée} vers l'extérieur ou \emph{absorbée} ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[vocabulaire de base]
+Répondre brièvement.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Qu'est-ce qu'un \textbf{système isolé} ? Que valent alors $Q$, $W$ et $\dU$ ?
+  \item Quelle est la différence entre une transformation \textbf{athermique} et une enceinte \textbf{adiabatique} ?
+  \item À quel type de système (ouvert, fermé, isolé) un \textbf{calorimètre parfait} correspond-il ?
+\end{enumerate}
+\end{exercice}
+
+\end{document}

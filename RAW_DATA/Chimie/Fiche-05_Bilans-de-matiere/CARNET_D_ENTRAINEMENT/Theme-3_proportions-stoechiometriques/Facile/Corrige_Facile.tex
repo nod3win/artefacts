@@ -1,0 +1,93 @@
+% =====================================================================
+%  THÈME 3 — Proportions stœchiométriques
+%  Niveau FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{corrcol}{RGB}{176,110,20}
+\newcommand{\nq}[1]{n_{\text{#1}}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 3 : Proportions}}
+\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 3 — Proportions}\\[1pt]
+{\large\color{corrcol}\textbf{Corrigé — Niveau Facile}}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{cor}[la synthèse générique 2A + 3B $\to$ C + 6D]
+Rapport de référence $=\dfrac{\nq{C}}{1}=0{,}100$. On multiplie par chaque coefficient :
+\[
+\nq{A}=2\times0{,}100=\SI{0,200}{\mole},\quad
+\nq{B}=3\times0{,}100=\SI{0,300}{\mole},\quad
+\nq{D}=6\times0{,}100=\SI{0,600}{\mole}.
+\]
+\rep{\boxed{\nq{A}=0{,}200\ \text{mol},\ \nq{B}=0{,}300\ \text{mol},\ \nq{D}=0{,}600\ \text{mol}}. Mélange stœchiométrique (aucun excès).}
+\end{cor}
+
+\begin{cor}[synthèse de l'ammoniac]
+\textbf{a)} $\nq{H2}=\nq{N2}\times\dfrac{3}{1}=5{,}0\times3=\boxed{\SI{15}{\mole}}$.\\
+\textbf{b)} $\nq{NH3}=\nq{N2}\times\dfrac{2}{1}=5{,}0\times2=\boxed{\SI{10}{\mole}}$.
+\end{cor}
+
+\begin{cor}[formation de l'eau]
+Rapport de référence $=\dfrac{\nq{H2O}}{2}=\dfrac{4{,}0}{2}=2{,}0$.
+\[
+\nq{H2}=2\times2{,}0=\boxed{\SI{4,0}{\mole}},\qquad
+\nq{O2}=1\times2{,}0=\boxed{\SI{2,0}{\mole}}.
+\]
+\rep{Autre façon : $\nq{H2}=\nq{H2O}\times\frac{2}{2}=4{,}0$ ; $\nq{O2}=\nq{H2O}\times\frac{1}{2}=2{,}0$.}
+\end{cor}
+
+\begin{cor}[décomposition du calcaire]
+Les coefficients valent tous 1 : la réaction est en proportions $1:1:1$.
+\[
+\nq{CaO}=\nq{CO2}=\nq{CaCO3}=\boxed{\SI{3,0}{\mole}}.
+\]
+\end{cor}
+
+\begin{cor}[oxydation du fer : remonter aux réactifs]
+Rapport de référence $=\dfrac{\nq{Fe2O3}}{2}=\dfrac{6{,}0}{2}=3{,}0$.
+\[
+\nq{Fe}=4\times3{,}0=\boxed{\SI{12}{\mole}},\qquad
+\nq{O2}=3\times3{,}0=\boxed{\SI{9,0}{\mole}}.
+\]
+\rep{Ou directement : $\nq{Fe}=\nq{Fe2O3}\times\frac{4}{2}=12$ ; $\nq{O2}=\nq{Fe2O3}\times\frac{3}{2}=9$.}
+\end{cor}
+
+\end{document}

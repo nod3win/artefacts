@@ -1,0 +1,1597 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 3
+%  Trigonométrie
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (rose/magenta = couleur des maths dans le livre)
+% =====================================================================
+\definecolor{primary}{RGB}{214,51,108}      % rose magenta (couleur du livre)
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+\definecolor{sincol}{RGB}{205,40,55}        % rouge — sinus
+\definecolor{coscol}{RGB}{20,110,200}       % bleu — cosinus
+\definecolor{tgcol}{RGB}{20,150,90}         % vert — tangente
+\definecolor{cotgcol}{RGB}{150,70,190}      % violet — cotangente
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode / Comment faire ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire ?}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 3} — Trigonométrie}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% =====================================================================
+%  RACCOURCIS MATHÉMATIQUES
+% =====================================================================
+\newcommand{\vv}[1]{\vec{#1}}
+\DeclareMathOperator{\tg}{tg}        % tangente (notation du livre)
+\DeclareMathOperator{\cotg}{cotg}    % cotangente (notation du livre)
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Trigonométrie}\\[6pt]
+   {\large\bfseries Cercle trigonométrique, nombres trigonométriques et résolution des triangles}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,3}}
+
+\vspace{0.8cm}
+
+% --- Illustration de couverture : le cercle trigonométrique ---
+\begin{tikzpicture}[scale=2.0]
+  % cercle
+  \draw[primary,line width=1.3pt] (0,0) circle (1);
+  % axes
+  \draw[->,>=Stealth,black!70] (-1.35,0) -- (1.45,0) node[right]{$\cos$};
+  \draw[->,>=Stealth,black!70] (0,-1.35) -- (0,1.45) node[above]{$\sin$};
+  % angle de 50°
+  \def\ang{52}
+  \draw[coscol,line width=1pt,dashed] (\ang:1) -- (cos{\ang},0);
+  \draw[sincol,line width=1pt,dashed] (\ang:1) -- (0,{sin(\ang)});
+  \draw[primarydark,line width=1.1pt] (0,0) -- (\ang:1);
+  \fill[primary] (\ang:1) circle (0.7pt);
+  \draw[primarydark] (0.36,0) arc (0:\ang:0.36);
+  \node at (0.55,0.23) {$\alpha$};
+  \node[coscol,below] at (cos{\ang},-0.02) {\scriptsize$\cos\alpha$};
+  \node[sincol,left] at (-0.02,{sin(\ang)}) {\scriptsize$\sin\alpha$};
+  \fill[black] (0,0) circle (0.6pt);
+  % quelques angles remarquables
+  \foreach \a in {0,30,...,330} \fill[black!55] (\a:1) circle (0.35pt);
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item construire et lire le \textbf{cercle trigonométrique}, et convertir un angle entre \textbf{degrés} et \textbf{radians} ;
+  \item définir les quatre \textbf{nombres trigonométriques} ($\cos$, $\sin$, $\tg$, $\cotg$), connaître leur \textbf{signe} selon le quadrant et leurs \textbf{valeurs remarquables} ;
+  \item démontrer et utiliser la \textbf{relation fondamentale} $\cos^2\alpha+\sin^2\alpha=1$ ;
+  \item exploiter les \textbf{angles associés} (opposés, complémentaires, supplémentaires\dots) pour ramener tout angle à un angle connu ;
+  \item appliquer les \textbf{formules d'addition} et de \textbf{duplication} ;
+  \item \textbf{résoudre des équations trigonométriques} en $\sin$, $\cos$ et $\tg$ ;
+  \item résoudre un \textbf{triangle quelconque} grâce à la \textbf{loi des sinus} et à la \textbf{loi des cosinus}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 3 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : à quoi sert la trigonométrie ?}
+% =====================================================================
+Le mot \textbf{trigonométrie} vient du grec \emph{trígonon} (« triangle ») et \emph{métron} (« mesure ») :
+c'est littéralement la \emph{mesure des triangles}. Historiquement, elle est née du besoin très concret
+de calculer des longueurs ou des angles \emph{inaccessibles} à la mesure directe : la hauteur d'une
+montagne, la distance d'un navire à la côte, la position d'une étoile. L'idée géniale est la suivante :
+dans un triangle, si l'on connaît assez d'informations (des côtés, des angles), on peut \emph{calculer}
+toutes les autres au lieu de les mesurer.
+
+\begin{definition}[la trigonométrie]
+La \textbf{trigonométrie} est la branche des mathématiques qui étudie les relations entre les
+\textbf{angles} et les \textbf{longueurs des côtés} d'un triangle. Elle repose sur quatre nombres
+associés à un angle --- le \textbf{cosinus}, le \textbf{sinus}, la \textbf{tangente} et la
+\textbf{cotangente} --- que l'on appelle les \emph{nombres trigonométriques}.
+\end{definition}
+
+Ces nombres ne servent pas qu'à la géométrie : ils décrivent tous les phénomènes \textbf{périodiques}
+(qui se répètent à l'identique) --- oscillations d'un ressort, courant alternatif, sons, marées, ondes
+lumineuses. Maîtriser cette fiche, c'est donc se donner un outil utilisé dans presque toute la physique
+et l'ingénierie.
+
+\subsection{Mesurer un angle : degrés et radians}
+Avant toute chose, il faut savoir \emph{mesurer} un angle. Il existe deux unités, et la trigonométrie
+les utilise \textbf{toutes les deux} : il est indispensable de passer aisément de l'une à l'autre.
+
+\begin{definition}[degré et radian]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item Le \textbf{degré} (symbole \si{\degree}) découpe un tour complet en \textbf{360} parts égales.
+        Un angle droit vaut donc \SI{90}{\degree}.
+  \item Le \textbf{radian} (symbole \si{\radian}) mesure l'angle par la \textbf{longueur de l'arc}
+        qu'il découpe sur un cercle de rayon~$1$. Comme la circonférence d'un tel cercle vaut $2\pi$,
+        un \textbf{tour complet} vaut $2\pi$ radians.
+\end{itemize}
+\end{definition}
+
+On a donc l'égalité fondamentale entre les deux unités : un demi-tour s'écrit
+$\SI{180}{\degree}$ \emph{ou} $\pi$~radians.
+
+\begin{formule}[conversion degrés $\leftrightarrow$ radians]
+\[
+\boxed{\;\alpha_{\text{rad}} = \alpha_{\text{deg}}\times \dfrac{\pi}{180}\;}
+\qquad\text{et}\qquad
+\boxed{\;\alpha_{\text{deg}} = \alpha_{\text{rad}}\times \dfrac{180}{\pi}\;}
+\]
+\begin{ou}
+  \item $\alpha_{\text{deg}}$ : la mesure de l'angle en \textbf{degrés} (unité : \si{\degree}) ;
+  \item $\alpha_{\text{rad}}$ : la même mesure en \textbf{radians} (unité : \si{\radian}, sans dimension) ;
+  \item $\pi \approx 3{,}14159$ : constante d'Archimède (rapport circonférence/diamètre).
+\end{ou}
+\end{formule}
+
+La règle de trois qui résume tout : $\dfrac{\alpha_{\text{deg}}}{180} = \dfrac{\alpha_{\text{rad}}}{\pi}$.
+Le tableau ci-dessous donne les conversions des angles les plus courants ; ce sont précisément les
+angles que l'on retrouvera partout dans la fiche.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\rowcolor{primary!12}
+\textbf{Degrés} & $0\degr$ & $30\degr$ & $45\degr$ & $60\degr$ & $90\degr$ & $120\degr$ & $180\degr$ & $270\degr$ & $360\degr$\\
+\hline
+\textbf{Radians} & $0$ & $\dfrac{\pi}{6}$ & $\dfrac{\pi}{4}$ & $\dfrac{\pi}{3}$ & $\dfrac{\pi}{2}$ & $\dfrac{2\pi}{3}$ & $\pi$ & $\dfrac{3\pi}{2}$ & $2\pi$\\[4pt]
+\hline
+\end{tabular}
+\end{center}
+
+\begin{exemple}[deux conversions dans les deux sens]
+\textbf{(a)} Convertir $\SI{30}{\degree}$ en radians. On applique la première formule :
+\[
+\alpha_{\text{rad}} = 30\times\frac{\pi}{180} = \frac{30\pi}{180} = \frac{\pi}{6}\ \text{rad}.
+\]
+\textbf{(b)} Convertir $\dfrac{3\pi}{4}$~rad en degrés. On applique la seconde formule :
+\[
+\alpha_{\text{deg}} = \frac{3\pi}{4}\times\frac{180}{\pi}
+= \frac{3\times 180}{4} = \frac{540}{4} = \SI{135}{\degree}.
+\]
+On remarque que le $\pi$ se simplifie toujours : c'est le signe que le calcul est bien mené.
+\end{exemple}
+
+\begin{remarque}[notation de la tangente]
+Dans ce cours, suivant la convention du livre, on note la tangente $\tg$ et la cotangente $\cotg$.
+On rencontre aussi très souvent les notations $\tan$ et $\cot$ (notamment sur les calculatrices) :
+ce sont exactement les mêmes objets.
+\end{remarque}
+
+% =====================================================================
+\section{Le cercle trigonométrique et les nombres trigonométriques}
+% =====================================================================
+Toute la trigonométrie « tient » dans une figure unique, le \textbf{cercle trigonométrique}.
+C'est l'outil central de la fiche : il sert à la fois à \emph{définir} les quatre nombres
+trigonométriques, à \emph{lire} leur signe, et à \emph{retrouver} leurs valeurs sans rien
+apprendre par cœur.
+
+\subsection{Construction et sens de parcours}
+
+\begin{definition}[cercle trigonométrique]
+Dans un repère orthonormé de centre $O$, le \textbf{cercle trigonométrique} est le cercle de
+\textbf{centre $O$} et de \textbf{rayon égal à $1$}. Tout point du cercle correspond à un
+\textbf{angle orienté} $\alpha$ mesuré à partir du demi-axe horizontal positif.
+\end{definition}
+
+Le rayon vaut~$1$ : ce choix n'est pas un détail, c'est lui qui rendra les définitions si simples
+(on divisera tout le temps par $1$). Le cercle est partagé par les deux axes en \textbf{quatre
+quadrants}, numérotés de~\textbf{I} à~\textbf{IV} dans le \emph{sens trigonométrique}.
+
+\begin{definition}[sens trigonométrique]
+Le \textbf{sens trigonométrique} (ou sens positif) est le sens de rotation \textbf{inverse des
+aiguilles d'une montre}. Les angles y sont comptés \textbf{positivement}. En tournant dans ce sens
+depuis l'axe horizontal, on balaie successivement les quadrants \textbf{I} ($0$ à $\tfrac{\pi}{2}$),
+\textbf{II} ($\tfrac{\pi}{2}$ à $\pi$), \textbf{III} ($\pi$ à $\tfrac{3\pi}{2}$) et
+\textbf{IV} ($\tfrac{3\pi}{2}$ à $2\pi$).
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=3.5,line cap=round]
+  % --- disques de quadrants très pâles ---
+  \fill[primary!6] (0,0)--(1,0) arc(0:90:1)--cycle;
+  \fill[primary!12] (0,0)--(0,1) arc(90:180:1)--cycle;
+  \fill[primary!6] (0,0)--(-1,0) arc(180:270:1)--cycle;
+  \fill[primary!12] (0,0)--(0,-1) arc(270:360:1)--cycle;
+  % --- cercle ---
+  \draw[primary,line width=1.2pt] (0,0) circle (1);
+  % --- axes ---
+  \draw[->,>=Stealth,black!75] (-1.32,0) -- (1.46,0) node[right]{\small$x=\cos$};
+  \draw[->,>=Stealth,black!75] (0,-1.32) -- (0,1.4) node[above]{\small$y=\sin$};
+  % --- flèche du sens trigonométrique ---
+  \draw[->,>=Stealth,thick,primarydark]
+        (1.18,0.28) arc (15:140:1.2);
+  \node[primarydark] at (1.07,0.74) {\small\itshape sens $+$};
+  % --- rayons + points + étiquettes (degré dehors, radian dedans) ---
+  \foreach \a/\deg/\rad in {%
+      0/0/0, 30/30/\frac{\pi}{6}, 45/45/\frac{\pi}{4}, 60/60/\frac{\pi}{3},
+      90/90/\frac{\pi}{2}, 120/120/\frac{2\pi}{3}, 135/135/\frac{3\pi}{4},
+      150/150/\frac{5\pi}{6}, 180/180/\pi, 210/210/\frac{7\pi}{6},
+      225/225/\frac{5\pi}{4}, 240/240/\frac{4\pi}{3}, 270/270/\frac{3\pi}{2},
+      300/300/\frac{5\pi}{3}, 315/315/\frac{7\pi}{4}, 330/330/\frac{11\pi}{6}}{
+    \draw[black!45,line width=0.3pt] (0,0)--(\a:1);
+    \fill[primarydark] (\a:1) circle (0.012);
+    \node[black!75,font=\scriptsize] at (\a:1.31) {$\deg\degr$};
+    \node[primary!75!black,font=\tiny] at (\a:1.12) {$\rad$};
+  }
+  % --- étiquettes de quadrants ---
+  \node[primarydark,font=\bfseries\small] at (45:0.55) {I};
+  \node[primarydark,font=\bfseries\small] at (135:0.55) {II};
+  \node[primarydark,font=\bfseries\small] at (225:0.55) {III};
+  \node[primarydark,font=\bfseries\small] at (315:0.55) {IV};
+  \fill[black] (0,0) circle (0.015) node[below left,font=\scriptsize]{$O$};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 1}} : Le cercle trigonométrique. À l'extérieur,
+la mesure de l'angle en \emph{degrés} ; à l'intérieur, la même mesure en \emph{radians}.
+Les quadrants I à IV sont parcourus dans le sens trigonométrique (inverse des aiguilles d'une montre).}
+\end{figure}
+
+\begin{remarque}[un angle, une infinité d'écritures]
+Comme on peut tourner autant de fois qu'on veut, un même point du cercle correspond à une
+\emph{infinité} de mesures qui diffèrent d'un nombre entier de tours : $\alpha$, $\alpha+2\pi$,
+$\alpha-2\pi$, \dots, c'est-à-dire $\alpha + 2k\pi$ avec $k\in\Z$. C'est la raison pour laquelle,
+plus loin, les solutions des équations trigonométriques contiendront toujours un terme « $+2k\pi$ ».
+\end{remarque}
+
+\subsection{Le cosinus et le sinus}
+À chaque angle $\alpha$ correspond un unique point $P$ sur le cercle. Comme le rayon vaut~$1$, les
+\textbf{coordonnées} de ce point fournissent directement les deux premiers nombres trigonométriques.
+
+\begin{definition}[cosinus et sinus]
+Soit $P$ le point du cercle trigonométrique associé à l'angle~$\alpha$. Alors :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item le \textbf{cosinus} de $\alpha$, noté $\cos\alpha$, est l'\textbf{abscisse} de $P$
+        (sa projection sur l'axe horizontal $x$) ;
+  \item le \textbf{sinus} de $\alpha$, noté $\sin\alpha$, est l'\textbf{ordonnée} de $P$
+        (sa projection sur l'axe vertical $y$).
+\end{itemize}
+Autrement dit, le point du cercle a pour coordonnées $P=(\cos\alpha\,;\,\sin\alpha)$.
+\end{definition}
+
+\begin{formule}[coordonnées d'un point du cercle]
+\[
+\boxed{\,P = (\cos\alpha\,;\,\sin\alpha)\,}
+\]
+\begin{ou}
+  \item $\alpha$ : l'angle orienté, mesuré en \textbf{radians} ou en \textbf{degrés} ;
+  \item $\cos\alpha$ : l'abscisse de $P$, un \textbf{nombre pur} (sans unité), car c'est une
+        longueur divisée par le rayon $1$ ;
+  \item $\sin\alpha$ : l'ordonnée de $P$, également un \textbf{nombre pur} sans unité.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[pourquoi « sans unité » ?]
+Les nombres trigonométriques ne sont \emph{pas} des longueurs : ce sont des \textbf{rapports}.
+Sur le cercle de rayon~$1$, $\cos\alpha$ et $\sin\alpha$ sont des coordonnées comprises entre
+$-1$ et $+1$. On verra à la section~3 qu'ils s'interprètent comme « côté divisé par hypoténuse » :
+un quotient de deux longueurs, dont les unités se simplifient. Voilà pourquoi un cosinus est juste
+un nombre, sans \si{\metre} ni \si{\degree}.
+\end{remarque}
+
+La figure~2 montre comment lire les \emph{quatre} nombres trigonométriques sur le cercle. On y a ajouté
+deux droites tangentes au cercle : l'\textbf{axe des tangentes} (vertical, tangent au point $0\degr$) et
+l'\textbf{axe des cotangentes} (horizontal, tangent au point $90\degr$).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=3.4,line cap=round,>=Stealth]
+  \def\ang{35}
+  % --- axes tangents ---
+  \draw[tgcol,line width=0.8pt] (1,-0.55)--(1,1.35) node[right,font=\scriptsize]{axe $\tg$ ($z$)};
+  \draw[cotgcol,line width=0.8pt] (-0.55,1)--(1.5,1) node[above,font=\scriptsize]{axe $\cotg$ ($t$)};
+  % --- cercle + axes ---
+  \draw[primary,line width=1.1pt] (0,0) circle (1);
+  \draw[->,black!75] (-1.25,0)--(1.62,0) node[right,font=\scriptsize]{$\cos$ ($x$)};
+  \draw[->,black!75] (0,-1.2)--(0,1.5) node[above,font=\scriptsize]{$\sin$ ($y$)};
+  % --- demi-droite OP prolongée jusqu'aux deux axes tangents ---
+  \draw[primarydark,line width=1pt] (0,0)--(1.428,1);
+  % --- projections cos et sin ---
+  \draw[coscol,line width=1pt,dashed] (\ang:1)--({cos(\ang)},0);
+  \draw[sincol,line width=1pt,dashed] (\ang:1)--(0,{sin(\ang)});
+  \draw[coscol,line width=1.6pt] (0,0)--({cos(\ang)},0);
+  \draw[sincol,line width=1.6pt] ({cos(\ang)},0.0)--({cos(\ang)},{sin(\ang)});
+  % --- tangente : segment vertical sur x=1 ---
+  \draw[tgcol,line width=1.8pt] (1,0)--(1,{tan(\ang)});
+  % --- cotangente : segment horizontal sur y=1 ---
+  \draw[cotgcol,line width=1.8pt] (0,1)--({1/tan(\ang)},1);
+  % --- pointillés de report ---
+  \draw[tgcol,dotted] (1,{tan(\ang)})--(1.428,1);
+  % --- point P et angle ---
+  \fill[primarydark] (\ang:1) circle (0.013) node[above right=-1pt,font=\scriptsize]{$P$};
+  \draw[black] (0.2,0) arc (0:\ang:0.2);
+  \node[font=\scriptsize] at (\ang*0.5:0.31) {$\alpha$};
+  % --- étiquettes ---
+  \node[coscol,font=\scriptsize,below] at ({cos(\ang)/2},-0.01) {$\cos\alpha$};
+  \node[sincol,font=\scriptsize,left] at (-0.02,{sin(\ang)/2}) {$\sin\alpha$};
+  \node[tgcol,font=\scriptsize,right] at (1.02,{tan(\ang)/2}) {$\tg\alpha$};
+  \node[cotgcol,font=\scriptsize,above] at ({1/tan(\ang)/2},1.02) {$\cotg\alpha$};
+  \fill[black] (0,0) circle (0.013);
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 2}} : Lecture des quatre nombres trigonométriques
+pour un angle $\alpha$ du premier quadrant. Le \textcolor{coscol}{cosinus} se lit sur l'axe horizontal,
+le \textcolor{sincol}{sinus} sur l'axe vertical, la \textcolor{tgcol}{tangente} sur la droite verticale
+tangente, et la \textcolor{cotgcol}{cotangente} sur la droite horizontale tangente.}
+\end{figure}
+
+\subsection{La tangente et la cotangente}
+Les deux derniers nombres se déduisent des deux premiers par un simple quotient.
+
+\begin{definition}[tangente et cotangente]
+Pour un angle $\alpha$ :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item la \textbf{tangente} de $\alpha$ est le quotient du sinus par le cosinus :
+        $\tg\alpha=\dfrac{\sin\alpha}{\cos\alpha}$, définie pour $\cos\alpha\neq0$, c'est-à-dire
+        $\alpha\neq\dfrac{\pi}{2}+k\pi$ ;
+  \item la \textbf{cotangente} de $\alpha$ est l'inverse de la tangente :
+        $\cotg\alpha=\dfrac{1}{\tg\alpha}=\dfrac{\cos\alpha}{\sin\alpha}$, définie pour
+        $\sin\alpha\neq0$, c'est-à-dire $\alpha\neq k\pi$.
+\end{itemize}
+\end{definition}
+
+\begin{formule}[tangente et cotangente]
+\[
+\boxed{\;\tg\alpha=\frac{\sin\alpha}{\cos\alpha}\;}
+\qquad\qquad
+\boxed{\;\cotg\alpha=\frac{1}{\tg\alpha}=\frac{\cos\alpha}{\sin\alpha}\;}
+\]
+\begin{ou}
+  \item $\sin\alpha,\ \cos\alpha$ : sinus et cosinus de l'angle (nombres purs, entre $-1$ et $1$) ;
+  \item $\tg\alpha,\ \cotg\alpha$ : tangente et cotangente, \textbf{nombres purs sans unité} ;
+  \item \textbf{conditions d'existence} : $\cos\alpha\neq0$ pour la tangente, $\sin\alpha\neq0$ pour
+        la cotangente --- diviser par zéro est interdit, d'où les valeurs « $\nexists$ » (n'existe pas)
+        dans les tableaux.
+\end{ou}
+\end{formule}
+
+\begin{attention}[ne pas confondre les conditions d'existence]
+La tangente « explose » (tend vers $\pm\infty$) là où le cosinus s'annule : aux angles
+$\tfrac{\pi}{2}$, $\tfrac{3\pi}{2}$, etc. La cotangente explose là où le sinus s'annule :
+en $0$, $\pi$, $2\pi$, etc. Contrairement au sinus et au cosinus qui restent \emph{bornés} entre
+$-1$ et $1$, \textbf{la tangente et la cotangente ne sont pas bornées} : elles prennent toutes les
+valeurs de $-\infty$ à $+\infty$.
+\end{attention}
+
+\subsection{Signe des nombres trigonométriques selon le quadrant}
+Le signe se lit \emph{directement} sur le cercle : il suffit de regarder si la projection
+correspondante est du côté positif ou négatif de l'axe.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85,every node/.style={font=\scriptsize}]
+ \foreach \x/\name/\sI/\sII/\sIII/\sIV in {%
+    0/$\cos$/$+$/$-$/$-$/$+$,
+    3.4/$\sin$/$+$/$+$/$-$/$-$,
+    6.8/$\tg$/$+$/$-$/$+$/$-$,
+    10.2/$\cotg$/$+$/$-$/$+$/$-$}{
+   \begin{scope}[shift={(\x,0)}]
+     \draw[primary,line width=0.8pt] (0,0) circle (1);
+     \draw[black!55,->,>=Stealth] (-1.25,0)--(1.25,0);
+     \draw[black!55,->,>=Stealth] (0,-1.25)--(0,1.25);
+     \node[primarydark,font=\bfseries] at (0,1.5) {\name};
+     \node at (45:0.55) {\sI};
+     \node at (135:0.55) {\sII};
+     \node at (225:0.55) {\sIII};
+     \node at (315:0.55) {\sIV};
+   \end{scope}
+ }
+\end{tikzpicture}
+\end{center}
+\vspace{-2mm}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 3}} : Signe de chaque nombre trigonométrique
+dans les quatre quadrants (I en haut à droite, puis sens trigonométrique).\end{center}
+
+On retient facilement : le \textbf{cosinus} (horizontal) est positif \emph{à droite} (quadrants I et IV) ;
+le \textbf{sinus} (vertical) est positif \emph{en haut} (quadrants I et II) ; la \textbf{tangente} et la
+\textbf{cotangente}, étant des quotients, sont positives quand $\sin$ et $\cos$ ont \emph{le même signe}
+(quadrants I et III).
+
+\subsection{Valeurs remarquables à connaître}
+Les angles $0,\ \tfrac{\pi}{6},\ \tfrac{\pi}{4},\ \tfrac{\pi}{3},\ \tfrac{\pi}{2}$ (soit
+$0\degr,30\degr,45\degr,60\degr,90\degr$) reviennent sans cesse. Leurs nombres trigonométriques
+forment le tableau suivant, qu'il faut savoir \emph{reconstruire} grâce au cercle.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.7}
+\begin{tabular}{|>{\columncolor{primary!12}}c|c|c|c|c|c|}
+\hline
+\rowcolor{primary!22}
+$\alpha$ & $0$ & $\dfrac{\pi}{6}$ & $\dfrac{\pi}{4}$ & $\dfrac{\pi}{3}$ & $\dfrac{\pi}{2}$\\[3pt]
+\hline
+(degrés) & $0\degr$ & $30\degr$ & $45\degr$ & $60\degr$ & $90\degr$\\
+\hline
+$\sin\alpha$ & $0$ & $\dfrac{1}{2}$ & $\dfrac{\sqrt2}{2}$ & $\dfrac{\sqrt3}{2}$ & $1$\\[4pt]
+\hline
+$\cos\alpha$ & $1$ & $\dfrac{\sqrt3}{2}$ & $\dfrac{\sqrt2}{2}$ & $\dfrac{1}{2}$ & $0$\\[4pt]
+\hline
+$\tg\alpha$ & $0$ & $\dfrac{\sqrt3}{3}$ & $1$ & $\sqrt3$ & $\nexists$\\[4pt]
+\hline
+$\cotg\alpha$ & $\nexists$ & $\sqrt3$ & $1$ & $\dfrac{\sqrt3}{3}$ & $0$\\[4pt]
+\hline
+\end{tabular}
+\end{center}
+
+\begin{remarque}[une astuce de mémorisation très efficace]
+Écrivez sur la ligne du sinus les nombres $\sqrt0,\sqrt1,\sqrt2,\sqrt3,\sqrt4$ tous divisés par $2$ :
+\[
+\sin: \ \frac{\sqrt0}{2},\ \frac{\sqrt1}{2},\ \frac{\sqrt2}{2},\ \frac{\sqrt3}{2},\ \frac{\sqrt4}{2}
+\ =\ 0,\ \frac12,\ \frac{\sqrt2}{2},\ \frac{\sqrt3}{2},\ 1.
+\]
+Le cosinus est la même liste \emph{à l'envers} (car $\cos\alpha=\sin(\tfrac{\pi}{2}-\alpha)$, voir
+section~4). La tangente s'obtient alors en divisant : $\tg=\dfrac{\sin}{\cos}$. Plus besoin de
+tout mémoriser !
+\end{remarque}
+
+\begin{methode}[retrouver un nombre trigonométrique sans calculatrice]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Placer} l'angle sur le cercle pour identifier son \textbf{quadrant} : on en déduit
+        le \textbf{signe} ($+$ ou $-$) du nombre cherché (figure~3).
+  \item \textbf{Ramener} l'angle à un angle remarquable du premier quadrant à l'aide des
+        \emph{angles associés} (section~4).
+  \item \textbf{Lire} la valeur (sans le signe) dans le tableau ci-dessus.
+  \item \textbf{Recoller} le signe trouvé à l'étape~1.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[lire un cosinus négatif : $\cos\tfrac{2\pi}{3}$]
+On veut $\cos\dfrac{2\pi}{3}$ (soit $\cos120\degr$).
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Quadrant} : $120\degr$ est entre $90\degr$ et $180\degr$, donc dans le quadrant~II.
+        Or, dans le quadrant~II, le \textbf{cosinus est négatif} (figure~3). On sait déjà que le
+        résultat sera précédé d'un « $-$ ».
+  \item \textbf{Angle de référence} : $120\degr$ est le supplémentaire de $60\degr$
+        ($180\degr-120\degr=60\degr$). On lit $\cos60\degr=\dfrac12$ dans le tableau.
+  \item \textbf{Conclusion} : $\cos\dfrac{2\pi}{3}=-\dfrac12$.
+\end{itemize}
+Ce raisonnement, mené ici sur un cas simple, est \emph{exactement} celui qu'on systématise à la
+section~4 avec les angles associés.
+\end{exemple}
+
+% =====================================================================
+\section{La relation fondamentale de la trigonométrie}
+% =====================================================================
+Jusqu'ici, le rayon valait~$1$. Reprenons le raisonnement avec un cercle (ou un triangle) de rayon
+\emph{quelconque} : on obtiendra l'interprétation des nombres trigonométriques dans un
+\textbf{triangle rectangle}, puis la formule la plus utilisée de toute la trigonométrie.
+
+\subsection{Définitions dans le triangle rectangle}
+Considérons un triangle $OAB$ \textbf{rectangle en $B$}, dont l'angle en $O$ vaut $\alpha$.
+On nomme les trois côtés par rapport à l'angle $\alpha$ :
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5,>=Stealth,line cap=round]
+  \coordinate (O) at (0,0);
+  \coordinate (B) at (4,0);
+  \coordinate (A) at (4,2.4);
+  % triangle
+  \draw[primary,line width=1.2pt] (O)--(B)--(A)--cycle;
+  % angle droit en B
+  \draw[black!70] (B)++(-0.32,0)--++(0,0.32)--++(0.32,0);
+  % angle alpha en O
+  \draw[primarydark,line width=1pt] (0.7,0) arc (0:31:0.7);
+  \node[primarydark] at (0.95,0.22) {$\alpha$};
+  % sommets
+  \fill (O) circle (1.4pt) node[left]{$O$};
+  \fill (B) circle (1.4pt) node[right]{$B$};
+  \fill (A) circle (1.4pt) node[right]{$A$};
+  % noms des côtés
+  \node[coscol,below,font=\small] at (2,0) {côté \textbf{adjacent} ($\overline{OB}$)};
+  \node[sincol,right,font=\small] at (4,1.2) {côté \textbf{opposé} ($\overline{AB}$)};
+  \node[primarydark,above left,font=\small,rotate=31] at (2,1.2) {\textbf{hypoténuse} ($\overline{OA}$)};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 4}} : Le triangle rectangle et le vocabulaire
+des côtés. L'\emph{hypoténuse} est toujours le côté opposé à l'angle droit (le plus long) ; les
+qualificatifs \emph{adjacent} et \emph{opposé} se rapportent à l'angle étudié $\alpha$.}
+\end{figure}
+
+\begin{formule}[définitions « SOH-CAH-TOA »]
+\[
+\boxed{\;\cos\alpha=\frac{\text{adjacent}}{\text{hypoténuse}}=\frac{\overline{OB}}{\overline{OA}}\;}
+\quad
+\boxed{\;\sin\alpha=\frac{\text{opposé}}{\text{hypoténuse}}=\frac{\overline{AB}}{\overline{OA}}\;}
+\quad
+\boxed{\;\tg\alpha=\frac{\text{opposé}}{\text{adjacent}}=\frac{\overline{AB}}{\overline{OB}}\;}
+\]
+\begin{ou}
+  \item $\overline{OA}$ : longueur de l'\textbf{hypoténuse} (unité de longueur : \si{\metre}, \si{\centi\metre}\dots) ;
+  \item $\overline{OB}$ : longueur du côté \textbf{adjacent} à $\alpha$ (même unité) ;
+  \item $\overline{AB}$ : longueur du côté \textbf{opposé} à $\alpha$ (même unité) ;
+  \item $\cos\alpha,\ \sin\alpha,\ \tg\alpha$ : \textbf{nombres purs} --- les unités de longueur du
+        numérateur et du dénominateur se simplifient.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[un moyen mnémotechnique célèbre]
+On retient les trois définitions par le « mot magique » \textbf{SOH-CAH-TOA} :
+\textbf{S}inus${}={}$\textbf{O}pposé sur \textbf{H}ypoténuse, \textbf{C}osinus${}={}$\textbf{A}djacent
+sur \textbf{H}ypoténuse, \textbf{T}angente${}={}$\textbf{O}pposé sur \textbf{A}djacent.
+\end{remarque}
+
+\subsection{Démonstration de la relation fondamentale}
+Cette identité relie le sinus et le cosinus d'un \emph{même} angle. C'est la conséquence directe du
+théorème de Pythagore appliqué au triangle rectangle.
+
+\begin{theoreme}[démonstration par Pythagore]
+Dans le triangle $OAB$ rectangle en $B$, Pythagore donne
+$\overline{OA}^{\,2}=\overline{OB}^{\,2}+\overline{AB}^{\,2}$.
+Or $\overline{OB}=\overline{OA}\cos\alpha$ et $\overline{AB}=\overline{OA}\sin\alpha$. En remplaçant :
+\[
+\overline{OA}^{\,2}=\bigl(\overline{OA}\cos\alpha\bigr)^2+\bigl(\overline{OA}\sin\alpha\bigr)^2
+=\overline{OA}^{\,2}\bigl(\cos^2\alpha+\sin^2\alpha\bigr).
+\]
+En divisant les deux membres par $\overline{OA}^{\,2}$ (non nul), il reste
+$\cos^2\alpha+\sin^2\alpha=1$.
+\end{theoreme}
+
+\begin{formule}[relation fondamentale de la trigonométrie]
+\[
+\boxed{\;\cos^2\alpha+\sin^2\alpha=1\;}
+\]
+\begin{ou}
+  \item $\cos^2\alpha$ signifie $(\cos\alpha)^2$, et $\sin^2\alpha$ signifie $(\sin\alpha)^2$ ;
+  \item l'identité est vraie pour \textbf{n'importe quel} angle $\alpha$ ;
+  \item les deux membres sont des \textbf{nombres purs} (sans unité).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[les formes dérivées, très pratiques]
+De $\cos^2\alpha+\sin^2\alpha=1$ on tire, selon ce que l'on cherche :
+\[
+\sin\alpha=\pm\sqrt{1-\cos^2\alpha},\qquad
+\cos\alpha=\pm\sqrt{1-\sin^2\alpha}.
+\]
+Le \textbf{signe} $\pm$ se tranche grâce au \emph{quadrant} de l'angle (figure~3). En divisant
+l'identité par $\cos^2\alpha$, puis par $\sin^2\alpha$, on obtient deux autres relations utiles :
+\[
+1+\tg^2\alpha=\frac{1}{\cos^2\alpha},\qquad 1+\cotg^2\alpha=\frac{1}{\sin^2\alpha}.
+\]
+\end{remarque}
+
+\begin{methode}[passer d'un nombre trigonométrique à un autre]
+On connaît l'un des nombres ($\sin$, $\cos$ ou $\tg$) et le \textbf{quadrant} de l'angle, et on veut
+les autres.
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item Écrire la relation fondamentale $\cos^2\alpha+\sin^2\alpha=1$ et isoler l'inconnue
+        (par exemple $\cos\alpha=\pm\sqrt{1-\sin^2\alpha}$).
+  \item Calculer la valeur sous la racine.
+  \item \textbf{Choisir le signe} $+$ ou $-$ d'après le quadrant (figure~3). \emph{C'est l'étape
+        où l'on se trompe le plus !}
+  \item Au besoin, calculer la tangente par $\tg\alpha=\dfrac{\sin\alpha}{\cos\alpha}$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[un angle du quatrième quadrant avec $\sin\alpha=-0{,}2$]
+\textbf{Énoncé.} $\alpha$ est un angle du \textbf{quatrième quadrant} et $\sin\alpha=-0{,}2=-\dfrac15$.
+Calculons $\cos\alpha$ puis $\tg\alpha$, sans calculatrice.
+
+\smallskip
+\textbf{Étape 1 --- isoler le cosinus.} D'après la relation fondamentale,
+\[
+\cos\alpha=\pm\sqrt{1-\sin^2\alpha}=\pm\sqrt{1-\left(-\tfrac15\right)^2}
+=\pm\sqrt{1-\tfrac{1}{25}}=\pm\sqrt{\tfrac{24}{25}}=\pm\frac{\sqrt{24}}{5}=\pm\frac{2\sqrt6}{5}.
+\]
+(On a simplifié $\sqrt{24}=\sqrt{4\cdot6}=2\sqrt6$.)
+
+\smallskip
+\textbf{Étape 2 --- choisir le signe.} Dans le \textbf{quatrième quadrant}, le cosinus est
+\textbf{positif} (figure~3). On garde donc la solution positive :
+\[
+\cos\alpha=\frac{2\sqrt6}{5}.
+\]
+
+\smallskip
+\textbf{Étape 3 --- en déduire la tangente.}
+\[
+\tg\alpha=\frac{\sin\alpha}{\cos\alpha}
+=\frac{-\tfrac15}{\ \tfrac{2\sqrt6}{5}\ }
+=-\frac15\times\frac{5}{2\sqrt6}
+=-\frac{1}{2\sqrt6}
+=-\frac{\sqrt6}{12}.
+\]
+(On a \emph{rationalisé} le dénominateur en multipliant haut et bas par $\sqrt6$ :
+$\frac{1}{2\sqrt6}=\frac{\sqrt6}{2\cdot6}=\frac{\sqrt6}{12}$.)
+
+\smallskip
+\textbf{Conclusion.} $\cos\alpha=\dfrac{2\sqrt6}{5}$ et $\tg\alpha=-\dfrac{\sqrt6}{12}$. La tangente
+est bien négative, ce qui est cohérent : au quatrième quadrant, $\sin<0$ et $\cos>0$ donnent un
+quotient négatif.
+\end{exemple}
+
+% =====================================================================
+\section{Les angles associés}
+% =====================================================================
+On sait calculer les nombres trigonométriques des angles \emph{remarquables} du premier quadrant.
+Les \textbf{angles associés} permettent de \emph{ramener n'importe quel angle} à l'un de ces angles
+connus, grâce à des \textbf{symétries} du cercle. C'est l'outil qui rend inutile l'apprentissage par
+cœur de centaines de valeurs : on en connaît une poignée, et les symétries donnent tout le reste.
+
+Le principe général : deux angles « associés » correspondent à deux points du cercle qui sont
+\textbf{symétriques} (par rapport à un axe ou au centre). Or une symétrie ne fait que changer le
+\emph{signe} de certaines coordonnées --- d'où des relations simples entre leurs cosinus et sinus.
+
+\subsection{Angles opposés : $\alpha$ et $-\alpha$}
+Deux angles sont \textbf{opposés} lorsque leur somme est nulle : $\alpha+(-\alpha)=0$. Leurs points
+sont \textbf{symétriques par rapport à l'axe horizontal} ($\cos$). La symétrie conserve l'abscisse
+(donc le cosinus) et change le signe de l'ordonnée (donc du sinus).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.6,>=Stealth,line cap=round]
+  \def\a{50}
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.25,0)--(1.45,0) node[right,font=\scriptsize]{$\cos$};
+  \draw[->,black!70] (0,-1.3)--(0,1.3) node[above,font=\scriptsize]{$\sin$};
+  \draw[black!40,dashed] (-1.2,0)--(1.2,0); % axe de symétrie
+  % rayons et points
+  \draw[primarydark,line width=0.9pt] (0,0)--(\a:1);
+  \draw[remarkcol,line width=0.9pt] (0,0)--(-\a:1);
+  \fill[primarydark] (\a:1) circle (0.018) node[above right=-2pt,font=\scriptsize]{$P(\alpha)$};
+  \fill[remarkcol] (-\a:1) circle (0.018) node[below right=-2pt,font=\scriptsize]{$P'(-\alpha)$};
+  % projections
+  \draw[coscol,dashed] (\a:1)--({cos(\a)},0);
+  \draw[coscol,dashed] (-\a:1)--({cos(\a)},0);
+  \draw[sincol,dashed] (\a:1)--(0,{sin(\a)});
+  \draw[sincol,dashed] (-\a:1)--(0,{-sin(\a)});
+  \fill[coscol] ({cos(\a)},0) circle (0.016);
+  \node[coscol,font=\scriptsize,below right] at ({cos(\a)},-0.02) {$\cos\alpha$};
+  \node[sincol,font=\scriptsize,left] at (0,{sin(\a)}) {$\sin\alpha$};
+  \node[sincol,font=\scriptsize,left] at (0,{-sin(\a)}) {$-\sin\alpha$};
+  \fill (0,0) circle (0.016);
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 5}} : Angles opposés. $P$ et $P'$ sont
+symétriques par rapport à l'axe des cosinus : \emph{même} cosinus, sinus \emph{opposés}.}
+\end{figure}
+
+\begin{formule}[angles opposés]
+\[
+\boxed{\cos(-\alpha)=\cos\alpha}\quad
+\boxed{\sin(-\alpha)=-\sin\alpha}\quad
+\boxed{\tg(-\alpha)=-\tg\alpha}\quad
+\boxed{\cotg(-\alpha)=-\cotg\alpha}
+\]
+On dit que le \textbf{cosinus est une fonction paire} (il « ignore » le signe de l'angle) tandis que
+le \textbf{sinus, la tangente et la cotangente sont impaires} (elles changent de signe avec l'angle).
+\end{formule}
+
+\begin{exemple}[deux applications immédiates]
+$\cos(-10\degr)=\cos(10\degr)$ : le signe « moins » de l'angle disparaît. En revanche
+$\sin(-5\degr)=-\sin(5\degr)$ : le signe « moins » sort du sinus. De même
+$\tg(-10\degr)=-\tg(10\degr)$.
+\end{exemple}
+
+\subsection{Angles complémentaires : $\alpha$ et $\dfrac{\pi}{2}-\alpha$}
+Deux angles sont \textbf{complémentaires} lorsque leur somme vaut $\dfrac{\pi}{2}$ (soit $90\degr$).
+Leurs points sont \textbf{symétriques par rapport à la première bissectrice} (la droite $y=x$).
+Cette symétrie \textbf{échange l'abscisse et l'ordonnée} : le cosinus de l'un devient le sinus de
+l'autre.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.6,>=Stealth,line cap=round]
+  \def\a{30}
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.25,0)--(1.45,0) node[right,font=\scriptsize]{$\cos$};
+  \draw[->,black!70] (0,-1.25)--(0,1.45) node[above,font=\scriptsize]{$\sin$};
+  \draw[black!40,dashed] (-1.0,-1.0)--(1.15,1.15) node[right,font=\scriptsize]{$y=x$};
+  % rayons
+  \draw[primarydark,line width=0.9pt] (0,0)--(\a:1);
+  \draw[thmcol,line width=0.9pt] (0,0)--({90-\a}:1);
+  \fill[primarydark] (\a:1) circle (0.018) node[right=-1pt,font=\scriptsize]{$P(\alpha)$};
+  \fill[thmcol] ({90-\a}:1) circle (0.018) node[above=0pt,font=\scriptsize]{$Q\!\left(\tfrac{\pi}{2}-\alpha\right)$};
+  % projections croisées
+  \draw[coscol,dashed] (\a:1)--({cos(\a)},0);
+  \draw[sincol,dashed] (\a:1)--(0,{sin(\a)});
+  \draw[coscol,dashed] ({90-\a}:1)--(0,{cos(\a)});
+  \draw[sincol,dashed] ({90-\a}:1)--({sin(\a)},0);
+  \node[coscol,font=\scriptsize,below] at ({cos(\a)},0) {$\cos\alpha$};
+  \node[sincol,font=\scriptsize,below] at ({sin(\a)},0) {$\sin\alpha$};
+  \fill (0,0) circle (0.016);
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 6}} : Angles complémentaires. La symétrie par
+rapport à la diagonale $y=x$ échange les rôles du sinus et du cosinus.}
+\end{figure}
+
+\begin{formule}[angles complémentaires]
+\[
+\boxed{\cos\alpha=\sin\!\left(\tfrac{\pi}{2}-\alpha\right)}\quad
+\boxed{\sin\alpha=\cos\!\left(\tfrac{\pi}{2}-\alpha\right)}\quad
+\boxed{\tg\alpha=\cotg\!\left(\tfrac{\pi}{2}-\alpha\right)}\quad
+\boxed{\cotg\alpha=\tg\!\left(\tfrac{\pi}{2}-\alpha\right)}
+\]
+En une phrase : \emph{le sinus d'un angle est le cosinus de son complémentaire} (et inversement).
+C'est d'ailleurs l'origine du mot « co-sinus » : le \emph{co}sinus est le \emph{co}mplément du sinus.
+\end{formule}
+
+\begin{exemple}[le sinus de l'un est le cosinus de l'autre]
+$5\degr$ et $85\degr$ sont complémentaires ($5\degr+85\degr=90\degr$). Donc
+$\sin(5\degr)=\cos(85\degr)$ et $\cos(10\degr)=\sin(80\degr)$. C'est ce qui explique pourquoi, dans
+le tableau des valeurs remarquables, la ligne du cosinus est la ligne du sinus lue \emph{à l'envers}.
+\end{exemple}
+
+\subsection{Angles supplémentaires : $\alpha$ et $\pi-\alpha$}
+Deux angles sont \textbf{supplémentaires} lorsque leur somme vaut $\pi$ (soit $180\degr$). Leurs
+points sont \textbf{symétriques par rapport à l'axe vertical} ($\sin$) : \emph{même} ordonnée
+(même sinus), abscisses opposées (cosinus opposés).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.6,>=Stealth,line cap=round]
+  \def\a{50}
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.4,0)--(1.4,0) node[right,font=\scriptsize]{$\cos$};
+  \draw[->,black!70] (0,-1.25)--(0,1.45) node[above,font=\scriptsize]{$\sin$};
+  \draw[black!40,dashed] (0,-1.2)--(0,1.2); % axe de symétrie
+  \draw[primarydark,line width=0.9pt] (0,0)--(\a:1);
+  \draw[formulacol,line width=0.9pt] (0,0)--({180-\a}:1);
+  \fill[primarydark] (\a:1) circle (0.018) node[above right=-2pt,font=\scriptsize]{$P(\alpha)$};
+  \fill[formulacol] ({180-\a}:1) circle (0.018) node[above left=-2pt,font=\scriptsize]{$P'(\pi-\alpha)$};
+  \draw[sincol,dashed] (\a:1)--(0,{sin(\a)});
+  \draw[sincol,dashed] ({180-\a}:1)--(0,{sin(\a)});
+  \draw[coscol,dashed] (\a:1)--({cos(\a)},0);
+  \draw[coscol,dashed] ({180-\a}:1)--({-cos(\a)},0);
+  \node[sincol,font=\scriptsize,above right] at (0,{sin(\a)}) {$\sin\alpha$};
+  \node[coscol,font=\scriptsize,below] at ({cos(\a)},0) {$\cos\alpha$};
+  \node[coscol,font=\scriptsize,below] at ({-cos(\a)},0) {$-\cos\alpha$};
+  \fill (0,0) circle (0.016);
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 7}} : Angles supplémentaires. Symétrie par rapport
+à l'axe des sinus : \emph{même} sinus, cosinus \emph{opposés}.}
+\end{figure}
+
+\begin{formule}[angles supplémentaires]
+\[
+\boxed{\sin(\pi-\alpha)=\sin\alpha}\quad
+\boxed{\cos(\pi-\alpha)=-\cos\alpha}\quad
+\boxed{\tg(\pi-\alpha)=-\tg\alpha}\quad
+\boxed{\cotg(\pi-\alpha)=-\cotg\alpha}
+\]
+C'est la relation la plus utilisée pour les équations en sinus : deux angles supplémentaires ont
+\emph{le même sinus}.
+\end{formule}
+
+\begin{exemple}[même sinus pour deux angles supplémentaires]
+$\sin(175\degr)=\sin(180\degr-5\degr)=\sin(5\degr)$, car $5\degr$ et $175\degr$ sont supplémentaires.
+De même $\cos(170\degr)=-\cos(10\degr)$ (cosinus opposés).
+\end{exemple}
+
+\subsection{Angles anti-complémentaires : $\alpha$ et $\dfrac{\pi}{2}+\alpha$}
+Ici la \emph{différence} des deux angles vaut $\dfrac{\pi}{2}$ : $\left(\dfrac{\pi}{2}+\alpha\right)-\alpha=\dfrac{\pi}{2}$.
+On obtient l'angle en ajoutant un quart de tour à $\alpha$.
+
+\begin{formule}[angles anti-complémentaires]
+\[
+\boxed{\cos\alpha=\sin\!\left(\tfrac{\pi}{2}+\alpha\right)}\quad
+\boxed{\sin\alpha=-\cos\!\left(\tfrac{\pi}{2}+\alpha\right)}\quad
+\boxed{\tg\alpha=-\cotg\!\left(\tfrac{\pi}{2}+\alpha\right)}\quad
+\boxed{\cotg\alpha=-\tg\!\left(\tfrac{\pi}{2}+\alpha\right)}
+\]
+\end{formule}
+
+\begin{exemple}
+$\cos(10\degr)=\sin(90\degr+10\degr)=\sin(100\degr)$, et $\tg(10\degr)=-\cotg(100\degr)$.
+\end{exemple}
+
+\subsection{Angles anti-supplémentaires : $\alpha$ et $\pi+\alpha$}
+Ici la \emph{différence} vaut $\pi$ : $(\pi+\alpha)-\alpha=\pi$. On ajoute un \textbf{demi-tour} à
+$\alpha$ : les points sont \textbf{symétriques par rapport au centre $O$} (symétrie centrale).
+Les deux coordonnées changent de signe --- mais leur \emph{quotient} ne change pas, d'où une
+tangente \textbf{inchangée}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.6,>=Stealth,line cap=round]
+  \def\a{50}
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.4,0)--(1.4,0) node[right,font=\scriptsize]{$\cos$};
+  \draw[->,black!70] (0,-1.4)--(0,1.4) node[above,font=\scriptsize]{$\sin$};
+  \draw[cotgcol!60,line width=0.8pt] (\a:1.25)--(-\a-180:1.25); % droite (la tangente est la même)
+  \draw[primarydark,line width=0.9pt] (0,0)--(\a:1);
+  \draw[tgcol,line width=0.9pt] (0,0)--({180+\a}:1);
+  \fill[primarydark] (\a:1) circle (0.018) node[above right=-2pt,font=\scriptsize]{$P(\alpha)$};
+  \fill[tgcol] ({180+\a}:1) circle (0.018) node[below left=-2pt,font=\scriptsize]{$P'(\pi+\alpha)$};
+  \draw[coscol,dashed] (\a:1)--({cos(\a)},0);
+  \draw[coscol,dashed] ({180+\a}:1)--({-cos(\a)},0);
+  \draw[sincol,dashed] (\a:1)--(0,{sin(\a)});
+  \draw[sincol,dashed] ({180+\a}:1)--(0,{-sin(\a)});
+  \node[coscol,font=\scriptsize,below] at ({cos(\a)},0) {$\cos\alpha$};
+  \node[coscol,font=\scriptsize,above] at ({-cos(\a)},0) {$-\cos\alpha$};
+  \fill (0,0) circle (0.018);
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 8}} : Angles anti-supplémentaires. Symétrie
+centrale : sinus \emph{et} cosinus opposés, mais \emph{même tangente}.}
+\end{figure}
+
+\begin{formule}[angles anti-supplémentaires]
+\[
+\boxed{\sin(\pi+\alpha)=-\sin\alpha}\quad
+\boxed{\cos(\pi+\alpha)=-\cos\alpha}\quad
+\boxed{\tg(\pi+\alpha)=\tg\alpha}\quad
+\boxed{\cotg(\pi+\alpha)=\cotg\alpha}
+\]
+La tangente et la cotangente sont \textbf{inchangées} : on dit qu'elles sont \emph{périodiques de
+période $\pi$} (un demi-tour suffit à retrouver la même valeur).
+\end{formule}
+
+\begin{exemple}
+$\tg(190\degr)=\tg(180\degr+10\degr)=\tg(10\degr)$ : la tangente ne « voit » pas le demi-tour.
+Par contre $\sin(185\degr)=-\sin(5\degr)$ et $\cos(190\degr)=-\cos(10\degr)$.
+\end{exemple}
+
+\subsection{Tableau récapitulatif et méthode générale}
+Les cinq familles se résument en un seul tableau. Chaque case donne le nombre trigonométrique de
+l'angle associé \emph{en fonction} de ceux de $\alpha$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\rowcolor{primary!20}
+\textbf{Angle associé} & $\sin$ & $\cos$ & $\tg$ & $\cotg$\\
+\hline
+\rowcolor{primary!5}
+Opposé\quad $-\alpha$ & $-\sin\alpha$ & $\cos\alpha$ & $-\tg\alpha$ & $-\cotg\alpha$\\
+\hline
+Complémentaire\quad $\tfrac{\pi}{2}-\alpha$ & $\cos\alpha$ & $\sin\alpha$ & $\cotg\alpha$ & $\tg\alpha$\\
+\hline
+\rowcolor{primary!5}
+Anti-complémentaire\quad $\tfrac{\pi}{2}+\alpha$ & $\cos\alpha$ & $-\sin\alpha$ & $-\cotg\alpha$ & $-\tg\alpha$\\
+\hline
+Supplémentaire\quad $\pi-\alpha$ & $\sin\alpha$ & $-\cos\alpha$ & $-\tg\alpha$ & $-\cotg\alpha$\\
+\hline
+\rowcolor{primary!5}
+Anti-supplémentaire\quad $\pi+\alpha$ & $-\sin\alpha$ & $-\cos\alpha$ & $\tg\alpha$ & $\cotg\alpha$\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{methode}[ramener n'importe quel angle au premier quadrant]
+Pour calculer un nombre trigonométrique d'un angle « compliqué » :
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Se ramener à un tour} : si l'angle est négatif ou dépasse $360\degr$ ($2\pi$),
+        ajouter ou retrancher des tours complets ($\pm360\degr$ ou $\pm2\pi$) jusqu'à tomber dans
+        $[0\degr;360\degr[$. Cela ne change aucun nombre trigonométrique.
+  \item \textbf{Repérer le quadrant} de l'angle obtenu $\Rightarrow$ on en déduit le \textbf{signe}
+        final (figure~3).
+  \item \textbf{Trouver l'angle de référence} $\alpha_{\text{réf}}$ (angle aigu avec l'axe horizontal) :
+        \begin{itemize}[leftmargin=1.3em,topsep=1pt,itemsep=0pt,nosep]
+          \item quadrant I : $\alpha_{\text{réf}}=\alpha$ ;
+          \item quadrant II : $\alpha_{\text{réf}}=180\degr-\alpha$ ;
+          \item quadrant III : $\alpha_{\text{réf}}=\alpha-180\degr$ ;
+          \item quadrant IV : $\alpha_{\text{réf}}=360\degr-\alpha$.
+        \end{itemize}
+  \item \textbf{Lire} la valeur de $\alpha_{\text{réf}}$ dans le tableau des valeurs remarquables,
+        puis \textbf{appliquer le signe} de l'étape~2.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[calcul de $\sin(240\degr)$ sans calculatrice]
+\textbf{Étape 1.} $240\degr$ est déjà dans $[0\degr;360\degr[$.
+
+\textbf{Étape 2 --- quadrant.} $180\degr<240\degr<270\degr$ : c'est le quadrant~III, où le
+\textbf{sinus est négatif}. Le résultat portera un signe « $-$ ».
+
+\textbf{Étape 3 --- angle de référence.} En quadrant III, $\alpha_{\text{réf}}=240\degr-180\degr=60\degr$.
+On reconnaît la relation des angles anti-supplémentaires : $240\degr=180\degr+60\degr$.
+
+\textbf{Étape 4 --- valeur et signe.} $\sin(60\degr)=\dfrac{\sqrt3}{2}$, et l'on applique le signe
+négatif :
+\[
+\sin(240\degr)=-\sin(60\degr)=-\frac{\sqrt3}{2}.
+\]
+\end{exemple}
+
+\begin{exemple}[un cas avec angle négatif : $\cos\!\left(-\dfrac{3\pi}{4}+\pi\right)$]
+On veut $\cos\!\left(-\dfrac{3\pi}{4}+\pi\right)$. \emph{Deux} méthodes, qui doivent donner le même
+résultat.
+
+\smallskip
+\textbf{Méthode directe (simplifier l'angle).}
+\[
+-\frac{3\pi}{4}+\pi=-\frac{3\pi}{4}+\frac{4\pi}{4}=\frac{\pi}{4}
+\quad\Longrightarrow\quad
+\cos\!\left(-\frac{3\pi}{4}+\pi\right)=\cos\frac{\pi}{4}=\frac{\sqrt2}{2}.
+\]
+
+\smallskip
+\textbf{Méthode par angles associés (comme attendu dans les QCM).} Les angles
+$-\dfrac{3\pi}{4}+\pi$ et $-\dfrac{3\pi}{4}$ sont \emph{anti-supplémentaires} (ils diffèrent de $\pi$),
+donc les cosinus sont opposés :
+\[
+\cos\!\left(-\tfrac{3\pi}{4}+\pi\right)=-\cos\!\left(-\tfrac{3\pi}{4}\right).
+\]
+Puis, par la règle des angles \emph{opposés}, $\cos\!\left(-\tfrac{3\pi}{4}\right)=\cos\tfrac{3\pi}{4}$ ;
+et comme $\tfrac{3\pi}{4}$ est le \emph{supplémentaire} de $\tfrac{\pi}{4}$,
+$\cos\tfrac{3\pi}{4}=-\cos\tfrac{\pi}{4}=-\tfrac{\sqrt2}{2}$. En remontant :
+\[
+\cos\!\left(-\tfrac{3\pi}{4}+\pi\right)=-\left(-\frac{\sqrt2}{2}\right)=\frac{\sqrt2}{2}.
+\]
+Les deux méthodes concordent : $\boxed{\dfrac{\sqrt2}{2}}$.
+\end{exemple}
+
+% =====================================================================
+\section{Formules d'addition et de duplication}
+% =====================================================================
+Comment calculer le cosinus ou le sinus d'une \emph{somme} d'angles, comme $\cos(a+b)$ ?
+\textbf{Attention}, c'est le piège classique : $\cos(a+b)\neq\cos a+\cos b$. Il existe une vraie
+formule, plus subtile, que nous allons établir puis exploiter.
+
+\subsection{Le cosinus d'une différence}
+On part de $\cos(a-b)$, dont la démonstration est la plus naturelle (par le produit scalaire).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.8,>=Stealth,line cap=round]
+  \def\aa{64}\def\bb{24}
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.25,0)--(1.5,0) node[right,font=\scriptsize]{$\cos$};
+  \draw[->,black!70] (0,-0.5)--(0,1.4) node[above,font=\scriptsize]{$\sin$};
+  \draw[coscol,line width=1pt] (0,0)--(\aa:1);
+  \draw[thmcol,line width=1pt] (0,0)--(\bb:1);
+  \fill[coscol] (\aa:1) circle (0.018)
+        node[above right=-2pt,font=\scriptsize]{$A(\cos a;\sin a)$};
+  \fill[thmcol] (\bb:1) circle (0.018)
+        node[right=0pt,font=\scriptsize]{$B(\cos b;\sin b)$};
+  % angle (a-b) entre OA et OB
+  \draw[primarydark,line width=0.8pt] (\bb:0.42) arc (\bb:\aa:0.42);
+  \node[primarydark,font=\scriptsize] at ({(\aa+\bb)/2}:0.56) {$a\!-\!b$};
+  % angle b
+  \draw[black!60] (0:0.22) arc (0:\bb:0.22);
+  \node[font=\scriptsize] at (12:0.32) {$b$};
+  \fill (0,0) circle (0.016);
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 9}} : Les vecteurs $\overline{OA}$ et $\overline{OB}$
+font entre eux l'angle $a-b$. Leur produit scalaire fournit directement la formule de $\cos(a-b)$.}
+\end{figure}
+
+\begin{theoreme}[démonstration par le produit scalaire]
+Sur le cercle de rayon~$1$, les vecteurs $\overline{OA}(\cos a\,;\sin a)$ et
+$\overline{OB}(\cos b\,;\sin b)$ ont pour norme~$1$ et font entre eux l'angle $(a-b)$. Le produit
+scalaire s'écrit de deux façons :
+\[
+\overline{OA}\cdot\overline{OB}
+=\underbrace{\lVert\overline{OA}\rVert\,\lVert\overline{OB}\rVert\cos(a-b)}_{=\,1\cdot1\cdot\cos(a-b)}
+=\underbrace{\cos a\cos b+\sin a\sin b}_{\text{produit scalaire en coordonnées}}.
+\]
+En identifiant les deux expressions, on obtient la formule encadrée ci-dessous.
+\end{theoreme}
+
+\begin{formule}[cosinus d'une somme et d'une différence]
+\[
+\boxed{\;\cos(a-b)=\cos a\cos b+\sin a\sin b\;}
+\]
+\[
+\boxed{\;\cos(a+b)=\cos a\cos b-\sin a\sin b\;}
+\]
+\begin{ou}
+  \item $a,\ b$ : deux angles quelconques (en radians ou en degrés) ;
+  \item le résultat est un \textbf{nombre pur} ;
+  \item \textbf{piège} : le signe \emph{change} entre les deux formules --- « moins » pour la somme,
+        « plus » pour la différence (signes \emph{opposés} de l'opération).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[comment passer de la différence à la somme]
+La formule de la somme se déduit de celle de la différence en remplaçant $b$ par $-b$ et en utilisant
+les angles opposés ($\cos(-b)=\cos b$, $\sin(-b)=-\sin b$) :
+\[
+\cos(a+b)=\cos\bigl(a-(-b)\bigr)=\cos a\cos(-b)+\sin a\sin(-b)=\cos a\cos b-\sin a\sin b.
+\]
+\end{remarque}
+
+\subsection{Le sinus d'une somme et d'une différence}
+On les obtient à partir du cosinus, via les angles \emph{complémentaires}
+($\sin x=\cos(\tfrac{\pi}{2}-x)$) :
+\[
+\sin(a+b)=\cos\!\Bigl(\tfrac{\pi}{2}-(a+b)\Bigr)=\cos\!\Bigl((\tfrac{\pi}{2}-a)-b\Bigr)
+=\cos(\tfrac{\pi}{2}-a)\cos b+\sin(\tfrac{\pi}{2}-a)\sin b=\sin a\cos b+\cos a\sin b.
+\]
+
+\begin{formule}[sinus d'une somme et d'une différence]
+\[
+\boxed{\;\sin(a+b)=\sin a\cos b+\cos a\sin b\;}
+\qquad
+\boxed{\;\sin(a-b)=\sin a\cos b-\cos a\sin b\;}
+\]
+Ici le signe est « \emph{le même} » que celui de l'opération : « plus » pour la somme, « moins »
+pour la différence. C'est l'inverse du cosinus --- attention à ne pas mélanger !
+\end{formule}
+
+\subsection{La tangente d'une somme}
+En divisant $\sin(a+b)$ par $\cos(a+b)$, puis numérateur et dénominateur par $\cos a\cos b$, on obtient :
+
+\begin{formule}[tangente d'une somme et d'une différence]
+\[
+\boxed{\;\tg(a+b)=\frac{\tg a+\tg b}{1-\tg a\,\tg b}\;}
+\qquad
+\boxed{\;\tg(a-b)=\frac{\tg a-\tg b}{1+\tg a\,\tg b}\;}
+\]
+valables tant que tous les termes existent et que le dénominateur n'est pas nul.
+\end{formule}
+
+\subsection{Formules de duplication (angle double)}
+En posant $b=a$ dans les formules d'addition, on obtient les nombres trigonométriques de l'angle
+\textbf{double} $2a$.
+
+\begin{formule}[angle double]
+\[
+\boxed{\;\sin(2a)=2\sin a\cos a\;}
+\qquad
+\boxed{\;\cos(2a)=\cos^2a-\sin^2a\;}
+\qquad
+\boxed{\;\tg(2a)=\frac{2\tg a}{1-\tg^2a}\;}
+\]
+\begin{ou}
+  \item $a$ : l'angle de départ ; $2a$ : son double ;
+  \item grâce à $\cos^2a+\sin^2a=1$, le cosinus double se réécrit de \textbf{trois} manières :
+  \[
+  \cos(2a)=\cos^2a-\sin^2a=2\cos^2a-1=1-2\sin^2a.
+  \]
+\end{ou}
+\end{formule}
+
+\begin{remarque}[formules de linéarisation : « abaisser le carré »]
+Les deux dernières écritures de $\cos(2a)$, retournées, expriment $\sin^2$ et $\cos^2$ \emph{sans}
+carré (ce qui est précieux pour l'intégration, fiche~7) :
+\[
+\boxed{\;\sin^2 x=\frac{1-\cos2x}{2}\;}\qquad\boxed{\;\cos^2 x=\frac{1+\cos2x}{2}\;}
+\]
+\end{remarque}
+
+\subsection{Mettre les formules en pratique}
+\begin{methode}[calculer un nombre trigonométrique d'un angle « non remarquable »]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Décomposer} l'angle en somme ou différence de deux angles \emph{remarquables}
+        (par ex. $15\degr=45\degr-30\degr$\,; $75\degr=45\degr+30\degr$), ou en \emph{double} d'un
+        angle connu.
+  \item \textbf{Appliquer} la formule d'addition (ou de duplication) adaptée.
+  \item \textbf{Remplacer} chaque $\sin$ et $\cos$ par sa valeur remarquable, puis simplifier.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[valeur exacte de $\cos(15\degr)$]
+On décompose $15\degr=45\degr-30\degr$ et on applique $\cos(a-b)=\cos a\cos b+\sin a\sin b$ :
+\[
+\cos(15\degr)=\cos(45\degr)\cos(30\degr)+\sin(45\degr)\sin(30\degr)
+=\frac{\sqrt2}{2}\cdot\frac{\sqrt3}{2}+\frac{\sqrt2}{2}\cdot\frac12
+=\frac{\sqrt6}{4}+\frac{\sqrt2}{4}=\frac{\sqrt6+\sqrt2}{4}.
+\]
+On a ainsi la valeur \emph{exacte} (numériquement $\approx0{,}966$), impossible à deviner à l'œil mais
+parfaitement déterminée.
+\end{exemple}
+
+\begin{exemple}[un calcul complet : $\sin\!\left(2\alpha-\dfrac{\pi}{3}\right)$ avec $\sin\alpha=\dfrac13$]
+\textbf{Énoncé.} $\alpha$ est un angle du \textbf{premier quadrant} dont l'amplitude est comprise entre
+$19\degr$ et $20\degr$, et $\sin\alpha=\dfrac13$. Calculons $\sin\!\left(2\alpha-\dfrac{\pi}{3}\right)$
+sans calculatrice.
+
+\smallskip
+\textbf{Étape 1 --- le cosinus de $\alpha$.} Par la relation fondamentale, et puisqu'au premier
+quadrant le cosinus est positif :
+\[
+\cos\alpha=\sqrt{1-\sin^2\alpha}=\sqrt{1-\tfrac19}=\sqrt{\tfrac89}=\frac{2\sqrt2}{3}.
+\]
+
+\textbf{Étape 2 --- l'angle double $2\alpha$.} Puisque $19\degr\le\alpha\le20\degr$, on a
+$38\degr\le2\alpha\le40\degr$ : $2\alpha$ est encore au premier quadrant, donc $\sin2\alpha$ et
+$\cos2\alpha$ sont positifs.
+\[
+\sin2\alpha=2\sin\alpha\cos\alpha=2\cdot\frac13\cdot\frac{2\sqrt2}{3}=\frac{4\sqrt2}{9},
+\qquad
+\cos2\alpha=1-2\sin^2\alpha=1-\frac29=\frac79.
+\]
+
+\textbf{Étape 3 --- la formule de différence.} Avec $\sin(a-b)=\sin a\cos b-\cos a\sin b$, où
+$a=2\alpha$ et $b=\dfrac{\pi}{3}$ (et $\cos\tfrac{\pi}{3}=\tfrac12$, $\sin\tfrac{\pi}{3}=\tfrac{\sqrt3}{2}$) :
+\[
+\sin\!\left(2\alpha-\frac{\pi}{3}\right)
+=\sin2\alpha\cos\frac{\pi}{3}-\cos2\alpha\sin\frac{\pi}{3}
+=\frac{4\sqrt2}{9}\cdot\frac12-\frac79\cdot\frac{\sqrt3}{2}
+=\frac{4\sqrt2}{18}-\frac{7\sqrt3}{18}=\boxed{\frac{4\sqrt2-7\sqrt3}{18}}.
+\]
+Tout le calcul repose sur l'enchaînement : relation fondamentale $\to$ duplication $\to$ addition.
+C'est le schéma de résolution le plus fréquent des exercices de ce type.
+\end{exemple}
+
+% =====================================================================
+\section{Résolution d'équations trigonométriques}
+% =====================================================================
+Résoudre une équation trigonométrique, c'est trouver \emph{tous} les angles $x$ qui la vérifient.
+Comme un même nombre trigonométrique est pris par une \textbf{infinité} d'angles (rappel : tourner
+d'un tour ne change rien), les solutions s'écrivent toujours avec un paramètre entier $k\in\Z$.
+Les trois équivalences ci-dessous sont la traduction directe des angles associés.
+
+\subsection{Les trois équations de base}
+
+\begin{formule}[équation en sinus]
+\[
+\boxed{\;\sin a=\sin b\iff a=b+2k\pi\ \text{ ou }\ a=\pi-b+2k\pi\quad(k\in\Z)\;}
+\]
+Deux angles ont le \textbf{même sinus} s'ils sont \emph{égaux} ou \emph{supplémentaires}
+(à un tour près). Le « $\pi-b$ » est la marque des angles supplémentaires.
+\end{formule}
+
+\begin{formule}[équation en cosinus]
+\[
+\boxed{\;\cos a=\cos b\iff a=b+2k\pi\ \text{ ou }\ a=-b+2k\pi\quad(k\in\Z)\;}
+\]
+Deux angles ont le \textbf{même cosinus} s'ils sont \emph{égaux} ou \emph{opposés} (à un tour près).
+Le « $-b$ » est la marque des angles opposés. On l'écrit souvent de façon condensée
+$a=\pm b+2k\pi$.
+\end{formule}
+
+\begin{formule}[équation en tangente]
+\[
+\boxed{\;\tg a=\tg b\iff a=b+k\pi\quad(k\in\Z)\;}
+\]
+Deux angles ont la \textbf{même tangente} s'ils sont égaux \emph{ou anti-supplémentaires} (ils
+diffèrent d'un demi-tour). C'est pourquoi le pas est $k\pi$ (et non $2k\pi$) : la tangente se répète
+tous les $\pi$.
+\end{formule}
+
+\begin{methode}[résoudre une équation trigonométrique]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Isoler} le nombre trigonométrique pour obtenir une forme
+        $\sin x=v$ (ou $\cos x=v$, ou $\tg x=v$).
+  \item \textbf{Reconnaître} la valeur $v$ comme le $\sin$ (resp. $\cos$, $\tg$) d'un angle de
+        \emph{référence} $b$ tiré du tableau des valeurs remarquables (gérer le signe avec les
+        angles associés).
+  \item \textbf{Appliquer} l'équivalence ci-dessus pour écrire la \emph{famille} de solutions
+        (avec $k\in\Z$).
+  \item \textbf{Si un intervalle est imposé} (par ex. « $x$ du deuxième quadrant »), donner aux
+        $k$ des valeurs entières successives et \textbf{ne garder} que les solutions qui tombent
+        dans l'intervalle.
+\end{enumerate}
+\end{methode}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[équation simple en cosinus : $2\cos x=1$]
+On isole : $\cos x=\dfrac12$. Or $\dfrac12=\cos\dfrac{\pi}{3}$, donc $\cos x=\cos\dfrac{\pi}{3}$.
+L'équivalence du cosinus donne
+\[
+x=\frac{\pi}{3}+2k\pi\quad\text{ou}\quad x=-\frac{\pi}{3}+2k\pi\qquad(k\in\Z),
+\]
+soit l'ensemble des solutions $S=\left\{\pm\dfrac{\pi}{3}+2k\pi\ \middle|\ k\in\Z\right\}$.
+\end{exemple}
+
+\begin{exemple}[avec contrainte d'intervalle : $2\cos x+1=0$, $x$ au deuxième quadrant]
+\textbf{Étape 1 --- isoler.} $2\cos x+1=0\iff\cos x=-\dfrac12$.
+
+\textbf{Étape 2 --- angle de référence (gérer le signe).} La valeur est \emph{négative}.
+Or $-\dfrac12=-\cos\dfrac{\pi}{3}=\cos\!\left(\pi-\dfrac{\pi}{3}\right)=\cos\dfrac{2\pi}{3}$
+(on a utilisé les angles supplémentaires pour absorber le signe). Donc $\cos x=\cos\dfrac{2\pi}{3}$.
+
+\textbf{Étape 3 --- familles de solutions.}
+\[
+x=\frac{2\pi}{3}+2k\pi\quad\text{ou}\quad x=-\frac{2\pi}{3}+2k\pi\qquad(k\in\Z).
+\]
+
+\textbf{Étape 4 --- sélection.} On cherche $x$ \emph{au deuxième quadrant}, c'est-à-dire entre
+$\dfrac{\pi}{2}$ et $\pi$. Pour $k=0$ : la première famille donne $\dfrac{2\pi}{3}\approx120\degr$
+(bien dans le 2\textsuperscript{e} quadrant \checkmark), la seconde donne $-\dfrac{2\pi}{3}$
+(3\textsuperscript{e} quadrant, à rejeter). Conclusion :
+\[
+\boxed{\,x=\frac{2\pi}{3}\,}\qquad\text{soit } S=\left\{\frac{2\pi}{3}+2k\pi\ \middle|\ k\in\Z\right\}.
+\]
+\end{exemple}
+
+\begin{exemple}[équation avec un angle double : $2\sin(2x)-1=0$, $x$ au premier quadrant]
+\textbf{Étape 1.} $2\sin(2x)-1=0\iff\sin(2x)=\dfrac12=\sin\dfrac{\pi}{6}$.
+
+\textbf{Étape 2 --- équivalence du sinus} (sur l'angle $2x$) :
+\[
+2x=\frac{\pi}{6}+2k\pi\quad\text{ou}\quad 2x=\pi-\frac{\pi}{6}+2k\pi=\frac{5\pi}{6}+2k\pi.
+\]
+
+\textbf{Étape 3 --- diviser par 2} (l'inconnue est $x$, pas $2x$) :
+\[
+x=\frac{\pi}{12}+k\pi\quad\text{ou}\quad x=\frac{5\pi}{12}+k\pi\qquad(k\in\Z).
+\]
+
+\textbf{Étape 4 --- sélection au premier quadrant} ($0<x<\dfrac{\pi}{2}$). Pour $k=0$ :
+$x=\dfrac{\pi}{12}=15\degr$ et $x=\dfrac{5\pi}{12}=75\degr$, toutes deux dans le premier quadrant
+\checkmark. Les autres valeurs de $k$ sortent de l'intervalle. Conclusion :
+\[
+\boxed{\,x=\frac{\pi}{12}\ \text{ ou }\ x=\frac{5\pi}{12}\,}.
+\]
+\textbf{Remarque importante} : il fallait diviser \emph{après} avoir écrit les deux familles, sinon
+on perdrait des solutions. Diviser par~2 transforme aussi le pas « $2k\pi$ » en « $k\pi$ ».
+\end{exemple}
+
+% =====================================================================
+\section{Relations dans un triangle quelconque}
+% =====================================================================
+Les définitions « SOH-CAH-TOA » ne valent que dans un triangle \emph{rectangle}. Pour un triangle
+\textbf{quelconque}, on dispose de trois outils puissants : la \textbf{formule de l'aire}, la
+\textbf{loi des sinus} et la \textbf{loi des cosinus}. Convention universelle : on note les sommets
+$A,B,C$ et l'on appelle $a,b,c$ les longueurs des côtés \emph{opposés} à ces sommets
+($a=\overline{BC}$, $b=\overline{CA}$, $c=\overline{AB}$).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.3,>=Stealth,line cap=round]
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (5.4,0);
+  \coordinate (A) at (1.7,2.7);
+  \coordinate (H) at (1.7,0);
+  \draw[primary,line width=1.2pt] (A)--(B)--(C)--cycle;
+  \draw[remarkcol,dashed,line width=0.8pt] (A)--(H) node[midway,right,font=\scriptsize]{$h$};
+  \draw[black!70] (H)++(0,0.28)--++(0.28,0)--++(0,-0.28);
+  \fill (A) circle (1.6pt) node[above]{$A$};
+  \fill (B) circle (1.6pt) node[below left]{$B$};
+  \fill (C) circle (1.6pt) node[below right]{$C$};
+  \node[font=\small] at (2.7,-0.32) {$a=\overline{BC}$};
+  \node[font=\small] at (3.9,1.5) {$b$};
+  \node[font=\small] at (0.5,1.5) {$c$};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 10}} : Triangle quelconque $ABC$ et hauteur $h$
+issue de $A$. Les côtés $a,b,c$ sont opposés aux sommets $A,B,C$.}
+\end{figure}
+
+\subsection{Aire d'un triangle quelconque}
+La hauteur $h$ issue de $A$ découpe deux triangles rectangles. Dans celui de gauche,
+$\sin B=\dfrac{h}{c}$, donc $h=c\sin B$. L'aire vaut alors
+$\mathcal{A}=\dfrac12\,(\text{base})\times(\text{hauteur})=\dfrac12\,a\,h=\dfrac12\,a\,c\sin B$.
+En prenant les hauteurs issues de $B$ et de $C$, on obtient les deux autres écritures.
+
+\begin{formule}[aire par le sinus d'un angle]
+\[
+\boxed{\;\mathcal{A}=\frac{1}{2}\,a\,b\,\sin\hat C=\frac{1}{2}\,b\,c\,\sin\hat A=\frac{1}{2}\,a\,c\,\sin\hat B\;}
+\]
+\begin{ou}
+  \item $\mathcal{A}$ : aire du triangle (unité : \si{\metre\squared}, \si{\centi\metre\squared}\dots) ;
+  \item $a,b,c$ : longueurs des côtés (unité de longueur) ;
+  \item $\hat A,\hat B,\hat C$ : angles aux sommets ; $\sin\hat A$ est sans unité ;
+  \item \textbf{règle} : on multiplie les \emph{deux côtés qui encadrent} l'angle, par le sinus de
+        \emph{cet} angle. L'aire est donc « demi-produit de deux côtés par le sinus de l'angle compris ».
+\end{ou}
+\end{formule}
+
+\subsection{Loi des sinus}
+Reprenons les trois expressions de l'aire : $\dfrac12 ab\sin\hat C=\dfrac12 bc\sin\hat A=\dfrac12 ac\sin\hat B$.
+En divisant le tout par $\dfrac12\,abc$, chaque terme se simplifie et il reste la loi des sinus.
+
+\begin{formule}[loi des sinus]
+\[
+\boxed{\;\frac{\sin\hat A}{a}=\frac{\sin\hat B}{b}=\frac{\sin\hat C}{c}\;}
+\]
+\begin{ou}
+  \item le sinus d'un angle est \emph{proportionnel} à la longueur du côté opposé ;
+  \item utile quand on connaît un \textbf{angle et son côté opposé} (le rapport est alors fixé),
+        plus une autre donnée.
+\end{ou}
+\end{formule}
+
+\subsection{Loi des cosinus (théorème d'Al-Kashi)}
+C'est la \emph{généralisation} du théorème de Pythagore aux triangles non rectangles : un terme
+correctif $-2ab\cos\hat C$ vient mesurer « de combien » le triangle s'écarte de l'angle droit.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.3,>=Stealth,line cap=round]
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (5.4,0);
+  \coordinate (A) at (3.7,2.5);
+  \coordinate (H) at (3.7,0);
+  \draw[primary,line width=1.2pt] (A)--(B)--(C)--cycle;
+  \draw[remarkcol,dashed,line width=0.8pt] (A)--(H) node[midway,right,font=\scriptsize]{$h$};
+  \draw[black!70] (H)++(0,0.26)--++(-0.26,0)--++(0,-0.26);
+  \fill (A) circle (1.6pt) node[above]{$A$};
+  \fill (B) circle (1.6pt) node[below left]{$B$};
+  \fill (C) circle (1.6pt) node[below right]{$C$};
+  \fill (H) circle (1.2pt) node[below=2pt,font=\scriptsize]{$H$};
+  \draw[<->,black!55] (0,-0.5)--(3.7,-0.5) node[midway,fill=white,font=\scriptsize]{$a-f$};
+  \draw[<->,black!55] (3.7,-0.5)--(5.4,-0.5) node[midway,fill=white,font=\scriptsize]{$f$};
+  \node[font=\small] at (1.6,1.5) {$c$};
+  \node[font=\small] at (4.8,1.4) {$b$};
+\end{tikzpicture}
+\caption*{\small\textbf{\textcolor{primary}{Figure 11}} : Pour la loi des cosinus, on projette $A$
+en $H$ sur $\overline{BC}$. On pose $f=\overline{HC}=b\cos\hat C$ et $h=b\sin\hat C$.}
+\end{figure}
+
+\begin{theoreme}[démonstration par Pythagore]
+Dans le triangle rectangle de droite : $f=\overline{HC}=b\cos\hat C$ et $h=b\sin\hat C$. Dans le
+triangle rectangle de gauche, Pythagore donne $c^2=(a-f)^2+h^2$. En remplaçant :
+\[
+c^2=(a-b\cos\hat C)^2+(b\sin\hat C)^2
+=a^2-2ab\cos\hat C+b^2\underbrace{(\cos^2\hat C+\sin^2\hat C)}_{=\,1}
+=a^2+b^2-2ab\cos\hat C.
+\]
+\end{theoreme}
+
+\begin{formule}[loi des cosinus]
+\[
+\boxed{\;c^2=a^2+b^2-2ab\cos\hat C\;}\quad
+\boxed{\;a^2=b^2+c^2-2bc\cos\hat A\;}\quad
+\boxed{\;b^2=a^2+c^2-2ac\cos\hat B\;}
+\]
+\begin{ou}
+  \item le carré d'un côté ${}={}$ somme des carrés des deux autres ${}-{}$ le double de leur produit
+        par le cosinus de l'angle \emph{compris entre eux} ;
+  \item si $\hat C=90\degr$ alors $\cos\hat C=0$ et l'on retrouve exactement Pythagore
+        $c^2=a^2+b^2$ ;
+  \item unités : $a,b,c$ en longueur, donc les deux membres sont en \si{\metre\squared}.
+\end{ou}
+\end{formule}
+
+\subsection{Comment résoudre un triangle}
+\begin{methode}[choisir le bon outil selon les données]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{3 côtés connus} (et l'on cherche un angle) : loi des \textbf{cosinus}, réarrangée en
+        $\cos\hat C=\dfrac{a^2+b^2-c^2}{2ab}$.
+  \item \textbf{2 côtés et l'angle compris} (et l'on cherche le 3\textsuperscript{e} côté) : loi des
+        \textbf{cosinus}.
+  \item \textbf{1 côté et 2 angles}, ou \textbf{1 angle avec son côté opposé} : loi des
+        \textbf{sinus}.
+  \item \textbf{aire} demandée à partir de 2 côtés et l'angle compris : formule
+        $\mathcal{A}=\tfrac12 ab\sin\hat C$.
+\end{itemize}
+\end{methode}
+
+\begin{exemple}[aire connue puis loi des cosinus (type QCM 20)]
+\textbf{Énoncé.} Dans le triangle $ABC$, $\hat C=60\degr$, $a=\overline{BC}=\SI{10}{\centi\metre}$ et
+l'aire vaut $\mathcal{A}=\dfrac{25\sqrt3}{2}\ \si{\centi\metre\squared}$. Trouver $c=\overline{AB}$.
+
+\smallskip
+\textbf{Étape 1 --- trouver le côté $b$ grâce à l'aire.} Les côtés qui encadrent l'angle $\hat C$
+sont $a$ et $b$, donc $\mathcal{A}=\dfrac12\,a\,b\,\sin\hat C$ :
+\[
+\frac{25\sqrt3}{2}=\frac12\cdot10\cdot b\cdot\underbrace{\sin60\degr}_{\sqrt3/2}
+=\frac{10b\sqrt3}{4}=\frac{5b\sqrt3}{2}
+\ \Longrightarrow\ 25\sqrt3=5b\sqrt3\ \Longrightarrow\ b=5\ \si{\centi\metre}.
+\]
+
+\textbf{Étape 2 --- trouver $c$ par la loi des cosinus.} Le côté $c=\overline{AB}$ est opposé à
+$\hat C$, donc $c^2=a^2+b^2-2ab\cos\hat C$ :
+\[
+c^2=10^2+5^2-2\cdot10\cdot5\cdot\underbrace{\cos60\degr}_{1/2}
+=100+25-100\cdot\frac12=125-50=75.
+\]
+Donc $c=\sqrt{75}=\sqrt{25\cdot3}=5\sqrt3\ \si{\centi\metre}\approx\SI{8.66}{\centi\metre}$.
+\end{exemple}
+
+\begin{exemple}[reconnaître un angle (type QCM 24)]
+\textbf{Énoncé.} Un triangle $ABC$ vérifie $c^2=a^2+b^2-ab$. Que vaut l'angle $\hat C$ ?
+
+\smallskip
+On \emph{compare} la donnée à la loi des cosinus $c^2=a^2+b^2-2ab\cos\hat C$. Les deux égalités
+ayant le même membre de gauche et le même $a^2+b^2$, les termes correctifs sont égaux :
+\[
+-2ab\cos\hat C=-ab\ \Longrightarrow\ \cos\hat C=\frac{ab}{2ab}=\frac12.
+\]
+Or $\cos\hat C=\dfrac12$ correspond à $\hat C=60\degr$ $\left(=\dfrac{\pi}{3}\right)$. Le triangle a
+donc un angle de $\boxed{60\degr}$ en $C$. C'est un bel exemple d'usage \emph{inverse} de la formule :
+on l'utilise pour \emph{identifier} un angle à partir d'une relation entre les côtés.
+\end{exemple}
+
+% =====================================================================
+\section{Formulaire récapitulatif}
+% =====================================================================
+Tout le contenu de la fiche en une page, à garder sous les yeux. Chaque formule a été établie et
+illustrée dans les sections précédentes.
+
+\begin{tcolorbox}[boxbase,colback=primary!4,colframe=primary,
+   title={\textsc{Mémo trigonométrie}}]
+\setlength{\columnsep}{6mm}
+\begin{multicols}{2}
+\footnotesize
+\textbf{\textcolor{primarydark}{Définitions (cercle de rayon 1)}}
+\[
+P=(\cos\alpha;\sin\alpha),\quad \tg\alpha=\frac{\sin\alpha}{\cos\alpha},\quad \cotg\alpha=\frac{\cos\alpha}{\sin\alpha}
+\]
+$-1\le\cos\alpha\le1$, \quad $-1\le\sin\alpha\le1$.
+
+\smallskip
+\textbf{\textcolor{primarydark}{Conversion d'angles}}
+\[
+\alpha_{\text{rad}}=\alpha_{\text{deg}}\frac{\pi}{180},\qquad
+180\degr=\pi\ \text{rad}
+\]
+
+\textbf{\textcolor{primarydark}{Relation fondamentale}}
+\[
+\cos^2\alpha+\sin^2\alpha=1
+\]
+\[
+1+\tg^2\alpha=\frac{1}{\cos^2\alpha},\quad 1+\cotg^2\alpha=\frac{1}{\sin^2\alpha}
+\]
+
+\textbf{\textcolor{primarydark}{Angles associés}}\\
+Opposés : $\cos(-\alpha)=\cos\alpha$, $\sin(-\alpha)=-\sin\alpha$.\\
+Complément. : $\sin\!\big(\tfrac{\pi}{2}-\alpha\big)=\cos\alpha$.\\
+Supplément. : $\sin(\pi-\alpha)=\sin\alpha$, $\cos(\pi-\alpha)=-\cos\alpha$.\\
+Anti-suppl. : $\tg(\pi+\alpha)=\tg\alpha$.
+
+\columnbreak
+
+\textbf{\textcolor{primarydark}{Formules d'addition}}
+\[
+\cos(a\pm b)=\cos a\cos b\mp\sin a\sin b
+\]
+\[
+\sin(a\pm b)=\sin a\cos b\pm\cos a\sin b
+\]
+\[
+\tg(a\pm b)=\frac{\tg a\pm\tg b}{1\mp\tg a\tg b}
+\]
+
+\textbf{\textcolor{primarydark}{Duplication / linéarisation}}
+\[
+\sin2a=2\sin a\cos a,\quad \cos2a=\cos^2a-\sin^2a
+\]
+\[
+\sin^2x=\frac{1-\cos2x}{2},\quad \cos^2x=\frac{1+\cos2x}{2}
+\]
+
+\textbf{\textcolor{primarydark}{Équations}}
+\[
+\cos a=\cos b\Rightarrow a=\pm b+2k\pi
+\]
+\[
+\sin a=\sin b\Rightarrow a=b+2k\pi\ \text{ou}\ \pi-b+2k\pi
+\]
+\[
+\tg a=\tg b\Rightarrow a=b+k\pi
+\]
+
+\textbf{\textcolor{primarydark}{Triangle quelconque}}
+\[
+\mathcal{A}=\tfrac12 ab\sin\hat C,\qquad
+\frac{\sin\hat A}{a}=\frac{\sin\hat B}{b}=\frac{\sin\hat C}{c}
+\]
+\[
+c^2=a^2+b^2-2ab\cos\hat C
+\]
+\end{multicols}
+\end{tcolorbox}
+
+\begin{center}
+\small\itshape\textcolor{black!60}{Fin du cours --- Fiche 3 : Trigonométrie. Pour bien mémoriser les
+nombres trigonométriques, le meilleur réflexe reste de \textbf{redessiner le cercle trigonométrique}.}
+\end{center}
+
+\end{document}

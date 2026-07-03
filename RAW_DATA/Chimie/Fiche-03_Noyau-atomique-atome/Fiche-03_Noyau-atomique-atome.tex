@@ -1,0 +1,1402 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 3
+%  Noyau atomique, atome
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (violet = couleur « Chimie » du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{124,78,140}      % violet (couleur du livre — section Chimie)
+\definecolor{primarydark}{RGB}{74,44,92}
+\definecolor{defcol}{RGB}{0,114,178}         % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}         % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}      % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}     % violet clair — remarques
+\definecolor{attncol}{RGB}{200,40,55}        % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}           % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}        % gris — méthode
+
+% couleurs « particules » réutilisées dans les figures
+\definecolor{protoncol}{RGB}{205,50,50}      % proton (rouge, +)
+\definecolor{neutroncol}{RGB}{105,108,120}   % neutron (gris, neutre)
+\definecolor{electroncol}{RGB}{25,95,205}    % électron (bleu, -)
+\definecolor{noyaucol}{RGB}{150,40,40}
+\definecolor{goldcol}{RGB}{225,205,90}       % case « non-métal » jaune du livre
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété / Loi (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété / Loi}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  RACCOURCIS NOTATION CHIMIQUE
+% =====================================================================
+\newcommand{\nuc}[3]{\prescript{#1}{#2}{\mathrm{#3}}}  % {}^A_Z X
+\newcommand{\pp}{p^{+}}      % proton
+\newcommand{\ee}{e^{-}}      % électron
+\newcommand{\nz}{n^{0}}      % neutron
+\newcommand{\np}{n(\pp)}     % nombre de protons
+\renewcommand{\ne}{n(\ee)}   % nombre d'électrons (redéfinit le symbole ≠ inutilisé ; on utilise \neq)
+\newcommand{\nnn}{n(\nz)}    % nombre de neutrons
+
+% =====================================================================
+%  PETITES FIGURES RÉUTILISABLES
+% =====================================================================
+% ---- Case du tableau périodique (version simple) ----
+% \ptcell{masse}{électronég.}{Z}{Symbole}{Nom}
+\newcommand{\ptcell}[5]{%
+\begin{tikzpicture}[baseline=(box.center)]
+  \node[draw=primary,fill=primary!7,line width=1pt,rounded corners=2pt,
+        minimum width=2.9cm,minimum height=2.9cm] (box) {};
+  \node[anchor=north,font=\large] at ([yshift=-2.2mm]box.north) {#1};
+  \node[anchor=north east,font=\small,protoncol] at ([xshift=-3mm,yshift=-9mm]box.north east) {#2};
+  \node[font=\Large,anchor=center] at ([yshift=1mm]box.center) {\textbf{#3}\,\ \textbf{#4}};
+  \node[anchor=south,font=\footnotesize] at ([yshift=2.2mm]box.south) {#5};
+\end{tikzpicture}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 3} — Noyau atomique, atome}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Noyau atomique, atome}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,3}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : modèle de Bohr du magnésium (K)2(L)8(M)2 ---
+\begin{tikzpicture}[scale=1.0]
+  % couches
+  \foreach \r/\nom in {1.05/K,2.05/L,3.05/M}{
+     \draw[primary!55,line width=0.8pt] (0,0) circle (\r);
+     \node[primary!75,font=\scriptsize] at (\r-0.18,0.22) {\nom};}
+  % noyau
+  \shade[ball color=noyaucol] (0,0) circle (0.6);
+  \node[white,font=\footnotesize\bfseries] at (0,0) {Mg};
+  \node[white,font=\scriptsize] at (0,-0.26) {\,12$\pp$};
+  % électrons K (2)
+  \foreach \a in {90,270}{\fill[electroncol] (\a:1.05) circle (2.2pt);}
+  % électrons L (8)
+  \foreach \a in {0,45,...,315}{\fill[electroncol] (\a:2.05) circle (2.2pt);}
+  % électrons M (2)
+  \foreach \a in {30,210}{\fill[electroncol] (\a:3.05) circle (2.2pt);}
+\end{tikzpicture}
+
+\vspace{0.3cm}
+{\footnotesize\color{black!60} Modèle en couches de l'atome de magnésium : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^2$.}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item décrire la \textbf{structure d'un atome} (noyau + nuage électronique) et son caractère essentiellement \textbf{lacunaire} ;
+  \item identifier les trois particules — \textbf{proton, neutron, électron} — par leur \textbf{charge} et leur \textbf{masse} ;
+  \item définir et calculer le \textbf{numéro atomique $Z$} et le \textbf{nombre de masse $A$}, et compter $\pp$, $\nz$, $\ee$ ;
+  \item distinguer un \textbf{atome neutre} d'un \textbf{ion} (cation / anion) et déterminer la composition d'un ion ;
+  \item reconnaître des \textbf{isotopes} et calculer une \textbf{masse atomique relative moyenne} ;
+  \item établir la \textbf{configuration électronique en couches} (K, L, M, N\dots) et repérer les \textbf{électrons de valence} ;
+  \item relier la stabilité des \textbf{gaz nobles} à la \textbf{règle de l'octet}, et lire les \textbf{tendances} du tableau périodique.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 3 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : l'atome, un monde de vide}
+% =====================================================================
+Toute la matière qui nous entoure — l'air, l'eau, les métaux, notre propre corps — est constituée
+de briques élémentaires appelées \textbf{atomes}. Comprendre la chimie commence donc par comprendre
+l'architecture de l'atome : de quoi est-il fait, comment se mesure-t-il, et comment ses constituants
+gouvernent-ils son comportement. C'est tout l'objet de cette fiche.
+
+\subsection{Deux régions : le noyau et le nuage électronique}
+
+\begin{definition}[atome]
+Un \textbf{atome} est la plus petite particule d'un élément chimique qui en conserve les propriétés.
+Il est formé de deux régions très différentes :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item un \textbf{noyau} central, minuscule et très dense, qui rassemble les \emph{protons} et les
+        \emph{neutrons} (on les appelle ensemble les \textbf{nucléons}) ;
+  \item un \textbf{nuage électronique} qui entoure le noyau, dans lequel les \emph{électrons}
+        « gravitent » à grande distance, répartis sur des \emph{couches}.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[nucléon]
+On appelle \textbf{nucléon} toute particule présente \emph{dans le noyau}. Il n'en existe que deux
+sortes : le \textbf{proton} et le \textbf{neutron}. \emph{Les électrons ne sont jamais dans le noyau.}
+Cette dernière phrase, en apparence anodine, est la source de nombreux pièges (voir l'exemple~\ref{ex:noyau-sc}).
+\end{definition}
+
+\subsection{Un atome est surtout fait de vide}
+
+Si l'on pouvait agrandir un atome jusqu'à la taille d'un grand stade, son noyau n'aurait que la
+taille d'une bille placée au centre du terrain : tout le reste serait du \textbf{vide}, parcouru par
+quelques électrons. Le diamètre d'un noyau est de l'ordre de \SI{e-15}{\metre}, alors que la distance
+noyau–électrons est environ \textbf{cent mille fois} (\(10^5\)) plus grande. Le constituant
+\emph{principal}, en volume, d'un atome est donc\dots\ le vide.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % nuage électronique (grand cercle estompé)
+  \shade[inner color=primary!18,outer color=primary!3] (0,0) circle (3.2);
+  \draw[primary!50,dashed,line width=0.7pt] (0,0) circle (3.2);
+  % quelques électrons (on laisse libre le coin haut-droit, réservé à l'annotation « noyau »)
+  \foreach \a/\r in {55/2.7,110/2.6,150/2.9,195/2.6,235/2.9,285/2.7,325/2.6,178/1.7}{
+     \fill[electroncol] (\a:\r) circle (2.3pt);}
+  % noyau minuscule
+  \shade[ball color=noyaucol] (0,0) circle (0.16);
+  % annotations
+  \draw[<-,>=Stealth,black!70] (0.15,0.11) -- (1.85,1.45)
+       node[right,font=\footnotesize,align=left]{noyau\\ ($\sim\SI{e-15}{\metre}$)};
+  \draw[<->,>=Stealth,primarydark] (0,-3.2) -- (0,0)
+       node[midway,fill=white,inner sep=1pt,font=\footnotesize]{$\sim\SI{e-10}{\metre}$};
+  \node[electroncol,font=\footnotesize] at (2.55,-2.45) {électrons};
+  \node[primary!75,font=\footnotesize,align=center] at (0,3.55) {nuage électronique (surtout du \textbf{vide})};
+\end{tikzpicture}
+\end{center}
+\captionof{figure}{}
+\vspace{-0.6em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 1}} : l'atome est essentiellement lacunaire — le noyau (point central) est $\sim 10^5$ fois plus petit que l'atome entier.\end{center}
+
+\begin{exemple}[le constituant principal d'un atome quelconque]
+\textbf{Question.} Quel est le constituant principal d'un atome quelconque : les électrons, les protons,
+les neutrons, ou le vide ?
+
+\smallskip
+\textbf{Raisonnement.} Comparons les ordres de grandeur. Le diamètre du noyau vaut environ
+\SI{e-15}{\metre}. La distance qui sépare le noyau des électrons est environ \(10^5\) fois plus grande,
+soit de l'ordre de \SI{e-10}{\metre}. Or le volume croît comme le \emph{cube} de la dimension : l'espace
+« habité » par les électrons est donc environ \((10^5)^3 = 10^{15}\) fois plus volumineux que le noyau.
+Entre ce noyau minuscule et ces quelques électrons lointains, il n'y a\dots\ rien.
+
+\smallskip
+\textbf{Conclusion.} Le constituant principal (en volume) d'un atome est le \textbf{vide}. La matière
+« pleine » que nous percevons au quotidien est, à l'échelle atomique, presque entièrement vide.
+\end{exemple}
+
+% =====================================================================
+\section{Les constituants de l'atome : proton, neutron, électron}
+% =====================================================================
+Trois particules suffisent à décrire l'atome. Deux d'entre elles (proton, neutron) vivent dans le
+noyau ; la troisième (électron) peuple le nuage électronique. On les caractérise par deux grandeurs :
+leur \textbf{charge électrique} et leur \textbf{masse}.
+
+\subsection{Charge et masse des trois particules}
+
+\begin{definition}[charge élémentaire]
+La \textbf{charge élémentaire}, notée \(e\), est la plus petite quantité de charge électrique que l'on
+rencontre à l'état libre. Sa valeur est
+\[ e = \SI{1,6e-19}{\coulomb}. \]
+Le \textbf{proton} porte la charge \(+e\), l'\textbf{électron} la charge \(-e\) (opposée), et le
+\textbf{neutron} est \emph{neutre} (charge nulle).
+\end{definition}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{l c c c}
+\rowcolor{primary!18}
+\textbf{Particule} & \textbf{Localisation} & \textbf{Charge} & \textbf{Masse (approx.)} \\
+\midrule
+\rowcolor{primary!4}
+Proton $\ \pp$   & noyau            & $+e = +\SI{1,6e-19}{\coulomb}$ & $\approx \SI{1,7e-27}{\kilo\gram}$ \\
+Neutron $\ \nz$  & noyau            & $0$ (neutre)                   & $\approx \SI{1,7e-27}{\kilo\gram}$ \\
+\rowcolor{primary!4}
+Électron $\ \ee$ & nuage électronique & $-e = -\SI{1,6e-19}{\coulomb}$ & $\approx \SI{9,1e-31}{\kilo\gram}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{-0.3em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 2}} : carte d'identité des trois particules subatomiques.\end{center}
+
+Deux faits essentiels se lisent dans ce tableau :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item le proton et le neutron ont \textbf{quasiment la même masse} ($\approx \SI{1,7e-27}{\kilo\gram}$) :
+        ce sont eux qui font, à eux deux, presque toute la masse de l'atome ;
+  \item l'électron est \textbf{environ 2000 fois plus léger} que le proton : sa contribution à la masse
+        de l'atome est négligeable.
+\end{itemize}
+
+\begin{formule}[rapport des masses électron / proton]
+\[ \boxed{\ \dfrac{m(\ee)}{m(\pp)} = \dfrac{\SI{9,1e-31}{\kilo\gram}}{\SI{1,7e-27}{\kilo\gram}} \approx 0{,}0005\ } \]
+\begin{ou}
+  \item $m(\ee)$ : masse d'un électron, en kilogrammes (\si{\kilo\gram}) ;
+  \item $m(\pp)$ : masse d'un proton, en kilogrammes (\si{\kilo\gram}) ;
+  \item le rapport est un \textbf{nombre sans unité} : l'électron pèse environ $5$ dix-millièmes de la
+        masse d'un proton, soit $\sim 1/2000$.
+\end{ou}
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % zoom sur le noyau : protons (rouge +) et neutrons (gris)
+  \node[primarydark,font=\footnotesize] at (0,2.25) {Zoom sur le \textbf{noyau} : protons et neutrons};
+  \begin{scope}
+    \clip (0,0) circle (1.55);
+    \fill[noyaucol!12] (0,0) circle (1.6);
+  \end{scope}
+  \draw[noyaucol!60,line width=1pt] (0,0) circle (1.55);
+  % protons +
+  \foreach \x/\y in {-0.7/0.4, 0.1/0.7, 0.75/0.25, -0.35/-0.45, 0.5/-0.55, -0.85/-0.2}{
+     \shade[ball color=protoncol] (\x,\y) circle (0.34);
+     \node[white,font=\scriptsize\bfseries] at (\x,\y) {$+$};}
+  % neutrons
+  \foreach \x/\y in {-0.1/0.0, 0.55/0.65, -0.7/-0.7, 0.85/-0.15, 0.05/-0.8, -0.4/0.75}{
+     \shade[ball color=neutroncol] (\x,\y) circle (0.34);}
+  % légende
+  \shade[ball color=protoncol] (3.0,0.6) circle (0.22); \node[white,font=\scriptsize\bfseries] at (3.0,0.6){$+$};
+  \node[right,font=\footnotesize] at (3.3,0.6) {proton $\pp$ (charge $+e$)};
+  \shade[ball color=neutroncol] (3.0,-0.2) circle (0.22);
+  \node[right,font=\footnotesize] at (3.3,-0.2) {neutron $\nz$ (neutre)};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.3em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 3}} : le noyau ne contient que des nucléons (protons + neutrons), jamais d'électrons.\end{center}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[électron contre proton : charge et masse]
+\textbf{Question.} Par rapport à la charge et à la masse d'un proton, que possède un électron ?
+
+\smallskip
+\textbf{Charge.} Le proton porte $+e$, l'électron porte $-e$ : les charges sont \textbf{opposées}
+(contraires), mais de même \emph{valeur absolue} $e = \SI{1,6e-19}{\coulomb}$.
+
+\smallskip
+\textbf{Masse.} On compare les deux masses :
+\[ \frac{m(\ee)}{m(\pp)} = \frac{\SI{9,1e-31}{\kilo\gram}}{\SI{1,7e-27}{\kilo\gram}} \approx 0{,}0005. \]
+L'électron a donc une masse \textbf{beaucoup plus faible} (environ $2000$ fois) que celle du proton.
+
+\smallskip
+\textbf{Conclusion.} L'électron a \emph{une charge contraire et une masse plus faible} que le proton.
+(C'est la bonne réponse du QCM~7 : proposition \textbf{B}.) Attention au piège « pas de masse » :
+l'électron est très léger, mais sa masse \emph{n'est pas nulle}.
+\end{exemple}
+
+\begin{exemple}[la masse d'un proton est à peu près celle\dots\ d'un neutron]
+\textbf{Question.} La masse d'un proton est à peu près identique à celle de quelle particule ?
+
+\smallskip
+\textbf{Raisonnement.} On lit le tableau de la figure~2 : le proton et le neutron ont tous deux une
+masse d'environ \SI{1,7e-27}{\kilo\gram}, tandis que l'électron est mille fois plus léger. Donc
+\[ m(\nz) \approx m(\pp) \approx \SI{1,7e-27}{\kilo\gram}. \]
+\textbf{Conclusion.} La masse d'un proton est quasiment identique à celle d'un \textbf{neutron}
+(QCM~8 : proposition \textbf{C}). Ni l'électron (trop léger), ni le deutéron (qui est un noyau formé
+d'un proton \emph{et} d'un neutron, donc deux fois plus lourd) ne conviennent.
+\end{exemple}
+
+\begin{exemple}[charge d'un ensemble de \texorpdfstring{$10^{12}$}{10\^{}12} protons]
+\textbf{Question.} Quelle est la charge électrique, en coulombs, d'un ensemble de \(10^{12}\) protons ?
+
+\smallskip
+\textbf{Étape 1 — charge d'un seul proton.} L'électron porte $-\SI{1,6e-19}{\coulomb}$ ; le proton
+porte la charge \emph{opposée}, donc
+\[ 1\,\pp \ \longrightarrow\ +\SI{1,6e-19}{\coulomb}. \]
+
+\textbf{Étape 2 — multiplier par le nombre de protons.} La charge totale est simplement
+proportionnelle au nombre de protons :
+\[ Q = 10^{12} \times (+\SI{1,6e-19}{\coulomb}) = +1{,}6\times 10^{\,12-19}\ \si{\coulomb}
+     = +\SI{1,6e-7}{\coulomb}. \]
+
+\textbf{Conclusion.} \(Q = +\SI{1,6e-7}{\coulomb}\). Dans le QCM~9, cette valeur exacte n'est pas
+proposée parmi A–D (qui contiennent des erreurs de signe ou d'exposant) : la bonne réponse est donc
+\textbf{E. « Autre »}. La leçon : un \emph{cation} (charge positive) provient d'un excès de protons
+sur les électrons, et la charge totale se calcule en additionnant les charges élémentaires.
+\end{exemple}
+
+% =====================================================================
+\section{Numéro atomique \texorpdfstring{$Z$}{Z} et nombre de masse \texorpdfstring{$A$}{A}}
+% =====================================================================
+Pour identifier sans ambiguïté un atome, deux nombres entiers suffisent : son \textbf{numéro atomique}
+$Z$ et son \textbf{nombre de masse} $A$.
+
+\subsection{Le numéro atomique \texorpdfstring{$Z$}{Z}}
+
+\begin{definition}[numéro atomique $Z$]
+Le \textbf{numéro atomique} $Z$ est le \textbf{nombre de protons} contenus dans le noyau. C'est la
+véritable « carte d'identité » de l'élément : c'est $Z$, et lui seul, qui définit \emph{de quel élément}
+il s'agit (tous les atomes de carbone ont $Z = 6$, tous ceux d'oxygène ont $Z = 8$, etc.).
+\end{definition}
+
+\begin{formule}[numéro atomique]
+\[ \boxed{\ Z = \np\ } \qquad\text{et, pour un atome neutre,}\qquad \boxed{\ \ne = \np = Z\ } \]
+\begin{ou}
+  \item $Z$ : numéro atomique, nombre entier \textbf{sans unité} ;
+  \item $\np$ : nombre de protons dans le noyau ;
+  \item $\ne$ : nombre d'électrons ; l'égalité $\ne = \np$ n'est vraie que \emph{si l'atome n'est pas
+        chargé} (atome neutre).
+\end{ou}
+\end{formule}
+
+\subsection{Le nombre de masse \texorpdfstring{$A$}{A}}
+
+\begin{definition}[nombre de masse $A$]
+Le \textbf{nombre de masse} $A$ est le \textbf{nombre total de nucléons}, c'est-à-dire la somme du
+nombre de protons et du nombre de neutrons présents dans le noyau. Comme les nucléons portent presque
+toute la masse de l'atome, $A$ est un bon indicateur de cette masse — d'où son nom.
+\end{definition}
+
+\begin{formule}[nombre de masse]
+\[ \boxed{\ A = \np + \nnn\ } \qquad\Longleftrightarrow\qquad \boxed{\ \nnn = A - Z\ } \]
+\begin{ou}
+  \item $A$ : nombre de masse (= nombre de nucléons), entier \textbf{sans unité} ;
+  \item $\np$ : nombre de protons ($=Z$) ;
+  \item $\nnn$ : nombre de neutrons ;
+  \item conséquence directe : pour trouver le nombre de neutrons, on \emph{soustrait} $Z$ de $A$.
+\end{ou}
+\end{formule}
+
+\begin{definition}[notation symbolique d'un noyau]
+On résume l'identité d'un noyau par la notation
+\[ \nuc{A}{Z}{X} \]
+où $\mathrm{X}$ est le symbole de l'élément, $Z$ (en bas à gauche) le numéro atomique, et $A$ (en haut
+à gauche) le nombre de masse. Par exemple, $\nuc{35}{17}{Cl}$ se lit : « chlore, $Z = 17$, $A = 35$ »,
+soit $17$ protons et $35 - 17 = 18$ neutrons.
+\end{definition}
+
+\begin{attention}[ne pas confondre $A$ et $Z$]
+$Z$ compte \emph{uniquement les protons} ; $A$ compte \emph{tous les nucléons} (protons \emph{et}
+neutrons). On a toujours $A \ge Z$, et le nombre de neutrons s'obtient par différence $\nnn = A - Z$.
+Le numéro atomique $Z$ est en \emph{bas}, le nombre de masse $A$ en \emph{haut} dans la notation
+$\nuc{A}{Z}{X}$.
+\end{attention}
+
+\begin{remarque}[où lire ces nombres dans le tableau périodique ?]
+Dans une case du tableau périodique, le nombre entier qui accompagne le symbole est le \textbf{numéro
+atomique $Z$}. Le nombre décimal affiché (par ex.\ $24{,}31$ pour le magnésium) est la \textbf{masse
+atomique relative moyenne} de l'élément (voir §\ref{sec:masse}) : en l'arrondissant à l'entier le plus
+proche, on retrouve en pratique le nombre de masse $A$ de l'isotope le plus courant (ici $A = 24$).
+\end{remarque}
+
+% =====================================================================
+\section{La case du tableau périodique : lire la carte d'identité d'un élément}
+% =====================================================================
+Le livre présente l'atome de magnésium tel qu'il apparaît dans le tableau périodique. Apprenons à
+\emph{décoder} entièrement une telle case.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % la case
+  \node[draw=primary,fill=primary!7,line width=1.2pt,rounded corners=2pt,
+        minimum width=3.0cm,minimum height=3.0cm] (box) at (0,0) {};
+  \node[anchor=north,font=\large] at ([yshift=-2.5mm]box.north) {24,31};
+  \node[anchor=north east,font=\normalsize,protoncol] at ([xshift=-4mm,yshift=-11mm]box.north east) {1,2};
+  \node[font=\LARGE] at ([yshift=1mm]box.center) {\textbf{12 \ Mg}};
+  \node[anchor=south,font=\small] at ([yshift=2.5mm]box.south) {Magnésium};
+  % annotations
+  \draw[<-,>=Stealth,thmcol!80] ([yshift=-3mm]box.north) .. controls (-2.5,2.4) .. (-4.4,2.0)
+       node[left,font=\footnotesize,align=right,thmcol]{nombre de masse $\approx A$\\ \footnotesize(masse atomique relative)};
+  \draw[<-,>=Stealth,protoncol] ([xshift=-5mm,yshift=-11mm]box.north east) .. controls (3.0,1.6) .. (4.2,1.4)
+       node[right,font=\footnotesize,align=left,protoncol]{électronégativité\\ de l'atome};
+  \draw[<-,>=Stealth,defcol] ([xshift=-9mm]box.center) .. controls (-2.4,-0.1) .. (-4.4,0.2)
+       node[left,font=\footnotesize,align=right,defcol]{numéro atomique\\ $Z = \np$};
+  \draw[<-,>=Stealth,primarydark] ([xshift=9mm]box.center) .. controls (2.6,-0.1) .. (4.2,-0.4)
+       node[right,font=\footnotesize,align=left,primarydark]{symbole de\\ l'élément};
+  \draw[<-,>=Stealth,black!70] ([yshift=3mm]box.south) .. controls (-2.2,-2.2) .. (-4.4,-1.9)
+       node[left,font=\footnotesize,align=right]{nom chimique\\ de l'élément};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.3em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 4}} : décodage complet de la case du magnésium dans le tableau périodique.\end{center}
+
+\begin{methode}[lire et exploiter une case du tableau périodique]
+Pour un atome \textbf{neutre} dont on lit la case :
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item le nombre \emph{entier} accolé au symbole est $Z = \np$ ;
+  \item l'atome étant neutre, $\ne = \np = Z$ ;
+  \item le nombre \emph{décimal} (masse atomique relative), arrondi, donne $A$ ; alors $\nnn = A - Z$ ;
+  \item le petit nombre en rouge (le cas échéant) est l'\emph{électronégativité} (sans unité).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[synthèse : l'atome de magnésium $\mathrm{Mg}$]
+On lit dans le tableau : masse atomique $24{,}31$, électronégativité $1{,}2$, $Z = 12$, symbole
+$\mathrm{Mg}$, nom « Magnésium ». Déterminons toute sa composition.
+
+\smallskip
+\textbf{Protons.} $\np = Z = 12$.
+
+\textbf{Électrons.} L'atome est neutre, donc $\ne = \np = 12$. Les $12$ électrons gravitent autour
+du noyau.
+
+\textbf{Nucléons et neutrons.} Le nombre de masse arrondi est $A = 24$. C'est le nombre de
+nucléons : il y a donc $\nnn = A - Z = 24 - 12 = 12$ neutrons dans le noyau.
+
+\smallskip
+\textbf{Bilan.} L'atome $\nuc{24}{12}{Mg}$ contient $12$ protons, $12$ neutrons et $12$ électrons.
+Le chiffre $24$ correspond bien au nombre de \emph{nucléons} (protons + neutrons) présents dans le
+noyau, et non au nombre d'électrons.
+\end{exemple}
+
+\begin{exemple}[lire d'autres cases : oxygène, calcium, scandium, radium, azote]
+La même lecture s'applique à n'importe quel élément. Rassemblons cinq cases utiles pour la suite :
+
+\smallskip
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{l c c c c c c}
+\rowcolor{primary!18}
+\textbf{Élément} & \textbf{Masse} & \textbf{Électronég.} & $Z=\np$ & $A$ & $\ne$ (neutre) & $\nnn=A-Z$ \\
+\midrule
+Oxygène $\ \mathrm{O}$   & $15{,}99$ & $3{,}5$ & $8$  & $16$  & $8$  & $8$  \\
+\rowcolor{primary!4}
+Azote $\ \mathrm{N}$     & $14{,}01$ & $3{,}0$ & $7$  & $14$  & $7$  & $7$  \\
+Calcium $\ \mathrm{Ca}$  & $40{,}08$ & $1{,}0$ & $20$ & $40$  & $20$ & $20$ \\
+\rowcolor{primary!4}
+Scandium $\ \mathrm{Sc}$ & $44{,}96$ & $1{,}3$ & $21$ & $45$  & $21$ & $24$ \\
+Radium $\ \mathrm{Ra}$   & $226$     & $0{,}9$ & $88$ & $226$ & $88$ & $138$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+Chaque ligne se lit de la même façon. Par exemple, pour le \textbf{scandium} : $Z = 21$ donne
+$21$ protons ; l'atome neutre a donc $21$ électrons ; le nombre de masse $A = 45$ donne
+$\nnn = 45 - 21 = 24$ neutrons. Pour le \textbf{radium} : $88$ protons, $88$ électrons, et
+$\nnn = 226 - 88 = 138$ neutrons. Ces résultats serviront directement dans les exemples sur les ions.
+\end{exemple}
+
+\begin{exemple}[le piège du « noyau » : combien d'électrons dans le noyau de $\nuc{45}{21}{Sc}^{3+}$ ?]\label{ex:noyau-sc}
+\textbf{Question.} Combien y a-t-il d'électrons \emph{dans le noyau} de l'isotope $\nuc{45}{21}{Sc}^{3+}$ ?
+
+\smallskip
+\textbf{Analyse de l'ion (pour le contexte).} L'atome de scandium a $Z = 21$, donc $21$ protons et,
+neutre, $21$ électrons. Le cation $\mathrm{Sc}^{3+}$ a perdu $3$ électrons : il possède donc $21$
+protons et $18$ électrons.
+
+\smallskip
+\textbf{Le vrai piège.} La question ne demande pas le nombre total d'électrons, mais le nombre
+d'électrons \emph{dans le noyau}. Or, par définition, \textbf{le noyau ne contient que des nucléons}
+(protons et neutrons) : \emph{aucun} électron ne s'y trouve jamais. Les $18$ électrons de
+$\mathrm{Sc}^{3+}$ sont tous dans le nuage électronique, autour du noyau.
+
+\smallskip
+\textbf{Conclusion.} Il y a \textbf{0 électron} dans le noyau. La réponse $18$ (nombre total
+d'électrons de l'ion) est un \emph{leurre} : aucune des propositions chiffrées $18,21,24,45$ ne
+correspond, la bonne réponse est donc \textbf{E} (QCM~2). Retenez la phrase-clé : \emph{« dans le
+noyau, seuls protons et neutrons sont présents »}.
+\end{exemple}
+
+% =====================================================================
+\section{Les ions : cations et anions}
+% =====================================================================
+Un atome neutre peut \textbf{gagner} ou \textbf{perdre} des électrons. Il devient alors un \textbf{ion},
+électriquement chargé. Point capital : seuls les \emph{électrons} sont échangés — \textbf{le noyau ne
+change pas}, donc $Z$ et le nombre de neutrons restent identiques.
+
+\subsection{Définitions}
+
+\begin{definition}[ion, cation, anion]
+Un \textbf{ion} est un atome (ou un groupe d'atomes) qui a perdu ou gagné un ou plusieurs électrons,
+et qui porte de ce fait une charge électrique non nulle.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item un \textbf{cation} est un ion \emph{positif} : il a \textbf{perdu} des électrons
+        (ex.\ $\mathrm{Mg}^{2+}$, $\mathrm{Na}^{+}$). Typique des \emph{métaux} ;
+  \item un \textbf{anion} est un ion \emph{négatif} : il a \textbf{gagné} des électrons
+        (ex.\ $\mathrm{O}^{2-}$, $\mathrm{Cl}^{-}$). Typique des \emph{non-métaux}.
+\end{itemize}
+\end{definition}
+
+\begin{formule}[nombre d'électrons d'un ion]
+Pour un ion de charge $q$ (comptée en nombre de charges élémentaires, signe compris) :
+\[ \boxed{\ \ne = Z - q\ } \]
+\begin{ou}
+  \item $\ne$ : nombre d'électrons de l'ion ;
+  \item $Z$ : numéro atomique ($=\np$, inchangé) ;
+  \item $q$ : charge de l'ion (par ex.\ $q = +2$ pour $\mathrm{Mg}^{2+}$, $q = -2$ pour $\mathrm{O}^{2-}$).
+\end{ou}
+Concrètement : un cation $X^{n+}$ a $n$ électrons \emph{en moins} que l'atome neutre
+($\ne = Z - n$) ; un anion $X^{n-}$ a $n$ électrons \emph{en plus} ($\ne = Z + n$).
+\end{formule}
+
+\begin{attention}[le noyau est intouchable lors de la formation d'un ion]
+Quand un atome devient un ion, \textbf{seul} le nombre d'électrons change. Le nombre de protons $\np$
+(donc $Z$, donc l'\emph{identité} de l'élément) et le nombre de neutrons $\nnn$ \textbf{restent les
+mêmes}. Ainsi $\mathrm{Ca}$ et $\mathrm{Ca}^{2+}$ ont exactement le même noyau : $20$ protons et $20$
+neutrons ; ils ne diffèrent que par les électrons ($20$ contre $18$).
+\end{attention}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.92]
+  % --- Mg neutre ---
+  \begin{scope}[shift={(0,0)}]
+    \foreach \r in {0.85,1.5,2.15}{\draw[primary!45,line width=0.6pt] (0,0) circle (\r);}
+    \shade[ball color=noyaucol] (0,0) circle (0.5);
+    \node[white,font=\scriptsize\bfseries] at (0,0.07) {Mg};
+    \node[white,font=\tiny] at (0,-0.22) {12$\pp$};
+    \foreach \a in {90,270}{\fill[electroncol] (\a:0.85) circle (1.8pt);}
+    \foreach \a in {0,45,...,315}{\fill[electroncol] (\a:1.5) circle (1.8pt);}
+    \foreach \a in {35,215}{\fill[electroncol] (\a:2.15) circle (1.8pt);}
+    \node[font=\footnotesize,align=center] at (0,-2.75) {\textbf{Mg} \ ($Z=12$)\\ 12 $\pp$, 12 $\ee$\\ $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^2$};
+  \end{scope}
+  % --- flèche ---
+  \draw[-{Stealth[length=3.5mm]},line width=1.4pt,protoncol] (2.7,0) -- (4.5,0)
+       node[midway,above,font=\footnotesize,protoncol,align=center]{perd\\ $2\,\ee$};
+  % --- Mg2+ ---
+  \begin{scope}[shift={(7.2,0)}]
+    \foreach \r in {0.85,1.5}{\draw[primary!45,line width=0.6pt] (0,0) circle (\r);}
+    \shade[ball color=noyaucol] (0,0) circle (0.5);
+    \node[white,font=\scriptsize\bfseries] at (0,0.07) {Mg};
+    \node[white,font=\tiny] at (0,-0.22) {12$\pp$};
+    \foreach \a in {90,270}{\fill[electroncol] (\a:0.85) circle (1.8pt);}
+    \foreach \a in {0,45,...,315}{\fill[electroncol] (\a:1.5) circle (1.8pt);}
+    \node[font=\footnotesize,align=center] at (0,-2.75) {\textbf{Mg}$^{2+}$ \ ($Z=12$)\\ 12 $\pp$, 10 $\ee$\\ $(\mathrm{K})^2(\mathrm{L})^8$ = config.\ de Ne};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\vspace{-0.2em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 5}} : formation du cation $\mathrm{Mg}^{2+}$ — le noyau est inchangé, seuls $2$ électrons (la couche M) sont perdus.\end{center}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[le cation $\mathrm{Mg}^{2+}$ et l'anion $\mathrm{O}^{2-}$]
+\textbf{Cation $\mathrm{Mg}^{2+}$.} Le magnésium ($Z = 12$) a perdu $2$ électrons. Le noyau ne change
+pas : il garde $12$ protons (et $12$ neutrons). Côté électrons : $\ne = Z - 2 = 12 - 2 = 10$. L'ion
+$\mathrm{Mg}^{2+}$ possède donc \textbf{12 protons et 10 électrons}.
+
+\smallskip
+\textbf{Anion $\mathrm{O}^{2-}$.} L'oxygène ($Z = 8$, un \emph{non-métal}) a gagné $2$ électrons.
+Le noyau garde ses $8$ protons ; côté électrons, $\ne = Z + 2 = 8 + 2 = 10$. L'anion $\mathrm{O}^{2-}$
+possède donc \textbf{8 protons et 10 électrons}.
+
+\smallskip
+\textbf{Observation.} $\mathrm{Mg}^{2+}$ et $\mathrm{O}^{2-}$ ont tous deux $10$ électrons : ils ont la
+même \emph{configuration électronique} (celle du néon), bien que leurs noyaux soient très différents.
+On reviendra sur cette idée avec la règle de l'octet (§\ref{sec:octet}).
+\end{exemple}
+
+\begin{exemple}[l'atome de calcium comparé au cation calcium]
+\textbf{Question.} En quoi un atome de calcium neutre diffère-t-il d'un cation calcium ?
+
+\smallskip
+\textbf{Données.} Calcium : $Z = 20$, $A = 40$. Donc l'atome neutre $\mathrm{Ca}$ a $20$ protons,
+$20$ électrons, et $\nnn = 40 - 20 = 20$ neutrons. Le calcium appartient à la famille des
+\emph{alcalino-terreux}, de \textbf{valence 2} : il forme naturellement le cation $\mathrm{Ca}^{2+}$.
+
+\smallskip
+\textbf{Le cation $\mathrm{Ca}^{2+}$.} Il a perdu $2$ électrons : $\ne = 20 - 2 = 18$. En revanche, son
+noyau est \emph{identique} à celui de l'atome neutre : toujours $20$ protons et $20$ neutrons.
+
+\smallskip
+\textbf{Conclusion.} Entre $\mathrm{Ca}$ et $\mathrm{Ca}^{2+}$, le nombre de masse, le nombre de
+protons et le numéro atomique sont \emph{inchangés}. La seule grandeur plus grande chez l'atome neutre
+est son \textbf{nombre d'électrons} ($20$ contre $18$). C'est la réponse \textbf{B} du QCM~4.
+\end{exemple}
+
+\begin{exemple}[composition de l'anion $\nuc{15}{7}{N}^{3-}$]
+\textbf{Question.} Que possède l'ion $\nuc{15}{7}{N}^{3-}$ ?
+
+\smallskip
+\textbf{Protons.} $Z = 7 \Rightarrow \np = 7$ protons (inchangé : c'est toujours de l'azote).
+
+\textbf{Neutrons.} $A = 15 \Rightarrow \nnn = A - Z = 15 - 7 = 8$ neutrons.
+
+\textbf{Électrons.} L'anion porte $3$ charges négatives : il a gagné $3$ électrons par rapport à
+l'atome neutre. Donc $\ne = Z + 3 = 7 + 3 = 10$ électrons.
+
+\smallskip
+\textbf{Bilan.} $\nuc{15}{7}{N}^{3-}$ possède \textbf{7 protons, 10 électrons et 8 neutrons}. La
+proposition « $7$ protons et $10$ électrons » est correcte : réponse \textbf{B} (QCM~5). On notera
+au passage que l'isotope $\nuc{15}{7}{N}$ neutre aurait, lui, $7$ électrons.
+\end{exemple}
+
+\begin{exemple}[protons, neutrons et électrons de $\nuc{226}{88}{Ra}^{2+}$]
+\textbf{Question.} Combien de protons, de neutrons et d'électrons compte le cation $\nuc{226}{88}{Ra}^{2+}$ ?
+
+\smallskip
+\textbf{Atome neutre $\nuc{226}{88}{Ra}$.} $Z = 88 \Rightarrow 88$ protons et (neutre) $88$ électrons.
+$A = 226 \Rightarrow \nnn = 226 - 88 = 138$ neutrons.
+
+\smallskip
+\textbf{Cation $\mathrm{Ra}^{2+}$.} Il porte $2$ charges positives : il a perdu $2$ électrons. Le
+noyau ne bouge pas. Donc :
+\[ \np = 88, \qquad \nnn = 138, \qquad \ne = 88 - 2 = 86. \]
+
+\textbf{Bilan.} $\nuc{226}{88}{Ra}^{2+}$ possède \textbf{88 protons, 138 neutrons et 86 électrons},
+soit l'ordre $(88,\,138,\,86)$ : réponse \textbf{E} (QCM~6). Méthode générale ci-dessous.
+\end{exemple}
+
+\begin{methode}[compter $\pp$, $\nz$, $\ee$ d'une espèce $\nuc{A}{Z}{X}^{q}$]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Protons} : $\np = Z$ (toujours, atome comme ion).
+  \item \textbf{Neutrons} : $\nnn = A - Z$ (toujours ; le noyau ne change pas en formant un ion).
+  \item \textbf{Électrons} : $\ne = Z - q$ (avec $q$ signé : $-q$ revient à \emph{ajouter} $|q|$ pour
+        un anion, \emph{retirer} $q$ pour un cation).
+\end{enumerate}
+\end{methode}
+
+% =====================================================================
+\section{Les isotopes}
+% =====================================================================
+\begin{definition}[isotopes]
+Les \textbf{isotopes} d'un élément sont des atomes qui ont le \textbf{même numéro atomique $Z$}
+(même nombre de protons, donc même élément) mais des \textbf{nombres de masse $A$ différents}
+(donc des nombres de \emph{neutrons} différents). En une phrase : \emph{mêmes protons, neutrons en
+nombre différent}.
+\end{definition}
+
+\begin{theoreme}[les isotopes ont les mêmes propriétés chimiques]
+Les propriétés chimiques d'un atome sont gouvernées par son \textbf{cortège électronique} (le nombre
+et la disposition de ses électrons), lui-même fixé par $Z$. Comme tous les isotopes d'un élément
+partagent le même $Z$, ils ont \textbf{le même nombre d'électrons et la même configuration
+électronique} : ils possèdent donc \emph{les mêmes propriétés chimiques}. Ils ne diffèrent que par
+leur masse (à cause des neutrons supplémentaires).
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % --- Chlore 35 ---
+  \begin{scope}[shift={(0,0)}]
+    \draw[noyaucol!55,line width=0.9pt] (0,0) circle (1.05);
+    \foreach \x/\y in {-0.45/0.25,0.25/0.45,0.5/-0.1,-0.2/-0.45,0.0/0.05}{\shade[ball color=protoncol] (\x,\y) circle (0.17);}
+    \foreach \x/\y in {0.45/0.25,-0.5/-0.1,0.2/-0.45,-0.25/0.5,0.55/-0.45,-0.55/0.4}{\shade[ball color=neutroncol] (\x,\y) circle (0.17);}
+    \node[font=\footnotesize,align=center] at (0,-1.7) {$\nuc{35}{17}{Cl}$\\ 17 $\pp$, \textbf{18} $\nz$};
+  \end{scope}
+  % --- Chlore 37 ---
+  \begin{scope}[shift={(4.6,0)}]
+    \draw[noyaucol!55,line width=0.9pt] (0,0) circle (1.15);
+    \foreach \x/\y in {-0.45/0.25,0.25/0.45,0.5/-0.1,-0.2/-0.45,0.0/0.05}{\shade[ball color=protoncol] (\x,\y) circle (0.17);}
+    \foreach \x/\y in {0.45/0.25,-0.5/-0.1,0.2/-0.45,-0.25/0.5,0.6/-0.45,-0.6/0.4,0.62/0.5,-0.62/-0.45}{\shade[ball color=neutroncol] (\x,\y) circle (0.17);}
+    \node[font=\footnotesize,align=center] at (0,-1.7) {$\nuc{37}{17}{Cl}$\\ 17 $\pp$, \textbf{20} $\nz$};
+  \end{scope}
+  % légende
+  \shade[ball color=protoncol] (7.2,0.55) circle (0.16); \node[right,font=\footnotesize] at (7.45,0.55){proton};
+  \shade[ball color=neutroncol] (7.2,-0.05) circle (0.16); \node[right,font=\footnotesize] at (7.45,-0.05){neutron};
+  \node[font=\footnotesize,align=center,primarydark] at (8.1,-1.55) {même $Z=17$\\ $\Rightarrow$ même chimie};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.2em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 6}} : les deux isotopes du chlore — même nombre de protons ($17$), nombres de neutrons différents ($18$ et $20$).\end{center}
+
+\begin{exemple}[les isotopes du chlore et de l'azote]
+\textbf{Chlore.} L'élément chlore ($Z = 17$) existe sous deux isotopes principaux, $\nuc{35}{17}{Cl}$ et
+$\nuc{37}{17}{Cl}$. Tous deux ont $17$ protons (et $17$ électrons à l'état neutre), mais
+$\nuc{35}{17}{Cl}$ a $35 - 17 = 18$ neutrons tandis que $\nuc{37}{17}{Cl}$ en a $37 - 17 = 20$. Ils se
+comportent \emph{chimiquement} de façon identique.
+
+\smallskip
+\textbf{Azote.} Il existe plusieurs isotopes de l'azote ($\nuc{12}{}{N}$, $\nuc{13}{}{N}$,
+$\nuc{14}{}{N}$, $\nuc{15}{}{N}$), mais seuls $\nuc{14}{7}{N}$ et $\nuc{15}{7}{N}$ sont \emph{stables}.
+Le plus léger, $\nuc{14}{7}{N}$ ($7$ protons, $7$ neutrons), est de loin majoritaire ($99{,}63\,\%$)
+contre seulement $0{,}37\,\%$ pour $\nuc{15}{7}{N}$ ($7$ protons, $8$ neutrons). C'est pourquoi la masse
+atomique moyenne de l'azote ($14{,}01$) est très proche de $14$.
+\end{exemple}
+
+% =====================================================================
+\section{Masse atomique : uma, dalton et masse relative moyenne}\label{sec:masse}
+% =====================================================================
+Les masses des atomes (de l'ordre de \SI{e-27}{\kilo\gram}) sont trop petites pour être commodes. On
+introduit une unité « à l'échelle de l'atome » : l'\textbf{unité de masse atomique}.
+
+\subsection{L'unité de masse atomique (uma, dalton)}
+
+\begin{definition}[unité de masse atomique — uma / dalton]
+L'\textbf{unité de masse atomique} (symbole \emph{uma}, aussi appelée \textbf{dalton}, symbole u) est
+définie comme \(\tfrac{1}{12}\) de la masse d'un atome de \textbf{carbone 12} ($\nuc{12}{6}{C}$).
+Sa valeur est
+\[ \SI{1}{uma} \approx \SI{1,66054e-27}{\kilo\gram}. \]
+\end{definition}
+
+\begin{formule}[lien entre l'uma et le nombre d'Avogadro]
+Exprimée en \emph{grammes}, la valeur d'une uma est l'inverse du nombre d'Avogadro $N_{\!A}$ :
+\[ \boxed{\ \SI{1}{uma} = \dfrac{1}{N_{\!A}}\ \si{\gram} \approx \SI{1,66054e-24}{\gram}\ } \]
+\begin{ou}
+  \item $N_{\!A} \approx \SI{6,022e23}{\per\mole}$ : nombre d'Avogadro (nombre d'entités par mole) ;
+  \item $\dfrac{1}{N_{\!A}} \approx \SI{1,66054e-24}{\gram} = \SI{1,66054e-27}{\kilo\gram}$ : masse, en
+        grammes, correspondant à une uma.
+\end{ou}
+\end{formule}
+
+\begin{attention}[uma $\neq$ masse d'un proton]
+On dit souvent qu'un nucléon « pèse environ $1$ uma », ce qui est vrai en \emph{ordre de grandeur}
+($m(\pp) \approx \SI{1,7e-27}{\kilo\gram}$ et $\SI{1}{uma} \approx \SI{1,66e-27}{\kilo\gram}$). Mais
+l'uma n'est \textbf{pas} \emph{définie} comme la masse d'un proton : elle est définie à partir du
+\textbf{carbone 12} ($\tfrac{1}{12}$ de la masse d'un atome de $\nuc{12}{6}{C}$). C'est une distinction
+qu'il faut savoir faire (voir l'exemple « vrai / faux » ci-dessous).
+\end{attention}
+
+\begin{exemple}[vrai ou faux sur les isotopes et l'uma]
+Examinons quelques affirmations (QCM~15), avec leur justification.
+\begin{itemize}[leftmargin=1.5em,topsep=3pt,itemsep=3pt]
+  \item \textbf{«~Trois isotopes d'un même atome diffèrent par leur nombre de masse.~»}
+        \;\textbf{\textcolor{excol}{VRAI}} : par définition les isotopes ont le même $Z$ mais des $A$
+        différents (donc des nombres de neutrons différents).
+  \item \textbf{«~Un dalton est défini comme $\tfrac{1}{12}$ de la masse d'un atome de carbone 12.~»}
+        \;\textbf{\textcolor{excol}{VRAI}} : c'est exactement la définition de l'uma (= dalton).
+  \item \textbf{«~Un atome de $\nuc{14}{7}{N}$ a une masse de $14$ uma.~»}
+        \;\textbf{\textcolor{excol}{VRAI}} (en très bonne approximation) : il compte $14$ nucléons,
+        chacun pesant $\approx 1$ uma.
+  \item \textbf{«~Une uma vaut approximativement $\SI{1,66054e-27}{\kilo\gram}$.~»}
+        \;\textbf{\textcolor{excol}{VRAI}}.
+  \item \textbf{«~La valeur de l'uma exprimée en grammes correspond à l'inverse du nombre
+        d'Avogadro.~»} \;\textbf{\textcolor{excol}{VRAI}} : $\SI{1}{uma} = \tfrac{1}{N_{\!A}}\,\si{\gram}
+        \approx \SI{1,66054e-24}{\gram}$.
+  \item \textbf{«~Le dalton est égal à la masse d'un proton.~»}
+        \;\textbf{\textcolor{attncol}{FAUX}} : il est \emph{voisin}, mais défini à partir du carbone 12,
+        pas du proton.
+\end{itemize}
+\end{exemple}
+
+\subsection{Masse atomique relative moyenne}
+
+\begin{definition}[masse atomique relative moyenne]
+La \textbf{masse atomique relative moyenne} d'un élément (le nombre décimal lu dans le tableau
+périodique) est la \textbf{moyenne pondérée} des masses de ses isotopes, chacun étant pondéré par son
+\textbf{abondance naturelle}.
+\end{definition}
+
+\begin{formule}[masse atomique relative moyenne]
+\[ \boxed{\ \overline{A} = \sum_i p_i\, A_i = p_1 A_1 + p_2 A_2 + \dots\ } \]
+\begin{ou}
+  \item $\overline{A}$ : masse atomique relative moyenne, \textbf{sans unité} (en uma) ;
+  \item $A_i$ : masse (nombre de masse) de l'isotope $i$, sans unité (en uma) ;
+  \item $p_i$ : abondance \emph{fractionnaire} de l'isotope $i$ (par ex.\ $8\,\% \to p_i = 0{,}08$) ;
+  \item la somme des abondances vaut $1$ ($100\,\%$) : $\sum_i p_i = 1$.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[masse moyenne d'un élément à deux isotopes]
+\textbf{Énoncé.} À l'état fondamental, un élément $\mathrm{M}$ est constitué de deux isotopes,
+$\nuc{6}{3}{M}$ et $\nuc{7}{3}{M}$. L'abondance de $\nuc{6}{3}{M}$ est $8\,\%$. Quelle est la masse
+atomique relative moyenne ?
+
+\smallskip
+\textbf{Étape 1 — abondances fractionnaires.} $p(\nuc{6}{}{M}) = 0{,}08$. Comme la somme vaut $1$ :
+$p(\nuc{7}{}{M}) = 1 - 0{,}08 = 0{,}92$.
+
+\textbf{Étape 2 — moyenne pondérée.}
+\[ \overline{A} = p_6\,A_6 + p_7\,A_7 = 0{,}08 \times 6 + 0{,}92 \times 7 = 0{,}48 + 6{,}44 = 6{,}92. \]
+
+\textbf{Conclusion.} $\overline{A} = 6{,}92$ (réponse \textbf{A}, QCM~17). \emph{Vérification de bon sens} :
+l'isotope $7$ étant largement majoritaire, la moyenne doit être proche de $7$ — c'est bien le cas.
+\end{exemple}
+
+\begin{exemple}[abondances comparées des isotopes du lithium]
+\textbf{Énoncé.} Le lithium est constitué de deux isotopes $\nuc{6}{3}{Li}$ et $\nuc{7}{3}{Li}$. Sa
+masse atomique relative (tableau) vaut environ $6{,}94$. Comparer les abondances des deux isotopes.
+
+\smallskip
+\textbf{Mise en équation.} Notons $p$ l'abondance de $\nuc{6}{}{Li}$ ; celle de $\nuc{7}{}{Li}$ vaut
+$1 - p$. La moyenne s'écrit :
+\[ \overline{A} = 6p + 7(1-p) = 7 - p = 6{,}94 \;\Longrightarrow\; p = 7 - 6{,}94 = 0{,}06. \]
+
+\textbf{Lecture.} L'abondance de $\nuc{6}{}{Li}$ est donc $6\,\%$, contre $94\,\%$ pour $\nuc{7}{}{Li}$.
+
+\smallskip
+\textbf{Conclusion.} L'abondance de $\nuc{6}{3}{Li}$ ($6\,\%$) est \emph{inférieure} à celle de
+$\nuc{7}{3}{Li}$ ($94\,\%$) : réponse \textbf{A} (QCM~16). On retiendra que la masse moyenne « penche »
+toujours du côté de l'isotope le plus abondant.
+\end{exemple}
+
+\begin{exemple}[abondance manquante des isotopes du fer]
+\textbf{Énoncé.} Le fer est constitué de quatre isotopes principaux : $\nuc{54}{}{Fe}$, $\nuc{56}{}{Fe}$,
+$\nuc{57}{}{Fe}$ et $\nuc{58}{}{Fe}$. Les abondances des trois premiers sont respectivement $5{,}82\,\%$,
+$91{,}66\,\%$ et $2{,}19\,\%$. Quelle est l'abondance de $\nuc{58}{}{Fe}$ ?
+
+\smallskip
+\textbf{Principe.} La somme de toutes les abondances vaut exactement $100\,\%$. On isole l'inconnue :
+\[ p(\nuc{58}{}{Fe}) = 100\,\% - \big(5{,}82 + 91{,}66 + 2{,}19\big)\,\% = 100\,\% - 99{,}67\,\% = 0{,}33\,\%. \]
+
+\textbf{Conclusion.} L'abondance de $\nuc{58}{}{Fe}$ est $0{,}33\,\%$ (réponse \textbf{D}, QCM~18).
+\emph{Attention au format} : la réponse est bien $0{,}33\,\%$ (un pourcentage), à ne pas confondre avec
+$0{,}33$ (la fraction, qui vaudrait $33\,\%$).
+\end{exemple}
+
+% =====================================================================
+\section{La structure électronique : couches et configuration}
+% =====================================================================
+Les électrons ne sont pas disposés n'importe comment autour du noyau : ils se répartissent sur des
+\textbf{couches} successives, de plus en plus éloignées du noyau. C'est cette organisation qui explique
+la réactivité chimique.
+
+\subsection{Les couches K, L, M, N\dots}
+
+\begin{definition}[couches électroniques]
+Les électrons se rangent par \textbf{couches}, désignées par des lettres à partir de K (la plus proche
+du noyau), puis L, M, N, O\dots\ On les numérote aussi par un entier $n = 1, 2, 3, 4\dots$
+(K $\leftrightarrow n=1$, L $\leftrightarrow n=2$, etc.).
+\end{definition}
+
+\begin{theoreme}[capacité d'une couche et remplissage]
+Chaque couche $n$ peut contenir au maximum $2n^2$ électrons :
+\[ \text{K} : 2,\quad \text{L} : 8,\quad \text{M} : 18,\quad \text{N} : 32 \quad(=2n^2). \]
+On remplit les couches \textbf{de l'intérieur vers l'extérieur} (K, puis L, puis M\dots). Dans ce
+modèle simplifié, la \textbf{couche la plus externe} (couche de valence) ne contient \emph{jamais plus
+de $8$ électrons} : dès qu'elle atteint $8$, on commence à remplir la couche suivante.
+\end{theoreme}
+
+\begin{remarque}[pourquoi M apparaît tantôt avec 8, tantôt avec 18 électrons]
+Cette règle « la couche externe $\le 8$ » explique les configurations du livre. Pour l'argon ($Z=18$),
+la couche M est \emph{externe} : elle est plafonnée à $8$, d'où $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$.
+Pour le brome ($Z=35$), une couche N s'est ouverte au-dessus : M est devenue \emph{interne} et peut
+alors se remplir jusqu'à $18$, d'où $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^7$.
+\end{remarque}
+
+\begin{definition}[configuration électronique]
+La \textbf{configuration électronique} d'un atome indique le nombre d'électrons sur chaque couche, sous
+la forme $(\mathrm{K})^a(\mathrm{L})^b(\mathrm{M})^c\dots$ où les exposants $a, b, c\dots$ comptent les
+électrons de chaque couche. Leur somme est égale au nombre total d'électrons (donc à $Z$ pour un atome
+neutre).
+\end{definition}
+
+\begin{methode}[établir la configuration électronique d'un atome neutre]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item compter les électrons : $\ne = Z$ (atome neutre) ;
+  \item remplir K ($2$ au plus), puis L ($8$ au plus), puis M\dots ;
+  \item tant que des électrons restent, on place sur la couche externe \emph{au plus $8$} avant
+        d'ouvrir la suivante ;
+  \item la dernière couche occupée est la \textbf{couche de valence}.
+\end{enumerate}
+\end{methode}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % --- Azote N : K2 L5 ---
+  \begin{scope}[shift={(0,0)}]
+    \foreach \r in {0.95,1.7}{\draw[primary!50,line width=0.7pt] (0,0) circle (\r);}
+    \node[primary!75,font=\scriptsize] at (0.95-0.16,0.2) {K};
+    \node[primary!75,font=\scriptsize] at (1.7-0.16,0.2) {L};
+    \shade[ball color=noyaucol] (0,0) circle (0.55);
+    \node[white,font=\footnotesize\bfseries] at (0,0.06) {N};
+    \node[white,font=\tiny] at (0,-0.24) {$Z{=}7$};
+    \foreach \a in {90,270}{\fill[electroncol] (\a:0.95) circle (2.0pt);}
+    \foreach \a in {18,90,162,234,306}{\fill[electroncol] (\a:1.7) circle (2.0pt);}
+    \node[font=\footnotesize,align=center] at (0,-2.35) {\textbf{Azote} $\mathrm{N}$\\ $(\mathrm{K})^2(\mathrm{L})^5$\\ \footnotesize 5 e$^-$ de valence};
+  \end{scope}
+  % --- Magnésium Mg : K2 L8 M2 ---
+  \begin{scope}[shift={(5.6,0)}]
+    \foreach \r in {0.8,1.45,2.1}{\draw[primary!50,line width=0.7pt] (0,0) circle (\r);}
+    \node[primary!75,font=\scriptsize] at (0.8-0.15,0.18) {K};
+    \node[primary!75,font=\scriptsize] at (1.45-0.15,0.18) {L};
+    \node[primary!75,font=\scriptsize] at (2.1-0.15,0.18) {M};
+    \shade[ball color=noyaucol] (0,0) circle (0.5);
+    \node[white,font=\footnotesize\bfseries] at (0,0.06) {Mg};
+    \node[white,font=\tiny] at (0,-0.22) {$Z{=}12$};
+    \foreach \a in {90,270}{\fill[electroncol] (\a:0.8) circle (1.9pt);}
+    \foreach \a in {0,45,...,315}{\fill[electroncol] (\a:1.45) circle (1.9pt);}
+    \foreach \a in {40,220}{\fill[electroncol] (\a:2.1) circle (1.9pt);}
+    \node[font=\footnotesize,align=center] at (0,-2.35) {\textbf{Magnésium} $\mathrm{Mg}$\\ $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^2$\\ \footnotesize 2 e$^-$ de valence};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\vspace{-0.2em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 7}} : modèles en couches de l'azote ($(\mathrm{K})^2(\mathrm{L})^5$) et du magnésium ($(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^2$).\end{center}
+
+\begin{exemple}[configuration de l'azote, étape par étape]
+\textbf{Énoncé.} L'azote a $Z = 7$. Établir sa configuration et identifier sa couche de valence.
+
+\smallskip
+\textbf{Remplissage.} On dispose de $7$ électrons.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item couche K : on y place $2$ électrons (saturée). Reste $7 - 2 = 5$ ;
+  \item couche L : on y place les $5$ restants ($\le 8$, donc tout tient). Reste $0$.
+\end{itemize}
+\textbf{Configuration.} $(\mathrm{K})^2(\mathrm{L})^5$. La dernière couche occupée est L : c'est la
+\textbf{couche de valence (périphérique)}, qui contient $5$ électrons de valence. Vérification :
+$2 + 5 = 7 = Z$. \checkmark
+\end{exemple}
+
+\begin{exemple}[configuration du magnésium et de son ion]
+\textbf{Magnésium ($Z = 12$).} Remplissage : K$^2$, puis L$^8$ (saturée, $2+8 = 10$), puis M$^2$
+(les $2$ restants). D'où $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^2$ : la couche de valence est M, avec
+$2$ électrons de valence.
+
+\smallskip
+\textbf{Cation $\mathrm{Mg}^{2+}$.} En perdant ses $2$ électrons de valence (la couche M), il ne reste
+que $(\mathrm{K})^2(\mathrm{L})^8$, soit $10$ électrons. C'est exactement la configuration du gaz noble
+\textbf{néon} ($Z = 10$) : voilà pourquoi $\mathrm{Mg}^{2+}$ est particulièrement stable (cf.\ §\ref{sec:octet}).
+\end{exemple}
+
+\begin{exemple}[configuration du phosphore : attention à la bonne couche]
+\textbf{Énoncé.} Le phosphore a $Z = 15$. Quelle est la configuration de sa couche de valence ?
+
+\smallskip
+\textbf{Remplissage.} K$^2$, L$^8$ ($2+8 = 10$), puis il reste $15 - 10 = 5$ électrons placés sur M.
+D'où $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^5$.
+
+\smallskip
+\textbf{Le piège.} On entend parfois que la couche de valence du phosphore serait $(\mathrm{L})^5$ :
+c'est \textbf{faux}. La couche de valence est la \emph{dernière} occupée, soit $\mathbf{(M)^5}$, pas
+$(\mathrm{L})^5$. La couche L, elle, est saturée à $8$. (Cette confusion correspond à la proposition
+\textbf{C} fausse du QCM~1.)
+\end{exemple}
+
+% =====================================================================
+\section{Électrons de valence, gaz nobles et règle de l'octet}\label{sec:octet}
+% =====================================================================
+\subsection{Électrons de valence et symbole de Lewis}
+
+\begin{definition}[électrons de valence]
+Les \textbf{électrons de valence} sont les électrons de la \textbf{couche périphérique} (la dernière
+occupée). Ce sont eux qui participent aux liaisons chimiques : ils déterminent presque toute la
+réactivité de l'atome.
+\end{definition}
+
+\begin{definition}[symbole de Lewis]
+Le \textbf{symbole de Lewis} d'un atome représente son noyau et ses électrons internes par le symbole
+chimique, autour duquel on dispose les \textbf{électrons de valence} sous forme de points. Les
+électrons s'apparient en \textbf{doublets} (paires) ; ceux qui restent seuls sont des \textbf{électrons
+célibataires} (non appariés).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \node[font=\Large] (O) at (0,0) {\textbf{O}};
+  % doublet du haut (2 points)
+  \fill[black] (-0.12,0.62) circle (1.6pt); \fill[black] (0.12,0.62) circle (1.6pt);
+  % doublet du bas (2 points)
+  \fill[black] (-0.12,-0.62) circle (1.6pt); \fill[black] (0.12,-0.62) circle (1.6pt);
+  % célibataire gauche
+  \fill[electroncol] (-0.72,0) circle (1.9pt);
+  % célibataire droite
+  \fill[electroncol] (0.72,0) circle (1.9pt);
+  % annotations
+  \draw[<-,>=Stealth,black!70] (0,0.74) -- (1.4,1.5) node[right,font=\footnotesize]{doublet d'électrons};
+  \draw[<-,>=Stealth,electroncol] (0.84,0) -- (2.0,-0.7) node[right,font=\footnotesize,electroncol]{électron célibataire};
+  \node[font=\footnotesize,align=center] at (0,-1.7) {Symbole de Lewis de l'atome d'oxygène\\ \footnotesize $(\mathrm{K})^2(\mathrm{L})^6$ : 6 électrons de valence = 2 doublets + 2 célibataires};
+\end{tikzpicture}
+\end{center}
+\vspace{-0.2em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 8}} : l'oxygène possède $6$ électrons de valence, organisés en $2$ doublets et $2$ électrons célibataires.\end{center}
+
+\subsection{Gaz nobles et règle de l'octet}
+
+\begin{definition}[gaz nobles et règle de l'octet / du duet]
+Les \textbf{gaz nobles} (ou gaz rares : He, Ne, Ar\dots) possèdent une couche de valence
+\textbf{saturée} : $8$ électrons (un \textbf{octet}) pour tous, sauf l'hélium qui se contente de $2$
+(un \textbf{duet}). Cette saturation les rend chimiquement très \emph{stables} (quasi inertes).
+\textbf{Règle de l'octet :} les autres atomes tendent à gagner, perdre ou partager des électrons pour
+\emph{atteindre la configuration du gaz noble le plus proche}.
+\end{definition}
+
+\begin{theoreme}[la formation des ions suit la règle de l'octet]
+Un atome forme l'ion qui lui donne la configuration électronique d'un \textbf{gaz noble} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item un \emph{métal} à $1, 2$ ou $3$ électrons de valence les \textbf{perd} (cation) : $\mathrm{Na}
+        \to \mathrm{Na}^{+}$, $\mathrm{Mg} \to \mathrm{Mg}^{2+}$ (config.\ de Ne) ;
+  \item un \emph{non-métal} à $6$ ou $7$ électrons de valence en \textbf{gagne} (anion) : $\mathrm{O}
+        \to \mathrm{O}^{2-}$, $\mathrm{Cl} \to \mathrm{Cl}^{-}$ (config.\ d'un gaz noble).
+\end{itemize}
+\end{theoreme}
+
+\begin{definition}[quelques familles d'éléments]
+Une \textbf{famille} (colonne du tableau) regroupe les éléments ayant le \emph{même nombre d'électrons
+de valence}, donc des propriétés voisines :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{halogènes} : $7$ électrons de valence (F, Cl, Br, I\dots) — avides d'un électron pour
+        compléter leur octet, ils forment des anions $X^{-}$ ;
+  \item \textbf{alcalino-terreux} : $2$ électrons de valence (Be, Mg, Ca\dots) — de valence $2$, ils
+        forment des cations $X^{2+}$ ;
+  \item \textbf{gaz nobles} : couche de valence saturée ($8$, ou $2$ pour He) — stables, peu réactifs.
+\end{itemize}
+\end{definition}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[hélium, oxygène, phosphore, ion hydrure : analyse de quatre affirmations]
+On reprend les quatre propositions du QCM~1.
+\begin{itemize}[leftmargin=1.5em,topsep=3pt,itemsep=4pt]
+  \item \textbf{A. «~À l'état fondamental, l'hélium possède deux électrons célibataires sur sa couche
+        K.~»} \;\textbf{\textcolor{attncol}{FAUX}}. L'hélium a $2$ électrons de valence, mais ils
+        forment un \emph{doublet} (une paire dans une même orbitale) : ce sont des électrons
+        \emph{appariés}, pas célibataires. C'est ce duet qui rend l'hélium stable.
+  \item \textbf{B. «~L'oxygène possède deux doublets d'électrons sur sa couche de valence.~»}
+        \;\textbf{\textcolor{excol}{VRAI}}. Son symbole de Lewis (figure~8) montre $6$ électrons de
+        valence : $2$ doublets et $2$ électrons célibataires.
+  \item \textbf{C. «~La couche de valence du phosphore est $(\mathrm{L})^5$.~»}
+        \;\textbf{\textcolor{attncol}{FAUX}}. Pour $Z = 15$, la configuration est
+        $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^5$ : la couche de valence est $\mathbf{(M)^5}$.
+  \item \textbf{D. «~La configuration de l'ion hydrure $\mathrm{H}^{-}$ est identique à celle de
+        l'hélium.~»} \;\textbf{\textcolor{excol}{VRAI}}. L'hydrogène ($Z=1$) qui gagne un électron
+        devient $\mathrm{H}^{-}$ à $2$ électrons : $(\mathrm{K})^2$, exactement comme l'hélium.
+\end{itemize}
+\textbf{Bilan : propositions correctes B et D.}
+\end{exemple}
+
+\begin{exemple}[reconnaître les halogènes par leur numéro atomique]
+\textbf{Énoncé.} L'atome de chlore possède $7$ électrons de valence. Parmi les numéros atomiques
+$Z = 9,\,18,\,35,\,53$, lesquels désignent aussi des atomes à $7$ électrons de valence ?
+
+\smallskip
+On établit la configuration de chacun et on lit la couche externe :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $Z = 9$ : $(\mathrm{K})^2(\mathrm{L})^7$ \;$\to$\; $7$ e$^-$ de valence \;\textbf{\textcolor{excol}{(halogène : fluor)}} ;
+  \item $Z = 18$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$ \;$\to$\; $8$ e$^-$ de valence
+        \;\textbf{\textcolor{attncol}{(gaz noble : argon, pas un halogène)}} ;
+  \item $Z = 35$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^7$ \;$\to$\; $7$ e$^-$
+        \;\textbf{\textcolor{excol}{(halogène : brome)}} ;
+  \item $Z = 53$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^{18}(\mathrm{O})^7$
+        \;$\to$\; $7$ e$^-$ \;\textbf{\textcolor{excol}{(halogène : iode)}}.
+\end{itemize}
+\textbf{Conclusion.} Les atomes à $7$ électrons de valence sont $Z = 9,\,35,\,53$ : réponses
+\textbf{A, C, D} (QCM~11). Seul $Z = 18$ (argon) fait exception, avec un octet complet.
+\end{exemple}
+
+\begin{exemple}[un seul halogène parmi des numéros atomiques proches]
+\textbf{Énoncé.} Un atome possède, comme le chlore, $7$ électrons de valence. Parmi $Z = 7, 9, 10, 12$,
+lequel est-ce ?
+
+\smallskip
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item $Z = 7$ : $(\mathrm{K})^2(\mathrm{L})^5$ $\to 5$ e$^-$ de valence ;
+  \item $Z = 9$ : $(\mathrm{K})^2(\mathrm{L})^7$ $\to \mathbf{7}$ e$^-$ de valence \;\textbf{\textcolor{excol}{(c'est lui : fluor)}} ;
+  \item $Z = 10$ : $(\mathrm{K})^2(\mathrm{L})^8$ $\to 8$ e$^-$ (néon, gaz noble) ;
+  \item $Z = 12$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^2$ $\to 2$ e$^-$ de valence.
+\end{itemize}
+\textbf{Conclusion.} Seul $Z = 9$ (le fluor) a $7$ électrons de valence : réponse \textbf{B} (QCM~14).
+\end{exemple}
+
+\begin{exemple}[trouver un élément par sa période et son groupe]
+\textbf{Énoncé.} Quel élément, de configuration donnée, appartient à la \emph{période 2} et au
+\emph{groupe 6A} ?
+
+\smallskip
+\textbf{Traduction.} La période est le numéro de la dernière couche occupée : période 2 $\Rightarrow$
+couche de valence = L. Le groupe 6A signifie $6$ électrons de valence. On cherche donc
+$(\mathrm{K})^2(\mathrm{L})^6$.
+
+\smallskip
+\textbf{Identification.} $2 + 6 = 8 = Z$ : c'est l'\textbf{oxygène}. Parmi les propositions, seule
+$(\mathrm{K})^2(\mathrm{L})^6$ a sa couche de valence (L) à $6$ électrons. Les configurations comme
+$(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^3$ seraient en période 3, et $(\mathrm{K})^2(\mathrm{L})^8$
+serait le néon (groupe 8A). \textbf{Conclusion : réponse D} (QCM~13).
+\end{exemple}
+
+\begin{exemple}[quels ions ont la configuration d'un gaz noble ?]
+\textbf{Énoncé.} Parmi $\mathrm{H}^{+}$, $\mathrm{H}^{-}$, $\mathrm{Na}^{+}$, $\mathrm{Ba}^{+}$,
+$\mathrm{Cu}^{2+}$, lesquels acquièrent la configuration d'un gaz rare ?
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item $\mathrm{H}^{+}$ : $\ne = 1 - 1 = 0$. \;\textbf{\textcolor{attncol}{Non}} : aucun électron, ce
+        n'est la configuration d'aucun gaz noble.
+  \item $\mathrm{H}^{-}$ : $\ne = 1 + 1 = 2$, soit $(\mathrm{K})^2$. \;\textbf{\textcolor{excol}{Oui}} :
+        c'est la configuration de l'\emph{hélium} (duet).
+  \item $\mathrm{Na}^{+}$ : $\ne = 11 - 1 = 10$, soit $(\mathrm{K})^2(\mathrm{L})^8$.
+        \;\textbf{\textcolor{excol}{Oui}} : configuration du \emph{néon}.
+  \item $\mathrm{Ba}^{+}$ : le baryum devrait perdre \emph{deux} électrons pour atteindre la case du
+        xénon. Avec un seul, $\mathrm{Ba}^{+}$ n'a pas la configuration d'un gaz noble : c'est
+        $\mathrm{Ba}^{2+}$ qui l'aurait. \;\textbf{\textcolor{attncol}{Non}}.
+  \item $\mathrm{Cu}^{2+}$ : le cuivre devrait perdre $11$ électrons pour rejoindre l'argon ; en
+        perdre $2$ ne suffit pas. \;\textbf{\textcolor{attncol}{Non}}.
+\end{itemize}
+\textbf{Conclusion.} Seuls $\mathrm{H}^{-}$ et $\mathrm{Na}^{+}$ conviennent : réponses \textbf{B et C}
+(QCM~12).
+\end{exemple}
+
+% =====================================================================
+\section{Les grandes tendances du tableau périodique}
+% =====================================================================
+Le rangement des éléments dans le tableau périodique n'est pas arbitraire : il fait apparaître des
+\textbf{tendances} régulières de trois grandeurs essentielles.
+
+\begin{definition}[électronégativité, énergie d'ionisation, rayon atomique]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item l'\textbf{électronégativité} mesure la tendance d'un atome, engagé dans une liaison, à
+        \emph{attirer vers lui} les électrons partagés (grandeur sans unité) ;
+  \item l'\textbf{énergie d'ionisation} est l'énergie qu'il faut fournir pour \emph{arracher} un
+        électron à l'atome ;
+  \item le \textbf{rayon atomique} est, en gros, la « taille » de l'atome (distance noyau–périphérie).
+\end{itemize}
+\end{definition}
+
+\begin{theoreme}[sens de variation dans le tableau]
+En parcourant le tableau périodique :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item l'\textbf{électronégativité} et l'\textbf{énergie d'ionisation} \emph{augmentent} vers la
+        \textbf{droite} (le long d'une période) et vers le \textbf{haut} (le long d'une colonne) ;
+  \item le \textbf{rayon atomique} varie en sens \emph{inverse} : il \emph{augmente} vers la
+        \textbf{gauche} et vers le \textbf{bas}.
+\end{itemize}
+Le coin \emph{haut-droite} (hors gaz nobles) rassemble donc les éléments les plus électronégatifs et
+les plus petits (le fluor en est l'archétype) ; le coin \emph{bas-gauche} les plus gros et les moins
+électronégatifs.
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % grille schématique du tableau
+  \fill[primary!8] (0,0) rectangle (7,3.2);
+  \draw[primary!40,line width=0.6pt] (0,0) grid[step=0.55] (7,3.2);
+  \draw[primary,line width=1pt] (0,0) rectangle (7,3.2);
+  % flèche horizontale (haut) : électronégativité / énergie d'ionisation augmentent ->
+  \draw[-{Stealth[length=3mm]},defcol,line width=1.3pt] (0.2,3.55) -- (6.8,3.55);
+  \node[defcol,font=\footnotesize,above] at (3.5,3.6) {Électronégativité \& énergie d'ionisation \ $\nearrow$};
+  % flèche horizontale (bas) : rayon atomique augmente <-
+  \draw[{Stealth[length=3mm]}-,protoncol,line width=1.3pt] (0.2,-0.4) -- (6.8,-0.4);
+  \node[protoncol,font=\footnotesize,below] at (3.5,-0.45) {Rayon atomique \ $\nwarrow$ (augmente vers la gauche)};
+  % flèche verticale gauche : électronégativité augmente vers le haut
+  \draw[-{Stealth[length=3mm]},defcol,line width=1.3pt] (-0.4,0.2) -- (-0.4,3.0);
+  \node[defcol,font=\footnotesize,rotate=90,above] at (-0.45,1.6) {Électronég.\ $\uparrow$};
+  % flèche verticale droite : rayon atomique augmente vers le bas
+  \draw[-{Stealth[length=3mm]},protoncol,line width=1.3pt] (7.4,3.0) -- (7.4,0.2);
+  \node[protoncol,font=\footnotesize,rotate=-90,above] at (7.45,1.6) {Rayon at.\ $\downarrow$};
+  % repères
+  \node[font=\scriptsize,align=center,thmcol] at (0.85,1.6) {métaux\\ (gauche)};
+  \node[font=\scriptsize,align=center,formulacol] at (6.0,1.6) {non-\\ métaux};
+\end{tikzpicture}
+\end{center}
+\vspace{0.2em}
+\begin{center}\small\textbf{\textcolor{primary}{Figure 9}} : tendances périodiques — électronégativité et énergie d'ionisation croissent vers le haut-droite, le rayon atomique vers le bas-gauche.\end{center}
+
+\begin{remarque}[lien avec la formation des ions]
+Ces tendances sont cohérentes avec tout ce qui précède. Les éléments du coin \emph{bas-gauche} (métaux,
+faible énergie d'ionisation) perdent facilement leurs électrons $\to$ \emph{cations}. Ceux du coin
+\emph{haut-droite} (non-métaux, forte électronégativité) attirent ou captent les électrons $\to$
+\emph{anions}. La position d'un élément « raconte » donc son comportement chimique.
+\end{remarque}
+
+% =====================================================================
+\section{Annexe : énergie cinétique d'un électron, un pont vers la physique}
+% =====================================================================
+Les électrons sont des particules en mouvement ; on peut leur associer une \textbf{énergie cinétique}.
+Cette annexe relie la chimie de l'atome à une grandeur physique, et introduit l'unité d'énergie
+adaptée à l'échelle atomique : l'\textbf{électron-volt}.
+
+\begin{formule}[énergie cinétique]
+\[ \boxed{\ E_c = \dfrac{1}{2}\,m\,v^2\ } \qquad\Longleftrightarrow\qquad \boxed{\ v = \sqrt{\dfrac{2E_c}{m}}\ } \]
+\begin{ou}
+  \item $E_c$ : énergie cinétique, en joules (\si{\joule}) ;
+  \item $m$ : masse de la particule, en kilogrammes (\si{\kilo\gram}) ;
+  \item $v$ : vitesse (norme), en mètres par seconde (\si{\metre\per\second}).
+\end{ou}
+\end{formule}
+
+\begin{definition}[électron-volt]
+L'\textbf{électron-volt} (\si{\electronvolt}) est une unité d'énergie commode à l'échelle atomique. Il
+faut toujours la convertir en joules avant un calcul faisant intervenir des masses en kg et des
+vitesses en m/s. Le livre utilise la conversion (arrondie) $\SI{1}{\electronvolt} = \SI{1,66e-19}{\joule}$.
+\end{definition}
+
+\begin{attention}[valeur exacte de l'électron-volt]
+La valeur \emph{physiquement exacte} est $\SI{1}{\electronvolt} = \SI{1,602e-19}{\joule}$ (l'électron-volt
+est l'énergie acquise par une charge $e = \SI{1,602e-19}{\coulomb}$ sous une tension de \SI{1}{\volt}).
+La valeur arrondie $\SI{1,66e-19}{\joule}$ employée ici est celle de l'énoncé du livre ; nous la
+conservons pour retrouver son résultat « propre », mais retenez la vraie valeur $1{,}602$ pour vos
+calculs rigoureux.
+\end{attention}
+
+\begin{exemple}[vitesse d'un électron de $\SI{18,22}{\electronvolt}$]
+\textbf{Énoncé.} Un électron ($m(\ee) = \SI{9,11e-31}{\kilo\gram}$) a une énergie cinétique de
+$\SI{18,22}{\electronvolt}$. Quelle est sa vitesse ? (On prend $\SI{1}{\electronvolt} = \SI{1,66e-19}{\joule}$.)
+
+\smallskip
+\textbf{Étape 1 — convertir l'énergie en joules.}
+\[ E_c = 18{,}22 \times \SI{1,66e-19}{\joule}. \]
+
+\textbf{Étape 2 — isoler la vitesse.} De $E_c = \tfrac12 m v^2$ on tire $v = \sqrt{2E_c/m}$, soit
+\[ v = \sqrt{\frac{2 \times 18{,}22 \times 1{,}66\times 10^{-19}}{9{,}11\times 10^{-31}}}. \]
+
+\textbf{Étape 3 — simplifier.} Le facteur numérique se range joliment : $2 \times 18{,}22 = 36{,}44$,
+et $36{,}44 / 9{,}11 = 4$ \emph{exactement}. Il reste donc, en sortant les puissances de dix
+($10^{-19}/10^{-31} = 10^{12}$) :
+\[ v = \sqrt{4 \times 1{,}66 \times 10^{12}} = \sqrt{4}\,\sqrt{1{,}66}\,\sqrt{10^{12}}
+     = 2\sqrt{1{,}66}\times 10^{6}\ \si{\metre\per\second}. \]
+
+\textbf{Conclusion.} $v = 2\sqrt{1{,}66}\times 10^{6}\ \si{\metre\per\second} \approx
+\SI{2,58e6}{\metre\per\second}$ (réponse \textbf{E}, QCM~10). C'est environ $1\,\%$ de la vitesse de la
+lumière : un électron est, à notre échelle, extraordinairement rapide.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : tableau récapitulatif et formulaire}
+% =====================================================================
+\subsection{Les idées-forces}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.7cm} >{\raggedright\arraybackslash}p{10.2cm}}
+\rowcolor{primary!18}
+\textbf{Notion} & \textbf{À retenir} \\
+\midrule
+\rowcolor{primary!4}
+Structure de l'atome & Noyau (protons + neutrons) + nuage électronique ; surtout du \textbf{vide}. \\
+Nucléons & Protons et neutrons ; \emph{jamais} d'électrons dans le noyau. \\
+\rowcolor{primary!4}
+Numéro atomique $Z$ & $Z = \np$ ; définit l'élément ; $\ne = Z$ si l'atome est neutre. \\
+Nombre de masse $A$ & $A = \np + \nnn$ ; nombre de nucléons ; $\nnn = A - Z$. \\
+\rowcolor{primary!4}
+Ion & Atome ayant gagné/perdu des électrons ; \textbf{noyau inchangé}. Cation $+$ (perte), anion $-$ (gain). \\
+Isotopes & Même $Z$, $A$ différents (neutrons différents) ; \textbf{mêmes propriétés chimiques}. \\
+\rowcolor{primary!4}
+uma / dalton & $\tfrac{1}{12}$ de la masse du $\nuc{12}{6}{C}$ ; $\approx \SI{1,66054e-27}{\kilo\gram} = 1/N_{\!A}$ g. \\
+Masse moyenne & Moyenne pondérée des masses isotopiques par les abondances. \\
+\rowcolor{primary!4}
+Couches & K($2$), L($8$), M($18$)\dots\ ($2n^2$) ; couche externe $\le 8$ dans ce modèle. \\
+Octet / duet & Gaz nobles : couche de valence saturée ($8$, ou $2$ pour He) $\Rightarrow$ stables. \\
+\rowcolor{primary!4}
+Tendances & Électronégativité \& énergie d'ionisation $\nearrow$ (haut-droite) ; rayon atomique $\nwarrow$ (bas-gauche). \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Formulaire}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{>{\raggedright\arraybackslash}p{6.4cm} >{\raggedright\arraybackslash}p{8.5cm}}
+\rowcolor{primary!18}
+\textbf{Relation} & \textbf{Signification} \\
+\midrule
+\rowcolor{primary!4}
+$Z = \np$ & numéro atomique = nombre de protons \\
+$A = \np + \nnn$ & nombre de masse = nombre de nucléons \\
+\rowcolor{primary!4}
+$\nnn = A - Z$ & nombre de neutrons \\
+$\ne = Z$ (atome neutre) & électrons = protons si non chargé \\
+\rowcolor{primary!4}
+$\ne = Z - q$ (ion de charge $q$) & électrons d'un ion ($q$ signé) \\
+$e = \SI{1,6e-19}{\coulomb}$ & charge élémentaire \\
+\rowcolor{primary!4}
+$\dfrac{m(\ee)}{m(\pp)} \approx 0{,}0005$ & l'électron est $\sim 2000\times$ plus léger \\
+$\SI{1}{uma} \approx \SI{1,66054e-27}{\kilo\gram} = \dfrac{1}{N_{\!A}}\,\si{\gram}$ & unité de masse atomique \\
+\rowcolor{primary!4}
+$\overline{A} = \sum_i p_i A_i$ & masse atomique relative moyenne \\
+$E_c = \tfrac12 m v^2 \;\Rightarrow\; v = \sqrt{2E_c/m}$ & énergie cinétique / vitesse \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.4cm}
+\begin{tcolorbox}[boxbase,colback=primarydark!5,colframe=primarydark,
+   title={\textsc{Le mot de la fin}}]
+Tout, dans cette fiche, découle de \emph{deux nombres} et \emph{trois particules}. Le couple
+$(Z, A)$ fixe la composition du noyau (protons, neutrons), donc l'identité de l'élément et sa masse ;
+les \emph{électrons}, eux, organisés en couches, gouvernent la chimie — la formation des ions, la
+stabilité des gaz nobles, et les grandes tendances du tableau périodique. Maîtriser le décodage d'une
+case du tableau et le comptage de $\pp$, $\nz$, $\ee$, c'est déjà tenir le fil de toute la chimie de
+l'atome.
+\end{tcolorbox}
+
+\end{document}

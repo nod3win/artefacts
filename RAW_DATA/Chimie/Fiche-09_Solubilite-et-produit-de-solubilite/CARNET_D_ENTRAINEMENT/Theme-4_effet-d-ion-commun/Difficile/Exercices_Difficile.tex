@@ -1,0 +1,199 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 4 — Effet d'ion commun}%
+{Exercices — Niveau Difficile}%
+{Récupération quantitative, courbe $s'(C)$, et le piège de l'ion commun cationique}
+
+\noindent\textit{Consigne : sous-questions progressives. Attention : la formule $s'=\Kps/C^{\,n}$
+n'est valable que si l'ion commun est l'\emph{anion} $\mathrm{X}^-$ — sinon, il faut la redémontrer.}
+\medskip
+
+\begin{exercice}[récupérer l'argent d'une solution]
+On veut « chasser » l'argent d'une solution en le faisant précipiter sous forme de \ce{AgCl}
+($\Kps=\num{1{,}8e-10}$). On travaille sur \qty{1{,}0}{\litre} de solution. Donnée : $M(\ce{Ag})=\qty{108}{\gram\per\mole}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item Rappelle la solubilité $s_0$ de \ce{AgCl} dans l'eau pure, et la quantité de matière d'argent
+        dissous (en mol) dans \qty{1{,}0}{\litre} saturé.
+  \item On ajoute des chlorures jusqu'à $[\ce{Cl-}]=\qty{0{,}10}{\molar}$. Calcule la nouvelle
+        solubilité $s'=[\ce{Ag+}]$.
+  \item Combien de moles d'argent restent \emph{dissoutes} dans \qty{1{,}0}{\litre} ? Quelle masse
+        d'argent cela représente-t-il ?
+  \item Quelle \textbf{fraction} de l'argent initialement dissous a été précipitée ? Commente
+        l'efficacité du procédé.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[courbe de solubilité $s'$ en fonction de l'ion commun]
+Pour \ce{CaF2} ($\Kps=\num{3{,}9e-11}$), on étudie la solubilité $s'$ en fonction de la concentration
+$C=[\ce{F-}]$ imposée. La figure ci-dessous trace $s'(C)$ en échelle log–log.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+   width=10.5cm,height=5.4cm,
+   xmode=log,ymode=log,
+   xlabel={$C=[\ce{F-}]$ imposée (\si{\molar})},
+   ylabel={$s'$ (\si{\molar})},
+   xmin=1e-3,xmax=1,ymin=1e-11,ymax=1e-4,
+   axis lines=left,grid=both,grid style={black!12},
+   every axis x label/.style={at={(xticklabel cs:1)},anchor=west},
+   every axis y label/.style={at={(yticklabel cs:1)},anchor=south,rotate=-90}]
+  \addplot[thick,anioncol,mark=*,mark options={fill=anioncol}] coordinates {
+    (1e-3,3.9e-5) (1e-2,3.9e-7) (1e-1,3.9e-9) (1,3.9e-11)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item Établis l'expression de $s'$ en fonction de $\Kps$ et $C$ (type $1{:}2$, ion commun \ce{F-}).
+  \item Calcule $s'$ pour $C=\qty{0{,}050}{\molar}$ puis pour $C=\qty{0{,}20}{\molar}$.
+  \item Sur la courbe log–log, la droite descend : quand $C$ est multipliée par 10, par combien $s'$
+        est-elle divisée ? Relie ce facteur à l'exposant de $C$ dans $s'=\Kps/C^{2}$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[le piège : ion commun \emph{cationique} sur un sel $1{:}2$]
+On dissout du bromure de plomb \ce{PbBr2} ($\Kps=\num{9{,}2e-6}$) dans une solution de nitrate de plomb
+\ce{Pb(NO3)2} telle que $[\ce{Pb^2+}]=\qty{0{,}10}{\molar}$. Ici l'ion commun est le \textbf{cation}
+\ce{Pb^2+}.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item Un camarade applique directement $s'=\Kps/C^{2}$. Explique pourquoi c'est \textbf{faux} ici
+        (quel ion vient de la dissolution, quel ion est imposé ?).
+  \item Exprime $[\ce{Br-}]$ en fonction de la solubilité $s'$, puis écris $\Kps$ en fonction de $s'$ et
+        de $C=[\ce{Pb^2+}]$.
+  \item Isole $s'$. Tu dois obtenir $s'=\dfrac{1}{2}\sqrt{\dfrac{\Kps}{C}}$.
+  \item Calcule $s'$ et compare à la solubilité $s_0=\qty{1{,}3e-2}{\molar}$ de \ce{PbBr2} dans l'eau pure.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

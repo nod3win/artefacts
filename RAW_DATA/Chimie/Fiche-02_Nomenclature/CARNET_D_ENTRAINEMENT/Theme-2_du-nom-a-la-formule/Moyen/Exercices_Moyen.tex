@@ -1,0 +1,170 @@
+% =====================================================================
+%  PRÉAMBULE COMMUN — Carnet d'entraînement, Fiche 2 (Nomenclature)
+%  (inséré physiquement dans chaque document pour qu'il soit autonome)
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques & chimie ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Graphismes & mise en page ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  fit,backgrounds,decorations.pathreplacing}
+\usepackage[a4paper,margin=2.2cm,headheight=28pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE (charte « Chimie » — mauve/prune du cours)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{metalcol}{RGB}{198,150,40}
+\definecolor{nonmetcol}{RGB}{0,140,150}
+\definecolor{oxycol}{RGB}{210,55,45}
+\definecolor{hydcol}{RGB}{60,120,210}
+\definecolor{catcol}{RGB}{200,70,120}
+\definecolor{ancol}{RGB}{40,110,190}
+\definecolor{saltcol}{RGB}{120,90,160}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+\newtcolorbox{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{regle}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Méthode-clé}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!6,colframe=primary,
+  title={\textsc{Astuce concours}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exercice (numéroté) ----
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=primary!4,colframe=primarydark,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% ---- Corrigé (numéroté) ----
+\newtcolorbox[auto counter]{corrige}[1][]{%
+  boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Nomenclature}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{}{0em}{}
+
+% ---- Bandeau de titre réutilisable : \bandeau{Thème}{Sous-titre} ----
+\newcommand{\bandeau}[2]{%
+  \begin{center}
+  \begin{tikzpicture}
+  \node[rectangle,rounded corners=7pt,fill=primary,text=white,
+        minimum width=16.0cm,minimum height=1.7cm,align=center,inner sep=8pt]
+    {{\Large\bfseries #1}\\[3pt]{\normalsize #2}};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{0.3cm}}
+\begin{document}
+\bandeau{Thème 2 — Moyen}{Du nom à la formule : croisement des valences --- Exercices}
+
+\noindent\textit{On part maintenant du \emph{nom complet}. Pense à l'ordre de lecture : « [anion] de [cation] ».}
+\vspace{0.3cm}
+
+\begin{exercice}[écrire un sel neutre à partir de son nom]
+Donne la formule brute (avec vérification de la neutralité) de :
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item sulfure de sodium \qquad b) nitrate de calcium \qquad c) phosphate d'aluminium
+  \item[d)] sulfate de potassium \qquad e) carbonate de sodium
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[quand la valence du métal est précisée]
+La mention « (II), (III), (IV)\ldots » donne le degré du métal, donc sa valence. Écris la formule de :
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item nitrate de fer(III) \qquad b) sulfate de cuivre(II) \qquad c) chlorure d'étain(IV)
+  \item[d)] carbonate de fer(II) \qquad e) phosphate de fer(III)
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[le piège des suffixes -ite / -ate]
+Une seule lettre change l'anion. Écris la formule des deux composés de chaque paire, et souligne la
+différence :
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item nitrite de sodium \emph{et} nitrate de sodium ;
+  \item sulfite de potassium \emph{et} sulfate de potassium ;
+  \item hypochlorite de sodium \emph{et} perchlorate de sodium.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[cation \emph{et} anion polyatomiques : le thiosulfate d'ammonium]
+Écris la formule du \textbf{thiosulfate d'ammonium}. Détaille : le cation, l'anion (\ce{S2O3^2-}), le
+croisement, les parenthèses, la vérification. Distingue bien ta réponse de celle du \emph{sulfite}
+d'ammonium.
+\end{exercice}
+
+\begin{exercice}[traduire un énoncé d'annales en formules]
+Un énoncé décrit : « le mélange de \textbf{phosphate de sodium} et de \textbf{bromure de strontium} conduit
+à la formation de \textbf{phosphate de strontium} et de \textbf{bromure de sodium} » (le strontium \ce{Sr}
+est un alcalino-terreux, valence 2). Écris les \emph{quatre} formules brutes correctement (sans équilibrer
+l'équation).
+\end{exercice}
+\end{document}

@@ -1,0 +1,1370 @@
+% =====================================================================
+%  COURS DE CHIMIE — FICHE 11
+%  Réaction de transfert d'électrons et les piles
+%  (nombre d'oxydation, oxydant/réducteur, équilibrage des équations
+%   redox en milieu acide et basique, potentiels standard, prévision
+%   des réactions, formule de Nernst, piles galvaniques, électrolyse,
+%   loi de Faraday)
+%  Figures TikZ tracées « from scratch ». Sans section exercices.
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Chimie ----------
+\usepackage[version=4]{mhchem}   % \ce{...} pour les formules et équations
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (violet — couleur de la section « Chimie » du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,160}      % violet/mauve (section Chimie)
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% ---- Couleurs « atomes » (style CPK) réutilisées dans les figures ----
+\definecolor{atomH}{RGB}{235,235,235}       % hydrogène — blanc
+\definecolor{atomO}{RGB}{220,55,45}         % oxygène — rouge
+\definecolor{atomN}{RGB}{48,80,200}         % azote — bleu
+
+% ---- Couleurs pour les figures (style CPK + électrodes) ----
+\definecolor{eleccol}{RGB}{60,90,210}       % électrons (bleu)
+\definecolor{anodecol}{RGB}{150,90,210}     % Zn / anode (violet)
+\definecolor{cathodecol}{RGB}{200,160,40}   % électrode / cathode (or)
+\definecolor{metalcol}{RGB}{150,150,160}    % métal gris
+\definecolor{solzn}{RGB}{190,225,255}       % solution Zn2+ (bleu pâle)
+\definecolor{solcu}{RGB}{170,230,200}       % solution Cu2+ (vert pâle)
+\definecolor{saltbridge}{RGB}{230,175,90}   % pont salin (orange)
+\definecolor{wirecol}{RGB}{70,70,75}        % fil électrique
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété / Loi / Règle (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Règle / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11} — Réaction de transfert d'électrons et les piles}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths / chimie
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}    % nombre d'oxydation
+\newcommand{\degner}[1]{\ensuremath{E_{\mathrm{r}}^{\circ}(#1)}}  % potentiel standard
+\newcommand{\cc}[1]{\left[#1\right]}            % concentration [ ]
+\newcommand{\fem}{\ensuremath{\Delta E}}        % force électromotrice
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.8cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Réaction de transfert}\\[5pt]
+   {\Huge\bfseries d'électrons et les piles}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de chimie — Fiche n\textsuperscript{o}\,11}}
+
+\vspace{0.6cm}
+
+% --- Illustration de couverture : schéma d'une pile galvanique (Zn || Cu) ---
+\begin{tikzpicture}[scale=0.92]
+  % Bécher gauche (anode Zn)
+  \draw[wirecol,line width=1.2pt] (-3.4,1.6) -- (-3.4,-0.1) (-2.0,1.6) -- (-2.0,-0.1);
+  \draw[wirecol,line width=1.2pt] (-3.4,1.6) .. controls (-3.4,2.0) and (-2.0,2.0) .. (-2.0,1.6);
+  \fill[solzn] (-3.45,-0.05) rectangle (-1.95,-1.55);
+  \draw[wirecol,line width=1.1pt] (-3.45,1.6)--(-3.45,-1.55) (-1.95,1.6)--(-1.95,-1.55)
+        (-3.45,-1.55)..controls(-3.2,-1.85)and(-2.2,-1.85)..(-1.95,-1.55);
+  % électrode Zn (anode -)
+  \fill[anodecol] (-2.75,1.55) rectangle (-2.55,-1.2);
+  \node[font=\footnotesize\bfseries,white] at (-2.65,0.2){Zn};
+  \node[font=\scriptsize,anodecol] at (-2.7,-2.05){\textbf{Anode ($-$)}};
+  \node[font=\scriptsize,primary] at (-2.7,2.25){\ce{Zn^{2+}}};
+
+  % Bécher droit (cathode Cu)
+  \draw[wirecol,line width=1.2pt] (2.0,1.6) -- (2.0,-0.1) (3.4,1.6) -- (3.4,-0.1);
+  \draw[wirecol,line width=1.2pt] (2.0,1.6) .. controls (2.0,2.0) and (3.4,2.0) .. (3.4,1.6);
+  \fill[solcu] (1.95,-0.05) rectangle (3.45,-1.55);
+  \draw[wirecol,line width=1.1pt] (1.95,1.6)--(1.95,-1.55) (3.45,1.6)--(3.45,-1.55)
+        (1.95,-1.55)..controls(2.2,-1.85)and(3.2,-1.85)..(3.45,-1.55);
+  % électrode Cu (cathode +)
+  \fill[cathodecol] (2.55,1.55) rectangle (2.75,-1.2);
+  \node[font=\footnotesize\bfseries,white] at (2.65,0.2){Cu};
+  \node[font=\scriptsize,cathodecol!60!black] at (2.7,-2.05){\textbf{Cathode ($+$)}};
+  \node[font=\scriptsize,primary] at (2.7,2.25){\ce{Cu^{2+}}};
+
+  % Pont salin (tube en U inversé au-dessus)
+  \draw[saltbridge,line width=2.4pt] (-2.65,1.6) .. controls (-2.65,3.1) and (2.65,3.1) .. (2.65,1.6);
+  \node[font=\scriptsize,saltbridge!40!black] at (0,3.25){pont salin};
+
+  % Voltmètre + fils
+  \draw[wirecol,line width=1.4pt] (-2.65,1.6)--(-2.65,4.1)--(-0.9,4.1);
+  \draw[wirecol,line width=1.4pt] (2.65,1.6)--(2.65,4.1)--(0.9,4.1);
+  \draw[wirecol,line width=1.4pt,fill=white] (-0.9,3.5) rectangle (0.9,4.7);
+  \node[font=\bfseries\large,primarydark] at (0,4.1){V};
+  % sens du courant (i) et des électrons (e-)
+  \draw[->,>=Stealth,attncol,line width=1.3pt] (2.0,4.7) -- (2.7,4.7);
+  \node[font=\scriptsize,attncol] at (2.35,4.95){$i$};
+  \draw[->,>=Stealth,eleccol,line width=1.3pt] (-2.7,3.75) -- (-2.0,3.75);
+  \node[font=\scriptsize,eleccol] at (-2.35,3.5){\ce{e^-}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15.2cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item attribuer le \textbf{nombre d'oxydation} ($\NO$) de chaque atome à partir des règles
+        usuelles et l'utiliser pour \textbf{repérer l'oxydation} et la \textbf{réduction} ;
+  \item distinguer \textbf{oxydant} et \textbf{réducteur}, et écrire les \textbf{demi-équations
+        électroniques} d'un couple \emph{Ox\,/\,Red} ;
+  \item \textbf{équilibrer} une équation d'oxydo-réduction par la méthode des demi-équations,
+        en \textbf{milieu acide} comme en \textbf{milieu basique} ;
+  \item prévoir le \textbf{sens spontané} d'une réaction redox à partir des \textbf{potentiels
+        standard de réduction} $E_{\mathrm{r}}^{\circ}$ ;
+  \item appliquer la \textbf{formule de Nernst} pour calculer le potentiel d'une demi-pile hors
+        des conditions standard et la \textbf{f.é.m.} d'une pile ;
+  \item décrire le fonctionnement d'une \textbf{pile galvanique} (anode, cathode, pont salin) et
+        l'écrire dans la \textbf{notation conventionnelle} ;
+  \item utiliser la \textbf{loi de Faraday} pour relier la masse déposée à l'intensité et au temps
+        dans une \textbf{cuve d'électrolyse}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.35cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 11 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Le nombre d'oxydation}
+% =====================================================================
+
+Une réaction d'\textbf{oxydo-réduction} (ou réaction \emph{redox}) est, fondamentalement, un
+\textbf{transfert d'électrons} entre deux espèces chimiques : l'une en \emph{cède}, l'autre en
+\emph{capte}. Pour repérer qui perd et qui gagne des électrons, on a besoin d'un outil de
+« comptabilité électronique » : le \textbf{nombre d'oxydation}.
+
+\subsection{Définition du nombre d'oxydation}
+
+\begin{definition}[nombre d'oxydation]
+Le \textbf{nombre d'oxydation} (noté $\NO$, parfois « degré / étage d'oxydation ») d'un atome
+est la \textbf{charge fictive} que porterait cet atome si \emph{toutes} les liaisons qu'il forme
+étaient \textbf{ioniques}, c'est-à-dire si chaque paire d'électrons de liaison était attribuée
+\emph{entièrement} à l'atome le plus \textbf{électronégatif}. Sa valeur et son signe dépendent donc
+de la \textbf{polarisation} des liaisons entourant l'atome.
+\end{definition}
+
+\begin{remarque}[le $\NO$ n'est pas la charge réelle]
+Le $\NO$ est un nombre \emph{formel} : il ne correspond à la charge réelle que pour un
+\textbf{ion monoatomique}. Dans une molécule covalente (comme \ce{H2O}), les électrons ne sont
+\emph{pas} réellement transférés : ils restent partagés. Le $\NO$ est néanmoins un outil
+\textbf{indispensable} pour suivre le transfert d'électrons au cours d'une réaction.
+\end{remarque}
+
+La figure~\ref{fig:polar} montre comment la polarisation des liaisons conduit au $\NO$ dans
+la molécule d'eau.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % atome central O
+  \coordinate (O) at (0,0);
+  \coordinate (H1) at (-2.4,0);
+  \coordinate (H2) at (2.4,0);
+  % liaisons polarisées : doublet déplacé vers O (dessiné plus proche de O)
+  \draw[wirecol,line width=2.2pt] (H1) -- ($($(H1)!0.62!(O)$)$);
+  \fill[eleccol] ($($(H1)!0.62!(O)$)+(-0.18,0.16)$) circle (2.6pt);
+  \fill[eleccol] ($($(H1)!0.62!(O)$)+(-0.18,-0.16)$) circle (2.6pt);
+  \draw[wirecol,line width=2.2pt] ($($(H2)!0.62!(O)$)$) -- (H2);
+  \fill[eleccol] ($($(H2)!0.62!(O)$)+(0.18,0.16)$) circle (2.6pt);
+  \fill[eleccol] ($($(H2)!0.62!(O)$)+(0.18,-0.16)$) circle (2.6pt);
+  % doublets non liants de O
+  \foreach \a in {130,230}{ \fill[eleccol] ($(O)+(\a:0.55)$) circle (2.4pt);
+                             \fill[eleccol] ($(O)+(\a:0.85)$) circle (2.4pt);}
+  % atomes
+  \shade[ball color=atomO] (O) circle (0.5);
+  \node[white,font=\bfseries] at (O) {O};
+  \shade[ball color=atomH] (H1) circle (0.36);
+  \node[black,font=\small\bfseries] at (H1) {H};
+  \shade[ball color=atomH] (H2) circle (0.36);
+  \node[black,font=\small\bfseries] at (H2) {H};
+  % étiquettes de charge fictive
+  \node[attncol,font=\bfseries] at ($(H1)+(0,0.75)$) {$\delta+$};
+  \node[attncol,font=\bfseries] at ($(H2)+(0,0.75)$) {$\delta+$};
+  \node[attncol,font=\bfseries] at ($(O)+(0,0.85)$) {$\delta-2$};
+  % légende NO
+  \node[draw=primarydark,rounded corners=3pt,fill=primary!8,align=center,font=\small,
+        text width=5.2cm] at (7.6,0)
+    {O est plus électronégatif que H : les deux doublets des liaisons \ce{H-O} sont attribués à O.\\[2pt]
+     $\Rightarrow\ \NO(\mathrm{O})=-\mathrm{II}\quad\NO(\mathrm{H})=+\mathrm{I}$};
+  \draw[->,>=Stealth,primarydark] (5.0,0) -- (4.9,0);
+\end{tikzpicture}
+\caption{Polarisation des liaisons dans la molécule d'eau \ce{H2O}. L'oxygène, plus
+électronégatif, « attire » les doublets des deux liaisons \ce{O-H} : on lui attribue donc
+\emph{deux} charges négatives fictives ($\NO(\mathrm{O})=-\mathrm{II}$), tandis que chaque
+hydrogène « perd » son électron ($\NO(\mathrm{H})=+\mathrm{I}$).}
+\label{fig:polar}
+\end{figure}
+
+\subsection{Règles d'attribution du nombre d'oxydation}
+
+\begin{theoreme}[règles conventionnelles du $\NO$]
+Le nombre d'oxydation se détermine à l'aide des règles suivantes (appliquées dans l'ordre,
+la règle~1 ayant priorité sur les autres).
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
+  \item Le $\NO$ d'un atome dans un \textbf{corps simple} (élément à l'état natif :
+        \ce{O2}, \ce{H2}, \ce{Fe}, \ce{Cl2}, \ce{S}\ldots) est \textbf{nul} ($\NO=0$).
+  \item Le $\NO$ d'un \textbf{ion monoatomique} est égal à sa \textbf{charge} :
+        $\NO(\ce{Ca^{2+}})=+\mathrm{II}$, $\NO(\ce{Cl^-})=-\mathrm{I}$, $\NO(\ce{Fe^{3+}})=+\mathrm{III}$.
+  \item Dans les composés, le $\NO$ de l'\textbf{hydrogène} vaut $+\mathrm{I}$
+        \emph{sauf} dans les \textbf{hydrures métalliques} (\ce{NaH}, \ce{CaH2}) où il vaut $-\mathrm{I}$.
+  \item Dans les composés, le $\NO$ de l'\textbf{oxygène} vaut $-\mathrm{II}$
+        \emph{sauf} dans les \textbf{peroxydes} (\ce{H2O2}, \ce{Na2O2}) où il vaut $-\mathrm{I}$
+        (et dans \ce{OF2}, où il vaut $+\mathrm{II}$ car F est plus électronégatif).
+  \item Les éléments du \textbf{groupe 17} (halogènes) ont $\NO=-\mathrm{I}$ dans les composés
+        (sauf combinés entre eux ou avec O).
+  \item Le $\NO$ des \textbf{métaux alcalins} (groupe~1) vaut toujours $+\mathrm{I}$, celui
+        des \textbf{alcalino-terreux} (groupe~2) toujours $+\mathrm{II}$.
+\end{enumerate}
+\end{theoreme}
+
+\begin{theoreme}[principe de conservation de la charge]
+La \textbf{somme} des nombres d'oxydation de tous les atomes d'une molécule ou d'un ion est
+\textbf{égale à la charge globale} de cette espèce :
+\[
+\sum_{\text{atomes}}\NO \;=\; \text{charge globale de l'espèce}.
+\]
+Pour une molécule \textbf{neutre}, cette somme vaut \textbf{0}. Pour un ion, elle vaut sa charge.
+Cette règle est la \textbf{clé de calcul} du $\NO$ d'un atome inconnu.
+\end{theoreme}
+
+\subsection{Méthode de calcul du $\NO$ d'un atome}
+
+\begin{methode}[calculer le $\NO$ d'un atome $X$]
+\begin{enumerate}[label=\textbf{Étape \arabic*.},leftmargin=2.6em,topsep=2pt,itemsep=2pt]
+  \item Noter la \textbf{charge globale} de l'espèce (0 pour une molécule neutre).
+  \item Attribuer les $\NO$ « évidents » grâce aux règles ci-dessus (O $=-\mathrm{II}$,
+        H $=+\mathrm{I}$, halogène $=-\mathrm{I}$\ldots).
+  \item Poser $x=\NO(X)$ et écrire la somme de tous les $\NO$ \textbf{égale à la charge globale}.
+  \item \textbf{Résoudre} l'équation : on obtient $x$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[le chrome dans le dichromate \ce{K2Cr2O7}]
+\textbf{Énoncé.} Quel est le nombre d'oxydation du chrome dans le dichromate de potassium \ce{K2Cr2O7} ?\\[2pt]
+\textbf{Résolution.}
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item L'espèce est \textbf{neutre} : la somme des $\NO$ vaut $0$.
+  \item Règles « évidentes » : $\NO(\mathrm{K})=+\mathrm{I}$ (alcalin) et $\NO(\mathrm{O})=-\mathrm{II}$.
+  \item Soit $x=\NO(\mathrm{Cr})$. La molécule contient \textbf{2} K, \textbf{2} Cr et \textbf{7} O :
+\end{itemize}
+\[
+\underbrace{2\times(+1)}_{\text{K}}\;+\;\underbrace{2\,x}_{\text{Cr}}\;+\;\underbrace{7\times(-2)}_{\text{O}}\;=\;0
+\;\Longrightarrow\;2+2x-14=0\;\Longrightarrow\;2x=12\;\Longrightarrow\;x=+6.
+\]
+\textbf{Conclusion.} $\NO(\mathrm{Cr})=+\mathrm{VI}$ dans \ce{K2Cr2O7}. (Réponse B du livre.)
+\end{exemple}
+
+\begin{exemple}[l'azote dans l'ammoniac et dans l'hydrazine]
+\textbf{(a) Ammoniac \ce{NH3}.} Molécule neutre, $\NO(\mathrm{H})=+\mathrm{I}$, soit $x=\NO(\mathrm{N})$ :
+$x+3\times(+1)=0\Rightarrow x=-3$, donc $\NO(\mathrm{N})=-\mathrm{III}$.
+
+\textbf{(b) Hydrazine \ce{N2H4}.} Molécule neutre, $2x+4\times(+1)=0\Rightarrow 2x=-4\Rightarrow x=-2$,
+donc $\NO(\mathrm{N})=-\mathrm{II}$.
+
+On voit que l'azote peut prendre des degrés d'oxydation \emph{très variés} (de $-\mathrm{III}$ à
+$+\mathrm{V}$) : c'est ce qui en fait un élément central de nombreuses réactions redox.
+\end{exemple}
+
+\begin{exemple}[comparer l'oxygène dans \ce{H2O} et \ce{H2O2}, l'hydrogène dans \ce{H2O} et \ce{NaH}]
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=3pt]
+  \item \textbf{Oxygène.} Dans \ce{H2O} (pas un peroxyde) : $2\times(+1)+x=0\Rightarrow x=-2$,
+        $\NO(\mathrm{O})=-\mathrm{II}$. Dans le peroxyde d'hydrogène \ce{H2O2}
+        (un \emph{peroxyde}, liaison \ce{O-O}) : $2\times(+1)+2x=0\Rightarrow x=-1$,
+        $\NO(\mathrm{O})=-\mathrm{I}$. Réponse C du livre.
+  \item \textbf{Hydrogène.} Dans \ce{H2O} : $\NO(\mathrm{H})=+\mathrm{I}$ (cas général). Dans l'hydrure
+        \ce{NaH}, H est plus électronégatif que Na (métal) : H joue le rôle d'anion hydrure \ce{H^-},
+        donc $\NO(\mathrm{H})=-\mathrm{I}$. On vérifie : $\NO(\mathrm{Na})=+\mathrm{I}$ et
+        $+\mathrm{I}+(-\mathrm{I})=0$. Réponse C du livre.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[pièges fréquents sur le $\NO$]
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item Le $\NO$ de l'hydrogène n'est \textbf{pas toujours} $+\mathrm{I}$ : il vaut $-\mathrm{I}$ dans les
+        hydrures et $0$ dans \ce{H2}.
+  \item Le $\NO$ de l'oxygène n'est \textbf{pas toujours} $-\mathrm{II}$ : il vaut $-\mathrm{I}$ dans les
+        peroxydes.
+  \item Ne pas confondre le $\NO$ (écrit en \textbf{chiffres romains}, sans signe explicite pour le
+        positif : $+\mathrm{II}$, $-\mathrm{III}$) et la \textbf{charge réelle} d'un ion.
+\end{itemize}
+\end{attention}
+
+% =====================================================================
+\section{Oxydation, réduction et couples redox}
+% =====================================================================
+
+\subsection{Définitions : oxydation, réduction, oxydant, réducteur}
+
+\begin{definition}[oxydation et réduction]
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item Un élément chimique est \textbf{oxydé} lors d'une réaction si son nombre d'oxydation
+        \textbf{augmente} : il \textbf{perd} un ou plusieurs électrons.
+  \item Un élément chimique est \textbf{réduit} lors d'une réaction si son nombre d'oxydation
+        \textbf{diminue} : il \textbf{capte} un ou plusieurs électrons.
+\end{itemize}
+Ces deux phénomènes sont toujours \textbf{simultanés} : si un élément est oxydé, un autre
+\emph{nécessairement} est réduit. On parle de réaction \textbf{redox}.
+\end{definition}
+
+\begin{definition}[oxydant et réducteur]
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item Un \textbf{oxydant} est une espèce \textbf{susceptible de capter} des électrons : c'est
+        l'espèce qui est \textbf{réduite} au cours de la réaction. (Dans un couple, c'est la forme
+        au $\NO$ le \emph{plus élevé}.)
+  \item Un \textbf{réducteur} est une espèce \textbf{susceptible de céder} des électrons : c'est
+        l'espèce qui est \textbf{oxydée} au cours de la réction. (Dans un couple, c'est la forme au
+        $\NO$ le \emph{moins élevé}.)
+\end{itemize}
+\end{definition}
+
+\begin{remarque}[moyen mnémotechnique]
+On retient : \og \textbf{oxydant} = celui qui est \textbf{réduit} ; \textbf{réducteur} = celui qui est
+\textbf{oxydé}\fg{}. Autrement dit, on \emph{oxyde toujours un réducteur} et on \emph{réduit toujours
+un oxydant}. Un élément qui s'oxyde perd des électrons (son $\NO$ monte) ; un élément qui se réduit
+gagne des électrons (son $\NO$ descend).
+\end{remarque}
+
+\subsection{Le couple oxydo-réducteur \emph{Ox\,/\,Red}}
+
+\begin{definition}[couple redox]
+Un \textbf{couple oxydo-réducteur} (ou \textbf{couple redox}), noté $\mathrm{Ox}/\mathrm{Red}$,
+est l'ensemble formé par l'\textbf{oxydant} et le \textbf{réducteur} reliés par une
+\textbf{demi-équation électronique} :
+\[
+\mathrm{Ox}+n\,\ce{e^-}\;\rightleftharpoons\;\mathrm{Red}.
+\]
+La double flèche indique que la réaction est \textbf{réversible}. Le nombre $n$ est le nombre
+d'électrons échangés entre les deux formes.
+\end{definition}
+
+\begin{formule}[demi-équation d'un couple]
+\[
+\mathrm{Ox}+n\,\ce{e^-}\;\rightleftharpoons\;\mathrm{Red}
+\]
+\begin{ou}
+  \item $\mathrm{Ox}$ : forme oxydée du couple (celle dont le $\NO$ est le plus élevé) ;
+  \item $\mathrm{Red}$ : forme réduite du couple (celle dont le $\NO$ est le plus bas) ;
+  \item $n$ : nombre d'électrons échangés (entier, sans dimension) ;
+  \item $\ce{e^-}$ : l'électron, qui figure \textbf{toujours du côté de l'oxydant}.
+\end{ou}
+\end{formule}
+
+\begin{attention}[où placer les électrons ?]
+Les électrons apparaissent \textbf{toujours du côté de l'oxydant} dans une demi-équation. En effet,
+l'oxydant est précisément l'espèce qui \emph{capte} ces électrons pour devenir le réducteur.
+Par exemple, dans le couple \ce{Fe^{3+}/Fe^{2+}}, on écrit
+$\ce{Fe^{3+} + e^- <=> Fe^{2+}}$ (et non l'inverse).
+\end{attention}
+
+\subsection{Nombre d'électrons échangés}
+
+\begin{formule}[écart de nombre d'oxydation]
+Le nombre d'électrons échangés dans une demi-équation est la \textbf{différence} de nombres
+d'oxydation entre l'oxydant et le réducteur :
+\[
+n(\ce{e^-})=\Delta\NO=\NO(\text{oxydant})-\NO(\text{réducteur}).
+\]
+\begin{ou}
+  \item $\NO(\text{oxydant})$ : degré d'oxydation de l'atome dans la forme oxydée ;
+  \item $\NO(\text{réducteur})$ : degré d'oxydation du \emph{même} atome dans la forme réduite ;
+  \item le résultat est un nombre d'électrons (sans dimension).
+\end{ou}
+\end{formule}
+
+\begin{exemple}[demi-équations des couples de l'azote et du fer]
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=4pt]
+  \item Couple \ce{NO3^-}/\ce{NO}. L'azote passe de $\NO=+\mathrm{V}$ (dans \ce{NO3^-},
+        car $x+3\times(-2)=-1\Rightarrow x=5$) à $\NO=+\mathrm{II}$ (dans \ce{NO},
+        car $x+(-2)=0\Rightarrow x=2$). D'où $n=5-2=3$ électrons :
+        $\ce{NO3^- + 3 e^- <=> NO}$ (réduction de l'azote : \ce{NO3^-} est l'oxydant).
+  \item Couple \ce{Fe^{3+}}/\ce{Fe^{2+}}. Le fer passe de $+\mathrm{III}$ à $+\mathrm{II}$, soit
+        $n=3-2=1$ électron : $\ce{Fe^{3+} + e^- <=> Fe^{2+}}$. Ici \ce{Fe^{2+}} est le réducteur
+        (ion ferreux) et \ce{Fe^{3+}} l'oxydant (ion ferrique).
+\end{itemize}
+\end{exemple}
+
+\subsection{L'équation globale : combiner deux demi-équations}
+
+Une oxydation et une réduction \textbf{séparées} n'existent pas dans la nature : le transfert
+d'électrons ne se produit que si l'oxydant et le réducteur sont \textbf{mis en présence}.
+L'\textbf{équation globale} s'obtient en additionnant les deux demi-équations membre à membre,
+après les avoir multipliées de sorte que le \textbf{nombre d'électrons soit identique} des deux
+côtés : les électrons s'éliminent alors (tous ceux produits sont consommés).
+
+\begin{exemple}[oxydation de A par B]
+Considérons deux couples fictifs :
+\[
+\mathrm{A}\rightleftharpoons\mathrm{A}^{2+}+2\,\ce{e^-}\qquad(\NO:0\to +\mathrm{II})
+\]
+\[
+\mathrm{B}+3\,\ce{e^-}\rightleftharpoons\mathrm{B}^{3-}\qquad(\NO:0\to -\mathrm{III})
+\]
+La première demi-équation échange \textbf{2} électrons, la seconde \textbf{3}. Pour égaliser, on
+multiplie la première par~$3$ et la seconde par~$2$ (soit $6$ électrons chacun) :
+\[
+3\,\mathrm{A}+2\,\mathrm{B}\;\rightleftharpoons\;3\,\mathrm{A}^{2+}+2\,\mathrm{B}^{3-}.
+\]
+Les électrons ont disparu : \ce{A} (réducteur) est \textbf{oxydé} par \ce{B} (oxydant), qui est
+lui-même \textbf{réduit}. Ce schéma résume toute l'oxydo-réduction.
+\end{exemple}
+
+% =====================================================================
+\section{Équilibrer une équation redox}
+% =====================================================================
+
+L'équilibrage d'une équation redox se fait \textbf{demi-équation par demi-équation}. La démarche
+ci-dessous fonctionne en \textbf{milieu acide} comme en \textbf{milieu basique} : seule l'étape~4
+diffère.
+
+\subsection{Méthode générale en six étapes}
+
+\begin{methode}[équilibrer une équation redox]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.2em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Repérer} les deux couples (donc les deux demi-équations) en identifiant l'atome
+        dont le $\NO$ varie.
+  \item \textbf{Calculer les $\NO$} et en déduire le \textbf{nombre d'électrons} échangés par
+        $n=\NO(\text{oxydant})-\NO(\text{réducteur})$. Placer les électrons \textbf{du côté de
+        l'oxydant}.
+  \item \textbf{Vérifier la conservation de l'élément central} (rapport « 1 pour 1 »). S'il y a
+        2~atomes d'un côté et 1 de l'autre, \textbf{multiplier aussi les électrons} en conséquence.
+  \item \textbf{Ajuster le milieu} :
+        \begin{itemize}[leftmargin=1.2em,topsep=1pt,itemsep=1pt]
+          \item \emph{Milieu acide} : pondérer l'\textbf{oxygène} en ajoutant des \ce{H2O} du côté
+                \textbf{réducteur}, puis ajuster l'\textbf{hydrogène} avec des \ce{H+} du côté
+                \textbf{oxydant}.
+          \item \emph{Milieu basique} : ajuster d'abord comme en milieu acide, puis ajouter
+                \ce{OH^-} de part et d'autre pour neutraliser les \ce{H+} (qui n'existent pas en
+                milieu basique), et regrouper les \ce{H+ + OH^-} en \ce{H2O}. Une méthode directe :
+                ajouter des \ce{OH^-} pour équilibrer la charge, puis des \ce{H2O} pour l'oxygène.
+        \end{itemize}
+  \item \textbf{Contrôler} : la \textbf{somme des charges} et le \textbf{nombre de chaque atome}
+        doivent être identiques de part et d'autre de chaque demi-équation.
+  \item \textbf{Écrire l'équation globale} : multiplier les demi-équations pour avoir le même nombre
+        d'électrons, les additionner et \textbf{simplifier} (électrons, \ce{H2O}, \ce{H+},
+        \ce{OH^-} communs, ions spectateurs).
+\end{enumerate}
+\end{methode}
+
+\subsection{Exemple détaillé n\textsuperscript{o}1 — milieu acide}
+
+\begin{exemple}[équilibrage en milieu acide : \ce{NO3^- + Fe^{2+} + H+ <=> NO + Fe^{3+} + H2O}]
+\textbf{Étape 1 — Repérer les deux couples.} On identifie deux atomes qui changent de $\NO$ :
+l'azote et le fer. Les deux demi-équations sont
+\[
+\text{(a)}\;\ce{NO3^- <=> NO}\qquad\qquad\text{(b)}\;\ce{Fe^{2+} <=> Fe^{3+}}.
+\]
+
+\textbf{Étape 2 — Calculer les $\NO$ et les électrons.}
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item Demi-équation (a) : dans \ce{NO3^-}, $\NO(\mathrm{N})=+\mathrm{V}$ (car
+        $x+3\times(-2)=-1\Rightarrow x=5$) ; dans \ce{NO}, $\NO(\mathrm{N})=+\mathrm{II}$ (car
+        $x+(-2)=0\Rightarrow x=2$). L'azote passe de $+\mathrm{V}$ à $+\mathrm{II}$ : c'est une
+        \textbf{réduction}, $n=5-2=3$ électrons. \ce{NO3^-} (le plus oxydé) est l'\textbf{oxydant} :
+        $\ce{NO3^- + 3 e^- <=> NO}$.
+  \item Demi-équation (b) : $\NO(\ce{Fe^{2+}})=+\mathrm{II}$ et $\NO(\ce{Fe^{3+}})=+\mathrm{III}$.
+        Le fer passe de $+\mathrm{II}$ à $+\mathrm{III}$ : c'est une \textbf{oxydation},
+        $n=3-2=1$ électron. \ce{Fe^{2+}} (ion ferreux) est le \textbf{réducteur} :
+        $\ce{Fe^{2+} <=> Fe^{3+} + e^-}$.
+\end{itemize}
+
+\textbf{Étape 3 — Conservation de l'élément central.}
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item (a) : 1 N de chaque côté \checkmark.
+  \item (b) : 1 Fe de chaque côté \checkmark.
+\end{itemize}
+
+\textbf{Étape 4 — Milieu acide.} Seule la demi-équation (a) contient de l'oxygène : \ce{NO3^-} en a
+\textbf{3}, \ce{NO} n'en a qu'\textbf{1}. Il en manque donc \textbf{2} du côté du réducteur
+(\ce{NO}) : on ajoute \textbf{2} \ce{H2O} à droite, ce qui apporte $2\times2=4$ H. On compense alors
+avec \textbf{4} \ce{H+} du côté de l'oxydant (\ce{NO3^-}) :
+\[
+\ce{NO3^- + 4 H+ + 3 e^- <=> NO + 2 H2O} \quad\text{(a)}
+\]
+La demi-équation (b) ne contient pas d'oxygène : elle reste $\ce{Fe^{2+} <=> Fe^{3+} + e^-}$.
+
+\textbf{Étape 5 — Contrôle des charges.}
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item (a) $\ce{NO3^- + 4 H+ + 3 e^- <=> NO + 2 H2O}$ : à gauche $-1+4+(-3)=0$, à droite $0$.
+        Charges équilibrées \checkmark.
+  \item (b) $\ce{Fe^{2+} <=> Fe^{3+} + e^-}$ : à gauche $+2$, à droite $+3+(-1)=+2$. \checkmark.
+\end{itemize}
+
+\textbf{Étape 6 — Équation globale.} La (a) échange 3 électrons, la (b) en échange 1 : on multiplie
+donc la (b) par~3, puis on additionne. Les électrons s'éliminent (3 de chaque côté) :
+\[
+\boxed{\;\ce{NO3^- + 3 Fe^{2+} + 4 H+ <=> NO + 3 Fe^{3+} + 2 H2O}\;}
+\]
+\textbf{Lecture.} L'ion nitrate \ce{NO3^-} (oxydant) \textbf{oxyde} l'ion ferreux \ce{Fe^{2+}}
+(réducteur) en ion ferrique \ce{Fe^{3+}}, tandis que l'azote est réduit en monoxyde d'azote \ce{NO}.
+Le milieu acide fournit les protons \ce{H+} nécessaires.
+\end{exemple}
+
+\begin{attention}[quand le rapport « 1 pour 1 » n'est pas respecté]
+Prenons le dichromate : \ce{Cr2O7^{2-} + 6 e^- <=> 2 Cr^{3+}}. Ici l'oxydant contient
+\textbf{2} Cr mais le réducteur n'en contient qu'\textbf{1} (\ce{Cr^{3+}}). Il faut donc
+\textbf{multiplier \ce{Cr^{3+}} par 2}, et surtout \textbf{ne pas oublier de multiplier aussi
+les électrons par 2} : on a $\Delta\NO=6-3=3$ électrons par atome de Cr, mais 2 atomes, donc
+$2\times3=6$ électrons au total. C'est l'erreur la plus fréquente !
+\end{attention}
+
+\subsection{Exemple détaillé n\textsuperscript{o}2 — milieu basique}
+
+\begin{exemple}[équilibrage en milieu basique : \ce{NH3 + O2 <=> NO + H2O}]
+\textbf{Étape 1 — Repérer les deux couples.}
+\[
+\text{(a)}\;\ce{NH3 <=> NO}\qquad\qquad\text{(b)}\;\ce{O2 <=> H2O}.
+\]
+
+\textbf{Étape 2 — Calculer les $\NO$ et les électrons.}
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item (a) : dans \ce{NH3}, $\NO(\mathrm{N})=-\mathrm{III}$ (car $x+3\times1=0\Rightarrow x=-3$) ;
+        dans \ce{NO}, $\NO(\mathrm{N})=+\mathrm{II}$. L'azote passe de $-\mathrm{III}$ à
+        $+\mathrm{II}$ : \textbf{oxydation}, $n=2-(-3)=5$ électrons. \ce{NH3} est le réducteur :
+        $\ce{NH3 <=> NO + 5 e^-}$.
+  \item (b) : dans \ce{O2}, $\NO(\mathrm{O})=0$ ; dans \ce{H2O}, $\NO(\mathrm{O})=-\mathrm{II}$.
+        L'oxygène passe de $0$ à $-\mathrm{II}$ : \textbf{réduction}, $n=0-(-2)=2$ électrons.
+        \ce{O2} est l'oxydant : $\ce{O2 + 2 e^- <=> H2O}$.
+\end{itemize}
+
+\textbf{Étape 3 — Conservation de l'élément central.} La demi-équation (b) a 2 O à gauche (\ce{O2})
+mais 1 O à droite (\ce{H2O}) : on multiplie \ce{H2O} (et les électrons) par~2 :
+$\ce{O2 + 4 e^- <=> 2 H2O}$.
+
+\textbf{Étape 4 — Milieu basique.} On équilibre d'abord \textbf{comme en milieu acide}, puis on
+neutralise les \ce{H+} (qui n'existent pas en milieu basique) en ajoutant autant de \ce{OH^-} des
+\textbf{deux} côtés, et en regroupant chaque $\ce{H+ + OH^-}$ en \ce{H2O}.
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item (a) \emph{en acide} : $\ce{NH3 + H2O -> NO + 5 H+ + 5 e^-}$ (1 \ce{H2O} à gauche pour l'O,
+        5 \ce{H+} à droite pour les H, 5 \ce{e-} pour la charge). On ajoute alors 5 \ce{OH^-} des
+        deux côtés ; les 5 \ce{H+ + OH^-} forment 5 \ce{H2O}, et l'on simplifie 1 \ce{H2O} commun :
+        $\ce{NH3 + 5 OH^- <=> NO + 5 e^- + 4 H2O}$.
+  \item (b) \emph{en acide} : $\ce{O2 + 4 H+ + 4 e^- -> 2 H2O}$. On ajoute 4 \ce{OH^-} des deux côtés ;
+        les 4 \ce{H+ + OH^-} deviennent 4 \ce{H2O}, et l'on simplifie 2 \ce{H2O} :
+        $\ce{O2 + 2 H2O + 4 e^- <=> 4 OH^-}$.
+\end{itemize}
+
+\textbf{Étape 5 — Contrôle des charges et des atomes.}
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item (a) : charges, gauche $0+5\times(-1)=-5$, droite $0+5\times(-1)+0=-5$ \checkmark.
+        Atomes H : gauche $3+5=8$, droite $4\times2=8$ \checkmark.
+  \item (b) : charges, gauche $0+0+4\times(-1)=-4$, droite $4\times(-1)=-4$ \checkmark.
+        Atomes H : gauche $2\times2=4$, droite $4$ \checkmark.
+\end{itemize}
+
+\textbf{Étape 6 — Équation globale.} La (a) échange 5 électrons, la (b) en échange 4 : PPCM $=20$,
+donc on multiplie (a) par~4 et (b) par~5. Les électrons, \ce{H2O} et \ce{OH^-} communs se
+simplifient :
+\[
+\boxed{\;\ce{4 NH3 + 5 O2 <=> 4 NO + 6 H2O}\;}
+\]
+\textbf{Lecture.} L'ammoniac \ce{NH3} (réducteur, base faible) est \textbf{oxydé} par le dioxygène
+\ce{O2} (oxydant) en monoxyde d'azote \ce{NO}. C'est la première étape d'oxydation de l'ammoniac,
+réaction importante dans le procédé industriel de synthèse de l'acide nitrique (procédé Ostwald).
+\end{exemple}
+
+\begin{remarque}[ions spectateurs]
+Dans une équation redox globale écrite en solution, certains ions ne changent pas de $\NO$ et ne
+participent pas au transfert d'électrons : ce sont les \textbf{ions spectateurs} (souvent
+\ce{Na+}, \ce{K+}, \ce{Cl^-}, \ce{NO3^-}\ldots selon le contexte). Ils assurent l'électroneutralité
+de la solution mais \emph{n'apparaissent pas} dans l'équation redox simplifiée.
+\end{remarque}
+
+% =====================================================================
+\section{Potentiels standard et prévision des réactions}
+% =====================================================================
+
+Tous les oxydants ne sont pas capables d'oxyder tous les réducteurs : il existe une
+\textbf{hiérarchie} des pouvoirs oxydants et réducteurs, quantifiée par le \textbf{potentiel
+standard de réduction}.
+
+\subsection{Potentiel standard de réduction $E_{\mathrm{r}}^{\circ}$}
+
+\begin{definition}[potentiel standard de réduction]
+Le \textbf{potentiel standard de réduction} $E_{\mathrm{r}}^{\circ}$ d'un couple
+$\mathrm{Ox}/\mathrm{Red}$ est la \textbf{tension} mesurée, dans les \textbf{conditions standard}
+(concentration \SI{1}{mol\per\litre}, pression \SI{1}{atm}, température \SI{25}{\celsius}), entre
+une électrode où se produit la réduction $\mathrm{Ox}+n\,\ce{e^-}\to\mathrm{Red}$ et l'
+\textbf{électrode standard à hydrogène} (ESH, prise comme référence, $E_{\mathrm{r}}^{\circ}=0$\,V).
+\end{definition}
+
+\begin{formule}[potentiel standard]
+\[
+E_{\mathrm{r}}^{\circ}\quad(\text{couple }\mathrm{Ox}/\mathrm{Red})\qquad\text{unité : le volt (V).}
+\]
+\begin{ou}
+  \item $E_{\mathrm{r}}^{\circ}$ : potentiel standard de \textbf{réduction} du couple, en volts (V) ;
+  \item plus $E_{\mathrm{r}}^{\circ}$ est \textbf{élevé}, plus la forme $\mathrm{Ox}$ est un
+        \textbf{oxydant fort} ;
+  \item plus $E_{\mathrm{r}}^{\circ}$ est \textbf{faible (négatif)}, plus la forme $\mathrm{Red}$
+        est un \textbf{réducteur fort}.
+\end{ou}
+\end{formule}
+
+\subsection{Pouvoir oxydant et pouvoir réducteur}
+
+\begin{theoreme}[comparaison des pouvoirs oxydant / réducteur]
+Soient deux couples $\mathrm{Ox_1}/\mathrm{Red_1}$ ($E_{\mathrm{r,1}}^{\circ}$) et
+$\mathrm{Ox_2}/\mathrm{Red_2}$ ($E_{\mathrm{r,2}}^{\circ}$).
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item Le système de potentiel \textbf{le plus élevé} possède le \textbf{plus fort pouvoir oxydant}
+        (sa forme $\mathrm{Ox}$ oxyde les autres).
+  \item Le système de potentiel \textbf{le plus faible} possède le \textbf{plus fort pouvoir
+        réducteur} (sa forme $\mathrm{Red}$ réduit les autres).
+\end{itemize}
+Une réaction redox spontanée (\SI{25}{\celsius}, \SI{1}{atm}, \SI{1}{mol\per\litre}) n'est possible
+que si le système de potentiel élevé \textbf{oxyde} le système de potentiel plus faible :
+\[
+\text{si }E_{\mathrm{r,2}}^{\circ}>E_{\mathrm{r,1}}^{\circ},\quad
+\mathrm{Red_1}+\mathrm{Ox_2}\;\rightleftharpoons\;\mathrm{Ox_1}+\mathrm{Red_2}\quad\text{a lieu.}
+\]
+\end{theoreme}
+
+\begin{remarque}[l'échelle des potentiels]
+On peut classer tous les couples sur une même \og échelle\fg{} verticale (figure~\ref{fig:echelle}).
+La règle est alors très visuelle : \textbf{l'oxydant d'un couple réagit avec le réducteur d'un
+couple situé en dessous de lui}. Inversement, deux espèces du \emph{même} côté ne réagissent pas
+entre elles.
+\end{remarque}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  % axe vertical
+  \draw[->,>=Stealth,primarydark,line width=1.2pt] (0,-4.8) -- (0,5.0);
+  \node[primarydark,font=\bfseries,rotate=90] at (-0.7,0) {$E_{\mathrm{r}}^{\circ}$ (V)};
+  % graduations
+  \foreach \y/\v in {4.5/2{,}9, 3.6/1{,}5, 2.7/0{,}8, 1.8/0{,}34, 0.9/0{,}0, 0/-0{,}44, -0.9/-0{,}76, -1.8/-1{,}0, -2.7/-2{,}8}{
+    \draw[primarydark] (-0.12,\y) -- (0.12,\y);
+    \node[primarydark,font=\scriptsize,left] at (-0.15,\y) {\v};}
+  % couples (oxydant à gauche, réducteur à droite)
+  \foreach \y/\ox/\red in {4.5/\ce{F2}/\ce{F^-}, 3.6/\ce{Au^{3+}}/\ce{Au}, 2.7/\ce{Ag+}/\ce{Ag},
+     1.8/\ce{Cu^{2+}}/\ce{Cu}, 0.9/\ce{H+}/\ce{H2}, 0/\ce{Fe^{2+}}/\ce{Fe}, -0.9/\ce{Zn^{2+}}/\ce{Zn},
+     -2.7/\ce{Ca^{2+}}/\ce{Ca}}{
+    \draw[formulacol,line width=1.1pt] (0.2,\y) -- (5.4,\y);
+    \node[attncol,font=\small\bfseries] at (1.9,\y) {\ox};
+    \node[thmcol,font=\small\bfseries] at (4.0,\y) {\red};}
+  % légendes
+  \node[attncol,font=\bfseries] at (1.9,5.3) {Oxydants};
+  \node[thmcol,font=\bfseries] at (4.0,5.3) {Réducteurs};
+  \node[attncol,font=\scriptsize,align=center] at (2.6,4.95) {\textbf{fort} $\uparrow$};
+  \node[thmcol,font=\scriptsize,align=center] at (3.3,-4.4) {\textbf{fort} $\downarrow$};
+  % flèche d'exemple : Ag+ oxyde Cu
+  \draw[->,>=Stealth,eleccol,line width=1.0pt,dashed] (2.0,2.7) to[bend right=28] (3.9,1.8);
+  \node[eleccol,font=\scriptsize] at (4.7,2.4) {\ce{Ag+} oxyde \ce{Cu}};
+\end{tikzpicture}
+\caption{Échelle comparative des potentiels standard de réduction. Plus un couple est \emph{haut},
+plus sa forme oxydée est puissante ; plus il est \emph{bas}, plus sa forme réduite est puissante.
+L'oxydant d'un couple \textbf{supérieur} réagit spontanément avec le réducteur d'un couple
+\textbf{inférieur} : ici \ce{Ag+} oxyde le cuivre métallique \ce{Cu}.}
+\label{fig:echelle}
+\end{figure}
+
+\subsection{Tableau des potentiels standard usuels}
+
+Le tableau~\ref{tab:pot} regroupe les principaux couples rencontrés en concours, dans l'ordre
+décroissant de $E_{\mathrm{r}}^{\circ}$ (du plus oxydant au plus réducteur).
+
+\begin{longtable}{>{\centering\arraybackslash}p{4.7cm} >{\centering\arraybackslash}p{5.0cm} >{\centering\arraybackslash}p{2.6cm}}
+\caption{Potentiels standard de réduction à \SI{25}{\celsius} (écrits en réduction).}
+\label{tab:pot}\\
+\toprule
+\rowcolor{primary!18}\textbf{Couple $\mathrm{Ox}/\mathrm{Red}$} & \textbf{Demi-équation de réduction} & $E_{\mathrm{r}}^{\circ}$ (V)\\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{primary!18}\textbf{Couple} & \textbf{Demi-équation} & $E_{\mathrm{r}}^{\circ}$ (V)\\
+\midrule
+\endhead
+\ce{F2}/\ce{F^-} & \ce{F2 + 2 e^- <=> 2 F^-} & $+2{,}87$\\
+\ce{Au^{3+}}/\ce{Au} & \ce{Au^{3+} + 3 e^- <=> Au} & $+1{,}52$\\
+\ce{MnO4^-}/\ce{Mn^{2+}} & \ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O} & $+1{,}51$\\
+\ce{Cl2}/\ce{Cl^-} & \ce{Cl2 + 2 e^- <=> 2 Cl^-} & $+1{,}39$\\
+\ce{Cr2O7^{2-}}/\ce{Cr^{3+}} & \ce{Cr2O7^{2-} + 14 H+ + 6 e^- <=> 2 Cr^{3+} + 7 H2O} & $+1{,}23$\\
+\ce{O2}/\ce{H2O} & \ce{O2 + 4 H+ + 4 e^- <=> 2 H2O} & $+1{,}23$\\
+\ce{MnO2}/\ce{Mn^{2+}} & \ce{MnO2 + 4 H+ + 2 e^- <=> Mn^{2+} + 2 H2O} & $+1{,}224$\\
+\ce{Br2}/\ce{Br^-} & \ce{Br2 + 2 e^- <=> 2 Br^-} & $+1{,}06$\\
+\ce{NO3^-}/\ce{NO} & \ce{NO3^- + 4 H+ + 3 e^- <=> NO + 2 H2O} & $+0{,}96$\\
+\ce{Ag+}/\ce{Ag} & \ce{Ag+ + e^- <=> Ag} & $+0{,}80$\\
+\ce{Fe^{3+}}/\ce{Fe^{2+}} & \ce{Fe^{3+} + e^- <=> Fe^{2+}} & $+0{,}771$\\
+\ce{I2}/\ce{I^-} & \ce{I2 + 2 e^- <=> 2 I^-} & $+0{,}536$\\
+\ce{Cu^{2+}}/\ce{Cu} & \ce{Cu^{2+} + 2 e^- <=> Cu} & $+0{,}34$\\
+\ce{Sn^{4+}}/\ce{Sn^{2+}} & \ce{Sn^{4+} + 2 e^- <=> Sn^{2+}} & $+0{,}151$\\
+\ce{S4O6^{2-}}/\ce{S2O3^{2-}} & \ce{S4O6^{2-} + 2 e^- <=> 2 S2O3^{2-}} & $+0{,}08$\\
+\ce{H+}/\ce{H2} (ESH) & \ce{2 H+ + 2 e^- <=> H2} & $0{,}00$\\
+\ce{Co^{2+}}/\ce{Co} & \ce{Co^{2+} + 2 e^- <=> Co} & $-0{,}28$\\
+\ce{Fe^{2+}}/\ce{Fe} & \ce{Fe^{2+} + 2 e^- <=> Fe} & $-0{,}44$\\
+\ce{Zn^{2+}}/\ce{Zn} & \ce{Zn^{2+} + 2 e^- <=> Zn} & $-0{,}76$\\
+\ce{Ca^{2+}}/\ce{Ca} & \ce{Ca^{2+} + 2 e^- <=> Ca} & $-2{,}84$\\
+\bottomrule
+\end{longtable}
+
+\subsection{Exemples de prévision de réaction}
+
+\begin{exemple}[\ce{Ag+} oxyde-t-il le cuivre et le zinc ?]
+Données : $\degner{\ce{Ag+}/\ce{Ag}}=+0{,}80$\,V, $\degner{\ce{Cu^{2+}}/\ce{Cu}}=+0{,}34$\,V,
+$\degner{\ce{Zn^{2+}}/\ce{Zn}}=-0{,}76$\,V.
+
+\ce{Ag+} est l'oxydant du couple \emph{le plus haut}. Pour qu'il oxyde un métal, ce métal doit
+appartenir à un couple \emph{situé plus bas}.
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item Cuivre : $+0{,}80>+0{,}34$ \checkmark, donc \ce{Ag+} \textbf{oxyde} \ce{Cu} :
+        $\ce{2 Ag+ + Cu <=> 2 Ag + Cu^{2+}}$.
+  \item Zinc : $+0{,}80>-0{,}76$ \checkmark, donc \ce{Ag+} \textbf{oxyde aussi} \ce{Zn} :
+        $\ce{2 Ag+ + Zn <=> 2 Ag + Zn^{2+}}$.
+\end{itemize}
+\textbf{Conclusion.} \ce{Ag+} oxyde \textbf{à la fois} le cuivre et le zinc (réponse C du livre,
+QCM~17). Si l'on plonge des lame de cuivre et de zinc dans une solution de nitrate d'argent
+\ce{AgNO3}, un dépôt d'argent métallique se forme sur les deux métaux.
+\end{exemple}
+
+\begin{exemple}[le fluor dissout-il l'or ?]
+Données : $\degner{\ce{F2}/\ce{F^-}}=+2{,}87$\,V, $\degner{\ce{Au^{3+}}/\ce{Au}}=+1{,}52$\,V.
+
+Le fluor \ce{F2} est l'\textbf{oxydant le plus puissant} du tableau. Puisque $+2{,}87>+1{,}52$,
+il \textbf{oxyde l'or} (métal pourtant très noble) :
+$\ce{3 F2 + 2 Au <=> 2 AuF3}$ (l'or se dissout). La proposition \og Vrai\fg{} (réponse A, QCM~19)
+est correcte. Aucun autre oxydant courant du tableau ne parvient à dissoudre l'or : c'est pourquoi
+l'or résiste à la plupart des acides.
+\end{exemple}
+
+\begin{exemple}[le fer dans l'acide chlorhydrique]
+Données : $\degner{\ce{Fe^{2+}}/\ce{Fe}}=-0{,}44$\,V, $\degner{\ce{H+}/\ce{H2}}=0{,}00$\,V.
+
+Dans \ce{HCl}, l'oxydant est le proton \ce{H+} (couple \ce{H+}/\ce{H2}). On a $0{,}00>-0{,}44$,
+donc \ce{H+} \textbf{oxyde le fer métallique} en \ce{Fe^{2+}} :
+$\ce{Fe + 2 H+ <=> Fe^{2+} + H2 ^}$. Il y a un \textbf{dégagement de dihydrogène} \ce{H2}
+(réponse C du livre, QCM~20), et le fer s'oxyde directement en \ce{Fe^{2+}} (et non en \ce{Fe^{3+}},
+car le couple \ce{Fe^{3+}}/\ce{Fe^{2+}} est \emph{plus haut} que \ce{H+}/\ce{H2} : \ce{H+} ne peut
+pas oxyder \ce{Fe^{2+}} en \ce{Fe^{3+}}).
+\end{exemple}
+
+% =====================================================================
+\section{La formule de Nernst}
+% =====================================================================
+
+Jusqu'ici, nous avons raisonné en \textbf{conditions standard} (\SI{1}{mol\per\litre}). Hors de
+ces conditions, le potentiel d'un couple dépend des \textbf{concentrations} : c'est l'objet de la
+\textbf{formule de Nernst}.
+
+\subsection{Expression générale}
+
+\begin{formule}[formule de Nernst pour une réaction redox]
+\[
+\fem=\fem^{\circ}-\frac{RT}{nF}\ln Q
+\]
+\begin{ou}
+  \item $\fem$ : force électromotrice (potentiel) de la réaction, en \textbf{volts (V)} ;
+  \item $\fem^{\circ}$ : f.é.m. standard ($E_{\mathrm{r}}^{\circ}$ cathode $-$ $E_{\mathrm{r}}^{\circ}$ anode), en V ;
+  \item $R=\SI{8.314}{J\per mol\per K}$ : constante des gaz parfaits ;
+  \item $T$ : température absolue, en \textbf{kelvins (K)} ($T(\mathrm{K})=\theta(^\circ\mathrm{C})+273{,}15$) ;
+  \item $n$ : nombre d'électrons échangés (entier, sans dimension) ;
+  \item $F=\SI{96485}{C\per mol}$ : constante de Faraday (charge d'une mole d'électrons) ;
+  \item $Q$ : quotient réactionnel (sans dimension, rapport des activités des produits sur réactifs).
+\end{ou}
+\end{formule}
+
+\subsection{Forme simplifiée à \SI{25}{\celsius}}
+
+À \SI{25}{\celsius} ($T=\SI{298{,}15}{K}$), le coefficient $\tfrac{RT}{F}\ln 10$ vaut
+$\SI{0.0592}{V}$ (souvent arrondi à $\SI{0.06}{V}$). En passant du logarithme népérien au logarithme
+décimal ($\ln Q=\ln 10\times\log Q$), on obtient la forme pratique :
+
+\begin{formule}[Nernst à \SI{25}{\celsius}]
+\[
+\fem=\fem^{\circ}-\frac{0{,}0592}{n}\log Q\qquad\Bigl(\simeq\fem^{\circ}-\frac{0{,}06}{n}\log Q\Bigr)
+\]
+\begin{ou}
+  \item $\fem$, $\fem^{\circ}$, $n$ : comme ci-dessus ;
+  \item $0{,}0592$\,V : valeur du facteur $\tfrac{RT}{F}\ln 10$ à \SI{25}{\celsius} ;
+  \item $Q$ : quotient réactionnel (sans dimension).
+\end{ou}
+\end{formule}
+
+\subsection{Application à une demi-pile}
+
+Pour une \textbf{demi-équation} de réduction $\mathrm{Ox}+n\,\ce{e^-}\rightleftharpoons\mathrm{Red}$,
+le potentiel de la demi-pile s'écrit :
+
+\begin{formule}[potentiel d'une demi-pile à \SI{25}{\celsius}]
+\[
+E=E_{\mathrm{r}}^{\circ}+\frac{0{,}06}{n}\log\frac{[\mathrm{Ox}]}{[\mathrm{Red}]}
+\]
+\begin{ou}
+  \item $E$ : potentiel de la demi-pile, en V ;
+  \item $E_{\mathrm{r}}^{\circ}$ : potentiel standard du couple, en V ;
+  \item $n$ : nombre d'électrons du couple ;
+  \item $[\mathrm{Ox}]$, $[\mathrm{Red}]$ : concentrations molaires des formes oxydée et réduite,
+        en \si{mol\per\litre}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[cas où les coefficients stœchiométriques interviennent]
+Si la demi-équation est plus complexe, par exemple
+$\ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O}$, le quotient fait apparaître les coefficients
+en exposant :
+\[
+E=E_{\mathrm{r}}^{\circ}+\frac{0{,}06}{5}\log\frac{\cc{\ce{MnO4^-}}\cc{\ce{H+}}^{8}}{\cc{\ce{Mn^{2+}}}}
+\]
+(l'eau, solvant, n'apparaît pas ; sa concentration est constante). Le \ce{H+} intervient avec la
+puissance~8 : le potentiel dépend donc fortement du \textbf{pH}.
+\end{remarque}
+
+\subsection{Exemples de calcul de potentiel}
+
+\begin{exemple}[potentiel d'une demi-pile \ce{Cu^{2+}}/\ce{Cu}]
+\textbf{Énoncé.} Calculer le potentiel de l'électrode de cuivre plongée dans une solution
+$\cc{\ce{Cu^{2+}}}=\SI{0.01}{mol\per\litre}$, à \SI{25}{\celsius}. Donnée :
+$\degner{\ce{Cu^{2+}}/\ce{Cu}}=+0{,}34$\,V.
+
+\textbf{Résolution.} Demi-équation : $\ce{Cu^{2+} + 2 e^- <=> Cu}$. Ici $n=2$,
+$[\mathrm{Ox}]=\cc{\ce{Cu^{2+}}}=0{,}01$ et $[\mathrm{Red}]=1$ (le métal solide \ce{Cu} a une
+activité de~1). La formule de Nernst donne :
+\[
+E=0{,}34+\frac{0{,}06}{2}\log(0{,}01)=0{,}34+\frac{0{,}06}{2}\times(-2)
+=0{,}34-0{,}06=0{,}28\ \mathrm{V}.
+\]
+\textbf{Conclusion.} $E\simeq\SI{0.28}{V}$ (réponse C du livre, QCM~23). On vérifie que
+\textbf{diluer} la forme oxydée (\ce{Cu^{2+}}) fait \textbf{chuter} le potentiel : la demi-pile
+devient \emph{moins} oxydante.
+\end{exemple}
+
+\begin{exemple}[potentiel de la demi-pile permanganate]
+\textbf{Énoncé.} Pour la demi-équation
+$\ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O}$, avec toutes les concentrations à
+\SI{0.01}{mol\per\litre} et $\mathrm{pH}=0$ (donc $\cc{\ce{H+}}=\SI{1}{mol\per\litre}$), à
+\SI{25}{\celsius}. Donnée : $\degner{\ce{MnO4^-}/\ce{Mn^{2+}}}=+1{,}51$\,V.
+
+\textbf{Résolution.} On applique la formule tenant compte des coefficients :
+\begin{align*}
+E &=1{,}51+\frac{0{,}06}{5}\log\frac{\cc{\ce{MnO4^-}}\cc{\ce{H+}}^{8}}{\cc{\ce{Mn^{2+}}}}\\
+  &=1{,}51+\frac{0{,}06}{5}\log\frac{0{,}01\times1^{8}}{0{,}01}
+   =1{,}51+\frac{0{,}06}{5}\log(1)\\
+  &=1{,}51+0=1{,}51\ \mathrm{V}.
+\end{align*}
+\textbf{Conclusion.} $E=\SI{1.51}{V}$ (réponse B du livre, QCM~24) car, le quotient valant~1
+($\log 1=0$), on retrouve exactement le potentiel standard. L'effet de la dilution sur \ce{MnO4^-}
+est \emph{compensé} par celui sur \ce{Mn^{2+}} (concentrations égales), et le $\mathrm{pH}=0$ donne
+$\cc{\ce{H+}}=1$ (activité standard).
+\end{exemple}
+
+\begin{remarque}[équilibre et f.é.m. nulle]
+À l'\textbf{équilibre} d'une réaction redox, la f.é.m. s'annule : $\fem=0$\,V. On en déduit une
+relation entre potentiel standard et constante d'équilibre $K$ :
+$\fem^{\circ}=\tfrac{0{,}0592}{n}\log K$. Un $\fem^{\circ}$ positif correspond donc à $K>1$
+(réaction favorisée dans le sens direct).
+\end{remarque}
+
+% =====================================================================
+\section{Les piles électrochimiques}
+% =====================================================================
+
+Une \textbf{pile} (ou pile \emph{galvanique}) est un dispositif qui \textbf{convertit l'énergie
+d'une réaction spontanée} d'oxydo-réduction en \textbf{énergie électrique}. Les deux demi-équations,
+qui auraient lieu au même endroit si on mélangeait les réactifs, sont ici \textbf{séparées}
+physiquement : les électrons sont alors obligés de transiter par un \textbf{circuit extérieur}.
+
+\subsection{Anode, cathode et pont salin}
+
+\begin{definition}[anode et cathode d'une pile]
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item \textbf{Anode} (pôle négatif, noté $-$) : siège de l'\textbf{oxydation}. Elle
+        \textbf{produit} des électrons, qui partent dans le circuit extérieur. C'est le couple de
+        potentiel $E_{\mathrm{r}}^{\circ}$ le \emph{plus faible}.
+  \item \textbf{Cathode} (pôle positif, noté $+$) : siège de la \textbf{réduction}. Elle
+        \textbf{consomme} les électrons revenus par le circuit extérieur. C'est le couple de
+        potentiel $E_{\mathrm{r}}^{\circ}$ le \emph{plus élevé}.
+\end{itemize}
+\end{definition}
+
+\begin{theoreme}[condition de fonctionnement spontané]
+Une pile débite spontanément (conditions standard, \SI{25}{\celsius}) si et seulement si :
+\[
+\fem^{\circ}=E_{\mathrm{r}}^{\circ}(\text{cathode})-E_{\mathrm{r}}^{\circ}(\text{anode})>0\ \mathrm{V}.
+\]
+La f.é.m. est donc la \textbf{différence} entre le potentiel de la cathode et celui de l'anode.
+\end{theoreme}
+
+\begin{definition}[pont salin]
+Le \textbf{pont salin} est un tube contenant une solution de sel ionique (par exemple \ce{KNO3},
+\ce{KCl}) ou un gel conducteur. Il \textbf{relie les deux demi-piles} et assure la
+\textbf{neutralité électrique} de chaque compartiment en laissant migrer des anions vers l'anode
+et des cations vers la cathode. Sans lui, l'accumulation de charges bloquerait immédiatement la
+réaction.
+\end{definition}
+
+\begin{remarque}[sens des porteurs de charge]
+Dans le \textbf{circuit extérieur} (le fil), ce sont les \textbf{électrons} qui circulent, de
+l'\textbf{anode ($-$) vers la cathode ($+$)}. Dans les \textbf{solutions} et le pont salin, ce sont
+les \textbf{ions} qui assurent le transport du courant. Le sens \emph{conventionnel} du courant
+électrique $i$ est l'\textbf{inverse} du sens des électrons (de $+$ vers $-$ à l'extérieur).
+\end{remarque}
+
+\subsection{Schéma d'une pile}
+
+La figure~\ref{fig:pile} présente le schéma complet d'une pile, illustré avec le classique
+exemple de la pile zinc--argent.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % ---- Bécher gauche : anode Zn ----
+  \draw[wirecol,line width=1.1pt,fill=solzn]
+    (-3.7,-2.0) .. controls (-3.7,-2.35) and (-2.3,-2.35) .. (-2.3,-2.0)
+    -- (-2.3,1.4) -- (-3.7,1.4) -- cycle;
+  \node[primary,font=\footnotesize] at (-3.0,0.8) {\ce{Zn^{2+}}};
+  \node[primary,font=\footnotesize] at (-3.0,0.35) {\ce{NO3^-}};
+  % électrode Zn (sort par le haut)
+  \fill[anodecol] (-3.05,1.4) rectangle (-2.95,-1.4);
+  \fill[anodecol] (-3.1,1.4) rectangle (-2.9,2.3);
+  \node[white,font=\footnotesize\bfseries,rotate=90] at (-3.0,0.0){Zn};
+  \node[anodecol,font=\bfseries\footnotesize] at (-3.0,-2.7){Anode ($-$)};
+  \node[font=\scriptsize,anodecol] at (-3.0,2.55){\ce{Zn}};
+
+  % ---- Bécher droit : cathode Ag ----
+  \draw[wirecol,line width=1.1pt,fill=solcu]
+    (2.3,-2.0) .. controls (2.3,-2.35) and (3.7,-2.35) .. (3.7,-2.0)
+    -- (3.7,1.4) -- (2.3,1.4) -- cycle;
+  \node[primary,font=\footnotesize] at (3.0,0.8) {\ce{Ag+}};
+  \node[primary,font=\footnotesize] at (3.0,0.35) {\ce{NO3^-}};
+  % électrode Ag
+  \fill[cathodecol] (2.95,1.4) rectangle (3.05,-1.4);
+  \fill[cathodecol] (2.9,1.4) rectangle (3.1,2.3);
+  \node[white,font=\footnotesize\bfseries,rotate=90] at (3.0,0.0){Ag};
+  \node[cathodecol!60!black,font=\bfseries\footnotesize] at (3.0,-2.7){Cathode ($+$)};
+  \node[font=\scriptsize,cathodecol!60!black] at (3.0,2.55){\ce{Ag}};
+
+  % ---- Pont salin (tube en U) ----
+  \draw[saltbridge,line width=2.6pt]
+    (-3.0,2.3) .. controls (-3.0,3.4) and (3.0,3.4) .. (3.0,2.3);
+  \node[font=\scriptsize,saltbridge!35!black,align=center] at (0,3.7){pont salin\\(\ce{KNO3})};
+  % migration ionique
+  \draw[->,>=Stealth,thmcol,line width=0.9pt] (-1.4,2.95)--(-0.8,2.95);
+  \node[thmcol,font=\tiny] at (-1.1,3.18){\ce{K+}};
+  \draw[->,>=Stealth,attncol,line width=0.9pt] (1.3,2.55)--(0.7,2.55);
+  \node[attncol,font=\tiny] at (1.0,2.35){\ce{NO3^-}};
+
+  % ---- Circuit extérieur : voltmètre + fils ----
+  \draw[wirecol,line width=1.3pt] (-3.0,2.3) -- (-3.0,4.6) -- (-1.1,4.6);
+  \draw[wirecol,line width=1.3pt] (3.0,2.3) -- (3.0,4.6) -- (1.1,4.6);
+  \draw[wirecol,line width=1.3pt,fill=white] (-1.1,3.9) rectangle (1.1,5.3);
+  \node[font=\bfseries\Large,primarydark] at (0,4.6){V};
+  \node[font=\footnotesize,primary] at (0,5.55){\fem};
+  % sens des électrons (anode -> cathode, côté extérieur)
+  \draw[->,>=Stealth,eleccol,line width=1.3pt] (-2.5,5.05) -- (-1.5,5.05);
+  \node[eleccol,font=\scriptsize] at (-2.0,5.3){\ce{e^-}};
+  % sens conventionnel du courant i (inverse)
+  \draw[->,>=Stealth,attncol,line width=1.1pt,dashed] (1.5,4.15) -- (2.5,4.15);
+  \node[attncol,font=\scriptsize] at (2.0,3.95){$i$};
+
+  % ---- Légendes des demi-équations ----
+  \node[draw=anodecol,rounded corners=2pt,fill=anodecol!8,align=center,
+        font=\footnotesize,text width=4.0cm] at (-3.0,-3.7)
+    {\textbf{Oxydation :}\\\ce{Zn -> Zn^{2+} + 2 e^-}};
+  \node[draw=cathodecol!60!black,rounded corners=2pt,fill=cathodecol!10,align=center,
+        font=\footnotesize,text width=4.0cm] at (3.0,-3.7)
+    {\textbf{Réduction :}\\\ce{Ag+ + e^- -> Ag}};
+\end{tikzpicture}
+\caption{Schéma d'une pile galvanique zinc--argent. À gauche, l'\textbf{anode} en zinc (pôle $-$),
+siège de l'oxydation $\ce{Zn -> Zn^{2+} + 2 e^-}$, produit des électrons qui traversent le
+voltmètre vers la \textbf{cathode} en argent (pôle $+$), siège de la réduction
+$\ce{Ag+ + e^- -> Ag}$. Le \textbf{pont salin} ferme le circuit en laissant migrer les ions
+(\ce{K+} vers la cathode, \ce{NO3^-} vers l'anode) pour maintenir l'électroneutralité.}
+\label{fig:pile}
+\end{figure}
+
+\subsection{Représentation conventionnelle d'une pile}
+
+\begin{formule}[notation conventionnelle]
+\[
+(\,-\,)\ \mathrm{Anode}\ \big|\ \mathrm{Ox}_a,\mathrm{Red}_a\ \big\|\ \mathrm{Ox}_c,\mathrm{Red}_c\ \big|\ \mathrm{Cathode}\ (\,+\,)
+\]
+\begin{ou}
+  \item le pôle négatif (anode) est écrit à \textbf{gauche}, le pôle positif (cathode) à
+        \textbf{droite} ;
+  \item la barre simple \textbar\ sépare l'\textbf{électrode} de la \textbf{solution} (interface) ;
+  \item la double barre $\big\|$ désigne le \textbf{pont salin} (jonction entre les deux
+        demi-piles) ;
+  \item les formes oxydée et réduite de chaque demi-pile sont séparées par une virgule.
+\end{ou}
+\end{formule}
+
+Ainsi, la pile de la figure~\ref{fig:pile} s'écrit :
+$\ce{(-) Zn | Zn^{2+} || Ag+ | Ag (+)}$.
+
+\begin{exemple}[représentation d'une pile \ce{Fe^{3+}/Fe^{2+}} $\big\|$ \ce{Sn^{4+}/Sn^{2+}}]
+\textbf{Énoncé.} On réalise une pile avec (i) une électrode de platine plongée dans
+\ce{Fe^{3+}} (\SI{1}{mol\per\litre}) et \ce{Fe^{2+}} (\SI{0.01}{mol\per\litre}), et (ii) une
+électrode de platine dans \ce{Sn^{2+}} (\SI{1}{mol\per\litre}) et \ce{Sn^{4+}} (\SI{0.01}{mol\per\litre}).
+Quelle est la bonne représentation ?
+
+\textbf{Résolution.} Données : $\degner{\ce{Fe^{3+}}/\ce{Fe^{2+}}}=+0{,}771$\,V et
+$\degner{\ce{Sn^{4+}}/\ce{Sn^{2+}}}=+0{,}151$\,V. Le couple fer est le \textbf{plus élevé} : c'est
+lui la \textbf{cathode} ($+$), à droite. L'étain est l'\textbf{anode} ($-$), à gauche. Les électrodes
+étant inertes (du platine \ce{Pt}), on les écrit aux extrémités. La représentation correcte est
+donc :
+\[
+\ce{(-) Pt | Sn^{2+}(1\,M), Sn^{4+}(0{,}01\,M) || Fe^{3+}(1\,M), Fe^{2+}(0{,}01\,M) | Pt (+)}
+\]
+(réponse D du livre, QCM~25). On place toujours la forme \textbf{réduite} juste à côté de
+l'électrode, mais l'ordre \ce{Sn^{2+}},\ce{Sn^{4+}} importe peu ; l'essentiel est la
+\textbf{position de l'anode à gauche} et de la \textbf{cathode à droite}.
+\end{exemple}
+
+\subsection{Force électromotrice d'une pile}
+
+\begin{formule}[f.é.m. d'une pile]
+\[
+\fem=E_{\text{cathode}}-E_{\text{anode}},\qquad
+\fem^{\circ}=E_{\mathrm{r}}^{\circ}(\text{cathode})-E_{\mathrm{r}}^{\circ}(\text{anode})
+\]
+\begin{ou}
+  \item $\fem$ : force électromotrice (tension à vide) de la pile, en V ;
+  \item $E_{\text{cathode}}$, $E_{\text{anode}}$ : potentiels (éventuellement corrigés par Nernst)
+        de chaque demi-pile, en V ;
+  \item $\fem^{\circ}$ : f.é.m. standard, en V.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[f.é.m. de la pile \ce{Zn} $\big\|$ \ce{Ag}]
+\textbf{Énoncé.} Calculer la f.é.m. de la pile
+$\ce{Zn(s) | Zn^{2+}(0{,}010\,M) || Ag+(0{,}10\,M) | Ag(s)}$ à \SI{25}{\celsius}.
+Données : $\degner{\ce{Ag+}/\ce{Ag}}=+0{,}80$\,V, $\degner{\ce{Zn^{2+}}/\ce{Zn}}=-0{,}76$\,V.
+
+\textbf{Résolution.}
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.2em,topsep=1pt,itemsep=2pt]
+  \item \textbf{Identifier anode et cathode.} $-0{,}76<+0{,}80$ : le zinc est l'\textbf{anode}
+        (oxydation $\ce{Zn -> Zn^{2+}+2 e^-}$), l'argent la \textbf{cathode}
+        (réduction $\ce{Ag+ + e^- -> Ag}$). Le PPCM des électrons est 2
+        ($\ce{Zn}$ en cède 2, $\ce{Ag+}$ en capte 1 $\times 2$).
+  \item \textbf{Potentiel de la cathode} (Nernst sur \ce{Ag+}/\ce{Ag}, $n=1$) :
+        \[
+        E_{\text{cath}}=0{,}80+0{,}06\log(0{,}10)=0{,}80+0{,}06\times(-1)=0{,}74\ \mathrm{V}.
+        \]
+  \item \textbf{Potentiel de l'anode} (Nernst sur \ce{Zn^{2+}}/\ce{Zn}, $n=2$) :
+        \[
+        E_{\text{anode}}=-0{,}76+\frac{0{,}06}{2}\log(0{,}010)
+        =-0{,}76+0{,}03\times(-2)=-0{,}76-0{,}06=-0{,}82\ \mathrm{V}.
+        \]
+  \item \textbf{F.é.m.} :
+        \[
+        \fem=E_{\text{cath}}-E_{\text{anode}}=0{,}74-(-0{,}82)=1{,}56\ \mathrm{V}.
+        \]
+\end{enumerate}
+\textbf{Conclusion.} $\fem=\SI{1.56}{V}$ (réponse A du livre, QCM~26). Remarquons qu'en conditions
+standard on aurait $\fem^{\circ}=0{,}80-(-0{,}76)=1{,}56$\,V également : la dilution de \ce{Ag+}
+(chute de 0{,}06) compense \emph{exactement} celle de \ce{Zn^{2+}} (chute de 0{,}06), car le nombre
+d'électrons échangés aux deux électroles conduit au même décalage.
+\end{exemple}
+
+% =====================================================================
+\section{Électrolyse et loi de Faraday}
+% =====================================================================
+
+Dans une \textbf{pile}, la réaction redox est \textbf{spontanée} et produit du courant. Dans une
+\textbf{cuve d'électrolyse}, c'est l'inverse : on \textbf{impose} un courant extérieur (à l'aide
+d'un générateur) pour forcer une réaction \textbf{non spontanée} (par exemple décomposer l'eau,
+déposer un métal). Les rôles des électrodes sont donc \textbf{inversés} par rapport à la pile.
+
+\subsection{Anode et cathode dans l'électrolyse}
+
+\begin{theoreme}[électrodes en électrolyse]
+Dans une cuve d'électrolyse, l'électrode \textbf{branchée au pôle} du générateur détermine sa
+nature :
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=2pt]
+  \item la \textbf{cathode} est reliée au pôle \textbf{négatif ($-$)} du générateur : c'est toujours
+        le siège de la \textbf{réduction} (consommation d'électrons) ;
+  \item l'\textbf{anode} est reliée au pôle \textbf{positif ($+$)} du générateur : c'est toujours
+        le siège de l'\textbf{oxydation} (production d'électrons).
+\end{itemize}
+\textbf{Règle d'or (toujours vraie) :} la \textbf{réduction a lieu à la cathode}, l'\textbf{oxydation
+à l'anode} — que ce soit en pile ou en électrolyse. Ce qui change, c'est le \emph{signe} des
+électrodes.
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  % cuve
+  \draw[wirecol,line width=1.1pt,fill=solzn!40]
+    (-2.2,-2.0) .. controls (-2.2,-2.35) and (2.2,-2.35) .. (2.2,-2.0)
+    -- (2.2,1.4) -- (-2.2,1.4) -- cycle;
+  \node[primary,font=\footnotesize] at (0,0.6) {solution};
+  \node[primary,font=\footnotesize] at (0,0.1) {\ce{M^{n+}}};
+  % cathode (gauche, branchée au - du générateur)
+  \fill[cathodecol] (-1.5,1.4) rectangle (-1.35,-1.4);
+  \node[cathodecol!60!black,font=\bfseries\footnotesize,align=center] at (-1.42,-2.55)
+        {Cathode\\($-$)};
+  \node[font=\scriptsize,align=center,cathodecol!60!black] at (-1.42,1.85){réduction};
+  % anode (droite, branchée au + du générateur)
+  \fill[anodecol] (1.35,1.4) rectangle (1.5,-1.4);
+  \node[anodecol,font=\bfseries\footnotesize,align=center] at (1.42,-2.55){Anode\\($+$)};
+  \node[font=\scriptsize,align=center,anodecol] at (1.42,1.85){oxydation};
+  % générateur en haut
+  \draw[wirecol,line width=1.3pt] (-1.42,1.4)--(-1.42,3.4)--(-0.9,3.4);
+  \draw[wirecol,line width=1.3pt] (1.42,1.4)--(1.42,3.4)--(0.9,3.4);
+  \draw[wirecol,line width=1.3pt,fill=white] (-0.9,2.7) rectangle (0.9,4.1);
+  \node[font=\bfseries,attncol] at (-0.55,3.4){$-$};
+  \node[font=\bfseries,thmcol] at (0.55,3.4){$+$};
+  \node[font=\Large,primarydark] at (0,3.4){G};
+  % sens des électrons imposé : du - du générateur vers la cathode, et de l'anode vers le +
+  \draw[->,>=Stealth,eleccol,line width=1.2pt] (-1.0,3.05)--(-1.42,3.05);
+  \draw[->,>=Stealth,eleccol,line width=1.2pt] (1.42,3.75)--(1.0,3.75);
+  \node[eleccol,font=\scriptsize] at (-0.2,2.45){\ce{e^-} imposés};
+  % demi-équations
+  \node[draw=cathodecol!60!black,rounded corners=2pt,fill=cathodecol!10,align=center,
+        font=\footnotesize,text width=4.4cm] at (-1.42,-3.7)
+     {\ce{M^{n+} + n e^- -> M(s)}\\(dépôt métallique)};
+  \node[draw=anodecol,rounded corners=2pt,fill=anodecol!10,align=center,
+        font=\footnotesize,text width=4.4cm] at (1.42,-3.7)
+     {\ce{A -> A^{+} + e^-}\\(oxydation forcée)};
+\end{tikzpicture}
+\caption{Cuve d'électrolyse. Le \textbf{générateur} (G) impose le sens du courant : il envoie des
+électrons vers la \textbf{cathode} ($-$, à gauche) où un métal se \textbf{dépose} par réduction, et
+les récupère à l'\textbf{anode} ($+$, à droite) où se produit une oxydation forcée. Contrairement à
+la pile, la réaction est \emph{non spontanée} : elle consomme de l'énergie électrique.}
+\label{fig:electrolyse}
+\end{figure}
+
+\subsection{La loi de Faraday}
+
+La \textbf{loi de Faraday} relie la \textbf{quantité de matière} transformée à une électrode à la
+\textbf{quantité d'électricité} qui a traversé le circuit.
+
+\begin{formule}[loi de Faraday — masse déposée]
+\[
+\boxed{\;m=\frac{M\,I\,t}{n\,F}\;}
+\]
+\begin{ou}
+  \item $m$ : masse de métal déposé (ou de substance transformée) à l'électrode, en \textbf{grammes (g)} ;
+  \item $M$ : masse molaire de l'espèce, en \si{g\per mol} ;
+  \item $I$ : intensité du courant, en \textbf{ampères (A)} ;
+  \item $t$ : durée de l'électrolyse, en \textbf{secondes (s)} ;
+  \item $n$ : nombre d'électrons échangés par « atome » dans la demi-équation (sans dimension) ;
+  \item $F=\SI{96485}{C\per mol}$ : constante de Faraday (charge d'une mole d'électrons).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[lecture de la loi de Faraday]
+Le produit $I\,t$ est la \textbf{charge électrique} totale $Q$ qui a traversé le circuit
+($Q=It$, en \textbf{coulombs}, C). En divisant par $F$, on obtient le nombre de
+\textbf{moles d'électrons} : $n_{\mathrm{mol}}(\ce{e^-})=Q/F$. Comme il faut $n$ électrons pour
+déposer un atome de métal, le nombre de moles de métal est
+$Q/(nF)$, d'où la masse $m=M\times Q/(nF)$. Cette loi est valable à toute électrode d'une
+électrolyse comme d'une pile.
+\end{remarque}
+
+\begin{exemple}[dépôt de cuivre par électrolyse]
+\textbf{Énoncé.} On électrolyse une solution de sulfate de cuivre \ce{CuSO4} avec une intensité
+$I=\SI{2{,}0}{A}$ pendant $t=\SI{30}{min}$. Quelle masse de cuivre se dépose à la cathode ?
+Données : $M(\ce{Cu})=\SI{63{,}5}{g\per mol}$, $F=\SI{96485}{C\per mol}$.
+
+\textbf{Résolution.} À la cathode, la réduction est $\ce{Cu^{2+} + 2 e^- -> Cu}$, donc $n=2$.
+La durée en secondes : $t=30\times60=\SI{1800}{s}$. On applique la loi de Faraday :
+\[
+m=\frac{M\,I\,t}{n\,F}=\frac{63{,}5\times2{,}0\times1800}{2\times96485}
+=\frac{228\,600}{192\,970}\simeq\SI{1{,}18}{g}.
+\]
+\textbf{Conclusion.} Il se dépose environ \SI{1{,}18}{g} de cuivre métallique à la cathode. On peut
+aussi retrouver la quantité d'électrons : $Q=It=2{,}0\times1800=\SI{3600}{C}$, soit
+$Q/F\simeq\SI{0{,}0373}{mol}$ d'électrons, et la moitié ($\SI{0{,}0187}{mol}$) de cuivre, ce qui
+donne bien $0{,}0187\times63{,}5\simeq1{,}18$\,g.
+\end{exemple}
+
+\begin{exemple}[durée nécessaire pour déposer une masse donnée]
+\textbf{Énoncé.} Combien de temps faut-il, avec une intensité de \SI{5{,}0}{A}, pour déposer
+$m=\SI{10}{g}$ d'argent (\ce{Ag}) à la cathode d'une solution de nitrate d'argent \ce{AgNO3} ?
+Données : $M(\ce{Ag})=\SI{107{,}9}{g\per mol}$.
+
+\textbf{Résolution.} La réduction est $\ce{Ag+ + e^- -> Ag}$, donc $n=1$. On isole $t$ de la loi de
+Faraday :
+\[
+t=\frac{m\,n\,F}{M\,I}=\frac{10\times1\times96485}{107{,}9\times5{,}0}
+=\frac{964\,850}{539{,}5}\simeq\SI{1788}{s}\simeq\SI{29{,}8}{min}.
+\]
+\textbf{Conclusion.} Il faut environ \SI{30}{min} pour déposer \SI{10}{g} d'argent. Plus l'intensité
+est élevée, plus le dépôt est rapide (la masse déposée est \textbf{proportionnelle} à $I$ et à $t$).
+\end{exemple}
+
+% =====================================================================
+%  SYNTHÈSE / RÉCAPITULATIF
+% =====================================================================
+\section*{Synthèse — les formules à retenir}
+\addcontentsline{toc}{section}{Synthèse — les formules à retenir}
+\setcounter{section}{7}
+
+\begin{tcolorbox}[boxbase,colback=formulacol!5,colframe=formulacol,
+   title={\textsc{Récapitulatif des formules de la fiche}}]
+\renewcommand{\arraystretch}{1.7}
+\begin{tabular}{@{}p{7.6cm} p{7.0cm}@{}}
+\textbf{Grandeur} & \textbf{Formule}\\
+\midrule
+Somme des $\NO$ d'une espèce & $\displaystyle\sum\NO=\text{charge globale}$ (0 si neutre)\\
+Électrons échangés (demi-équation) & $\displaystyle n(\ce{e^-})=\NO(\text{oxydant})-\NO(\text{réducteur})$\\
+Demi-équation d'un couple & $\mathrm{Ox}+n\,\ce{e^-}\rightleftharpoons\mathrm{Red}$\\
+Nernst (général) & $\displaystyle\fem=\fem^{\circ}-\frac{RT}{nF}\ln Q$\\
+Nernst à \SI{25}{\celsius} & $\displaystyle\fem=\fem^{\circ}-\frac{0{,}0592}{n}\log Q$\\
+Potentiel d'une demi-pile & $\displaystyle E=E_{\mathrm{r}}^{\circ}+\frac{0{,}06}{n}\log\frac{[\mathrm{Ox}]}{[\mathrm{Red}]}$\\
+F.é.m. d'une pile & $\fem=E_{\text{cathode}}-E_{\text{anode}}$\\
+Condition de spontanéité & $\fem^{\circ}=E_{\text{cath}}^{\circ}-E_{\text{anode}}^{\circ}>0$\\
+Équilibre & $\fem=0$\,V \ ; \ $\fem^{\circ}=\tfrac{0{,}0592}{n}\log K$\\
+Loi de Faraday & $\displaystyle m=\frac{M\,I\,t}{n\,F}$ \quad (charge $Q=It$)\\
+\end{tabular}
+\end{tcolorbox}
+
+\begin{remarque}[ce qu'il faut retenir de la fiche]
+La démarche centrale est toujours la même : \textbf{(1)}~attribuer les $\NO$ pour identifier
+oxydation et réduction $\to$ \textbf{(2)}~écrire les deux demi-équations (électrons du côté de
+l'oxydant) et les équilibrer selon le milieu $\to$ \textbf{(3)}~combiner en équation globale
+$\to$ \textbf{(4)}~prévoir le sens spontané par comparaison des $E_{\mathrm{r}}^{\circ}$ $\to$
+\textbf{(5)}~calculer potentiels et f.é.m. par Nernst $\to$ \textbf{(6)}~quantifier le dépôt
+électrolytique par la loi de Faraday. Maîtriser cet enchaînement, c'est savoir traiter la quasi-
+totalité des problèmes d'oxydo-réduction du concours.
+\end{remarque}
+
+\vspace{0.3cm}
+\begin{tcolorbox}[boxbase,colback=remarkcol!6,colframe=remarkcol,
+   title={\textsc{Constantes utiles}}]
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item Constante des gaz parfaits : $R=\SI{8.314}{J\per mol\per K}$
+  \item Constante de Faraday : $F=\SI{96485}{C\per mol}$ (charge d'une mole d'électrons)
+  \item Température standard : $T=\SI{298{,}15}{K}$ (\SI{25}{\celsius})
+  \item Facteur de Nernst à \SI{25}{\celsius} : $\tfrac{RT}{F}\ln 10=\SI{0{,}0592}{V}\simeq\SI{0{,}06}{V}$
+  \item Conditions standard : concentrations $=\SI{1}{mol\per\litre}$, pression $=\SI{1}{atm}$
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

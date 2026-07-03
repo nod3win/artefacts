@@ -1,0 +1,107 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{acidecol}{RGB}{205,60,45}
+\definecolor{basecol}{RGB}{40,110,200}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{corrbox}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{astuce}{boxbase,colback=attncol!6,colframe=attncol,sharp corners}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 10} — Thème 2 : pH, pOH, $K_e$}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- Corrigé Facile}
+\end{center}
+
+\begin{corrbox}[du pH vers la concentration]
+On applique $[\ce{H3O+}] = 10^{-\mathrm{pH}}$ :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $[\ce{H3O+}] = 10^{-1} = 0{,}1\ \si{mol.L^{-1}}$
+  \item $[\ce{H3O+}] = 10^{-4}\ \si{mol.L^{-1}}$
+  \item $[\ce{H3O+}] = 10^{-2}\ \si{mol.L^{-1}}$
+  \item $[\ce{H3O+}] = 10^{-7}\ \si{mol.L^{-1}}$ (eau neutre)
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[de la concentration vers le pH]
+On applique $\mathrm{pH} = -\log[\ce{H3O+}]$ :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\mathrm{pH} = -\log(10^{-3}) = 3$
+  \item $\mathrm{pH} = -\log(10^{-9}) = 9$
+  \item $\mathrm{pH} = -\log(5\times10^{-4}) = 4 - \log 5 \approx 4 - 0{,}70 = \mathbf{3{,}30}$
+  \item $\mathrm{pH} = -\log(2\times10^{-6}) = 6 - \log 2 \approx 6 - 0{,}30 = \mathbf{5{,}70}$
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[acide, neutre ou basique ?]
+Frontière à $\mathrm{pH}=7$ (soit $[\ce{H3O+}]=[\ce{OH-}]=10^{-7}$) :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\mathrm{pH}=3{,}5<7$ : \textcolor{acidecol}{\textbf{acide}}.
+  \item $\mathrm{pH}=7$ : \textbf{neutre}.
+  \item $\mathrm{pH}=10{,}2>7$ : \textcolor{basecol}{\textbf{basique}}.
+  \item $[\ce{H3O+}]=10^{-5}>10^{-7}$ : \textcolor{acidecol}{\textbf{acide}} (\,$\mathrm{pH}=5$\,).
+  \item $[\ce{OH-}]=10^{-3}$, donc $[\ce{H3O+}]=10^{-14}/10^{-3}=10^{-11}<10^{-7}$ :
+        \textcolor{basecol}{\textbf{basique}} (\,$\mathrm{pH}=11$\,).
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[passer par $\mathrm{pH}+\mathrm{pOH}=14$]
+$\mathrm{pOH}=14-\mathrm{pH}$ puis $[\ce{OH-}]=10^{-\mathrm{pOH}}$ :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $\mathrm{pOH}=11$, $[\ce{OH-}]=10^{-11}\ \si{mol.L^{-1}}$.
+  \item $\mathrm{pOH}=3$, $[\ce{OH-}]=10^{-3}\ \si{mol.L^{-1}}$.
+  \item $\mathrm{pOH}=5{,}5$, $[\ce{OH-}]=10^{-5{,}5}\approx 3{,}2\times10^{-6}\ \si{mol.L^{-1}}$.
+\end{enumerate}
+\end{corrbox}
+
+\begin{corrbox}[le produit ionique en action]
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item $[\ce{OH-}] = \dfrac{10^{-14}}{10^{-2}} = 10^{-12}\ \si{mol.L^{-1}}$.
+  \item $[\ce{H3O+}] = \dfrac{10^{-14}}{10^{-4}} = 10^{-10}\ \si{mol.L^{-1}}$.
+  \item $[\ce{H3O+}]^2 = K_e \Rightarrow [\ce{H3O+}] = \sqrt{10^{-14}} = 10^{-7}\ \si{mol.L^{-1}}$
+        (et $[\ce{OH-}]=10^{-7}$).
+\end{enumerate}
+\end{corrbox}
+
+\begin{astuce}
+\textbf{Vérification de cohérence.} Après tout calcul, contrôlez que
+$[\ce{H3O+}]\times[\ce{OH-}] = 10^{-14}$ et que $\mathrm{pH}+\mathrm{pOH}=14$. Si ce n'est pas le cas, il y a
+une erreur de signe ou d'exposant.
+\end{astuce}
+
+\end{document}

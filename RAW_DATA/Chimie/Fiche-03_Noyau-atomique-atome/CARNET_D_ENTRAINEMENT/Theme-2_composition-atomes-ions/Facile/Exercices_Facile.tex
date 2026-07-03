@@ -1,0 +1,102 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — CHIMIE — FICHE 3 — THÈME 2
+%  Composition : atomes et ions — NIVEAU FACILE — ÉNONCÉS
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{124,78,140}
+\definecolor{primarydark}{RGB}{74,44,92}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\newcommand{\nuc}[3]{\prescript{#1}{#2}{\mathrm{#3}}}
+\newcommand{\pp}{p^{+}}
+\newcommand{\ee}{e^{-}}
+\newcommand{\nz}{n^{0}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 3 — Thème 2}} : Composition des atomes et des ions}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile — Énoncés}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcounter{exo}
+\newcommand{\exo}[1][]{\stepcounter{exo}\par\medskip%
+  \noindent{\color{primary}\rule[-2pt]{3.5pt}{15pt}}\ \textbf{\color{primarydark}\large Exercice \theexo}%
+  \ifx\relax#1\relax\relax\else\ \textmd{\normalsize\color{black!65}— \itshape #1}\fi\par\nopagebreak\smallskip}
+
+\setlist{leftmargin=1.7em,topsep=2pt,itemsep=3pt}
+
+\begin{document}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=6pt,fill=primary,text=white,
+      minimum width=\textwidth,minimum height=1.35cm,align=center,inner sep=6pt]
+  {\Large\bfseries Thème 2 — Composition des atomes et des ions\\[2pt]
+   \normalsize\mdseries Niveau Facile — Énoncés};
+\end{tikzpicture}
+
+\vspace{3pt}
+{\small\itshape Rappels : $Z = $ nombre de protons ; $A = $ nombre de nucléons ; nombre de neutrons
+$= A - Z$ ; atome neutre $\Rightarrow$ nombre d'électrons $= Z$.}
+
+% ---------------------------------------------------------------
+\exo[lire une notation symbolique]
+On considère l'atome de chlore $\nuc{35}{17}{Cl}$. Donne :
+\begin{enumerate}[label=\alph*)]
+  \item son numéro atomique $Z$ et son nombre de masse $A$ ;
+  \item son nombre de protons et son nombre de neutrons ;
+  \item son nombre d'électrons, sachant qu'il est neutre.
+\end{enumerate}
+
+% ---------------------------------------------------------------
+\exo[compter dans un atome neutre]
+L'atome de calcium a pour numéro atomique $Z = 20$ et pour nombre de masse $A = 40$. Combien
+possède-t-il de protons, de neutrons et d'électrons ?
+
+% ---------------------------------------------------------------
+\exo[écrire la notation]
+Un atome de sodium a $Z = 11$ et $A = 23$, symbole $\mathrm{Na}$. Écris sa notation symbolique
+$\nuc{A}{Z}{X}$ en plaçant correctement $Z$ et $A$. Lequel des deux se met \emph{en haut} ? lequel
+\emph{en bas} ?
+
+% ---------------------------------------------------------------
+\exo[que représentent $Z$ et $A$ ?]
+Dans la notation $\nuc{A}{Z}{X}$ :
+\begin{enumerate}[label=\alph*)]
+  \item que représente le nombre $Z$ ?
+  \item que représente le nombre $A$ ?
+  \item comment obtient-on le nombre de neutrons à partir de $Z$ et $A$ ?
+\end{enumerate}
+
+% ---------------------------------------------------------------
+\exo[remonter à $Z$ et $A$]
+Un atome possède $8$ protons et $8$ neutrons dans son noyau.
+\begin{enumerate}[label=\alph*)]
+  \item Quel est son numéro atomique $Z$ ?
+  \item Quel est son nombre de masse $A$ ?
+  \item Combien a-t-il d'électrons s'il est neutre ?
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,107 @@
+% =====================================================================
+%  FICHE 11 — THEME 4 — Corrigé MOYEN — Potentiels standard et prévision
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.0cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+\newcommand{\Ered}{\ensuremath{E_{\mathrm{r}}^{\circ}}}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 4} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Corrigé Moyen}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[\ce{Ag+} face au cuivre et au zinc]
+\ce{Ag+} appartient au couple le plus haut de la comparaison ($+0{,}80$\,V) : il oxyde tout métal
+d'un couple situé plus bas.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item $\Delta E^{\circ}=0{,}80-0{,}34=+0{,}46>0$ : \ce{Ag+} \textbf{oxyde} \ce{Cu} :
+        $\ce{2 Ag+ + Cu -> 2 Ag + Cu^{2+}}$.
+  \item $\Delta E^{\circ}=0{,}80-(-0{,}76)=+1{,}56>0$ : \ce{Ag+} \textbf{oxyde aussi} \ce{Zn} :
+        $\ce{2 Ag+ + Zn -> 2 Ag + Zn^{2+}}$.
+\end{enumerate}
+\ce{Ag+} oxyde donc \textbf{à la fois} le cuivre et le zinc : un dépôt d'argent se forme sur les
+deux lames. \emph{(Réponse C, livre QCM~17.)}
+\end{corr}
+
+\begin{corr}[le fluor dissout-il l'or ?]
+$\Ered(\ce{F2}/\ce{F^-})=+2{,}87$ et $\Ered(\ce{Au^{3+}}/\ce{Au})=+1{,}52$.
+Comme $2{,}87>1{,}52$, le fluor (oxydant du couple le plus haut) \textbf{oxyde l'or} :
+$\Delta E^{\circ}=2{,}87-1{,}52=+1{,}35>0$. \textbf{Oui}, l'or se dissout :
+\[
+\ce{3 F2 + 2 Au -> 2 AuF3}.
+\]
+\ce{F2} est le seul oxydant assez puissant du tableau pour attaquer l'or (d'où sa réputation de
+métal « inattaquable » par les acides usuels). \emph{(Réponse « Vrai », livre QCM~19.)}
+\end{corr}
+
+\begin{corr}[le fer dans l'acide chlorhydrique]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item L'oxydant de \ce{HCl} est \ce{H+} ($\Ered(\ce{H+}/\ce{H2})=0{,}00$).
+        Comme $0{,}00>\Ered(\ce{Fe^{2+}}/\ce{Fe})=-0{,}44$, $\Delta E^{\circ}=+0{,}44>0$ : le fer est
+        \textbf{oxydé}.
+  \item Oui : $\ce{Fe + 2 H+ -> Fe^{2+} + H2 ^}$ $\Rightarrow$ \textbf{dégagement de dihydrogène \ce{H2}}.
+  \item Le fer s'oxyde en \textbf{\ce{Fe^{2+}}} (et non \ce{Fe^{3+}}) : le couple \ce{Fe^{3+}}/\ce{Fe^{2+}}
+        ($+0{,}77$) est \emph{plus haut} que \ce{H+}/\ce{H2} ($0{,}00$), donc \ce{H+} ne peut pas oxyder
+        \ce{Fe^{2+}} en \ce{Fe^{3+}}. \emph{(Réponse C, livre QCM~20.)}
+\end{enumerate}
+\end{corr}
+
+\begin{corr}[qui peut réduire \ce{Ag+} ?]
+\og{}Réduire \ce{Ag+}\fg{} signifie \emph{céder des électrons} à \ce{Ag+} : le réactif doit être un
+\textbf{réducteur} appartenant à un couple \emph{plus bas} que \ce{Ag+}/\ce{Ag} ($+0{,}80$).
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{\ce{Ca}} : forme réduite du couple $\Ered=-2{,}84$, très bas $\Rightarrow$ réducteur puissant,
+        il \textbf{réduit \ce{Ag+}}. \checkmark
+  \item \ce{Cu^{2+}} et \ce{Br2} : ce sont des formes \emph{oxydées} (des oxydants) $\Rightarrow$ ne peuvent
+        pas céder d'électrons.
+  \item \ce{Au} : métal, mais couple $\Ered=+1{,}52$, \emph{au-dessus} de \ce{Ag+}/\ce{Ag} $\Rightarrow$
+        réducteur trop faible, il ne réduit pas \ce{Ag+}.
+\end{itemize}
+Seul \textbf{\ce{Ca}} convient (réponse A, livre QCM~18).
+\end{corr}
+
+\begin{corr}[le dioxyde de manganèse peut-il oxyder \ce{Cl^-} ?]
+Pour que \ce{MnO2} oxyde \ce{Cl^-}, il faut $\Ered(\ce{MnO2}/\ce{Mn^{2+}}) > \Ered(\ce{Cl2}/\ce{Cl^-})$.
+Or :
+\[
+\Delta E^{\circ} = \Ered(\ce{MnO2}/\ce{Mn^{2+}}) - \Ered(\ce{Cl2}/\ce{Cl^-}) = 1{,}224 - 1{,}39 = -0{,}166 < 0.
+\]
+$\Delta E^{\circ}<0$ : la réaction proposée \textbf{n'est pas spontanée} dans les conditions standard.
+C'est au contraire \ce{Cl2} qui est l'oxydant le plus fort ; la réaction \emph{inverse}
+($\ce{Cl2 + Mn^{2+} + 2 H2O -> MnO2 + 2 Cl^- + 4 H+}$) serait, elle, favorisée.
+\end{corr}
+
+\end{document}

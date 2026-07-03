@@ -1,0 +1,1391 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 9
+%  Électrostatique
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « électrostatique » réutilisées dans les figures
+\definecolor{poscol}{RGB}{200,40,40}        % charge positive (rouge)
+\definecolor{negcol}{RGB}{0,90,200}         % charge négative (bleu)
+\definecolor{neutcol}{RGB}{90,90,95}        % corps neutre (gris)
+\definecolor{chplig}{RGB}{20,140,90}        % ligne de champ (vert)
+\definecolor{platpos}{RGB}{210,120,120}     % armature +
+\definecolor{platneg}{RGB}{120,150,210}     % armature -
+\definecolor{eleccol}{RGB}{255,210,70}      % doré pour les charges
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Loi (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  champ/.style={->,>=Stealth,line width=1.1pt,chplig},
+  forcpos/.style={->,>=Stealth,line width=1.3pt,poscol},
+  forcneg/.style={->,>=Stealth,line width=1.3pt,negcol},
+  cpos/.style={circle,fill=poscol,draw=poscol!60!black,inner sep=0pt,
+               minimum size=7mm,font=\bfseries\small,text=white},
+  cneg/.style={circle,fill=negcol,draw=negcol!60!black,inner sep=0pt,
+               minimum size=7mm,font=\bfseries\small,text=white},
+  cneut/.style={circle,fill=neutcol,draw=black!50,inner sep=0pt,
+               minimum size=7mm,font=\bfseries\small,text=white},
+  lignechamp/.style={chplig,line width=0.9pt},
+  ptn/.style={circle,fill=black,inner sep=1.1pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Électrostatique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vc}[1]{\vec{#1}}
+\newcommand{\F}[2]{\vc{F}_{#1/#2}}     % force exercée par #1 sur #2
+\newcommand{\E}[2]{\vc{E}_{#1/#2}}     % champ créé par #1 en #2
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Électrostatique}\\[5pt]
+   {\large\bfseries Charges, forces, champ et potentiel}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,9}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : dipôle + champ uniforme ---
+\begin{tikzpicture}[scale=1.0]
+  % charge + et charge - avec quelques lignes de champ
+  \node[cpos] (P) at (-2.4,0) {$+$};
+  \node[cneg] (N) at (2.4,0) {$-$};
+  % lignes de champ allant de + vers -
+  \foreach \y in {-1.3,-0.85,-0.4,0.4,0.85,1.3}{
+     \draw[lignechamp,->,>=Stealth] (-2.4,\y*0.6) .. controls (-0.5,\y) and (0.5,\y) .. (2.4,\y*0.6);
+  }
+  % ligne directe
+  \draw[lignechamp,->,>=Stealth,line width=1.2pt] (-1.9,0) -- (1.9,0);
+  \node[primarydark,font=\small] at (0,2.1) {lignes de champ d'un dipôle électrostatique};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item distinguer \textbf{conducteur} et \textbf{isolant}, et décrire les trois modes
+        d'\textbf{électrisation} (frottement, contact, influence) ;
+  \item manipuler la \textbf{charge élémentaire} $e$ et compter les électrons transférés lors
+        d'une électrisation ;
+  \item énoncer et appliquer la \textbf{loi de Coulomb} $F = K\,q_1 q_2/d^2$ et le
+        \textbf{principe de superposition} ;
+  \item définir le \textbf{champ électrique} $\vc{E}$, le calculer pour une charge ponctuelle
+        et pour un \textbf{condensateur plan} ;
+  \item lire et tracer des \textbf{lignes de champ} (charges de même signe, signes opposés,
+        champ uniforme) ;
+  \item relier \textbf{différence de potentiel} $U_{AB}$, \textbf{travail électrique} et champ
+        via $E = U_{AB}/d$.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 9 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : l'électricité immobile}
+% =====================================================================
+L'\textbf{électrostatique} est la branche de la physique qui étudie les phénomènes liés aux
+\emph{charges électriques au repos}. Le terme s'explique ainsi : «~électro-~» (l'électricité) +
+«~-statique~» (qui ne bouge pas), par opposition à l'\emph{électrocinétique} (Fiche~10) qui traite
+des charges en mouvement ordonné, c'est-à-dire des courants.
+
+L'observation de départ est universelle et vieille comme le monde : certains corps, après avoir été
+frottés, acquièrent la propriété étrange d'\textbf{attirer} ou de \textbf{repousser} de petits
+objets légers (fragments de papier, poussières, brins de paille). On dit qu'ils sont
+\emph{électrisés}. Cette fiche construit pas à pas tout le vocabulaire et toutes les lois nécessaires
+pour \emph{quantifier} ces forces : la \textbf{charge électrique}, la \textbf{loi de Coulomb}, le
+\textbf{champ électrique} $\vc{E}$ et le \textbf{potentiel} $V$.
+
+\begin{remarque}[le fil rouge de la fiche]
+Presque toute l'électrostatique tient en trois idées :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item deux charges de \textbf{signes contraires} s'\emph{attirent}, deux charges de \textbf{même
+        signe} se \emph{repoussent} ;
+  \item l'intensité de la force \textbf{décroît comme l'inverse du carré de la distance}
+        ($1/d^2$) ;
+  \item pour décrire l'action «~à distance~» d'une charge, on intercale la notion intermédiaire
+        de \textbf{champ électrique} : une charge crée un champ, le champ agit sur les autres
+        charges.
+\end{enumerate}
+\end{remarque}
+
+% =====================================================================
+\section{Définitions : la charge et les corps}
+% =====================================================================
+
+\subsection{La charge électrique et la charge élémentaire}
+
+\begin{definition}[charge électrique]
+La \textbf{charge électrique}, notée $q$ (ou $Q$), est une \emph{grandeur scalaire} qui caractérise
+l'une des propriétés fondamentales de la matière. Elle se mesure en \textbf{coulombs} (symbole~C).
+Une charge peut être \emph{positive} ($+$), \emph{négative} ($-$) ou \emph{nulle} (corps neutre).
+\end{definition}
+
+À l'échelle microscopique, la charge est portée par les particules de l'atome :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\rowcolors{2}{primary!5}{white}
+\begin{tabular}{>{\bfseries}l c c c}
+\rowcolor{primary!18}
+Particule & Position & Charge & Masse \\
+\midrule
+Proton   & dans le noyau        & $q_p = +e = +1{,}6\cdot 10^{-19}$~C & $1{,}67\cdot 10^{-27}$~kg \\
+Neutron  & dans le noyau        & $q_n = 0$                            & $1{,}67\cdot 10^{-27}$~kg \\
+Électron & autour du noyau      & $q_e = -e = -1{,}6\cdot 10^{-19}$~C & $9{,}11\cdot 10^{-31}$~kg \\
+\end{tabular}
+\end{center}
+
+\begin{formule}[charge élémentaire]
+La \textbf{charge élémentaire} est la plus petite charge électrique isolable :
+\[ \boxed{\,e = 1{,}6\times 10^{-19}\ \mathrm{C}\,} \]
+Toute charge macroscopique est un \emph{multiple entier} de cette charge élémentaire :
+\[ q = N\,e \qquad \text{avec } N\in\mathbb{Z}. \]
+\begin{ou}
+  \item $e$ : charge élémentaire, $e = \SI{1.6e-19}{\coulomb}$ ;
+  \item $N$ : nombre entier (algébrique) de charges élémentaires — \textbf{sans dimension} ;
+  \item $q$ : charge totale du corps, en \si{\coulomb}.
+\end{ou}
+\end{formule}
+
+\begin{attention}[on ne crée jamais de charge !]
+Frotter deux corps \emph{n'invente pas} de charge électrique : on ne fait que \textbf{transférer}
+des électrons de l'un vers l'autre. Le nombre total d'électrons (et donc la charge totale) du
+système reste rigoureusement constant : c'est le \textbf{principe de conservation de la charge}.
+\end{attention}
+
+Le signe de la charge d'un corps se déduit donc d'un simple \emph{compte} des porteurs :
+
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Corps chargé positivement} : il a \emph{perdu} une partie de ses électrons.
+        Il y a alors plus de protons que d'électrons ($N_p > N_e$).
+  \item \textbf{Corps chargé négativement} : il a \emph{reçu} des électrons.
+        Il y a plus d'électrons que de protons ($N_e > N_p$).
+  \item \textbf{Corps neutre} : autant de protons que d'électrons ($N_p = N_e$).
+\end{itemize}
+
+\begin{exemple}[combien d'électrons dans un coulomb ?]
+Un coulomb est une charge \emph{énorme} à l'échelle de l'électron. Combien d'électrons faut-il pour
+obtenir $q = \SI{1}{\coulomb}$ ?
+
+\smallskip
+\textbf{Mise en équation.} Chaque électron porte la charge $-e$. En valeur absolue, le nombre $N$
+d'électrons nécessaires pour cumuler $|q|$ vaut
+\[ N = \frac{|q|}{e}. \]
+
+\textbf{Application numérique.}
+\[ N = \frac{1}{1{,}6\times 10^{-19}} = 6{,}25\times 10^{18}\ \text{électrons}. \]
+(Calcul pas à pas : $1 / 1{,}6 = 0{,}625$, et $1 / 10^{-19} = 10^{19}$, d'où $0{,}625\times
+10^{19} = 6{,}25\times 10^{18}$.)
+
+\textbf{Interprétation.} Six milliards de milliards d'électrons ! Ce chiffre colossal explique
+pourquoi \SI{1}{\coulomb} n'est presque jamais rencontré isolé en électrostatique : on manipule
+couramment des microcoulombs ($\SI{1}{\micro\coulomb} = \SI{e-6}{\coulomb}$) ou des nanocoulombs.
+\end{exemple}
+
+\subsection{Isolants et conducteurs}
+
+\begin{definition}[isolant]
+Un \textbf{isolant} est un matériau dont les charges électriques sont \emph{liées} aux atomes et ne
+peuvent pas se déplacer librement (verre, plastique, ébonite, papier, air sec\dots). Un isolant
+s'\textbf{électrise facilement par frottement}, et la charge reste \emph{localisée} à l'endroit
+frotté : elle ne se disperse pas.
+\end{definition}
+
+\begin{definition}[conducteur]
+Un \textbf{conducteur} est un corps qui contient des charges \emph{libres}, capables de se déplacer
+facilement d'un bout à l'autre du matériau. Les \textbf{métaux} (cuivre, argent, or, aluminium\dots)
+sont d'excellents conducteurs : leurs \emph{électrons libres} circulent dans tout le volume. Un
+conducteur ne s'électrise donc \emph{pas} durablement par frottement, car toute charge acquise est
+immédiatement redistribuée (et s'écoule vers la terre si le corps est relié au sol).
+\end{definition}
+
+\begin{attention}[le piège du vocabulaire]
+«~Libre~» ne veut pas dire «~qui apparaît~» : les électrons libres d'un métal existent
+\emph{déjà}, ils sont juste peu liés à leur noyau. Frotter un métal \emph{nu} (non isolé) ne le
+charge pas, car les électrons arrachés sont aussitôt remplacés. Pour charger un métal, il faut le
+tenir par un \textbf{manche isolant}.
+\end{attention}
+
+\subsection{Les trois modes d'électrisation}
+
+\begin{theoreme}[les trois manières d'électriser un corps]
+\leavevmode
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Par frottement} : deux isolants frottés l'un contre l'autre échangent des électrons.
+        Celui qui «~capte~» les électrons devient négatif, l'autre devient positif (charges
+        \emph{opposées et égales} : conservation de la charge).
+  \item \textbf{Par contact} : un corps chargé touche un conducteur neutre ; une partie des charges
+        est \emph{transférée} (du moins les électrons). Les deux corps finissent chargés
+        \textbf{de même signe}.
+  \item \textbf{Par influence} (à distance) : un corps chargé, approché d'un conducteur neutre
+        \emph{sans le toucher}, provoque une \textbf{redistribution} des charges libres du
+        conducteur : les charges de signe opposé sont attirées du côté de l'influence, celles de
+        même signe repoussées à l'autre extrémité. Le conducteur reste globalement \textbf{neutre},
+        mais ses extrémités portent des charges \emph{localisées} de signes contraires.
+\end{enumerate}
+\end{theoreme}
+
+\begin{exemple}[l'influence : charger un métal sans le toucher]
+On approche une tige d'ébonite préalablement frottée (donc chargée \emph{négativement}) d'une
+sphère métallique initialement neutre, sans la toucher.
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % sphère métallique
+  \draw[fill=neutcol!20,line width=1pt] (0,0) circle (1.3);
+  \node at (0,0) {\small sphère};
+  \node at (0,-0.4) {\small métallique};
+  % électrons repoussés à droite
+  \foreach \y in {-0.9,-0.45,0,0.45,0.9}{\node[cneg,scale=0.5] at (1.05,\y) {$-$};}
+  % charges + à gauche (attirées)
+  \foreach \y in {-0.9,-0.45,0,0.45,0.9}{\node[cpos,scale=0.5] at (-1.05,\y) {$+$};}
+  % tige d'ébonite chargée négativement
+  \draw[fill=negcol!40,line width=1pt] (-4.4,-0.4) rectangle (-3.0,0.4);
+  \foreach \x in {-4.15,-3.8,-3.45}{\node[cneg,scale=0.55] at (\x,0) {$-$};}
+  \node[negcol,above,font=\footnotesize] at (-3.7,0.5) {ébonite $(-)$};
+  % flèches de l'influence
+  \draw[negcol,->,>=Stealth,dashed,line width=0.7pt] (-3.0,0) -- (-1.3,0);
+  \node[negcol,font=\scriptsize,above] at (-2.15,0.05) {influence};
+  % flèches de déplacement des électrons
+  \draw[->,>=Stealth,line width=0.8pt,poscol] (0.2,1.45) -- (1.05,1.0);
+  \node[poscol,font=\scriptsize,above] at (0.6,1.5) {électrons repoussés};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Analyse.} Les électrons libres de la sphère (charges négatives) sont \emph{repoussées} par
+l'ébonite : elles migrent vers la droite. La gauche, appauvrie en électrons, devient positive. La
+sphère reste \textbf{globalement neutre} (autant de $+$ à gauche que de $-$ à droite), mais ses
+extrémités sont désormais \emph{polarisées}.
+
+\textbf{Pour obtenir une charge nette.} Si, pendant que l'ébonite est maintenue proche, on relie
+momentanément la sphère à la terre (avec le doigt, par exemple), les charges $-$ excédentaires
+s'écoulent vers le sol. Lorsqu'on retire d'abord le fil de terre \emph{puis} l'ébonite, la sphère
+se retrouve avec un \emph{déficit} d'électrons : elle est durablement chargée \textbf{positivement},
+alors qu'on ne l'a jamais touchée avec un corps chargé. C'est le \textbf{principe de la machine de
+Wimshurst} et des générateurs électrostatiques.
+\end{exemple}
+
+\subsection{L'électroscope}
+
+\begin{definition}[électroscope]
+L'\textbf{électroscope} est l'instrument historique qui permet de \emph{détecter} qu'un corps est
+chargé et d'en estimer le signe. Il est constitué de trois pièces conductrices reliées entre elles :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item une \textbf{platine} (ou sphère) supérieure, où l'on pose l'objet à tester ;
+  \item une \textbf{tige} métallique verticale ;
+  \item une ou deux \textbf{feuilles} métalliques très fines, fixées en bas de la tige.
+\end{enumerate}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % platine supérieure (sphère)
+  \draw[fill=eleccol!40,line width=1pt] (0,3.7) circle (0.45);
+  \node[font=\scriptsize] at (0,3.7) {platine};
+  % tige
+  \draw[line width=2pt,neutcol] (0,3.25) -- (0,1.2);
+  \node[font=\scriptsize,right] at (0.1,2.2) {tige};
+  % boitier
+  \draw[fill=primary!8,draw=primary!50,line width=1pt] (-2.0,-1.3) rectangle (2.0,1.3);
+  \node[primary,font=\scriptsize] at (1.45,1.05) {boîtier};
+  % feuilles écartées (état chargé)
+  \draw[line width=1.4pt,poscol] (0,1.2) -- (-0.55,-0.7);
+  \draw[line width=1.4pt,poscol] (0,1.2) -- (0.55,-0.7);
+  \foreach \f in {-0.55,0.55}{
+    \node[cpos,scale=0.45] at (\f,-0.1) {$+$};
+    \node[cpos,scale=0.45] at (\f,-0.5) {$+$};
+  }
+  \node[poscol,font=\scriptsize,below] at (0,-0.95) {feuilles écartées};
+  % masses + sur la tige
+  \foreach \y in {2.9,2.5,2.0}{\node[cpos,scale=0.4] at (0.15,\y) {$+$};}
+  % corps chargé testé
+  \node[cpos,scale=0.6] at (0,4.55) {$+$};
+  \node[font=\scriptsize,right] at (0.35,4.55) {corps testé};
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[principe de fonctionnement de l'électroscope]
+Lorsqu'on approche (ou que l'on pose) un corps chargé sur la platine, les charges se répartissent
+sur \emph{l'ensemble} du conducteur (platine, tige et feuilles) par le mécanisme de contact ou
+d'influence. Les deux feuilles, porteuses de charges de \textbf{même signe}, se \textbf{repoussent}
+et s'écartent : l'\emph{angle d'écartement} augmente avec la quantité de charge. Relier la platine
+à la \textbf{terre} fait s'écouler les charges et les feuilles retombent : l'électroscope est
+déchargé.
+\end{theoreme}
+
+\begin{remarque}[la prise de terre, une question de survie]
+Le même principe explique l'utilité de la \textbf{prise de terre} des appareils ménagers. Si un fil
+dénudé touche accidentellement la carcasse métallique d'une machine, celle-ci se charge. Sans prise
+de terre, quiconque la touche referme le circuit à travers son corps et s'électrocute. Avec une
+prise de terre (un fil reliant la carcasse au sol), les charges \emph{s'écoulent vers la terre},
+qui est un excellent conducteur : la carcasse redevient inoffensive. Le disjoncteur différentiel
+détecte alors la fuite et coupe le courant.
+\end{remarque}
+
+% =====================================================================
+\section{La loi de Coulomb}
+% =====================================================================
+
+\subsection{Énoncé de la loi}
+
+La loi fondamentale de l'électrostatique a été établie par \textbf{Charles-Augustin Coulomb} en
+1785 à l'aide d'une balance de torsion. Elle décrit la force exercée par une charge ponctuelle sur
+une autre.
+
+\begin{theoreme}[loi de Coulomb]
+Deux charges ponctuelles $q_1$ et $q_2$, séparées par la distance $d$, exercent l'une sur l'autre
+des forces $\F{1}{2}$ et $\F{2}{1}$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item de \textbf{même droite d'action} (la droite joignant les deux charges) ;
+  \item de \textbf{même intensité} $F$ ;
+  \item de \textbf{sens opposés} (principe de l'action et de la réaction) ;
+  \item \textbf{attractives} si les charges sont de signes contraires, \textbf{répulsives} si elles
+        sont de même signe.
+\end{itemize}
+L'intensité commune de ces deux forces est :
+\[ \boxed{\,F_{1/2} = F_{2/1} = K\,\dfrac{\,|q_1|\,|q_2|\,}{d^{2}}\,} \]
+\end{theoreme}
+
+\begin{formule}[intensité de la force de Coulomb — éléments et unités]
+\[ F = K\,\dfrac{|q_1|\,|q_2|}{d^{2}} \]
+\begin{ou}
+  \item $F$ : intensité (norme) de la force électrostatique, en \textbf{newtons} (\si{\newton}) ;
+  \item $q_1,\,q_2$ : valeurs absolues des charges, en \textbf{coulombs} (\si{\coulomb}) ;
+  \item $d$ : distance entre les deux charges, en \textbf{mètres} (\si{\metre}) ;
+  \item $K$ : constante caractéristique du milieu ; dans le vide et dans l'air,
+        $K \approx 9\times 10^{9}\ \si{\newton\metre\squared\per\coulomb\squared}$.
+\end{ou}
+\end{formule}
+
+\begin{formule}[constante de Coulomb et permittivité du vide]
+La constante $K$ s'exprime à partir de la \textbf{permittivité diélectrique du vide} $\varepsilon_0$ :
+\[ \boxed{\,K = \dfrac{1}{4\pi\varepsilon_0}\,}\qquad\text{avec}\qquad
+   \varepsilon_0 = 8{,}85\times 10^{-12}\ \mathrm{F/m}. \]
+\begin{ou}
+  \item $\varepsilon_0$ : permittivité électrique du vide, en \textbf{farads par mètre} (F/m) ;
+  \item $K$ : constante de Coulomb, en \si{\newton\metre\squared\per\coulomb\squared}.
+\end{ou}
+On vérifie : $K = \dfrac{1}{4\pi\times 8{,}85\times 10^{-12}} = \dfrac{1}{1{,}112\times 10^{-10}}
+\approx 9{,}0\times 10^{9}$.
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % ---- cas attractif (signes contraires) ----
+  \node[font=\bfseries\large,primarydark] at (-4.5,2.3) {Signes contraires $\Rightarrow$ attraction};
+  \node[cpos] (P1) at (-5.6,0.6) {$q_1>0$};
+  \node[cneg] (P2) at (-3.4,0.6) {$q_2<0$};
+  \draw[forcpos,->,>=Stealth] (-5.0,0.6) -- (-4.05,0.6);
+  \node[poscol,above,font=\scriptsize] at (-4.5,0.65) {$\F{2}{1}$};
+  \draw[forcneg,->,>=Stealth] (-4.0,0.1) -- (-4.95,0.1);
+  \node[negcol,below,font=\scriptsize] at (-4.5,0.05) {$\F{1}{2}$};
+  \draw[<->,>=Stealth,black!60,dashed] (-5.6,-0.5) -- (-3.4,-0.5);
+  \node[black!60,below,font=\scriptsize] at (-4.5,-0.5) {distance $d$};
+
+  % ---- cas répulsif (mêmes signes) ----
+  \node[font=\bfseries\large,primarydark] at (4.5,2.3) {Mêmes signes $\Rightarrow$ répulsion};
+  \node[cpos] (Q1) at (2.4,0.6) {$q_1>0$};
+  \node[cpos] (Q2) at (5.6,0.6) {$q_2>0$};
+  \draw[forcpos,->,>=Stealth] (3.0,0.6) -- (2.0,0.6);
+  \node[poscol,above,font=\scriptsize] at (2.5,0.65) {$\F{2}{1}$};
+  \draw[forcpos,->,>=Stealth] (5.0,0.1) -- (6.0,0.1);
+  \node[poscol,below,font=\scriptsize] at (5.5,0.05) {$\F{1}{2}$};
+  \draw[<->,>=Stealth,black!60,dashed] (2.4,-0.5) -- (5.6,-0.5);
+  \node[black!60,below,font=\scriptsize] at (4.0,-0.5) {distance $d$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}[trois propriétés-clés à retenir]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item La force est \textbf{proportionnelle} au produit des charges : doubler l'une double la
+        force.
+  \item Elle est \textbf{inversement proportionnelle au carré de la distance} : doubler la distance
+        \emph{divise} la force par~$4$.
+  \item La \textbf{direction} est celle de la droite $(q_1q_2)$ ; le \textbf{sens} dépend des
+        signes (les vecteurs $\F{1}{2}$ et $\F{2}{1}$ sont toujours \emph{opposés}).
+\end{itemize}
+\end{remarque}
+
+\begin{attention}[la valeur absolue est indispensable]
+Dans la formule de l'\emph{intensité} $F$, on prend toujours la \textbf{valeur absolue} des charges
+et l'on fixe le sens «~à la main~» (attraction ou répulsion) en regardant les signes. Beaucoup
+d'erreurs viennent de l'oubli de ces barres de valeur absolue, qui donneraient une force
+«~négative~» (sans signification physique pour une norme).
+\end{attention}
+
+\subsection{Le principe de superposition}
+
+Lorsque \emph{plusieurs} charges agissent simultanément sur une charge donnée, la force résultante
+est la \textbf{somme vectorielle} des forces qu'exerce chacune d'elles, comme si les autres
+n'existaient pas.
+
+\begin{theoreme}[principe de superposition]
+La force électrostatique totale exercée sur une charge $q_0$ par un ensemble de charges
+$q_1, q_2, \dots, q_n$ est la somme vectorielle des forces individuelles :
+\[ \boxed{\;\vc{F}_{\,\text{tot}/0} \;=\; \sum_{i=1}^{n}\F{i}{0}
+      \;=\; \F{1}{0} + \F{2}{0} + \cdots + \F{n}{0}\;} \]
+C'est une \textbf{somme de vecteurs} : on additionne séparément les composantes, ou l'on construit
+géométriquement le vecteur résultant.
+\end{theoreme}
+
+\begin{exemple}[superposition : deux forces perpendiculaires]
+Une charge $q_3$ est soumise à deux forces $\F{1}{3}$ et $\F{2}{3}$ \textbf{perpendiculaires} entre
+elles, d'intensités respectives $F_{1/3} = \SI{3}{\newton}$ et $F_{2/3} = \SI{4}{\newton}$.
+Calculons la force résultante.
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \node[cpos,scale=0.8] (A) at (-2.5,-1.5) {$q_1$};
+  \node[cpos,scale=0.8] (B) at (2.5,1.5) {$q_2$};
+  \node[cpos,scale=0.9] (C) at (0,0) {$q_3$};
+  % deux forces perpendiculaires
+  \draw[forcpos,->,>=Stealth] (0,0) -- (3.0,0) node[right,font=\scriptsize]{$\F{1}{3}$};
+  \draw[forcpos,->,>=Stealth] (0,0) -- (0,4.0) node[above,font=\scriptsize]{$\F{2}{3}$};
+  % resultant (parallelogramme)
+  \draw[black!50,dashed] (3.0,0) -- (3.0,4.0);
+  \draw[black!50,dashed] (0,4.0) -- (3.0,4.0);
+  \draw[->,>=Stealth,line width=1.6pt,primary] (0,0) -- (3.0,4.0)
+        node[midway,above left=-2pt,sloped,font=\scriptsize,primary]{$\vc{F}_{\,\text{tot}/3}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Mise en équation.} Les deux forces étant \emph{perpendiculaires}, le théorème de
+Pythagore donne directement l'intensité de la résultante :
+\[ F_{\,\text{tot}/3} = \sqrt{F_{1/3}^{\,2} + F_{2/3}^{\,2}}. \]
+
+\textbf{Application numérique.}
+\[ F_{\,\text{tot}/3} = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = \SI{5}{\newton}. \]
+
+\textbf{Direction de la résultante.} L'angle $\theta$ entre la résultante et $\F{1}{3}$ vérifie
+$\tan\theta = \dfrac{F_{2/3}}{F_{1/3}} = \dfrac{4}{3}$, soit $\theta = \arctan(4/3) \approx
+53{,}1^\circ$. Ce cas d'école est l'archétype de tout problème de superposition : on décompose,
+on somme par composantes, puis on recompose l'intensité et la direction.
+\end{exemple}
+
+\begin{exemple}[force de Coulomb : application numérique directe]
+Deux charges ponctuelles $q_1 = +\SI{4}{\micro\coulomb}$ et $q_2 = -\SI{1}{\micro\coulomb}$ sont
+séparées par $d = \SI{30}{\centi\metre}$ dans l'air. Quelle est l'intensité de la force
+d'interaction ?
+
+\textbf{Données.} $K = 9\times 10^{9}\ \si{\newton\metre\squared\per\coulomb\squared}$ ;
+$q_1 = 4\times 10^{-6}\ \si{\coulomb}$ ; $q_2 = 1\times 10^{-6}\ \si{\coulomb}$ (en valeur
+absolue) ; $d = \SI{0.30}{\metre}$.
+
+\textbf{Calcul.}
+\begin{align*}
+F &= K\,\frac{|q_1|\,|q_2|}{d^{2}}
+   = 9\times 10^{9}\times\frac{(4\times 10^{-6})(1\times 10^{-6})}{(0{,}30)^{2}} \\
+  &= 9\times 10^{9}\times\frac{4\times 10^{-12}}{0{,}09}
+   = 9\times 10^{9}\times 4{,}44\times 10^{-11}
+   \approx \SI{0.40}{\newton}.
+\end{align*}
+\textbf{Sens.} Les charges sont de signes opposés $\Rightarrow$ la force est \textbf{attractive}.
+Cette force de $0{,}4$~N, modeste à l'échelle humaine, est pourtant colossale à l'échelle des
+charges : elle illustre la puissance de la constante $K = 9\times 10^{9}$.
+\end{exemple}
+
+\begin{exemple}[comment la force varie-t-elle avec la distance ?]
+Deux charges s'attirent avec une force d'intensité $f$ lorsqu'elles sont distantes de $r$. Que
+devient la force si l'on écarte les charges à une distance $r+x$ ?
+
+\textbf{Sans recalculer $K$ ni les charges.} Écrivons le rapport des deux forces :
+\[ f = K\,\frac{q^2}{r^{2}}\qquad\text{et}\qquad
+   F = K\,\frac{q^2}{(r+x)^{2}}, \]
+d'où, en éliminant $K\,q^2$ :
+\[ F = f\times\frac{r^{2}}{(r+x)^{2}} = f\left(\frac{r}{r+x}\right)^{\!2}. \]
+Pour «~faire apparaître~» le $1$ attendu dans une décomposition, on écrit
+$r = (r+x) - x$ :
+\[ F = f\left(\frac{r+x-x}{r+x}\right)^{\!2}
+    = f\left(\frac{r+x}{r+x} - \frac{x}{r+x}\right)^{\!2}
+    = \boxed{\,f\left(1 - \frac{x}{r+x}\right)^{\!2}\,}. \]
+\textbf{Vérification.} Si $x=0$, $F=f\cdot 1 = f$ (tout va bien) ; si $x\to\infty$, $F\to 0$ (la
+force s'éteint). Cet exemple montre l'\emph{astuce algébrique} récurrente dans tous les problèmes
+de \textbf{proportionnalité inverse au carré} : former le \emph{rapport} des deux situations pour
+faire disparaître les constantes.
+\end{exemple}
+
+\begin{exemple}[«~tout au tiers~» : quand les forces ne changent pas !]
+Deux charges identiques $q$ séparées de $d$ se repoussent avec une force $f$. Que devient la force
+si l'on divise \emph{simultanément} par~$3$ les deux charges \emph{et} leur distance ?
+
+\textbf{Analyse.} Les nouvelles grandeurs sont $q' = q/3$ et $d' = d/3$. La nouvelle force vaut
+\[ F = K\,\frac{(q/3)^2}{(d/3)^2} = K\,\frac{q^2/9}{d^2/9} = K\,\frac{q^2}{d^2} = f. \]
+\textbf{Conclusion surprenante.} La force est \textbf{inchangée} ($F=f$) ! La raison est que le
+numérateur (en $q^2$) et le dénominateur (en $d^2$) sont divisés par le \emph{même} facteur $9$.
+C'est un piège classique des QCM : beaucoup «~sentent~» que la force doit changer, alors que tout
+dépend des \emph{exposants respectifs} de $q$ et de $d$ (tous deux égaux à~$2$ ici).
+\end{exemple}
+
+% =====================================================================
+\section{Le champ électrique}
+% =====================================================================
+
+\subsection{De la force au champ}
+
+Pour \emph{ne pas} parler de «~force à distance~», les physiciens intercalent une notion
+intermédiaire très puissante : le \textbf{champ}. L'idée est la suivante. Une charge $Q$ \emph{modifie
+l'espace} autour d'elle ; cet espace «~modifié~» est décrit par un champ électrique $\vc{E}$. Lorsqu'on
+place une autre charge $q$ en un point $M$, elle subit une force qui est simplement le \emph{produit}
+de $q$ par le champ $\vc{E}$ régnant en $M$.
+
+\begin{definition}[champ électrique]
+Le \textbf{champ électrique} $\vc{E}$ créé en un point $M$ par une distribution de charges est le
+vecteur défini par le rapport de la force qu'exercent ces charges sur une \emph{charge test}
+positive $q$ placée en $M$, à la valeur de $q$ :
+\[ \boxed{\;\vc{E}(M) = \dfrac{\vc{F}_{\,\text{sur }q}}{q}\;}\qquad
+   \text{soit}\qquad \vc{F} = q\,\vc{E}. \]
+$\vc{E}$ \textbf{ne dépend pas} de la charge test $q$ : il ne dépend que des charges qui le créent
+et de la position du point $M$.
+\end{definition}
+
+\begin{formule}[définition du champ et unités]
+\[ \vc{E} = \dfrac{\vc{F}}{q} \]
+\begin{ou}
+  \item $\vc{E}$ : champ électrique, vecteur, en \textbf{newtons par coulomb} (\si{\newton\per\coulomb}),
+        unité aussi notée \textbf{volt par mètre} (\si{\volt\per\metre}), car $\SI{1}{\newton\per\coulomb}
+        = \SI{1}{\volt\per\metre}$ ;
+  \item $\vc{F}$ : force électrique subie par la charge test, en \si{\newton} ;
+  \item $q$ : charge test (algébrique, c'est-à-dire \emph{avec son signe}), en \si{\coulomb}.
+\end{ou}
+\end{formule}
+
+\begin{theoreme}[direction, sens et lien avec la force]
+\leavevmode
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Direction} : $\vc{E}$ a la même direction que la force $\vc{F}$ subie par une charge
+        test positive.
+  \item \textbf{Sens} : pour une charge test \textbf{positive}, $\vc{E}$ et $\vc{F}$ ont le
+        \emph{même} sens ; pour une charge test \textbf{négative}, ils sont de sens \emph{opposés}.
+  \item \textbf{Règle d'orientation} : $\vc{E}$ \textbf{fuit} les charges positives (il pointe
+        vers l'extérieur) et \textbf{pointe vers} les charges négatives.
+\end{itemize}
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % cas charge +Q
+  \node[cpos,scale=1.2] (Q) at (-3.2,0) {$+Q$};
+  \node[font=\bfseries,primarydark] at (-3.2,1.4) {Charge source positive};
+  \draw[lignechamp,->,>=Stealth] (-2.5,0) -- (-0.6,0);
+  \node[chplig,above,font=\scriptsize] at (-1.6,0.1) {$\vc{E}$};
+  \node[cpos,scale=0.7] at (0,0) {$+q$};
+  \draw[forcpos,->,>=Stealth] (0.45,0) -- (1.9,0);
+  \node[poscol,below,font=\scriptsize] at (1.2,-0.1) {$\vc{F}=q\vc{E}$};
+
+  % cas charge -Q
+  \node[cneg,scale=1.2] (Q2) at (5.8,0) {$-Q$};
+  \node[font=\bfseries,primarydark] at (5.8,1.4) {Charge source négative};
+  \draw[lignechamp,->,>=Stealth] (3.2,0) -- (5.1,0);
+  \node[chplig,above,font=\scriptsize] at (4.1,0.1) {$\vc{E}$};
+  \node[cpos,scale=0.7] at (2.7,0) {$+q$};
+  \draw[forcpos,->,>=Stealth] (3.15,0) -- (1.7,0);
+  \node[poscol,below,font=\scriptsize] at (2.4,-0.1) {$\vc{F}=q\vc{E}$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Champ créé par une charge ponctuelle}
+
+\begin{formule}[champ d'une charge ponctuelle]
+Une charge ponctuelle $Q$ (le «~potentiel source~») crée, en un point $M$ situé à la distance $r$,
+un champ électrique d'intensité
+\[ \boxed{\,E = K\,\dfrac{|Q|}{r^{2}}\,} \]
+\begin{ou}
+  \item $E$ : intensité du champ en $M$, en \si{\newton\per\coulomb} (ou \si{\volt\per\metre}) ;
+  \item $K$ : constante de Coulomb, $K\approx 9\times 10^{9}\ \si{\newton\metre\squared\per\coulomb\squared}$ ;
+  \item $Q$ : charge source (en valeur absolue), en \si{\coulomb} ;
+  \item $r$ : distance entre la source $Q$ et le point $M$, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[comment cette formule se déduit-elle de Coulomb ?]
+Plaçons une charge test $q$ en $M$. D'après la loi de Coulomb, elle subit la force
+$F = K\,|Q|\,|q|/r^{2}$. Par \emph{définition} du champ, $E = F/|q|$, d'où en simplifiant par
+$|q|$ :
+\[ E = \frac{K\,|Q|\,|q|}{r^{2}\,|q|} = K\,\frac{|Q|}{r^{2}}. \]
+Le champ est donc la force \emph{par unité de charge} ; c'est exactement pour cela qu'il est
+indépendant de la charge test.
+\end{remarque}
+
+\subsection{Principe de superposition pour le champ}
+
+\begin{theoreme}[superposition des champs]
+Le champ électrique total créé en un point $M$ par plusieurs charges est la \textbf{somme
+vectorielle} des champs créés par chacune d'elles :
+\[ \boxed{\;\vc{E}_{\,\text{tot}}(M) \;=\; \sum_{i} \E{i}{M}\;} \]
+Chaque charge «~ignore~» les autres : on calcule tous les $\E{i}{M}$ comme si la charge $i$ était
+seule, puis on les additionne vectoriellement.
+\end{theoreme}
+
+\begin{exemple}[le champ s'annule au milieu de deux charges identiques]
+Deux charges ponctuelles identiques $q_A = q_B = +q$ sont placées en $A$ et $B$, distants de
+$2r$. Quel est le champ résultant au point $C$, milieu de $[AB]$ ?
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[black!40,dashed,line width=0.6pt] (-3.2,0) -- (3.2,0);
+  \node[cpos] (A) at (-2.4,0) {$+q$};
+  \node[below=2pt,font=\scriptsize] at (A) {$A$};
+  \node[cpos] (B) at (2.4,0) {$+q$};
+  \node[below=2pt,font=\scriptsize] at (B) {$B$};
+  \node[ptn] at (0,0) {};
+  \node[below=4pt,font=\scriptsize] at (0,0) {$C$ (milieu)};
+  % champ cree par A en C : fuit A -> vers la droite
+  \draw[->,>=Stealth,line width=1.3pt,chplig] (-0.05,0.0) -- (1.5,0.0);
+  \node[chplig,above,font=\scriptsize] at (0.75,0.1) {$\E{A}{C}$};
+  % champ cree par B en C : fuit B -> vers la gauche
+  \draw[->,>=Stealth,line width=1.3pt,negcol] (-0.05,-0.45) -- (-1.5,-0.45);
+  \node[negcol,below,font=\scriptsize] at (-0.75,-0.55) {$\E{B}{C}$};
+  % distances
+  \draw[<->,>=Stealth,black!55] (-2.4,-1.0) -- (0,-1.0);
+  \node[black!55,below,font=\scriptsize] at (-1.2,-1.0) {$r$};
+  \draw[<->,>=Stealth,black!55] (0,-1.0) -- (2.4,-1.0);
+  \node[black!55,below,font=\scriptsize] at (1.2,-1.0) {$r$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Pourquoi la distance est-elle $r$ ?} Comme $C$ est au milieu de $[AB]$ dont la longueur
+totale est $2r$, on a $AC = CB = r$.
+
+\textbf{Mise en équation.} Les deux champs ont même intensité (mêmes charges, mêmes distances) :
+\[ E_A = E_B = K\,\frac{q}{r^{2}}. \]
+Mais ils pointent dans des \textbf{sens opposés} : $\E{A}{C}$ fuit $A$ (vers la droite), tandis que
+$\E{B}{C}$ fuit $B$ (vers la gauche). La somme vectorielle est donc nulle :
+\[ \boxed{\;\vc{E}_{\,\text{tot}}(C) = \E{A}{C} + \E{B}{C} = \vc{0}\;} \]
+
+\textbf{Conséquence pour une charge test.} Plaçons en $C$ une charge quelconque $q_0$ (positive
+\emph{ou} négative). La force qu'elle subit est $\vc{F} = q_0\,\vc{E}_{\,\text{tot}} = \vc{0}$ :
+elle \textbf{reste immobile} au milieu, quel que soit le signe de $q_0$. C'est un point
+d'\textbf{équilibre} (instable : un léger déplacement brise la symétrie et la charge s'enfuit).
+\end{exemple}
+
+\begin{exemple}[champ nul : où le trouver entre deux charges inégales ?]
+Deux charges ponctuelles $q_A = \SI{4}{\coulomb}$ et $q_B = \SI{9}{\coulomb}$ (positives) sont
+distantes de $L = \SI{100}{\centi\metre}$. Où le champ total peut-il s'annuler ?
+
+\textbf{Raisonnement qualitatif.} Entre $A$ et $B$, $\E{A}{M}$ pointe vers $B$ (il fuit $A$) et
+$\E{B}{M}$ pointe vers $A$ (il fuit $B$) : ils sont \emph{opposés}, donc peuvent se compenser.
+C'est forcément \textbf{entre les deux charges}, plus près de la \emph{petite} charge ($A$).
+
+\textbf{Mise en équation.} Soit $x = AM$. Alors $MB = L-x$. La condition $E_A = E_B$ s'écrit
+\[ K\,\frac{4}{x^{2}} = K\,\frac{9}{(L-x)^{2}}
+   \;\Longrightarrow\; \frac{(L-x)^{2}}{x^{2}} = \frac{9}{4}
+   \;\Longrightarrow\; \frac{L-x}{x} = \frac{3}{2}. \]
+On en déduit $2(L-x) = 3x$, soit $2L = 5x$, donc
+\[ x = \frac{2L}{5} = \frac{2\times 100}{5} = \SI{40}{\centi\metre}. \]
+\textbf{Vérification.} En $M$ situé à $\SI{40}{\centi\metre}$ de $A$ (et donc
+$\SI{60}{\centi\metre}$ de $B$), le rapport des distances est $60/40 = 3/2$, exactement ce qu'il
+faut pour compenser le rapport des charges $\sqrt{9/4}=3/2$. L'astuce consiste à \emph{prendre la
+racine} de l'équation en $1/r^{2}$ pour obtenir une équation linéaire.
+\end{exemple}
+
+\begin{exemple}[champ au centre d'un carré de quatre charges]
+Quatre charges identiques $+q$ sont placées aux quatre sommets d'un carré. Quel est le champ au
+centre $O$ du carré ?
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[black!40,dashed] (-2,-2) rectangle (2,2);
+  \node[cpos,scale=0.85] (TL) at (-2,2) {$+q$};
+  \node[cpos,scale=0.85] (TR) at (2,2) {$+q$};
+  \node[cpos,scale=0.85] (BL) at (-2,-2) {$+q$};
+  \node[cpos,scale=0.85] (BR) at (2,-2) {$+q$};
+  \node[ptn] (O) at (0,0) {};
+  \node[below right=-1pt,font=\scriptsize] at (O) {$O$};
+  % 4 vecteurs champs, opposes deux a deux
+  \draw[->,>=Stealth,line width=1.2pt,chplig] (0,0) -- (1.3,0);   % depuis la gauche
+  \draw[->,>=Stealth,line width=1.2pt,chplig] (0,0) -- (-1.3,0);
+  \draw[->,>=Stealth,line width=1.2pt,negcol] (0,0) -- (0,1.3);
+  \draw[->,>=Stealth,line width=1.2pt,negcol] (0,0) -- (0,-1.3);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Analyse par symétrie.} Le centre $O$ est à \emph{égale distance} des quatre sommets, donc
+les quatre champs créés ont la \textbf{même intensité}. Par symétrie centrale, le champ créé par
+une charge et celui créé par la charge \emph{diamétralement opposée} sont exactement
+\textbf{opposés} (mêmes normes, sens contraires). Ils s'annulent donc deux à deux :
+\[ \vc{E}_{\,\text{tot}}(O) = \vc{0}. \]
+\textbf{Généralisation.} Ce résultat s'étend à toute configuration \emph{centrosymétrique} de
+charges identiques (polygone régulier à $n$ sommets, etc.) : au centre, le champ est toujours
+nul. C'est l'argument de \textbf{symétrie} qui permet de conclure \emph{sans aucun calcul}.
+\end{exemple}
+
+\begin{exemple}[superposition de deux charges d'amplitudes différentes]
+Une charge $q$ (positive) est placée au point $C$ et une charge $Q = 4q$ au point $O$, avec
+$CO = r$. On considère le point $B$, sur la droite $(CO)$, situé \emph{au-delà} de $O$ à la
+distance $OB = r$ (donc $CB = CO + OB = 2r$). Comparons le champ total en $B$ au champ créé par la
+seule charge $Q$ en un point $D$ tel que $OD = 2r$.
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \draw[black!40,dashed,line width=0.6pt] (-1.5,0) -- (5.5,0);
+  \node[cpos,scale=0.85] (C) at (0,0) {$q$};
+  \node[below=3pt,font=\scriptsize] at (C) {$C$};
+  \node[cpos,scale=0.95] (O) at (1.6,0) {$4q$};
+  \node[below=3pt,font=\scriptsize] at (O) {$O$};
+  \node[ptn] at (3.2,0) {};
+  \node[below=3pt,font=\scriptsize] at (3.2,0) {$B$};
+  \node[ptn] at (4.8,0) {};
+  \node[below=3pt,font=\scriptsize] at (4.8,0) {$D$};
+  % distances
+  \draw[<->,>=Stealth,black!55] (0,-0.9) -- (1.6,-0.9); \node[black!55,below,font=\scriptsize] at (0.8,-0.9) {$r$};
+  \draw[<->,>=Stealth,black!55] (1.6,-0.9) -- (3.2,-0.9); \node[black!55,below,font=\scriptsize] at (2.4,-0.9) {$r$};
+  \draw[<->,>=Stealth,black!55] (1.6,-1.5) -- (4.8,-1.5); \node[black!55,below,font=\scriptsize] at (3.2,-1.5) {$2r$};
+  % en B : deux champs de meme sens (vers la droite)
+  \draw[->,>=Stealth,line width=1.3pt,chplig] (3.2,0.35) -- (4.2,0.35);
+  \node[chplig,above,font=\scriptsize] at (3.7,0.4) {$\E{C}{B}$};
+  \draw[->,>=Stealth,line width=1.3pt,negcol] (3.2,0.75) -- (4.6,0.75);
+  \node[negcol,above,font=\scriptsize] at (3.9,0.8) {$\E{O}{B}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Étape 1 — sens des champs en $B$.} Les deux charges sont positives : $\E{C}{B}$ fuit $C$
+(vers la droite) et $\E{O}{B}$ fuit $O$ (vers la droite). Comme $B$ est \emph{au-delà} de $O$, les
+deux champs ont le \textbf{même sens} : ils s'\textbf{additionnent}.
+
+\textbf{Étape 2 — intensités individuelles en $B$.}
+\[ E_{C/B} = K\,\frac{q}{(CB)^{2}} = K\,\frac{q}{(2r)^{2}} = \frac{K\,q}{4r^{2}},
+   \qquad
+   E_{O/B} = K\,\frac{4q}{(OB)^{2}} = K\,\frac{4q}{r^{2}}. \]
+
+\textbf{Étape 3 — champ total en $B$.} Les sens étant identiques, on ajoute les intensités :
+\[ E(B) = E_{C/B} + E_{O/B} = \frac{K\,q}{4r^{2}} + \frac{4K\,q}{r^{2}}
+        = \frac{K\,q}{r^{2}}\!\left(\frac{1}{4} + 4\right)
+        = \boxed{\,\dfrac{17}{4}\,\dfrac{K\,q}{r^{2}}\,}. \]
+
+\textbf{Étape 4 — comparaison avec le champ en $D$.} Au point $D$ (situé à $OD = 2r$ de $O$), le
+champ créé par la \emph{seule} charge $Q = 4q$ vaut
+\[ E'(D) = K\,\frac{4q}{(2r)^{2}} = K\,\frac{q}{r^{2}}. \]
+On en déduit le rapport
+\[ \frac{E(B)}{E'(D)} = \frac{\dfrac{17}{4}\,\dfrac{Kq}{r^{2}}}{\dfrac{Kq}{r^{2}}} = \boxed{\,\dfrac{17}{4}\,}. \]
+
+\textbf{Bilan.} Le champ total en $B$ est $\dfrac{17}{4}\approx 4{,}25$ fois plus intense que le
+champ créé par la seule charge $Q$ au point $D$. Cet exemple illustre les deux réflexes-clés de la
+superposition : (i) raisonner sur les \textbf{sens} avant d'additionner (somme ou différence selon
+la position), (ii) \textbf{factoriser} $Kq/r^{2}$ pour comparer des rapports sans calculer
+explicitement les valeurs.
+\end{exemple}
+
+% =====================================================================
+\section{Lignes de champ électrique}
+% =====================================================================
+
+\subsection{Définition et propriétés}
+
+\begin{definition}[ligne de champ électrique]
+Une \textbf{ligne de champ électrique} est une courbe \emph{orientée} telle qu'en chacun de ses
+points le vecteur champ $\vc{E}$ soit \textbf{tangent} à la courbe, et orientée dans le
+\textbf{même sens} que $\vc{E}$. L'ensemble des lignes de champ autour d'une distribution de charges
+forme le \textbf{spectre électrique}.
+\end{definition}
+
+\begin{theoreme}[propriétés des lignes de champ]
+\leavevmode
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item Elles \textbf{partent} des charges \textbf{positives} et \textbf{aboutissent} aux charges
+        \textbf{négatives} (ou s'enfuient à l'infini s'il n'y a pas de charge négative).
+  \item Elles \textbf{ne se croisent jamais} : en tout point, le champ a une direction unique.
+  \item Leur \textbf{densité} (nombre de lignes par unité de surface perpendiculaire) est
+        proportionnelle à l'\textbf{intensité} du champ : là où les lignes sont \emph{resserrées},
+        le champ est \emph{fort} ; là où elles sont \emph{écartées}, le champ est \emph{faible}.
+  \item Une charge test \textbf{positive}, lâchée librement, se déplace en suivant (au début) la
+        tangente à la ligne de champ.
+\end{enumerate}
+\end{theoreme}
+
+\subsection{Allure des lignes dans les configurations classiques}
+
+\subsubsection{Charge ponctuelle unique : champ radial}
+
+Pour une charge ponctuelle isolée, les lignes de champ sont des \textbf{droites rayonnantes} passant
+par la charge (champ \emph{radial}). Pour une charge positive elles \emph{divergent} (le champ
+fuit la charge) ; pour une charge négative elles \emph{convergent} (le champ pointe vers elle).
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  % divergent (charge +)
+  \begin{scope}[xshift=-4.2cm]
+    \foreach \a in {0,30,...,330}
+       {\draw[lignechamp,->,>=Stealth] (0,0) -- (\a:2.2);}
+    \node[cpos,scale=1.1] at (0,0) {$+$};
+    \node[font=\small\bfseries,primarydark] at (0,-2.8) {Lignes divergentes};
+    \node[font=\scriptsize,black!60] at (0,-3.25) {(charge positive)};
+  \end{scope}
+  % convergent (charge -)
+  \begin{scope}[xshift=4.2cm]
+    \foreach \a in {0,30,...,330}
+       {\draw[lignechamp,->,>=Stealth] (\a:2.2) -- (0,0);}
+    \node[cneg,scale=1.1] at (0,0) {$-$};
+    \node[font=\small\bfseries,primarydark] at (0,-2.8) {Lignes convergentes};
+    \node[font=\scriptsize,black!60] at (0,-3.25) {(charge négative)};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Deux charges de signes opposés : le dipôle}
+
+C'est la configuration la plus fréquente (figure historique des graines de gazon dans l'huile, ou
+de la limaille de fer). Les lignes \emph{naissent} sur la charge $+$ et se \emph{terminent} sur la
+charge $-$ en dessinant des arcs.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \node[cpos] (P) at (-2.2,0) {$+$};
+  \node[cneg] (N) at (2.2,0) {$-$};
+  % arcs reliant + a -
+  \foreach \y/\c in {0.0/0.6, 0.9/1.2, 1.6/1.6, -0.9/1.2, -1.6/1.6}{
+     \draw[lignechamp,->,>=Stealth]
+        (-1.75,\y*0.55) .. controls (-0.6,\y) and (0.6,\y) .. (1.75,\y*0.55);}
+  % ligne axiale directe
+  \draw[lignechamp,->,>=Stealth,line width=1.3pt] (-1.6,0) -- (1.6,0);
+  % quelques lignes extérieures "de l'infini" vers la charge -
+  \draw[lignechamp,->,>=Stealth] (-1.75,2.1) .. controls (0,2.6) .. (1.75,2.1);
+  \draw[lignechamp,->,>=Stealth] (-1.75,-2.1) .. controls (0,-2.6) .. (1.75,-2.1);
+  \node[font=\small,primarydark] at (0,-3.1) {Dipôle : lignes allant de la charge $+$ vers la charge $-$};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Deux charges de même signe : répulsion des lignes}
+
+Quand les deux charges sont de même signe, les lignes «~se repoussent~» et décrivent des courbes
+partant de l'une \emph{et} de l'autre pour s'enfuir vers l'infini. Au point milieu, le champ est
+nul : c'est un \textbf{point neutre} où aucune ligne ne passe.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \node[cpos] (P) at (-2.0,0) {$+$};
+  \node[cpos] (N) at (2.0,0) {$+$};
+  % lignes qui partent a droite de la charge gauche
+  \foreach \a in {10,40,-10,-40,70,-70}{
+     \draw[lignechamp,->,>=Stealth] (-2.0,0) -- ++(\a:3.4);}
+  % lignes qui partent a gauche de la charge droite
+  \foreach \a in {170,140,190,220,110,250}{
+     \draw[lignechamp,->,>=Stealth] (2.0,0) -- ++(\a:3.4);}
+  % quelques lignes presque axiales qui s'ecartent
+  \draw[lignechamp,->,>=Stealth] (-2.0,0) .. controls (-1,1.0) and (1,1.0) .. (2.0,0);
+  \node[font=\small,primarydark] at (0,-3.0) {Deux charges $+$ : lignes divergentes, champ nul au milieu};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Cas particulier du condensateur plan : champ uniforme}
+
+\begin{definition}[condensateur plan]
+Un \textbf{condensateur plan} est formé de deux \textbf{armatures} (plaques) métalliques
+\emph{parallèles}, l'une chargée positivement ($+Q$) et l'autre négativement ($-Q$), séparées par
+une faible distance. Entre les plaques, les lignes de champ sont \textbf{parallèles et
+équiréparties} : le champ y est \textbf{uniforme} (même direction, même sens, même intensité en
+tout point). Au bord des plaques, les lignes se courbent légèrement (effet de bord).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % armatures
+  \fill[platpos] (-3,1.4) rectangle (3,1.6);
+  \fill[platneg] (-3,-1.6) rectangle (3,-1.4);
+  \node[poscol,font=\bfseries] at (3.4,1.5) {$+Q$};
+  \node[negcol,font=\bfseries] at (3.4,-1.5) {$-Q$};
+  \node[poscol,font=\scriptsize,left] at (-3.1,1.5) {armature $A$ ($V_A$)};
+  \node[negcol,font=\scriptsize,left] at (-3.1,-1.5) {armature $B$ ($V_B$)};
+  % lignes de champ uniformes (vers le bas, de + vers -)
+  \foreach \x in {-2.4,-1.6,-0.8,0,0.8,1.6,2.4}{
+     \draw[lignechamp,->,>=Stealth] (\x,1.3) -- (\x,-1.3);}
+  % distance d
+  \draw[<->,>=Stealth,black!60] (-3.0,1.4) -- (-3.0,-1.4);
+  \node[black!60,left,font=\scriptsize] at (-3.0,0) {$d$};
+  % legende
+  \node[chplig,font=\small] at (0,2.1) {champ uniforme $\vc{E}$};
+  \draw[lignechamp,->,>=Stealth,line width=1.4pt] (1.7,2.1) -- (1.7,1.8);
+\end{tikzpicture}
+\end{center}
+
+\begin{theoreme}[orientation du champ dans un condensateur]
+Dans un condensateur plan, le vecteur champ électrique est \textbf{orienté de l'armature positive
+vers l'armature négative}, c'est-à-dire \textbf{vers l'armature de potentiel le plus bas}.
+\end{theoreme}
+
+% =====================================================================
+\section{Différence de potentiel et énergie électrique}
+% =====================================================================
+
+\subsection{Le potentiel électrique}
+
+\begin{definition}[potentiel électrique]
+Le \textbf{potentiel électrique} $V_M$ en un point $M$ est l'\emph{énergie qu'il faut fournir, par
+unité de charge}, pour amener une charge test positive depuis l'infini (où le potentiel est pris
+nul) jusqu'au point $M$, sans la mettre en mouvement. C'est une grandeur \textbf{scalaire} (un
+nombre, pas un vecteur), qui ne dépend que de la position $M$ et des charges qui créent le champ.
+\end{definition}
+
+\begin{formule}[définition du potentiel]
+\[ V_M = \dfrac{W_{\infty\to M}}{q} \]
+\begin{ou}
+  \item $V_M$ : potentiel électrique au point $M$, en \textbf{volts} (\si{\volt}) ;
+  \item $W_{\infty\to M}$ : travail fourni pour amener la charge depuis l'infini, en \si{\joule} ;
+  \item $q$ : charge test positive déplacée, en \si{\coulomb}.
+\end{ou}
+\textbf{Conséquence clé} : pour une même position $M$, le rapport $W_{\infty\to M}/q$ est
+\emph{constant}, quelle que soit la charge $q$ transportée. C'est ce rapport constant qui définit
+le potentiel.
+\end{formule}
+
+\begin{remarque}[seul le potentiel est «~absolu~», mais seule la différence se mesure]
+Le potentiel $V_M$ dépend de l'origine arbitraire «~infini = 0~» ; sa valeur absolue importe peu.
+En revanche, la \textbf{différence} de potentiel entre deux points est une grandeur physique bien
+définie, et c'est elle que mesure un voltmètre. On la note $U_{AB}$ :
+\[ U_{AB} \;=\; V_A - V_B. \]
+\end{remarque}
+
+\subsection{La différence de potentiel (tension)}
+
+\begin{definition}[différence de potentiel]
+La \textbf{différence de potentiel} (d.d.p.), ou \textbf{tension}, entre deux points $A$ et $B$ est
+\[ \boxed{\,U_{AB} = V_A - V_B\,} \]
+Elle représente, en valeur absolue, l'\textbf{énergie qu'il faut fournir par unité de charge} pour
+déplacer une charge positive de $B$ vers $A$ dans le champ électrique. Son unité est le
+\textbf{volt} (\si{\volt}), équivalent à \SI{1}{\joule\per\coulomb} ($1~\mathrm{V} = 1~\mathrm{J/C}$).
+\end{definition}
+
+\begin{formule}[travail électrique et d.d.p.]
+\[ \boxed{\;W_{B\to A} = q\,(V_A - V_B) = q\,U_{AB}\;} \]
+\begin{ou}
+  \item $W_{B\to A}$ : travail de la force électrique pour déplacer $q$ de $B$ vers $A$, en
+        \si{\joule} ;
+  \item $q$ : charge déplacée (algébrique), en \si{\coulomb} ;
+  \item $U_{AB} = V_A - V_B$ : différence de potentiel, en \si{\volt}.
+\end{ou}
+\textbf{Lecture du signe.} Si $W_{B\to A}>0$, la force électrique \emph{fournit} du travail
+(mouvement «~naturel~») ; si $W_{B\to A}<0$, il faut \emph{fournir} un travail \emph{contre} la
+force électrique pour aller de $B$ à $A$.
+\end{formule}
+
+\begin{exemple}[déplacer une charge «~en remontant~» le potentiel : le travail double]
+Une charge positive $Q$ placée dans le champ d'une autre charge positive doit être déplacée d'un
+point $A$ vers un point $B$ plus proche de la source répulsive. Il faut fournir un travail $x$
+(en joules). Quel travail faut-il fournir pour déplacer une charge $10\,Q$ sur le \emph{même}
+trajet ?
+
+\textbf{Raisonnement.} Le potentiel en chaque point ne dépend \emph{que des charges sources}, pas
+de la charge déplacée. La différence de potentiel $U_{AB}$ est donc la même dans les deux cas.
+D'après la formule du travail :
+\[ W_{A\to B} = q\,U_{AB}. \]
+Si l'on remplace $Q$ par $10\,Q$, le travail est multiplié par $10$ :
+\[ W'_{A\to B} = 10\,Q\,U_{AB} = 10\,W_{A\to B} = 10\,x\ \text{joules}. \]
+\textbf{À retenir.} Le travail électrique est \textbf{proportionnel à la charge} déplacée (à
+d.d.p. constante). Doublez la charge, doublez le travail.
+\end{exemple}
+
+\begin{attention}[énergie potentielle petite $\neq$ tension petite]
+Une énergie potentielle électrique très faible ne signifie \emph{pas} qu'une d.d.p. est faible, car
+\[ U = \frac{W}{q}. \]
+Avec une charge $q$ minuscule, même une d.d.p. très élevée ne représente qu'une toute petite
+énergie : $1~\mathrm{\mu C}$ sous $\SI{1000}{\volt}$ ne stocke que $W = 10^{-6}\times 1000 =
+\SI{e-3}{\joule}$. Inversement, une faible énergie peut cacher une forte tension. Il faut donc
+\textbf{toujours raisonner sur la d.d.p.}, pas sur l'énergie brute.
+\end{attention}
+
+\subsection{Relation champ--tension dans un condensateur plan}
+
+Dans un condensateur plan, le champ est \emph{uniforme}. Il existe alors une relation remarquable
+entre l'intensité du champ, la tension entre les plaques et leur écartement.
+
+\begin{formule}[champ uniforme et différence de potentiel]
+Dans un condensateur plan dont les armatures sont séparées par la distance $d$ et soumises à la
+tension $U_{AB}$ :
+\[ \boxed{\,E = \dfrac{|U_{AB}|}{d}\,} \]
+\begin{ou}
+  \item $E$ : intensité (uniforme) du champ entre les armatures, en \si{\volt\per\metre} ;
+  \item $U_{AB} = |V_A - V_B|$ : valeur absolue de la tension entre les plaques, en \si{\volt} ;
+  \item $d$ : distance entre les armatures, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[le champ ne « dépend » que de $U$ et $d$]
+Pour un condensateur plan, l'intensité du champ \textbf{ne dépend ni de la surface des plaques, ni
+de la charge totale} : connaître la tension et l'écartement suffit. Cette formule est l'une des
+plus utilisées de la fiche, car elle relie directement une grandeur \emph{vectorielle} ($\vc{E}$,
+difficile à mesurer) à une grandeur \emph{scalaire} facile à mesurer ($U_{AB}$, lue au voltmètre).
+\end{remarque}
+
+\begin{exemple}[champ dans un condensateur : calcul direct]
+Un condensateur plan est constitué de deux disques de rayon $R = \SI{10}{\centi\metre}$, séparés par
+$d = 2R = \SI{20}{\centi\metre}$, soumis à une tension $U_{AB} = \SI{100}{\volt}$ ($V_A > V_B$).
+Quel est le champ entre les armatures ?
+
+\textbf{Données.} $U_{AB} = \SI{100}{\volt}$ ; $d = \SI{0.20}{\metre}$. (Le rayon est ici un
+\emph{piège} : il ne sert à rien pour calculer $E$.)
+
+\textbf{Calcul.}
+\[ E = \frac{U_{AB}}{d} = \frac{100}{0{,}20} = \boxed{\SI{500}{\volt\per\metre}}. \]
+\textbf{Sens.} Comme $V_A > V_B$, le champ est orienté de $A$ vers $B$, soit vers l'armature de
+potentiel le plus bas.
+\textbf{Vérification d'ordre de grandeur.} Avec $\SI{100}{\volt}$ répartis sur $\SI{20}{\centi\metre}$,
+on doit trouver quelques centaines de \si{\volt\per\metre} ; le résultat $E = \SI{500}{\volt\per\metre}$
+est bien cohérent (et confirme que le rayon $R$ était un piège : il n'entre pas dans la formule).
+\end{exemple}
+
+\begin{exemple}[tension entre une armature et le milieu]
+Même condensateur que ci-dessus. Quel est le potentiel au point $P$ situé exactement au milieu des
+deux armatures, sachant que $V_A > V_B$ et que l'on cherche $U_{AP} = V_A - V_P$ ?
+
+\textbf{Hypothèse clé.} Dans un condensateur plan, le champ est \textbf{uniforme}, donc le
+\textbf{potentiel décroît linéairement} le long de l'axe perpendiculaire aux plaques. Entre $A$ et
+$B$, la courbe $V(x)$ est une droite qui passe de $V_A$ à $V_B$. Au milieu, $P$ est donc à
+\emph{mi-chemin} en potentiel aussi :
+\[ V_P = \frac{V_A + V_B}{2} \quad\Longrightarrow\quad
+   U_{AP} = V_A - V_P = \frac{V_A - V_B}{2} = \frac{U_{AB}}{2}. \]
+
+\textbf{Application numérique.}
+\[ U_{AP} = \frac{100}{2} = \boxed{\SI{50}{\volt}}. \]
+\textbf{Vérification via le champ.} On a aussi $E = U_{AP}/(d/2)$, soit $U_{AP} = E\cdot d/2 =
+500\times 0{,}10 = \SI{50}{\volt}$. Les deux méthodes concordent : c'est la \emph{linéarité} du
+potentiel en champ uniforme qui justifie la simple division par~2.
+\end{exemple}
+
+\begin{exemple}[la gouttelette en lévitation : équilibre poids--force électrique]
+Une particule de masse $m = 32\times 10^{-12}\ \mathrm{g} = \SI{3.2e-14}{\kilo\gram}$ reste
+\textbf{immobile} entre deux plaques horizontales distantes de $d = \SI{20}{\milli\metre}$ soumises
+à $U_{AB} = \SI{200}{\volt}$, la plaque supérieure étant positive. On donne $g =
+\SI{10}{\newton\per\kilo\gram}$.
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % plaques
+  \fill[platpos] (-3,1.7) rectangle (3,1.9);
+  \fill[platneg] (-3,-1.9) rectangle (3,-1.7);
+  \node[poscol,font=\bfseries] at (3.4,1.8) {$+$ ($A$)};
+  \node[negcol,font=\bfseries] at (3.4,-1.8) {$-$ ($B$)};
+  \node[poscol,font=\scriptsize,left] at (-3.1,1.8) {$V_A$};
+  \node[negcol,font=\scriptsize,left] at (-3.1,-1.8) {$V_B$};
+  % champ uniforme vers le bas
+  \foreach \x in {-2.2,-1.1,0,1.1,2.2}{\draw[lignechamp,->,>=Stealth] (\x,1.55) -- (\x,-1.55);}
+  \node[chplig,font=\small] at (0,2.5) {$\vc{E}$ vers le bas};
+  % particule
+  \node[cneg,scale=0.8] (M) at (0,0) {$-$};
+  \node[font=\scriptsize,below=6pt] at (M) {particule};
+  % force electrique (vers le haut car q<0 et E vers le bas)
+  \draw[forcneg,->,>=Stealth] (0,0.2) -- (0,1.5);
+  \node[negcol,right,font=\scriptsize] at (0.05,0.9) {$\vc{F}_{\text{élec}}=q\vc{E}$};
+  % poids vers le bas
+  \draw[->,>=Stealth,line width=1.3pt,black] (0,-0.2) -- (0,-1.5);
+  \node[black,right,font=\scriptsize] at (0.05,-0.9) {$\vc{P}=m\vc{g}$};
+  % d
+  \draw[<->,>=Stealth,black!60] (-3.0,1.7) -- (-3.0,-1.7);
+  \node[black!60,left,font=\scriptsize] at (-3.0,0) {$d$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Étape 1 — signe de la charge.} Le poids $\vc{P}$ est vers le \emph{bas}. Pour que la
+particule soit en équilibre, la force électrique doit la \emph{compenser}, donc pointer vers le
+\emph{haut}. Or le champ $\vc{E}$ pointe vers le \emph{bas} (de l'armature $+$ vers l'armature
+$-$). Comme $\vc{F} = q\vc{E}$ est \emph{opposée} à $\vc{E}$, on en déduit
+\[ \boxed{\,q<0\,}\quad\text{la particule est chargée \textbf{négativement}.} \]
+
+\textbf{Étape 2 — champ électrique.}
+\[ E = \frac{U_{AB}}{d} = \frac{200}{0{,}020} = \SI{10000}{\volt\per\metre}\ \bigl(=\SI{10000}{\newton\per\coulomb}\bigr). \]
+
+\textbf{Étape 3 — équilibre des forces.} En valeur absolue, $|q|\,E = m\,g$, d'où
+\[ |q| = \frac{m\,g}{E} = \frac{(3{,}2\times 10^{-14})\times 10}{10\,000}
+       = \frac{3{,}2\times 10^{-13}}{10^{4}} = \boxed{\SI{3.2e-17}{\coulomb}}. \]
+
+\textbf{Étape 4 — combien d'électrons en excès ?} La particule étant négative, son excédent
+d'électrons vaut
+\[ N = \frac{|q|}{e} = \frac{3{,}2\times 10^{-17}}{1{,}6\times 10^{-19}} = \frac{3{,}2}{1{,}6}\times 10^{2}
+   = \boxed{200\ \text{électrons}}. \]
+\textbf{Conclusion.} Une particule ne portant que $200$ électrons en trop est suffisamment chargée
+pour léviter sous $\SI{200}{\volt}$ ! Cet équilibre est exactement celui qu'utilisa
+\textbf{Millikan} (1909) pour mesurer la charge élémentaire $e$ à l'aide de gouttelettes d'huile.
+\end{exemple}
+
+\begin{exemple}[compter les électrons transférés à un électroscope]
+On charge un électroscope par contact : après l'opération, il porte une charge $|q| =
+\SI{6.4}{\micro\coulomb}$. Combien d'électrons a-t-il reçus (ou perdus) ?
+
+\textbf{Mise en équation.} Comme toute charge est quantifiée par la charge élémentaire,
+\[ N = \frac{|q|}{e} = \frac{6{,}4\times 10^{-6}}{1{,}6\times 10^{-19}}
+   = \frac{6{,}4}{1{,}6}\times 10^{13} = 4\times 10^{13}. \]
+\textbf{Lecture du signe.} L'énoncé précise que l'électroscope a \emph{reçu} (et non perdu) des
+électrons : il est donc chargé \emph{négativement}, et les $N=4\times 10^{13}$ porteurs sont bien
+des \textbf{électrons excédentaires}. Cet exemple typique illustre comment la charge
+\emph{macroscopique} (en \si{\micro\coulomb}) se ramène à un \emph{dénombrer} de porteurs
+élémentaires, via la division par $e$.
+\end{exemple}
+
+\begin{exemple}[deux charges au sommet d'un triangle équilatéral]
+On place une charge $+q$ à chaque sommet d'un triangle équilatéral de côté $a$. Quelle est
+l'intensité de la force subie par l'une d'elles, due aux deux autres ?
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \coordinate (A) at (-2,0);
+  \coordinate (B) at (2,0);
+  \coordinate (C) at (0,3.464);
+  \draw[primary!60,line width=0.8pt] (A) -- (B) -- (C) -- cycle;
+  \node[below,font=\scriptsize] at (0,-0.1) {$a$};
+  \node[cpos,scale=0.85] at (A) {$+q$};
+  \node[cpos,scale=0.85] at (B) {$+q$};
+  \node[cpos,scale=0.85] at (C) {$+q$};
+  \node[below=4pt,font=\scriptsize] at (A) {$A$};
+  \node[below=4pt,font=\scriptsize] at (B) {$B$};
+  \node[above=2pt,font=\scriptsize] at (C) {$C$};
+  % forces sur C : repoussees vers le haut (symetrie)
+  \draw[forcpos,->,>=Stealth] (C) -- ++(110:1.6);
+  \draw[forcpos,->,>=Stealth] (C) -- ++(70:1.6);
+  \draw[->,>=Stealth,line width=1.6pt,primary] (C) -- ++(90:2.2);
+  \node[primary,right,font=\scriptsize] at (0.1,5.0) {$\vc{F}_{\,\text{tot}}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Symétrie.} Les deux forces $\F{A}{C}$ et $\F{B}{C}$ ont la même intensité
+$f = K\,q^2/a^{2}$ (mêmes charges, mêmes distances $a$). Elles forment entre elles un angle de
+$60^\circ$ (les angles du triangle équilatéral valent $60^\circ$). Par symétrie par rapport à la
+médiatrice, la résultante est \emph{verticale}.
+
+\textbf{Calcul de la résultante.} La composante verticale de chaque force est $f\cos 30^\circ$ (car
+la résultante est sur la bissectrice). En sommant les deux contributions :
+\[ F_{\,\text{tot}} = 2\,f\cos 30^\circ = 2\,\frac{K\,q^2}{a^{2}}\times\frac{\sqrt{3}}{2}
+   = \boxed{\,\dfrac{\sqrt{3}\,K\,q^{2}}{a^{2}}\,}. \]
+\textbf{À retenir.} Le triangle équilatéral est le cas d'école de la \textbf{superposition avec
+symétrie} : on n'a jamais besoin de décomposer en $x/y$, la bissectrice fait tout le travail. La
+force subie par chaque charge est \emph{identique} (par symétrie de permutation) et ne dépend
+\textbf{pas de la masse} des particules.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : formulaire et points-clés}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.55}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.7cm} >{\centering\arraybackslash}p{4.8cm} >{\raggedright\arraybackslash}p{4.7cm}}
+\rowcolor{primary!18}
+\textbf{Loi / grandeur} & \textbf{Formule} & \textbf{À retenir} \\
+\midrule
+Charge élémentaire & $e = 1{,}6\times 10^{-19}$~C & toute charge est multiple de $e$ \\
+Nombre d'électrons & $N = |q|/e$ & quantification de la charge \\
+Loi de Coulomb (intensité) & $F = K\,|q_1 q_2|/d^{2}$ & attractive si signes $\ne$, répulsive si $=$ \\
+Constante de Coulomb & $K=1/(4\pi\varepsilon_0)\approx 9\!\cdot\!10^{9}$ & dans le vide et l'air \\
+Champ créé par une charge & $E = K\,|Q|/r^{2}$ & radial, fuit $+$, pointe vers $-$ \\
+Définition du champ & $\vc{E}=\vc{F}/q\ \Leftrightarrow\ \vc{F}=q\vc{E}$ & indép. de la charge test \\
+Superposition & $\vc{E}_{\text{tot}}=\sum_i\vc{E}_i$ & somme \emph{vectorielle} \\
+Champ dans un condensateur & $E = U_{AB}/d$ & champ uniforme, parallèle \\
+Travail électrique & $W_{B\to A}=q\,U_{AB}$ & $1~\mathrm{V}=1~\mathrm{J/C}$ \\
+Potentiel au point $M$ & $V_M = W_{\infty\to M}/q$ & scalaire, en volts \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[résoudre un problème d'électrostatique en 6 réflexes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Faire un schéma} et placer les charges avec leur signe ; repérer les points où
+        l'on calcule force ou champ.
+  \item \textbf{Convertir les unités} en SI : C, m, V, N (attention aux \si{\micro\coulomb} et
+        \si{\centi\metre} des énoncés !).
+  \item \textbf{Choisir la formule} : Coulomb pour une force entre deux charges ;
+        $E=K|Q|/r^{2}$ pour un champ ponctuel ; $E=U/d$ pour un condensateur.
+  \item \textbf{Prévoir le sens} à partir des signes (attraction/répulsion, $\vc{E}$ fuit les $+$)
+        \emph{avant} de calculer la norme.
+  \item \textbf{Superposer vectoriellement} : décomposer par composantes ou utiliser une symétrie
+        (milieu, centre, bissectrice) pour gagner du temps.
+  \item \textbf{Vérifier la cohérence} : un champ infini, une force négative ou un $E$ qui dépend
+        de la masse signale une erreur.
+\end{enumerate}
+\end{methode}
+
+\begin{attention}[les six pièges les plus fréquents]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Oublier la valeur absolue} dans $F = K|q_1 q_2|/d^2$ (une norme est toujours
+        positive).
+  \item \textbf{Confondre conducteur et isolant} : seuls les isolants se chargent par frottement
+        \emph{de façon durable}.
+  \item \textbf{Mélanger force et champ} : la force \emph{dépend} de la charge test, le champ
+        \emph{n'en dépend pas}.
+  \item \textbf{Oublier la conservation de la charge} : frotter ne crée rien, on ne fait que
+        transférer des électrons.
+  \item \textbf{Croire que le champ dépend de la masse} : il ne dépend jamais de la masse de la
+        particule, seulement de sa charge.
+  \item \textbf{Inverser le sens du champ} dans un condensateur : $\vc{E}$ va \emph{toujours} de
+        l'armature $+$ vers l'armature $-$ (vers le potentiel le plus bas).
+\end{enumerate}
+\end{attention}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 9}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Charge} : $q = N\,e$ avec $e = 1{,}6\times 10^{-19}$~C ; conservation lors de tout
+        transfert d'électrons. Isolants (charges liées) \emph{vs} conducteurs (charges libres).
+  \item \textbf{Loi de Coulomb} : $F = K\,|q_1 q_2|/d^{2}$, attractive entre signes opposés,
+        répulsive entre mêmes signes ; $K\approx 9\!\cdot\!10^{9}$ dans l'air.
+  \item \textbf{Superposition} : la force (ou le champ) total est la somme \emph{vectorielle} des
+        contributions individuelles.
+  \item \textbf{Champ électrique} : $\vc{E} = \vc{F}/q$ ; pour une charge ponctuelle
+        $E = K|Q|/r^{2}$ ; il fuit les charges $+$ et pointe vers les charges $-$.
+  \item \textbf{Lignes de champ} : tangentes à $\vc{E}$, jamais sécantes, denses là où $E$ est
+        fort ; parallèles entre les plaques d'un condensateur (champ uniforme).
+  \item \textbf{Tension et travail} : $W_{B\to A} = q\,U_{AB}$ ; dans un condensateur
+        $E = U_{AB}/d$, et le potentiel décroît linéairement de la plaque $+$ vers la plaque $-$.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+\begin{center}
+\small\color{black!55}
+Fiche 9 — Électrostatique \quad\textbullet\quad Cours rédigé à partir de l'extrait du livre
+(Fiche~9, p.~99--106), avec figures TikZ originales et exemples détaillés.
+\end{center}
+
+\end{document}

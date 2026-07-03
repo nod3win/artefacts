@@ -1,0 +1,114 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — CHIMIE — FICHE 3 — THÈME 2
+%  Composition : atomes et ions — NIVEAU FACILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{124,78,140}
+\definecolor{primarydark}{RGB}{74,44,92}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\newcommand{\nuc}[3]{\prescript{#1}{#2}{\mathrm{#3}}}
+\newcommand{\pp}{p^{+}}
+\newcommand{\ee}{e^{-}}
+\newcommand{\nz}{n^{0}}
+\newcommand{\rep}{\textbf{\color{excol}Réponse : }}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 3 — Thème 2}} : Composition des atomes et des ions}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.8pt,arc=2pt,
+     left=2.6mm,right=2.6mm,top=1.8mm,bottom=1.8mm,
+     fonttitle=\bfseries,coltitle=white,toptitle=0.4mm,bottomtitle=0.4mm},
+}
+\newtcolorbox{bilan}[1][]{boxbase,colback=thmcol!7,colframe=thmcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcounter{exo}
+\newcommand{\cor}[1][]{\stepcounter{exo}\par\medskip%
+  \noindent{\color{primary}\rule[-2pt]{3.5pt}{15pt}}\ \textbf{\color{primarydark}\large Exercice \theexo}%
+  \ \textmd{\normalsize\color{black!55}— corrigé}%
+  \ifx\relax#1\relax\relax\else\ \textmd{\normalsize\color{black!65}\itshape (#1)}\fi\par\nopagebreak\smallskip}
+
+\setlist{leftmargin=1.7em,topsep=2pt,itemsep=3pt}
+
+\begin{document}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=6pt,fill=primarydark,text=white,
+      minimum width=\textwidth,minimum height=1.35cm,align=center,inner sep=6pt]
+  {\Large\bfseries Thème 2 — Composition des atomes et des ions\\[2pt]
+   \normalsize\mdseries Niveau Facile — Corrigé détaillé};
+\end{tikzpicture}
+
+% ---------------------------------------------------------------
+\cor[lire une notation symbolique]
+\begin{enumerate}[label=\alph*)]
+  \item $Z = 17$ (en bas), $A = 35$ (en haut).
+  \item protons : $\np = Z = 17$ ; neutrons : $A - Z = 35 - 17 = 18$.
+  \item électrons (atome neutre) : $\ee = Z = 17$.
+\end{enumerate}
+\rep $17$ protons, $18$ neutrons, $17$ électrons.
+
+% ---------------------------------------------------------------
+\cor[compter dans un atome neutre]
+Protons $= Z = 20$ ; neutrons $= A - Z = 40 - 20 = 20$ ; électrons (neutre) $= Z = 20$.\\
+\rep $\boxed{20\ \pp,\ 20\ \nz,\ 20\ \ee}$.
+
+% ---------------------------------------------------------------
+\cor[écrire la notation]
+\rep $\boxed{\nuc{23}{11}{Na}}$. \\
+Le \textbf{nombre de masse} $A = 23$ se place \emph{en haut} à gauche ; le \textbf{numéro atomique}
+$Z = 11$ se place \emph{en bas} à gauche. Moyen mnémotechnique : $A$ (grand nombre) en haut, $Z$ (petit
+nombre) en bas.
+
+% ---------------------------------------------------------------
+\cor[que représentent $Z$ et $A$ ?]
+\begin{enumerate}[label=\alph*)]
+  \item $Z$ = \textbf{numéro atomique} = nombre de \textbf{protons} ; il identifie l'élément.
+  \item $A$ = \textbf{nombre de masse} = nombre total de \textbf{nucléons} (protons + neutrons).
+  \item nombre de neutrons $= A - Z$ (on soustrait le nombre de protons du nombre de nucléons).
+\end{enumerate}
+
+% ---------------------------------------------------------------
+\cor[remonter à $Z$ et $A$]
+\begin{enumerate}[label=\alph*)]
+  \item $Z = $ nombre de protons $= 8$.
+  \item $A = \pp + \nz = 8 + 8 = 16$.
+  \item électrons (neutre) $= Z = 8$.
+\end{enumerate}
+\rep $Z = 8$, $A = 16$, $8$ électrons (c'est un atome d'oxygène $\nuc{16}{8}{O}$).
+
+\begin{bilan}
+$Z = \np$ (identité de l'élément) ; $A = \np + \nnn$ (nucléons) ; $\nnn = A - Z$ ; atome neutre
+$\Rightarrow \ee = Z$. Dans $\nuc{A}{Z}{X}$ : $A$ en haut, $Z$ en bas.
+\end{bilan}
+
+\end{document}

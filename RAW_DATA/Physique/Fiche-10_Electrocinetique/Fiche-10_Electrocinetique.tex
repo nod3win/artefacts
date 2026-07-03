@@ -1,0 +1,1173 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 10
+%  Électrocinétique
+%  Document généré en LaTeX, figures tracées « from scratch »
+%  (TikZ + circuitikz). Compilation : pdflatex (2 passes min.).
+%  Source : extrait du livre « Réussir le concours d'entrée en
+%  médecine », Fiche 10 — Électrocinétique (p. 123–142).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage[european]{circuitikz}   % symboles électriques (résistances rectangles)
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\usetikzlibrary{babel}   % indispensable : babel-french + circuitikz (chaînes de composants)
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « circuit » réutilisées dans les figures
+\definecolor{wire}{RGB}{35,35,40}           % fil conducteur
+\definecolor{cuivre}{RGB}{184,115,51}       % cuivre (chaleur)
+\definecolor{elec}{RGB}{200,40,40}          % sens du courant (flèches)
+\definecolor{battcol}{RGB}{0,110,160}       % batterie / générateur
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Loi (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLE circuitikz
+% =====================================================================
+\ctikzset{resistor=european, inductor=european, logic ports=european}
+\ctikzset{bipoles/resistor/height=0.30, bipoles/resistor/width=0.60}
+
+% raccourci ohm en mode texte
+\newcommand{\ohm}{\,\Omega}
+
+% petite boîte « symbole + légende » pour la table des symboles (Figure 2)
+\newcommand{\symbox}[2]{%
+  \begin{tabular}[t]{c}%
+    \begin{circuitikz}[scale=0.7,scale=0.95]\draw (0,0) to[#1] (0,1.5);\end{circuitikz}\\[1pt]
+    {\footnotesize #2}%
+  \end{tabular}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 10} — Électrocinétique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Req}{R_{\mathrm{eq}}}
+\newcommand{\Geq}{G_{\mathrm{eq}}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.1cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Électrocinétique}\\[4pt]
+   {\large\bfseries Courant, tension, résistance et circuits}};
+\end{tikzpicture}
+
+\vspace{0.35cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,10}}
+
+\vspace{0.7cm}
+
+% --- Illustration de couverture : circuit fermé simple ---
+\begin{circuitikz}[scale=1.2]
+  \draw (0,0) to[battery1,l_=$E$] (0,2.4)
+        to[closing switch,l=$K$] (3.4,2.4)
+        to[lamp,l_=$L$] (3.4,0)
+        to[ammeter,l=$A$] (0,0);
+  \draw[elec,->,>=Stealth,line width=1.4pt] (0,1.05) -- (0,1.6)
+     node[elec,midway,left,font=\small]{$I$};
+  \node[elec,font=\footnotesize] at (1.7,0.9) {sens conventionnel du courant};
+  \node[wire,font=\footnotesize] at (1.7,-0.75) {circuit fermé};
+\end{circuitikz}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir l'\textbf{intensité} $I$ d'un courant ($I=Q/t$), la relier au nombre de porteurs de charge et l'\emph{utiliser avec un ampèremètre} ;
+  \item énoncer la \textbf{loi des nœuds} (Kirchhoff) et la \textbf{loi des mailles} ;
+  \item définir la \textbf{différence de potentiel} (tension) et mesurer une tension au \emph{voltmètre} ;
+  \item calculer la \textbf{résistance} d'un fil ($R=\rho L/S$), expliquer son \textbf{effet thermique} et sa dépendance avec la température ;
+  \item énoncer et exploiter la \textbf{loi d'Ohm} $U=RI$, reconnaître un dipôle \emph{ohmique} d'un dipôle \emph{non ohmique} ;
+  \item manipuler la \textbf{puissance} ($P=UI=RI^2$) et l'\textbf{énergie de Joule} ($W_{\mathrm{th}}=RI^2t$) ;
+  \item calculer une \textbf{résistance équivalente} en série et en parallèle (conductance) ;
+  \item modéliser un \textbf{générateur réel} ($U=E-rI$) et un \textbf{moteur} ($U=E'+rI$).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 10 du livre — figures originales tracées en TikZ / circuitikz.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : le courant électrique et le circuit}
+% =====================================================================
+L'\textbf{électrocinétique} est l'étude du \emph{mouvement des charges électriques} à l'intérieur
+des conducteurs et des propriétés qui en découlent. Dans un métal conducteur (cuivre, aluminium\ldots),
+ce sont les \textbf{électrons} (porteurs de charge négative) qui se déplacent sous l'action d'un
+générateur. Le \textbf{courant électrique} est ce déplacement ordonné de charges.
+
+\subsection{Pour qu'un courant dure, il faut un circuit fermé}
+
+Pour assurer un déplacement \emph{continu} des charges dans un conducteur, il faut une « pompe à
+électrons » : le \textbf{générateur électrique} (pile, batterie d'accumulateurs, alimentation\ldots).
+Deux conditions doivent être réunies simultanément :
+\begin{enumerate}[leftmargin=2em,topsep=2pt]
+  \item le circuit doit être \textbf{fermé} (les charges doivent pouvoir revenir au générateur) ;
+  \item il doit exister une \textbf{différence de potentiel} entre les bornes du générateur.
+\end{enumerate}
+
+\begin{definition}[circuit électrique]
+Un \textbf{circuit électrique} est un ensemble de dipôles (générateur, fils, récepteurs) reliés par
+des fils conducteurs et formant un \emph{chemin fermé}. Tant que ce chemin est fermé, un courant
+peut circuler ; dès qu'il est ouvert (interrupteur ouvert, fil coupé), le courant s'annule.
+\end{definition}
+
+\begin{center}
+\begin{minipage}{0.62\textwidth}
+\centering
+\begin{circuitikz}[scale=1.1]
+  \draw (0,0) to[battery1,l_=$G$] (0,2.6)
+        to[closing switch,l=$K$] (3.6,2.6)
+        to[lamp,l_=$L$] (3.6,0)
+        to[ammeter,l=$A$] (0,0);
+\end{circuitikz}\\[2pt]
+{\footnotesize\textbf{Figure 1.} Circuit fermé simple : générateur $G$, interrupteur $K$, lampe $L$, ampèremètre $A$.}
+\end{minipage}
+\end{center}
+
+\subsection{Sens conventionnel et symboles usuels}
+
+Par \textbf{convention}, le courant circule de la borne \textbf{$+$} vers la borne \textbf{$-$} du
+générateur, \emph{à l'extérieur} de celui-ci (c'est le « sens conventionnel »). Les électrons, eux,
+se déplacent en réalité dans le \emph{sens opposé} : de la borne négative (répulsive) vers la borne
+positive (attractive), car leur charge est négative.
+
+\begin{center}
+\setlength{\tabcolsep}{14pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cccc}
+\symbox{battery1}{Pile / batterie} &
+\symbox{V,l=$E$}{Générateur} &
+\symbox{closing switch}{Interrupteur fermé} &
+\symbox{ammeter}{Ampèremètre} \\[4pt]
+\symbox{voltmeter}{Voltmètre} &
+\symbox{lamp}{Lampe} &
+\symbox{R,l=$R$}{Résistance} &
+\symbox{elmech}{Moteur} \\
+\end{tabular}\\[3pt]
+{\footnotesize\textbf{Figure 2.} Symboles électriques usuels utilisés dans la fiche.}
+\end{center}
+
+% =====================================================================
+\section{L'intensité du courant électrique}
+% =====================================================================
+\begin{definition}[intensité du courant]
+L'\textbf{intensité} $I$ d'un courant électrique mesure la \emph{quantité de charge} qui traverse une
+section d'un conducteur par unité de temps. Le courant est d'autant plus intense que la circulation
+des charges est grande.
+\end{definition}
+
+\subsection{Courant continu : charge et intensité}
+
+Dans un conducteur, la charge totale transportée est proportionnelle au nombre d'électrons
+déplacés. Chaque électron porte (en valeur absolue) la \textbf{charge élémentaire} $e$.
+
+\begin{formule}[quantité de charge]
+\[ \boxed{\,Q = n\,e\,} \]
+\begin{ou}
+  \item $Q$ : quantité de charge électrique traversant la section, en \textbf{coulombs} (\si{\coulomb}) ;
+  \item $n$ : nombre d'électrons (entier, sans dimension) ;
+  \item $e$ : charge élémentaire, $e = \SI{1,6e-19}{\coulomb}$.
+\end{ou}
+\end{formule}
+
+\begin{formule}[intensité d'un courant continu]
+Si l'intensité est \emph{constante} au cours du temps (courant continu), elle vaut :
+\[ \boxed{\,I = \dfrac{Q}{t}\,} \]
+\begin{ou}
+  \item $I$ : intensité du courant, en \textbf{ampères} (\si{\ampere}) ;
+  \item $Q$ : charge traversant la section, en \si{\coulomb} ;
+  \item $t$ : durée de passage, en \textbf{secondes} (\si{\second}).
+\end{ou}
+On rappelle que $\SI{1}{\ampere}=\SI{1}{\coulomb\per\second}$ : un ampère correspond à une charge de
+\SI{1}{\coulomb} traversant la section chaque seconde.
+\end{formule}
+
+\begin{remarque}[sens des électrons $\neq$ sens conventionnel]
+En courant continu les électrons se déplacent toujours dans le même sens, de la borne \textbf{négative}
+(répulsive) vers la borne \textbf{positive} (attractive) \emph{à l'intérieur} du générateur, et dans le
+sens opposé à l'extérieur. Le \emph{sens conventionnel} du courant (borne $+$ vers borne $-$) est
+donc l'\textbf{inverse} du sens réel de déplacement des électrons. Il faut garder cette convention à
+l'esprit dans toute la fiche.
+\end{remarque}
+
+\begin{methode}[mesurer une intensité : l'ampèremètre]
+L'intensité se mesure à l'aide d'un \textbf{ampèremètre} qui doit toujours être inséré \textbf{en
+série} dans le circuit (le courant doit le traverser). Peu importe sa position le long d'une même
+branche : l'intensité y est partout la même.
+\end{methode}
+
+\begin{exemple}[combien d'électrons par seconde dans un fil ?]
+\textbf{Énoncé.} Un fil conducteur est parcouru par un courant d'intensité $I=\SI{3,2}{\ampere}$.
+Combien d'électrons traversent une section de ce fil chaque seconde ? Ce nombre est-il proche d'une
+mole d'électrons ?
+
+\smallskip
+\textbf{Étape 1 — charge traversant la section en \SI{1}{\second}.} D'après $I=Q/t$ avec $t=\SI{1}{\second}$ :
+\[ Q = I\,t = 3{,}2 \times 1 = \SI{3,2}{\coulomb}. \]
+Chaque seconde, ce sont donc \SI{3,2}{\coulomb} qui franchissent la section.
+
+\smallskip
+\textbf{Étape 2 — nombre d'électrons correspondant.} Avec $Q=n\,e$, soit $n=Q/e$ :
+\[ n = \frac{3{,}2}{1{,}6\times10^{-19}} = 2{,}0\times10^{19}\ \text{électrons}. \]
+\textbf{Étape 3 — comparaison avec une mole.} Une mole d'électrons contiendrait $N_A\approx
+6{,}022\times10^{23}$ électrons. Le rapport vaut :
+\[ \frac{2{,}0\times10^{19}}{6{,}022\times10^{23}} \approx 3{,}3\times10^{-5}. \]
+Ainsi, les $2\times10^{19}$ électrons par seconde ne représentent qu'environ \textbf{un trente-millième
+de mole}. Conclusion de l'exemple : même un courant modéré ($\SI{3,2}{\ampere}$) correspond à un nombre
+d'électrons \emph{gigantesque} à notre échelle, mais \emph{dérisoire} en termes de quantité de matière.
+Cela explique pourquoi les prises électriques ne sont pas une « source d'électrons » : les électrons
+sont déjà dans les fils ; c'est l'\emph{énergie} transportée par le champ que l'on paie.
+\end{exemple}
+
+\subsection{La loi des nœuds (première loi de Kirchhoff)}
+
+Lorsqu'un circuit comporte des branches en parallèle, des \textbf{nœuds} apparaissent (points de
+jonction de plusieurs fils). La conservation de la charge impose une règle simple.
+
+\begin{theoreme}[loi des nœuds]
+En un nœud d'un circuit, la somme des intensités des courants \emph{arrivant} est égale à la somme
+des intensités des courants \emph{partant} :
+\[ \boxed{\;\sum I_{\text{arrivant}} = \sum I_{\text{partant}}\;} \]
+On suppose qu'aucune charge ne peut être ni créée, ni perdue, ni accumulée au nœud (conservation de
+la charge électrique).
+\end{theoreme}
+
+\begin{center}
+\begin{circuitikz}[scale=1.0]
+  % nœud N à gauche, 3 branches parallèles vers la droite puis retour
+  \coordinate (N) at (0,0);  \coordinate (M) at (5.2,0);
+  % branche du haut
+  \draw[wire] (N) -- (0,1.6);
+  \draw (0,1.6) to[R,l_=$R_1$] (5.2,1.6);
+  \draw[wire] (5.2,1.6) -- (M);
+  % branche du milieu
+  \draw (N) to[R,l_=$R_2$] (M);
+  % branche du bas
+  \draw[wire] (N) -- (0,-1.6);
+  \draw (0,-1.6) to[R,l_=$R_3$] (5.2,-1.6);
+  \draw[wire] (5.2,-1.6) -- (M);
+  % courant entrant I et sortants
+  \draw[elec,->,>=Stealth,line width=1.4pt] (-1.7,0) -- ($(N)+(-0.15,0)$)
+     node[elec,midway,above,font=\small]{$I$};
+  \draw[elec,->,>=Stealth,line width=1.2pt] ($(N)+(0,1.2)$) -- ($(N)+(0,1.55)$)
+     node[elec,right,font=\small]{$I_1$};
+  \draw[elec,->,>=Stealth,line width=1.2pt] ($(N)+(0.9,0)$) -- ($(N)+(1.55,0)$)
+     node[elec,above,font=\small]{$I_2$};
+  \draw[elec,->,>=Stealth,line width=1.2pt] ($(N)+(0,-1.2)$) -- ($(N)+(0,-1.55)$)
+     node[elec,right,font=\small]{$I_3$};
+  % nœud
+  \fill[black] (N) circle (2.2pt); \node[above left,font=\small] at (N) {$N$};
+\end{circuitikz}\\[2pt]
+{\footnotesize\textbf{Figure 3.} Trois résistances en parallèle : au nœud $N$, $I = I_1 + I_2 + I_3$.}
+\end{center}
+
+Pour le circuit de la figure 3, le courant $I$ arrive au nœud $N$ et les courants $I_1$, $I_2$, $I_3$
+le quittent (chacun traversant un récepteur mesuré par un ampèremètre), donc :
+\[ \boxed{\,I = I_1 + I_2 + I_3\,}. \]
+La conservation de la charge donne aussi, pour les quantités de charge : $Q = Q_1+Q_2+Q_3$.
+
+\begin{attention}[en série, l'intensité est partout la même]
+Dans une association de dipôles \textbf{en série}, il n'y a \emph{aucun nœud} entre eux : l'intensité
+qui les traverse est donc \textbf{identique} d'un bout à l'autre de la branche ($I=I_1=I_2=\ldots$).
+Ne pas confondre : \emph{loi des nœuds} = parallèle (les intensités s'ajoutent) ;
+\emph{même intensité} = série.
+\end{attention}
+
+\subsection{Courant variable : intensité instantanée}
+
+Lorsque la quantité d'électricité traversant la section \emph{n'est pas constante} dans le temps, le
+courant est dit \textbf{variable}. On définit alors une \textbf{intensité instantanée} $i(t)$.
+
+\begin{formule}[intensité instantanée]
+\[ \boxed{\,i(t) = \lim_{\Delta t \to 0}\dfrac{\Delta q}{\Delta t} = \dfrac{\dd q}{\dd t}\,} \]
+\begin{ou}
+  \item $i(t)$ : intensité instantanée, en ampères (\si{\ampere}) — c'est la \emph{dérivée} de la
+        charge par rapport au temps ;
+  \item $\dd q$ : charge élémentaire traversant la section pendant $\dd t$, en \si{\coulomb} ;
+  \item $\dd t$ : intervalle de temps infinitésimal, en \si{\second}.
+\end{ou}
+\end{formule}
+
+On rencontre ce type de courant dans deux situations courantes : le \textbf{courant alternatif}
+(intensité sinusoïdale, fournie par les prises domestiques) et le \textbf{court-circuit}
+(intensité qui augmente brutalement). La figure ci-dessous illustre le cas alternatif.
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=11cm,height=4.2cm,axis lines=middle,xlabel={$t$},ylabel={$i(t)$},
+    xmin=0,xmax=6.5,ymin=-1.7,ymax=1.9,
+    xtick=\empty,ytick=\empty,
+    every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south},
+    axis line style={primarydark},label style={primarydark}]
+    \addplot[elec,thick,domain=0:6.283,samples=120] {sin(deg(x))};
+    \node[primarydark,font=\footnotesize] at (axis cs:5.6,1.25) {$i(t)=I_{\max}\sin(\omega t)$};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\footnotesize\textbf{Figure 4.} Allure d'un courant alternatif : l'intensité varie (change même de signe) au cours du temps.}
+\end{center}
+
+% =====================================================================
+\section{La différence de potentiel (tension)}
+% =====================================================================
+\begin{definition}[différence de potentiel]
+Aux bornes de tout dipôle parcouru par un courant, il existe une \textbf{différence de potentiel}
+(ddp), encore appelée \textbf{tension} : c'est la « hauteur électrique » qui pousse les charges à
+traverser le dipôle.
+\end{definition}
+
+\subsection{Mesure et conventions de tension}
+
+La tension se mesure avec un \textbf{voltmètre}, toujours placé \textbf{en parallèle} (en
+dérivation) aux bornes du dipôle considéré. On adopte les conventions de fléchage suivantes :
+
+\begin{formule}[conventions de tension]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item aux bornes d'un \textbf{générateur} : $\;U = V_A - V_B$ (en volts, \si{\volt}) ;
+  \item aux bornes d'un \textbf{récepteur} : $\;U' = V_{A'} - V_{B'}$ (en volts, \si{\volt}).
+\end{itemize}
+\begin{ou}
+  \item $U$, $U'$ : tensions (ddp), en volts (\si{\volt}) ;
+  \item $V_A$, $V_B$, \ldots : potentiels électriques en chaque point, en volts (\si{\volt}).
+\end{ou}
+Aux bornes d'un générateur, le courant circule dans le sens des potentiels \emph{croissants} : la
+tension et le courant y sont fléchés \textbf{dans le même sens}.
+\end{formule}
+
+\begin{center}
+\begin{circuitikz}[scale=1.0]
+  \draw (0,0) to[battery1,l_=$G$] (0,2.4) -- (3.4,2.4) -- (3.4,1.55)
+        to[generic,l_=$R$] (3.4,0.9) -- (3.4,0) -- (0,0);
+  % voltmètre aux bornes du récepteur (branche parallèle)
+  \draw (3.4,1.55) to[short,-*] (4.9,1.55)
+        to[voltmeter,l=V] (4.9,0.9)
+        to[short,-*] (3.4,0.9);
+  % flèches de tension
+  \draw[battcol,->,>=Stealth,line width=1.3pt] (0.0,0.3) -- (0.0,2.1)
+     node[battcol,midway,left,font=\small]{$U$};
+  \draw[attncol,->,>=Stealth,line width=1.3pt] (3.78,1.5) -- (3.78,0.95)
+     node[attncol,midway,right,font=\small]{$U'$};
+\end{circuitikz}\\[2pt]
+{\footnotesize\textbf{Figure 5.} Voltmètre branché en parallèle aux bornes du récepteur $R$. Tension $U$ du générateur (sens $+/-$), tension $U'$ du récepteur.}
+\end{center}
+
+\subsection{La loi des mailles (deuxième loi de Kirchhoff)}
+
+\begin{definition}[maille]
+Une \textbf{maille} est un \emph{chemin fermé} dans un circuit : on part d'un point et, en suivant
+des fils, on revient au point de départ sans passer deux fois par le même dipôle.
+\end{definition}
+
+\begin{theoreme}[loi des mailles]
+La somme des tensions le long d'une maille d'un réseau électrique est \textbf{nulle} :
+\[ \boxed{\;\sum_{\text{maille}} U = 0\;} \]
+On suppose qu'aucune charge n'est ni créée, ni perdue, ni accumulée.
+\end{theoreme}
+
+\begin{methode}[appliquer la loi des mailles en 4 étapes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Choisir la maille} (chemin fermé).
+  \item \textbf{Choisir un sens de parcours} arbitraire (le long de la maille).
+  \item \textbf{Affecter du signe $+$} les tensions fléchées \emph{dans le même sens} que le parcours.
+  \item \textbf{Affecter du signe $-$} les tensions fléchées \emph{en sens contraire}.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[loi des mailles sur un circuit générateur $+$ récepteur]
+\textbf{Énoncé.} Un circuit fermé contient un générateur (tension $U$) et un récepteur (tension $U'$).
+Que vaut la somme des tensions dans la maille ?
+
+\smallskip
+\begin{center}
+\begin{circuitikz}[scale=0.95]
+  \draw (0,0) to[battery1,l_=$U$] (0,2.4) -- (3.6,2.4) -- (3.6,1.6)
+        to[generic,l_=$U'$] (3.6,0.8) -- (3.6,0) -- (0,0);
+  % sens de parcours (flèche rouge courbe)
+  \draw[elec,->,>=Stealth,line width=1.3pt] (1.8,2.8) arc[start angle=0,end angle=-310,radius=1.1]
+     node[elec,font=\footnotesize,above] at (2.9,2.8) {parcours};
+  \draw[battcol,->,>=Stealth,line width=1.3pt] (0,0.3) -- (0,2.1)
+     node[battcol,midway,left,font=\small]{$U$};
+  \draw[attncol,->,>=Stealth,line width=1.3pt] (3.95,1.55) -- (3.95,0.85)
+     node[attncol,midway,right,font=\small]{$U'$};
+\end{circuitikz}
+\end{center}
+
+\textbf{Application.} Choisissons un parcours \emph{horaire}. La tension $U$ (générateur) est fléchée
+dans le sens du parcours : coefficient $+$. La tension $U'$ (récepteur) est fléchée en sens contraire
+du parcours : coefficient $-$. La loi des mailles donne :
+\[ +\,U \;-\; U' = 0 \qquad\Longrightarrow\qquad \boxed{\,U = U'\,}. \]
+Dans ce circuit simple, la tension fournie par le générateur est \emph{intégralement} récupérée aux
+bornes du récepteur.
+\end{exemple}
+
+\begin{formule}[additivité des tensions selon le montage]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item En \textbf{série} ($n$ récepteurs en série avec un générateur) :
+        $\;\boxed{\,U = \displaystyle\sum_{i=1}^{n} U_i\,}$ \quad (les tensions s'ajoutent).
+  \item En \textbf{parallèle} ($n$ récepteurs en parallèle) :
+        $\;\boxed{\,U = U_1 = U_2 = \ldots = U_n\,}$ \quad (toutes les tensions sont égales).
+\end{itemize}
+\end{formule}
+
+% =====================================================================
+\section{La résistance d'un conducteur}
+% =====================================================================
+Tout conducteur s'oppose plus ou moins au passage du courant : c'est la \textbf{résistance}
+électrique, notée $R$ et exprimée en \textbf{ohms} (\si{\ohm}).
+
+\subsection{Loi de Pouillet}
+
+Les expériences montrent que la résistance d'un fil conducteur métallique, homogène et de section
+constante, dépend de sa \emph{nature}, de sa \emph{longueur}, de l'\emph{aire de sa section} et,
+plus légèrement, de sa \emph{température}.
+
+\begin{formule}[loi de Pouillet — résistance d'un fil]
+\[ \boxed{\,R = \rho\,\dfrac{L}{S}\,} \]
+\begin{ou}
+  \item $R$ : résistance du fil, en ohms (\si{\ohm}) ;
+  \item $L$ : longueur du fil, en mètres (\si{\metre}) ;
+  \item $S$ : aire (surface) de la section droite du fil, en mètres carrés (\si{\metre\squared}) ;
+  \item $\rho$ : \textbf{résistivité} du matériau, en \si{\ohm\metre}.
+\end{ou}
+La résistivité $\rho$ caractérise la \emph{nature} du conducteur : plus $\rho$ est petit, meilleur est
+le conducteur (cuivre, argent) ; plus $\rho$ est grand, plus le matériau est isolant.
+\end{formule}
+
+\begin{definition}[conductivité]
+La \textbf{conductivité} $\sigma$ est l'inverse de la résistivité : $\sigma = 1/\rho$. Son unité est
+le \si{\per\ohm\per\metre}, aussi écrit \si{\siemens\per\metre} ($\mathrm{S}=\si{\per\ohm}$).
+\end{definition}
+
+\begin{center}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{lcc}
+\rowcolor{primary!18}
+\textbf{Matériau} & \textbf{Résistivité $\rho$ (\si{\ohm\metre})} & \textbf{Type} \\
+\midrule
+Argent (Ag)   & $\sim 1{,}6\times10^{-8}$ & excellent conducteur \\
+Cuivre (Cu)   & $\sim 1{,}7\times10^{-8}$ & excellent conducteur \\
+Aluminium (Al)& $\sim 2{,}8\times10^{-8}$ & bon conducteur \\
+Fer           & $\sim 10\times10^{-8}$    & conducteur \\
+Carbone       & $\sim 3{,}5\times10^{-5}$ & mauvais conducteur \\
+Verre / porcelaine & $\sim 10^{12}$ à $10^{16}$ & isolant \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{exemple}[résistance d'un fil de cuivre]
+\textbf{Énoncé.} Quel est l'avantage d'utiliser du cuivre ($\rho\approx\SI{1,7e-8}{\ohm\metre}$) pour
+un fil de longueur $L=\SI{100}{\metre}$ et de section $S=\SI{2,0}{\milli\metre\squared}$ ?
+
+\smallskip
+\textbf{Conversion de la section en \si{\metre\squared}.} \;
+$\SI{2,0}{\milli\metre\squared} = 2{,}0\times10^{-6}\,\si{\metre\squared}$.
+
+\textbf{Application de la loi de Pouillet.}
+\[ R = \rho\,\frac{L}{S} = 1{,}7\times10^{-8}\times\frac{100}{2{,}0\times10^{-6}}
+   = \SI{0,85}{\ohm}. \]
+\textbf{Interprétation.} Sur \SI{100}{\metre}, un fil de cuivre d'à peine \SI{2}{\milli\metre\squared}
+présente une résistance inférieure à l'ohm : le cuivre est bien un \emph{très bon} conducteur, ce qui
+explique son usage universel dans le câblage. Si l'on doublait la section ($S'=\SI{4,0}{\milli\metre\squared}$),
+la résistance serait divisée par deux ($R'=\SI{0,425}{\ohm}$) : \textbf{$R$ est inversement
+proportionnelle à $S$}. Si l'on doublait la longueur, $R$ doublerait : \textbf{$R$ est proportionnelle à $L$}.
+\end{exemple}
+
+\subsection{Effet de la température}
+
+Pour un métal pur, la résistivité (donc la résistance) varie de façon \textbf{linéaire} avec la
+température, tant que celle-ci reste modérée.
+
+\begin{formule}[résistivité en fonction de la température]
+\[ \boxed{\,\rho = \rho_0\,(1 + \alpha\,T)\,} \qquad\text{et donc}\qquad
+   R = R_0\,(1 + \alpha\,T) \]
+\begin{ou}
+  \item $\rho$ : résistivité à la température $T$, en \si{\ohm\metre} ;
+  \item $\rho_0$ : résistivité de référence (à $T=0\,\si{\degreeCelsius}$), en \si{\ohm\metre} ;
+  \item $T$ : température, en degrés Celsius (\si{\degreeCelsius}) ;
+  \item $\alpha$ : \textbf{coefficient de température}, en \si{\per\degreeCelsius}.
+\end{ou}
+\textbf{Valable uniquement} si la température n'est pas trop élevée.
+\end{formule}
+
+\begin{exemple}[comment évolue une résistance avec la température]
+\textbf{Énoncé.} La résistance d'un fil d'aluminium vaut $R_0=\SI{50}{\ohm}$ à $\SI{0}{\degreeCelsius}$,
+avec un coefficient de température $\alpha=\SI{4e-3}{\per\degreeCelsius}$. Que devient-elle à
+$\SI{250}{\degreeCelsius}$ ?
+
+\smallskip
+\textbf{Astuce.} Il n'est même pas nécessaire de connaître $R_0$ pour connaître le \emph{rapport} :
+\[ \frac{R(T)}{R_0} = 1 + \alpha\,T = 1 + 4\times10^{-3}\times 250 = 1 + 1 = 2. \]
+
+\textbf{Application numérique.}
+\[ R(250\,\si{\degreeCelsius}) = 50 \times \bigl(1 + 4\times10^{-3}\times 250\bigr)
+   = 50 \times 2 = \boxed{\,\SI{100}{\ohm}\,}. \]
+\textbf{Conclusion.} Lorsque la température passe de \SI{0}{} à \SI{250}{\degreeCelsius}, la résistance
+du fil est \textbf{doublée}. C'est pourquoi la résistance d'une \emph{lampe} à filament (très chaude)
+est bien plus grande à chaud qu'à froid : la lampe est un dipôle \emph{non ohmique} (section~5).
+\end{exemple}
+
+% =====================================================================
+\section{La loi d'Ohm}
+% =====================================================================
+\begin{formule}[loi d'Ohm pour un conducteur ohmique]
+Pour un récepteur de résistance $R$, la puissance thermique qu'il consomme vaut $P=RI^2$, alors que,
+pour tout récepteur, $P=U\times I$. En égalant les deux expressions :
+\[ \boxed{\,U = R\,I\,} \qquad\Longleftrightarrow\qquad I = \dfrac{U}{R} \]
+\begin{ou}
+  \item $U$ : tension aux bornes de la résistance, en volts (\si{\volt}) ;
+  \item $R$ : résistance du dipôle, en ohms (\si{\ohm}) ;
+  \item $I$ : intensité qui le traverse, en ampères (\si{\ampere}).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[que nous dit la loi d'Ohm ?]
+Pour une résistance \emph{donnée}, la loi d'Ohm exprime que la tension est \textbf{proportionnelle} à
+l'intensité : $U$ et $I$ varient dans le même sens. Elle indique aussi que, à tension imposée,
+l'intensité est d'autant plus \emph{grande} que $U$ est grand et que $R$ est \emph{faible}.
+\end{remarque}
+
+\subsection{Dipôles ohmiques et non ohmiques}
+
+\begin{definition}[dipôle ohmique]
+Un dipôle est dit \textbf{ohmique} (ou linéaire) lorsqu'il obéit à la loi d'Ohm $U=RI$ : sa
+\textbf{caractéristique} (le graphe de $U$ en fonction de $I$) est une \emph{droite passant par
+l'origine}, de pente constante égale à $R$.
+\end{definition}
+
+\begin{center}
+\begin{minipage}{0.52\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{axis}[width=6.2cm,height=4.6cm,axis lines=middle,xlabel={$I$ (A)},ylabel={$U$ (V)},
+    xmin=0,xmax=3.2,ymin=0,ymax=7.5,
+    xtick={0,1,2,3},ytick={0,2,4,6},
+    axis line style={primarydark},label style={primarydark,font=\footnotesize},
+    tick label style={font=\scriptsize}]
+    \addplot[excol,thick,domain=0:3,samples=2] {2*x};
+    \node[excol,font=\footnotesize] at (axis cs:2.0,5.3) {$U=RI$};
+    \node[excol,font=\scriptsize] at (axis cs:2.6,4.4) {pente $=R$};
+  \end{axis}
+\end{tikzpicture}\\[1pt]
+{\footnotesize\textbf{Figure 6a.} Dipôle ohmique : droite linéaire passant par l'origine.}
+\end{minipage}\hfill
+\begin{minipage}{0.46\textwidth}
+\centering
+\begin{tikzpicture}
+  \begin{axis}[width=6.2cm,height=4.6cm,axis lines=middle,xlabel={$I$ (A)},ylabel={$U$ (V)},
+    xmin=0,xmax=3.2,ymin=0,ymax=7.5,
+    xtick={0,1,2,3},ytick={0,2,4,6},
+    axis line style={primarydark},label style={primarydark,font=\footnotesize},
+    tick label style={font=\scriptsize}]
+    \addplot[attncol,thick,domain=0:3,samples=80] {2*x*(1+0.22*x)};
+    \node[attncol,font=\footnotesize] at (axis cs:1.5,6.0) {non ohmique};
+    \node[attncol,font=\footnotesize] at (axis cs:1.7,3.0) {(lampe)};
+  \end{axis}
+\end{tikzpicture}\\[1pt]
+{\footnotesize\textbf{Figure 6b.} Lampe à filament : $U/I$ augmente avec $I$ (la résistance croît avec la température).}
+\end{minipage}
+\end{center}
+
+\begin{exemple}[reconnaître un dipôle ohmique sur un graphique]
+\textbf{Énoncé.} On trace, pour trois résistances différentes, la tension $U$ à leurs bornes en
+fonction de l'intensité $I$ qui les traverse. On obtient trois droites passant par l'origine, la
+droite n\textsuperscript{o}\,1 étant la plus pentue, la n\textsuperscript{o}\,3 la moins pentue.
+Que peut-on en déduire ?
+
+\smallskip
+\textbf{Analyse.} Puisque les trois caractéristiques sont des droites passant par l'origine, les
+trois dipôles sont \textbf{ohmiques} : dans chaque cas, le quotient $U/I$ est \emph{constant} et vaut
+la résistance. Or la pente de la droite $U=f(I)$ est précisément $R=\Delta U/\Delta I$. On en déduit
+l'ordre des résistances :
+\[ R_1 > R_2 > R_3 \qquad\text{(la pente la plus grande correspond à la résistance la plus grande).} \]
+
+\textbf{Conclusion de l'exemple.} La résistance \textbf{3} est la plus petite : à tension imposée
+égale, c'est elle qui laisse passer le courant le plus intense ($I=U/R$). À l'inverse, à intensité
+égale, c'est la résistance \textbf{1} qui demande la plus grande tension. \textbf{Leçon :} pour un
+dipôle ohmique, $U=f(I)$ est une droite de pente $R$ ; pour un dipôle non ohmique (ex.\ une lampe),
+la « pente » augmente avec $I$ car la résistance dépend de la température.
+\end{exemple}
+
+% =====================================================================
+\section{Puissance et énergie électriques}
+% =====================================================================
+\begin{definition}[puissance électrique]
+La \textbf{puissance} est l'\emph{énergie} qu'un appareil fournit (pour un générateur) ou consomme
+(pour un récepteur, par exemple une lampe) \emph{par unité de temps}.
+\end{definition}
+
+\begin{formule}[puissance électrique]
+\[ \boxed{\,P = \dfrac{W}{t} = U\times I\,} \]
+\begin{ou}
+  \item $P$ : puissance, en \textbf{watts} (\si{\watt}) ;
+  \item $W$ : énergie (travail) échangée, en \textbf{joules} (\si{\joule}) ;
+  \item $t$ : durée, en secondes (\si{\second}) ;
+  \item $U$ : tension aux bornes du dipôle, en volts (\si{\volt}) ;
+  \item $I$ : intensité qui le traverse, en ampères (\si{\ampere}).
+\end{ou}
+La première égalité ($P=W/t$) est la définition ; la deuxième ($P=UI$) se déduit de $U=W/q$ et $I=q/t$.
+\end{formule}
+
+\subsection{La loi de Joule}
+
+\begin{theoreme}[loi de Joule]
+L'\textbf{énergie thermique} (chaleur) libérée dans un conducteur parcouru par un courant est
+proportionnelle au \textbf{carré de l'intensité} ($I^2$), à la \textbf{durée} ($t$) pendant laquelle
+le courant le traverse, et à la \textbf{résistance} $R$ du conducteur :
+\[ \boxed{\,W_{\mathrm{th}} = R\,I^{2}\,t\,} \qquad\text{et}\qquad \boxed{\,P_{\mathrm{th}} = R\,I^{2}\,} \]
+\begin{ou}
+  \item $W_{\mathrm{th}}$ : énergie thermique (chaleur) libérée, en joules (\si{\joule}) ;
+  \item $P_{\mathrm{th}}$ : puissance thermique, en watts (\si{\watt}) ;
+  \item $R$ : résistance du conducteur, en ohms (\si{\ohm}) ;
+  \item $I$ : intensité, en ampères (\si{\ampere}) ; $t$ : durée, en secondes (\si{\second}).
+\end{ou}
+Cette énergie est due aux \textbf{chocs} des électrons contre les atomes (ionisés ou non) lors de
+leur déplacement dans le conducteur : l'énergie libérée est \emph{purement thermique}.
+\end{theoreme}
+
+\begin{remarque}[deux écritures équivalentes de la puissance]
+Pour une résistance, $P=UI$ et $U=RI$ donnent $P=U\times I = (RI)\times I = RI^2$. On peut aussi
+écrire $P=U^2/R$ (en éliminant $I=U/R$). Ces trois formes sont équivalentes pour un \emph{conducteur
+ohmique} :
+\[ P = U\,I = R\,I^{2} = \dfrac{U^{2}}{R}. \]
+\end{remarque}
+
+\begin{exemple}[retrouver la résistance d'un appareil à partir de sa plaque]
+\textbf{Énoncé.} Un appareil porte les indications $\SI{1000}{\watt}$ et $\SI{200}{\volt}$. Quelle est
+sa résistance équivalente, et quelle intensité absorbe-t-il ?
+
+\smallskip
+\textbf{Étape 1 — intensité absorbée.} D'après $P=UI$, soit $I=P/U$ :
+\[ I = \frac{1000}{200} = \SI{5}{\ampere}. \]
+
+\textbf{Étape 2 — résistance.} Avec $P=RI^2$, soit $R=P/I^2$ :
+\[ R = \frac{1000}{5^2} = \frac{1000}{25} = \boxed{\,\SI{40}{\ohm}\,}. \]
+\textbf{Vérification.} $U=RI = 40\times 5 = \SI{200}{\volt}$ \checkmark. \;Cohérent avec la plaque.
+\end{exemple}
+
+\begin{exemple}[chaleur dégagée par des résistances en série]
+\textbf{Énoncé.} Deux résistances $R_1=\SI{10}{\ohm}$ et $R_2=\SI{50}{\ohm}$ sont placées \emph{en
+série}. On applique à l'ensemble une tension constante $U=\SI{20}{\volt}$ pendant $t=\SI{9}{\hour}$.
+Quelle est la chaleur (énergie thermique) dégagée ?
+
+\smallskip
+\textbf{Étape 1 — résistance équivalente (série).}
+\[ R_{\mathrm{eq}} = R_1 + R_2 = 10 + 50 = \SI{60}{\ohm}. \]
+\textbf{Étape 2 — intensité (la même partout en série).}
+\[ I = \frac{U}{R_{\mathrm{eq}}} = \frac{20}{60} = \SI{0,333}{\ampere}\;(=1/3). \]
+\textbf{Étape 3 — conversion de la durée.}
+$t = 9\times 3600 = \SI{32400}{\second}$.
+
+\textbf{Étape 4 — énergie thermique de Joule.}
+\[ W_{\mathrm{th}} = R_{\mathrm{eq}}\,I^{2}\,t = 60 \times \left(\tfrac{1}{3}\right)^{2} \times 32400
+   = 60 \times \tfrac{1}{9}\times 32400 = \boxed{\,\SI{216000}{\joule} = \SI{216}{\kilo\joule}\,}. \]
+\textbf{Bilan.} En une nuit ($\SI{9}{\hour}$), cet ensemble a dissipé \SI{216}{\kilo\joule} de chaleur,
+soit l'énergie nécessaire pour porter environ \SI{0,5}{\litre} d'eau de \SI{20}{} à
+\SI{100}{\degreeCelsius}.
+\end{exemple}
+
+\subsection{Applications : fusible et transport de l'énergie}
+
+\begin{remarque}[le fusible, un protecteur thermique]
+L'\textbf{effet Joule} est le principe du \textbf{fusible} classique : c'est un fil de section bien
+calibrée, souvent noyé dans un isolant inflammable, conçu pour \emph{fondre} dès que l'intensité
+dépasse une valeur de sécurité (par exemple $\SI{16}{\ampere}$). La coupure du circuit protège alors
+l'appareil et l'installation. Dans les maisons, on utilise désormais des \textbf{disjoncteurs} (dont
+le fonctionnement repose sur le magnétisme) pour permettre un réenclenchement immédiat.
+\end{remarque}
+
+\begin{exemple}[pourquoi transporte-t-on l'électricité à très haute tension ?]
+\textbf{Le problème.} Sur une ligne de transport, la chaleur perdue par effet Joule vaut
+$W_{\mathrm{pertes}} = R_{\mathrm{ligne}}\,I^{2}\,t$. On veut transporter une \emph{puissance utile}
+$P=UI$ constante : comment minimiser les pertes ?
+
+\smallskip
+\textbf{Analyse.} À puissance $P$ \emph{constante}, $I=P/U$ : l'intensité diminue quand $U$ augmente.
+Or les pertes sont proportionnelles à $I^2$. \textbf{Doubler la tension divise l'intensité par 2, donc
+les pertes par 4 !}
+
+\textbf{Trois leviers complémentaires pour réduire les pertes :}
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{diminuer la résistance} du fil : choisir un bon conducteur (cuivre, aluminium) ;
+  \item \textbf{augmenter la section} $S$ du fil (car $R=\rho L/S$, donc $R\searrow$ quand $S\nearrow$) ;
+  \item \textbf{diminuer l'intensité} dans la ligne en \textbf{augmentant la tension} (à puissance
+        constante) : c'est pour cela que le courant alternatif — facilement transformable en haute
+        tension par des \emph{transformateurs} — peut être transporté sur des centaines de kilomètres.
+\end{enumerate}
+\textbf{Chiffre.} Sur une ligne à \SI{400}{\kilo\volt}, l'intensité est des centaines de fois plus
+faible qu'à \SI{230}{\volt} pour la même puissance : les pertes deviennent négligeables.
+\end{exemple}
+
+% =====================================================================
+\section{Associations de résistances}
+% =====================================================================
+Dans tout réseau, un groupe de résistances peut être remplacé par une \textbf{résistance
+équivalente} unique $\Req$, qui produit le même effet vu de l'extérieur.
+
+\subsection{Association en série}
+
+\begin{center}
+\begin{circuitikz}[scale=1.0]
+  \draw (0,0) to[short, o-] (0.6,0);
+  \draw (0.6,0) to[R,l=$R_1$] (2.6,0);
+  \draw (2.6,0) to[R,l=$R_2$] (4.6,0);
+  \draw (4.6,0) to[R,l=$R_3$] (6.6,0);
+  \draw (6.6,0) to[short, -o] (7.2,0);
+  \node[above,font=\small] at (1.6,0.0) {$U_1$};
+  \node[above,font=\small] at (3.6,0.0) {$U_2$};
+  \node[above,font=\small] at (5.6,0.0) {$U_3$};
+  \draw[battcol,<->,>=Stealth,line width=1.1pt] (0,0.9) -- (7.2,0.9)
+     node[battcol,midway,above,font=\small]{$U_{\mathrm{AB}}$};
+  \draw[elec,->,>=Stealth,line width=1.2pt] (1.0,-0.55) -- (1.6,-0.55)
+     node[elec,midway,below,font=\small]{$I$};
+\end{circuitikz}\\[2pt]
+{\footnotesize\textbf{Figure 7.} Résistances en série : même intensité $I$ partout, tensions additives.}
+\end{center}
+
+\begin{formule}[résistance équivalente en série]
+Les résistances en série sont parcourues par la \textbf{même intensité} $I$, et leurs tensions
+s'ajoutent (loi des mailles) : $U_{\mathrm{AB}} = U_1+U_2+\cdots+U_n$. Avec $U_i=R_i I$, il vient :
+\[ \boxed{\,\Req = \displaystyle\sum_{i=1}^{n} R_i = R_1 + R_2 + \cdots + R_n\,} \]
+\begin{ou}
+  \item $\Req$ : résistance équivalente de l'association, en ohms (\si{\ohm}) ;
+  \item $R_i$ : résistance du $i$\textsuperscript{e} dipôle, en ohms (\si{\ohm}).
+\end{ou}
+En série, la résistance équivalente est donc toujours \textbf{supérieure} à chacune des résistances.
+\end{formule}
+
+\begin{exemple}[intensité dans un circuit série]
+\textbf{Énoncé.} Deux résistances $R_1=\SI{10}{\ohm}$ et $R_2=\SI{20}{\ohm}$ sont en série, soumises
+à une tension $U=\SI{30}{\volt}$. Quelle intensité traverse $R_1$ ?
+
+\smallskip
+\textbf{Résistance équivalente.} $R_{\mathrm{eq}} = R_1+R_2 = 10+20 = \SI{30}{\ohm}$.
+
+\textbf{Intensité.} En série, l'intensité est la \emph{même} partout :
+\[ I = \frac{U}{R_{\mathrm{eq}}} = \frac{30}{30} = \boxed{\,\SI{1}{\ampere}\,}. \]
+C'est aussi l'intensité qui traverse $R_1$ \emph{et} $R_2$. On peut le vérifier : $U_1=R_1 I=10\times1=\SI{10}{\volt}$
+et $U_2=R_2 I=20\times1=\SI{20}{\volt}$, soit $U_1+U_2=\SI{30}{\volt}=U$ \checkmark.
+\end{exemple}
+
+\subsection{Association en parallèle}
+
+\begin{center}
+\begin{circuitikz}[scale=0.95]
+  \coordinate (A) at (0,0);  \coordinate (B) at (5.2,0);
+  \draw (A) to[short, o-] (0,1.7);  \draw (0,1.7) to[R,l=$R_1$] (5.2,1.7);  \draw (5.2,1.7) to[short,-o] (B);
+  \draw (A) to[R,l=$R_2$] (B);
+  \draw (A) to[short, o-] (0,-1.7); \draw (0,-1.7) to[R,l=$R_3$] (5.2,-1.7); \draw (5.2,-1.7) to[short,-o] (B);
+  \draw[elec,->,>=Stealth,line width=1.4pt] (-1.5,0) -- ($(A)+(-0.1,0)$)
+     node[elec,midway,above,font=\small]{$I$};
+  \draw[elec,->,>=Stealth,line width=1.2pt] ($(A)+(0,1.35)$) -- ($(A)+(0,1.65)$)
+     node[elec,right,font=\small]{$I_1$};
+  \draw[elec,->,>=Stealth,line width=1.2pt] ($(A)+(0.9,0)$) -- ($(A)+(1.6,0)$)
+     node[elec,above,font=\small]{$I_2$};
+  \draw[elec,->,>=Stealth,line width=1.2pt] ($(A)+(0,-1.35)$) -- ($(A)+(0,-1.65)$)
+     node[elec,right,font=\small]{$I_3$};
+  \node[above,font=\small] at (A) {$A$};  \node[above,font=\small] at (B) {$B$};
+\end{circuitikz}\\[2pt]
+{\footnotesize\textbf{Figure 8.} Résistances en parallèle : même tension $U_{\mathrm{AB}}$ partout, intensités partagées par la loi des nœuds ($I=I_1+I_2+I_3$).}
+\end{center}
+
+\begin{formule}[résistance équivalente en parallèle]
+En parallèle, la \textbf{tension est la même} aux bornes de chaque résistance ($U_1=U_2=\ldots=U_{\mathrm{AB}}$),
+et l'intensité se partage (loi des nœuds). En combinant $U_{\mathrm{AB}}=\Req I$ et $I_i=U_i/R_i$, on
+obtient :
+\[ \boxed{\;\dfrac{1}{\Req} = \displaystyle\sum_{i=1}^{n}\dfrac{1}{R_i}
+   = \dfrac{1}{R_1}+\dfrac{1}{R_2}+\cdots+\dfrac{1}{R_n}\;} \]
+\begin{ou}
+  \item $\Req$ : résistance équivalente, en ohms (\si{\ohm}) ;
+  \item $R_i$ : résistance de la $i$\textsuperscript{e} branche, en ohms (\si{\ohm}).
+\end{ou}
+En parallèle, la résistance équivalente est toujours \textbf{inférieure} à chacune des résistances.
+\end{formule}
+
+\begin{definition}[conductance]
+La \textbf{conductance} $G$ est l'inverse de la résistance : $G=1/R$, exprimée en siemens
+(\si{\siemens}, $\mathrm{S}=\si{\per\ohm}$). En parallèle, les conductances s'ajoutent simplement :
+\[ \boxed{\,\Geq = \displaystyle\sum_{i=1}^{n} G_i = G_1+G_2+\cdots+G_n\,}. \]
+\end{definition}
+
+\begin{exemple}[résistance équivalente de trois résistances identiques en parallèle]
+\textbf{Énoncé.} Trois résistances identiques $R_1=R_2=R_3=\SI{30}{\ohm}$ sont placées en parallèle.
+Que vaut $\Req$ ? Que deviennent les intensités dans chaque branche ?
+
+\smallskip
+\textbf{Résistance équivalente.}
+\[ \frac{1}{R_{\mathrm{eq}}} = \frac{1}{30}+\frac{1}{30}+\frac{1}{30} = \frac{3}{30}=\frac{1}{10}
+   \;\Longrightarrow\; \boxed{\,R_{\mathrm{eq}}=\SI{10}{\ohm}\,}. \]
+\textbf{Intensités.} La tension est la même aux bornes des trois résistances, et comme elles sont
+identiques, la loi d'Ohm donne :
+\[ I_1 = I_2 = I_3 = \frac{U}{30}. \]
+Par la loi des nœuds, $I=I_1+I_2+I_3 = 3\,U/30 = U/10 = U/R_{\mathrm{eq}}$ \checkmark. On retrouve
+bien la résistance équivalente par une autre voie.
+
+\textbf{Astuce à retenir.} Pour $n$ résistances \emph{égales} à $R$ en parallèle, la résistance
+équivalente vaut simplement $\Req = R/n$. Ici $\Req=30/3=\SI{10}{\ohm}$.
+\end{exemple}
+
+\begin{exemple}[la résistance équivalente parallèle est toujours la plus petite]
+\textbf{Énoncé.} Trois résistances en parallèle satisfont $R_1<R_2<R_3$. Classer les intensités qui les
+traversent. La résistance équivalente est-elle plus grande ou plus petite que $R_1$ ?
+
+\smallskip
+\textbf{Partage du courant.} En parallèle, $U=R_1 I_1=R_2 I_2=R_3 I_3$ : pour une même tension,
+l'intensité est d'autant plus \emph{grande} que la résistance est \emph{petite}. Donc :
+\[ I_1 > I_2 > I_3 \qquad (\text{la plus petite résistance « prend » le plus de courant}). \]
+\textbf{Position de $\Req$.} Puisque $\Req=1/(1/R_1+1/R_2+1/R_3)$ et que tous les termes sont
+positifs, on a $1/\Req > 1/R_1$, donc $\Req < R_1$. En parallèle, $\Req$ est \textbf{inférieure à la
+plus petite} des résistances : \emph{ajouter une branche en parallèle ne fait que diminuer la
+résistance globale} (le courant dispose d'un chemin supplémentaire).
+\end{exemple}
+
+\begin{exemple}[calcul complet d'un circuit parallèle sans passer par $\Req$]
+\textbf{Énoncé.} Trois résistances en parallèle vérifient $R_1=\SI{10}{\ohm}$, $R_2=\SI{100}{\ohm}$,
+$R_3=\SI{20}{\ohm}$. On applique entre leurs bornes une tension $U_{\mathrm{AB}}=\SI{2,5}{\volt}$.
+Quelle est l'intensité totale $I$ traversant $\Req$ ?
+
+\smallskip
+\textbf{Méthode 1 — via $\Req$.}
+\[ R_{\mathrm{eq}} = \frac{1}{\tfrac{1}{10}+\tfrac{1}{100}+\tfrac{1}{20}}
+   = \frac{1}{0{,}1+0{,}01+0{,}05} = \frac{1}{0{,}16} = \SI{6,25}{\ohm}, \]
+\[ I = \frac{U_{\mathrm{AB}}}{R_{\mathrm{eq}}} = \frac{2{,}5}{6{,}25} = \boxed{\,\SI{0,40}{\ampere}\,}. \]
+
+\textbf{Méthode 2 — via chaque branche (loi des nœuds).}
+\[ I_1=\frac{2{,}5}{10}=\SI{0,25}{\ampere},\quad
+   I_2=\frac{2{,}5}{100}=\SI{0,025}{\ampere},\quad
+   I_3=\frac{2{,}5}{20}=\SI{0,125}{\ampere}, \]
+\[ I = I_1+I_2+I_3 = 0{,}25+0{,}025+0{,}125 = \SI{0,40}{\ampere}. \]
+Les deux méthodes concordent. \textbf{Leçon :} le « diviseur de courant » en parallèle envoie le plus
+de courant dans la \emph{plus petite} résistance ($I_1$ maximal car $R_1$ minimal) — c'est l'inverse
+du partage des tensions en série.
+\end{exemple}
+
+% =====================================================================
+\section{Générateurs et récepteurs réels : la résistance interne}
+% =====================================================================
+Jusqu'ici, nous avons considéré des dipôles « idéaux ». En réalité, tout générateur et tout moteur
+possèdent une petite \textbf{résistance interne} $r$, qui dissipe elle-même de l'énergie par effet Joule.
+
+\begin{formule}[modèle d'un générateur réel (pile, batterie)]
+\[ \boxed{\,U = E - r\,I\,} \]
+\begin{ou}
+  \item $U$ : tension (ddp) effectivement disponible aux bornes du générateur en charge, en volts (\si{\volt}) ;
+  \item $E$ : \textbf{force électromotrice} (f.é.m.), c'est-à-dire la tension « à vide » (quand $I=0$), en volts (\si{\volt}) ;
+  \item $r$ : résistance interne du générateur, en ohms (\si{\ohm}) ;
+  \item $I$ : intensité débitée, en ampères (\si{\ampere}).
+\end{ou}
+Le signe « $-$ » traduit la \emph{chute de tension} interne : plus le générateur débite de courant,
+plus sa tension aux bornes \emph{diminue}.
+\end{formule}
+
+\begin{formule}[modèle d'un récepteur (moteur à courant continu)]
+\[ \boxed{\,U = E' + r\,I\,} \]
+\begin{ou}
+  \item $U$ : tension imposée aux bornes du moteur, en volts (\si{\volt}) ;
+  \item $E'$ : \textbf{force contre-électromotrice} (f.c.é.m.) du moteur, en volts (\si{\volt}) ;
+  \item $r$ : résistance interne du moteur, en ohms (\si{\ohm}) ;
+  \item $I$ : intensité absorbée, en ampères (\si{\ampere}).
+\end{ou}
+Le signe « $+$ » indique qu'il faut fournir \emph{plus} que $E'$ pour vaincre la résistance interne.
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=9.5cm,height=4.6cm,axis lines=middle,xlabel={$I$ (A)},ylabel={$U$ (V)},
+    xmin=0,xmax=5.2,ymin=0,ymax=7,
+    xtick={0,1,2,3,4},ytick={0,2,4,6},
+    axis line style={primarydark},label style={primarydark,font=\footnotesize},
+    tick label style={font=\scriptsize}]
+    \addplot[battcol,thick,domain=0:5,samples=2] {6-1*x};
+    \node[battcol,font=\footnotesize] at (axis cs:0.5,5.6) {$U=E-rI$};
+    \draw[dashed,primarydark!60] (axis cs:0,6) -- (axis cs:0,6.0);
+    \node[battcol,font=\scriptsize] at (axis cs:0.55,6.2) {$E$ (à vide)};
+  \end{axis}
+\end{tikzpicture}\\[2pt]
+{\footnotesize\textbf{Figure 9.} Caractéristique d'un générateur réel : droite décroissante d'ordonnée à l'origine $E$ et de pente $-r$.}
+\end{center}
+
+\begin{exemple}[court-circuit et tension à vide d'une pile]
+\textbf{Énoncé.} Une pile a une f.é.m. $E=\SI{9}{\volt}$ et une résistance interne $r=\SI{1}{\ohm}$.
+(a) Quelle est sa tension à vide ? (b) Quelle tension fournit-elle quand elle débite $I=\SI{2}{\ampere}$ ?
+(c) Que se passe-t-il en court-circuit ?
+
+\smallskip
+\textbf{(a) Tension à vide.} « À vide » signifie qu'aucun courant ne circule ($I=0$). D'après $U=E-rI$ :
+\[ U_{\mathrm{vide}} = E - r\times 0 = \boxed{\,\SI{9}{\volt}\,}. \]
+La f.é.m. $E$ est donc \emph{par définition} la tension mesurée quand la pile ne débite aucun courant.
+
+\textbf{(b) En charge ($I=\SI{2}{\ampere}$).}
+\[ U = 9 - 1\times 2 = \boxed{\,\SI{7}{\volt}\,}. \]
+La chute de tension due à la résistance interne est de \SI{2}{\volt} : la pile « perd » de la tension
+lorsqu'elle débite.
+
+\textbf{(c) Court-circuit.} En court-circuit, la pile est reliée par un fil de résistance quasi nulle,
+donc $U\approx 0$. D'où $0=E-rI_{\mathrm{cc}}$, soit :
+\[ I_{\mathrm{cc}} = \frac{E}{r} = \frac{9}{1} = \boxed{\,\SI{9}{\ampere}\,}. \]
+Une pile de $\SI{9}{\volt}$ peut ainsi débiter une intensité importante en court-circuit : la puissance
+dissipée dans $r$ vaut $P=rI_{\mathrm{cc}}^2=1\times 81=\SI{81}{\watt}$, ce qui explique pourquoi une
+pile en court-circuit \textbf{chauffe dangereusement} (effet Joule).
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : formulaire et points-clés}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.55}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.4cm} >{\centering\arraybackslash}p{5.4cm} >{\raggedright\arraybackslash}p{4.7cm}}
+\rowcolor{primary!18}
+\textbf{Loi / grandeur} & \textbf{Formule} & \textbf{À retenir} \\
+\midrule
+Charge électrique & $Q = n\,e$ & $e=\SI{1,6e-19}{\coulomb}$ \\
+Intensité (continu) & $I = \dfrac{Q}{t}$ & $\si{\ampere}=\si{\coulomb\per\second}$ \\
+Intensité instantanée & $i(t) = \dfrac{\dd q}{\dd t}$ & courant variable \\
+Loi des nœuds & $\sum I_{\text{arriv.}}=\sum I_{\text{part.}}$ & en parallèle \\
+Loi des mailles & $\sum_{\text{maille}} U = 0$ & attention aux signes \\
+Résistance d'un fil & $R = \rho\,\dfrac{L}{S}$ & loi de Pouillet \\
+Loi d'Ohm & $U = R\,I$ & dipôle ohmique \\
+Puissance & $P = U\,I = R\,I^{2} = \dfrac{U^{2}}{R}$ & en watts \\
+Loi de Joule & $W_{\mathrm{th}} = R\,I^{2}\,t$ & chaleur dissipée \\
+Résistivité / température & $\rho=\rho_0(1+\alpha T)$ & métal pur, $T$ modérée \\
+Série & $\Req = R_1+R_2+\cdots+R_n$ & $\Req>$ chacune \\
+Parallèle & $\dfrac{1}{\Req}=\dfrac{1}{R_1}+\cdots+\dfrac{1}{R_n}$ & $\Req<$ chacune \\
+Générateur réel & $U = E - r\,I$ & $E$ = tension à vide \\
+Moteur & $U = E' + r\,I$ & f.c.é.m. $E'$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[étudier un circuit en 5 réflexes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Repérer les associations} (série / parallèle) et simplifier progressivement en
+        résistance équivalente $\Req$.
+  \item \textbf{En série} : même intensité partout, tensions additives ; \textbf{en parallèle} :
+        même tension partout, intensités partagées (loi des nœuds).
+  \item \textbf{Appliquer la loi d'Ohm} $U=RI$ sur la résistance équivalente pour trouver $I$ ou $U$.
+  \item \textbf{Calculer la puissance / l'énergie} via $P=UI=RI^2$ et $W_{\mathrm{th}}=RI^2t$ (penser
+        à convertir les durées en secondes).
+  \item \textbf{Vérifier la cohérence} : en série $\Req$ \emph{grandit}, en parallèle $\Req$
+        \emph{diminue} ; le courant préfère la plus petite résistance.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[comparer deux montages : série ou parallèle ?]
+\textbf{Énoncé.} Deux résistances identiques $R$ sont, selon le circuit, soit en série (circuit 1),
+soit en parallèle (circuit 2). On applique la même tension $U$ pendant \SI{1}{\minute}. Quel circuit
+dissipe le plus de chaleur, et dans quel rapport ?
+
+\smallskip
+\textbf{Circuit 1 (série).} $R_{\mathrm{eq},1}=R+R=2R$, d'où $I_1=U/(2R)$.
+\[ W_1 = R_{\mathrm{eq},1}\,I_1^{2}\,t = 2R\left(\frac{U}{2R}\right)^{2}t
+   = \frac{2R\,U^{2}\,t}{4R^{2}} = \frac{U^{2}\,t}{2R}. \]
+
+\textbf{Circuit 2 (parallèle).} $R_{\mathrm{eq},2}=\bigl(1/R+1/R\bigr)^{-1}=R/2$, d'où $I_2=U/(R/2)=2U/R$.
+\[ W_2 = R_{\mathrm{eq},2}\,I_2^{2}\,t = \frac{R}{2}\left(\frac{2U}{R}\right)^{2}t
+   = \frac{R}{2}\cdot\frac{4U^{2}}{R^{2}}\,t = \frac{2U^{2}\,t}{R}. \]
+
+\textbf{Comparaison.}
+\[ \frac{W_2}{W_1} = \frac{\,2U^{2}t/R\,}{\,U^{2}t/(2R)\,} = 4. \]
+\textbf{Conclusion.} Le montage \textbf{parallèle} dissipe \textbf{4 fois plus de chaleur} que le
+montage série à tension et durée égales. Cela paraît contre-intuitif (on ajoute des résistances !)
+mais s'explique : en parallèle, la résistance équivalente est plus \emph{petite}, donc l'intensité
+totale est plus \emph{grande} ($I_2=2U/R$ contre $I_1=U/(2R)$), et la chaleur croît comme $I^2$.
+C'est aussi pourquoi, chez soi, \textbf{plus on branche d'appareils en parallèle sur une prise,
+plus l'intensité totale (et la facture !) augmente}.
+\end{exemple}
+
+\begin{exemple}[ampoules en série : la plus résistante brille le plus]
+\textbf{Énoncé.} Deux ampoules ohmiques ont, seules sous une même tension $U$, des puissances
+$P_1$ et $P_2=2P_1$. Si on les \emph{associe en série} sous la même tension $U$, laquelle brille le
+plus, et que devient la puissance totale ?
+
+\smallskip
+\textbf{Étape 1 — résistances respectives.} Seule, chaque ampoule vérifie $P=U^2/R$, donc
+$R_1=U^2/P_1$ et $R_2=U^2/P_2=U^2/(2P_1)=R_1/2$. Autrement dit, l'ampoule \textbf{la plus puissante
+($P_2$) est la moins résistante} ($R_2=R_1/2$).
+
+\textbf{Étape 2 — en série, même intensité.} Le courant traversant les deux ampoules est le même :
+$I=U/(R_1+R_2)$. La puissance dissipée dans chacune vaut $P_i'=R_i I^2$. Comme $R_1>R_2$ :
+\[ P_1' = R_1 I^{2} \;>\; R_2 I^{2} = P_2'. \]
+C'est donc l'ampoule \textbf{1} (la \emph{moins} puissante à l'origine !) qui brille le \emph{plus}
+une fois mise en série. Surprenant mais logique : en série, c'est la plus grande résistance qui
+« prend » le plus de tension et de puissance.
+
+\textbf{Étape 3 — puissance totale.}
+\[ P_{\text{totale}}' = \frac{U^{2}}{R_1+R_2} = \frac{U^{2}}{R_1+\tfrac{R_1}{2}} = \frac{U^{2}}{\tfrac{3}{2}R_1}
+   = \frac{2}{3}\frac{U^{2}}{R_1} = \frac{2}{3}P_1 = \frac{P_2}{3}. \]
+La puissance totale des deux ampoules en série vaut \textbf{le tiers} de la puissance $P_2$ de
+l'ampoule 2 seule. Bilan : les deux ampoules brillent \emph{moins} en série que seules (l'intensité
+est plus faible, donc $P=RI^2$ chute), et la moins puissante brille paradoxalement le plus.
+\end{exemple}
+
+\begin{exemple}[temps de fonctionnement pour consommer une énergie donnée]
+\textbf{Énoncé.} Un appareil de puissance $P=\SI{2}{\kilo\watt}$ doit consommer une énergie
+$W=\SI{36}{\mega\joule}$. Combien de temps doit-il fonctionner ?
+
+\smallskip
+\textbf{Conversion des unités.} $P=\SI{2000}{\watt}$ et $W=\SI{36e6}{\joule}$.
+
+\textbf{Application.} D'après $W=P\,t$, soit $t=W/P$ :
+\[ t = \frac{36\times10^{6}}{2000} = \SI{18000}{\second} = \frac{18000}{3600}\,\si{\hour}
+   = \boxed{\,\SI{5}{\hour}\,}. \]
+\textbf{Astuce unités.} On peut aussi raisonner en \si{\watt\hour} : $\SI{36}{\mega\joule} =
+\SI{10}{\kilo\watt\hour}$ (car $\SI{1}{\watt\hour}=\SI{3600}{\joule}$), et $t=W/P=10/2=\SI{5}{\hour}$.
+On retrouve le même résultat — c'est l'unité de la facture d'électricité !
+\end{exemple}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 10}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Intensité} $I=Q/t$ (ampères) ; charge $Q=n\,e$ ($e=\SI{1,6e-19}{\coulomb}$).
+        Ampèremètre \emph{en série}. Courant variable : $i=\dd q/\dd t$.
+  \item \textbf{Loi des nœuds} : $\sum I_{\text{arriv.}}=\sum I_{\text{part.}}$ (parallèle).
+        \textbf{Loi des mailles} : $\sum U=0$ le long d'une maille.
+  \item \textbf{Tension} $U$ (volts) ; voltmètre \emph{en parallèle}. En série, tensions additives ;
+        en parallèle, tensions égales.
+  \item \textbf{Résistance} $R=\rho L/S$ (loi de Pouillet) ; $\rho=\rho_0(1+\alpha T)$.
+  \item \textbf{Loi d'Ohm} $U=RI$ : dipôle ohmique $\Leftrightarrow$ caractéristique $U=f(I)$
+        linéaire passant par l'origine.
+  \item \textbf{Puissance} $P=UI=RI^2=U^2/R$ ; \textbf{loi de Joule} $W_{\mathrm{th}}=RI^2t$
+        (fusible, pertes de transport : haute tension $\Rightarrow$ faible $I$ $\Rightarrow$ faibles pertes).
+  \item \textbf{Série} : $\Req=\sum R_i$ ($\Req$ augmente, même $I$). \textbf{Parallèle} :
+        $1/\Req=\sum 1/R_i$ ou $\Geq=\sum G_i$ ($\Req$ diminue, même $U$).
+  \item \textbf{Générateur réel} $U=E-rI$ ; \textbf{moteur} $U=E'+rI$.
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

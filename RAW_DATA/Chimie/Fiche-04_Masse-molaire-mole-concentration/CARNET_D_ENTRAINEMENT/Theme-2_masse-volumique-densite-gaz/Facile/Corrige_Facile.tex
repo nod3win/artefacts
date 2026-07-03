@@ -1,0 +1,95 @@
+% =====================================================================
+%  FICHE 4 — THEME 2 — Corrige niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{M}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newcounter{exo}
+\newenvironment{corr}[1][]{%
+  \par\medskip\refstepcounter{exo}%
+  \noindent\begin{tcolorbox}[boxbase,colback=excol!5,colframe=excol,
+     title={\textsc{Correction \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
+  {\end{tcolorbox}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Corrigé Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\NA}{N_{\!\text{A}}}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 --- Corrigé Facile}
+\end{center}
+
+\begin{corr}[masse volumique à partir d'une pesée]
+\textbf{a)} La masse d'urine est la différence des pesées :
+$m=80{,}36-50{,}00=\SI{30.36}{\gram}$.\\[2pt]
+\textbf{b)} $\rho=\dfrac{m}{V}=\dfrac{30{,}36}{30}=\SI{1.012}{\gram\per\milli\litre}$, soit
+$\rho=1{,}012\times1000=\SI{1012}{\gram\per\litre}$.
+\[ \boxed{\rho=\SI{1.012}{\gram\per\milli\litre}=\SI{1012}{\gram\per\litre}} \]
+\end{corr}
+
+\begin{corr}[de la masse volumique à la densité]
+\textbf{a)} $d=\dfrac{\rho}{\rho_{\text{eau}}}=\dfrac{13{,}6}{1}=13{,}6$ (sans unité).\\[2pt]
+\textbf{b)} $\SI{1}{\litre}=\SI{1000}{\milli\litre}$, donc
+$m=\rho\,V=13{,}6\times1000=\SI{13600}{\gram}=\SI{13.6}{\kilo\gram}$.
+\[ \boxed{d=13{,}6\ ;\quad m(\SI{1}{\litre})=\SI{13.6}{\kilo\gram}} \]
+\end{corr}
+
+\begin{corr}[du volume à la masse]
+On part du volume et l'on veut la masse : on \textbf{multiplie} par $\rho$.
+\[ m=\rho\,V=0{,}79\times250=\SI{197.5}{\gram}. \]
+\[ \boxed{m\approx\SI{198}{\gram} \ \text{d'éthanol}} \]
+\end{corr}
+
+\begin{corr}[volume molaire d'un gaz]
+\textbf{a)} On multiplie la quantité de matière par $V_m$ :
+\[ V=n\,V_m=0{,}250\times22{,}4=\SI{5.60}{\litre}. \]
+\textbf{b)} On passe d'abord de la masse à la quantité ($n=m/M$), puis au volume :
+\[ n=\frac{2{,}0}{2}=\SI{1.0}{\mole}\ \Rightarrow\ V=1{,}0\times22{,}4=\SI{22.4}{\litre}. \]
+\[ \boxed{V(\ce{CO2})=\SI{5.60}{\litre};\quad V(\ce{H2})=\SI{22.4}{\litre}} \]
+\textit{Remarque :} la nature du gaz n'intervient pas dans $V=nV_m$ ; seule la quantité de matière compte.
+\end{corr}
+
+\begin{corr}[conversions d'unités de masse volumique]
+\textbf{a)} $\SI{1}{\cubic\centi\metre}=\SI{1}{\milli\litre}$, donc
+$\rho=\SI{2.0}{\gram\per\milli\litre}$.\\[2pt]
+\textbf{b)} $\SI{1}{\litre}=\SI{1000}{\milli\litre}$ :
+$\rho=2{,}0\times1000=\SI{2000}{\gram\per\litre}$.\\[2pt]
+\textbf{c)} $\SI{1000}{\gram}=\SI{1}{\kilo\gram}$ :
+$\rho=\SI{2.0}{\kilo\gram\per\litre}$.
+\[ \boxed{\rho=\SI{2.0}{\gram\per\milli\litre}=\SI{2000}{\gram\per\litre}=\SI{2.0}{\kilo\gram\per\litre}} \]
+\textit{À retenir :} la \emph{valeur numérique} en \si{\gram\per\milli\litre} et en \si{\kilo\gram\per\litre}
+est identique.
+\end{corr}
+
+\end{document}

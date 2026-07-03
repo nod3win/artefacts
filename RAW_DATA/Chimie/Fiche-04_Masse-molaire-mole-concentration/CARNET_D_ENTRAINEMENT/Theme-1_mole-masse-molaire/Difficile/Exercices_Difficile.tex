@@ -1,0 +1,106 @@
+% =====================================================================
+%  FICHE 4 — THEME 1 — Exercices niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{M}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.5mm,bottomtitle=0.5mm}}
+\newtcolorbox{donnees}{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Données}}}
+
+\newcounter{exo}
+\newenvironment{exo}[1][]{%
+  \par\medskip\refstepcounter{exo}%
+  \noindent\begin{tcolorbox}[boxbase,colback=primary!7,colframe=primary,
+     title={\textsc{Exercice \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
+  {\end{tcolorbox}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,1 : Mole, masse molaire, entit\'es}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\newcommand{\NA}{N_{\!\text{A}}}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 --- Niveau Difficile}\\[2pt]
+{\color{primary}\itshape Raisonner « à l'envers » : hydrates, identifications, formules}
+\end{center}
+
+\begin{donnees}
+Masses molaires atomiques (\si{\gram\per\mole}) :
+$\ce{H}=1$ ; $\ce{O}=16$ ; $\ce{P}=31$ ; $\ce{Cl}=35{,}5$ ; $\ce{Mg}=24$ ; $\ce{Ni}=58{,}7$ ;
+$\ce{Ag}=108$.\\
+Métaux alcalins : $\ce{Li}=7$ ; $\ce{Na}=23$ ; $\ce{K}=39$ ; $\ce{Rb}=85$ ; $\ce{Cs}=133$.\quad
+$\NA=\SI{6.02e23}{\per\mole}$.
+\end{donnees}
+
+\begin{exo}[eau de cristallisation d'un hydrate]
+Le chlorure de nickel(II) hydraté \ce{NiCl2 \cdot x H2O} est un solide vert. Fortement chauffé, un
+échantillon de $\SI{0.238}{\gram}$ de ce composé perd toute son eau ; il reste alors
+$\SI{0.130}{\gram}$ de \ce{NiCl2} anhydre. On cherche la valeur de $x$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Calculer la masse molaire du \ce{NiCl2} anhydre, puis la quantité de matière de \ce{NiCl2}
+        restant après chauffage.
+  \item Déterminer la masse d'eau partie au chauffage, puis la quantité de matière d'eau
+        correspondante.
+  \item En déduire $x$ (rapport des quantités de matière eau\,/\,\ce{NiCl2}) et écrire la formule
+        de l'hydrate.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[identifier un métal, puis nommer son chlorure]
+La masse molaire d'un oxyde métallique de formule \ce{M2O} vaut $\SI{232.0}{\gram\per\mole}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Poser l'équation reliant $M(\ce{M2O})$ à la masse molaire $M(\ce{M})$ du métal, puis en
+        déduire $M(\ce{M})$ et l'identité du métal.
+  \item Le métal forme un chlorure de formule \ce{MCl}. Calculer sa masse molaire.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[pourcentage massique utilisé « à l'envers »]
+La chlorophylle, pigment de la photosynthèse, contient approximativement $\SI{3.0}{\percent}$ en
+masse de magnésium. On admet que chaque molécule de chlorophylle contient exactement \textbf{un}
+atome de magnésium.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item En raisonnant sur une mole de chlorophylle, déterminer sa masse molaire approximative.
+  \item Combien de molécules de chlorophylle contient un échantillon de $\SI{1.0}{\gram}$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[identifier un élément alcalin]
+Une quantité de $\SI{0.20}{\mole}$ d'un phosphate d'un métal alcalin, de formule générale
+\ce{M3PO4}, a une masse de $\SI{42.4}{\gram}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Déterminer la masse molaire du composé \ce{M3PO4}.
+  \item En déduire la masse molaire de l'élément \ce{M} et identifier ce métal alcalin.
+\end{enumerate}
+\end{exo}
+
+\end{document}

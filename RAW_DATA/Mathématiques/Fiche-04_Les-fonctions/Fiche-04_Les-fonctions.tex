@@ -1,0 +1,1994 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 4
+%  Les fonctions
+%  Document généré en LaTeX avec figures TikZ / pgfplots tracées
+%  « from scratch » (aucune image importée).
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (rouge corail / framboise — couleur du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{219,54,77}       % rouge corail (couleur du livre)
+\definecolor{primarydark}{RGB}{150,28,46}
+\definecolor{primarylight}{RGB}{250,224,228}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « courbes » réutilisées dans les figures
+\definecolor{courbe}{RGB}{40,90,200}        % courbe principale (bleu)
+\definecolor{courbeB}{RGB}{210,60,40}       % seconde courbe (rouge brique)
+\definecolor{courbeC}{RGB}{30,150,80}       % troisième courbe (vert)
+\definecolor{axiscol}{RGB}{60,60,60}        % axes
+\definecolor{gridcol}{RGB}{200,205,215}     % quadrillage
+\definecolor{varcol}{RGB}{0,120,150}        % flèches des tableaux de variation
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode (comment faire) ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire ?}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES pgfplots RÉUTILISABLES (repère « propre » comme le livre)
+% =====================================================================
+\pgfplotsset{
+  repere/.style={
+    axis lines=middle,
+    axis line style={-{Stealth[length=2.2mm]},axiscol,line width=0.8pt},
+    label style={font=\footnotesize},
+    tick label style={font=\scriptsize},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=north west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south east},
+    xlabel={$x$},ylabel={$y$},
+    grid=both,
+    minor tick num=0,
+    major grid style={gridcol,line width=0.4pt},
+    samples=200,
+    clip=false,
+  }
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} — Les fonctions}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Df}{D_f}
+\renewcommand{\Re}{\mathbb{R}}
+\newcommand{\croit}{\textcolor{varcol}{\Large$\nearrow$}}
+\newcommand{\decroit}{\textcolor{varcol}{\Large$\searrow$}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Les fonctions}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,4}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : quelques fonctions usuelles ---
+\begin{tikzpicture}[scale=1.0]
+\begin{axis}[repere,width=13.5cm,height=8.2cm,
+    xmin=-3.4,xmax=3.4,ymin=-2.6,ymax=3.4,
+    xtick={-3,-2,-1,1,2,3},ytick={-2,-1,1,2,3},
+    samples=200,restrict y to domain=-2.6:3.4]
+  \addplot[courbe,line width=1.3pt,domain=-2.2:1.6] {exp(x)};
+  \addplot[courbeB,line width=1.3pt,domain=0.05:3.3] {ln(x)};
+  \addplot[courbeC,line width=1.3pt,domain=-1.85:1.85] {x^2-1};
+  \addplot[primary,line width=1.3pt,domain=-3.4:3.4] {sin(deg(x))};
+  \node[courbe] at (axis cs:-1.7,2.6) {\footnotesize $e^{x}$};
+  \node[courbeB] at (axis cs:2.7,1.35) {\footnotesize $\ln x$};
+  \node[courbeC] at (axis cs:1.7,2.6) {\footnotesize $x^2-1$};
+  \node[primary] at (axis cs:-2.55,-1.25) {\footnotesize $\sin x$};
+\end{axis}
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15.5cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir une \textbf{fonction}, distinguer \textbf{image} et \textbf{antécédent} ;
+  \item déterminer le \textbf{domaine de définition} $\Df$ d'une fonction (les trois interdits) ;
+  \item reconnaître les \textbf{caractéristiques} d'une fonction : axe et centre de symétrie, parité, périodicité, croissance, racines, extremums ;
+  \item lire et construire un \textbf{tableau de variation} ;
+  \item étudier les \textbf{fonctions usuelles} : affine, quadratique, trigonométriques (et leurs réciproques), exponentielle et logarithmique ;
+  \item appliquer les \textbf{formules de la géométrie analytique} (pente, distance, milieu, droite) et le \textbf{formulaire trigonométrique}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 4 du livre — figures originales tracées en TikZ / pgfplots.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : qu'est-ce qu'une fonction ?}
+% =====================================================================
+La notion de \textbf{fonction} est l'un des piliers des mathématiques : elle décrit
+comment une grandeur \emph{dépend} d'une autre. Dire que « le prix à payer dépend
+du nombre d'articles achetés », que « la distance parcourue dépend du temps » ou que
+« l'aire d'un disque dépend de son rayon » revient à chaque fois à définir une fonction.
+Dans cette fiche, nous apprenons à \emph{décrire}, \emph{caractériser} et \emph{représenter}
+les fonctions, puis nous passons en revue les \emph{fonctions usuelles} que l'on rencontre
+partout dans les sciences.
+
+\medskip
+Sauf indication contraire, toutes les fonctions de cette fiche sont des fonctions
+d'une \textbf{variable réelle} $x$, à \textbf{valeurs réelles}, et on les représente
+graphiquement dans un \textbf{repère orthonormé} (deux axes perpendiculaires gradués
+avec la même unité de longueur).
+
+% =====================================================================
+\section{Notion de fonction}
+% =====================================================================
+
+\begin{definition}[Fonction, image, antécédent]
+Une \textbf{fonction} de la variable $x$ est un procédé mathématique qui associe à
+chaque nombre $x$ \emph{un unique} nombre correspondant, appelé son \textbf{image}.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item L'image de $x$ par la fonction $f$ se note $f(x)$ (lire « $f$ de $x$ »).
+  \item Réciproquement, $x$ est appelé un \textbf{antécédent} de $f(x)$ par la fonction $f$.
+\end{itemize}
+\end{definition}
+
+Le mot-clé de cette définition est \emph{unique} : à un $x$ donné ne correspond
+\textbf{qu'une seule} image. En revanche, un même nombre peut posséder
+\emph{plusieurs} antécédents (par exemple $4$ a deux antécédents, $-2$ et $2$, par la
+fonction $x\mapsto x^2$).
+
+\begin{formule}[Notation d'une fonction]
+\[
+  f:\ x \longmapsto f(x)
+\]
+\begin{ou}
+  \item $f$ : le \textbf{nom} de la fonction (une lettre : $f$, $g$, $h$\dots) ;
+  \item $x$ : la \textbf{variable} (ou \emph{antécédent}) — un nombre réel, sans unité dans le cadre des mathématiques pures (en physique, $x$ porterait l'unité de la grandeur représentée) ;
+  \item $f(x)$ : l'\textbf{image} de $x$ — le nombre réel obtenu après application du procédé ;
+  \item le symbole $\longmapsto$ se lit « \emph{a pour image} » et relie un antécédent à son image.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[Lire « image » et « antécédent » sur une formule]
+Soit la fonction $f$ définie par $f(x)=2x+1$.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item \textbf{Image de $x=1$.} On remplace $x$ par $1$ dans l'expression :
+        \[ f(1)=2\times 1 + 1 = 3. \]
+        On dit que « l'image de $1$ par $f$ est $3$ », ce qui s'écrit $f(1)=3$.
+  \item \textbf{Antécédent de $3$.} On cherche le(s) nombre(s) $x$ tel(s) que $f(x)=3$ :
+        \[ 2x+1=3 \;\Longleftrightarrow\; 2x = 2 \;\Longleftrightarrow\; x = 1. \]
+        Donc « l'antécédent de $3$ est $1$ ».
+\end{itemize}
+Sur le graphique, l'image se lit \emph{verticalement} (on monte depuis $x$ jusqu'à la
+courbe), et l'antécédent se lit \emph{horizontalement} (on part d'une valeur sur l'axe
+des $y$ et on rejoint la courbe).
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\begin{axis}[repere,width=10.5cm,height=6.2cm,
+    xmin=-1.6,xmax=2.8,ymin=-1.6,ymax=4.4,
+    xtick={-1,1,2},ytick={1,2,3},samples=2]
+  \addplot[courbe,line width=1.3pt,domain=-1.6:1.7] {2*x+1};
+  \node[courbe,anchor=west] at (axis cs:1.2,4.0) {$f(x)=2x+1$};
+  % point (1,3)
+  \draw[dashed,gray] (axis cs:1,0) -- (axis cs:1,3) -- (axis cs:0,3);
+  \filldraw[primary] (axis cs:1,3) circle (2pt);
+  \node[primary,anchor=south west] at (axis cs:1,3) {$(1\,;3)$};
+  \node[anchor=north,font=\scriptsize] at (axis cs:1,0) {antécédent $x=1$};
+  \node[anchor=east,font=\scriptsize] at (axis cs:0,3) {image $f(1)=3$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 1}} : lecture graphique de l'image et de l'antécédent pour $f(x)=2x+1$.
+\end{center}
+
+% =====================================================================
+\section{Domaine de définition d'une fonction}
+% =====================================================================
+
+\begin{definition}[Domaine de définition $\Df$]
+Le \textbf{domaine de définition} $\Df$ d'une fonction $f$ est l'\textbf{ensemble de
+tous les nombres réels} $x$ pour lesquels l'image $f(x)$ \emph{existe} (c'est-à-dire
+pour lesquels le calcul $f(x)$ a un sens).
+\end{definition}
+
+Chercher un domaine de définition, c'est repérer les valeurs de $x$ \emph{interdites},
+puis les exclure de $\R$. Trois interdits reviennent en permanence ; il faut les
+connaître par cœur.
+
+\begin{attention}[Les trois interdits à mémoriser]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{On ne peut jamais diviser par $0$} : un dénominateur doit être $\neq 0$.
+  \item \textbf{La racine carrée d'un nombre réel strictement négatif n'existe pas} : sous une racine carrée, la quantité doit être $\geq 0$.
+  \item \textbf{Le logarithme d'un nombre réel négatif ou nul n'existe pas} : l'argument d'un logarithme doit être $>0$.
+\end{enumerate}
+\end{attention}
+
+\subsection{Premier interdit : la division par zéro}
+
+On ne peut jamais diviser par $0$. Par exemple, l'image de $x=0$ par $f(x)=\dfrac1x$
+serait $\dfrac10$, qui \emph{n'existe pas} (noté $\nexists$).
+
+\begin{exemple}[Fonction inverse $f(x)=\frac1x$]
+\textbf{Condition d'existence :} le dénominateur doit être non nul, soit $x\neq 0$.
+\[
+  \boxed{\;\Df = \R\setminus\{0\}\quad\text{(noté aussi }\R_0\text{)}\;}
+\]
+On lit « $\R$ privé de $0$ ». La courbe est une \textbf{hyperbole} : elle se rapproche
+indéfiniment des deux axes sans jamais les toucher (on dit que les axes sont des
+\emph{asymptotes}).
+\end{exemple}
+
+\begin{exemple}[Fonction tangente $f(x)=\tan x = \frac{\sin x}{\cos x}$]
+Ici le dénominateur est $\cos x$. La condition d'existence est $\cos x \neq 0$.
+Or le cosinus s'annule en $\dfrac{\pi}{2}$ et à chaque demi-tour supplémentaire :
+\[
+  \cos x \neq 0 \;\Longleftrightarrow\; x \neq \frac{\pi}{2} + k\pi,\quad k\in\Z.
+\]
+D'où
+\[
+  \boxed{\;\Df = \R\setminus\Big\{\tfrac{\pi}{2}+k\pi,\ k\in\Z\Big\}.\;}
+\]
+La courbe de la tangente possède donc une \emph{infinité} d'asymptotes verticales,
+espacées de $\pi$.
+\end{exemple}
+
+\begin{remarque}
+Pour $f$ définie par la cotangente $f(x)=\cot x = \dfrac{\cos x}{\sin x}$, c'est le
+\emph{sinus} qui est au dénominateur. Comme $\sin x = 0 \Leftrightarrow x = k\pi$, on a
+$\Df = \R\setminus\{k\pi,\ k\in\Z\}$.
+\end{remarque}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.6cm,height=6.0cm,
+    xmin=-3.4,xmax=3.4,ymin=-3.4,ymax=3.4,
+    xtick={-3,-2,-1,1,2,3},ytick={-3,-2,-1,1,2,3},
+    samples=300,restrict y to domain=-3.4:3.4,title={\footnotesize $f(x)=\frac1x$}]
+  \addplot[courbe,line width=1.2pt,domain=0.30:3.4] {1/x};
+  \addplot[courbe,line width=1.2pt,domain=-3.4:-0.30] {1/x};
+\end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\begin{axis}[repere,width=8.4cm,height=6.0cm,
+    xmin=-4.9,xmax=4.9,ymin=-3.4,ymax=3.4,
+    xtick={-4.712,-1.571,1.571,4.712},
+    xticklabels={$-\frac{3\pi}{2}$,$-\frac{\pi}{2}$,$\frac{\pi}{2}$,$\frac{3\pi}{2}$},
+    ytick={-3,-2,-1,1,2,3},
+    samples=400,restrict y to domain=-3.4:3.4,title={\footnotesize $f(x)=\tan x$}]
+  \addplot[courbe,line width=1.2pt,domain=-4.64:-1.64] {tan(deg(x))};
+  \addplot[courbe,line width=1.2pt,domain=-1.50:1.50] {tan(deg(x))};
+  \addplot[courbe,line width=1.2pt,domain=1.64:4.64] {tan(deg(x))};
+  \draw[dashed,gray,thin] (axis cs:-4.712,-3.4) -- (axis cs:-4.712,3.4);
+  \draw[dashed,gray,thin] (axis cs:-1.571,-3.4) -- (axis cs:-1.571,3.4);
+  \draw[dashed,gray,thin] (axis cs:1.571,-3.4) -- (axis cs:1.571,3.4);
+  \draw[dashed,gray,thin] (axis cs:4.712,-3.4) -- (axis cs:4.712,3.4);
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 2}} : à gauche l'hyperbole $\frac1x$ ($\Df=\R\setminus\{0\}$) ;
+à droite la tangente et ses asymptotes verticales en $\frac{\pi}{2}+k\pi$.
+\end{center}
+
+\subsection{Deuxième interdit : la racine carrée d'un négatif}
+
+Une racine carrée d'un nombre réel strictement négatif n'existe pas (dans $\R$).
+Par exemple, l'image de $x=-3$ par $f(x)=\sqrt{x}$ serait $\sqrt{-3}$, qui $\nexists$.
+
+\begin{exemple}[Fonction racine carrée $f(x)=\sqrt{x}$]
+\textbf{Condition d'existence :} la quantité sous la racine doit être positive ou nulle,
+soit $x\geq 0$.
+\[
+  \boxed{\;\Df = \big[0,+\infty\big[\quad\text{(noté aussi }\R^{+}\text{)}\;}
+\]
+On garde le crochet \emph{fermé} en $0$ car $\sqrt{0}=0$ existe bel et bien.
+\end{exemple}
+
+\begin{remarque}
+Pour $f$ définie par $f(x)=\dfrac{1}{\sqrt{x}}$, on combine \emph{deux} interdits :
+sous la racine $x\geq 0$ \emph{et} le dénominateur $\sqrt{x}\neq 0$, donc $x\neq 0$.
+Les deux conditions ensemble donnent $x>0$, soit
+$\Df=\,]0,+\infty[$ (noté $\R_0^{+}$). Le crochet en $0$ devient \emph{ouvert}.
+\end{remarque}
+
+\subsection{Troisième interdit : le logarithme d'un négatif ou nul}
+
+Le logarithme d'un nombre réel négatif ou nul n'existe pas. Par exemple, l'image de
+$x=-3$ par $f(x)=\log x$ serait $\log(-3)$, qui $\nexists$.
+
+\begin{exemple}[Fonction logarithme $f(x)=\ln x$]
+\textbf{Condition d'existence :} l'argument du logarithme doit être strictement positif,
+soit $x>0$.
+\[
+  \boxed{\;\Df = \big]0,+\infty\big[\quad\text{(noté aussi }\R_0^{+}\text{)}\;}
+\]
+Cette fois le crochet en $0$ est \emph{ouvert} : $\ln 0$ n'existe pas (la courbe plonge
+vers $-\infty$ quand $x\to 0$).
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.6cm,height=5.4cm,
+    xmin=-1.2,xmax=4.6,ymin=-1.2,ymax=2.6,
+    xtick={1,2,3,4},ytick={1,2},
+    samples=200,title={\footnotesize $f(x)=\sqrt{x}$}]
+  \addplot[courbe,line width=1.3pt,domain=0:4.4] {sqrt(x)};
+  \filldraw[courbe] (axis cs:0,0) circle (1.6pt);
+\end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.8cm,height=5.4cm,
+    xmin=-1.2,xmax=4.6,ymin=-2.6,ymax=2.0,
+    xtick={1,2,3,4},ytick={-2,-1,1},
+    samples=200,restrict y to domain=-2.6:2.0,title={\footnotesize $f(x)=\ln x$}]
+  \addplot[courbe,line width=1.3pt,domain=0.085:4.4] {ln(x)};
+  \draw[dashed,gray,thin] (axis cs:0,-2.6) -- (axis cs:0,2.0);
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 3}} : la racine carrée (définie sur $[0,+\infty[$) et le
+logarithme népérien (défini sur $]0,+\infty[$).
+\end{center}
+
+\subsection{Quand le domaine est $\R$ tout entier}
+
+Si l'image par $f$ de \emph{tout} réel $x$ existe (aucun interdit rencontré), alors le
+domaine de définition est $\Df=\R$. Voici les fonctions usuelles dont $\Df=\R$ :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{>{\raggedright\arraybackslash}p{6.4cm} >{\raggedright\arraybackslash}p{9.0cm}}
+\toprule
+\rowcolor{primarylight}
+\textbf{Type de fonction} & \textbf{Forme / exemples} \\
+\midrule
+Fonction du premier degré (droite) & $f(x)=ax+b$, avec $a\neq 0$ et $b\in\R$ \\
+Fonction du second degré (parabole) & $f(x)=ax^2+bx+c$, avec $a\neq 0$ \\
+Fonction du troisième degré & $x\mapsto x^3$ \\
+Valeur absolue linéaire & $f(x)=\lvert ax+b\rvert$ \\
+Fonction exponentielle & $x\mapsto e^{x}$,\quad $x\mapsto 2e^{3x}$ \\
+Fonction trigonométrique & $x\mapsto \sin x$,\quad $x\mapsto \cos x$ \\
+Fonction rationnelle à dénominateur jamais nul & $x\mapsto \dfrac{2x+1}{x^2+1}$ \quad(car $x^2+1>0$) \\
+Logarithme d'une quantité toujours $>0$ & $x\mapsto \ln(x^2+3)$ \quad(car $x^2+3>0$) \\
+Racine carrée d'une quantité toujours $\geq 0$ & $x\mapsto \sqrt{x^2+1}$,\quad $x\mapsto\sqrt{\sin^2 x+1}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[Déterminer un domaine de définition]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Repérer} dans l'expression de $f(x)$ les « zones à risque » :
+        tout \emph{dénominateur}, toute \emph{racine carrée}, tout \emph{logarithme}.
+  \item \textbf{Écrire une condition d'existence} pour chacune :
+        dénominateur $\neq 0$ ; quantité sous racine $\geq 0$ ; argument du log $>0$.
+  \item \textbf{Résoudre} chaque (in)équation pour trouver les $x$ \emph{autorisés}.
+  \item \textbf{Combiner} les conditions (intersection) et écrire $\Df$ en notation d'intervalles.
+        S'il n'y a aucune zone à risque, conclure $\Df=\R$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[Domaine d'une racine de quotient : $f(x)=\sqrt{\dfrac{2x+1}{x+2}}$]
+On a à la fois une racine carrée \emph{et} un quotient. Deux conditions :
+\[
+  \text{(racine)}\quad \frac{2x+1}{x+2}\geq 0 \qquad\text{et}\qquad
+  \text{(dénominateur)}\quad x+2\neq 0.
+\]
+On dresse un \textbf{tableau de signes} du quotient $\dfrac{2x+1}{x+2}$.
+Le numérateur s'annule en $x=-\frac12$, le dénominateur en $x=-2$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c c c c c|}
+\hline
+$x$ & $-\infty$ & & $-2$ & & $-\tfrac12$ \hspace{1.2cm} $+\infty$ \\
+\hline
+$2x+1$ & & $-$ & $\;|\;$ $-$ & & $0\ \ +$ \\
+\hline
+$x+2$ & & $-$ & $\;0\;$ $+$ & & $+\ \ +$ \\
+\hline
+$\dfrac{2x+1}{x+2}$ & & $+$ & $\;\nexists\;$ $-$ & & $0\ \ +$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Le quotient est $\geq 0$ sur $\,]-\infty,-2[\,$ (signe $+$) et sur
+$\big[-\tfrac12,+\infty\big[$ (signe $+$, en incluant $-\tfrac12$ où il vaut $0$).
+On exclut $x=-2$ (interdit du dénominateur). D'où
+\[
+  \boxed{\;\Df = \,]-\infty,-2[\ \cup\ \Big[-\tfrac12,+\infty\Big[\;.}
+\]
+\end{exemple}
+
+% =====================================================================
+\section{Caractéristiques et formules importantes d'une fonction}
+% =====================================================================
+Étudier une fonction, c'est en déterminer les \textbf{caractéristiques} : ses symétries,
+sa parité, sa périodicité, ses variations, ses zéros et ses points particuliers. Ces
+informations permettent de tracer la courbe rapidement et de la comprendre.
+
+\subsection{Axe de symétrie}
+
+\begin{definition}[Axe de symétrie vertical]
+Une fonction $f$ admet un \textbf{axe de symétrie} d'équation $x=a$ si et seulement si
+\[
+  f(a-x)=f(a+x),\qquad \forall x\in\Df .
+\]
+\end{definition}
+
+Concrètement, la courbe se \emph{replie sur elle-même} autour de la droite verticale
+$x=a$ : deux points situés à la même distance horizontale de cet axe (l'un à gauche,
+l'autre à droite) ont la \emph{même} hauteur.
+
+\begin{formule}[Axe de symétrie d'une parabole]
+Pour une fonction parabolique $x\mapsto ax^2+bx+c$, l'axe de symétrie a pour équation
+\[
+  \boxed{\,x=-\dfrac{b}{2a}\,}
+\]
+\begin{ou}
+  \item $a$ : coefficient du terme $x^2$ (réel non nul, sans unité) ;
+  \item $b$ : coefficient du terme $x$ (réel, sans unité) ;
+  \item $x$ : abscisse de l'axe vertical de symétrie (réel, sans unité).
+\end{ou}
+\end{formule}
+
+\begin{exemple}[Trois axes de symétrie de paraboles]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $f(x)=x^2-2x+1=(x-1)^2$. L'axe de symétrie est $x=1$, car
+        $f(1-x)=f(1+x)$. (On vérifie : $a=1,\ b=-2 \Rightarrow -\frac{b}{2a}=\frac{2}{2}=1$.)
+  \item $f(x)=x^2-x+3$. L'axe est $x=\dfrac12$, car $f\!\left(\tfrac12-x\right)=f\!\left(\tfrac12+x\right)$.
+        (Vérification : $a=1,\ b=-1\Rightarrow -\frac{b}{2a}=\frac12$.)
+  \item Vérifions le premier par le calcul direct : avec $a=1$,
+        \[ f(1-x)=(1-x)^2-2(1-x)+1 = x^2,\quad f(1+x)=(1+x)^2-2(1+x)+1 = x^2. \]
+        Les deux expressions sont égales : l'axe $x=1$ est bien axe de symétrie.
+\end{itemize}
+\end{exemple}
+
+\subsection{Centre de symétrie}
+
+\begin{definition}[Centre de symétrie]
+Une fonction $f$ admet un \textbf{centre de symétrie} de coordonnées $(a\,;b)$ si et
+seulement si
+\[
+  f(a-x)+f(a+x)=2b,\qquad \forall x\in\Df .
+\]
+\end{definition}
+
+Cette fois la courbe est invariante par un \emph{demi-tour} (symétrie centrale) autour
+du point $(a\,;b)$. La moyenne des images de deux points symétriques par rapport à $a$
+vaut toujours $b$ (l'ordonnée du centre).
+
+\begin{exemple}[Centre de symétrie de la fonction cube]
+$(0\,;0)$ est le centre de symétrie de $f$ définie par $f(x)=x^3$. En effet, avec
+$a=0$ et $b=0$ :
+\[
+  f(0-x)+f(0+x)=(-x)^3+x^3=-x^3+x^3=0=2\times 0 . \checkmark
+\]
+\end{exemple}
+
+\subsection{Parité d'une fonction}
+
+\begin{definition}[Fonction paire]
+Une fonction $f$ est \textbf{paire} si et seulement si
+\[
+  f(-x)=f(x),\qquad \forall x\in\Df .
+\]
+Une fonction paire admet l'\textbf{axe des ordonnées} ($x=0$) comme axe de symétrie.
+\end{definition}
+
+\begin{exemple}[Fonctions paires]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $f(x)=x^2+1$ est paire, car $f(-x)=(-x)^2+1=x^2+1=f(x)$.
+  \item $f(x)=\cos x$ est paire, car $f(-x)=\cos(-x)=\cos x=f(x)$.
+\end{itemize}
+\end{exemple}
+
+\subsection{Imparité d'une fonction}
+
+\begin{definition}[Fonction impaire]
+Une fonction $f$ est \textbf{impaire} si et seulement si
+\[
+  f(-x)=-f(x),\qquad \forall x\in\Df .
+\]
+Une fonction impaire admet l'\textbf{origine du repère} $(0\,;0)$ comme centre de symétrie.
+\end{definition}
+
+\begin{exemple}[Fonctions impaires]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $f(x)=x^3$ est impaire, car $f(-x)=(-x)^3=-x^3=-f(x)$.
+  \item $f(x)=\sin x$ est impaire, car $f(-x)=\sin(-x)=-\sin x=-f(x)$.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}
+Beaucoup de fonctions ne sont \textbf{ni paires ni impaires} (par exemple $f(x)=2x+1$ ou
+$f(x)=\lvert x+2\rvert$). « Paire » et « impaire » ne sont pas deux cas qui couvrent tout :
+ce sont deux propriétés \emph{particulières}, qu'il faut \emph{vérifier} et non supposer.
+\end{attention}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.6cm,height=5.4cm,
+    xmin=-2.6,xmax=2.6,ymin=-0.6,ymax=4.4,
+    xtick={-2,-1,1,2},ytick={1,2,3,4},samples=120,
+    title={\footnotesize paire : $f(x)=x^2+1$}]
+  \addplot[courbe,line width=1.3pt,domain=-2.05:2.05] {x^2+1};
+  \draw[dashed,gray,thin] (axis cs:0,-0.6) -- (axis cs:0,4.4);
+  \filldraw[courbeB] (axis cs:1.4,2.96) circle (1.6pt);
+  \filldraw[courbeB] (axis cs:-1.4,2.96) circle (1.6pt);
+\end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.6cm,height=5.4cm,
+    xmin=-2.2,xmax=2.2,ymin=-3.4,ymax=3.4,
+    xtick={-2,-1,1,2},ytick={-3,-2,-1,1,2,3},samples=120,
+    restrict y to domain=-3.4:3.4,
+    title={\footnotesize impaire : $f(x)=x^3$}]
+  \addplot[courbe,line width=1.3pt,domain=-1.5:1.5] {x^3};
+  \filldraw[courbeB] (axis cs:1.2,1.728) circle (1.6pt);
+  \filldraw[courbeB] (axis cs:-1.2,-1.728) circle (1.6pt);
+  \filldraw[black] (axis cs:0,0) circle (1.4pt);
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 4}} : une fonction paire est symétrique par rapport à
+l'axe des $y$ ; une fonction impaire est symétrique par rapport à l'origine.
+\end{center}
+
+\subsection{Périodicité d'une fonction}
+
+\begin{definition}[Fonction périodique]
+Une fonction $f$ est \textbf{périodique de période $T$} si et seulement si
+\[
+  f(x+T)=f(x),\qquad \forall x\in\Df .
+\]
+$T$ est une constante (le plus petit réel strictement positif vérifiant cette égalité)
+que l'on peut ajouter à $x$ sans modifier l'image $f(x)$ : le motif de la courbe se
+\emph{répète} à l'identique tous les $T$.
+\end{definition}
+
+\begin{formule}[Période — éléments]
+\[
+  f(x+T)=f(x)
+\]
+\begin{ou}
+  \item $T$ : la \textbf{période}, plus petit décalage horizontal qui laisse la courbe inchangée. Pour une fonction d'angle, $T$ s'exprime en \textbf{radians} (rad) ;
+  \item $x$ : la variable (réel, en radian pour les fonctions trigonométriques).
+\end{ou}
+\end{formule}
+
+\begin{exemple}[Période du sinus]
+$f:\ x\mapsto \sin x$ a pour période $T=2\pi$. En effet,
+\[
+  f(x+2\pi)=\sin(x+2\pi)=\sin x = f(x). \checkmark
+\]
+La courbe du sinus se reproduit donc à l'identique tous les $2\pi$ ($\approx 6{,}28$ rad).
+\end{exemple}
+
+\subsection{Croissance et décroissance d'une fonction}
+
+\begin{definition}[Sens de variation]
+Soit un intervalle $[a,b]\subset\Df$.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $f$ est \textbf{croissante} sur $[a,b]$ si et seulement si : pour tous
+        $x_1,x_2\in[a,b]$, \quad $x_1>x_2 \Rightarrow f(x_1)>f(x_2)$.\\
+        (Quand $x$ augmente, $f(x)$ augmente : la courbe « monte ».)
+  \item $f$ est \textbf{décroissante} sur $[a,b]$ si et seulement si : pour tous
+        $x_1,x_2\in[a,b]$, \quad $x_1>x_2 \Rightarrow f(x_1)<f(x_2)$.\\
+        (Quand $x$ augmente, $f(x)$ diminue : la courbe « descend ».)
+\end{itemize}
+\end{definition}
+
+\begin{exemple}[Quelques sens de variation usuels]
+\textbf{Croissantes :} $x\mapsto 2x+1$ sur $\R$ ; $x\mapsto e^x$ sur $\R$ ;
+$x\mapsto \ln x$ sur $\R_0^{+}$ ; $x\mapsto \sqrt{x}$ sur $\R^{+}$.\\[2pt]
+\textbf{Décroissantes :} $x\mapsto -2x+1$ sur $\R$ ; $x\mapsto 3x^2$ sur $\R_0^{-}$ ;
+$x\mapsto -\ln x = \ln\frac1x$ sur $\R_0^{+}$ ; $x\mapsto -\sqrt{x}$ sur $\R^{+}$.
+\end{exemple}
+
+\begin{remarque}[Lire un tableau de variation]
+Un \textbf{tableau de variation} résume le sens de variation : la première ligne donne
+les valeurs remarquables de $x$, la ligne $f'(x)$ donne le signe de la dérivée
+(\,$+$ : monte, $-$ : descend\,), et la ligne $f(x)$ trace les flèches
+\croit\ (croissance) et \decroit\ (décroissance) avec les valeurs atteintes.
+\end{remarque}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|c|ccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $a$ & & & & $b$ \\
+\hline
+$f$ croissante & $f(a)$ & & \croit & & $f(b)$ \\
+\hline
+\end{tabular}
+\qquad
+\begin{tabular}{|c|ccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $a$ & & & & $b$ \\
+\hline
+$f$ décroissante & $f(a)$ & & \decroit & & $f(b)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Racines (zéros) d'une fonction}
+
+\begin{definition}[Racine d'une fonction]
+Les \textbf{racines} (ou \emph{zéros}) d'une fonction $f$ sont les points de rencontre de
+sa courbe avec l'\textbf{axe des abscisses}. Ce sont les valeurs de $x$ telles que
+$f(x)=0$.
+\end{definition}
+
+\begin{formule}[Racines d'un trinôme du second degré]
+Pour $f:\ x\mapsto ax^2+bx+c$ (avec $a\neq 0$), les racines, \emph{lorsqu'elles existent}, sont
+\[
+  \boxed{\;x_1=\dfrac{-b+\sqrt{\Delta}}{2a}\quad\text{et}\quad
+          x_2=\dfrac{-b-\sqrt{\Delta}}{2a}\;,\qquad \Delta=b^2-4ac\;}
+\]
+\begin{ou}
+  \item $a,b,c$ : les coefficients du trinôme (réels, $a\neq 0$, sans unité) ;
+  \item $\Delta$ : le \textbf{discriminant} (réel, sans unité), qui décide du nombre de racines ;
+  \item $x_1,x_2$ : les racines, c'est-à-dire les abscisses où la courbe coupe l'axe des $x$.
+\end{ou}
+\end{formule}
+
+\begin{attention}[Le discriminant décide de tout]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item Si $\Delta>0$ : \textbf{deux} racines distinctes $x_1\neq x_2$.
+  \item Si $\Delta=0$ : \textbf{une} racine double $x_1=x_2=-\dfrac{b}{2a}$
+        (la courbe est tangente à l'axe des $x$).
+  \item Si $\Delta<0$ : \textbf{aucune} racine réelle. La fonction garde alors un signe
+        constant : strictement positive si $a>0$, strictement négative si $a<0$.
+\end{itemize}
+\end{attention}
+
+\begin{exemple}[Racines d'autres fonctions usuelles]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item Pour $x\mapsto ax+b$, la racine est $x=-\dfrac{b}{a}$ (si $a\neq 0$).
+  \item Pour $x\mapsto \ln x$, la racine est $x=1$, car $\ln 1 = 0$.
+\end{itemize}
+\end{exemple}
+
+\subsection{Point de rencontre avec l'axe des ordonnées}
+
+\begin{definition}[Ordonnée à l'origine]
+Le point de rencontre d'une fonction $f$ avec l'\textbf{axe des ordonnées} correspond à
+l'ordonnée $y_0=f(0)$ obtenue pour $x=0$, soit le point de coordonnées $(0\,;y_0)$.
+Une fonction ne peut couper l'axe des $y$ qu'\emph{en un seul point} (puisqu'à $x=0$ ne
+correspond qu'une image).
+\end{definition}
+
+\begin{exemple}[Ordonnée à l'origine de fonctions usuelles]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $x\mapsto ax^2+bx+c \ \Rightarrow\ (0\,;c)$, car $f(0)=c$.
+  \item $x\mapsto e^{x} \ \Rightarrow\ (0\,;1)$, car $e^0=1$.
+  \item $x\mapsto \cos x \ \Rightarrow\ (0\,;1)$, car $\cos 0=1$.
+  \item $x\mapsto \sin x \ \Rightarrow\ (0\,;0)$, car $\sin 0=0$.
+\end{itemize}
+\end{exemple}
+
+\subsection{Extremums d'une fonction}
+
+\begin{definition}[Maximum et minimum sur un intervalle]
+Soit un intervalle $[a,b]\subset\Df$.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $f$ admet un \textbf{maximum} $M=f(\alpha)$ (atteint en $\alpha\in[a,b]$) si et
+        seulement si $f(x)\leq M$ pour tout $x\in[a,b]$.
+  \item $f$ admet un \textbf{minimum} $m=f(\alpha)$ (atteint en $\alpha\in[a,b]$) si et
+        seulement si $f(x)\geq m$ pour tout $x\in[a,b]$.
+\end{itemize}
+Un \textbf{extremum} est un maximum ou un minimum. En un extremum « lisse », la courbe
+cesse de monter pour descendre (maximum) ou de descendre pour monter (minimum) : sa
+\emph{tangente est horizontale}, donc la dérivée $f'$ s'y annule en \emph{changeant de signe}.
+\end{definition}
+
+\begin{methode}[Trouver les extremums d'une fonction]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Déterminer} la dérivée $f'$.
+  \item \textbf{Résoudre} l'équation $f'(x)=0$ pour trouver les racines (les
+        \emph{candidats} extremums).
+  \item \textbf{Dresser le tableau de variation} de $f$ (signe de $f'$, puis sens de variation).
+  \item \textbf{Conclure} : là où $f'$ passe de $-$ à $+$, il y a un \emph{minimum} ;
+        là où $f'$ passe de $+$ à $-$, il y a un \emph{maximum}.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[Étude complète de $f(x)=x^2-4x+3$ (un minimum)]
+\textbf{1) Domaine et dérivée.} $\Df=\R$ et $f'(x)=2x-4$.\\[2pt]
+\textbf{2) Annulation de la dérivée.}
+\[
+  f'(x)=0 \;\Longleftrightarrow\; 2x-4=0 \;\Longleftrightarrow\; x=2 .
+\]
+\textbf{3) Tableau de variation.} $f'(x)=2x-4$ est négatif avant $2$, positif après :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{12pt}
+\begin{tabular}{|c|ccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $-\infty$ & & $2$ & & $+\infty$ \\
+\hline
+$f'(x)$ & & $-$ & $0$ & $+$ & \\
+\hline
+$f(x)$ & & \decroit & $f(2)$ & \croit & \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{4) Conclusion.} $f'$ passe de $-$ à $+$ en $x=2$ : la fonction présente un
+\textbf{minimum} en ce point. Le point $\big(2\,;f(2)\big)$ où la courbe cesse de
+décroître et commence à croître est le \textbf{sommet de la parabole}.
+
+\medskip
+\textbf{Vérification par la formule du sommet.} Le sommet a pour coordonnées
+$\left(-\dfrac{b}{2a}\,;-\dfrac{\Delta}{4a}\right)$. Avec $a=1,\ b=-4,\ c=3$ :
+\[
+  \Delta=b^2-4ac=(-4)^2-4(1)(3)=16-12=4,\qquad
+  \left(-\frac{-4}{2}\,;-\frac{4}{4}\right)=(2\,;-1).
+\]
+Cela correspond exactement à $\big(2\,;f(2)\big)$ puisque $f(2)=4-8+3=-1$. \checkmark
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=10.5cm,height=6.4cm,
+    xmin=-1.2,xmax=5.2,ymin=-2.2,ymax=4.4,
+    xtick={-1,1,2,3,4},ytick={-1,1,2,3},samples=120,
+    title={\footnotesize $f(x)=x^2-4x+3$}]
+  \addplot[courbe,line width=1.3pt,domain=-0.45:4.45] {x^2-4*x+3};
+  \draw[dashed,gray,thin] (axis cs:2,0) -- (axis cs:2,-1) -- (axis cs:0,-1);
+  \filldraw[primary] (axis cs:2,-1) circle (2pt);
+  \node[primary,anchor=north west,font=\scriptsize] at (axis cs:2.1,-1.05)
+        {Minimum $(2\,;-1)$ — sommet};
+  \filldraw[courbeC] (axis cs:1,0) circle (1.6pt);
+  \filldraw[courbeC] (axis cs:3,0) circle (1.6pt);
+  \node[courbeC,anchor=south,font=\scriptsize] at (axis cs:1,0.1) {$x_1=1$};
+  \node[courbeC,anchor=south,font=\scriptsize] at (axis cs:3,0.1) {$x_2=3$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 5}} : la parabole $x^2-4x+3$, son minimum (sommet) en
+$(2\,;-1)$ et ses deux racines $x_1=1$, $x_2=3$.
+\end{center}
+
+\begin{exemple}[Étude de $f(x)=x^3-x^2-x+1$ (un maximum \emph{et} un minimum)]
+\textbf{1) Domaine et dérivée.} $\Df=\R$ et $f'(x)=3x^2-2x-1$.\\[2pt]
+\textbf{2) Annulation de la dérivée.} On résout $3x^2-2x-1=0$ :
+\[
+  a=3,\ b=-2,\ c=-1 \;\Rightarrow\; \Delta=(-2)^2-4(3)(-1)=4+12=16>0\ \Rightarrow\ \text{2 racines}.
+\]
+\[
+  x_1=\frac{-b+\sqrt{\Delta}}{2a}=\frac{2+4}{6}=1,\qquad
+  x_2=\frac{-b-\sqrt{\Delta}}{2a}=\frac{2-4}{6}=-\frac13 .
+\]
+\textbf{3) Signe de $f'$.} Comme $a=3>0$, le trinôme $3x^2-2x-1$ est négatif
+\emph{entre} les racines et positif \emph{à l'extérieur} :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|c|ccccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $-\infty$ & & $-\tfrac13$ & & $1$ & & $+\infty$ \\
+\hline
+$f'(x)$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
+\hline
+$f(x)$ & & \croit & $f\!\left(-\tfrac13\right)$ & \decroit & $f(1)$ & \croit & \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{4) Conclusion.} En $x=-\tfrac13$, $f'$ passe de $+$ à $-$ : c'est un
+\textbf{maximum local}, avec
+\[
+  f\!\left(-\tfrac13\right)=\left(-\tfrac13\right)^3-\left(-\tfrac13\right)^2-\left(-\tfrac13\right)+1
+  =-\tfrac{1}{27}-\tfrac19+\tfrac13+1=\frac{32}{27}\approx 1{,}19 .
+\]
+En $x=1$, $f'$ passe de $-$ à $+$ : c'est un \textbf{minimum local}, avec
+$f(1)=1-1-1+1=0$. Ainsi, sur l'intervalle $\left]-\tfrac12,\tfrac32\right[$, $f$ admet un
+maximum en $x=-\tfrac13$ et un minimum en $x=1$.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=10.5cm,height=6.6cm,
+    xmin=-1.7,xmax=1.9,ymin=-0.8,ymax=2.2,
+    xtick={-1,-0.3333,1},xticklabels={$-1$,$-\frac13$,$1$},
+    ytick={1,2},samples=200,
+    title={\footnotesize $f(x)=x^3-x^2-x+1$}]
+  \addplot[courbe,line width=1.3pt,domain=-1.35:1.6] {x^3-x^2-x+1};
+  \filldraw[primary] (axis cs:-0.3333,1.1852) circle (2pt);
+  \node[primary,anchor=south,font=\scriptsize] at (axis cs:-0.55,1.30) {Max $\frac{32}{27}$};
+  \filldraw[primary] (axis cs:1,0) circle (2pt);
+  \node[primary,anchor=north west,font=\scriptsize] at (axis cs:1.02,-0.02) {Min $0$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 6}} : la cubique $x^3-x^2-x+1$, son maximum local
+$\frac{32}{27}$ en $-\frac13$ et son minimum local $0$ en $1$.
+\end{center}
+
+% =====================================================================
+\section{Les caractéristiques des fonctions usuelles}
+% =====================================================================
+
+\subsection{Fonction du premier degré (fonction affine)}
+
+\begin{definition}[Fonction affine]
+Une \textbf{fonction affine} est définie par
+\[
+  f(x)=ax+b ,
+\]
+sa courbe représentative est une \textbf{droite}.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $a$ est la \textbf{pente} (aussi appelée \emph{coefficient angulaire} ou
+        \emph{coefficient directeur}) ;
+  \item $b$ est l'\textbf{ordonnée à l'origine} : le point de rencontre de la droite avec
+        l'axe des $y$, soit $(0\,;b)$.
+\end{itemize}
+\end{definition}
+
+\paragraph{Caractéristiques.}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item $\Df=\R$.
+  \item \textbf{Racine} (intersection avec l'axe des $x$) : $ax+b=0 \Leftrightarrow x=-\dfrac{b}{a}$ (si $a\neq 0$).
+  \item \textbf{Intersection avec l'axe des $y$} : $(0\,;b)$.
+  \item La fonction est \textbf{impaire} si $b=0$, car alors $f(-x)=a(-x)=-ax=-f(x)$.
+  \item La fonction n'est \textbf{pas périodique} et n'admet \textbf{pas d'extremum} sur $\R$.
+  \item Sens de variation : \textbf{croissante} si $a>0$ (car $f'(x)=a>0$),
+        \textbf{décroissante} si $a<0$.
+\end{itemize}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{12pt}
+\begin{tabular}{|c|ccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $-\infty$ & & & & $+\infty$ \\
+\hline
+$f'(x)=a$ & & $+$ & $+$ & $+$ & \\
+\hline
+$f(x)=ax+b$\ \ ($a>0$) & & & \croit & & \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{exemple}[La droite $f(x)=2x-3$]
+$f'(x)=2>0$ : la droite est \emph{croissante} sur $\R$. Sa racine est
+$2x-3=0\Leftrightarrow x=\frac32$ ; elle coupe l'axe des $y$ en $(0\,;-3)$.
+Ainsi $f(x)<0$ pour $x<\frac32$, $f(x)=0$ pour $x=\frac32$, et $f(x)>0$ pour $x>\frac32$.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.7cm,height=5.6cm,
+    xmin=-1.4,xmax=3.4,ymin=-3.8,ymax=3.4,
+    xtick={-1,1,2,3},ytick={-3,-2,-1,1,2,3},samples=2,
+    restrict y to domain=-3.8:3.4,title={\footnotesize $f(x)=2x-3$}]
+  \addplot[courbe,line width=1.3pt,domain=-0.4:3.2] {2*x-3};
+  \filldraw[primary] (axis cs:1.5,0) circle (1.8pt);
+  \node[primary,anchor=north west,font=\scriptsize] at (axis cs:1.55,-0.1) {$x=\frac32$};
+\end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.7cm,height=5.6cm,
+    xmin=-1.4,xmax=3.4,ymin=-0.8,ymax=4.2,
+    xtick={-1,1,2,3},ytick={1,2,3,4},samples=2,
+    title={\footnotesize $f(x)=\lvert 2x-3\rvert$}]
+  \addplot[courbe,line width=1.3pt,domain=-0.4:1.5] {-(2*x-3)};
+  \addplot[courbe,line width=1.3pt,domain=1.5:3.2] {2*x-3};
+  \filldraw[primary] (axis cs:1.5,0) circle (1.8pt);
+  \node[primary,anchor=north,font=\scriptsize] at (axis cs:1.5,-0.06) {$\left(\frac32\,;0\right)$ min};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 7}} : la droite $2x-3$ (à gauche) et sa
+\emph{valeur absolue} $\lvert 2x-3\rvert$ (à droite), toujours positive, avec un minimum
+en $\left(\frac32\,;0\right)$.
+\end{center}
+
+\subsubsection{Formules de la géométrie analytique (droites)}
+
+\begin{formule}[Pente à partir de deux points]
+Si $A(x_A\,;y_A)$ et $B(x_B\,;y_B)$ sont deux points de la droite $d:\ y=ax+b$, alors
+\[
+  \boxed{\;a=\dfrac{y_B-y_A}{x_B-x_A}\;}
+\]
+\begin{ou}
+  \item $a$ : la pente de la droite (réel, sans unité — c'est un \emph{taux d'accroissement} : variation de $y$ pour une variation de $1$ de $x$) ;
+  \item $x_A,y_A$ et $x_B,y_B$ : les coordonnées des points $A$ et $B$ (réels, sans unité).
+\end{ou}
+Une fois $a$ connu, on trouve $b$ en injectant les coordonnées d'un point :
+$b=y_A-a\,x_A$ (ou $b=y_B-a\,x_B$).
+\end{formule}
+
+\begin{exemple}[Équation d'une droite passant par deux points]
+Soit $A(1\,;2)$ et $B(-1\,;3)$ deux points de la droite $d:\ y=ax+b$.
+\[
+  a=\frac{y_B-y_A}{x_B-x_A}=\frac{3-2}{-1-1}=\frac{1}{-2}=-\frac12 .
+\]
+Puis $b=y_B-a\,x_B=3-\left(-\tfrac12\right)\times(-1)=3-\tfrac12=\dfrac52$.
+La droite a donc pour équation $y=-\dfrac12 x+\dfrac52$.
+\end{exemple}
+
+\begin{theoreme}[Droites parallèles et perpendiculaires]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item Deux droites sont \textbf{parallèles} si et seulement si elles ont la \emph{même
+        pente} : $a=a'$.
+  \item Deux droites sont \textbf{perpendiculaires} si et seulement si la pente de l'une
+        vaut l'\emph{opposé de l'inverse} de l'autre : $a'=-\dfrac{1}{a}$
+        (de façon équivalente, $a\cdot a'=-1$).
+\end{itemize}
+\end{theoreme}
+
+\begin{exemple}[Parallèles et perpendiculaires]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $d:\ y=2x+5$ et $d':\ y=2x-3$ sont \textbf{parallèles} (même pente $a=2$).
+  \item $d:\ y=3x+5$ et $d':\ y=-\dfrac13 x-3$ sont \textbf{perpendiculaires}, car
+        $a\cdot a'=3\times\left(-\tfrac13\right)=-1$.
+\end{itemize}
+\end{exemple}
+
+\begin{formule}[Distance entre deux points]
+Dans un repère orthonormé, la distance entre $A(x_A\,;y_A)$ et $B(x_B\,;y_B)$ est
+\[
+  \boxed{\;\overline{AB}=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}\;}
+\]
+\begin{ou}
+  \item $\overline{AB}$ : la longueur du segment $[AB]$ (réel positif, en unités de longueur du repère) ;
+  \item $x_B-x_A$ : l'écart horizontal entre les deux points ;
+  \item $y_B-y_A$ : l'écart vertical. C'est le \emph{théorème de Pythagore} appliqué au triangle rectangle dont $[AB]$ est l'hypoténuse.
+\end{ou}
+\end{formule}
+
+\begin{formule}[Coordonnées du milieu d'un segment]
+Le milieu $M$ du segment $[AB]$ a pour coordonnées
+\[
+  \boxed{\;M\left(\dfrac{x_A+x_B}{2}\,;\dfrac{y_A+y_B}{2}\right)\;}
+\]
+\begin{ou}
+  \item $M$ : le point situé exactement au centre de $[AB]$ ;
+  \item chaque coordonnée de $M$ est la \textbf{moyenne} des coordonnées correspondantes de $A$ et $B$ (réels, sans unité).
+\end{ou}
+\end{formule}
+
+\begin{formule}[Distance d'un point à une droite]
+La distance d'un point $A(x_A\,;y_A)$ à la droite $d$ d'équation \emph{canonique}
+$ax+by+c=0$ vaut
+\[
+  \boxed{\;\operatorname{dist}(A,d)=\dfrac{\lvert a\,x_A+b\,y_A+c\rvert}{\sqrt{a^2+b^2}}\;}
+\]
+\begin{ou}
+  \item $a,b,c$ : les coefficients de l'équation \textbf{canonique} de la droite $ax+by+c=0$ (attention : ici $a,b$ ne sont pas la pente et l'ordonnée à l'origine !) ;
+  \item $x_A,y_A$ : les coordonnées du point $A$ ;
+  \item les barres $\lvert\,\cdot\,\rvert$ : la valeur absolue, car une distance est toujours positive.
+\end{ou}
+\end{formule}
+
+\begin{attention}[Forme canonique]
+La forme \textbf{canonique} d'une droite est $ax+by+c=0$ (tout d'un côté, $=0$ de l'autre).
+Pour l'obtenir à partir de $y=mx+p$, on écrit $mx-y+p=0$. \emph{Exemple :} la droite
+$y=-2x+3$ devient $2x+y-3=0$, ou de façon équivalente $-2x-y+3=0$.
+\end{attention}
+
+\begin{formule}[Intersection de deux droites sécantes]
+Pour trouver le point d'intersection de $d:\ y=ax+b$ et $d':\ y=a'x+b'$
+(sécantes, donc $a\neq a'$), on résout le \textbf{système}
+\[
+  \boxed{\;\begin{cases} y=ax+b\\[2pt] y=a'x+b' \end{cases}\;}
+\]
+par substitution ou par addition. La solution $(x\,;y)$ est le point commun aux deux droites.
+\end{formule}
+
+\begin{exemple}[Intersection de deux droites par addition]
+Cherchons l'intersection de $d:\ y=2x$ et $d':\ y=-2x+3$.
+\[
+  \begin{cases} y=2x & (\mathrm{I})\\ y=-2x+3 & (\mathrm{II}) \end{cases}
+  \quad\xrightarrow{(\mathrm{I})+(\mathrm{II})}\quad 2y=3 \;\Rightarrow\; y=\frac32 .
+\]
+En reportant dans $(\mathrm{I})$ : $\frac32=2x\Rightarrow x=\frac34$.
+Les droites se coupent au point $\left(\dfrac34\,;\dfrac32\right)$.
+\end{exemple}
+
+\subsection{Fonction du second degré (parabole)}
+
+\begin{definition}[Fonction quadratique]
+Une \textbf{fonction quadratique} est définie par
+\[
+  f(x)=ax^2+bx+c,\qquad a\neq 0,
+\]
+et sa courbe représentative est une \textbf{parabole}. $\Df=\R$.
+\end{definition}
+
+\paragraph{Caractéristiques.}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Racines} : on résout $ax^2+bx+c=0$ ;
+        $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$ avec $\Delta=b^2-4ac$.
+  \item \textbf{Factorisation} (si $\Delta>0$) : $f(x)=a(x-x_1)(x-x_2)$.\\
+        Si $\Delta=0$ : $f(x)=a(x-x_1)^2$ (racine double $x_1=-\frac{b}{2a}$).\\
+        Si $\Delta<0$ : pas de racine réelle, la parabole ne coupe pas l'axe des $x$.
+  \item \textbf{Sommet} : point $\left(-\dfrac{b}{2a}\,;-\dfrac{\Delta}{4a}\right)$.
+  \item \textbf{Axe de symétrie} : $x=-\dfrac{b}{2a}$.
+  \item \textbf{Intersection avec l'axe des $y$} : $(0\,;c)$.
+  \item La fonction est \textbf{paire} si $b=0$ (car $f(-x)=a x^2+c=f(x)$).
+  \item \textbf{Orientation \& extremum} : si $a>0$ la parabole est ouverte vers le haut et
+        le sommet est un \textbf{minimum} ; si $a<0$ elle est ouverte vers le bas et le
+        sommet est un \textbf{maximum}.
+\end{itemize}
+
+\begin{formule}[Sommet de la parabole]
+\[
+  \boxed{\;S\left(-\dfrac{b}{2a}\,;-\dfrac{\Delta}{4a}\right),\qquad \Delta=b^2-4ac\;}
+\]
+\begin{ou}
+  \item $-\dfrac{b}{2a}$ : abscisse du sommet (et équation de l'axe de symétrie) ;
+  \item $-\dfrac{\Delta}{4a}$ : ordonnée du sommet, c'est-à-dire la valeur extrême
+        (minimum si $a>0$, maximum si $a<0$) ;
+  \item $a,b,c$ : coefficients du trinôme (réels, $a\neq 0$, sans unité).
+\end{ou}
+\end{formule}
+
+\paragraph{Tableau de variation (cas $a>0$).} $f'(x)=2ax+b$ s'annule en $x=-\frac{b}{2a}$ :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{12pt}
+\begin{tabular}{|c|ccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $-\infty$ & & $-\tfrac{b}{2a}$ & & $+\infty$ \\
+\hline
+$f'(x)$ & & $-$ & $0$ & $+$ & \\
+\hline
+$f(x)$ & & \decroit & $-\tfrac{\Delta}{4a}$ & \croit & \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{exemple}[Étude complète de $f(x)=x^2-4x+3$]
+On a $a=1,\ b=-4,\ c=3$, donc $\Delta=b^2-4ac=16-12=4>0$.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item \textbf{Sommet} : $\left(-\dfrac{b}{2a}\,;-\dfrac{\Delta}{4a}\right)=(2\,;-1)$.
+  \item \textbf{Axe de symétrie} : $x=-\dfrac{b}{2a}=2$.
+  \item \textbf{Racines} : $x_1=\dfrac{-b-\sqrt\Delta}{2a}=\dfrac{4-2}{2}=1$ et
+        $x_2=\dfrac{-b+\sqrt\Delta}{2a}=\dfrac{4+2}{2}=3$.
+        \;Intersections $(1\,;0)$ et $(3\,;0)$.
+  \item \textbf{Intersection avec $Oy$} : $(0\,;c)=(0\,;3)$.
+  \item \textbf{Orientation} : vers le haut car $a=1>0$ ; le sommet est un minimum.
+  \item \textbf{Forme factorisée} : $f(x)=(x-1)(x-3)$.
+\end{itemize}
+(La courbe est la Figure 5 déjà tracée plus haut.)
+\end{exemple}
+
+\begin{exemple}[Le rôle du discriminant : trois paraboles]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $f(x)=x^2-2x+1$ : $a=1,\ b=-2,\ c=1\Rightarrow\Delta=0$ → \textbf{racine double}
+        $x=1$ ; la parabole \emph{touche} l'axe des $x$ en $(1\,;0)$.
+  \item $f(x)=x^2-x+4$ : $a=1,\ b=-1,\ c=4\Rightarrow\Delta=1-16=-15<0$ → \textbf{aucune
+        racine} ; comme $a>0$, $f(x)>0$ partout (parabole au-dessus de l'axe).
+  \item $f(x)=-x^2+x-2$ : $a=-1,\ b=1,\ c=-2\Rightarrow\Delta=1-8=-7<0$ → \textbf{aucune
+        racine} ; comme $a<0$, $f(x)<0$ partout (parabole sous l'axe, ouverte vers le bas).
+\end{itemize}
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=11.5cm,height=6.8cm,
+    xmin=-2.4,xmax=3.4,ymin=-4.6,ymax=4.6,
+    xtick={-2,-1,1,2,3},ytick={-4,-2,2,4},samples=120,
+    restrict y to domain=-4.6:4.6]
+  \addplot[courbe,line width=1.2pt,domain=-0.9:2.9] {x^2-2*x+1};
+  \addplot[courbeB,line width=1.2pt,domain=-1.4:2.4] {x^2-x+4};
+  \addplot[courbeC,line width=1.2pt,domain=-1.4:2.4] {-x^2+x-2};
+  \filldraw[courbe] (axis cs:1,0) circle (1.8pt);
+  \node[courbe,anchor=north,font=\scriptsize] at (axis cs:1.0,-0.12) {$\Delta=0$};
+  \node[courbeB,anchor=south,font=\scriptsize] at (axis cs:0.5,3.9) {$x^2-x+4\ (\Delta<0)$};
+  \node[courbeC,anchor=north,font=\scriptsize] at (axis cs:0.5,-2.1) {$-x^2+x-2\ (\Delta<0)$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 8}} : selon le signe de $\Delta$, la parabole touche
+($\Delta=0$), ne touche pas par le haut ou ne touche pas par le bas ($\Delta<0$) l'axe des abscisses.
+\end{center}
+
+\subsection{Fonctions trigonométriques et trigonométriques réciproques}
+
+\subsubsection{Fonction sinus}
+
+\begin{definition}[Fonction sinus]
+La fonction \textbf{sinus} est définie par $f(x)=\sin x$, avec $\Df=\R$.
+\end{definition}
+
+\paragraph{Caractéristiques.}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Racines} : $\sin x=0 \Leftrightarrow x=k\pi$, $k\in\Z$.
+  \item \textbf{Périodique} de période $T=2\pi$, car $\sin(x+2\pi)=\sin x$.
+  \item \textbf{Intersection avec $Oy$} : $(0\,;0)$.
+  \item \textbf{Impaire} : $\sin(-x)=-\sin x$.
+  \item \textbf{Bornée} : $-1\leq \sin x\leq 1$. Maximum $+1$ en $x=\dfrac{\pi}{2}+2k\pi$,
+        minimum $-1$ en $x=\dfrac{3\pi}{2}+2k\pi$, $k\in\Z$.
+  \item Dérivée : $f'(x)=\cos x$, qui s'annule en $x=\dfrac{\pi}{2}+k\pi$.
+\end{itemize}
+
+\paragraph{Tableau de variation sur $[0,2\pi]$.}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{9pt}
+\begin{tabular}{|c|ccccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $0$ & & $\tfrac{\pi}{2}$ & & $\tfrac{3\pi}{2}$ & & $2\pi$ \\
+\hline
+$f'(x)=\cos x$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
+\hline
+$f(x)=\sin x$ & $0$ & \croit & $1$ & \decroit & $-1$ & \croit & $0$ \\
+\hline
+\end{tabular}
+\end{center}
+La fonction $x\mapsto\sin x$ est \emph{croissante} sur
+$\left]0,\tfrac{\pi}{2}\right[\cup\left]\tfrac{3\pi}{2},2\pi\right[$ et \emph{décroissante}
+sur $\left]\tfrac{\pi}{2},\tfrac{3\pi}{2}\right[$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=14cm,height=4.8cm,
+    xmin=-1.9,xmax=7.4,ymin=-1.6,ymax=1.7,
+    xtick={-1.571,1.571,3.1416,4.712,6.283},
+    xticklabels={$-\frac{\pi}{2}$,$\frac{\pi}{2}$,$\pi$,$\frac{3\pi}{2}$,$2\pi$},
+    ytick={-1,1},samples=300,title={\footnotesize $f(x)=\sin x$ — période $T=2\pi$}]
+  \addplot[courbe,line width=1.3pt,domain=-1.7:7.2] {sin(deg(x))};
+  \draw[dashed,gray,thin] (axis cs:1.571,0) -- (axis cs:1.571,1);
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 9}} : la sinusoïde, impaire, bornée entre $-1$ et $+1$, de période $2\pi$.
+\end{center}
+
+\subsubsection{Fonction arcsinus}
+
+\begin{definition}[Fonction arcsinus]
+La fonction \textbf{arcsinus}, notée $\arcsin$, est la fonction \emph{réciproque} de la
+restriction du sinus à $\left[-\tfrac{\pi}{2},\tfrac{\pi}{2}\right]$ :
+\[
+  y=\arcsin x \;\Longleftrightarrow\; x=\sin y \ \text{ et } \ y\in\left[-\tfrac{\pi}{2},\tfrac{\pi}{2}\right].
+\]
+Son graphique est l'image de celui du sinus (restreint) par la symétrie d'axe $y=x$.
+\end{definition}
+
+\begin{formule}[Dérivée de l'arcsinus]
+\[
+  \boxed{\;\big(\arcsin x\big)'=\dfrac{1}{\sqrt{1-x^2}}\;}
+\]
+\textbf{Démonstration.} Posons $y=\arcsin x$, donc $x=\sin y$. En dérivant
+$x=\sin y$ par rapport à $x$ : $1=(\sin y)'=y'\cos y$, d'où $y'=\dfrac{1}{\cos y}$. Or
+$\cos y=\sqrt{1-\sin^2 y}=\sqrt{1-x^2}$ (le cosinus est positif sur
+$\left[-\tfrac{\pi}{2},\tfrac{\pi}{2}\right]$). On obtient bien
+$y'=\dfrac{1}{\sqrt{1-x^2}}$.
+\begin{ou}
+  \item $x$ : variable, avec $x\in\,]-1,1[$ (sinon la racine s'annule ou n'existe pas) ;
+  \item $\sqrt{1-x^2}$ : toujours positif sur $]-1,1[$, ce qui rend la dérivée positive : $\arcsin$ est \emph{croissante}.
+\end{ou}
+\end{formule}
+
+\subsubsection{Fonction cosinus}
+
+\begin{definition}[Fonction cosinus]
+La fonction \textbf{cosinus} est définie par $f(x)=\cos x$, avec $\Df=\R$.
+\end{definition}
+
+\paragraph{Caractéristiques.}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Racines} : $\cos x=0 \Leftrightarrow x=\dfrac{\pi}{2}+k\pi$, $k\in\Z$.
+  \item \textbf{Périodique} de période $T=2\pi$, car $\cos(x+2\pi)=\cos x$.
+  \item \textbf{Intersection avec $Oy$} : $(0\,;1)$.
+  \item \textbf{Paire} : $\cos(-x)=\cos x$.
+  \item \textbf{Bornée} : $-1\leq\cos x\leq 1$. Maximum $+1$ en $x=2k\pi$, minimum $-1$ en
+        $x=\pi+2k\pi$.
+  \item Dérivée : $f'(x)=-\sin x$, qui s'annule en $x=k\pi$.
+\end{itemize}
+
+\paragraph{Tableau de variation sur $[0,2\pi]$.}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{12pt}
+\begin{tabular}{|c|ccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $0$ & & $\pi$ & & $2\pi$ \\
+\hline
+$f'(x)=-\sin x$ & $0$ & $-$ & $0$ & $+$ & $0$ \\
+\hline
+$f(x)=\cos x$ & $1$ & \decroit & $-1$ & \croit & $1$ \\
+\hline
+\end{tabular}
+\end{center}
+$x\mapsto\cos x$ est \emph{décroissante} sur $]0,\pi[$ et \emph{croissante} sur $]\pi,2\pi[$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=14cm,height=4.8cm,
+    xmin=-1.9,xmax=7.4,ymin=-1.6,ymax=1.7,
+    xtick={-1.571,1.571,3.1416,4.712,6.283},
+    xticklabels={$-\frac{\pi}{2}$,$\frac{\pi}{2}$,$\pi$,$\frac{3\pi}{2}$,$2\pi$},
+    ytick={-1,1},samples=300,title={\footnotesize $f(x)=\cos x$ — période $T=2\pi$}]
+  \addplot[courbe,line width=1.3pt,domain=-1.7:7.2] {cos(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 10}} : la fonction cosinus, paire, déduite du sinus par un décalage de $\frac{\pi}{2}$.
+\end{center}
+
+\subsubsection{Fonction arccosinus}
+
+\begin{definition}[Fonction arccosinus]
+La fonction \textbf{arccosinus}, notée $\arccos$, est la fonction réciproque de la
+restriction du cosinus à $[0,\pi]$ :
+\[
+  y=\arccos x \;\Longleftrightarrow\; x=\cos y \ \text{ et } \ y\in[0,\pi].
+\]
+\end{definition}
+
+\begin{formule}[Dérivée de l'arccosinus]
+\[
+  \boxed{\;\big(\arccos x\big)'=-\dfrac{1}{\sqrt{1-x^2}}\;}
+\]
+\textbf{Démonstration.} Avec $y=\arccos x$, donc $x=\cos y$ : en dérivant,
+$1=(\cos y)'=-y'\sin y$, d'où $y'=-\dfrac{1}{\sin y}$. Or
+$\sin y=\sqrt{1-\cos^2 y}=\sqrt{1-x^2}$ ($\sin y\geq 0$ sur $[0,\pi]$), d'où
+$y'=-\dfrac{1}{\sqrt{1-x^2}}$. La dérivée est \emph{négative} : $\arccos$ est décroissante.
+\end{formule}
+
+\subsubsection{Fonction tangente}
+
+\begin{definition}[Fonction tangente]
+La fonction \textbf{tangente} est définie par
+$f(x)=\tan x = \dfrac{\sin x}{\cos x}$.
+Condition d'existence : $\cos x\neq 0 \Leftrightarrow x\neq\dfrac{\pi}{2}+k\pi$, donc
+\[
+  \Df=\R\setminus\Big\{\tfrac{\pi}{2}+k\pi,\ k\in\Z\Big\}.
+\]
+\end{definition}
+
+\paragraph{Caractéristiques.}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Racines} : $\tan x=0 \Leftrightarrow x=k\pi$, $k\in\Z$.
+  \item \textbf{Périodique} de période $T=\pi$ (et non $2\pi$ !), car $\tan(x+\pi)=\tan x$.
+  \item \textbf{Intersection avec $Oy$} : $(0\,;0)$.
+  \item \textbf{Impaire} : $\tan(-x)=\dfrac{\sin(-x)}{\cos(-x)}=\dfrac{-\sin x}{\cos x}=-\tan x$.
+  \item Dérivée : $f'(x)=\dfrac{1}{\cos^2 x}>0$ sur tout $\Df$ : la tangente est
+        \emph{croissante} sur chaque intervalle où elle est définie (mais pas globalement,
+        à cause des asymptotes).
+\end{itemize}
+
+\paragraph{Tableau de variation sur $\left[0,\tfrac{\pi}{2}\right[$.}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{14pt}
+\begin{tabular}{|c|ccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $0$ & & $\tfrac{\pi}{2}$ \\
+\hline
+$f'(x)=\tfrac{1}{\cos^2 x}$ & $1$ & $+$ & $\nexists$ \\
+\hline
+$f(x)=\tan x$ & $0$ & \croit & $+\infty$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=12cm,height=6.2cm,
+    xmin=-1.9,xmax=7.6,ymin=-3.6,ymax=3.6,
+    xtick={1.571,3.1416,4.712,6.283},
+    xticklabels={$\frac{\pi}{2}$,$\pi$,$\frac{3\pi}{2}$,$2\pi$},
+    ytick={-3,-2,-1,1,2,3},samples=400,
+    restrict y to domain=-3.6:3.6,title={\footnotesize $f(x)=\tan x$ — période $T=\pi$}]
+  \addplot[courbe,line width=1.2pt,domain=-1.45:1.45] {tan(deg(x))};
+  \addplot[courbe,line width=1.2pt,domain=1.70:4.59] {tan(deg(x))};
+  \addplot[courbe,line width=1.2pt,domain=4.84:7.45] {tan(deg(x))};
+  \draw[dashed,gray,thin] (axis cs:1.571,-3.6) -- (axis cs:1.571,3.6);
+  \draw[dashed,gray,thin] (axis cs:4.712,-3.6) -- (axis cs:4.712,3.6);
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 11}} : la tangente, impaire, de période $\pi$, avec une
+asymptote verticale à chaque $\frac{\pi}{2}+k\pi$.
+\end{center}
+
+\subsubsection{Fonction arctangente}
+
+\begin{definition}[Fonction arctangente]
+La fonction \textbf{arctangente}, notée $\arctan$, est la fonction réciproque de la
+restriction de la tangente à $\left]-\tfrac{\pi}{2},\tfrac{\pi}{2}\right[$ :
+\[
+  y=\arctan x \;\Longleftrightarrow\; x=\tan y \ \text{ et } \ y\in\left]-\tfrac{\pi}{2},\tfrac{\pi}{2}\right[.
+\]
+\end{definition}
+
+\begin{formule}[Dérivée de l'arctangente]
+\[
+  \boxed{\;\big(\arctan x\big)'=\dfrac{1}{1+x^2}\;}
+\]
+\textbf{Démonstration.} Avec $y=\arctan x$, donc $x=\tan y$ : en dérivant,
+$1=(\tan y)'=\dfrac{y'}{\cos^2 y}$, d'où $y'=\cos^2 y$. Comme
+$\cos^2 y=\dfrac{1}{1+\tan^2 y}=\dfrac{1}{1+x^2}$, on conclut
+$y'=\dfrac{1}{1+x^2}$. Cette dérivée est toujours positive : $\arctan$ est croissante
+sur $\R$ tout entier, et bornée entre $-\tfrac{\pi}{2}$ et $\tfrac{\pi}{2}$.
+\end{formule}
+
+\begin{remarque}[Formulaire trigonométrique usuel]
+Quelques formules reliant les fonctions trigonométriques, très utiles dans les calculs :
+\end{remarque}
+
+\begin{tcolorbox}[boxbase,colback=primary!6,colframe=primary,
+    title={\textsc{Formulaire trigonométrique}}]
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=1.2em,topsep=0pt,itemsep=3pt]
+  \item $\cos^2 x+\sin^2 x=1$
+  \item $\cos(x+y)=\cos x\cos y-\sin x\sin y$
+  \item $\sin(x+y)=\sin x\cos y+\cos x\sin y$
+  \item $\sin^2 x=\dfrac{1-\cos 2x}{2}$ \ et \ $\cos^2 x=\dfrac{1+\cos 2x}{2}$
+  \item $\sin 2x=2\sin x\cos x$
+  \item $\tan 2x=\dfrac{2\tan x}{1-\tan^2 x}$
+\end{itemize}
+\end{multicols}
+\end{tcolorbox}
+
+\subsection{Fonctions exponentielles de base $a$ et logarithmiques}
+
+\begin{definition}[Fonction exponentielle de base $a$]
+La fonction \textbf{exponentielle de base $a$} est définie par
+\[
+  f(x)=a^{x},\qquad a\in\R_0^{+}\setminus\{1\}\ \ (a>0,\ a\neq 1).
+\]
+$\Df=\R$, et la courbe $y=a^x$ est \textbf{toujours strictement positive}
+(elle ne coupe jamais l'axe des $x$).
+\end{definition}
+
+\paragraph{Sens de variation selon la base.}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item Si $a>1$ : $x\mapsto a^x$ est \textbf{strictement croissante}
+        (ex. $a=e\approx 2{,}718$, soit $f(x)=e^x$).
+  \item Si $0<a<1$ : $x\mapsto a^x$ est \textbf{strictement décroissante}
+        (ex. $a=\frac1e$ ou $a=\frac12$, soit $f(x)=\left(\frac12\right)^x$).
+\end{itemize}
+
+\begin{definition}[Fonction logarithmique]
+La fonction \textbf{logarithmique de base $a$} est la \emph{réciproque} de l'exponentielle :
+\[
+  a^{x}=y \;\Longleftrightarrow\; x=\log_a y .
+\]
+On en déduit immédiatement $\log_a 1=0$ et $\log_a a=1$. Comme $a^x=y$ est toujours
+$>0$, le domaine de $y\mapsto\log_a y$ est $\Df=\R_0^{+}=\,]0,+\infty[$.
+\end{definition}
+
+\begin{remarque}[Symétrie exp/log]
+Dans un repère orthonormé, le graphique de $x\mapsto\log_a x$ est l'\textbf{image} du
+graphique de $x\mapsto a^x$ par la \emph{symétrie orthogonale d'axe} $y=x$ (la première
+bissectrice). C'est la signature des fonctions réciproques.
+\end{remarque}
+
+\paragraph{Sens de variation du logarithme.}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item Si $a>1$ : $x\mapsto\log_a x$ est croissante.
+  \item Si $0<a<1$ : $x\mapsto\log_a x$ est décroissante.
+  \item Injectivité : $\log_a x_1=\log_a x_2 \Rightarrow x_1=x_2$.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.8cm,height=6.4cm,
+    xmin=-3.2,xmax=4.2,ymin=-3.2,ymax=4.2,
+    xtick={-2,2,4},ytick={-2,2,4},samples=200,
+    restrict y to domain=-3.2:4.2,title={\footnotesize base $a=2>1$}]
+  \addplot[courbeB,line width=1.0pt,dashed,domain=-3.2:4.2] {x};
+  \addplot[courbe,line width=1.3pt,domain=-3.2:2.05] {2^x};
+  \addplot[courbeC,line width=1.3pt,domain=0.13:4.1] {ln(x)/ln(2)};
+  \node[courbe,font=\scriptsize,anchor=south] at (axis cs:1.5,3.6) {$2^x$};
+  \node[courbeC,font=\scriptsize,anchor=west] at (axis cs:3.0,1.4) {$\log_2 x$};
+  \node[courbeB,font=\scriptsize,anchor=south west] at (axis cs:2.6,3.1) {$y=x$};
+\end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\begin{axis}[repere,width=7.8cm,height=6.4cm,
+    xmin=-3.2,xmax=4.2,ymin=-3.2,ymax=4.2,
+    xtick={-2,2,4},ytick={-2,2,4},samples=200,
+    restrict y to domain=-3.2:4.2,title={\footnotesize base $0<a=\frac14<1$}]
+  \addplot[courbeB,line width=1.0pt,dashed,domain=-3.2:4.2] {x};
+  \addplot[courbe,line width=1.3pt,domain=-1.7:3.0] {(1/4)^x};
+  \addplot[courbeC,line width=1.3pt,domain=0.06:4.1] {ln(x)/ln(1/4)};
+  \node[courbe,font=\scriptsize,anchor=west] at (axis cs:-1.3,3.4) {$\left(\frac14\right)^x$};
+  \node[courbeC,font=\scriptsize,anchor=north] at (axis cs:3.4,-1.0) {$\log_{1/4} x$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 12}} : exponentielle et logarithme sont symétriques par
+rapport à la droite $y=x$. À gauche base $>1$ (croissantes), à droite base $<1$ (décroissantes).
+\end{center}
+
+\begin{tcolorbox}[boxbase,colback=formulacol!6,colframe=formulacol,
+    title={\textsc{Propriétés des logarithmes}}]
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=1.2em,topsep=0pt,itemsep=3pt]
+  \item $\log_a(x\times y)=\log_a x+\log_a y$
+  \item $\log_a\dfrac{x}{y}=\log_a x-\log_a y$
+  \item $\log_a x^{n}=n\log_a x$,\quad $n\in\Z$
+  \item $\log_a\sqrt[n]{x}=\dfrac1n\log_a x$,\quad $n\in\Z_0$
+\end{itemize}
+\end{multicols}
+\end{tcolorbox}
+
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item Si $a=10$ : on parle de \textbf{logarithme décimal} (celui de la calculatrice),
+        noté $\log x=\log_{10}x$.
+  \item Si $a=e$ : on parle de \textbf{logarithme népérien}, noté $\ln x=\log_e x$.
+\end{itemize}
+
+\begin{remarque}[Tout ramener à la base $e$]
+Toute exponentielle de base $a$ ($a\in\R_0^{+}\setminus\{1\}$) se réécrit en base $e$ :
+\[
+  a^{x}=e^{x\ln a}.
+\]
+\end{remarque}
+
+\begin{formule}[Changement de base]
+\[
+  \boxed{\;\log_a x=\dfrac{\log x}{\log a}=\dfrac{\ln x}{\ln a}=\dfrac{\log_n x}{\log_n a}\;}
+\]
+\textbf{Exemple :} $\log_{10}x=\dfrac{\log x}{\log 10}=\dfrac{\ln x}{\ln 10}$, d'où
+$\ln x=\ln 10\times\log x\approx 2{,}30259\times\log x$.
+\end{formule}
+
+\begin{formule}[Dérivée du logarithme népérien]
+Pour $x\mapsto\ln x$ définie sur $\R_0^{+}$,
+\[
+  \boxed{\;\big(\ln x\big)'=\dfrac1x\;}
+\]
+Comme $\dfrac1x>0$ pour tout $x\in\Df$, on a $f'(x)>0$ : la fonction $\ln$ est
+\textbf{croissante} sur tout son domaine.
+\end{formule}
+
+\paragraph{Tableau de variation et graphe de $\ln$ sur $\R_0^{+}$.}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{14pt}
+\begin{tabular}{|c|ccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $0$ & & $+\infty$ \\
+\hline
+$f'(x)=\tfrac1x$ & $\nexists$ & $+$ & \\
+\hline
+$f(x)=\ln x$ & $-\infty$ & \croit & $+\infty$ \\
+\hline
+\end{tabular}
+\qquad
+\begin{tikzpicture}
+\begin{axis}[repere,width=6.6cm,height=4.6cm,
+    xmin=-0.6,xmax=5.4,ymin=-2.6,ymax=2.2,
+    xtick={1,2,3,4,5},ytick={-2,-1,1,2},samples=200,
+    restrict y to domain=-2.6:2.2,title={\footnotesize $f(x)=\ln x$}]
+  \addplot[courbe,line width=1.3pt,domain=0.085:5.3] {ln(x)};
+  \draw[dashed,gray,thin] (axis cs:0,-2.6) -- (axis cs:0,2.2);
+  \filldraw[primary] (axis cs:1,0) circle (1.6pt);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+% =====================================================================
+\section{Méthodes transversales (« comment faire »)}
+% =====================================================================
+
+\begin{methode}[Transformer la courbe d'une fonction]
+À partir de la courbe de $x\mapsto f(x)$, on obtient :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item $x\mapsto f(x)+k$ : on \textbf{translate verticalement} de $k$ (toute ordonnée augmentée de $k$).
+  \item $x\mapsto f(x+k)$ : on \textbf{translate horizontalement} de $-k$ (toute abscisse diminuée de $k$).
+  \item $x\mapsto k\,f(x)$ : on \textbf{multiplie toutes les ordonnées} par $k$ (dilatation verticale ; renversement si $k<0$).
+  \item $x\mapsto f(kx)$, $k\in\R_0^{+}$ : on \textbf{divise toutes les abscisses} par $k$ (compression horizontale si $k>1$).
+\end{itemize}
+\end{methode}
+
+\begin{methode}[Étudier une fonction de A à Z]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item Déterminer le \textbf{domaine de définition} $\Df$ (les trois interdits).
+  \item Étudier les \textbf{symétries} : parité ($f(-x)=f(x)$ ?), imparité ($f(-x)=-f(x)$ ?), périodicité.
+  \item Calculer la \textbf{dérivée} $f'$, résoudre $f'(x)=0$, dresser le \textbf{tableau de variation}.
+  \item Trouver les \textbf{racines} ($f(x)=0$) et l'\textbf{ordonnée à l'origine} ($f(0)$).
+  \item Repérer les \textbf{extremums} et points particuliers (sommet, asymptotes\dots).
+  \item \textbf{Tracer} la courbe à partir de toutes ces informations.
+\end{enumerate}
+\end{methode}
+
+% =====================================================================
+\section{Exemples résolus détaillés}
+% =====================================================================
+Cette section reprend, sous forme d'\textbf{exemples entièrement résolus}, les situations
+les plus formatrices : elles mobilisent toutes les notions de la fiche.
+
+\begin{exemple}[Somme de deux valeurs absolues : $h(x)=\lvert 2x-1\rvert+\lvert x+2\rvert$]
+Soit $f(x)=\lvert 2x-1\rvert$, $g(x)=\lvert x+2\rvert$ et $h=f+g$. Comme une valeur
+absolue est définie partout, $\Df=D_g=D_h=\R$.
+
+\smallskip
+\textbf{Expression « morceau par morceau ».} Chaque valeur absolue change de signe à sa
+racine ($x=\frac12$ pour $f$, $x=-2$ pour $g$) :
+\[
+  f(x)=\begin{cases} 2x-1 & x>\tfrac12\\ 0 & x=\tfrac12\\ -2x+1 & x<\tfrac12\end{cases}
+  \qquad
+  g(x)=\begin{cases} x+2 & x>-2\\ 0 & x=-2\\ -x-2 & x<-2\end{cases}
+\]
+On découpe $\R$ aux points $-2$ et $\frac12$ et on additionne :
+\[
+  h(x)=\begin{cases}
+    -(2x-1)-(x+2)=-3x-1 & x\leq -2,\\[2pt]
+    -(2x-1)+(x+2)=-x+3 & -2\leq x\leq \tfrac12,\\[2pt]
+    (2x-1)+(x+2)=3x+1 & x\geq \tfrac12.
+  \end{cases}
+\]
+\textbf{Une image.} L'image de $-1$ : comme $-1\in\left[-2,\tfrac12\right]$, on prend
+$h(x)=-x+3$, donc $h(-1)=-(-1)+3=4$. (De même $h(-3)=-3(-3)-1=8$, car $-3\leq -2$.)
+La courbe de $h$ est une ligne brisée, partout positive.
+\end{exemple}
+
+\begin{exemple}[Domaine d'un arcsinus composé : $h(x)=\arcsin(x-1)$]
+La fonction $\arcsin$ n'est définie que sur $[-1,1]$. Pour que $h(x)=\arcsin(x-1)$
+existe, il faut donc
+\[
+  -1\leq x-1\leq 1 \;\Longleftrightarrow\; 0\leq x\leq 2 .
+\]
+D'où $\boxed{D_h=[0,2]}$. (On résout chaque inégalité : $-1\leq x-1\Rightarrow x\geq 0$,
+et $x-1\leq 1\Rightarrow x\leq 2$ ; l'intersection donne $[0,2]$.)
+\end{exemple}
+
+\begin{exemple}[{Domaine d'une racine cubique : $f(x)=\sqrt[3]{3x+5}$}]
+\textbf{Piège classique.} La racine \emph{cubique} (indice impair) existe pour
+\emph{tous} les réels, y compris les négatifs : $\sqrt[3]{-8}=-2$. Il ne faut donc
+\textbf{pas} imposer $3x+5\geq 0$. Le domaine est $\boxed{\Df=\R}$ (et non
+$\left[-\tfrac53,+\infty\right[$, qui serait l'erreur). Seules les racines d'indice
+\emph{pair} ($\sqrt{\ },\sqrt[4]{\ },\dots$) imposent un argument positif.
+\end{exemple}
+
+\begin{exemple}[De $\sin x$ à $\sin 2x$ : période et compression]
+Soit $g(x)=\sin x$ et $f(x)=\sin 2x$. Les deux ont $\Df=\R$.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item $f$ est \textbf{impaire} : $f(-x)=\sin(-2x)=-\sin 2x=-f(x)$.
+  \item $f$ admet l'\textbf{origine comme centre de symétrie} (conséquence de l'imparité) :
+        $f(0-x)+f(0+x)=\sin(-2x)+\sin(2x)=0$.
+  \item $f$ est \textbf{périodique de période} $T=\pi$ (et non $2\pi$), car
+        $f(x+\pi)=\sin(2x+2\pi)=\sin 2x=f(x)$.
+  \item \textbf{Construction} : pour tracer $\sin 2x$ à partir de $\sin x$, on
+        \emph{divise toutes les abscisses par $2$} : le couple $(x\,;y)$ de la courbe de
+        $g$ devient $\left(\frac{x}{2}\,;y\right)$ sur celle de $f$. La sinusoïde est donc
+        « comprimée » horizontalement d'un facteur $2$.
+\end{itemize}
+\textbf{Variations sur $[0,\pi]$.} $f'(x)=2\cos 2x$ s'annule quand $2x=\frac{\pi}{2}+k\pi$,
+soit $x=\frac{\pi}{4}+k\frac{\pi}{2}$ :
+\begin{center}
+\renewcommand{\arraystretch}{1.6}\setlength{\tabcolsep}{11pt}
+\begin{tabular}{|c|ccccccc|}
+\hline
+\rowcolor{primarylight}
+$x$ & $0$ & & $\tfrac{\pi}{4}$ & & $\tfrac{3\pi}{4}$ & & $\pi$ \\
+\hline
+$f'(x)=2\cos 2x$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
+\hline
+$f(x)=\sin 2x$ & $0$ & \croit & $1$ & \decroit & $-1$ & \croit & $0$ \\
+\hline
+\end{tabular}
+\end{center}
+$\sin 2x$ est croissante sur $\left]0,\tfrac{\pi}{4}\right[\cup\left]\tfrac{3\pi}{4},\pi\right[$
+et décroissante sur $\left]\tfrac{\pi}{4},\tfrac{3\pi}{4}\right[$.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=14cm,height=4.6cm,
+    xmin=-1.9,xmax=7.0,ymin=-1.6,ymax=1.7,
+    xtick={0.785,1.571,2.356,3.1416,4.712,6.283},
+    xticklabels={$\frac{\pi}{4}$,$\frac{\pi}{2}$,$\frac{3\pi}{4}$,$\pi$,$\frac{3\pi}{2}$,$2\pi$},
+    ytick={-1,1},samples=300,
+    title={\footnotesize $f(x)=\sin 2x$ (bleu) et $g(x)=\sin x$ (rouge) — $T_f=\pi<T_g=2\pi$}]
+  \addplot[courbe,line width=1.3pt,domain=-1.7:6.9] {sin(deg(2*x))};
+  \addplot[courbeB,line width=1.0pt,dashed,domain=-1.7:6.9] {sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 13}} : $\sin 2x$ oscille deux fois plus vite que $\sin x$
+(abscisses divisées par 2, période deux fois plus courte).
+\end{center}
+
+\begin{exemple}[Calculer $\sin 2x$ connaissant $\sin x$ dans le premier quadrant]
+On suppose $x$ angle du premier quadrant avec $\sin x=\dfrac34$. Dans ce quadrant
+$\cos x>0$, donc
+\[
+  \cos x=\sqrt{1-\sin^2 x}=\sqrt{1-\left(\tfrac34\right)^2}=\sqrt{1-\tfrac{9}{16}}
+  =\sqrt{\tfrac{7}{16}}=\frac{\sqrt7}{4}.
+\]
+Puis, avec $\sin 2x=2\sin x\cos x$ :
+\[
+  \sin 2x=2\times\frac34\times\frac{\sqrt7}{4}=\frac{3\sqrt7}{8}.
+\]
+\end{exemple}
+
+\begin{exemple}[Reconnaître des paraboles transformées de $x\mapsto x^2$]
+On compare chaque parabole à la « parabole mère » $x\mapsto x^2$ (sommet à l'origine,
+ouverte vers le haut) en lisant les transformations :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item $f(x)=(x+1)^2+1$ : abscisses \emph{translatées} de $-1$ (vers la gauche) puis
+        ordonnées \emph{augmentées} de $+1$ → sommet en $(-1\,;1)$.
+  \item $g(x)=(2x)^2-3$ : abscisses \emph{divisées} par $2$ (parabole resserrée) puis
+        ordonnées \emph{diminuées} de $3$ → sommet en $(0\,;-3)$, plus étroite.
+  \item $h(x)=-x^2+1$ : parabole \emph{renversée} ($a=-1<0$, ouverte vers le bas) et
+        ordonnées augmentées de $+1$ → sommet en $(0\,;1)$.
+  \item $i(x)=-x^2+x-3$ : $a=-1<0$ (ouverte vers le bas) ; discriminant
+        $\Delta=b^2-4ac=1-12=-11<0$ → aucune racine, courbe entièrement \emph{sous} l'axe.
+        On peut vérifier par deux images : $i(0)=-3$ et $i(-1)=-5$.
+\end{itemize}
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=12cm,height=7.0cm,
+    xmin=-3.6,xmax=3.6,ymin=-5.4,ymax=4.8,
+    xtick={-3,-2,-1,1,2,3},ytick={-4,-2,2,4},samples=130,
+    restrict y to domain=-5.4:4.8]
+  \addplot[courbe,line width=1.2pt,domain=-3.3:1.3] {(x+1)^2+1};
+  \addplot[courbeC,line width=1.2pt,domain=-1.45:1.45] {(2*x)^2-3};
+  \addplot[courbeB,line width=1.2pt,domain=-2.0:2.0] {-x^2+1};
+  \addplot[primary,line width=1.2pt,domain=-1.6:2.6] {-x^2+x-3};
+  \node[courbe,font=\scriptsize,anchor=south east] at (axis cs:-1,2.0) {$f=(x+1)^2{+}1$};
+  \node[courbeC,font=\scriptsize,anchor=west] at (axis cs:0.9,1.5) {$g=(2x)^2{-}3$};
+  \node[courbeB,font=\scriptsize,anchor=west] at (axis cs:1.4,-2.0) {$h=-x^2{+}1$};
+  \node[primary,font=\scriptsize,anchor=north] at (axis cs:0.5,-3.6) {$i=-x^2{+}x{-}3$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 14}} : quatre paraboles obtenues par translation,
+dilatation et renversement de la parabole mère $x\mapsto x^2$.
+\end{center}
+
+\begin{exemple}[Retrouver les paramètres de $f(x)=a\,e^{bx}$ sur un graphe]
+On lit sur le graphe deux informations : la courbe passe par $(0\,;2)$ et par
+$\left(\tfrac{\ln 2}{2}\,;4\right)$.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item \textbf{Paramètre $a$} : $f(0)=a\,e^{b\times 0}=a\,e^0=a$. Or $f(0)=2$, donc
+        $\boxed{a=2}$.
+  \item \textbf{Paramètre $b$} : $f\!\left(\tfrac{\ln 2}{2}\right)=2\,e^{b\frac{\ln 2}{2}}=4$,
+        d'où $e^{b\frac{\ln 2}{2}}=2$. En prenant le logarithme népérien :
+        \[
+          b\,\frac{\ln 2}{2}=\ln 2 \;\Longrightarrow\; \frac{b}{2}=1 \;\Longrightarrow\; \boxed{b=2}.
+        \]
+\end{itemize}
+Conclusion : $f(x)=2\,e^{2x}$.
+\end{exemple}
+
+\begin{exemple}[Retrouver les paramètres de $f(x)=\ln x^{a}+b$ sur un graphe]
+On utilise la propriété $\ln x^a=a\ln x$, donc $f(x)=a\ln x+b$. Le graphe indique
+$f(1)=-3$ et $f(2)=\ln 4-3$.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item \textbf{Paramètre $b$} : $f(1)=a\ln 1+b=a\times 0+b=b$. Or $f(1)=-3$, donc
+        $\boxed{b=-3}$.
+  \item \textbf{Paramètre $a$} : $f(2)=a\ln 2+b=a\ln 2-3$. Or $f(2)=\ln 4-3$ et
+        $\ln 4=\ln 2^2=2\ln 2$, donc $a\ln 2-3=2\ln 2-3$, d'où $a\ln 2=2\ln 2$ et
+        $\boxed{a=2}$.
+\end{itemize}
+Conclusion : $f(x)=\ln x^{2}-3$.
+\end{exemple}
+
+\begin{exemple}[Exemple-synthèse : géométrie analytique d'une fonction en « V »]
+On considère la fonction $f$ dont la courbe (en forme de V) passe par les points
+$A\left(\tfrac32\,;0\right)$ (le creux du V), $B(0\,;3)$ et $C(3\,;3)$, avec un point
+$P(-2\,;1)$ hors de la courbe. Cet exemple mobilise \emph{toutes} les formules de
+géométrie analytique de la section~5.1.
+
+\medskip
+\textbf{a) Équation de la branche droite $(AC)$.} Pente :
+\[
+  a=\frac{y_C-y_A}{x_C-x_A}=\frac{3-0}{3-\tfrac32}=\frac{3}{\tfrac32}=2,
+  \qquad b=y_C-a x_C=3-2\times 3=-3 .
+\]
+La branche droite a pour équation $y=2x-3$.
+
+\textbf{b) Équation de la branche gauche $(AB)$.} Pente :
+\[
+  a=\frac{y_B-y_A}{x_B-x_A}=\frac{3-0}{0-\tfrac32}=\frac{3}{-\tfrac32}=-2,
+  \qquad b=y_B-a x_B=3-(-2)\times 0=3 .
+\]
+La branche gauche a pour équation $y=-2x+3$. La fonction est donc
+$f(x)=\lvert 2x-3\rvert$ (recollement des deux branches : c'est bien un V de sommet
+$\left(\tfrac32\,;0\right)$).
+
+\textbf{c) Le triangle $ABC$ est-il isocèle ?} On compare $\overline{AB}$ et $\overline{AC}$ :
+\[
+  \overline{AB}=\sqrt{(0-\tfrac32)^2+(3-0)^2}=\sqrt{\tfrac94+9}=\sqrt{\tfrac{45}{4}}=\frac{3\sqrt5}{2},
+\]
+\[
+  \overline{AC}=\sqrt{(3-\tfrac32)^2+(3-0)^2}=\sqrt{\tfrac94+9}=\frac{3\sqrt5}{2}.
+\]
+Comme $\overline{AB}=\overline{AC}$, le triangle $ABC$ est \textbf{isocèle}. \checkmark
+
+\textbf{d) Parallèle à $(AC)$ passant par l'origine.} $(AC)$ a pour pente $2$ ; la
+parallèle cherchée a la même pente : $y=2x+b$. Elle passe par $(0\,;0)$, donc $b=0$ :
+$d:\ y=2x$. Son intersection avec $(AB):\ y=-2x+3$ :
+\[
+  \begin{cases} y=2x\\ y=-2x+3\end{cases}\Rightarrow 2x=-2x+3\Rightarrow x=\tfrac34,\ y=\tfrac32.
+\]
+Elle coupe $(AB)$ au point $\left(\tfrac34\,;\tfrac32\right)$.
+
+\textbf{e) Perpendiculaire à $(AB)$ passant par $A$.} $(AB)$ a pour pente $-2$ ; la
+perpendiculaire a pour pente $-\dfrac{1}{-2}=\dfrac12$. Donc $y=\tfrac12 x+b$, et elle
+passe par $A\left(\tfrac32\,;0\right)$ : $0=\tfrac12\times\tfrac32+b\Rightarrow b=-\tfrac34$.
+Équation : $y=\tfrac12 x-\tfrac34$.
+
+\textbf{f) Milieu de $[AB]$.}
+$M\left(\dfrac{x_A+x_B}{2}\,;\dfrac{y_A+y_B}{2}\right)
+ =\left(\dfrac{\tfrac32+0}{2}\,;\dfrac{0+3}{2}\right)=\left(\dfrac34\,;\dfrac32\right)$.
+
+\textbf{g) Distance du point $P(-2\,;1)$ à la droite $(AB)$.} Équation canonique de
+$(AB):\ y=-2x+3 \Rightarrow 2x+y-3=0$ (donc $a=2,\ b=1,\ c=-3$). Alors
+\[
+  \operatorname{dist}(P,AB)=\frac{\lvert 2\times(-2)+1\times 1-3\rvert}{\sqrt{2^2+1^2}}
+  =\frac{\lvert -4+1-3\rvert}{\sqrt5}=\frac{6}{\sqrt5}.
+\]
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=11cm,height=6.6cm,
+    xmin=-2.8,xmax=4.0,ymin=-0.8,ymax=4.0,
+    xtick={-2,-1,1,2,3},ytick={1,2,3},samples=2,
+    title={\footnotesize $f(x)=\lvert 2x-3\rvert$ et les points $A,B,C,P$}]
+  \addplot[courbe,line width=1.3pt,domain=-0.4:1.5] {-(2*x-3)};
+  \addplot[courbe,line width=1.3pt,domain=1.5:3.4] {2*x-3};
+  \filldraw[primary] (axis cs:1.5,0) circle (2pt) node[anchor=north,font=\scriptsize]{$A$};
+  \filldraw[courbeC] (axis cs:0,3) circle (2pt) node[anchor=south east,font=\scriptsize]{$B$};
+  \filldraw[courbeC] (axis cs:3,3) circle (2pt) node[anchor=south west,font=\scriptsize]{$C$};
+  \filldraw[courbeB] (axis cs:-2,1) circle (2pt) node[anchor=south,font=\scriptsize]{$P$};
+  \filldraw[black] (axis cs:0.75,1.5) circle (1.5pt) node[anchor=north west,font=\scriptsize]{$M$};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{}
+\textbf{\textcolor{primary}{Figure 15}} : la fonction $\lvert 2x-3\rvert$, son triangle
+isocèle $ABC$ et le milieu $M$ de $[AB]$.
+\end{center}
+
+% =====================================================================
+\section{Synthèse et formulaire}
+% =====================================================================
+
+\subsection{Tableau récapitulatif des fonctions usuelles}
+
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.45}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.7cm}|c|c|c|>{\raggedright\arraybackslash}p{4.6cm}|}
+\hline
+\rowcolor{primary}
+\textcolor{white}{\textbf{Fonction}} & \textcolor{white}{\textbf{$\Df$}} &
+\textcolor{white}{\textbf{Parité}} & \textcolor{white}{\textbf{Dérivée}} &
+\textcolor{white}{\textbf{Particularité}} \\
+\hline
+Affine \;$ax+b$ & $\R$ & impaire si $b{=}0$ & $a$ & droite ; racine $-\tfrac{b}{a}$ \\
+\hline
+\rowcolor{primarylight}
+Quadratique \;$ax^2{+}bx{+}c$ & $\R$ & paire si $b{=}0$ & $2ax{+}b$ & parabole ; sommet $\left(-\tfrac{b}{2a};-\tfrac{\Delta}{4a}\right)$ \\
+\hline
+Cube \;$x^3$ & $\R$ & impaire & $3x^2$ & centre de sym. $(0;0)$ \\
+\hline
+\rowcolor{primarylight}
+Inverse \;$\tfrac1x$ & $\R\setminus\{0\}$ & impaire & $-\tfrac{1}{x^2}$ & hyperbole ; 2 asymptotes \\
+\hline
+Racine \;$\sqrt{x}$ & $[0,+\infty[$ & --- & $\tfrac{1}{2\sqrt x}$ & croissante \\
+\hline
+\rowcolor{primarylight}
+$\sin x$ & $\R$ & impaire & $\cos x$ & $T{=}2\pi$ ; bornée $[-1,1]$ \\
+\hline
+$\cos x$ & $\R$ & paire & $-\sin x$ & $T{=}2\pi$ ; bornée $[-1,1]$ \\
+\hline
+\rowcolor{primarylight}
+$\tan x$ & $\R\setminus\{\tfrac{\pi}{2}{+}k\pi\}$ & impaire & $\tfrac{1}{\cos^2 x}$ & $T{=}\pi$ ; asymptotes \\
+\hline
+$\arcsin x$ & $[-1,1]$ & impaire & $\tfrac{1}{\sqrt{1-x^2}}$ & réciproque de $\sin$ \\
+\hline
+\rowcolor{primarylight}
+$\arccos x$ & $[-1,1]$ & --- & $-\tfrac{1}{\sqrt{1-x^2}}$ & réciproque de $\cos$ \\
+\hline
+$\arctan x$ & $\R$ & impaire & $\tfrac{1}{1+x^2}$ & réciproque de $\tan$ ; bornée \\
+\hline
+\rowcolor{primarylight}
+$e^{x}$ & $\R$ & --- & $e^{x}$ & toujours $>0$ ; croissante \\
+\hline
+$\ln x$ & $]0,+\infty[$ & --- & $\tfrac1x$ & croissante ; racine $x{=}1$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Formulaire essentiel à retenir}
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,
+    title={\textsc{Les formules incontournables de la fiche}}]
+\begin{multicols}{2}
+\small
+\textbf{Caractéristiques}
+\begin{itemize}[leftmargin=1.2em,topsep=1pt,itemsep=2pt]
+  \item Axe de symétrie : $f(a-x)=f(a+x)$
+  \item Centre de symétrie : $f(a-x)+f(a+x)=2b$
+  \item Parité : $f(-x)=f(x)$ ; \ Imparité : $f(-x)=-f(x)$
+  \item Périodicité : $f(x+T)=f(x)$
+\end{itemize}
+
+\textbf{Second degré}
+\begin{itemize}[leftmargin=1.2em,topsep=1pt,itemsep=2pt]
+  \item $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$,\ $\Delta=b^2-4ac$
+  \item Sommet : $\left(-\dfrac{b}{2a}\,;-\dfrac{\Delta}{4a}\right)$
+  \item Axe de symétrie : $x=-\dfrac{b}{2a}$
+\end{itemize}
+
+\columnbreak
+
+\textbf{Géométrie analytique}
+\begin{itemize}[leftmargin=1.2em,topsep=1pt,itemsep=2pt]
+  \item Pente : $a=\dfrac{y_B-y_A}{x_B-x_A}$
+  \item Parallèles : $a=a'$ ; \ Perpend. : $a\,a'=-1$
+  \item Distance : $\overline{AB}=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}$
+  \item Milieu : $\left(\dfrac{x_A+x_B}{2}\,;\dfrac{y_A+y_B}{2}\right)$
+  \item Point-droite : $\dfrac{\lvert ax_A+by_A+c\rvert}{\sqrt{a^2+b^2}}$
+\end{itemize}
+
+\textbf{Log / exp}
+\begin{itemize}[leftmargin=1.2em,topsep=1pt,itemsep=2pt]
+  \item $\log_a(xy)=\log_a x+\log_a y$
+  \item $\log_a x^n=n\log_a x$ ; \ $a^x=e^{x\ln a}$
+  \item Changement de base : $\log_a x=\dfrac{\ln x}{\ln a}$
+\end{itemize}
+\end{multicols}
+\end{tcolorbox}
+
+\begin{center}
+\vspace{0.3cm}
+{\color{primary}\rule{0.5\linewidth}{1pt}}\\[4pt]
+{\small\itshape Fin du cours — Fiche 4 : Les fonctions.}
+\end{center}
+
+% ----- SENTINELLE_FIN -----
+\end{document}

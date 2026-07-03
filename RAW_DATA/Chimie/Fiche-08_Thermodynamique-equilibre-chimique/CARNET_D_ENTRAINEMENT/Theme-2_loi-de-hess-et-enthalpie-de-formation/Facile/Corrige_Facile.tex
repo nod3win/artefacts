@@ -1,0 +1,104 @@
+% =====================================================================
+%  FICHE 8 — THÈME 2 — NIVEAU FACILE — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\dH}{\Delta H}
+\newcommand{\dHr}{\Delta H^{\circ}_{\text{r}}}
+\newcommand{\dHf}{\Delta H^{\circ}_{\text{f}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 2 : Enthalpie de formation et loi de Hess}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile — corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=excol,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 2 — Enthalpie de formation et loi de Hess}\\[1pt]{\small Niveau \textsc{Facile} — corrigé détaillé}};
+\end{tikzpicture}
+\end{center}
+
+\begin{correction}[reconnaître un $\dHf$ nul]
+Sont nuls les \textbf{corps purs simples dans leur état le plus stable} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \rep{$\ce{O2}(g)$, $\ce{Fe}(s)$, $\ce{N2}(g)$, $\ce{C}$(graphite)} : $\dHf=0$ (corps simples, forme la plus stable).
+  \item $\ce{CO2}$, $\ce{H2O}$, $\ce{NH3}$ : \emph{composés}, donc $\dHf\neq0$.
+  \item $\ce{O3}$ : c'est bien un corps simple, mais l'ozone \emph{n'est pas} la forme la plus stable de
+        l'oxygène ($\ce{O2}$ l'est). Donc \rep{$\dHf(\ce{O3})\neq0$}.
+\end{itemize}
+\end{correction}
+
+\begin{correction}[écrire la loi de Hess]
+« Produits $-$ réactifs », chacun $\times$ son coefficient ; les corps simples valent $0$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=3pt]
+  \item $\dHr ={}$ \rep{$2\,\dHf(\ce{B}) - \dHf(\ce{A})$}.
+  \item $\dHr = 2\,\dHf(\ce{NH3}) - \big[\dHf(\ce{N2}) + 3\,\dHf(\ce{H2})\big] ={}$ \rep{$2\,\dHf(\ce{NH3})$}
+        (car $\dHf(\ce{N2})=\dHf(\ce{H2})=0$).
+  \item $\dHr = \dHf(\ce{C2H5OH},l) - \big[2\,\dHf(\ce{C}) + 3\,\dHf(\ce{H2}) + \tfrac12\dHf(\ce{O2})\big]
+        ={}$ \rep{$\dHf(\ce{C2H5OH},l)$}. C'est justement la définition de $\dHf$ de l'éthanol.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[application numérique de la loi de Hess]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\dHr = \big[\dHf(\ce{CO2}) + 2\,\dHf(\ce{H2O},l)\big] - \big[\dHf(\ce{CH4}) + 2\,\dHf(\ce{O2})\big]$.
+  \item Application :
+  \[ \dHr = \big[(-394) + 2(-286)\big] - \big[(-75) + 0\big] = (-966) + 75 = \rep{\SI{-891}{\kilo\joule}}. \]
+  $\dHr<0$ : la combustion est \rep{exothermique}.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[inverser une réaction]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Inverser une réaction change le signe de $\dH$ : $\dH_{\text{inverse}} = \rep{\SI{+200}{\kilo\joule}}$.
+  \item $\dH>0$ : la décomposition de $\ce{SO3}$ est \rep{endothermique} (l'inverse d'une réaction
+        exothermique est endothermique).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[effet des coefficients]
+$\dH$ est proportionnel aux coefficients de l'équation.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item Coefficients $\times 2$ : $\dH = 2\times(-286) = \rep{\SI{-572}{\kilo\joule}}$.
+  \item Coefficients $\times \tfrac12$ : $\dH = \tfrac12\times(-286) = \rep{\SI{-143}{\kilo\joule}}$.
+  \item C'est l'\rep{enthalpie standard de formation de $\ce{H2O}(l)$}, $\dHf(\ce{H2O},l)=\SI{-286}{\kilo\joule\per\mol}$
+        (formation d'\emph{une} mole à partir des corps simples).
+\end{enumerate}
+\end{correction}
+
+\end{document}

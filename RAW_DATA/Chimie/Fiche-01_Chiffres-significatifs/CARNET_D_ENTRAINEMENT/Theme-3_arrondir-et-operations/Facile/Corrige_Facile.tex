@@ -1,0 +1,93 @@
+% =====================================================================
+%  THÈME 3 — Arrondir & opérations — CORRIGÉ — Niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Facile · Thème 3}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
+  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,
+  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Corrigé — Niveau Facile}\\[1pt]
+{\color{primary} Thème 3 : arrondir un résultat}
+\end{center}
+\vspace{2mm}
+
+\begin{cor}[Arrondir à un nombre de \CS\ donné]
+On garde les CS demandés et on regarde le premier chiffre supprimé.
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{3,148}\to$ supprimé $8\,(\ge5)\to \mathbf{\num{3,15}}$.
+  \item b) $\num{3,142}\to$ supprimé $2\,(<5)\to \mathbf{\num{3,14}}$.
+  \item c) $\num{0,06237}\to$ CS $=6,2$ ; supprimé $3\,(<5)\to \mathbf{\num{0,062}}$.
+  \item d) $\num{124,7}\to$ supprimé $7\,(\ge5)\to \mathbf{\num{125}}$.
+  \item e) $\num{7,8451}\to$ supprimé $4\,(<5)\to \mathbf{\num{7,8}}$.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[Le premier chiffre supprimé]
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{0,4271}$ à $2$~CS : premier supprimé $=7\,(\ge5)\to$ par excès $\to \mathbf{\num{0,43}}$.
+  \item b) $\num{58,96}$ à $3$~CS : premier supprimé $=6\,(\ge5)\to$ par excès $\to \mathbf{\num{59,0}}$.
+  \item c) $\num{1,2350}$ à $3$~CS : premier supprimé $=5\,(\ge5)\to$ par excès $\to \mathbf{\num{1,24}}$.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[Attention aux retenues en cascade]
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{2,996}$ à $3$~CS : supprimé $6\,(\ge5)$, $\num{2,99}+\num{0,01}=\mathbf{\num{3,00}}$
+        (on garde « $00$ » pour avoir $3$~CS).
+  \item b) $\num{9,98}$ à $2$~CS : supprimé $8\,(\ge5)$, $\num{9,9}+\num{0,1}=\num{10}$, soit
+        $\mathbf{\num{1,0e1}}$ (pour afficher clairement $2$~CS).
+  \item c) $\num{0,7996}$ à $3$~CS : CS $=7,9,9$ ; supprimé $6\,(\ge5)$,
+        $\num{0,799}+\num{0,001}=\mathbf{\num{0,800}}$.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[Arrondir à un nombre de \emph{décimales} donné]
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{255,507}$ à $1$ décimale : supprimé $0\,(<5)\to \mathbf{\num{255,5}}$.
+  \item b) $\num{0,1149}$ à $2$ décimales : supprimé $4\,(<5)\to \mathbf{\num{0,11}}$.
+  \item c) $\num{18,016}$ à $2$ décimales : supprimé $6\,(\ge5)\to \mathbf{\num{18,02}}$.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[Arrondir de grands nombres]
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item a) $\num{45678}$ à $2$~CS : $\num{4,5}\dots$, supprimé $6\,(\ge5)\to \mathbf{\num{4,6e4}}$.
+  \item b) $\num{30960}$ à $3$~CS : $\num{3,09}\dots$, supprimé $6\,(\ge5)\to \mathbf{\num{3,10e4}}$.
+  \item c) $\num{1249}$ à $2$~CS : $\num{1,2}\dots$, supprimé $4\,(<5)\to \mathbf{\num{1,2e3}}$.
+\end{itemize}
+\end{cor}
+
+\end{document}

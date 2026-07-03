@@ -1,0 +1,1224 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 7
+%  Lois de la réflexion et de la réfraction
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « physique » réutilisées dans les figures
+\definecolor{rayinc}{RGB}{20,20,20}         % rayon incident (noir)
+\definecolor{rayref}{RGB}{0,90,200}         % rayon réfléchi (bleu)
+\definecolor{rayrac}{RGB}{200,40,40}        % rayon réfracté (rouge)
+\definecolor{eaucol}{RGB}{120,150,220}      % eau
+\definecolor{verrecol}{RGB}{175,180,185}    % verre
+\definecolor{rougeL}{RGB}{220,30,30}        % lumière rouge
+\definecolor{verteL}{RGB}{20,160,60}        % lumière verte
+\definecolor{bleueL}{RGB}{20,70,220}        % lumière bleue
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Loi (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  normale/.style={dash pattern=on 3pt off 2pt,black!60,line width=0.7pt},
+  dioptre/.style={primary,line width=2pt},
+  inc/.style={->,>=Stealth,line width=1.2pt,rayinc},
+  ref/.style={->,>=Stealth,line width=1.2pt,rayref},
+  rac/.style={->,>=Stealth,line width=1.2pt,rayrac},
+  ptn/.style={circle,fill=black,inner sep=1.1pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Lois de la réflexion et de la réfraction}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\angi}{\hat{\imath}}     % angle d'incidence
+\newcommand{\angr}{\hat{r}}          % angle de réfraction (ou réflexion)
+\newcommand{\dd}{\mathrm{d}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Lois de la réflexion}\\[5pt]
+   {\Huge\bfseries et de la réfraction}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,7}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : un rayon qui se réfléchit ET se réfracte ---
+\begin{tikzpicture}[scale=1.15]
+  % milieux
+  \fill[eaucol!35] (-4.2,-2.2) rectangle (4.2,0);
+  \node[primarydark,font=\small] at (-3.5,0.9) {Milieu 1 (air)};
+  \node[primarydark,font=\small] at (-3.5,-0.55) {Milieu 2 (eau)};
+  % dioptre + normale
+  \draw[dioptre] (-4.2,0) -- (4.2,0);
+  \node[primary,right,font=\footnotesize] at (4.2,0) {dioptre};
+  \draw[normale] (0,-2.2) -- (0,2.2);
+  \node[black!60,above,font=\footnotesize] at (0,2.2) {normale};
+  % rayons
+  \draw[inc] (-2.6,2.0) -- (0,0);
+  \node[rayinc,above left,font=\footnotesize] at (-2.0,1.55) {rayon incident};
+  \draw[ref] (0,0) -- (2.6,2.0);
+  \node[rayref,above right,font=\footnotesize] at (2.0,1.55) {rayon réfléchi};
+  \draw[rac] (0,0) -- (1.15,-2.0);
+  \node[rayrac,below right,font=\footnotesize] at (1.0,-1.7) {rayon réfracté};
+  % angles
+  \draw[rayinc,line width=0.7pt] (0,0.85) arc (90:142.4:0.85);
+  \node[font=\scriptsize] at (-0.42,1.0) {$\angi$};
+  \draw[rayref,line width=0.7pt] (0,0.85) arc (90:37.6:0.85);
+  \node[font=\scriptsize] at (0.5,1.0) {$\angr$};
+  \draw[rayrac,line width=0.7pt] (0,-0.95) arc (270:299.9:0.95);
+  \node[font=\scriptsize] at (0.42,-1.12) {$\hat{r}'$};
+  \fill[black] (0,0) circle (1.4pt);
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item énoncer et appliquer les \textbf{deux lois de la réflexion} d'une onde sur une surface ;
+  \item définir l'\textbf{indice de réfraction} d'un milieu et le relier à la vitesse de la lumière ;
+  \item écrire et exploiter la \textbf{loi de Snell–Descartes} $n_1\sin\angi = n_2\sin\angr$ ;
+  \item prévoir le sens de la déviation (\emph{vers} ou \emph{loin de} la normale) selon la réfringence des milieux ;
+  \item déterminer un \textbf{angle limite} et reconnaître les conditions de \textbf{réflexion totale} (fibres optiques, prismes) ;
+  \item expliquer la \textbf{dispersion} de la lumière par un prisme et le phénomène de la latte « brisée ».
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 7 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : lumière, rayons et dioptres}
+% =====================================================================
+La \textbf{réflexion} et la \textbf{réfraction} sont les deux phénomènes fondamentaux qui décrivent
+ce qu'il advient d'une onde — en particulier de la \emph{lumière} — lorsqu'elle rencontre la
+\emph{surface de séparation} entre deux milieux transparents. Avant d'énoncer leurs lois, fixons
+le vocabulaire et les outils géométriques qui reviendront dans toute la fiche.
+
+\subsection{La lumière comme onde et le modèle du rayon}
+
+La lumière est une \textbf{onde électromagnétique}. Comme toute onde, elle est caractérisée par
+sa \emph{fréquence} $f$, sa \emph{longueur d'onde} $\lambda$ et sa \emph{vitesse de propagation}
+(appelée ici \emph{célérité}) $c_i$ dans le milieu considéré. Dans le vide, cette célérité prend
+une valeur universelle notée $c$.
+
+\begin{formule}[relation fondamentale d'une onde]
+Pour une onde se propageant dans un milieu, la vitesse, la longueur d'onde et la fréquence sont liées par :
+\[ \boxed{\,c_i = \lambda_i \, f\,} \qquad\Longleftrightarrow\qquad \lambda_i = \dfrac{c_i}{f} \]
+\begin{ou}
+  \item $c_i$ : célérité (vitesse) de l'onde dans le milieu $i$, en mètres par seconde (\si{\metre\per\second}) ;
+  \item $\lambda_i$ : longueur d'onde dans le milieu $i$, en mètres (\si{\metre}) ;
+  \item $f$ : fréquence de l'onde, en hertz (\si{\hertz}), c'est-à-dire en \si{\per\second}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[la grandeur qui ne change jamais]
+Lorsqu'une onde passe d'un milieu à un autre, sa \textbf{fréquence $f$ reste rigoureusement constante} :
+elle est imposée par la \emph{source} qui a émis l'onde. En revanche la célérité $c_i$ et la longueur
+d'onde $\lambda_i$, elles, \emph{changent}. Cette idée — « $f$ fixe, $c$ et $\lambda$ variables » — est
+la clé de presque tous les raisonnements de cette fiche.
+\end{remarque}
+
+En optique géométrique, on remplace l'onde par un modèle simple et commode : le \textbf{rayon lumineux},
+une ligne orientée qui indique la direction de propagation de l'énergie. Dans un milieu
+\emph{homogène}, la lumière se propage \textbf{en ligne droite} : c'est le principe de
+\emph{propagation rectiligne}, que confirme par exemple la netteté des ombres.
+
+\begin{exemple}[propagation rectiligne : la hauteur du Soleil d'après une ombre]
+La propagation rectiligne de la lumière permet de relier la longueur d'une ombre à la position
+du Soleil. Un bâtiment vertical de hauteur $H = \SI{100}{\metre}$ projette sur le sol horizontal
+une ombre de longueur $L = \SI{65}{\metre}$. \emph{Quelle est l'inclinaison $\alpha$ des rayons du
+Soleil sur l'horizontale ?}
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  % soleil
+  \node[font=\large] at (-0.2,4.3) {\textcolor{orange}{\(\displaystyle \ast\)}};
+  \foreach \a in {0,45,...,315}{\draw[orange,line width=0.6pt] (-0.2,4.3)+(\a:0.28) -- +(\a:0.5);}
+  % sol
+  \draw[black!55,line width=1pt] (-0.6,0) -- (7.6,0);
+  % batiment
+  \draw[verrecol,line width=5pt] (5.2,0) -- (5.2,3.4);
+  \node[right,font=\footnotesize] at (5.35,1.7) {$H=\SI{100}{\metre}$};
+  % rayon du soleil qui rase le sommet
+  \draw[orange,->,>=Stealth,line width=1pt] (0.2,4.05) -- (5.2,3.4);
+  % ombre
+  \draw[<->,>=Stealth,black!70] (1.5,-0.35) -- (5.2,-0.35);
+  \node[below,font=\footnotesize] at (3.35,-0.4) {ombre $L=\SI{65}{\metre}$};
+  % triangle ombre
+  \draw[orange,dashed,line width=0.8pt] (1.5,0) -- (5.2,3.4);
+  \draw[black!70] (5.2,0) -- (5.2,3.4);
+  % angle alpha au pied de l'ombre
+  \draw[black!70,line width=0.7pt] (2.3,0) arc (0:42.6:0.8);
+  \node[font=\footnotesize] at (2.55,0.35) {$\alpha$};
+  \node[ptn] at (1.5,0) {};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Mise en équation.} Le sommet du bâtiment, son pied et l'extrémité de l'ombre forment un
+\emph{triangle rectangle}. L'angle $\alpha$ que font les rayons solaires avec l'horizontale est
+tel que le côté opposé est la hauteur $H$ et le côté adjacent est l'ombre $L$ :
+\[ \tan\alpha = \frac{H}{L} = \frac{100}{65} = 1{,}5385. \]
+
+\textbf{Application numérique.}
+\[ \alpha = \arctan\!\left(\frac{100}{65}\right) = 56{,}976\ldots\,^\circ. \]
+On convertit la partie décimale en minutes et secondes d'arc (\(1^\circ = 60'\), \(1' = 60''\)) :
+\[ 0{,}9761^\circ \times 60 = 58{,}57' \quad\Rightarrow\quad 0{,}57' \times 60 \approx 34''. \]
+\[ \boxed{\alpha \approx 56^\circ\,58'\,34''} \]
+L'astuce de cet exemple est de bien identifier \emph{quel angle} on cherche : ici l'angle
+\emph{avec l'horizontale}, et non avec la verticale. C'est exactement la même vigilance qu'il faudra
+avoir plus loin avec l'angle d'incidence, mesuré \emph{par rapport à la normale}.
+\end{exemple}
+
+\subsection{Surface de séparation, normale et angles}
+
+\begin{definition}[dioptre]
+On appelle \textbf{dioptre} la \emph{surface de séparation} entre deux milieux transparents
+d'indices de réfraction différents (par exemple la surface plane air/eau, ou une face d'un prisme
+en verre). Quand cette surface est plane, on parle de \emph{dioptre plan}.
+\end{definition}
+
+\begin{definition}[normale et angles]
+La \textbf{normale} au point d'incidence est la droite \emph{perpendiculaire au dioptre} en ce point.
+Tous les angles de l'optique géométrique se mesurent \textbf{par rapport à cette normale}, jamais par
+rapport à la surface :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item l'\textbf{angle d'incidence} $\angi$ est l'angle entre le rayon \emph{incident} et la normale ;
+  \item l'\textbf{angle de réflexion} $\angr$ est l'angle entre le rayon \emph{réfléchi} et la normale ;
+  \item l'\textbf{angle de réfraction} $\hat{r}'$ est l'angle entre le rayon \emph{réfracté} (transmis) et la normale.
+\end{itemize}
+\end{definition}
+
+\begin{attention}[la faute classique : « par rapport au dioptre »]
+Un énoncé donne parfois l'angle d'un rayon \textbf{par rapport à la surface} (au dioptre).
+Il faut alors le \emph{convertir} avant tout calcul : comme la normale est perpendiculaire au dioptre,
+\[ \angi = 90^\circ - (\text{angle mesuré par rapport au dioptre}). \]
+Un rayon « à $40^\circ$ du dioptre » a en réalité un angle d'incidence de $\angi = 50^\circ$.
+Oublier cette conversion est l'erreur la plus fréquente du chapitre (voir l'exemple~\ref{ex:dioptre40} plus loin).
+\end{attention}
+
+\subsection{L'indice de réfraction d'un milieu}
+
+\begin{definition}[indice de réfraction]
+L'\textbf{indice de réfraction} $n_i$ d'un milieu transparent mesure à quel point ce milieu
+« ralentit » la lumière. On dit qu'un milieu est d'autant plus \textbf{réfringent} que son indice
+est grand.
+\end{definition}
+
+\begin{formule}[indice de réfraction]
+\[ \boxed{\,n_i = \dfrac{c}{c_i}\,} \]
+\begin{ou}
+  \item $n_i$ : indice de réfraction du milieu $i$ — nombre \textbf{sans dimension} (sans unité) ;
+  \item $c$ : célérité de la lumière \emph{dans le vide}, $c \approx \SI{3.00e8}{\metre\per\second}$ ;
+  \item $c_i$ : célérité de la lumière \emph{dans le milieu} $i$, en \si{\metre\per\second}.
+\end{ou}
+\end{formule}
+
+Comme la lumière ne peut jamais aller plus vite que dans le vide, on a toujours
+$c_i \le c$, donc :
+\[ \boxed{\,n_i \ge 1\,} \qquad\text{(l'indice d'un milieu transparent est toujours supérieur ou égal à 1).} \]
+Le vide a, par définition, un indice exactement égal à 1. Plus un milieu est dense optiquement
+(plus réfringent), plus la lumière y est lente, donc plus $n_i$ est grand.
+
+\begin{center}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{lcc}
+\rowcolor{primary!18}
+\textbf{Milieu} & \textbf{Indice $n$ (lumière visible)} & \textbf{Célérité $c_i \approx c/n$} \\
+\midrule
+Vide        & $1$ (exact)        & \SI{3.00e8}{\metre\per\second} \\
+Air         & $\approx 1{,}0003 \approx 1$ & $\approx \SI{3.00e8}{\metre\per\second}$ \\
+Eau         & $1{,}33$           & $\approx \SI{2.26e8}{\metre\per\second}$ \\
+Verre ordinaire & $1{,}50$       & $\approx \SI{2.00e8}{\metre\per\second}$ \\
+Diamant     & $2{,}42$           & $\approx \SI{1.24e8}{\metre\per\second}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remarque}
+Dans toute la fiche on prendra, sauf mention contraire, les valeurs usuelles
+$n_{\text{air}} = 1$, $\;n_{\text{eau}} = 1{,}33$ et $\;n_{\text{verre}} = 1{,}5$.
+\end{remarque}
+
+% =====================================================================
+\section{La réflexion}
+% =====================================================================
+\begin{definition}[réflexion]
+La \textbf{réflexion} est le \emph{renvoi} d'une onde par une surface, l'onde restant dans son
+milieu de départ. Sur un \emph{miroir} (surface lisse), la réflexion est dite \emph{spéculaire} :
+elle obéit à deux lois très simples.
+\end{definition}
+
+\begin{theoreme}[les deux lois de la réflexion]
+La réflexion d'une onde est régie par deux lois :
+\begin{enumerate}[label=(\roman*),leftmargin=2.1em,topsep=2pt]
+  \item l'\textbf{amplitude de l'angle d'incidence est égale à celle de l'angle de réflexion} ;
+  \item le \textbf{rayon incident, le rayon réfléchi et la normale} sont \textbf{dans un même plan}
+        (le plan d'incidence).
+\end{enumerate}
+\end{theoreme}
+
+\begin{formule}[loi de la réflexion]
+\[ \boxed{\,\angi = \angr\,} \]
+\begin{ou}
+  \item $\angi$ : angle d'incidence (rayon incident $\leftrightarrow$ normale), en degrés (\si{\degree}) ;
+  \item $\angr$ : angle de réflexion (rayon réfléchi $\leftrightarrow$ normale), en degrés (\si{\degree}).
+\end{ou}
+Les deux angles étant mesurés par rapport à la normale, cette égalité signifie que le rayon
+« rebondit » \emph{symétriquement} par rapport à la normale.
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  % miroir
+  \fill[pattern=north east lines,pattern color=black!45] (-3,-0.32) rectangle (3,0);
+  \draw[black,line width=1.6pt] (-3,0) -- (3,0);
+  \node[black!70,right,font=\footnotesize] at (3,-0.18) {miroir};
+  % normale
+  \draw[normale] (0,0) -- (0,2.6);
+  \node[black!60,above,font=\footnotesize] at (0,2.6) {normale};
+  % rayons
+  \draw[inc] (-2.3,2.3) -- (0,0);
+  \node[rayinc,left,font=\footnotesize] at (-2.3,2.05) {rayon incident};
+  \draw[ref] (0,0) -- (2.3,2.3);
+  \node[rayref,right,font=\footnotesize] at (2.3,2.05) {rayon réfléchi};
+  % angles
+  \draw[rayinc,line width=0.7pt] (0,1) arc (90:135:1);
+  \node[font=\footnotesize] at (-0.5,1.18) {$\angi$};
+  \draw[rayref,line width=0.7pt] (0,1) arc (90:45:1);
+  \node[font=\footnotesize] at (0.5,1.18) {$\angr$};
+  \fill[black] (0,0) circle (1.4pt);
+  % egalite
+  \node[draw=rayref,rounded corners=3pt,fill=rayref!8,font=\footnotesize] at (1.9,1.3) {$\angi=\angr$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Application : le réflecteur en coin (deux miroirs perpendiculaires)}
+
+Une conséquence remarquable de la loi $\angi=\angr$ apparaît lorsqu'on place \textbf{deux miroirs
+perpendiculaires}. Un rayon qui se réfléchit successivement sur les deux miroirs repart
+\textbf{exactement parallèle} à sa direction d'arrivée (mais en sens opposé), quel que soit l'angle
+d'entrée. C'est le principe du \emph{réflecteur en coin} (catadioptre), utilisé sur les vélos, les
+bornes routières et même sur la Lune (réflecteurs déposés par les missions Apollo).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  % miroirs perpendiculaires
+  \draw[black,line width=1.6pt] (0,0) -- (0,3.4);
+  \draw[black,line width=1.6pt] (0,0) -- (4.4,0);
+  \fill[pattern=north east lines,pattern color=black!40] (-0.3,0) rectangle (0,3.4);
+  \fill[pattern=north east lines,pattern color=black!40] (0,-0.3) rectangle (4.4,0);
+  \node[black!70,left,font=\footnotesize] at (0,3.0) {miroir 1};
+  \node[black!70,below,font=\footnotesize] at (3.7,0) {miroir 2};
+  % Trajet EXACT : entrant dir (-1.25,-1) ; après 2 réflexions, sortant dir (+1.25,+1) = -entrant.
+  \coordinate (A) at (0,2.0);     % impact sur le miroir 1 (vertical)
+  \coordinate (B) at (2.5,0);     % impact sur le miroir 2 (horizontal)
+  % rayon entrant -> A
+  \draw[inc] (1.5,3.2) -- (A);
+  \fill[black] (A) circle (1.2pt);
+  % A -> B (réflexion sur le miroir vertical : la composante x s'inverse)
+  \draw[ref] (A) -- (B);
+  \fill[black] (B) circle (1.2pt);
+  % B -> sortant (réflexion sur le miroir horizontal : la composante y s'inverse)
+  \draw[rac] (B) -- (4.0,1.2);
+  % normales aux points d'impact
+  \draw[normale] (A) -- (1.3,2.0);
+  \draw[normale] (B) -- (2.5,1.3);
+  % etiquettes
+  \node[rayinc,font=\footnotesize] at (2.0,3.05) {rayon entrant};
+  \node[rayrac,right,font=\footnotesize] at (3.6,1.25) {rayon sortant};
+  \node[primarydark,font=\footnotesize,align=center] at (3.05,2.15) {sortant \emph{parallèle}\\à l'entrant};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[pourquoi le rayon ressort parallèle]
+Plaçons les deux miroirs selon les axes $Ox$ (horizontal) et $Oy$ (vertical). Un rayon de direction
+$\vec{u} = (u_x,\,u_y)$ frappe d'abord le miroir vertical (miroir 1). La réflexion sur un miroir
+\emph{vertical} inverse uniquement la composante \emph{horizontale} : la direction devient
+$(-u_x,\,u_y)$. Ce rayon frappe ensuite le miroir \emph{horizontal} (miroir 2), qui inverse la
+composante \emph{verticale} : la direction devient $(-u_x,\,-u_y) = -\vec{u}$.
+
+\smallskip
+Le rayon ressortant a donc la direction $-\vec{u}$ : il est \textbf{antiparallèle} au rayon entrant,
+c'est-à-dire parallèle à sa direction initiale mais de sens opposé — et ce \emph{quel que soit}
+l'angle d'arrivée. C'est exactement ce que l'on observera plus loin avec le rayon~2 dans un prisme
+à angle droit (exemple~\ref{ex:prisme}), où les deux réflexions internes jouent le rôle des deux
+miroirs.
+\end{exemple}
+
+% =====================================================================
+\section{La réfraction : la loi de Snell–Descartes}
+% =====================================================================
+\begin{definition}[réfraction]
+La \textbf{réfraction} d'une onde a lieu lorsqu'elle \emph{passe d'un milieu de propagation à un
+autre, différent}. En traversant le dioptre, le rayon \textbf{change de direction} (il est « dévié »).
+Au passage, la vitesse $c_i$ et la longueur d'onde $\lambda_i$ changent d'un milieu à l'autre,
+\textbf{mais la fréquence reste constante}.
+\end{definition}
+
+\begin{theoreme}[lois de la réfraction]
+\begin{enumerate}[label=(\roman*),leftmargin=2.1em,topsep=2pt]
+  \item Le rayon incident, le rayon réfracté et la normale sont \textbf{dans un même plan}.
+  \item L'angle d'incidence $\angi$ et l'angle de réfraction $\angr$ sont liés par la
+        \textbf{loi de Snell–Descartes} : $n_1\sin\angi = n_2\sin\angr$.
+\end{enumerate}
+\end{theoreme}
+
+\begin{formule}[loi de Snell–Descartes]
+\[ \boxed{\,n_1 \times \sin(\angi) = n_2 \times \sin(\angr)\,} \]
+\begin{ou}
+  \item $n_1$ : indice de réfraction du \emph{milieu 1} (celui d'où vient le rayon), sans unité ;
+  \item $n_2$ : indice de réfraction du \emph{milieu 2} (celui où le rayon est transmis), sans unité ;
+  \item $\angi$ : angle d'incidence (dans le milieu 1), en degrés (\si{\degree}) ;
+  \item $\angr$ : angle de réfraction (dans le milieu 2), en degrés (\si{\degree}).
+\end{ou}
+\end{formule}
+
+En combinant cette loi avec la définition de l'indice ($n_i = c/c_i$) et la relation
+$\lambda_i = c_i/f$ (avec $f$ constante), on obtient une \textbf{chaîne d'égalités} très utile :
+
+\begin{formule}[chaîne des rapports]
+\[ \boxed{\;\dfrac{\sin(\angi)}{\sin(\angr)} = \dfrac{n_2}{n_1} = \dfrac{c_1}{c_2} = \dfrac{\lambda_1}{\lambda_2}\;} \]
+\begin{ou}
+  \item $\dfrac{\sin\angi}{\sin\angr}$ : rapport des sinus des angles, sans unité ;
+  \item $\dfrac{n_2}{n_1}$ : rapport des indices (milieu d'arrivée sur milieu de départ), sans unité ;
+  \item $\dfrac{c_1}{c_2}$ : rapport \emph{inverse} des célérités (départ sur arrivée), sans unité ;
+  \item $\dfrac{\lambda_1}{\lambda_2}$ : rapport des longueurs d'onde (départ sur arrivée), sans unité.
+\end{ou}
+\end{formule}
+
+\begin{attention}[bien lire le sens des rapports]
+Remarquez l'\emph{inversion} : quand on passe des indices ($n_2/n_1$) aux célérités, le rapport se
+retourne ($c_1/c_2$). C'est logique car $n_i = c/c_i$ : un \emph{grand} indice correspond à une
+\emph{petite} vitesse. De même, les longueurs d'onde suivent les célérités ($\lambda_i = c_i/f$),
+d'où $\lambda_1/\lambda_2 = c_1/c_2$.
+\end{attention}
+
+\subsection{Les deux cas : vers la normale ou loin de la normale ?}
+
+Le signe de la déviation se lit directement sur la loi de Snell–Descartes. Réécrivons-la sous la
+forme $\sin\angr = \dfrac{n_1}{n_2}\sin\angi$ : tout dépend du rapport $n_1/n_2$.
+
+\begin{center}
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{\textcolor{primarydark}{Cas 1 — milieu 2 \emph{plus} réfringent}}\\[1pt]
+{\footnotesize $n_2 > n_1 \;\Rightarrow\; \angr < \angi$ : le rayon se rapproche de la normale}\\[4pt]
+\begin{tikzpicture}[scale=1.0]
+  \fill[verrecol!55] (-2.4,-2.2) rectangle (2.4,0);
+  \draw[dioptre] (-2.4,0) -- (2.4,0);
+  \node[primary,right,font=\scriptsize] at (2.4,0) {dioptre};
+  \draw[normale] (0,-2.2) -- (0,2.2);
+  \node[black!60,above,font=\scriptsize] at (0,2.2) {normale};
+  % milieu labels
+  \node[font=\scriptsize,align=left] at (-1.95,1.45) {$n_1,c_1,\lambda_1$};
+  \node[font=\scriptsize,align=left] at (-1.95,-1.55) {$n_2,c_2,\lambda_2$};
+  \node[font=\scriptsize] at (1.7,0.5) {milieu 1};
+  \node[font=\scriptsize] at (1.7,-0.5) {milieu 2};
+  % incident i=45
+  \draw[inc] (-1.84,1.84) -- (0,0);
+  % reflechi
+  \draw[ref] (0,0) -- (1.84,1.84);
+  % refracte r=25 (vers normale)
+  \draw[rac] (0,0) -- ({2.0*sin(25)},{-2.0*cos(25)});
+  % angles
+  \draw[rayinc,line width=0.6pt] (0,0.9) arc (90:135:0.9);
+  \node[font=\scriptsize] at (-0.42,1.05) {$\angi$};
+  \draw[rayrac,line width=0.6pt] (0,-0.95) arc (270:245:0.95);
+  \node[font=\scriptsize] at (0.32,-1.18) {$\angr$};
+  \fill[black] (0,0) circle (1.2pt);
+  \node[rayrac,below,font=\scriptsize] at (0.9,-1.95) {réfracté};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{\textcolor{primarydark}{Cas 2 — milieu 2 \emph{moins} réfringent}}\\[1pt]
+{\footnotesize $n_2 < n_1 \;\Rightarrow\; \angr > \angi$ : le rayon s'éloigne de la normale}\\[4pt]
+\begin{tikzpicture}[scale=1.0]
+  \fill[eaucol!25] (-2.4,-2.2) rectangle (2.4,0);
+  \draw[dioptre] (-2.4,0) -- (2.4,0);
+  \node[primary,right,font=\scriptsize] at (2.4,0) {dioptre};
+  \draw[normale] (0,-2.2) -- (0,2.2);
+  \node[black!60,above,font=\scriptsize] at (0,2.2) {normale};
+  \node[font=\scriptsize,align=left] at (-1.95,1.45) {$n_1,c_1,\lambda_1$};
+  \node[font=\scriptsize,align=left] at (-1.95,-1.55) {$n_2,c_2,\lambda_2$};
+  \node[font=\scriptsize] at (1.7,0.5) {milieu 1};
+  \node[font=\scriptsize] at (1.7,-0.5) {milieu 2};
+  % incident i=25
+  \draw[inc] ({-1.84*sin(25)},{1.84*cos(25)}) -- (0,0);
+  \draw[ref] (0,0) -- ({1.84*sin(25)},{1.84*cos(25)});
+  % refracte r=50 (loin de la normale)
+  \draw[rac] (0,0) -- ({2.0*sin(50)},{-2.0*cos(50)});
+  \draw[rayinc,line width=0.6pt] (0,0.9) arc (90:115:0.9);
+  \node[font=\scriptsize] at (-0.27,1.07) {$\angi$};
+  \draw[rayrac,line width=0.6pt] (0,-0.95) arc (270:230:0.95);
+  \node[font=\scriptsize] at (0.5,-1.0) {$\angr$};
+  \fill[black] (0,0) circle (1.2pt);
+  \node[rayrac,font=\scriptsize] at (1.15,-1.95) {réfracté};
+\end{tikzpicture}
+\end{minipage}
+\end{center}
+
+\medskip
+On résume ces deux comportements ainsi :
+\begin{itemize}[leftmargin=1.8em,topsep=2pt]
+  \item \textbf{Cas 1} ($n_2 > n_1$, on entre dans un milieu \emph{plus} réfringent) :
+        $\angr < \angi$, la lumière \textbf{ralentit} ($c_2<c_1$), $\lambda_2 < \lambda_1$, et le
+        rayon \emph{se rapproche} de la normale.
+  \item \textbf{Cas 2} ($n_2 < n_1$, on entre dans un milieu \emph{moins} réfringent) :
+        $\angr > \angi$, la lumière \textbf{accélère} ($c_2>c_1$), $\lambda_2 > \lambda_1$, et le
+        rayon \emph{s'éloigne} de la normale.
+\end{itemize}
+
+\begin{exemple}[le piège de l'angle « par rapport au dioptre »]\label{ex:dioptre40}
+\textbf{Énoncé.} Un rayon lumineux passe de l'air ($n_1 = 1$) au verre ($n_2 = 1{,}5$) sous un angle
+égal à $40^\circ$ \emph{par rapport au dioptre}. Quel est l'angle de réfraction ?
+
+\smallskip
+\textbf{Étape 1 — convertir l'angle.} L'angle d'incidence se mesure \emph{par rapport à la normale},
+or l'énoncé le donne par rapport au dioptre. La normale étant perpendiculaire au dioptre :
+\[ \angi = 90^\circ - 40^\circ = 50^\circ. \]
+C'est le point décisif : prendre directement $40^\circ$ conduirait à une réponse fausse.
+
+\smallskip
+\textbf{Étape 2 — appliquer Snell–Descartes.}
+\[ n_1\sin\angi = n_2\sin\angr \;\Longrightarrow\; \sin\angr = \frac{n_1\sin\angi}{n_2}
+   = \frac{1 \times \sin 50^\circ}{1{,}5}. \]
+
+\smallskip
+\textbf{Étape 3 — application numérique.}
+\[ \sin\angr = \frac{0{,}766}{1{,}5} = 0{,}5107 \;\Longrightarrow\; \angr = \arcsin(0{,}5107) \approx 30{,}7^\circ. \]
+\[ \boxed{\angr \approx 30{,}7^\circ} \]
+
+\textbf{Vérification du sens physique.} On passe de l'air vers le verre, milieu \emph{plus}
+réfringent (cas 1) : on doit donc trouver $\angr < \angi$. Effectivement $30{,}7^\circ < 50^\circ$ :
+le rayon s'est bien \emph{rapproché} de la normale. Cohérent.
+\end{exemple}
+
+\begin{exemple}[ce qui change vraiment : vitesse et longueur d'onde]
+Reprenons le passage air $\to$ verre ($n_1=1$, $n_2=1{,}5$) avec une lumière de fréquence
+$f = \SI{5.0e14}{\hertz}$ (lumière verte). \emph{Comment évoluent la vitesse, la longueur d'onde et
+la fréquence ?}
+
+\smallskip
+\textbf{Vitesse.} D'après $n_i = c/c_i$, soit $c_i = c/n_i$ :
+\[ c_1 = \frac{c}{n_1} = \frac{\SI{3.0e8}{\metre\per\second}}{1} = \SI{3.0e8}{\metre\per\second},
+   \qquad
+   c_2 = \frac{c}{n_2} = \frac{\SI{3.0e8}{\metre\per\second}}{1{,}5} = \SI{2.0e8}{\metre\per\second}. \]
+La lumière \textbf{ralentit} en entrant dans le verre, comme attendu pour un milieu plus réfringent.
+
+\smallskip
+\textbf{Longueur d'onde.} La fréquence est imposée par la source, donc $f$ ne change pas. Avec
+$\lambda_i = c_i/f$ :
+\[ \lambda_1 = \frac{c_1}{f} = \frac{\SI{3.0e8}{}}{\SI{5.0e14}{}} = \SI{6.0e-7}{\metre} = \SI{600}{\nano\metre}, \]
+\[ \lambda_2 = \frac{c_2}{f} = \frac{\SI{2.0e8}{}}{\SI{5.0e14}{}} = \SI{4.0e-7}{\metre} = \SI{400}{\nano\metre}. \]
+La longueur d'onde a \textbf{diminué} d'un facteur $1{,}5$ — exactement le rapport $n_2/n_1$,
+ce que confirme la chaîne $\lambda_1/\lambda_2 = n_2/n_1 = 1{,}5$.
+
+\smallskip
+\textbf{Fréquence.} Inchangée : $f = \SI{5.0e14}{\hertz}$ dans les deux milieux. La couleur perçue,
+qui dépend de la fréquence, ne change donc pas lorsqu'on plonge l'objet dans l'eau ou le verre.
+\end{exemple}
+
+% =====================================================================
+\section{Réflexion totale et angle limite}
+% =====================================================================
+Examinons le \textbf{cas 2} (passage vers un milieu \emph{moins} réfringent, $n_1 > n_2$) de plus près.
+Le rayon réfracté s'éloigne de la normale : quand $\angi$ augmente, $\angr$ augmente \emph{plus vite}
+encore. Il existe donc un angle d'incidence pour lequel $\angr$ atteint $90^\circ$ : le rayon réfracté
+\emph{rase} alors le dioptre. Au-delà, plus aucune réfraction n'est possible : toute la lumière est
+réfléchie. C'est la \textbf{réflexion totale}.
+
+\begin{definition}[angle limite et réflexion totale]
+L'\textbf{angle limite} $\angi_{\text{lim}}$ est l'angle d'incidence (dans le milieu le plus réfringent)
+pour lequel l'angle de réfraction vaut $90^\circ$, c'est-à-dire $\sin\angr = 1$. Pour tout angle
+d'incidence \emph{supérieur} à $\angi_{\text{lim}}$, il n'y a plus de rayon réfracté : la
+\textbf{réflexion est totale}.
+\end{definition}
+
+\begin{formule}[angle limite]
+En posant $\sin\angr = 1$ dans la loi $n_1\sin\angi = n_2\sin\angr$, avec ici le milieu 1
+\emph{plus} réfringent ($n_1 > n_2$) :
+\[ \boxed{\,\angi_{\text{lim}} = \arcsin\!\left(\dfrac{n_2}{n_1}\right)\,} \]
+\begin{ou}
+  \item $\angi_{\text{lim}}$ : angle limite d'incidence, en degrés (\si{\degree}) ;
+  \item $n_1$ : indice du milieu \emph{le plus réfringent} (celui d'où part le rayon), sans unité ;
+  \item $n_2$ : indice du milieu \emph{le moins réfringent}, sans unité ($n_2 < n_1$).
+\end{ou}
+\textbf{Condition de réflexion totale :} $\angi > \angi_{\text{lim}}$ \emph{et} passage d'un milieu
+plus réfringent vers un milieu moins réfringent.
+\end{formule}
+
+\begin{exemple}[angle limite verre $\to$ air]
+Pour un rayon passant du verre ($n_1 = 1{,}5$) à l'air ($n_2 = 1$) :
+\[ \angi_{\text{lim}} = \arcsin\!\left(\frac{1}{1{,}5}\right) = \arcsin(0{,}667) \approx 41{,}81^\circ. \]
+Tout rayon arrivant sur la surface verre/air sous un angle \textbf{supérieur à $41{,}81^\circ$} est
+\emph{intégralement réfléchi} à l'intérieur du verre : c'est ce qui rend possibles les fibres
+optiques et les prismes à réflexion totale étudiés ci-dessous.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+  % milieu dense en bas (verre), peu dense en haut (air)
+  \fill[verrecol!55] (-3.4,-2.0) rectangle (3.4,0);
+  \draw[dioptre] (-3.4,0) -- (3.4,0);
+  \draw[normale] (0,-2.0) -- (0,2.0);
+  \node[black!60,above,font=\footnotesize] at (0,2.0) {normale};
+  \node[font=\footnotesize] at (-2.7,0.7) {air ($n_2$)};
+  \node[font=\footnotesize] at (-2.7,-0.7) {verre ($n_1$)};
+  % source commune en bas
+  % rayon 1 : petit i -> refraction (r>i)
+  \draw[inc] ({-1.6*sin(25)},{-1.6*cos(25)}) -- (0,0);
+  \draw[rac] (0,0) -- ({1.7*sin(43)},{1.7*cos(43)});
+  \node[rayrac,font=\scriptsize,above] at ({1.7*sin(43)},{1.7*cos(43)}) {réfracté};
+  % rayon 2 : i = i_lim -> rase la surface (r=90)
+  \draw[inc] ({-1.6*sin(41.81)},{-1.6*cos(41.81)}) -- (0,0);
+  \draw[rac] (0,0) -- (2.6,0.07);
+  \node[rayrac,font=\scriptsize,above right] at (2.4,0.07) {$\angr=90^\circ$ (rase)};
+  \node[font=\scriptsize,fill=white,inner sep=1pt] at ({-1.95*sin(41.81)},{-1.95*cos(41.81)}) {$\angi_{\text{lim}}$};
+  % rayon 3 : i > i_lim -> reflexion totale
+  \draw[inc] ({-1.6*sin(60)},{-1.6*cos(60)}) -- (0,0);
+  \draw[ref] (0,0) -- ({1.7*sin(60)},{-1.7*cos(60)});
+  \node[rayref,font=\scriptsize,below] at ({1.7*sin(60)},{-1.7*cos(60)}) {réflexion totale};
+  \fill[black] (0,0) circle (1.3pt);
+  \node[font=\scriptsize,align=center,primarydark] at (0,-1.85)
+    {$\angi>\angi_{\text{lim}}$ : plus de réfraction};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}[ne pas confondre avec l'angle maximal de réfraction]
+Dans le \emph{sens inverse} (passage d'un milieu \emph{moins} réfringent à un milieu \emph{plus}
+réfringent, ex.\ air $\to$ verre), la réfraction a \textbf{toujours} lieu, pour tout
+$0^\circ < \angi < 90^\circ$. Mais l'angle réfracté ne peut pas dépasser une valeur maximale
+$\hat{r}_{\text{lim}}$, atteinte quand $\angi \to 90^\circ$ (rayon rasant). On a alors $\sin\angi = 1$ :
+\[ \hat{r}_{\text{lim}} = \arcsin\!\left(\frac{n_1}{n_2}\right). \]
+Par exemple :
+\[ \hat{r}_{\text{lim}}(\text{Air} \to \text{Verre}) = \arcsin\!\left(\frac{1}{1{,}5}\right)
+   = \arcsin\!\left(\frac{2}{3}\right) \approx 41{,}81^\circ, \]
+\[ \hat{r}_{\text{lim}}(\text{Air} \to \text{Eau}) = \arcsin\!\left(\frac{1}{1{,}33}\right)
+   = \arcsin\!\left(\frac{3}{4}\right) \approx 48{,}59^\circ. \]
+\textbf{À retenir :} \emph{réflexion totale} $\Rightarrow$ on part du milieu le plus réfringent et
+$\angi$ doit \emph{dépasser} $\angi_{\text{lim}}$ ; \emph{angle maximal de réfraction} $\Rightarrow$
+on part du milieu le moins réfringent et la réfraction a toujours lieu.
+\end{remarque}
+
+\subsection{Application 1 : les fibres optiques}
+
+\begin{definition}[fibre optique]
+Une \textbf{fibre optique} est un fil de verre (ou de plastique) très transparent dans lequel la
+lumière reste \emph{piégée} par réflexions totales successives sur les parois. La lumière y
+« zigzague » sans jamais sortir : la perte d'énergie est quasi nulle, ce qui permet de transporter
+de l'information sur de très grandes distances.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % parois de la fibre
+  \draw[rayref,line width=1.8pt] (-0.3,1.1) -- (9.3,1.1);
+  \draw[rayref,line width=1.8pt] (-0.3,-1.1) -- (9.3,-1.1);
+  \node[rayref,above,font=\footnotesize] at (4.5,1.1) {paroi (verre, $n=1{,}5$)};
+  \node[rayref,below,font=\footnotesize] at (4.5,-1.1) {paroi (verre, $n=1{,}5$)};
+  \fill[verrecol!30] (-0.3,-1.1) rectangle (9.3,1.1);
+  % rayon en zigzag
+  \draw[rac,line width=1.3pt]
+     (-0.2,-0.4) -- (1.5,1.1) -- (3.3,-1.1) -- (5.1,1.1) -- (6.9,-1.1) -- (8.7,1.1) -- (9.4,1.7);
+  % points de reflexion + normales locales
+  \foreach \x/\y in {1.5/1.1,5.1/1.1,8.7/1.1}{ \fill[black] (\x,\y) circle (1.1pt);
+     \draw[normale] (\x,\y) -- (\x,0.45);}
+  \foreach \x/\y in {3.3/-1.1,6.9/-1.1}{ \fill[black] (\x,\y) circle (1.1pt);
+     \draw[normale] (\x,\y) -- (\x,-0.45);}
+  \node[font=\footnotesize,primarydark,align=center] at (4.5,0.0)
+     {chaque rebond : $\angi > \angi_{\text{lim}} \Rightarrow$ réflexion totale};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[un rayon dans une fibre optique]\label{ex:fibre}
+\textbf{Énoncé.} Un rayon rouge pénètre dans une fibre optique en un point $M$ de sa face d'entrée,
+puis frappe la paroi latérale en un point $P$. La géométrie impose que le rayon, à l'intérieur de la
+fibre, fait un angle de $35^\circ$ \emph{avec la face d'entrée} ; on prend $n_{\text{fibre}} = 1{,}5$ et
+$n_{\text{air}} = 1$. On souhaite vérifier (i) l'angle d'incidence en $P$, (ii) que la réflexion en $P$
+est totale, et (iii) l'angle d'incidence en $M$.
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[rayref,line width=1.6pt] (0,1.2) -- (7.2,1.2);
+  \draw[rayref,line width=1.6pt] (0,-1.2) -- (7.2,-1.2);
+  \fill[verrecol!28] (0,-1.2) rectangle (7.2,1.2);
+  \draw[rayref,line width=1.6pt] (0,-1.2) -- (0,1.2);   % face d'entrée
+  \node[rayref,left,font=\footnotesize] at (0,0) {face d'entrée};
+  \node[font=\footnotesize] at (5.4,0) {fibre optique ($n=1{,}5$)};
+  % rayon exterieur arrivant en M
+  \coordinate (M) at (0,-0.55);
+  \draw[inc] (-1.5,-1.7) -- (M);
+  \node[rayinc,left,font=\footnotesize] at (-1.5,-1.7) {air};
+  \fill[black] (M) circle (1.2pt); \node[below left,font=\footnotesize] at (M) {$M$};
+  % normale en M (horizontale, perpendiculaire a la face verticale)
+  \draw[normale] (M) -- (1.4,-0.55);
+  % rayon interne M->P
+  \coordinate (P) at (2.55,1.2);
+  \draw[rac,line width=1.2pt] (M) -- (P);
+  \fill[black] (P) circle (1.2pt); \node[above,font=\footnotesize] at (P) {$P$};
+  % angle 35 a M : entre le rayon refracte et la normale HORIZONTALE en M
+  \draw[black!70,line width=0.6pt] (0.7,-0.55) arc (0:34.5:0.7);
+  \node[font=\scriptsize] at (0.96,-0.31) {$35^\circ$};
+  % normale en P (verticale) + suite reflexion totale
+  \draw[normale] (P) -- (2.55,0.5);
+  \draw[rac,line width=1.2pt] (P) -- (5.1,-1.2);
+  \node[font=\scriptsize,fill=white,inner sep=1pt] at (2.95,0.75) {$\angi_P$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{(i) Angle d'incidence en $P$.} À l'intérieur de la fibre, le rayon réfracté $MP$ chemine à
+$35^\circ$ au-dessus de l'horizontale — c'est l'angle qu'il fait avec la normale \emph{horizontale}
+en $M$. En $P$, la paroi est \emph{horizontale}, donc la normale y est \emph{verticale} : l'angle
+d'incidence en $P$ est l'angle \emph{complémentaire},
+\[ \angi_P = 90^\circ - 35^\circ = 55^\circ. \]
+
+\textbf{(ii) La réflexion en $P$ est-elle totale ?} On part du verre vers l'air ($n_1 = 1{,}5 > n_2 = 1$),
+donc l'angle limite vaut $\angi_{\text{lim}} = \arcsin(1/1{,}5) = 41{,}81^\circ$. Or
+\[ \angi_P = 55^\circ > 41{,}81^\circ = \angi_{\text{lim}}, \]
+donc \textbf{la réflexion en $P$ est totale} : le rayon ne sort pas, il rebondit — c'est ce qui le
+guide le long de la fibre.
+
+\textbf{(iii) Angle d'incidence en $M$ (entrée air $\to$ verre).} En $M$, la lumière passe de l'air au
+verre. La normale en $M$ étant \emph{horizontale}, le rayon réfracté fait justement $35^\circ$ avec
+elle : l'angle de réfraction y vaut donc $\hat{r}_M = 35^\circ$. La loi de Snell–Descartes donne :
+\[ n_{\text{air}}\sin\angi_M = n_{\text{verre}}\sin\hat{r}_M
+   \;\Longrightarrow\; \sin\angi_M = \frac{n_{\text{verre}}}{n_{\text{air}}}\sin\hat{r}_M
+   = 1{,}5 \times \sin 35^\circ. \]
+\[ \sin\angi_M = 1{,}5 \times 0{,}5736 = 0{,}8604
+   \;\Longrightarrow\; \angi_M = \arcsin(0{,}8604) \approx 59{,}36^\circ \approx 59^\circ\,21'\,27''. \]
+\textbf{Vérification du sens.} On entre dans un milieu plus réfringent (verre), donc on doit avoir
+$\angi_M > \hat{r}_M$ : effectivement $59{,}4^\circ > 35^\circ$, le rayon s'est bien rapproché de la
+normale.
+
+\textbf{Leçon de l'exemple :} toujours repérer \emph{l'orientation de la normale} — \emph{horizontale}
+en $M$, \emph{verticale} en $P$ — car c'est elle qui décide si l'angle utile est celui que l'on lit
+directement ou son complémentaire ($90^\circ - \cdots$).
+\end{exemple}
+
+\subsection{Application 2 : le prisme à réflexion totale}
+
+\begin{exemple}[prisme à angle droit ($45^\circ$–$45^\circ$–$90^\circ$)]\label{ex:prisme}
+\textbf{Énoncé.} Un rayon lumineux entre \emph{perpendiculairement} dans la petite face d'un prisme en
+verre ($n = 1{,}5$) dont la section est un triangle rectangle isocèle ($45^\circ$, $45^\circ$, $90^\circ$).
+Que devient le rayon ?
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  % prisme : triangle rectangle isocèle
+  \coordinate (A) at (0,0);     % angle droit
+  \coordinate (B) at (0,3);     % sommet haut (45°)
+  \coordinate (C) at (3,0);     % sommet droit (45°)
+  \fill[verrecol!55] (A) -- (B) -- (C) -- cycle;
+  \draw[black!70,line width=1pt] (A) -- (B) -- (C) -- cycle;
+  \node[font=\footnotesize] at (1.0,0.7) {verre $n=1{,}5$};
+  \node[above left,font=\footnotesize] at (B) {$45^\circ$};
+  \node[below right,font=\footnotesize] at (C) {$45^\circ$};
+  \draw (0.25,0) -- (0.25,0.25) -- (0,0.25); % angle droit
+  % petite marque d'angle droit
+  % rayon incident horizontal, entre par la face verticale AB sans devier
+  \coordinate (M) at (0,1.8);
+  \draw[inc] (-1.4,1.8) -- (M);
+  \fill[black] (M) circle (1pt);
+  % a l'interieur jusqu'a l'hypotenuse
+  % hypotenuse : de B(0,3) a C(3,0), droite y = 3 - x ; intersection avec y=1.8 -> x=1.2
+  \coordinate (N) at (1.2,1.8);
+  \draw[rac,line width=1.1pt] (M) -- (N);
+  \fill[black] (N) circle (1pt); \node[above left,font=\footnotesize] at (N) {$N$};
+  % normale a l'hypotenuse en N (hypotenuse a pente -1 -> normale pente +1)
+  \draw[normale] (N) -- ($(N)+(0.8,0.8)$);
+  \draw[normale] (N) -- ($(N)-(0.8,0.8)$);
+  % angle 45 a N : entre le rayon incident (horizontal) et la normale (pente +1)
+  \draw[black!70,line width=0.5pt] ($(N)+(0.5,0)$) arc (0:45:0.5);
+  \node[font=\scriptsize] at (1.82,2.02) {$45^\circ$};
+  % reflexion totale : repart vers le bas, sort par la face AC perpendiculairement
+  \coordinate (P) at (1.2,0);
+  \draw[ref,line width=1.1pt] (N) -- (P);
+  \fill[black] (P) circle (1pt);
+  \draw[rac,line width=1.1pt] (P) -- (1.2,-1.3);
+  \node[rayinc,left,font=\footnotesize] at (-1.4,1.95) {rayon};
+  \node[rayinc,left,font=\footnotesize] at (-1.4,1.65) {incident};
+  \node[rayrac,below,font=\footnotesize] at (1.2,-1.3) {rayon sortant};
+  \node[primarydark,font=\footnotesize,align=center] at (2.55,-0.9) {dévié de $90^\circ$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Entrée sans déviation.} Le rayon arrive \emph{perpendiculairement} à la face d'entrée
+($\angi = 0^\circ$). D'après Snell–Descartes, $\sin\angr = (n_1/n_2)\sin 0^\circ = 0$, donc
+$\angr = 0^\circ$ : le rayon entre \textbf{sans être dévié}.
+
+\smallskip
+\textbf{Sur l'hypoténuse : réflexion totale.} Le rayon frappe l'hypoténuse. Le triangle étant
+isocèle rectangle, il l'aborde sous un angle d'incidence de $45^\circ$ par rapport à la normale de
+cette face. Comme on est dans le verre et que
+\[ 45^\circ > \angi_{\text{lim}} = 41{,}81^\circ, \]
+la réflexion est \textbf{totale} : l'hypoténuse se comporte comme un \emph{miroir parfait} incliné à
+$45^\circ$. (On peut aussi le voir avec la loi de Snell : $1{,}5 \times \sin 45^\circ = 1{,}06 > 1$,
+ce qui rend $\sin\angr > 1$ impossible — donc pas de réfraction, réflexion totale.)
+
+\smallskip
+\textbf{Sortie.} Après réflexion, le rayon ressort par la troisième face, là encore
+perpendiculairement, donc \textbf{sans déviation à la sortie}. Bilan : le prisme a fait
+\emph{tourner le rayon de $90^\circ$}, sans aucune perte, mieux qu'un miroir métallique ordinaire.
+C'est le principe optique des \emph{jumelles} et des \emph{périscopes}.
+
+\smallskip
+\textbf{Variante à deux réflexions.} Si le rayon entre de façon à subir \emph{deux} réflexions
+totales internes (sur les deux petites faces), il ressort \textbf{parallèle à sa direction initiale
+mais en sens opposé} — exactement le comportement du réflecteur en coin du paragraphe~2.1. C'est
+ainsi qu'agit un catadioptre.
+\end{exemple}
+
+\subsection{Application 3 : la lame de verre à faces parallèles}
+
+\begin{exemple}[une lame à faces parallèles ne dévie pas le rayon]
+\textbf{Énoncé.} Un rayon traverse une lame de verre ($n > 1$) à \emph{faces parallèles}, d'épaisseur
+$a$, entourée d'air. Est-il dévié de sa direction initiale ?
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+  % lame
+  \fill[verrecol!50] (-2.6,-0.7) rectangle (2.6,0.7);
+  \draw[rayref,line width=1.4pt] (-2.6,0.7) -- (2.6,0.7);
+  \draw[rayref,line width=1.4pt] (-2.6,-0.7) -- (2.6,-0.7);
+  \node[font=\footnotesize] at (0,0.0) {verre ($n>1$)};
+  \node[font=\footnotesize] at (-2.0,1.05) {air};
+  \node[font=\footnotesize] at (2.0,-1.05) {air};
+  \draw[<->,>=Stealth,black!60] (-2.85,-0.7) -- (-2.85,0.7);
+  \node[left,font=\footnotesize] at (-2.85,0) {$a$};
+  % rayon : entre en haut, se refracte (vers normale), ressort parallele
+  \coordinate (E) at (-1.0,0.7);
+  \coordinate (S) at (0.4,-0.7);
+  \draw[inc] (-2.1,1.45) -- (E);
+  \draw[rac,line width=1.1pt] (E) -- (S);
+  \draw[inc] (S) -- (1.5,-1.45);
+  \fill[black] (E) circle (1pt); \fill[black] (S) circle (1pt);
+  % normales
+  \draw[normale] (E) -- (-1.0,1.45);
+  \draw[normale] (E) -- (-1.0,0.1);
+  \draw[normale] (S) -- (0.4,-0.1);
+  \draw[normale] (S) -- (0.4,-1.45);
+  \node[font=\scriptsize] at (-0.72,1.15) {$\angi$};
+  \node[font=\scriptsize] at (-0.7,0.3) {$\hat r$};
+  \node[font=\scriptsize] at (0.62,-0.3) {$\hat r'$};
+  \node[font=\scriptsize] at (0.66,-1.15) {$\angi'$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Raisonnement.} À la première face (air $\to$ verre), Snell donne
+$n_{\text{air}}\sin\angi = n_{\text{verre}}\sin\hat r$. À la seconde face (verre $\to$ air), comme
+les deux faces sont \emph{parallèles}, l'angle d'incidence interne sur la seconde face est égal à
+$\hat r$ (angles alternes-internes), donc :
+\[ n_{\text{verre}}\sin\hat r = n_{\text{air}}\sin\angi'. \]
+En combinant les deux égalités, $n_{\text{air}}\sin\angi = n_{\text{air}}\sin\angi'$, soit
+\[ \boxed{\angi' = \angi}. \]
+
+\textbf{Conclusion.} Le rayon sortant est \textbf{parallèle} au rayon entrant : la lame à faces
+parallèles ne change pas la \emph{direction} de la lumière. Elle la décale seulement
+\emph{latéralement} d'une petite distance (d'autant plus grande que la lame est épaisse), mais
+sans déviation angulaire. C'est pourquoi on voit « droit » à travers une vitre.
+\end{exemple}
+
+% =====================================================================
+\section{Conséquences de la réfraction dans la vie courante}
+% =====================================================================
+\subsection{La latte « brisée » et la position apparente}
+
+Plongez une règle (une latte) dans l'eau : sa partie immergée paraît \emph{remontée}, comme si la
+règle était brisée à la surface. C'est une conséquence directe de la réfraction.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % cuve + eau
+  \draw[black!55,line width=1pt] (-3.2,1.3) -- (-3.2,-2.6) -- (3.4,-2.6) -- (3.4,1.3);
+  \fill[eaucol!40] (-3.2,0) rectangle (3.4,-2.6);
+  \draw[dioptre] (-3.2,0) -- (3.4,0);
+  \node[font=\footnotesize] at (3.0,0.55) {air};
+  \node[font=\footnotesize] at (2.3,-2.25) {eau ($n=1{,}33$)};
+  % --- points ---
+  \coordinate (A)  at (-0.9,-2.0);   % extremite reelle (au fond)
+  \coordinate (Ap) at (-0.9,-1.05);  % extremite apparente (meme verticale, plus haute)
+  \coordinate (P1) at (0.3,0);        % sortie 1 a la surface
+  \coordinate (P2) at (0.8,0);        % sortie 2 a la surface
+  % --- latte reelle : traverse la surface et ressort EN HAUT A GAUCHE (loin de l'oeil) ---
+  \draw[black,line width=2.2pt] (A) -- (-2.7,1.15);
+  \fill[black] (A) circle (1.5pt); \node[below,font=\footnotesize] at (A) {$A$ (réel)};
+  % verticale de reperage A -> A'
+  \draw[black!35,dash pattern=on 1.5pt off 1.5pt] (A) -- (-0.9,0.1);
+  % --- rayons reels A -> surface (vers la droite, cote oeil) ---
+  \draw[rac,line width=1pt] (A) -- (P1);
+  \draw[rac,line width=1pt] (A) -- (P2);
+  % --- normales aux points de sortie ---
+  \draw[normale] (P1) -- (0.3,1.0);
+  \draw[normale] (P2) -- (0.8,1.0);
+  % --- rayons refractes (s'eloignent de la normale) vers l'oeil ---
+  \draw[rac,line width=1pt] (P1) -- (1.75,1.28);
+  \draw[rac,line width=1pt] (P2) -- (2.25,1.02);
+  % --- prolongements pointilles vers A' ---
+  \draw[rayref,dash pattern=on 2pt off 2pt] (P1) -- (Ap);
+  \draw[rayref,dash pattern=on 2pt off 2pt] (P2) -- (Ap);
+  \fill[rayref] (Ap) circle (1.5pt);
+  \node[left,font=\footnotesize,rayref] at (Ap) {$A'$ (apparent)};
+  % --- oeil ---
+  \node[font=\large] at (2.4,1.25) {\(\bullet\!\!<\)};
+  \node[right,font=\footnotesize] at (2.52,1.22) {œil};
+  % legende rayons refractes
+  \node[rac,font=\footnotesize,align=center] at (1.45,0.72) {rayons\\réfractés};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Explication.} Les rayons partis du point réel $A$ (au fond) passent de l'eau (plus
+réfringente) à l'air (moins réfringent) : ils \emph{s'éloignent de la normale} (cas 2). L'œil, lui,
+prolonge en ligne droite les rayons qu'il reçoit ; ces prolongements (en pointillés) se croisent en
+un point $A'$ \textbf{plus haut} que $A$. Le cerveau « voit » donc l'extrémité de la latte en $A'$ :
+l'objet immergé paraît \emph{plus proche de la surface} (et globalement plus gros) qu'il ne l'est en
+réalité. Ce n'est qu'une illusion d'optique.
+
+\begin{formule}[profondeur apparente (incidence quasi verticale)]
+Pour un observateur regardant presque à la verticale, la profondeur apparente $h'$ d'un objet situé
+à la profondeur réelle $h$ sous une surface vaut :
+\[ \boxed{\,h' = \dfrac{n_2}{n_1}\,h\,} \qquad\text{(de l'eau, } n_1=1{,}33\text{, vers l'air, } n_2=1\text{)} \]
+\begin{ou}
+  \item $h'$ : profondeur apparente (vue par l'observateur), en mètres (\si{\metre}) ;
+  \item $h$ : profondeur réelle de l'objet, en mètres (\si{\metre}) ;
+  \item $n_1$ : indice du milieu où se trouve l'objet (l'eau) ; $n_2$ : indice du milieu de l'observateur (l'air).
+\end{ou}
+\end{formule}
+
+\begin{exemple}[à quelle profondeur voit-on un caillou ?]
+Un caillou repose au fond d'un bassin, à la profondeur réelle $h = \SI{1.20}{\metre}$. L'eau a pour
+indice $n_1 = 1{,}33$ ; on regarde presque à la verticale ($n_2 = 1$ pour l'air). La profondeur
+apparente est :
+\[ h' = \frac{n_2}{n_1}\,h = \frac{1}{1{,}33}\times 1{,}20 = 0{,}90\ \text{m}. \]
+Le caillou \emph{semble} à $\SI{90}{\centi\metre}$ de profondeur alors qu'il est réellement à
+$\SI{120}{\centi\metre}$ : il paraît remonté de $\SI{30}{\centi\metre}$. C'est pourquoi on sous-estime
+toujours la profondeur de l'eau — et pourquoi un pêcheur doit viser \emph{sous} le poisson qu'il voit.
+\end{exemple}
+
+% =====================================================================
+\section{La dispersion de la lumière}
+% =====================================================================
+\begin{definition}[milieu dispersif]
+Un milieu est dit \textbf{dispersif} lorsque son indice de réfraction $n$ \emph{dépend de la longueur
+d'onde} (donc de la couleur) de la lumière. Le verre et l'eau sont dispersifs : c'est ce qui permet
+de \emph{décomposer} la lumière blanche en ses couleurs.
+\end{definition}
+
+Lorsqu'un faisceau \textbf{trichromatique} (rouge + vert + bleu, avec
+$\lambda_{\text{rouge}} > \lambda_{\text{verte}} > \lambda_{\text{bleue}}$) passe de l'air dans le
+verre, on constate trois faits :
+\begin{enumerate}[leftmargin=2em,topsep=2pt]
+  \item la lumière se \textbf{décompose} en trois radiations distinctes : rouge, verte, bleue ;
+  \item la radiation \textbf{rouge} est la \emph{plus éloignée de la normale} (la moins déviée) ;
+  \item la \textbf{vitesse} de la lumière rouge dans le verre est la plus grande :
+        $v_{\text{rouge}} > v_{\text{verte}} > v_{\text{bleue}}$.
+\end{enumerate}
+
+\begin{theoreme}[hiérarchie des couleurs dans un milieu dispersif]
+Dans le verre, plus la longueur d'onde est \emph{courte} (vers le bleu), plus l'indice est
+\emph{grand}, donc plus la lumière est \emph{lente} et plus elle est \emph{déviée} (rapprochée de la
+normale). On a donc l'ordre :
+\[ n_{\text{bleu}} > n_{\text{vert}} > n_{\text{rouge}}, \qquad
+   v_{\text{bleu}} < v_{\text{vert}} < v_{\text{rouge}}, \qquad
+   \hat{r}_{\text{bleu}} < \hat{r}_{\text{vert}} < \hat{r}_{\text{rouge}}. \]
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  \fill[verrecol!50] (-3.0,-2.1) rectangle (3.0,0);
+  \draw[dioptre] (-3.0,0) -- (3.0,0);
+  \draw[normale] (0,-2.1) -- (0,2.1);
+  \node[black!60,above,font=\footnotesize] at (0,2.1) {normale};
+  \node[font=\footnotesize] at (2.2,0.9) {milieu 1 : air ($n_1$)};
+  \node[font=\footnotesize] at (2.2,-1.0) {milieu 2 : verre ($n_2$)};
+  % incident blanc
+  \draw[inc,line width=1.4pt] (-2.0,2.0) -- (0,0);
+  \node[rayinc,above left,font=\footnotesize] at (-1.6,1.6) {lumière blanche};
+  % reflechi
+  \draw[ref] (0,0) -- (2.0,2.0);
+  % trois refractes (r croissant : bleu < vert < rouge), angles bien separes
+  \draw[bleueL,->,>=Stealth,line width=1.1pt] (0,0) -- ({2.0*sin(15)},{-2.0*cos(15)});
+  \draw[verteL,->,>=Stealth,line width=1.1pt] (0,0) -- ({2.0*sin(27)},{-2.0*cos(27)});
+  \draw[rougeL,->,>=Stealth,line width=1.1pt] (0,0) -- ({2.0*sin(40)},{-2.0*cos(40)});
+  \node[bleueL,font=\scriptsize]  at (0.33,-2.16) {$\hat r_b$};
+  \node[verteL,font=\scriptsize]  at (1.04,-1.99) {$\hat r_v$};
+  \node[rougeL,font=\scriptsize]  at (1.62,-1.60) {$\hat r_r$};
+  \fill[black] (0,0) circle (1.3pt);
+  \node[draw=attncol,rounded corners=3pt,fill=attncol!8,font=\scriptsize,align=center] at (-1.75,-1.35)
+     {\textcolor{bleueL}{bleu}\,$<$\,\textcolor{verteL}{vert}\,$<$\,\textcolor{rougeL}{rouge}\\[1pt]
+      $\hat r_b < \hat r_v < \hat r_r$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}[le rouge, « le plus éloigné de la normale »]
+Attention au vocabulaire : « le plus éloigné de la normale » signifie que le rayon \emph{rouge} fait
+le plus \emph{grand} angle avec la normale ($\hat r_r$ le plus grand), donc qu'il est le \emph{moins}
+dévié de sa trajectoire initiale. À l'inverse le \emph{bleu}, le plus dévié, est le plus proche de la
+normale. C'est le bleu qui « tourne » le plus.
+\end{remarque}
+
+\subsection{Décomposition par un prisme : le spectre}
+
+En traversant un \textbf{prisme}, la lumière blanche subit \emph{deux} réfractions (à l'entrée et à
+la sortie) qui se cumulent au lieu de se compenser (les faces ne sont pas parallèles). La séparation
+des couleurs s'amplifie et l'on obtient sur un écran un \textbf{spectre continu}, du rouge au violet.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % prisme
+  \coordinate (S) at (0,2.6);
+  \coordinate (L) at (-1.5,-0.4);
+  \coordinate (R) at (1.5,-0.4);
+  \fill[verrecol!55] (S) -- (L) -- (R) -- cycle;
+  \draw[black!60,line width=1pt] (S) -- (L) -- (R) -- cycle;
+  \node[font=\footnotesize] at (0,0.1) {prisme};
+  % lumiere blanche entrante
+  \draw[black,line width=1.6pt,->,>=Stealth] (-3.4,0.9) -- (-0.78,1.07);
+  \node[above,font=\footnotesize] at (-2.4,1.0) {lumière blanche};
+  % trajet interne (entree -> face de sortie) puis faisceau disperse vers l'ecran
+  \coordinate (X) at (0.55,1.35); % point de sortie sur la face droite du prisme
+  \draw[black!25,line width=1pt] (-0.78,1.07) -- (X);
+  \draw[rougeL,line width=1pt,->,>=Stealth] (X) -- (4.55,1.55);
+  \draw[orange,line width=1pt,->,>=Stealth] (X) -- (4.55,1.18);
+  \draw[verteL,line width=1pt,->,>=Stealth] (X) -- (4.55,0.82);
+  \draw[cyan,line width=1pt,->,>=Stealth]   (X) -- (4.55,0.46);
+  \draw[bleueL,line width=1pt,->,>=Stealth] (X) -- (4.55,0.10);
+  \draw[violet,line width=1pt,->,>=Stealth] (X) -- (4.55,-0.25);
+  % ecran avec degrade
+  \shade[top color=rougeL,bottom color=violet] (4.6,-0.45) rectangle (4.95,1.75);
+  \draw[black!50] (4.6,-0.45) rectangle (4.95,1.75);
+  \node[right,font=\footnotesize] at (4.98,0.65) {écran};
+  \node[above,font=\scriptsize,rougeL] at (4.77,1.75) {rouge};
+  \node[below,font=\scriptsize,violet] at (4.77,-0.47) {violet};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[pourquoi le ciel offre un arc-en-ciel]
+L'\textbf{arc-en-ciel} est l'application « grandeur nature » de la dispersion. Chaque gouttelette de
+pluie joue le rôle d'un minuscule prisme sphérique. Un rayon de Soleil qui y pénètre subit :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt]
+  \item une \emph{réfraction} à l'entrée de la goutte (l'eau étant dispersive, les couleurs se
+        séparent déjà légèrement) ;
+  \item une \emph{réflexion} (totale ou partielle) sur la face arrière de la goutte ;
+  \item une seconde \emph{réfraction} à la sortie, qui amplifie la séparation des couleurs.
+\end{enumerate}
+Comme $n$ dépend de la couleur, chaque radiation ressort sous un angle légèrement différent (environ
+$42^\circ$ pour le rouge, $40^\circ$ pour le violet). L'œil reçoit donc le rouge des gouttes les plus
+hautes et le violet des plus basses : c'est ce qui étale les couleurs en arc.
+
+\smallskip
+\textbf{À ne pas confondre :} l'arc-en-ciel n'est \emph{pas} dû à une simple réflexion de la lumière
+blanche (sinon il serait blanc !), mais bien à la combinaison \emph{réfraction + réflexion +
+réfraction} dans un milieu \emph{dispersif}. Sans dispersion, pas de couleurs.
+\end{exemple}
+
+\begin{exemple}[une lumière rouge \emph{monochromatique} n'est pas décomposable]
+Si l'on envoie sur un prisme une lumière \textbf{rouge monochromatique} (une seule longueur d'onde,
+donc une seule vitesse $v = \lambda f$ dans le milieu), elle est bien \emph{déviée} par le prisme,
+mais elle \textbf{n'est pas décomposée} : il n'y a qu'une couleur à séparer. La dispersion ne se
+manifeste que pour une lumière \emph{polychromatique} (contenant plusieurs longueurs d'onde). C'est
+la différence essentielle entre \emph{déviation} (tout rayon est dévié) et \emph{dispersion}
+(seule une lumière à plusieurs couleurs s'étale en spectre).
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : formulaire et points-clés}
+% =====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\rowcolors{2}{primary!4}{white}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.6cm} >{\centering\arraybackslash}p{5.0cm} >{\raggedright\arraybackslash}p{4.6cm}}
+\rowcolor{primary!18}
+\textbf{Loi / grandeur} & \textbf{Formule} & \textbf{À retenir} \\
+\midrule
+Relation d'onde & $c_i = \lambda_i\,f$ & $f$ constante d'un milieu à l'autre \\
+Indice de réfraction & $n_i = \dfrac{c}{c_i} \ge 1$ & grand $n$ $\Rightarrow$ lumière lente \\
+Loi de la réflexion & $\angi = \angr$ & angles mesurés / normale \\
+Loi de Snell–Descartes & $n_1\sin\angi = n_2\sin\angr$ & cœur du chapitre \\
+Chaîne des rapports & $\dfrac{\sin\angi}{\sin\angr}=\dfrac{n_2}{n_1}=\dfrac{c_1}{c_2}=\dfrac{\lambda_1}{\lambda_2}$ & attention aux inversions \\
+Angle limite & $\angi_{\text{lim}}=\arcsin\!\left(\dfrac{n_2}{n_1}\right)$ & du milieu \emph{dense} vers le moins dense \\
+Profondeur apparente & $h' = \dfrac{n_2}{n_1}\,h$ & objet immergé paraît remonté \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{methode}[résoudre un problème de réfraction en 5 réflexes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Repérer la normale} (perpendiculaire au dioptre) et convertir tout angle donné
+        « par rapport à la surface » via $\angi = 90^\circ - (\cdots)$.
+  \item \textbf{Identifier les milieux} 1 (départ) et 2 (arrivée) et leurs indices $n_1$, $n_2$.
+  \item \textbf{Prévoir le sens} : $n_2>n_1 \Rightarrow$ rapproché de la normale ; $n_2<n_1 \Rightarrow$ éloigné.
+  \item \textbf{Tester la réflexion totale} si l'on part du milieu le plus réfringent :
+        comparer $\angi$ à $\angi_{\text{lim}} = \arcsin(n_2/n_1)$.
+  \item \textbf{Appliquer Snell–Descartes} et \emph{vérifier la cohérence physique} du résultat
+        (un $\sin > 1$ signale une réflexion totale ou une erreur d'angle).
+\end{enumerate}
+\end{methode}
+
+\begin{tcolorbox}[boxbase,colback=primarydark!6,colframe=primarydark,
+   title={\textsc{L'essentiel de la Fiche 7}}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Réflexion} : $\angi = \angr$, et rayons + normale coplanaires.
+  \item \textbf{Réfraction} : $n_1\sin\angi = n_2\sin\angr$ ; la fréquence ne change pas, la vitesse
+        et la longueur d'onde si.
+  \item Vers un milieu \textbf{plus} réfringent : rayon rapproché de la normale et ralenti ; vers un
+        milieu \textbf{moins} réfringent : éloigné et accéléré.
+  \item \textbf{Réflexion totale} si l'on part du milieu le plus réfringent \emph{et}
+        $\angi > \angi_{\text{lim}} = \arcsin(n_2/n_1)$ : base des fibres optiques et des prismes.
+  \item \textbf{Dispersion} : dans le verre, $n$ dépend de la couleur ; le bleu est le plus dévié,
+        le rouge le moins — d'où le spectre du prisme et l'arc-en-ciel.
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

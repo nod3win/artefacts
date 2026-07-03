@@ -1,0 +1,1403 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 5
+%  Travail, énergie et puissance
+%  Figures TikZ tracées « from scratch ». Sans section exercices.
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{vxc}{RGB}{0,90,200}
+\definecolor{vyc}{RGB}{210,30,40}
+\definecolor{enrjc}{RGB}{0,151,169}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Théorème}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ
+% =====================================================================
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  Fvec/.style={->,>=Stealth,line width=1.1pt,vxc},        % force appliquée / générique
+  Gvec/.style={->,>=Stealth,line width=1.1pt,vyc},        % poids (rouge)
+  Nvec/.style={->,>=Stealth,line width=1.1pt,excol!85!black}, % normale (vert)
+  Ffvec/.style={->,>=Stealth,line width=1.1pt,formulacol},% frottement (orange)
+  avec/.style={->,>=Stealth,line width=1.1pt,remarkcol},  % accélération (violet)
+  vvec/.style={->,>=Stealth,line width=1pt,vxc},          % vitesse (bleu)
+  proj/.style={dashed,black!55,line width=0.6pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Travail, énergie et puissance}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vv}[1]{\vec{#1}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\N}{\si{\newton}}
+\newcommand{\kg}{\si{\kilogram}}
+\newcommand{\ms}{\si{\metre\per\second}}
+\newcommand{\mss}{\si{\metre\per\second\squared}}
+\newcommand{\J}{\si{\joule}}
+\newcommand{\W}{\si{\watt}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.2cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Travail, énergie et puissance}\\[6pt]
+   {\large\bfseries Énergie cinétique, potentielle, mécanique \& quantité de mouvement}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,5}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : conversion Ec <-> Ep sur une piste ---
+\begin{tikzpicture}[scale=1.0]
+  % piste : cuvette parabolique
+  \draw[primary,line width=1.4pt] plot[domain=-3.2:3.2,smooth] (\x,{0.30*\x*\x});
+  \fill[black!12] plot[domain=-3.2:3.2,smooth] (\x,{0.30*\x*\x}) -- (3.2,-0.15) -- (-3.2,-0.15) -- cycle;
+  % bille en haut à gauche (Ep max)
+  \shade[ball color=vyc] (-3.0,2.7) circle (0.18);
+  \node[vyc] at (-3.0,3.15) {\small $E_p$ max, $E_c=0$};
+  % bille au fond (Ec max)
+  \shade[ball color=vxc] (0,0.06) circle (0.18);
+  \node[vxc] at (0,-0.55) {\small $E_c$ max, $E_p=0$};
+  % bille en haut à droite
+  \shade[ball color=vyc] (3.0,2.7) circle (0.18);
+  % flèche d'échange d'énergie
+  \draw[->,>=Stealth,enrjc,line width=1pt] (-2.2,2.0) to[bend left=18] (-0.4,0.45);
+  \node[enrjc] at (-0.45,1.75) {\small $E_m=E_c+E_p=$ Cte};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir et calculer le \textbf{travail} d'une force ($W=\vv F\cdot\vv{AB}$), interpréter son \textbf{signe} (moteur, résistant, nul) ;
+  \item définir la \textbf{puissance} ($P=W/\Delta t=\vv F\cdot\vv v$) et la relier à la rapidité d'un système ;
+  \item établir et appliquer le \textbf{théorème de l'énergie cinétique} ($W=\Delta E_c$, $E_c=\tfrac12 mv^2$) ;
+  \item exprimer l'\textbf{énergie potentielle de pesanteur} ($E_p=mgh$) et l'\textbf{énergie potentielle élastique} ($E_p=\tfrac12 kx^2$) ;
+  \item utiliser la \textbf{conservation de l'énergie mécanique} ($E_m=E_c+E_p=$ Cte) ;
+  \item définir la \textbf{quantité de mouvement} ($\vv p=m\vv v$).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 5 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : énergie, travail et puissance}
+% =====================================================================
+En mécanique, on peut décrire un mouvement de deux manières complémentaires. La première, vue
+dans les fiches précédentes, utilise les \textbf{forces} et l'\textbf{accélération} (lois de Newton).
+La seconde, objet de cette fiche, utilise une grandeur scalaire centrale : l'\textbf{énergie}.
+
+\begin{definition}[énergie]
+L'\textbf{énergie} d'un système est sa \emph{capacité à produire un travail}, c'est-à-dire à
+exercer des forces qui déplacent des objets. C'est une grandeur \textbf{scalaire} (un nombre, pas
+un vecteur), qui se mesure en \textbf{joules} (\si{\joule}) et qui peut se \emph{transformer}
+d'une forme à une autre (cinétique $\leftrightarrow$ potentielle) ou se \emph{transférer}
+d'un corps à un autre, mais qui \emph{ne se crée ni ne se détruit}.
+\end{definition}
+
+L'avantage de cette approche est considérable : l'énergie étant un scalaire, on additionne des
+nombres plutôt que des vecteurs, et lorsqu'elle se conserve, on peut relier directement l'état
+\emph{initial} à l'état \emph{final} sans connaître le détail du mouvement intermédiaire. Trois
+grandeurs servent de fil conducteur à toute la fiche :
+
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item le \textbf{travail} $W$ : l'énergie \emph{transférée} à un corps par une force qui le déplace ;
+  \item la \textbf{puissance} $P$ : la \emph{rapidité} avec laquelle ce travail est fourni ;
+  \item l'\textbf{énergie} (cinétique, potentielle, mécanique) : l'énergie \emph{stockée} par le corps du fait de son mouvement ou de sa position.
+\end{itemize}
+
+\begin{remarque}[le joule, unité commune]
+Travail, énergie cinétique, énergie potentielle, énergie mécanique : \emph{toutes} ces grandeurs
+s'expriment dans la même unité, le \textbf{joule} (\si{\joule}). Ce n'est pas un hasard : ce sont
+toutes des \emph{quantités d'énergie}. Par définition, \(\SI{1}{\joule}=\SI{1}{\newton}\times\SI{1}{\metre}
+=\si{\kilogram\metre\squared\per\second\squared}\) : c'est le travail fourni par une force de
+\SI{1}{\newton} dont le point d'application se déplace de \SI{1}{\metre} dans la direction de la force.
+\end{remarque}
+
+% =====================================================================
+\section{Le travail d'une force}
+% =====================================================================
+\subsection{Définition et expression générale}
+
+Une force qui s'exerce sur un corps ne « travaille » que si son point d'application
+\emph{se déplace}. Le travail mesure précisément l'\emph{effet de transfert d'énergie} associé
+à ce déplacement.
+
+\begin{definition}[travail d'une force constante]
+Le \textbf{travail} fourni à un solide pour le déplacer de la position $A$ vers la position $B$,
+sous l'action d'une force $\vv F$ \emph{constante en intensité, direction et sens} le long d'une
+\emph{trajectoire rectiligne}, est égal au \textbf{produit scalaire} de $\vv F$ par le vecteur
+déplacement $\vv{AB}$.
+\end{definition}
+
+\begin{formule}[travail d'une force constante]
+\[
+\boxed{\;W_{AB}(\vv F)=\vv F\cdot\vv{AB}=F\times AB\times\cos\alpha\;}
+\]
+\begin{ou}
+  \item $W_{AB}(\vv F)$ : travail de la force $\vv F$ entre $A$ et $B$, en \textbf{joules} (\si{\joule}) ;
+  \item $F=\lVert\vv F\rVert$ : intensité (norme) de la force, en \textbf{newtons} (\si{\newton}) ;
+  \item $AB=\lVert\vv{AB}\rVert$ : distance parcourue (longueur du déplacement), en \textbf{mètres} (\si{\metre}) ;
+  \item $\alpha$ : angle entre la force $\vv F$ et le déplacement $\vv{AB}$, \emph{sans unité} (en degrés ou radians) ;
+  \item $\cos\alpha$ : nombre compris entre $-1$ et $+1$, \emph{sans unité}.
+\end{ou}
+\end{formule}
+
+\noindent La figure~\ref{fig:travail} illustre la situation : seule la \emph{partie} de la force
+qui « pousse dans le sens du déplacement » contribue au travail.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % bloc en A
+  \draw[fill=primary!12,draw=black!70,line width=0.8pt] (-0.55,-0.45) rectangle (0.35,0.45);
+  \node at (-0.1,0) {\small $m$};
+  \node[below] at (-0.1,-0.5) {\small\textbf{A}};
+  % point d'application
+  \coordinate (O) at (0.35,0);
+  % force F (à 30°)
+  \draw[Fvec] (O) -- ++(30:2.2) node[above right]{$\vv F$};
+  % composante Fx
+  \draw[Ffvec] (O) -- ++(2.2*cos 30:0) ;
+  \draw[->,>=Stealth,line width=1.1pt,formulacol] (O) -- ++(1.905,0) node[below,black]{\small $\vv F_x$};
+  % projection verticale (pointillé) du bout de F vers l'axe horizontal
+  \draw[proj] ($(O)+(30:2.2)$) -- ($(O)+(1.905,0)$);
+  % angle alpha
+  \draw[->,>=Stealth,black!70] (O)+(0.75,0) arc (0:30:0.75);
+  \node at ($(O)+(0.95,0.27)$) {\small $\alpha$};
+  % déplacement AB en pointillé jusqu'à B
+  \draw[proj,line width=0.9pt] (O) -- (6.2,0);
+  \node[pt] at (6.2,0) {};
+  \node[below] at (6.2,-0.12) {\small\textbf{B}};
+  \draw[<->,black!55] (0.35,-0.85) -- (6.2,-0.85) node[midway,below]{\small $\vv{AB}$ (déplacement)};
+  % relation cos
+  \node[vxc] at (4.3,0.95) {\small $\cos\alpha=\dfrac{F_x}{F}$};
+  % petit repère xy
+  \begin{scope}[shift={(7.1,0.2)}]
+     \draw[axe] (0,0) -- (0,1.0) node[left]{\small $y$};
+     \draw[axe] (0,0) -- (1.0,0) node[below]{\small $x$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Travail d'une force constante $\vv F$ inclinée d'un angle $\alpha$ sur le déplacement
+$\vv{AB}$. Seule la composante $F_x=F\cos\alpha$ (parallèle au déplacement) travaille.}
+\label{fig:travail}
+\end{figure}
+
+\subsubsection{La forme avec la composante}
+Si l'on projette la force sur l'axe du déplacement (axe $Ox$), sa composante vaut
+$F_x=F\cos\alpha$. Le travail s'écrit alors plus simplement :
+
+\begin{formule}[travail et composante de la force]
+\[
+\boxed{\;W_{AB}(\vv F)=F_x\times AB\quad\text{avec}\quad \cos\alpha=\dfrac{F_x}{F}\;}
+\]
+\begin{ou}
+  \item $F_x=F\cos\alpha$ : composante de la force sur l'axe du déplacement, en \textbf{newtons} (\si{\newton}) ;
+  \item $AB$ : longueur du déplacement, en \textbf{mètres} (\si{\metre}) ;
+  \item $W_{AB}(\vv F)$ : travail, en \textbf{joules} (\si{\joule}).
+\end{ou}
+Cette écriture montre clairement que \emph{seule la composante de la force parallèle au
+déplacement travaille} : la composante perpendiculaire, elle, ne transfère aucune énergie.
+\end{formule}
+
+\subsection{Le signe du travail : moteur, résistant ou nul}
+
+Le facteur $\cos\alpha$ peut être positif, négatif ou nul : il fixe à lui seul le \emph{signe} du
+travail, et donc son \emph{sens physique} (la force aide-t-elle ou s'oppose-t-elle au mouvement ?).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.92]
+  % --- Cas 1 : alpha aigu, moteur ---
+  \begin{scope}
+    \draw[proj,line width=0.9pt] (0,0) -- (2.6,0);
+    \node[pt] at (0,0){}; \node[pt] at (2.6,0){};
+    \draw[vvec] (1.0,-0.45) -- (2.0,-0.45) node[midway,below]{\small $\vv{AB}$};
+    \draw[Fvec] (0,0) -- (40:1.8) node[above]{$\vv F$};
+    \draw[->,>=Stealth,black!70] (0.7,0) arc (0:40:0.7);
+    \node at (1.0,0.32){\small $\alpha$};
+    \node[align=center,excol,font=\bfseries] at (1.3,-1.75)
+       {$\alpha<\ang{90}\Rightarrow\cos\alpha>0$\\ $W>0$ : travail \emph{moteur}};
+  \end{scope}
+  % --- Cas 2 : alpha = 90°, nul ---
+  \begin{scope}[shift={(5.5,0)}]
+    \draw[proj,line width=0.9pt] (0,0) -- (2.6,0);
+    \node[pt] at (0,0){}; \node[pt] at (2.6,0){};
+    \draw[vvec] (1.0,-0.45) -- (2.0,-0.45) node[midway,below]{\small $\vv{AB}$};
+    \draw[Nvec] (1.3,0) -- (1.3,1.7) node[above]{$\vv F$};
+    \draw[black!70] (1.05,0) -- (1.05,0.25) -- (1.3,0.25);
+    \node at (0.95,0.45){\small $\alpha$};
+    \node[align=center,attncol,font=\bfseries] at (1.3,-1.75)
+       {$\alpha=\ang{90}\Rightarrow\cos\alpha=0$\\ $W=0$ : travail \emph{nul}};
+  \end{scope}
+  % --- Cas 3 : alpha obtus, résistant ---
+  \begin{scope}[shift={(11.0,0)}]
+    \draw[proj,line width=0.9pt] (0,0) -- (2.6,0);
+    \node[pt] at (0,0){}; \node[pt] at (2.6,0){};
+    \draw[vvec] (1.0,-0.45) -- (2.0,-0.45) node[midway,below]{\small $\vv{AB}$};
+    \draw[Ffvec] (1.3,0) -- ($(1.3,0)+(140:1.8)$) node[above left]{$\vv F$};
+    \draw[->,>=Stealth,black!70] (2.0,0) arc (0:140:0.7);
+    \node at (1.55,0.55){\small $\alpha$};
+    \node[align=center,vyc,font=\bfseries] at (1.3,-1.75)
+       {$\alpha>\ang{90}\Rightarrow\cos\alpha<0$\\ $W<0$ : travail \emph{résistant}};
+  \end{scope}
+\end{tikzpicture}
+\caption{Les trois régimes du travail selon l'angle $\alpha$. À gauche, la force accompagne le
+mouvement (moteur) ; au centre, elle lui est perpendiculaire (travail nul) ; à droite, elle s'y
+oppose, comme un frottement (résistant).}
+\label{fig:signe}
+\end{figure}
+
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Travail moteur} ($W>0$) : la force a une composante \emph{dans le sens} du
+        déplacement ; elle \emph{donne} de l'énergie au corps et tend à l'accélérer. Le travail est
+        \emph{maximal} quand $\alpha=\ang{0}$ ($\cos\alpha=1$), soit $W=F\times AB$.
+  \item \textbf{Travail nul} ($W=0$) : la force est \emph{perpendiculaire} au déplacement
+        ($\alpha=\ang{90}$). Elle ne transfère aucune énergie.
+  \item \textbf{Travail résistant} ($W<0$) : la force a une composante \emph{opposée} au
+        déplacement ; elle \emph{retire} de l'énergie au corps et tend à le freiner. Il est
+        \emph{minimal} quand $\alpha=\ang{180}$ ($\cos\alpha=-1$), soit $W=-F\times AB$.
+\end{itemize}
+
+\subsection{Deux cas particuliers fondamentaux}
+
+\begin{theoreme}[force perpendiculaire au déplacement]
+Si une force est \textbf{perpendiculaire} au vecteur déplacement, son travail est \textbf{nul}.
+\[
+\alpha=\ang{90}\ \Rightarrow\ \cos\alpha=0\ \Rightarrow\ W_{AB}(\vv F)=0\ \J
+\]
+C'est typiquement le cas de la \textbf{réaction normale} $\vv N$ d'un support : elle est toujours
+$\perp$ au déplacement, donc $W_{AB}(\vv N)=\SI{0}{\joule}$. C'est aussi le cas du \textbf{poids}
+lors d'un déplacement horizontal, et de la \textbf{force centripète} d'un mouvement circulaire.
+\end{theoreme}
+
+\begin{theoreme}[travail des forces de frottement]
+Le travail des forces de \textbf{frottement} est \textbf{souvent négatif}. En effet, la force de
+frottement $\vv F_f$ est tangente à la trajectoire et \emph{de sens opposé} au déplacement
+($\alpha=\ang{180}$) :
+\[
+W_{AB}(\vv F_f)=F_f\times AB\times\cos\ang{180}=-\,F_f\times AB <0 .
+\]
+Le frottement \emph{dissipe} de l'énergie mécanique (en chaleur) : c'est une force résistante.
+\end{theoreme}
+
+\subsection{Interprétation par l'intégrale : l'aire sous la courbe}
+
+La définition $W=F\cos\alpha\times AB$ suppose une force \emph{constante}. Quand la force
+\textbf{varie} le long du trajet, on découpe le déplacement en petits morceaux $\dd x$ sur chacun
+desquels la force est quasi constante, puis on \emph{somme} (on intègre) :
+
+\begin{formule}[travail d'une force variable]
+\[
+\boxed{\;W_{AB}=\int_{x_A}^{x_B} F\,\dd x\;}
+\]
+\begin{ou}
+  \item $\int_{x_A}^{x_B} F\,\dd x$ : aire algébrique sous la courbe $F(x)$ entre $x_A$ et $x_B$ ;
+  \item $F$ : composante de la force selon le déplacement, en \textbf{newtons} (\si{\newton}) ;
+  \item $\dd x$ : élément de déplacement, en \textbf{mètres} (\si{\metre}) ;
+  \item $W_{AB}$ : travail, en \textbf{joules} (\si{\joule}).
+\end{ou}
+\textbf{Le travail est donc l'aire comprise entre la courbe $F(x)$ et l'axe des positions.}
+\end{formule}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+% ---- Graphe 1 : force variable (linéaire) ----
+\begin{scope}
+  \node[primary,font=\bfseries] at (2.3,3.5) {Travail de la force $\vv F$};
+  \draw[axe] (0,0) -- (0,3.1) node[left]{\small $F$};
+  \draw[axe] (0,0) -- (4.6,0) node[below]{\small $x$};
+  \node[below left] at (0,0) {\small O};
+  % droite F(x) croissante
+  \draw[vxc,line width=1.2pt] (0,0) -- (4.2,2.8);
+  % aire hachurée entre xA et xB (trapèze)
+  \def\xa{1.4}\def\xb{3.1}
+  \fill[vxc!18] (\xa,0) -- (\xa,{\xa*2.8/4.2}) -- (\xb,{\xb*2.8/4.2}) -- (\xb,0) -- cycle;
+  \draw[vxc!55,pattern=north east lines,pattern color=vxc!35]
+        (\xa,0) -- (\xa,{\xa*2.8/4.2}) -- (\xb,{\xb*2.8/4.2}) -- (\xb,0) -- cycle;
+  \draw[proj] (\xa,0) node[below]{\small $x_A$} -- (\xa,{\xa*2.8/4.2});
+  \draw[proj] (\xb,0) node[below]{\small $x_B$} -- (\xb,{\xb*2.8/4.2});
+  \draw[->,>=Stealth,vxc] (4.0,2.0) to[bend right=12] (2.4,1.0);
+  \node[vxc] at (4.0,2.35) {\small $\bigl|W_{AB}(\vv F)\bigr|$};
+\end{scope}
+% ---- Graphe 2 : force de gravitation constante ----
+\begin{scope}[shift={(7.4,0)}]
+  \node[primary,font=\bfseries] at (2.3,3.5) {Travail de la gravitation $\vv G$};
+  \draw[axe] (0,0) -- (0,3.1) node[left]{\small $G$};
+  \draw[axe] (0,0) -- (4.6,0) node[below]{\small $h$};
+  % droite horizontale G constante
+  \def\Gc{2.0}\def\ha{1.3}\def\hb{3.2}
+  \draw[vyc,line width=1.2pt] (0,\Gc) -- (4.3,\Gc);
+  \node[vyc,left] at (0,\Gc) {\small $G$};
+  % aire rectangle entre hA et hB
+  \fill[vyc!20] (\ha,0) rectangle (\hb,\Gc);
+  \draw[vyc!60,pattern=north east lines,pattern color=vyc!35] (\ha,0) rectangle (\hb,\Gc);
+  \draw[proj] (\ha,0) node[below]{\small $h_A$} -- (\ha,\Gc);
+  \draw[proj] (\hb,0) node[below]{\small $h_B$} -- (\hb,\Gc);
+  \draw[->,>=Stealth,vyc] (3.9,2.55) to[bend right=12] (2.5,1.0);
+  \node[vyc] at (3.7,2.85) {\small $\bigl|W_{AB}(\vv G)\bigr|$};
+\end{scope}
+\end{tikzpicture}
+\caption{Le travail comme aire sous la courbe. À gauche, la force exercée varie (croît) le long du
+trajet $A\to B$ : l'aire est un \emph{trapèze}. À droite, la force de gravitation $\vv G$ est
+supposée \emph{constante} : l'aire est un \emph{rectangle}, $W=G\times(h_B-h_A)$.}
+\label{fig:aire}
+\end{figure}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[le travail du poids d'un wagon sur des rails horizontaux]
+Un wagon de masse $m=\SI{100}{\kilogram}$ parcourt une distance $d=\SI{10}{\metre}$ sur des rails
+\emph{horizontaux}. Quel est le travail de son poids $\vv G$ ?
+
+\smallskip
+\textbf{Analyse.} Le poids $\vv G$ est \emph{vertical} (dirigé vers le bas), tandis que le
+déplacement $\vv d$ est \emph{horizontal}. Les deux vecteurs sont donc perpendiculaires :
+$\alpha=\ang{90}$.
+
+\textbf{Calcul.}
+\[
+W(\vv G)=\vv G\cdot\vv d=G\times d\times\cos\ang{90}=G\times d\times 0=\SI{0}{\joule}.
+\]
+
+\textbf{Conclusion.} \boxed{W(\vv G)=\SI{0}{\joule}} \; : le poids ne travaille pas sur un trajet
+horizontal. Remarquez que la masse (\SI{100}{\kilogram}) et la distance (\SI{10}{\metre}) ne servent
+\emph{à rien} ici : tant que le déplacement reste horizontal, le résultat est nul quelles que soient
+ces valeurs. C'est une erreur fréquente de vouloir calculer $G\times d=\SI{1000}{\newton}\times\SI{10}{\metre}=\SI{10000}{\joule}$
+en oubliant le facteur $\cos\ang{90}=0$.
+\end{exemple}
+
+\begin{exemple}[le travail de la force de frottement]
+Le même wagon ($m=\SI{100}{\kilogram}$) se déplace de $d=\SI{10}{\metre}$ sur les rails horizontaux,
+mais cette fois on s'intéresse à la force de frottement $\vv F_f$ qui s'oppose au glissement.
+Quel est le signe de son travail ?
+
+\smallskip
+\textbf{Analyse.} La force de frottement est \emph{tangente} à la trajectoire et \emph{toujours
+opposée} au sens du déplacement. L'angle entre $\vv F_f$ et $\vv d$ vaut donc $\alpha=\ang{180}$.
+
+\textbf{Calcul.}
+\[
+W(\vv F_f)=F_f\times d\times\cos\ang{180}=F_f\times \SI{10}{\metre}\times(-1)=-\,10\,F_f \;(\si{\joule}).
+\]
+
+\textbf{Conclusion.} Le travail du frottement est \boxed{\text{négatif}} ($W<0$), proportionnel à
+l'intensité $F_f$ et à la distance parcourue. Le frottement \emph{retire} de l'énergie au wagon : il
+le freine. C'est pourquoi un objet lancé sur une surface réelle finit toujours par s'arrêter.
+\end{exemple}
+
+\begin{exemple}[le travail de la force centripète en mouvement circulaire]
+Un solide de masse $m=\SI{10}{\kilogram}$ décrit un \textbf{mouvement circulaire uniforme} (MCU)
+de centre $O$ et de rayon $r=\SI{2}{\metre}$, à la vitesse tangentielle $v=\SI{10}{\metre\per\second}$.
+Que vaut le travail de la force centripète $\vv F_c$ ?
+
+\smallskip
+\textbf{Première idée (fausse piste).} On pourrait calculer l'intensité de la force centripète :
+\(F_c=\dfrac{m v^2}{r}=\dfrac{10\times 10^2}{2}=\SI{500}{\newton}.\) C'est une force importante !
+On est tenté de répondre « \SI{500}{\joule} » ou « \SI{250}{\joule} »… mais c'est une erreur.
+
+\textbf{Le bon raisonnement.} Dans un MCU, la force centripète pointe \emph{en permanence vers le
+centre} $O$, donc le long du rayon. Or, à chaque instant, le déplacement est \emph{tangent} au
+cercle, donc \emph{perpendiculaire} au rayon. Ainsi $\vv F_c\perp\vv{AB}$ à tout instant :
+$\alpha=\ang{90}$ et $\cos\ang{90}=0$.
+\[
+W(\vv F_c)=\vv F_c\cdot\vv{AB}=F_c\times AB\times\cos\ang{90}=\SI{0}{\joule}.
+\]
+
+\textbf{Conclusion.} \boxed{W(\vv F_c)=\SI{0}{\joule}}. Bien que la force centripète soit grande
+(\SI{500}{\newton}), elle ne travaille \emph{jamais} : elle \emph{infléchit} la trajectoire sans
+modifier la vitesse (la norme de $\vv v$ reste constante en MCU). Une force qui ne fait que
+« tourner » un mouvement ne lui transfère aucune énergie.
+\end{exemple}
+
+% =====================================================================
+\section{La puissance}
+% =====================================================================
+\subsection{Définition}
+
+Deux moteurs peuvent fournir \emph{le même travail}, mais l'un peut le faire beaucoup plus vite que
+l'autre. C'est cette idée de \emph{rapidité} qu'exprime la puissance.
+
+\begin{definition}[puissance moyenne]
+La \textbf{puissance} fournie par une force $\vv F$ est le travail qu'elle fournit \emph{par unité
+de temps}. Elle mesure la capacité d'un système à fournir un travail pendant un temps donné.
+\end{definition}
+
+\begin{formule}[puissance moyenne]
+\[
+\boxed{\;P=\dfrac{W_{AB}(\vv F)}{\Delta t}\;}
+\]
+\begin{ou}
+  \item $P$ : puissance, en \textbf{watts} (\si{\watt}), avec \(\SI{1}{\watt}=\SI{1}{\joule\per\second}\) ;
+  \item $W_{AB}(\vv F)$ : travail fourni par la force, en \textbf{joules} (\si{\joule}) ;
+  \item $\Delta t$ : durée du déplacement, en \textbf{secondes} (\si{\second}).
+\end{ou}
+\end{formule}
+
+\begin{remarque}[lire la formule]
+Pour un \emph{même} travail $W$, plus la durée $\Delta t$ est courte, plus la puissance $P$ est
+grande (les deux sont \emph{inversement proportionnelles}). \emph{À travail égal, le système le plus
+puissant est le plus rapide.}
+\end{remarque}
+
+\subsection{Puissance et vitesse}
+
+En reliant le travail $W=F\times d$ (cas $\alpha=\ang{0}$) à la vitesse $v=d/\Delta t$, on obtient
+une seconde expression très utile de la puissance :
+
+\begin{formule}[puissance et vitesse]
+\[
+\boxed{\;P=\vv F\cdot\vv v=F\times v\times\cos\alpha\;}
+\]
+\begin{ou}
+  \item $P$ : puissance, en \textbf{watts} (\si{\watt}) ;
+  \item $F$ : intensité de la force, en \textbf{newtons} (\si{\newton}) ;
+  \item $v$ : vitesse du point d'application, en \textbf{mètres par seconde} (\si{\metre\per\second}) ;
+  \item $\alpha$ : angle entre $\vv F$ et $\vv v$.
+\end{ou}
+Cette forme est commode quand la vitesse est connue (véhicule à vitesse constante, par exemple).
+\end{formule}
+
+\begin{remarque}[interprétation intégrale]
+De même que le travail est l'intégrale de la force par rapport à la position, le travail est aussi
+l'\emph{intégrale de la puissance par rapport au temps} : \(\displaystyle\int_{t_A}^{t_B} P\,\dd t=W_{AB}.\)
+Le travail est l'aire sous la courbe $P(t)$.
+\end{remarque}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[monter un escalier vite ou lentement]
+Une personne monte tous les escaliers d'un bâtiment en fournissant la \emph{même} quantité de
+travail $W$, mais selon deux scénarios de durée différente. Comparons la puissance développée.
+
+\smallskip
+\textbf{Cas 1 — rapide :} la montée dure $\Delta t_1=\SI{30}{\second}$.
+\[
+P_1=\frac{W}{\Delta t_1}=\frac{W}{30}.
+\]
+\textbf{Cas 2 — lent :} la même montée dure $\Delta t_2=\SI{3}{\minute}=\SI{180}{\second}$.
+\[
+P_2=\frac{W}{\Delta t_2}=\frac{W}{180}=\frac{1}{6}\times\frac{W}{30}=\frac{P_1}{6}.
+\]
+
+\textbf{Conclusion.} \boxed{P_1=6\times P_2}. Pour le \emph{même} travail $W$, la puissance du cas
+rapide est \textbf{6 fois} plus grande. C'est exactement la sensation physiologique : on est bien
+plus essoufflé en montant l'escalier en \SI{30}{\second} qu'en \SI{3}{\minute}, car notre corps doit
+\emph{délivrer la même énergie six fois plus vite}. Le travail (l'énergie dépensée) est identique ;
+c'est la \emph{puissance} qui change.
+\end{exemple}
+
+\begin{exemple}[puissance d'un moteur pour vaincre les frottements]
+Un véhicule de masse $m=\SI{6}{\tonne}$ roule en mouvement rectiligne uniforme (MRU, vitesse
+constante) à $v=\SI{72}{\kilo\metre\per\hour}$. La résultante des forces de frottement est constante,
+$F_f=\SI{600}{\newton}$. Quelle puissance le moteur doit-il développer pour \emph{compenser} ces
+frottements ?
+
+\smallskip
+\textbf{Étape 1 — convertir la vitesse en \si{\metre\per\second}.}
+\[
+v=\SI{72}{\kilo\metre\per\hour}=\frac{72}{3{,}6}=\SI{20}{\metre\per\second}.
+\]
+(Rappel : pour passer des \si{\kilo\metre\per\hour} aux \si{\metre\per\second}, on \emph{divise par
+$3{,}6$}.)
+
+\textbf{Étape 2 — comprendre la situation.} En MRU à vitesse constante, l'accélération est nulle,
+donc la force motrice du moteur équilibre exactement les frottements : la force utile a pour
+intensité $F=F_f=\SI{600}{\newton}$, et elle est dirigée \emph{dans le sens} du mouvement
+($\alpha=\ang{0}$).
+
+\textbf{Étape 3 — calculer la puissance} avec $P=F\times v\times\cos\ang{0}$ :
+\[
+P=600\times 20\times 1=\SI{12000}{\watt}=\SI{12}{\kilo\watt}.
+\]
+
+\textbf{Conclusion.} \boxed{P=\SI{12}{\kilo\watt}}. Le moteur doit fournir \SI{12}{\kilo\watt} en
+permanence \emph{rien que} pour annuler les frottements et maintenir la vitesse — bien que le
+véhicule n'accélère pas. La masse de \SI{6}{\tonne} n'intervient pas dans ce calcul, puisqu'on ne
+fait que maintenir la vitesse (pas d'accélération, pas de montée).
+\end{exemple}
+
+% =====================================================================
+\section{L'énergie cinétique}
+% =====================================================================
+\subsection{Mise en place et démonstration}
+
+Considérons un solide de masse $m$ soumis à une force motrice $\vv F_x$ \emph{constante}. Il part du
+repos en $A$ ($t_0=\SI{0}{\second}$, $v_0=\SI{0}{\metre\per\second}$) et atteint la vitesse $v$ en
+$B$. Le mouvement est rectiligne uniformément accéléré (MRUA), de longueur $d=AB$
+(figure~\ref{fig:mrua}).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % sol
+  \draw[black!70,line width=0.9pt] (-0.7,-0.5) -- (8.6,-0.5);
+  \foreach \x in {-0.5,-0.1,...,8.4} \draw[black!45] (\x,-0.5) -- (\x-0.18,-0.72);
+  % bloc en A
+  \draw[fill=primary!12,draw=black!70] (-0.4,-0.5) rectangle (0.5,0.35);
+  \node at (0.05,-0.08){\small $m$};
+  \node[below] at (0.05,-0.55){\small\textbf{A}};
+  % force F en A à 30°
+  \draw[Fvec] (0.5,0.05) -- ++(30:1.7) node[above right]{$\vv F$};
+  \draw[->,>=Stealth,line width=1.0pt,formulacol] (0.5,0.05) -- ++(1.45,0) node[below,black]{\small $\vv F_x$};
+  \draw[->,>=Stealth,black!70] (0.5,0.05)+(0.55,0) arc (0:30:0.55);
+  \node at (1.25,0.25){\small $\alpha$};
+  % bloc en B
+  \draw[fill=primary!12,draw=black!70] (6.7,-0.5) rectangle (7.6,0.35);
+  \node[below] at (7.15,-0.55){\small\textbf{B}};
+  % déplacement d
+  \draw[proj,line width=0.9pt] (2.1,0.05) -- (6.55,0.05);
+  \draw[<->,black!55] (0.5,-0.95) -- (6.7,-0.95) node[midway,below]{\small $d=AB$};
+  \node[primary] at (4.0,0.55){\small MRUA};
+  % données
+  \node[align=left,black!75] at (0.9,-1.6){\small $t_0=\SI{0}{\second}$\\ \small $v_0=\SI{0}{\metre\per\second}$};
+  \node[align=left,black!75] at (7.2,-1.6){\small $t$\\ \small $v$};
+  % repère
+  \begin{scope}[shift={(8.1,-0.2)}]
+     \draw[axe] (0,0) -- (0,0.9) node[left]{\small $y$};
+     \draw[axe] (0,0) -- (0.9,0) node[below]{\small $x$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Solide accéléré de $A$ (repos) à $B$ (vitesse $v$) sous l'action d'une force motrice
+constante : mouvement rectiligne uniformément accéléré.}
+\label{fig:mrua}
+\end{figure}
+
+\begin{methode}[démonstration de l'expression de l'énergie cinétique]
+On part du travail de la force motrice, $W_{AB}=F_x\times d$, et on y injecte deux résultats connus
+du MRUA :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item la deuxième loi de Newton : $F_x=m\times a$ ;
+  \item la distance parcourue depuis le repos : $d=\tfrac12\,a\,t^2$.
+\end{enumerate}
+On remplace :
+\[
+W_{AB}=F_x\times d=(m\,a)\times\Bigl(\tfrac12\,a\,t^2\Bigr)=\tfrac12\,m\,a^2\,t^2=\tfrac12\,m\,(a\,t)^2 .
+\]
+Or, pour un MRUA partant du repos, la vitesse atteinte est $v=a\,t$. En remplaçant $a\,t$ par $v$ :
+\[
+W_{AB}=\tfrac12\,m\,v^2 .
+\]
+Cette quantité, qui mesure l'énergie acquise par le corps du fait de sa mise en mouvement, est son
+\textbf{énergie cinétique}.
+\end{methode}
+
+\begin{formule}[énergie cinétique]
+\[
+\boxed{\;E_c=\tfrac12\,m\,v^2\;}
+\]
+\begin{ou}
+  \item $E_c$ : énergie cinétique, en \textbf{joules} (\si{\joule}) ;
+  \item $m$ : masse du corps, en \textbf{kilogrammes} (\si{\kilogram}) ;
+  \item $v$ : vitesse (norme) du corps, en \textbf{mètres par seconde} (\si{\metre\per\second}).
+\end{ou}
+L'énergie cinétique est \emph{toujours positive} (carré de la vitesse) et nulle au repos ($v=0$).
+\end{formule}
+
+\subsection{Le théorème de l'énergie cinétique}
+
+\begin{theoreme}[théorème de l'énergie cinétique]
+Dans un référentiel \textbf{galiléen} (inertiel), la somme algébrique des travaux de \emph{toutes}
+les forces appliquées à un corps, entre deux points $A$ et $B$, est égale à la \textbf{variation de
+son énergie cinétique} entre ces deux points :
+\[
+\boxed{\;\textstyle\sum W_{AB}(\vv F)=E_c(B)-E_c(A)=\tfrac12\,m\,v_B^{\,2}-\tfrac12\,m\,v_A^{\,2}\;}
+\]
+\begin{ou}
+  \item $\sum W_{AB}(\vv F)$ : somme des travaux de toutes les forces, en \si{\joule} ;
+  \item $E_c(A)=\tfrac12 m v_A^2$, $E_c(B)=\tfrac12 m v_B^2$ : énergies cinétiques en $A$ et $B$, en \si{\joule} ;
+  \item $v_A,\ v_B$ : vitesses en $A$ et $B$, en \si{\metre\per\second}.
+\end{ou}
+\end{theoreme}
+
+\begin{remarque}[à quoi sert ce théorème ?]
+C'est l'un des outils les plus puissants de la mécanique : il relie directement les \emph{forces}
+(via leur travail) à la \emph{variation de vitesse}, sans passer par l'accélération ni par le détail
+de la trajectoire. Si le travail total est positif, le corps accélère ($v_B>v_A$) ; s'il est
+négatif, il ralentit ; s'il est nul, la vitesse est conservée.
+\end{remarque}
+
+\subsection{Une dépendance au carré de la vitesse}
+
+\begin{attention}[l'énergie cinétique varie comme $v^2$]
+Comme la vitesse intervient \emph{au carré}, l'énergie cinétique est très sensible à la vitesse.
+Si la vitesse est multipliée par $n$, l'énergie cinétique est multipliée par $n^2$ :
+\[
+v\to n\,v\quad\Longrightarrow\quad E_c\to n^2\,E_c .
+\]
+Par exemple, si la vitesse est \textbf{triplée} ($n=3$), l'énergie cinétique devient
+\textbf{9 fois} plus grande ($n^2=9$). C'est la raison physique pour laquelle la distance de
+freinage d'un véhicule augmente si vite avec la vitesse : rouler deux fois plus vite, c'est avoir
+quatre fois plus d'énergie cinétique à dissiper.
+\end{attention}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \begin{axis}[
+     width=10.2cm,height=5.2cm,
+     xlabel={\small vitesse $v$ (\si{\metre\per\second})},
+     ylabel={\small $E_c$ (\si{\joule})},
+     xmin=0,xmax=10.5,ymin=0,ymax=55,
+     axis lines=left,
+     xtick={0,2,4,6,8,10},ytick={0,10,20,30,40,50},
+     tick label style={font=\footnotesize},
+     label style={font=\footnotesize},
+     domain=0:10,samples=60,
+  ]
+    \addplot[vxc,line width=1.3pt]{0.5*x^2};
+    \node[vxc] at (axis cs:4.3,31){\small $E_c=\tfrac12 m v^2\ (m=\SI{1}{\kilogram})$};
+    % marqueurs v et 3v
+    \draw[proj] (axis cs:3,0) -- (axis cs:3,4.5);
+    \draw[proj] (axis cs:3,4.5) -- (axis cs:0,4.5) node[left,black]{\small $E_c$};
+    \draw[proj] (axis cs:9,0) -- (axis cs:9,40.5);
+    \draw[proj] (axis cs:9,40.5) -- (axis cs:0,40.5) node[left,black]{\small $9E_c$};
+    \fill[vyc] (axis cs:3,4.5) circle (2pt);
+    \fill[vyc] (axis cs:9,40.5) circle (2pt);
+  \end{axis}
+\end{tikzpicture}
+\caption{Croissance \emph{parabolique} de l'énergie cinétique avec la vitesse. En triplant la
+vitesse (de $v$ à $3v$), l'énergie cinétique est multipliée par $9$.}
+\label{fig:ec}
+\end{figure}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[un objet qui glisse le long d'un plan incliné sans frottement]
+Un objet de masse $m=\SI{10}{\kilogram}$ part du repos en haut ($A$) d'un plan incliné lisse (sans
+frottement) faisant un angle $\beta=\ang{30}$ avec l'horizontale. Il glisse jusqu'en bas ($B$). La
+longueur du plan est $AB=\SI{100}{\metre}$. On prend $g=\SI{10}{\metre\per\second\squared}$.
+Cherchons (a) le travail du poids, et (b) la vitesse atteinte en $B$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82]
+  % triangle du plan incliné
+  \coordinate (A) at (0,3.0);
+  \coordinate (B) at (5.2,0);
+  \coordinate (C) at (0,0);
+  \draw[fill=primary!8,draw=black!70,line width=0.9pt] (A) -- (B) -- (C) -- cycle;
+  % hachures du sol
+  \foreach \x in {0,0.4,...,5.0} \draw[black!45] (\x,0) -- (\x-0.2,-0.22);
+  % angle beta
+  \draw[->,>=Stealth,black!70] (1.0,0) arc (180:150:1.0);
+  \node at (1.35,0.28){\small $\beta=\ang{30}$};
+  % objet en A (posé sur la pente, près du sommet)
+  \coordinate (OA) at (0.40,2.73);
+  \draw[fill=vyc!25,draw=black!70,rotate around={-30:(OA)}]
+        ($(OA)+(-0.26,0)$) rectangle ($(OA)+(0.26,0.42)$);
+  \node[above] at (0,3.16){\small\textbf{A} ($v_A=0$)};
+  % objet en B
+  \draw[fill=vxc!25,draw=black!70] ($(B)+(-0.55,0.0)$) rectangle ($(B)+(0.0,0.45)$);
+  \node[below right] at (B){\small\textbf{B} ($v_B=?$)};
+  % poids en milieu
+  \coordinate (M) at (2.6,1.5);
+  \draw[Gvec] (M) -- ++(0,-1.3) node[right,black]{\small $\vv G$};
+  % composante le long du plan
+  \draw[Ffvec] (M) -- ++({-1.1*cos 30},{-1.1*sin 30}) node[below,black]{\small $G_x$};
+  % hauteur h
+  \draw[<->,black!55,dashed] (-0.45,0) -- (-0.45,3.0) node[midway,left]{\small $h$};
+  \node[align=left,black!70] at (3.9,2.4){\small $AB=\SI{100}{\metre}$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{(a) Travail du poids.} Le poids vaut $G=m g=10\times10=\SI{100}{\newton}$. Sa composante le
+long du plan est $G_x=G\sin\beta$. Le travail du poids sur le déplacement $AB$ est :
+\[
+W_{AB}(\vv G)=G_x\times AB=(G\sin\ang{30})\times AB=100\times 0{,}5\times 100=\SI{5000}{\joule}=\SI{5}{\kilo\joule}.
+\]
+On peut le retrouver autrement avec la hauteur de descente $h=AB\sin\ang{30}=100\times0{,}5=\SI{50}{\metre}$,
+ce qui donne $W=mgh=10\times10\times50=\SI{5000}{\joule}$ : les deux méthodes concordent.
+
+\textbf{(b) Vitesse en $B$ (théorème de l'énergie cinétique).} Le plan est lisse et la réaction
+normale ne travaille pas. La seule force motrice est le poids, donc :
+\[
+W_{AB}(\vv G)=E_c(B)-E_c(A)=\tfrac12 m v_B^2-0.
+\]
+On isole $v_B$ :
+\[
+\tfrac12 m v_B^2=\SI{5000}{\joule}\ \Rightarrow\ v_B^2=\frac{2\times5000}{10}=\SI{1000}{\metre\squared\per\second\squared}
+\ \Rightarrow\ v_B=\sqrt{1000}=10\sqrt{10}\approx\SI{31,6}{\metre\per\second}.
+\]
+
+\textbf{Remarque importante.} On peut aussi écrire $v_B^2=2gh$ : la vitesse finale ne dépend
+\emph{ni de la masse}, ni de l'angle, mais seulement de la hauteur de descente $h$. Deux objets de
+masses différentes lâchés de la même hauteur arrivent en bas à la \emph{même} vitesse (en l'absence
+de frottement).
+\end{exemple}
+
+\begin{exemple}[puissance moyenne développée pendant la descente]
+Reprenons l'objet précédent ($m=\SI{10}{\kilogram}$, $g=\SI{10}{\metre\per\second\squared}$, plan de
+$AB=\SI{100}{\metre}$ incliné à $\ang{30}$, $v_B=10\sqrt{10}\ \si{\metre\per\second}$). Quelle est la
+puissance moyenne fournie par le poids pendant la descente ?
+
+\smallskip
+\textbf{Étape 1 — durée de la descente.} L'accélération le long du plan est
+$a=g\sin\ang{30}=10\times0{,}5=\SI{5}{\metre\per\second\squared}$. Partant du repos, $v_B=a\,t$, d'où :
+\[
+t=\frac{v_B}{a}=\frac{10\sqrt{10}}{5}=2\sqrt{10}\approx\SI{6,32}{\second}.
+\]
+\textbf{Étape 2 — puissance moyenne.} On connaît déjà $W_{AB}(\vv G)=\SI{5000}{\joule}$, donc :
+\[
+P=\frac{W_{AB}(\vv G)}{t}=\frac{5000}{2\sqrt{10}}=\frac{2500}{\sqrt{10}}=250\sqrt{10}\approx\SI{790}{\watt}.
+\]
+
+\textbf{Conclusion.} \boxed{P=250\sqrt{10}\ \si{\watt}\approx\SI{0,79}{\kilo\watt}}. La même énergie
+(\SI{5}{\kilo\joule}) délivrée en un temps plus court correspondrait à une puissance plus grande :
+on retrouve le lien étroit entre puissance et rapidité.
+\end{exemple}
+
+% =====================================================================
+\section{L'énergie potentielle de pesanteur}
+% =====================================================================
+\subsection{Définition et expression}
+
+Un objet peut aussi stocker de l'énergie \emph{grâce à sa position} : c'est l'énergie potentielle.
+Soulever un objet, c'est lui fournir un travail qu'il pourra \emph{restituer} plus tard en
+retombant.
+
+\begin{definition}[énergie potentielle de pesanteur]
+L'\textbf{énergie potentielle de pesanteur} (ou gravifique) est l'énergie qu'un corps possède du
+fait de sa \emph{position en hauteur} dans un champ de pesanteur. Un objet soulevé de la hauteur $h$
+stocke une énergie potentielle égale au travail qu'il a fallu fournir pour le soulever contre la
+force d'attraction terrestre.
+\end{definition}
+
+Pour élever un solide de masse $m$ de $A$ vers $B$, on doit exercer une force exactement opposée au
+poids ($\vv F=-\vv G$). Le travail requis vaut :
+\[
+W_{AB}(\vv F)=W_{AB}(-\vv G)=G\times h=mg\times(h_B-h_A).
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % sol
+  \draw[black!70,line width=0.9pt] (-0.5,0) -- (5.5,0);
+  \foreach \x in {-0.3,0.1,...,5.3} \draw[black!45] (\x,0) -- (\x-0.2,-0.22);
+  % niveau A
+  \draw[proj] (-0.3,1.0) -- (4.8,1.0);
+  \node[left,black!75] at (-0.3,1.0){\small $h_A$};
+  % niveau B
+  \draw[proj] (-0.3,3.3) -- (4.8,3.3);
+  \node[left,black!75] at (-0.3,3.3){\small $h_B$};
+  % objet en A
+  \draw[fill=primary!15,draw=black!70] (1.3,1.0) rectangle (2.1,1.7);
+  \node at (1.7,1.35){\small $m$};
+  \node[below right] at (2.1,1.05){\small\textbf{A}};
+  % objet en B
+  \draw[fill=primary!15,draw=black!70] (1.3,3.3) rectangle (2.1,4.0);
+  \node at (1.7,3.65){\small $m$};
+  \node[below right] at (2.1,3.35){\small\textbf{B}};
+  % force F (vers le haut) et poids G
+  \draw[Fvec] (3.0,1.7) -- (3.0,3.0) node[midway,right]{\small $\vv F=-\vv G$};
+  \draw[Gvec] (3.0,1.7) -- (3.0,0.4) node[midway,right]{\small $\vv G$};
+  % hauteur h
+  \draw[<->,black!60] (4.4,1.0) -- (4.4,3.3) node[midway,right]{\small $h=h_B-h_A$};
+\end{tikzpicture}
+\caption{Élever un solide de $A$ à $B$ exige un travail $W=mg\,h$, qui se retrouve stocké sous forme
+d'énergie potentielle de pesanteur.}
+\label{fig:ep}
+\end{figure}
+
+\begin{formule}[énergie potentielle de pesanteur]
+\[
+\boxed{\;E_p=mgh\;}
+\]
+\begin{ou}
+  \item $E_p$ : énergie potentielle de pesanteur, en \textbf{joules} (\si{\joule}) ;
+  \item $m$ : masse du corps, en \textbf{kilogrammes} (\si{\kilogram}) ;
+  \item $g$ : intensité de la pesanteur, $g=\SI{9,81}{\metre\per\second\squared}$ (souvent arrondie
+        à $\SI{10}{\metre\per\second\squared}$) ;
+  \item $h$ : hauteur (altitude) du corps au-dessus d'un niveau de référence, en \textbf{mètres} (\si{\metre}).
+\end{ou}
+\end{formule}
+
+\begin{attention}[choix de l'origine des altitudes]
+$E_p$ dépend du \emph{niveau de référence} choisi pour $h$ (le « zéro » d'altitude est arbitraire).
+Seule la \emph{variation} $\Delta E_p=mg(h_B-h_A)$ a un sens physique absolu : c'est elle qui compte
+dans les bilans d'énergie. On choisit en général $E_p=0$ au point le plus bas du mouvement.
+\end{attention}
+
+\subsection{Le théorème de l'énergie potentielle}
+
+\begin{theoreme}[théorème de l'énergie potentielle]
+Le travail de la force de pesanteur entre $A$ et $B$ est égal à l'\textbf{opposé} de la variation de
+l'énergie potentielle :
+\[
+\boxed{\;W_{AB}(\vv G)=-\,\Delta E_p=-\bigl(E_p(B)-E_p(A)\bigr)\;}
+\]
+Autrement dit : quand le corps \emph{descend}, son énergie potentielle diminue ($\Delta E_p<0$) et
+le poids fournit un travail \emph{moteur} ($W>0$) ; quand il \emph{monte}, son énergie potentielle
+augmente et le poids fournit un travail \emph{résistant} ($W<0$).
+\end{theoreme}
+
+\subsection{Exemple détaillé}
+
+\begin{exemple}[soulever un sac jusqu'au premier étage]
+On soulève un sac de masse $m=\SI{50}{\kilogram}$ du rez-de-chaussée jusqu'au premier étage, soit
+une hauteur $h=\SI{6}{\metre}$. On prend $g=\SI{10}{\metre\per\second\squared}$. Quel travail
+faut-il fournir, et quelle énergie potentielle le sac a-t-il alors stockée ?
+
+\smallskip
+\textbf{Calcul.} Le travail requis est égal à la variation d'énergie potentielle :
+\[
+W=\Delta E_p=mgh=50\times10\times6=\SI{3000}{\joule}=\SI{3}{\kilo\joule}.
+\]
+
+\textbf{Attention au piège des unités.} On pourrait être tenté d'annoncer « \SI{3}{\joule} » par
+simple distraction (en lisant le \og 3 \fg{} du résultat sans le préfixe \emph{kilo}). Le bon
+résultat est \boxed{\SI{3000}{\joule}=\SI{3}{\kilo\joule}}, soit \emph{mille fois} plus. Cette énergie de
+\SI{3}{\kilo\joule} est maintenant \emph{stockée} dans le sac : s'il retombait, le poids fournirait à
+nouveau \SI{3}{\kilo\joule}, qui se transformeraient intégralement en énergie cinétique (en
+l'absence de frottement).
+\end{exemple}
+
+% =====================================================================
+\section{L'énergie mécanique et sa conservation}
+% =====================================================================
+\subsection{Définition}
+
+\begin{definition}[énergie mécanique]
+L'\textbf{énergie mécanique} $E_m$ d'un système est la \emph{somme} de son énergie cinétique $E_c$
+et de son énergie potentielle $E_p$ :
+\[
+E_m=E_c+E_p .
+\]
+Elle représente le « capital » d'énergie mécanique total du corps, à la fois sous forme de mouvement
+($E_c$) et sous forme de position ($E_p$).
+\end{definition}
+
+\subsection{La conservation de l'énergie mécanique}
+
+\begin{theoreme}[conservation de l'énergie mécanique]
+Pour un \textbf{système isolé} (soumis aux seules forces conservatives, c'est-à-dire \emph{sans
+frottement}), l'énergie mécanique \textbf{reste constante} en tout point de la trajectoire :
+\[
+\boxed{\;E_m=E_c+E_p=\text{Cte}\quad(\si{\joule})\;}
+\]
+Il y a alors \emph{transformation continuelle} d'énergie cinétique en énergie potentielle et
+\emph{vice versa}, mais leur somme ne change pas.
+\end{theoreme}
+
+\begin{ou}
+  \item $E_m$ : énergie mécanique, en \textbf{joules} (\si{\joule}), constante au cours du mouvement ;
+  \item $E_c=\tfrac12 m v^2$ : énergie cinétique (varie avec la vitesse), en \si{\joule} ;
+  \item $E_p=mgh$ : énergie potentielle (varie avec l'altitude), en \si{\joule}.
+\end{ou}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+% --- piste : descente puis remontée (cuvette) ---
+\begin{scope}
+  \draw[primary,line width=1.4pt] plot[domain=-2.8:2.8,smooth] (\x,{0.34*\x*\x});
+  \foreach \x in {-2.8,-2.4,...,2.6} \draw[black!35] (\x,{0.34*\x*\x}) -- ++(-0.16,-0.16);
+  % point haut A
+  \shade[ball color=vyc] (-2.6,2.30) circle (0.16);
+  \node[vyc,left] at (-2.75,2.45){\small $A$};
+  % point bas O
+  \shade[ball color=vxc] (0,0.05) circle (0.16);
+  \node[vxc,below] at (0,-0.1){\small $O$};
+  % vitesse en bas
+  \draw[vvec] (0.25,0.05) -- (1.05,0.05) node[right]{\small $\vv v$};
+  % hauteur h
+  \draw[<->,black!55,dashed] (-3.2,0.0) -- (-3.2,2.30) node[midway,left]{\small $h$};
+  \draw[proj] (-3.2,0) -- (0,0);
+  \draw[proj] (-3.2,2.30) -- (-2.6,2.30);
+\end{scope}
+% --- diagramme en barres de l'énergie ---
+\begin{scope}[shift={(6.6,0)}]
+  \def\H{2.6}
+  \draw[axe] (0,0) -- (0,3.1) node[above]{\small $E$ (\si{\joule})};
+  \draw[axe] (0,0) -- (5.6,0);
+  \foreach \i/\x/\labl in {0/0.8/A,1/2.6/milieu,2/4.4/O}{
+     % Ep (vyc) en bas, Ec (vxc) au dessus, total = H
+  }
+  % barre A : tout Ep
+  \fill[vyc!70] (0.45,0) rectangle (1.15,\H);
+  \node[below] at (0.8,0){\small $A$};
+  % barre milieu : moitié-moitié
+  \fill[vyc!70] (2.25,0) rectangle (2.95,{0.5*\H});
+  \fill[vxc!70] (2.25,{0.5*\H}) rectangle (2.95,\H);
+  \node[below] at (2.6,0){\small milieu};
+  % barre O : tout Ec
+  \fill[vxc!70] (4.05,0) rectangle (4.75,\H);
+  \node[below] at (4.4,0){\small $O$};
+  % ligne Em constante
+  \draw[enrjc,line width=1pt,dashed] (0.1,\H) -- (5.4,\H);
+  \node[enrjc,right] at (4.8,\H+0.0){\small $E_m$};
+  % légende
+  \fill[vyc!70] (0.2,-1.1) rectangle (0.55,-0.8); \node[right] at (0.55,-0.95){\small $E_p=mgh$};
+  \fill[vxc!70] (2.9,-1.1) rectangle (3.25,-0.8); \node[right] at (3.25,-0.95){\small $E_c=\tfrac12 mv^2$};
+\end{scope}
+\end{tikzpicture}
+\caption{Conservation de l'énergie mécanique. À gauche, une bille descend dans une cuvette lisse.
+À droite, le diagramme d'énergie : en $A$ tout est potentiel, en $O$ tout est cinétique, et la somme
+$E_m=E_c+E_p$ (pointillés) reste \emph{constante}.}
+\label{fig:em}
+\end{figure}
+
+\subsection{Exemples détaillés}
+
+\begin{exemple}[une bille qui remonte une pente : hauteur indépendante de l'inclinaison]
+Une bille glisse sans frottement sur un plan horizontal à la vitesse $v_0$, puis aborde une pente et
+remonte jusqu'à un point $B$ où sa vitesse s'annule ($v_B=0$). Jusqu'à quelle hauteur $h$ monte-t-elle,
+et cette hauteur dépend-elle de l'inclinaison de la pente ?
+
+\smallskip
+\textbf{Conservation de l'énergie.} Sans frottement, $E_m$ se conserve. En prenant $E_p=0$ sur le
+plan horizontal :
+\[
+\underbrace{E_c(\text{bas})+E_p(\text{bas})}_{\frac12 m v_0^2+0}
+=\underbrace{E_c(B)+E_p(B)}_{0+mgh}.
+\]
+On en tire :
+\[
+\tfrac12 m v_0^2=mgh\quad\Longrightarrow\quad \boxed{\,h=\dfrac{v_0^2}{2g}\,}.
+\]
+
+\textbf{Interprétation.} La hauteur atteinte $h=\dfrac{v_0^2}{2g}$ \emph{ne dépend ni de la masse}
+$m$ (elle se simplifie), \emph{ni de l'angle} de la pente : elle n'est fixée que par la vitesse
+initiale $v_0$ et par $g$. Si l'on rend la pente plus raide, la bille monte sur une distance plus
+courte \emph{le long de la pente}, mais atteint exactement la \emph{même hauteur}. À l'inverse, sur
+une pente nulle ($\beta=\ang{0}$), la bille ne s'arrête jamais (principe d'inertie) : aucune montée,
+donc aucune conversion d'énergie cinétique en potentielle.
+\end{exemple}
+
+\begin{exemple}[lancer vertical : hauteur maximale d'un objet]
+On lance verticalement vers le haut un objet de masse $m=\SI{50}{\gram}=\SI{0,05}{\kilogram}$ avec une
+vitesse initiale $v_0=\SI{10}{\metre\per\second}$. On néglige la résistance de l'air et on prend
+$g=\SI{10}{\metre\per\second\squared}$. Quelle hauteur maximale $h_{\max}$ atteint-il ?
+
+\smallskip
+\textbf{Conservation de l'énergie.} Au point le plus haut, la vitesse est nulle ($v=0$), donc toute
+l'énergie cinétique de départ s'est transformée en énergie potentielle :
+\[
+\tfrac12 m v_0^2=mg\,h_{\max}\quad\Longrightarrow\quad h_{\max}=\frac{v_0^2}{2g}=\frac{10^2}{2\times10}=\frac{100}{20}=\SI{5}{\metre}.
+\]
+
+\textbf{Conclusion.} \boxed{h_{\max}=\SI{5}{\metre}}. Comme pour la bille, la masse n'intervient pas :
+un objet de \SI{50}{\gram} et un objet de \SI{5}{\kilogram} lancés à \SI{10}{\metre\per\second}
+montent à la même hauteur (sans frottement). Vérifions la cohérence des énergies :
+$E_c$ initiale $=\tfrac12\times0{,}05\times10^2=\SI{2,5}{\joule}$, et
+$E_p$ finale $=0{,}05\times10\times5=\SI{2,5}{\joule}$ : l'énergie mécanique
+$E_m=\SI{2,5}{\joule}$ est bien conservée.
+\end{exemple}
+
+% =====================================================================
+\section{L'énergie potentielle élastique}
+% =====================================================================
+\subsection{Le ressort : période et fréquence}
+
+\begin{definition}[énergie potentielle élastique]
+L'\textbf{énergie potentielle élastique} est l'énergie stockée dans un système élastique (un
+ressort, par exemple) lorsqu'on l'\emph{écarte de sa position d'équilibre}. Comprimé ou étiré, le
+ressort « emmagasine » de l'énergie qu'il restitue en revenant à sa position initiale.
+\end{definition}
+
+Considérons un ressort vertical de constante de raideur $k$, fixé en haut, auquel on attache une
+masse $m$ (figure~\ref{fig:ressort}). Si on l'écarte de sa position d'équilibre puis qu'on le
+relâche, l'ensemble \emph{oscille}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % support
+  \draw[black!70,line width=1pt] (-1.2,5) -- (1.2,5);
+  \foreach \x in {-1.0,-0.6,...,1.0} \draw[black!50] (\x,5) -- (\x-0.25,5.25);
+  % ressort 1 (au repos) à gauche
+  \draw[primary,line width=1.0pt] (-0.7,5) -- (-0.7,4.6)
+     decorate[decoration={coil,aspect=0.6,segment length=4.5pt,amplitude=4.5pt}]
+     {-- (-0.7,2.7)} -- (-0.7,2.4);
+  \draw[proj] (-1.3,2.4) -- (0.9,2.4);
+  \node[right,black!75] at (0.95,2.4){\small $t_0=\SI{0}{\second},\ x_0=\SI{0}{\metre}$};
+  % ressort 2 (étiré) à droite
+  \draw[vyc,line width=1.0pt] (0.5,5) -- (0.5,4.6)
+     decorate[decoration={coil,aspect=0.6,segment length=4.5pt,amplitude=4.5pt}]
+     {-- (0.5,1.7)} -- (0.5,1.3);
+  \shade[ball color=vxc] (0.5,1.05) circle (0.22);
+  \node[white] at (0.5,1.05){\small $m$};
+  \draw[proj] (-0.1,1.3) -- (0.9,1.3);
+  \node[right,black!75] at (0.95,1.3){\small $t,\ x$};
+  % flèche élongation x
+  \draw[<->,black!70] (-0.15,2.4) -- (-0.15,1.3) node[midway,left]{\small $x$};
+\end{tikzpicture}
+\caption{Ressort vertical de raideur $k$. À gauche, position d'équilibre ($x_0=0$). À droite, le
+ressort est étiré d'une élongation $x$ par la masse $m$ : il stocke alors une énergie potentielle
+élastique.}
+\label{fig:ressort}
+\end{figure}
+
+\begin{formule}[période et fréquence des oscillations]
+\[
+\boxed{\;T=2\pi\sqrt{\dfrac{m}{k}}\;}\qquad\qquad
+\boxed{\;f=\dfrac{1}{T}=\dfrac{1}{2\pi}\sqrt{\dfrac{k}{m}}\;}
+\]
+\begin{ou}
+  \item $T$ : période (durée d'une oscillation complète), en \textbf{secondes} (\si{\second}) ;
+  \item $f$ : fréquence (nombre d'oscillations par seconde), en \textbf{hertz} (\si{\hertz}), avec $\SI{1}{\hertz}=\si{\per\second}$ ;
+  \item $m$ : masse attachée, en \textbf{kilogrammes} (\si{\kilogram}) ;
+  \item $k$ : constante de raideur du ressort, en \textbf{newtons par mètre} (\si{\newton\per\metre}).
+\end{ou}
+Plus le ressort est \emph{raide} ($k$ grand), plus il oscille \emph{vite} ($T$ petit, $f$ grande) ;
+plus la masse est \emph{lourde} ($m$ grand), plus il oscille \emph{lentement}.
+\end{formule}
+
+\subsection{L'expression de l'énergie élastique}
+
+À l'instant $t$, pour un ressort non amorti écarté d'une élongation $x$, l'énergie potentielle
+associée à la force de rappel est :
+
+\begin{formule}[énergie potentielle élastique]
+\[
+\boxed{\;E_p=\tfrac12\,k\,x^2\;}
+\]
+\begin{ou}
+  \item $E_p$ : énergie potentielle élastique, en \textbf{joules} (\si{\joule}) ;
+  \item $k$ : constante de raideur du ressort, en \textbf{newtons par mètre} (\si{\newton\per\metre}) ;
+  \item $x$ : élongation (écart à la position d'équilibre), en \textbf{mètres} (\si{\metre}).
+\end{ou}
+Comme pour l'énergie cinétique, la dépendance est \emph{en carré} ($x^2$) : doubler l'élongation
+\emph{quadruple} l'énergie élastique stockée.
+\end{formule}
+
+\begin{remarque}[le travail comme aire du graphe $F(x)$]
+La force de rappel d'un ressort vaut $F=k\,x$ (loi de Hooke) : elle croît \emph{linéairement} avec
+l'élongation. Le travail fourni pour étirer le ressort de $0$ à $x$ est donc l'aire du triangle sous
+la droite $F(x)$ : \(W=\tfrac12\times x\times(kx)=\tfrac12 k x^2=E_p.\) On retrouve bien l'expression
+de l'énergie élastique (figure~\ref{fig:hooke}). Sans frottement, l'énergie mécanique
+$E_m=E_c+E_p=\text{Cte}$ se conserve sur une période.
+\end{remarque}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \begin{axis}[
+     width=9.6cm,height=5.0cm,
+     xlabel={\small élongation $\Delta x$ (\si{\centi\metre})},
+     ylabel={\small force $F$ (\si{\newton})},
+     xmin=0,xmax=11,ymin=0,ymax=3,
+     axis lines=left,
+     xtick={0,2,4,6,8,10},ytick={0,0.5,1,1.5,2,2.5},
+     tick label style={font=\footnotesize},
+     label style={font=\footnotesize},
+  ]
+    % droite de Hooke F = k x avec k = 25 N/m => à x=10cm=0.1m, F=2.5 N
+    \addplot[vyc,line width=1.3pt,domain=0:10,samples=2]{0.25*x};
+    \node[vyc] at (axis cs:6.5,2.45){\small $F=k\,x$};
+    % aire triangle sous la courbe jusqu'à 10 cm
+    \addplot[draw=excol!60,pattern=north east lines,pattern color=excol!35]
+       coordinates {(0,0) (10,0) (10,2.5)} -- cycle;
+    \node[excol] at (axis cs:7.3,0.85){\small $E_p=\tfrac12 k x^2$};
+    \draw[proj] (axis cs:10,0) -- (axis cs:10,2.5);
+  \end{axis}
+\end{tikzpicture}
+\caption{Force de rappel d'un ressort en fonction de l'élongation. L'énergie potentielle élastique
+est l'\emph{aire du triangle} sous la droite $F=kx$.}
+\label{fig:hooke}
+\end{figure}
+
+\subsection{Exemple détaillé}
+
+\begin{exemple}[énergie stockée par un ressort étiré]
+On étire un ressort à partir de sa position détendue ($x_0=0$). La mesure de la force $F$ en fonction
+de l'élongation $\Delta x$ donne une droite : $F=\SI{2,5}{\newton}$ lorsque $\Delta x=\SI{10}{\centi\metre}$
+(figure~\ref{fig:hooke}). Quelle est l'énergie potentielle élastique emmagasinée à $x=\SI{10}{\centi\metre}$ ?
+
+\smallskip
+\textbf{Étape 1 — constante de raideur.} La pente de la droite $F=kx$ donne $k$. Avec
+$x=\SI{10}{\centi\metre}=\SI{0,10}{\metre}$ :
+\[
+k=\frac{F}{x}=\frac{2{,}5}{0{,}10}=\SI{25}{\newton\per\metre}.
+\]
+\textbf{Étape 2 — énergie élastique.}
+\[
+E_p=\tfrac12 k x^2=\tfrac12\times25\times(0{,}10)^2=\tfrac12\times25\times0{,}01=\SI{0,125}{\joule}.
+\]
+\textbf{Vérification par l'aire.} L'aire du triangle sous la droite vaut
+$\tfrac12\times\text{base}\times\text{hauteur}=\tfrac12\times\SI{0,10}{\metre}\times\SI{2,5}{\newton}=\SI{0,125}{\joule}$ :
+on retrouve le même résultat.
+
+\textbf{Conclusion.} \boxed{E_p=\SI{0,125}{\joule}}. Notons que si l'on doublait l'élongation
+(\SI{20}{\centi\metre}), l'énergie ne doublerait pas mais \emph{quadruplerait} (car $E_p\propto x^2$),
+atteignant \SI{0,5}{\joule}. Lorsqu'on relâche le ressort, cette énergie est restituée et se convertit
+en énergie cinétique de la masse.
+\end{exemple}
+
+% =====================================================================
+\section{La quantité de mouvement}
+% =====================================================================
+\subsection{Définition}
+
+À côté de l'énergie, une autre grandeur caractérise « l'élan » d'un corps en mouvement : la quantité
+de mouvement. Contrairement à l'énergie, c'est une grandeur \emph{vectorielle}.
+
+\begin{definition}[quantité de mouvement]
+La \textbf{quantité de mouvement} d'un corps est le produit de sa \emph{masse} par son \emph{vecteur
+vitesse}. Dans un sens choisi du mouvement :
+\[
+\text{quantité de mouvement}=\text{masse}\times\text{vitesse}.
+\]
+\end{definition}
+
+\begin{formule}[quantité de mouvement]
+\[
+\boxed{\;\vv p=m\,\vv v\;}
+\]
+\begin{ou}
+  \item $\vv p$ : quantité de mouvement, en \textbf{kilogramme-mètre par seconde} (\si{\kilogram\metre\per\second}) ;
+  \item $m$ : masse du corps, en \textbf{kilogrammes} (\si{\kilogram}) ;
+  \item $\vv v$ : vecteur vitesse, en \textbf{mètres par seconde} (\si{\metre\per\second}).
+\end{ou}
+$\vv p$ a la \emph{même direction et le même sens} que la vitesse $\vv v$. Plus un corps est massif
+\emph{et} rapide, plus sa quantité de mouvement est grande, et plus il est \og difficile à arrêter \fg.
+\end{formule}
+
+\subsection{Exemple détaillé}
+
+\begin{exemple}[une voiture et un camion à la même vitesse]
+Une voiture de masse $m_1=\SI{2000}{\kilogram}$ et un camion de masse $m_2=\SI{4}{\tonne}=\SI{4000}{\kilogram}$
+roulent à la \emph{même} vitesse $v=\SI{80}{\kilo\metre\per\hour}$. Comparons leurs quantités de
+mouvement.
+
+\smallskip
+\textbf{Étape 1 — vitesse en \si{\metre\per\second}.}
+\[
+v=\frac{80}{3{,}6}\approx\SI{22,2}{\metre\per\second}.
+\]
+\textbf{Étape 2 — quantités de mouvement.}
+\[
+p_1=m_1 v=2000\times22{,}2\approx\SI{44400}{\kilogram\metre\per\second},\qquad
+p_2=m_2 v=4000\times22{,}2\approx\SI{88800}{\kilogram\metre\per\second}.
+\]
+\textbf{Conclusion.} Le camion possède une quantité de mouvement \boxed{\text{deux fois plus grande}}
+que celle de la voiture ($p_2=2\,p_1$), car il a la même vitesse mais une masse double. C'est donc
+\emph{le camion} qui sera le plus difficile à arrêter : à vitesse égale, il faut une force plus grande
+(ou une distance de freinage plus longue) pour annuler une quantité de mouvement plus grande. De plus,
+si l'on augmente la vitesse d'un véhicule, sa quantité de mouvement augmente proportionnellement, et
+son freinage devient d'autant plus difficile.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse}
+% =====================================================================
+\subsection{Carte mentale de la fiche}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+   every node/.style={font=\small},
+   root/.style={rectangle,rounded corners=5pt,fill=primary,text=white,font=\bfseries,
+                inner sep=6pt,align=center},
+   br/.style={rectangle,rounded corners=4pt,draw=#1,fill=#1!8,inner sep=5pt,align=center,
+              text=black},
+   lk/.style={-Stealth,thick,black!55},
+]
+  \node[root] (R) at (0,0) {Travail, énergie\\ et puissance};
+  \node[br=defcol] (W) at (-5.2,2.0) {\textbf{Travail}\\ $W=F\,AB\cos\alpha$\\ (\si{\joule})};
+  \node[br=methcol] (P) at (-5.2,-2.0) {\textbf{Puissance}\\ $P=\dfrac{W}{\Delta t}=F v\cos\alpha$\\ (\si{\watt})};
+  \node[br=vxc] (Ec) at (0,2.6) {\textbf{Én. cinétique}\\ $E_c=\tfrac12 m v^2$};
+  \node[br=vyc] (Ep) at (5.2,1.4) {\textbf{Én. pot. pesanteur}\\ $E_p=mgh$};
+  \node[br=excol] (Ee) at (5.2,-1.4) {\textbf{Én. pot. élastique}\\ $E_p=\tfrac12 k x^2$};
+  \node[br=enrjc] (Em) at (0,-2.6) {\textbf{Én. mécanique}\\ $E_m=E_c+E_p=$ Cte};
+  \draw[lk] (R) -- (W);
+  \draw[lk] (R) -- (P);
+  \draw[lk] (R) -- (Ec);
+  \draw[lk] (R) -- (Ep);
+  \draw[lk] (R) -- (Ee);
+  \draw[lk] (R) -- (Em);
+  \draw[lk,dashed] (W) -- (Ec) node[midway,above,black!60,font=\scriptsize]{$W=\Delta E_c$};
+  \draw[lk,dashed] (Ec) -- (Em);
+  \draw[lk,dashed] (Ep) -- (Em);
+  \draw[lk,dashed] (Ee) -- (Em);
+\end{tikzpicture}
+\caption{Vue d'ensemble des grandeurs de la fiche et de leurs relations.}
+\label{fig:carte}
+\end{figure}
+
+\subsection{Tableau récapitulatif}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}m{3.5cm} >{\centering\arraybackslash}m{5.0cm} >{\raggedright\arraybackslash}m{5.2cm}}
+\toprule
+\rowcolor{primary!15}
+\textbf{Grandeur} & \textbf{Formule} & \textbf{Unités et remarques} \\
+\midrule
+Travail d'une force & $W_{AB}=F\,AB\cos\alpha$ & \si{\joule} ; signe donné par $\cos\alpha$ \\
+\rowcolor{black!4}
+Puissance & $P=\dfrac{W}{\Delta t}=F v\cos\alpha$ & \si{\watt} $=\si{\joule\per\second}$ \\
+Énergie cinétique & $E_c=\tfrac12 m v^2$ & \si{\joule} ; varie comme $v^2$ \\
+\rowcolor{black!4}
+Th. énergie cinétique & $\sum W=E_c(B)-E_c(A)$ & relie travail et variation de vitesse \\
+Én. pot. de pesanteur & $E_p=mgh$ & \si{\joule} ; $g=\SI{9,81}{\metre\per\second\squared}$ \\
+\rowcolor{black!4}
+Th. énergie potentielle & $W(\vv G)=-\Delta E_p$ & le poids est une force conservative \\
+Én. pot. élastique & $E_p=\tfrac12 k x^2$ & \si{\joule} ; $k$ en \si{\newton\per\metre} \\
+\rowcolor{black!4}
+Énergie mécanique & $E_m=E_c+E_p=$ Cte & conservée si pas de frottement \\
+Période / fréquence (ressort) & $T=2\pi\sqrt{\tfrac{m}{k}}$ ; $f=\tfrac1T$ & \si{\second} ; \si{\hertz} \\
+\rowcolor{black!4}
+Quantité de mouvement & $\vv p=m\vv v$ & \si{\kilogram\metre\per\second} ; vectorielle \\
+\bottomrule
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1}
+
+\subsection{Formulaire et points-clés à retenir}
+
+\begin{tcolorbox}[boxbase,colback=primary!4,colframe=primary,
+   title={\textsc{L'essentiel en six points}}]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=3pt]
+  \item \textbf{Travail} : $W=F\,AB\cos\alpha$. Le signe du travail (moteur, nul, résistant) est
+        donné par $\cos\alpha$. Une force \emph{perpendiculaire} au déplacement (normale, centripète,
+        poids à l'horizontale) ne travaille pas ; le \emph{frottement} travaille négativement.
+  \item \textbf{Puissance} : $P=W/\Delta t$. À travail égal, le système le plus puissant est le plus
+        \emph{rapide}. Pour une vitesse connue, $P=Fv\cos\alpha$.
+  \item \textbf{Théorème de l'énergie cinétique} : $\sum W=\Delta E_c=\tfrac12 m v_B^2-\tfrac12 m v_A^2$.
+        Comme $E_c\propto v^2$, tripler la vitesse multiplie $E_c$ par $9$.
+  \item \textbf{Énergie potentielle} : de pesanteur $E_p=mgh$ ; élastique $E_p=\tfrac12 k x^2$. Le
+        poids vérifie $W(\vv G)=-\Delta E_p$.
+  \item \textbf{Conservation de l'énergie mécanique} : sans frottement, $E_m=E_c+E_p=$ Cte. Les
+        hauteurs et vitesses se déduisent l'une de l'autre \emph{sans connaître la trajectoire}, et
+        \emph{indépendamment de la masse} (ex. : $h=\tfrac{v^2}{2g}$).
+  \item \textbf{Quantité de mouvement} : $\vv p=m\vv v$ (vectorielle, en \si{\kilogram\metre\per\second}).
+        Plus un corps est massif et rapide, plus il est difficile à arrêter.
+\end{enumerate}
+\end{tcolorbox}
+
+\vfill
+{\small\color{black!55}\itshape Fin de la Fiche 5 — Travail, énergie et puissance. Cours rédigé
+d'après l'extrait du livre (lu par OCR) ; toutes les figures ont été tracées en TikZ.}
+
+\end{document}

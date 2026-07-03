@@ -1,0 +1,1128 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 1
+%  Rappel d'outils et concepts de base en algèbre
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités & nombres ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{textcomp}            % symbole euro \texteuro
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (rose framboise = couleur des maths dans le livre)
+% =====================================================================
+\definecolor{primary}{RGB}{222,49,99}       % rose framboise
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}         % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}         % vert-bleu — théorèmes / propriétés
+\definecolor{formulacol}{RGB}{198,93,9}      % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}     % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}        % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}           % vert — exemples
+\definecolor{methcol}{RGB}{52,92,148}        % bleu profond — « comment faire »
+\definecolor{curveA}{RGB}{0,90,200}          % courbe bleue
+\definecolor{curveB}{RGB}{210,30,40}         % courbe rouge
+\definecolor{curveC}{RGB}{0,150,90}          % courbe verte
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété / Théorème}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Comment faire (méthode pas-à-pas) ----
+\newtcolorbox{commentfaire}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Outils de base en algèbre}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\euro}{\texteuro}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.4cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.7cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Rappel d'outils}\\[4pt]
+   {\LARGE\bfseries et concepts de base en algèbre}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,1}}
+
+\vspace{0.8cm}
+
+% --- Illustration de couverture : exponentielle et logarithme, symétriques par rapport à y=x ---
+\begin{tikzpicture}[scale=1.0]
+  \begin{axis}[width=10.5cm,height=6.4cm,axis lines=middle,
+      xmin=-3.2,xmax=3.6,ymin=-3.2,ymax=3.6,
+      xtick=\empty,ytick=\empty,clip=true,
+      xlabel={$x$},ylabel={$y$},every axis x label/.style={at={(ticklabel cs:1)},anchor=west},
+      every axis y label/.style={at={(ticklabel cs:1)},anchor=south}]
+    \addplot[curveA,line width=1.3pt,domain=-3:1.25,samples=80]{exp(x)};
+    \addplot[curveB,line width=1.3pt,domain=0.06:3.4,samples=80]{ln(x)};
+    \addplot[black!45,dashed,line width=0.8pt,domain=-3.1:3.4]{x};
+    \node[curveA] at (axis cs:1.35,3.0){$y=e^{x}$};
+    \node[curveB] at (axis cs:3.0,1.45){$y=\ln x$};
+    \node[black!55,font=\scriptsize] at (axis cs:2.5,3.0){$y=x$};
+  \end{axis}
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item lire et utiliser les \emph{ensembles de nombres} et leurs notations ($\N_0$, $\Z_0$, $\R_0$, $\R_0^+$) ;
+  \item manipuler sans erreur les \emph{puissances}, les \emph{racines} et les \emph{exposants} (entiers, négatifs, fractionnaires) ;
+  \item définir et appliquer les \emph{logarithmes} (décimal, népérien, base quelconque) et résoudre des équations exponentielles et logarithmiques ;
+  \item \emph{factoriser} une expression (mise en évidence, produits remarquables, méthode de Horner) et résoudre équations et inéquations ;
+  \item \emph{résoudre des systèmes} à deux et trois inconnues (substitution, combinaison, pivot de Gauss).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 1 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Le langage de l'algèbre : ensembles et notations}
+% =====================================================================
+Avant tout calcul, il faut savoir \emph{dans quel ensemble} vivent les nombres que l'on manipule.
+Une grande partie des erreurs en algèbre vient d'un oubli de domaine : on prend la racine d'un
+nombre négatif, on divise par zéro, ou on applique un logarithme à un nombre négatif. Cette
+première section fixe le vocabulaire utilisé dans toute la fiche.
+
+\subsection{Les grands ensembles de nombres}
+
+\begin{definition}[les ensembles usuels]
+On emboîte les ensembles de nombres les uns dans les autres :
+\[ \N \subset \Z \subset \Q \subset \R. \]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item $\N=\{0,1,2,3,\dots\}$ : les \textbf{entiers naturels} ;
+  \item $\Z=\{\dots,-2,-1,0,1,2,\dots\}$ : les \textbf{entiers relatifs} (avec les négatifs) ;
+  \item $\Q=\bigl\{\tfrac{p}{q}\;:\;p\in\Z,\ q\in\Z,\ q\neq 0\bigr\}$ : les \textbf{rationnels} (fractions) ;
+  \item $\R$ : les \textbf{réels} (tous les points d'une droite, y compris $\sqrt2$, $\pi$, $e$\dots).
+\end{itemize}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \foreach \r/\c/\lab/\px in {3.4/primary/$\R$/3.05, 2.55/formulacol/$\Q$/2.25, 1.75/thmcol/$\Z$/1.5, 1.0/defcol/$\N$/0.0}{}
+  \draw[fill=primary!8,draw=primary,line width=1pt] (0,0) ellipse (3.6 and 2.4);
+  \draw[fill=formulacol!10,draw=formulacol,line width=1pt] (-0.4,0) ellipse (2.7 and 1.85);
+  \draw[fill=thmcol!12,draw=thmcol,line width=1pt] (-0.9,0) ellipse (1.85 and 1.3);
+  \draw[fill=defcol!14,draw=defcol,line width=1pt] (-1.35,0) ellipse (1.0 and 0.78);
+  \node[defcol,font=\bfseries] at (-1.35,0) {$\N$};
+  \node[thmcol,font=\bfseries] at (-0.1,0) {$\Z$};
+  \node[formulacol,font=\bfseries] at (1.25,0) {$\Q$};
+  \node[primary,font=\bfseries] at (2.85,0) {$\R$};
+  \node[font=\scriptsize,black!70] at (0.55,1.55) {$\sqrt2,\ \pi,\ e$ (irrationnels)};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Comment lire les notations $\N_0$, $\Z_0$, $\R_0$, $\R_0^+$}
+
+Le livre écrit par exemple : « Soit $a,b\in\R_0$, $m\in\Z_0$, $n\in\N_0$ et $c$ un réel strictement
+positif. » Ces indices et exposants \emph{restreignent} l'ensemble. Voici la clé de lecture.
+
+\begin{theoreme}[convention de notation des ensembles privés ou orientés]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item un \textbf{indice $0$} signifie « \emph{privé de} $0$ » : \quad
+        $\N_0=\N\setminus\{0\}=\{1,2,3,\dots\}$, \quad $\Z_0=\Z\setminus\{0\}$, \quad $\R_0=\R\setminus\{0\}$ ;
+  \item un \textbf{exposant $+$} signifie « \emph{positifs} » (au sens large, $\geq 0$) : \quad
+        $\R^{+}=[0,+\infty[$ ;
+  \item les deux ensemble, $\R_0^{+}$, désigne les \textbf{réels strictement positifs} : \quad
+        $\R_0^{+}=\,]0,+\infty[$.
+\end{itemize}
+\end{theoreme}
+
+\begin{remarque}
+Cette notation est typiquement utilisée dans l'enseignement belge. Retenez la logique :
+l'\emph{indice} $0$ enlève le zéro, l'\emph{exposant} de signe choisit le côté de la droite réelle.
+Ainsi $\R_0^{+}$ se lit « les réels, sans le zéro, du côté positif » $=\,]0,+\infty[$.
+\end{remarque}
+
+\begin{attention}[pourquoi ces restrictions sont vitales]
+Les restrictions ne sont pas de la décoration : elles garantissent que les opérations ont un sens.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item On ne divise jamais par $0$ : un dénominateur doit appartenir à $\R_0$.
+  \item Un logarithme $\log_a x$ n'existe que pour $x\in\R_0^{+}$ et une base $a\in\R_0^{+}\setminus\{1\}$.
+  \item Une racine carrée réelle $\sqrt{x}$ n'existe que pour $x\in\R^{+}$.
+\end{itemize}
+\end{attention}
+
+\begin{remarque}[la nature « sans unité » des objets algébriques]
+En algèbre pure, les lettres ($a$, $x$, $n$\dots) représentent des \emph{nombres} : ce sont des
+grandeurs \textbf{sans dimension}, donc \emph{sans unité physique}. Quand l'algèbre sert à modéliser
+une situation concrète (un prix, une longueur), l'unité provient du contexte (l'euro \euro{}, le mètre
+\si{\metre}), pas de l'algèbre elle-même. Dans chaque encadré « \textbf{où :} » ci-dessous, nous
+précisons donc surtout \emph{l'ensemble d'appartenance} de chaque symbole et ses \emph{contraintes}.
+\end{remarque}
+
+% =====================================================================
+\section{Puissances, racines et exposants}
+% =====================================================================
+La \textbf{puissance} est l'outil de calcul le plus fondamental : toute la suite (logarithmes,
+factorisation, équations) en dépend. Posons d'abord la définition, puis les règles, puis de
+nombreux exemples détaillés.
+
+\begin{definition}[puissance à exposant entier]
+Pour un réel $a$ et un entier $n\in\N_0$, la \textbf{puissance} $a^{n}$ est le produit de $n$ facteurs
+égaux à $a$ :
+\[ a^{n}=\underbrace{a\times a\times\cdots\times a}_{n\ \text{facteurs}}. \]
+Le nombre $a$ s'appelle la \textbf{base}, et $n$ l'\textbf{exposant}.
+\end{definition}
+
+\subsection{Les règles de calcul des exposants}
+
+\begin{formule}[règles fondamentales des puissances]
+Pour $a,b\in\R_0$ et $m,n\in\Z$ :
+\[ \boxed{\,a^{n}\times a^{m}=a^{n+m}\,}\quad
+   \boxed{\,\dfrac{a^{n}}{a^{m}}=a^{n-m}\,}\quad
+   \boxed{\,a^{n}\times b^{n}=(a\times b)^{n}\,}\quad
+   \boxed{\,\bigl(a^{n}\bigr)^{m}=a^{nm}\,} \]
+\begin{ou}
+  \item $a,b$ : les bases, nombres réels non nuls ($a,b\in\R_0$) ;
+  \item $n,m$ : les exposants, nombres entiers relatifs ($n,m\in\Z$) ;
+  \item le symbole « $\times$ » est le produit ; toutes ces quantités sont des nombres sans unité.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Lecture des règles.} Trois idées seulement à mémoriser :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item \emph{même base, on multiplie} $\Rightarrow$ on \textbf{additionne} les exposants ($a^n\times a^m=a^{n+m}$) ;
+  \item \emph{même base, on divise} $\Rightarrow$ on \textbf{soustrait} les exposants ($a^n/a^m=a^{n-m}$) ;
+  \item \emph{même exposant, bases différentes} $\Rightarrow$ on peut regrouper les bases ($a^n b^n=(ab)^n$) ;
+  \item une \emph{puissance de puissance} $\Rightarrow$ on \textbf{multiplie} les exposants ($(a^n)^m=a^{nm}$).
+\end{itemize}
+
+\begin{formule}[exposant nul, négatif et inverse]
+\[ \boxed{\,a^{0}=1\,}\ (a\neq 0);\qquad
+   \boxed{\,a^{-n}=\dfrac{1}{a^{n}}\,};\qquad
+   \boxed{\,a^{-m}\times b^{m}=\bigl(b\,a^{-1}\bigr)^{m}=\Bigl(\dfrac{b}{a}\Bigr)^{m}}. \]
+En particulier $a^{-3}=\dfrac{1}{a^{3}}$.
+\begin{ou}
+  \item $a^{0}=1$ : \emph{toute} base non nulle élevée à la puissance $0$ vaut $1$ ;
+  \item $a^{-n}$ : un exposant négatif signifie « \emph{passer à l'inverse} » ($a\in\R_0$) ;
+  \item $\Bigl(\dfrac{b}{a}\Bigr)^{m}$ : un quotient élevé à une puissance ($a\in\R_0$).
+\end{ou}
+\end{formule}
+
+\begin{definition}[racine $n$-ième et exposant fractionnaire]
+La \textbf{racine $n$-ième} d'un réel $c>0$ se note $\sqrt[n]{c}$ ; c'est l'unique réel positif dont la
+puissance $n$ vaut $c$. On la relie aux puissances par un \textbf{exposant fractionnaire} :
+\[ \boxed{\,\sqrt[n]{c}=c^{\frac{1}{n}}\,},\qquad\text{et plus généralement}\qquad
+   \sqrt[n]{c^{\,p}}=c^{\frac{p}{n}}. \]
+\begin{ou}
+  \item $c$ : le radicande, réel strictement positif ($c\in\R_0^{+}$) ;
+  \item $n$ : l'indice de la racine, entier $\geq 1$ ($n\in\N_0$) ;
+  \item $\dfrac{1}{n}$ ou $\dfrac{p}{n}$ : l'exposant fractionnaire équivalent.
+\end{ou}
+\end{definition}
+
+\begin{theoreme}[racine d'un carré : valeur absolue]
+Attention à un piège fréquent : pour \emph{tout} réel $A$,
+\[ \boxed{\,\sqrt{A^{2}}=|A|\,}\qquad\text{(et non simplement } A\text{ !).} \]
+La racine carrée renvoie toujours un résultat $\geq 0$ : si $A\geq 0$, $\sqrt{A^2}=A$ ; si $A<0$,
+$\sqrt{A^2}=-A>0$. On retiendra cette identité pour la section sur les racines emboîtées.
+\end{theoreme}
+
+\subsection{Le signe d'une puissance : exposant pair ou impair}
+
+\begin{theoreme}[règle des signes pour une base négative]
+Le signe de $(-a)^{n}$ (avec $a>0$) ne dépend que de la \emph{parité} de l'exposant $n$ :
+\[ (-a)^{2n}=+a^{2n}\quad(\text{exposant pair}),\qquad
+   (-a)^{2n+1}=-a^{2n+1}\quad(\text{exposant impair}). \]
+\end{theoreme}
+
+\noindent Il faut donc distinguer avec soin où s'applique le signe « $-$ ». Détaillons sur l'exemple
+$2$, c'est-à-dire $a=2$ :
+
+\begin{exemple}[le « $-$ » dans la base ou devant la puissance ?]
+\begin{align*}
+  (-2)^{2} &= (-2)\times(-2) = +4 &&\text{(le signe est dans la base : il se neutralise, exposant pair)} \\
+  -2^{2} &= -(2\times 2) = -4 &&\text{(le signe est \emph{devant} : il ne participe pas à la puissance)} \\
+  -(-2)^{2n} &= -\bigl(2^{2n}\bigr) = -2^{2n} &&\text{(exposant pair $\Rightarrow (-2)^{2n}=2^{2n}$, puis le « $-$ » reste)} \\
+  -(-2)^{2n+1} &= -\bigl(-2^{2n+1}\bigr) = +2^{2n+1} &&\text{(exposant impair $\Rightarrow (-2)^{2n+1}=-2^{2n+1}$, le « $-$ » l'annule)}
+\end{align*}
+\textbf{Conclusion :} $(-2)^{2}\neq -2^{2}$. Le parenthésage change tout.
+\end{exemple}
+
+\subsection{Comment faire : simplifier une expression à exposants}
+
+\begin{commentfaire}[ramener une expression sous la forme $c^{k}$]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Convertir} toutes les racines en exposants fractionnaires : $\sqrt[n]{\,\cdot\,}=(\cdot)^{1/n}$.
+  \item \textbf{Empiler} les exposants de l'intérieur vers l'extérieur avec $(a^{n})^{m}=a^{nm}$.
+  \item \textbf{Regrouper} les exposants : multiplier ceux qui sont emboîtés, additionner ceux d'un même produit.
+  \item \textbf{Simplifier} la fraction d'exposants obtenue.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[racines emboîtées — calcul détaillé]
+Simplifions l'expression $\displaystyle \sqrt[n]{\sqrt[n]{c^{\,2n^{2}}}}$ pour $c>0$ et $n\in\N_0$.
+
+\medskip
+\textbf{Étape 1 — racine intérieure en exposant.} La racine intérieure $\sqrt[n]{c^{2n^2}}$ devient
+$\bigl(c^{2n^2}\bigr)^{\frac{1}{n}}$.
+
+\textbf{Étape 2 — racine extérieure en exposant.} Toute l'expression s'écrit alors
+\[ \sqrt[n]{\sqrt[n]{c^{\,2n^{2}}}}
+   =\left(\Bigl(c^{2n^{2}}\Bigr)^{\frac{1}{n}}\right)^{\!\frac{1}{n}}. \]
+
+\textbf{Étape 3 — on multiplie les exposants emboîtés} (règle $(a^p)^q=a^{pq}$) :
+\[ =\Bigl(c^{2n^{2}}\Bigr)^{\frac{1}{n^{2}}}
+   = c^{\,2n^{2}\times\frac{1}{n^{2}}}. \]
+
+\textbf{Étape 4 — on simplifie l'exposant :} $\;2n^{2}\times\dfrac{1}{n^{2}}=2$. D'où
+\[ \boxed{\;\sqrt[n]{\sqrt[n]{c^{\,2n^{2}}}}=c^{2}.\;} \]
+Le résultat ne dépend plus de $n$ : tout le « bruit » se simplifie.
+\end{exemple}
+
+\begin{exemple}[manipulations courantes, expliquées une à une]
+\begin{align*}
+  a^{-m}\times b^{m} &= \frac{b^{m}}{a^{m}} = \Bigl(\frac{b}{a}\Bigr)^{m}
+     &&\text{exposant négatif} \to \text{inverse, puis même exposant} \to \text{quotient} \\[2pt]
+  \frac{a^{n}}{a^{m}} &= a^{n-m}
+     &&\text{même base, division} \to \text{soustraction des exposants} \\[2pt]
+  \frac{1}{a^{3}} &= a^{-3}
+     &&\text{l'inverse d'une puissance} \to \text{exposant opposé} \\[2pt]
+  \bigl(2^{x}\bigr)^{3} &= 2^{3x}
+     &&\text{puissance de puissance} \to \text{produit des exposants}
+\end{align*}
+\end{exemple}
+
+\subsection{La fonction exponentielle $x\mapsto a^{x}$ : croissance et décroissance}
+
+Quand on laisse la base $a$ \emph{fixe} et qu'on fait varier l'exposant $x$, on obtient la fonction
+\textbf{exponentielle} de base $a$. Son comportement dépend entièrement de la position de $a$ par
+rapport à $1$.
+
+\begin{theoreme}[monotonie de l'exponentielle]
+Soit $a\in\R_0^{+}\setminus\{1\}$ et la fonction $f:x\mapsto a^{x}$ définie sur $\R$.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Si $a>1$}, $f$ est \emph{strictement croissante} : un plus grand exposant donne un plus grand résultat.
+        \[ a^{x_1}>a^{x_2}\ \text{et}\ a>1 \;\Longrightarrow\; x_1>x_2. \]
+  \item \textbf{Si $0<a<1$}, $f$ est \emph{strictement décroissante} : un plus grand exposant donne un plus \emph{petit} résultat.
+        \[ a^{x_1}>a^{x_2}\ \text{et}\ 0<a<1 \;\Longrightarrow\; x_1<x_2. \]
+  \item Dans les deux cas, $f$ est injective : \quad $a^{x_1}=a^{x_2}\;\Longrightarrow\;x_1=x_2$.
+\end{itemize}
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=11cm,height=6.2cm,axis lines=middle,
+      xmin=-3,xmax=3,ymin=-0.4,ymax=5.2,
+      xlabel={$x$},ylabel={$a^{x}$},
+      xtick={-2,-1,1,2},ytick={1,2,3,4},
+      every axis x label/.style={at={(ticklabel cs:1)},anchor=west},
+      every axis y label/.style={at={(ticklabel cs:1)},anchor=south},
+      legend pos=north west,legend cell align=left,legend style={font=\small,draw=black!30}]
+    \addplot[curveA,line width=1.3pt,domain=-3:1.7,samples=80]{exp(x*0.6931)};   % 2^x
+    \addplot[curveB,line width=1.3pt,domain=-1.7:3,samples=80]{exp(-x*0.6931)};  % (1/2)^x
+    \addplot[black!40,dashed,domain=-3:3]{1};
+    \node[curveA] at (axis cs:1.95,4.5){$a=2>1$ (croissante)};
+    \node[curveB] at (axis cs:-1.55,4.6){$a=\tfrac12<1$ (décroissante)};
+    \node[black!55,font=\scriptsize,anchor=south west] at (axis cs:1.4,1){$a^{0}=1$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}
+Les deux courbes passent \emph{toutes} par le point $(0,1)$, puisque $a^{0}=1$ quelle que soit la
+base. Remarquez aussi qu'elles sont l'image l'une de l'autre par la symétrie $x\mapsto -x$, car
+$\bigl(\tfrac12\bigr)^{x}=2^{-x}$.
+\end{remarque}
+
+\subsection{Comment faire : résoudre une équation exponentielle}
+
+\begin{commentfaire}[équation du type $a^{u(x)}=a^{v(x)}$]
+L'exponentielle étant injective, l'égalité des puissances équivaut à l'égalité des exposants
+(à condition d'avoir \emph{la même base} des deux côtés).
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Ramener} les deux membres à une même base $a$ (avec $a>0$, $a\neq 1$).
+  \item \textbf{Supprimer} les bases : $a^{u}=a^{v}\Longleftrightarrow u=v$.
+  \item \textbf{Résoudre} l'équation ordinaire obtenue sur les exposants.
+  \item \textbf{Écrire} l'ensemble solution $S$.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[trois équations exponentielles détaillées]
+\textbf{(a)} \;$2^{2x+1}=2^{x}$. Même base $2$, on égale les exposants :
+\[ 2x+1=x \;\Longleftrightarrow\; x=-1, \qquad S=\{-1\}. \]
+
+\medskip
+\textbf{(b)} \;$2^{2x+1}=2^{-x}$. Toujours la base $2$ :
+\[ 2x+1=-x \;\Longleftrightarrow\; 3x=-1 \;\Longleftrightarrow\; x=-\tfrac{1}{3}, \qquad S=\Bigl\{-\tfrac{1}{3}\Bigr\}. \]
+
+\medskip
+\textbf{(c)} \;$\displaystyle\Bigl(\frac{2^{2x+1}}{2^{x}}\Bigr)^{3}=1$. On simplifie d'abord l'intérieur
+($\tfrac{2^{2x+1}}{2^{x}}=2^{2x+1-x}=2^{x+1}$), puis on monte au cube :
+\[ \bigl(2^{x+1}\bigr)^{3}=2^{3x+3}=1=2^{0}
+   \;\Longleftrightarrow\; 3x+3=0 \;\Longleftrightarrow\; x=-1,\qquad S=\{-1\}. \]
+On a utilisé $1=2^{0}$ pour se ramener à une comparaison d'exposants.
+\end{exemple}
+
+% =====================================================================
+\section{Les logarithmes}
+% =====================================================================
+Le logarithme est la \textbf{fonction réciproque} de l'exponentielle : là où l'exponentielle
+transforme un exposant en nombre, le logarithme retrouve l'exposant à partir du nombre. C'est
+l'outil-clé pour résoudre toute équation où l'inconnue est « en exposant ».
+
+\subsection{Définition et lien avec l'exponentielle}
+
+\begin{definition}[logarithme de base $a$]
+Pour une base $a\in\R_0^{+}\setminus\{1\}$ et un nombre $x\in\R_0^{+}$, le \textbf{logarithme de base $a$}
+de $x$, noté $\log_a x$, est l'\emph{exposant} qu'il faut donner à $a$ pour obtenir $x$ :
+\[ \boxed{\,\log_a x = y \;\Longleftrightarrow\; x = a^{y}\,}. \]
+\begin{ou}
+  \item $a$ : la base, réel strictement positif et différent de $1$ ($a\in\R_0^{+}\setminus\{1\}$) ;
+  \item $x$ : l'argument, réel strictement positif ($x\in\R_0^{+}$) — \emph{on ne prend jamais le log d'un nombre négatif ou nul} ;
+  \item $y=\log_a x$ : le résultat, un réel quelconque ($y\in\R$).
+\end{ou}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=11cm,height=6cm,axis lines=middle,
+      xmin=-2.8,xmax=4.2,ymin=-2.8,ymax=4.2,
+      xlabel={$x$},ylabel={$y$},xtick={-2,-1,1,2,3},ytick={-2,-1,1,2,3},
+      every axis x label/.style={at={(ticklabel cs:1)},anchor=west},
+      every axis y label/.style={at={(ticklabel cs:1)},anchor=south}]
+    \addplot[curveA,line width=1.3pt,domain=-2.7:1.4,samples=80]{exp(x)};
+    \addplot[curveB,line width=1.3pt,domain=0.06:4,samples=90]{ln(x)};
+    \addplot[black!40,dashed,domain=-2.7:4]{x};
+    \node[curveA] at (axis cs:1.45,3.5){$y=e^{x}$};
+    \node[curveB] at (axis cs:3.4,1.6){$y=\ln x$};
+    \node[black!55,font=\scriptsize] at (axis cs:3.2,3.6){$y=x$};
+    \fill (axis cs:0,1) circle (1.6pt); \fill (axis cs:1,0) circle (1.6pt);
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{remarque}
+Graphiquement, $y=\ln x$ est le \emph{symétrique} de $y=e^{x}$ par rapport à la droite $y=x$ :
+c'est la signature de deux fonctions réciproques. Le point $(0,1)$ de l'exponentielle correspond au
+point $(1,0)$ du logarithme : $\log_a 1=0$ pour toute base.
+\end{remarque}
+
+\subsection{Les propriétés des logarithmes}
+
+\begin{formule}[propriétés fondamentales]
+Pour $x,y\in\R_0^{+}$, $a\in\R_0^{+}\setminus\{1\}$ et $n\in\Z_0$ :
+\begin{align}
+  \log_a(x\times y) &= \log_a x + \log_a y && \text{(produit $\to$ somme)} \tag{L1}\\
+  \log_a\!\Bigl(\frac{x}{y}\Bigr) &= \log_a x - \log_a y && \text{(quotient $\to$ différence)} \tag{L2}\\
+  \log_a\bigl(x^{n}\bigr) &= n\,\log_a x && \text{(puissance $\to$ produit)} \tag{L3}
+\end{align}
+\begin{ou}
+  \item $x,y$ : arguments strictement positifs ($x,y\in\R_0^{+}$) ;
+  \item $a$ : base strictement positive et $\neq 1$ ;
+  \item $n$ : exposant entier non nul ($n\in\Z_0$).
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Idée à retenir.} Le logarithme \emph{abaisse} les opérations d'un cran : il transforme
+un \emph{produit} en \emph{somme}, un \emph{quotient} en \emph{différence}, une \emph{puissance} en
+\emph{produit}. C'est précisément ce qui permet de « descendre » une inconnue qui se trouve en exposant.
+
+\begin{formule}[valeurs remarquables et changement de base]
+\[ \boxed{\,\log_a 1 = 0\,}\quad(\text{car }a^{0}=1);\qquad
+   \boxed{\,\log_a a = 1\,}\quad(\text{car }a^{1}=a); \]
+\[ \boxed{\,\log_a x = \frac{\log_b x}{\log_b a}\,}\quad\text{(changement de base)};\qquad
+   \boxed{\,\log_{a^{n}} x = \frac{1}{n}\,\log_a x\,}. \]
+\begin{ou}
+  \item $\log_a 1=0$ : le log de $1$ est nul dans \emph{toute} base ;
+  \item $\log_a a=1$ : le log de la base elle-même vaut $1$ ;
+  \item $b$ : une base auxiliaire quelconque ($b\in\R_0^{+}\setminus\{1\}$) servant à changer de base.
+\end{ou}
+\end{formule}
+
+\begin{definition}[logarithme décimal et logarithme népérien]
+Deux bases sont si fréquentes qu'elles ont une notation propre :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item si $a=10$ : le \textbf{logarithme décimal}, noté $\log x = \log_{10} x$ ;
+  \item si $a=e\approx 2{,}718$ : le \textbf{logarithme népérien} (naturel), noté $\ln x=\log_{e} x$.
+\end{itemize}
+La formule de changement de base les relie : $\displaystyle \log_{10} x=\frac{\ln x}{\ln 10}$, avec $\ln 10\approx 2{,}30$.
+\end{definition}
+
+\begin{theoreme}[monotonie du logarithme]
+Pour une base $a>1$, $\log_a$ est strictement croissant, donc compatible avec les inégalités :
+\[ \log_a x \geq \log_a y \;\Longleftrightarrow\; x\geq y. \]
+Pour une base $0<a<1$, $\log_a$ est strictement décroissant : l'inégalité \emph{change de sens}.
+\end{theoreme}
+
+\begin{attention}[ne pas confondre $\ln^{2}x$, $\ln x^{2}$ et $\ln(\ln x)$]
+Ces écritures sont \emph{différentes} :
+\[ \ln^{2}x=(\ln x)^{2}\quad(\text{le log, au carré});\qquad
+   \ln x^{2}=2\ln x\quad(\text{log d'un carré, propriété L3}). \]
+Ainsi $\ln^{2}x \neq \ln x^{2}$ en général. C'est une source d'erreur classique aux concours.
+\end{attention}
+
+\subsection{Exemples de calculs logarithmiques détaillés}
+
+\begin{exemple}[valeurs directes]
+\begin{align*}
+  \log_a\sqrt[n]{x} &= \log_a x^{1/n} = \tfrac{1}{n}\log_a x &&\text{(L3 avec l'exposant $1/n$)} \\
+  \log_a\tfrac{1}{x} &= \log_a x^{-1} = -\log_a x &&\text{(L3 avec l'exposant $-1$)} \\
+  \log_{10}10 &= 1, \qquad \ln 1 = 0, \qquad \ln e = 1 &&\text{(valeurs de base)} \\
+  \ln e^{2} &= 2\ln e = 2 &&\text{(L3 puis $\ln e=1$)} \\
+  \log_{10}10^{2a} &= 2a\,\log_{10}10 = 2a &&\text{(L3)} \\
+  \ln 0{,}1 &= \ln\tfrac{1}{10} = -\ln 10 \approx -2{,}30 &&\text{(inverse $\to$ opposé)}
+\end{align*}
+\end{exemple}
+
+\begin{exemple}[une simplification fine avec les exposants des logarithmes]
+Montrons que $\displaystyle \frac{\ln^{2}\!\bigl(2\bigr)}{8}=\frac{1}{2}\,\ln^{2}\!\sqrt{2}$ (résultat utile).
+Partons de la définition $\ln^2(2)=(\ln 2)^2$ et de $\ln 2 = \ln\bigl(2^{1/2}\bigr)^{2}=2\ln\sqrt2$, soit
+$\ln 2 = 2\ln\sqrt 2$. Alors :
+\[ \frac{\ln^{2}(2)}{8}=\frac{(\ln 2)^{2}}{8}
+   =\frac{\bigl(2\ln\sqrt2\bigr)^{2}}{8}
+   =\frac{4\,(\ln\sqrt2)^{2}}{8}
+   =\frac{1}{2}\,\ln^{2}\sqrt2. \]
+Chaque étape n'utilise que $\ln 2 = 2\ln\sqrt2$ et l'algèbre des carrés.
+\end{exemple}
+
+\subsection{Comment faire : résoudre une équation logarithmique ou « en exposant »}
+
+\begin{commentfaire}[passer du log à l'exponentiel, ou inversement]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Domaine d'abord (C.E.).} Tout argument de logarithme doit être $>0$ : poser les
+        \emph{conditions d'existence} avant de calculer.
+  \item \textbf{Si l'inconnue est en exposant}, appliquer le logarithme (souvent $\ln$) aux deux membres,
+        puis « faire descendre » l'exposant avec $\ln(a^{u})=u\ln a$.
+  \item \textbf{Si l'inconnue est dans un logarithme}, repasser à l'exponentiel : $\log_a u = v\Leftrightarrow u=a^{v}$.
+  \item \textbf{Résoudre} l'équation obtenue, puis \textbf{vérifier} que les solutions respectent la C.E.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[équation où l'inconnue est en exposant]
+Résolvons $e^{2x}=10$. On applique $\ln$ aux deux membres :
+\[ \ln e^{2x}=\ln 10 \;\Longrightarrow\; 2x\ln e=\ln 10 \;\Longrightarrow\; 2x=\ln 10
+   \;\Longrightarrow\; x=\frac{\ln 10}{2}, \qquad S=\Bigl\{\tfrac{\ln 10}{2}\Bigr\}. \]
+On a utilisé $\ln e=1$. Aucune C.E. ici, car $e^{2x}>0$ toujours.
+\end{exemple}
+
+\begin{exemple}[équation logarithmique avec condition d'existence]
+Résolvons $2\times 10^{5x}=5$.
+
+\textbf{Étape 1 — isoler la puissance :} $\;10^{5x}=\dfrac{5}{2}$.
+
+\textbf{Étape 2 — appliquer $\log_{10}$ :} $\;\log_{10}10^{5x}=\log_{10}\dfrac{5}{2}$, soit $5x=\log_{10}\dfrac52$.
+
+\textbf{Étape 3 — isoler $x$ et développer le quotient (L2) :}
+\[ x=\frac{1}{5}\log_{10}\frac{5}{2}=\frac{1}{5}\bigl(\log 5-\log 2\bigr),\qquad
+   S=\Bigl\{\tfrac{1}{5}(\log 5-\log 2)\Bigr\}. \]
+\end{exemple}
+
+\begin{exemple}[inéquation logarithmique : le domaine est décisif]
+Résolvons $\ln(x-1)\geq \ln 2$.
+
+\textbf{C.E. :} l'argument doit être positif : $x-1>0$, donc $x>1$, soit $D_f=\,]1,+\infty[$.
+
+\textbf{Résolution :} $\ln$ étant croissant (base $e>1$), on peut « enlever » les $\ln$ sans changer le sens :
+\[ \ln(x-1)\geq\ln 2 \;\Longleftrightarrow\; x-1\geq 2 \;\Longleftrightarrow\; x\geq 3. \]
+\textbf{Intersection avec la C.E. :} $\;x\geq 3$ est déjà inclus dans $x>1$. Donc $S=[3,+\infty[$.
+\end{exemple}
+
+% =====================================================================
+\section{Factorisation et résolution d'équations}
+% =====================================================================
+\textbf{Factoriser}, c'est récrire une somme comme un \emph{produit} de facteurs. C'est le geste central
+de l'algèbre : un produit est nul si et seulement si l'un de ses facteurs est nul, ce qui transforme
+une équation compliquée en plusieurs équations simples.
+
+\begin{theoreme}[règle du produit nul]
+Pour des réels (ou des expressions) $F$ et $G$ :
+\[ \boxed{\,F\times G=0 \;\Longleftrightarrow\; F=0\ \text{ou}\ G=0\,}. \]
+C'est pourquoi on cherche toujours à \emph{factoriser} avant de résoudre une équation.
+\end{theoreme}
+
+\subsection{Méthode 1 — la mise en évidence}
+
+\begin{definition}[mise en évidence d'un facteur commun]
+\textbf{Mettre en évidence}, c'est repérer un \emph{facteur commun} à tous les termes et le « sortir »
+devant une parenthèse, en application de la distributivité $k(a+b)=ka+kb$ lue à l'envers.
+\end{definition}
+
+\begin{commentfaire}[mettre en évidence]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Repérer} le facteur commun à tous les termes (un nombre, une lettre, une puissance, une parenthèse\dots).
+  \item \textbf{Choisir} la plus grande puissance commune et le plus grand diviseur commun des coefficients.
+  \item \textbf{Diviser} chaque terme par ce facteur et écrire le reste entre parenthèses.
+  \item \textbf{Vérifier} en redéveloppant mentalement.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[trois mises en évidence détaillées]
+\textbf{(a)} \;$2x^{2}-3x$. Le facteur commun est $x$ :
+\[ 2x^{2}-3x = x\,(2x-3). \]
+
+\textbf{(b)} \;$5\times 2^{2x}-3a\times 2^{2x+1}$. Remarquons $2^{2x+1}=2^{2x}\times 2$, le facteur commun est $2^{2x}$ :
+\[ 5\times 2^{2x}-3a\times 2^{2x}\times 2 = 2^{2x}\,(5-3a\times 2) = 2^{2x}\,(5-6a). \]
+
+\textbf{(c)} \;$(x-1)(2x+3)-(x-1)^{2}$. Le facteur commun est la parenthèse $(x-1)$ :
+\[ (x-1)\bigl[(2x+3)-(x-1)\bigr] = (x-1)(2x+3-x+1) = (x-1)(x+4). \]
+On a soigneusement distribué le signe « $-$ » devant $(x-1)$.
+\end{exemple}
+
+\subsection{Méthode 2 — les produits remarquables}
+
+\begin{formule}[les identités remarquables]
+\[ \boxed{\,A^{2}-B^{2}=(A-B)(A+B)\,}\qquad\text{(différence de deux carrés)} \]
+\[ \boxed{\,A^{2}+2AB+B^{2}=(A+B)^{2}\,}\qquad
+   \boxed{\,A^{2}-2AB+B^{2}=(A-B)^{2}\,} \]
+\begin{ou}
+  \item $A,B$ : deux expressions algébriques quelconques (nombres, monômes, fonctions\dots) ;
+  \item le terme central $2AB$ est le « \emph{double produit} » : sa présence (et son signe) signale un carré parfait.
+\end{ou}
+\end{formule}
+
+\begin{formule}[factorisation du trinôme du second degré]
+Pour $A\neq 0$, si le discriminant $\Delta=B^{2}-4AC>0$ :
+\[ \boxed{\,Ax^{2}+Bx+C=A\,(x-x_1)(x-x_2)\,},\qquad
+   x_{1}=\frac{-B+\sqrt{\Delta}}{2A},\quad x_{2}=\frac{-B-\sqrt{\Delta}}{2A}. \]
+Si $\Delta=0$, les deux racines sont confondues : $Ax^{2}+Bx+C=A\,(x-x_1)^{2}$ avec $x_1=\dfrac{-B}{2A}$.
+\begin{ou}
+  \item $A,B,C$ : les coefficients du trinôme, réels avec $A\neq 0$ ;
+  \item $\Delta=B^{2}-4AC$ : le \textbf{discriminant} (sans unité) ; son signe décide du nombre de racines ;
+  \item $x_1,x_2$ : les racines (les valeurs qui annulent le trinôme).
+\end{ou}
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=12.5cm,height=5.6cm,axis lines=middle,
+      xmin=-3,xmax=3,ymin=-1.6,ymax=4.4,
+      xlabel={$x$},ylabel={$y$},xtick={-2,-1,1,2},ytick={1,2,3},
+      every axis x label/.style={at={(ticklabel cs:1)},anchor=west},
+      every axis y label/.style={at={(ticklabel cs:1)},anchor=south},
+      legend pos=north west,legend cell align=left,legend style={font=\scriptsize,draw=black!30}]
+    \addplot[curveC,line width=1.2pt,domain=-2:2,samples=60]{x*x-1};   % Delta>0
+    \addplot[curveA,line width=1.2pt,domain=-1.9:1.9,samples=60]{x*x};  % Delta=0
+    \addplot[curveB,line width=1.2pt,domain=-1.8:1.8,samples=60]{x*x+1};% Delta<0
+    \addplot[black!40,dashed,domain=-3:3]{0};
+    \node[curveC,font=\scriptsize] at (axis cs:2.0,3.5){$\Delta>0$ : 2 racines};
+    \node[curveA,font=\scriptsize] at (axis cs:-1.55,3.4){$\Delta=0$ : 1 racine double};
+    \node[curveB,font=\scriptsize] at (axis cs:0,3.9){$\Delta<0$ : aucune racine réelle};
+    \fill[curveC] (axis cs:-1,0) circle (1.6pt); \fill[curveC] (axis cs:1,0) circle (1.6pt);
+    \fill[curveA] (axis cs:0,0) circle (1.6pt);
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[reconnaître et factoriser, cas par cas]
+\textbf{(a) Différence de carrés :} \;$5x^{2}-9=(\sqrt5\,x)^{2}-3^{2}=(\sqrt5\,x-3)(\sqrt5\,x+3)$.
+
+\medskip
+\textbf{(b) Carré parfait (signe $-$) :}
+\[ 3x^{2}-2\sqrt3\,x+1=(\sqrt3\,x)^{2}-2\times\sqrt3\times 1\times x + 1^{2}=(\sqrt3\,x-1)^{2}. \]
+On a identifié $A=\sqrt3\,x$, $B=1$, et vérifié le double produit $2AB=2\sqrt3\,x$.
+
+\medskip
+\textbf{(c) Carré parfait (signe $+$) :}
+\[ x^{2}+6x+9=x^{2}+2\times 1\times 3\times x+3^{2}=(x+3)^{2}. \]
+
+\medskip
+\textbf{(d) Avec mise en évidence préalable :}
+\[ 2x^{3}+12x^{2}+18x=2x\,(x^{2}+6x+9)=2x\,(x+3)^{2}. \]
+
+\medskip
+\textbf{(e) Avec une exponentielle :}
+\[ e^{2x}+2e^{x}+1=(e^{x})^{2}+2\times 1\times e^{x}+1^{2}=(e^{x}+1)^{2}. \]
+
+\medskip
+\textbf{(f) Double différence de carrés :}
+\[ e^{4x}-1=(e^{2x})^{2}-1^{2}=(e^{2x}-1)(e^{2x}+1)=(e^{x}-1)(e^{x}+1)(e^{2x}+1). \]
+
+\medskip
+\textbf{(g) Avec des logarithmes ($x>0$) :}
+\[ \ln^{2}x^{2}-3=(\ln x^{2})^{2}-(\sqrt3)^{2}=(\ln x^{2}-\sqrt3)(\ln x^{2}+\sqrt3)=(2\ln x-\sqrt3)(2\ln x+\sqrt3). \]
+\end{exemple}
+
+\begin{exemple}[un produit remarquable « malin » sans calculatrice]
+Calculons $1\,000\,001^{2}-999\,999^{2}$ \emph{sans} calculatrice, grâce à $A^2-B^2=(A-B)(A+B)$ :
+\[ 1\,000\,001^{2}-999\,999^{2}=(1\,000\,001-999\,999)(1\,000\,001+999\,999)=2\times 2\,000\,000=\num{4000000}=4\times 10^{6}. \]
+La factorisation évite tout calcul de carré géant.
+\end{exemple}
+
+\subsection{Méthode 3 — la factorisation d'un polynôme (méthode de Horner)}
+
+\begin{theoreme}[racine et facteur d'un polynôme]
+Un polynôme $P(x)$ est divisible par $(x-a)$ \emph{si et seulement si} $a$ est une racine, c'est-à-dire
+$P(a)=0$. On écrit alors
+\[ P(x)=(x-a)\times Q(x), \]
+où $Q(x)$ est le \textbf{quotient}, un polynôme de degré inférieur d'une unité. Si de plus $Q(b)=0$,
+on factorise encore : $P(x)=(x-a)(x-b)\,Q'(x)$.
+\end{theoreme}
+
+\noindent La \textbf{méthode de Horner} est un tableau très pratique pour calculer ce quotient $Q(x)$
+sans poser de division longue. Illustrons-la sur $P(x)=x^{3}-x^{2}+2x-2$, qui admet $a=1$ comme racine
+(car $P(1)=1-1+2-2=0$).
+
+\begin{center}
+\begin{tikzpicture}[scale=1,every node/.style={font=\small}]
+  % coefficients du haut
+  \node at (-1.6,1.2) {$P(x)$ :};
+  \node[curveB] at (0,1.2) {$1$};
+  \node[curveB] at (2,1.2) {$-1$};
+  \node[curveB] at (4,1.2) {$2$};
+  \node[curveB] at (6,1.2) {$-2$};
+  \node[font=\scriptsize,black!60] at (0,1.75) {$x^{3}$};
+  \node[font=\scriptsize,black!60] at (2,1.75) {$x^{2}$};
+  \node[font=\scriptsize,black!60] at (4,1.75) {$x^{1}$};
+  \node[font=\scriptsize,black!60] at (6,1.75) {$x^{0}$};
+  % a = 1 à gauche
+  \node[primary,font=\bfseries] at (-1.6,-0.2) {$a=1$};
+  % ligne des produits (flèches) et résultats
+  \node[curveA] at (2,0.3) {$1$};
+  \node[curveA] at (4,0.3) {$0$};
+  \node[curveA] at (6,0.3) {$2$};
+  % barre horizontale
+  \draw[line width=0.9pt] (-0.8,-0.15) -- (6.8,-0.15);
+  % résultats (somme)
+  \node[primarydark,font=\bfseries] at (0,-0.7) {$1$};
+  \node[primarydark,font=\bfseries] at (2,-0.7) {$0$};
+  \node[primarydark,font=\bfseries] at (4,-0.7) {$2$};
+  \node[excol,font=\bfseries] at (6,-0.7) {$0$};
+  \node[excol,font=\scriptsize] at (6.9,-0.7) {reste};
+  % flèches descente + multiplication
+  \draw[->,curveA,thick] (0,-0.95) to[bend right=35] (1.8,0.2);
+  \draw[->,curveA,thick] (2,-0.95) to[bend right=35] (3.8,0.2);
+  \draw[->,curveA,thick] (4,-0.95) to[bend right=35] (5.8,0.2);
+  \node[curveA,font=\scriptsize] at (1,-1.25) {$\times 1$};
+  \node[curveA,font=\scriptsize] at (3,-1.25) {$\times 1$};
+  \node[curveA,font=\scriptsize] at (5,-1.25) {$\times 1$};
+  % quotient
+  \node[anchor=west] at (-1.6,-1.9) {$Q(x)=1\,x^{2}+0\,x+2=x^{2}+2$};
+  % résultat encadré
+  \node[draw=primary,rounded corners,fill=primary!6,anchor=west,inner sep=5pt] at (2.6,-2.5)
+       {$P(x)=(x-1)\times(x^{2}+2)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{commentfaire}[schéma de Horner, pas à pas]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Aligner} les coefficients de $P$ dans l'ordre des puissances \emph{décroissantes}
+        (mettre un $0$ pour toute puissance manquante).
+  \item \textbf{Trouver} une racine évidente $a$ (souvent $\pm1,\pm2,\dots$) telle que $P(a)=0$.
+  \item \textbf{Abaisser} le premier coefficient tel quel.
+  \item \textbf{Multiplier} par $a$, écrire le résultat sous le coefficient suivant, puis \textbf{additionner}.
+        Répéter jusqu'au bout.
+  \item \textbf{Lire} le résultat : les sommes (sauf la dernière) sont les coefficients de $Q(x)$ ;
+        la \emph{dernière} somme est le \textbf{reste} (il doit valoir $0$ si $a$ est bien racine).
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[factorisation complète de $4x^{3}-8x^{2}+5x-1$]
+Soit $P(x)=4x^{3}-8x^{2}+5x-1$.
+
+\textbf{Étape 1 — racine évidente :} $P(1)=4-8+5-1=0$, donc $(x-1)$ divise $P$.
+
+\textbf{Étape 2 — Horner} donne le quotient $Q(x)=4x^{2}-4x+1$, d'où
+\[ P(x)=(x-1)\bigl(4x^{2}-4x+1\bigr). \]
+
+\textbf{Étape 3 — reconnaître un carré parfait :} $4x^{2}-4x+1=(2x)^{2}-2\times 2x\times 1+1^{2}=(2x-1)^{2}$.
+
+\textbf{Conclusion :} $\;P(x)=(x-1)(2x-1)^{2}$.
+
+\textbf{Étape 4 — résoudre $P(x)=0$ (règle du produit nul) :}
+\[ (x-1)(2x-1)^{2}=0 \;\Longleftrightarrow\; x-1=0\ \text{ou}\ 2x-1=0
+   \;\Longleftrightarrow\; x=1\ \text{ou}\ x=\tfrac12,\qquad S=\Bigl\{\tfrac12,\,1\Bigr\}. \]
+\end{exemple}
+
+\subsection{Comment faire : simplifier une fraction rationnelle}
+
+\begin{commentfaire}[simplifier $\dfrac{P(x)}{Q(x)}$]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Conditions d'existence (C.E.) :} chercher les valeurs qui annulent le \emph{dénominateur} et les exclure.
+  \item \textbf{Factoriser} entièrement le numérateur \emph{et} le dénominateur.
+  \item \textbf{Simplifier} les facteurs communs (autorisé seulement parce qu'ils sont non nuls grâce à la C.E.).
+  \item \textbf{Conclure} en rappelant la C.E. (la fraction simplifiée n'est égale à l'originale que là où elle existe).
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[simplification détaillée]
+Simplifions $\displaystyle \frac{4x^{3}-8x^{2}+5x-1}{2x^{2}-3x+1}$.
+
+\textbf{C.E. :} on annule le dénominateur $2x^{2}-3x+1=0$. Discriminant : $\Delta=(-3)^{2}-4\times2\times1=1$, racines
+\[ x_1=\frac{3+\sqrt1}{4}=1,\qquad x_2=\frac{3-\sqrt1}{4}=\frac{1}{2}. \]
+Donc C.E. : $x\neq 1$ et $x\neq\tfrac12$, et $2x^{2}-3x+1=2\bigl(x-\tfrac12\bigr)(x-1)=(2x-1)(x-1)$.
+
+\textbf{Numérateur} (vu ci-dessus) : $4x^{3}-8x^{2}+5x-1=(x-1)(2x-1)^{2}$.
+
+\textbf{Simplification :}
+\[ \frac{4x^{3}-8x^{2}+5x-1}{2x^{2}-3x+1}
+   =\frac{(x-1)(2x-1)^{2}}{(2x-1)(x-1)}
+   =2x-1,\qquad \text{si } x\neq 1\ \text{et}\ x\neq\tfrac12. \]
+\end{exemple}
+
+\subsection{Comment faire : résoudre une inéquation avec un tableau de signes}
+
+\begin{commentfaire}[tableau de signes d'un quotient ou d'un produit]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{C.E. :} exclure les valeurs annulant un dénominateur.
+  \item \textbf{Factoriser} pour obtenir un produit/quotient de facteurs du \emph{premier degré}.
+  \item \textbf{Valeurs critiques :} repérer les zéros de chaque facteur ; les placer dans l'ordre croissant sur la ligne du haut.
+  \item \textbf{Signe de chaque facteur} sur chaque intervalle (un facteur $x-r$ est négatif avant $r$, positif après).
+  \item \textbf{Multiplier les signes} colonne par colonne (règle des signes), en marquant $0$ aux zéros et « $\nexists$ » aux valeurs interdites.
+  \item \textbf{Lire} l'ensemble solution selon le sens de l'inéquation ($>0$, $\geq 0$, $<0$\dots).
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[résolution complète d'une inéquation]
+Résolvons $\displaystyle \frac{(x-1)(2x-3)}{x+1}>0$.
+
+\textbf{C.E. :} $x+1\neq 0$, donc $x\neq -1$.
+
+\textbf{Valeurs critiques :} $x=1$ (annule $x-1$), $x=\tfrac32$ (annule $2x-3$), $x=-1$ (interdite).
+Ordonnées : $-1<1<\tfrac32$.
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\setlength{\arraycolsep}{5pt}
+\begin{tabular}{|>{\columncolor{primary!8}}l|c c c c c c c|}
+\hline
+\rowcolor{primary!15}
+\textbf{Valeur de }$x$ & $-\infty$ & & $-1$ & & $1$ & $\tfrac32$ & $+\infty$ \\
+\hline
+Signe de $x-1$        & & $-$ & $|$ & $-$ & $0\ \ +$ & $+$ & \\
+Signe de $2x-3$       & & $-$ & $|$ & $-$ & $-$ & $0\ \ +$ & \\
+Signe de $x+1$        & & $-$ & $0$ & $+$ & $+$ & $+$ & \\
+\hline
+\rowcolor{excol!10}
+Signe de $\dfrac{(x-1)(2x-3)}{x+1}$ & & $-$ & $\nexists$ & $+$ & $0\ \ -$ & $0\ \ +$ & \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\textbf{Lecture :} le quotient est strictement positif sur $]-1,1[$ et sur $]\tfrac32,+\infty[$. D'où
+\[ \boxed{\,S=\,]-1,1[\ \cup\ \Bigl]\tfrac32,+\infty\Bigr[.\,} \]
+\textbf{Attention au signe.} Si l'on multipliait les deux membres par un nombre \emph{négatif}, le sens
+de l'inégalité changerait ; le tableau de signes évite ce piège en gardant $0$ à droite.
+\end{exemple}
+
+% =====================================================================
+\section{Résolution des systèmes d'équations}
+% =====================================================================
+Un \textbf{système} est un ensemble d'équations qui doivent être satisfaites \emph{simultanément}.
+Résoudre un système, c'est trouver les valeurs des inconnues qui conviennent à \emph{toutes} les
+équations à la fois. Géométriquement, chaque équation linéaire représente une droite (à 2 inconnues)
+ou un plan (à 3 inconnues) ; la solution est leur \emph{intersection}.
+
+\subsection{Systèmes à deux inconnues}
+
+Considérons le système
+\[ \begin{cases} x+2y=5 & (\mathrm{I}) \\ 3x+y=20 & (\mathrm{II}) \end{cases} \]
+Chaque équation est celle d'une droite ; la solution $(x,y)$ est le \textbf{point d'intersection} des
+deux droites.
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=10.5cm,height=6cm,axis lines=middle,
+      xmin=-1,xmax=9,ymin=-3,ymax=7,
+      xlabel={$x$},ylabel={$y$},xtick={2,4,6,8},ytick={-2,2,4,6},grid=both,
+      grid style={black!10},
+      every axis x label/.style={at={(ticklabel cs:1)},anchor=west},
+      every axis y label/.style={at={(ticklabel cs:1)},anchor=south},
+      legend pos=south west,legend cell align=left,legend style={font=\scriptsize,draw=black!30}]
+    \addplot[curveA,line width=1.2pt,domain=-1:9]{(5-x)/2};   % I : y=(5-x)/2
+    \addplot[curveB,line width=1.2pt,domain=-1:9]{20-3*x};    % II : y=20-3x
+    \addlegendentry{$(\mathrm{I})\ x+2y=5$}
+    \addlegendentry{$(\mathrm{II})\ 3x+y=20$}
+    \fill[black] (axis cs:7,-1) circle (2.2pt);
+    \node[anchor=south west,font=\small] at (axis cs:7,-1){$(7,-1)$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Méthode A — par substitution}
+
+\begin{commentfaire}[substitution]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Isoler} une inconnue dans l'une des équations.
+  \item \textbf{Remplacer} cette inconnue par son expression dans l'\emph{autre} équation.
+  \item \textbf{Résoudre} l'équation à une seule inconnue obtenue.
+  \item \textbf{Réinjecter} la valeur trouvée pour calculer la seconde inconnue.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[substitution, pas à pas]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item On isole $x$ dans (I) : $\;x=5-2y$.
+  \item On remplace dans (II) : $\;3(5-2y)+y=20$.
+  \item On résout : $\;15-6y+y=20 \Rightarrow -5y=5 \Rightarrow y=-1$.
+  \item On réinjecte : $\;x=5-2\times(-1)=7$.
+\end{enumerate}
+\[ S=\{(7\,;-1)\}. \]
+\end{exemple}
+
+\subsubsection{Méthode B — par combinaison linéaire}
+
+\begin{commentfaire}[combinaison (addition)]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Multiplier} chaque équation par un nombre bien choisi pour rendre \emph{opposés} les coefficients d'une inconnue.
+  \item \textbf{Additionner} les deux équations : l'inconnue choisie disparaît.
+  \item \textbf{Résoudre} l'équation à une inconnue restante.
+  \item \textbf{Réinjecter} dans l'une des équations de départ.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[combinaison, pas à pas]
+On veut éliminer $x$. On multiplie (I) par $3$ et (II) par $-1$ pour obtenir des coefficients de $x$ opposés :
+\[ \begin{cases} (x+2y)\times 3=5\times 3 \\ (3x+y)\times(-1)=20\times(-1)\end{cases}
+   \;\Longleftrightarrow\;
+   \begin{cases} +3x+6y=15 \\ -3x-y=-20\end{cases} \]
+On additionne (I)$+$(II) : $\;6y-y=15+(-20)$, soit $5y=-5$, donc $y=-1$.
+On réinjecte dans (I) : $\;x+2\times(-1)=5$, soit $x=7$.
+\[ S=\{(7\,;-1)\}. \]
+On retrouve bien la même solution : c'est le point d'intersection des deux droites.
+\end{exemple}
+
+\subsection{Systèmes à trois inconnues : le pivot de Gauss}
+
+Pour trois inconnues, la méthode systématique est le \textbf{pivot de Gauss} : on élimine les inconnues
+une à une pour rendre le système « triangulaire », puis on remonte.
+
+\begin{definition}[méthode du pivot de Gauss]
+On utilise une équation comme \textbf{pivot} pour éliminer une inconnue dans les autres équations, par
+des opérations qui ne changent pas l'ensemble solution : remplacer une ligne $L_i$ par $L_i-k\,L_j$
+(combinaison de lignes). On obtient un système \emph{échelonné} (triangulaire) que l'on résout de bas
+en haut.
+\end{definition}
+
+\begin{commentfaire}[pivot de Gauss, à 3 inconnues]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Pivot 1 :} garder $L_1$ ; s'en servir pour éliminer $x$ dans $L_2$ et $L_3$.
+  \item \textbf{Pivot 2 :} garder $L_2$ (nouvelle) ; s'en servir pour éliminer une seconde inconnue dans $L_3$.
+  \item \textbf{Triangle :} $L_3$ ne contient plus qu'une inconnue $\Rightarrow$ on la calcule directement.
+  \item \textbf{Remontée :} réinjecter dans $L_2$, puis dans $L_1$, pour obtenir les autres inconnues.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[résolution complète d'un système $3\times3$]
+Résolvons
+\[ \begin{cases} x+2y+z=4 & L_1 \\ 2x+y-z=5 & L_2 \\ 3x+y+2z=3 & L_3 \end{cases} \]
+
+\textbf{Étape 1 — éliminer $x$.} $L_1$ est le pivot. On remplace $L_2\leftarrow L_2-2L_1$ et $L_3\leftarrow L_3-3L_1$ :
+\[ \begin{cases} x+2y+z=4 & L_1 \\ -3y-3z=-3 & L_2 \\ -5y-z=-9 & L_3 \end{cases} \]
+
+\textbf{Étape 2 — éliminer une inconnue de $L_3$.} On combine pour faire disparaître $z$ :
+$L_3\leftarrow L_2-3L_3$ donne
+\[ -3y-3z-3(-5y-z)=-3-3(-9)\;\Longrightarrow\;12y=24, \]
+d'où le système triangulaire
+\[ \begin{cases} x+2y+z=4 & L_1 \\ -3y-3z=-3 & L_2 \\ 12y=24 & L_3 \end{cases} \]
+
+\textbf{Étape 3 — remontée.} De $L_3$ : $\;12y=24\Rightarrow y=2$. On reporte dans $L_2$ :
+$-3(2)-3z=-3\Rightarrow -6-3z=-3\Rightarrow z=-1$. Enfin dans $L_1$ :
+$x+2(2)+(-1)=4\Rightarrow x+3=4\Rightarrow x=1$.
+\[ \boxed{\,S=\{(1\,;2\,;-1)\}.\,} \]
+\end{exemple}
+
+\subsection{Comment faire : mettre un problème concret en système}
+
+Beaucoup d'énoncés « en français » se traduisent directement en systèmes. La compétence-clé est la
+\emph{traduction} mot à mot.
+
+\begin{commentfaire}[traduire un énoncé en équations]
+\begin{enumerate}[leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Nommer} les inconnues (par ex. $x,y,z$ = les prix recherchés).
+  \item \textbf{Traduire} chaque phrase en une équation (« le triple de », « augmenté de », « la somme »\dots).
+  \item \textbf{Nettoyer} : chasser les fractions (multiplier chaque ligne), ranger les termes.
+  \item \textbf{Résoudre} par la méthode adaptée (Gauss pour 3 inconnues) et \textbf{interpréter} le résultat.
+\end{enumerate}
+\end{commentfaire}
+
+\begin{exemple}[un problème de prix à trois inconnues]
+\emph{Trois articles ont des prix $x$, $y$, $z$ (en \euro). On sait que :}
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item \emph{le prix du premier plus le triple du second et du troisième vaut \num{54}~\euro} : $\;x+3y+3z=54$ ;
+  \item \emph{le double du premier plus le tiers du second vaut le troisième augmenté de \num{21}~\euro} : $\;2x+\tfrac{y}{3}=z+21$ ;
+  \item \emph{le troisième plus le tiers des deux autres vaut \num{16}~\euro} : $\;z+\tfrac{x}{3}+\tfrac{y}{3}=16$.
+\end{itemize}
+
+\textbf{Étape 1 — chasser les fractions} (multiplier $L_2$ et $L_3$ par $3$) et ranger :
+\[ \begin{cases} x+3y+3z=54 & L_1 \\ 6x+y-3z=63 & L_2 \\ x+y+3z=48 & L_3 \end{cases} \]
+
+\textbf{Étape 2 — pivot de Gauss.} $L_2\leftarrow L_2-6L_1$ et $L_3\leftarrow L_3-L_1$ :
+\[ \begin{cases} x+3y+3z=54 \\ -17y-21z=-261 \\ -2y=-6 \end{cases} \]
+La dernière ligne donne directement $y=3$.
+
+\textbf{Étape 3 — remontée.} Dans $-17y-21z=-261$ : $-17\times3-21z=-261\Rightarrow -21z=-210\Rightarrow z=10$.
+Puis $L_1$ : $x+3\times3+3\times10=54\Rightarrow x+39=54\Rightarrow x=15$.
+\[ S=\{(15\,;3\,;10)\}. \]
+\textbf{Interprétation :} les articles coûtent respectivement \num{15}~\euro, \num{3}~\euro{} et \num{10}~\euro.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse : la boîte à outils de l'algèbre}
+% =====================================================================
+Tous les outils de cette fiche se répondent. Le schéma ci-dessous résume comment ils s'articulent
+autour d'un seul objectif : \emph{transformer un problème compliqué en problèmes simples}.
+
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small},node distance=0.8cm]
+  \node[rectangle,rounded corners=5pt,fill=primary,text=white,font=\bfseries,
+        minimum width=4.2cm,minimum height=1cm,align=center] (top)
+        {BOÎTE À OUTILS\\ALGÉBRIQUE};
+  \node[rectangle,rounded corners=4pt,draw=defcol,fill=defcol!10,text width=3.0cm,align=center,
+        minimum height=1.2cm,below left=1.4cm and 3.4cm of top] (a) {\textbf{Puissances \& racines}\\ \scriptsize exposants, $a^{m+n}$, $\sqrt[n]{\cdot}$};
+  \node[rectangle,rounded corners=4pt,draw=thmcol,fill=thmcol!12,text width=3.0cm,align=center,
+        minimum height=1.2cm,below left=1.4cm and 0.0cm of top] (b) {\textbf{Logarithmes}\\ \scriptsize réciproque de l'exponentielle};
+  \node[rectangle,rounded corners=4pt,draw=formulacol,fill=formulacol!12,text width=3.0cm,align=center,
+        minimum height=1.2cm,below right=1.4cm and 0.0cm of top] (c) {\textbf{Factorisation}\\ \scriptsize mise en évidence, Horner};
+  \node[rectangle,rounded corners=4pt,draw=excol,fill=excol!12,text width=3.0cm,align=center,
+        minimum height=1.2cm,below right=1.4cm and 3.4cm of top] (d) {\textbf{Systèmes}\\ \scriptsize substitution, Gauss};
+  \draw[->,>=Stealth,thick,primary] (top) -- (a);
+  \draw[->,>=Stealth,thick,primary] (top) -- (b);
+  \draw[->,>=Stealth,thick,primary] (top) -- (c);
+  \draw[->,>=Stealth,thick,primary] (top) -- (d);
+\end{tikzpicture}
+\end{center}
+
+\begin{tcolorbox}[boxbase,colback=primary!4,colframe=primary,
+    title={\textsc{Les réflexes à garder en tête}}]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Domaine d'abord} : avant tout calcul, vérifier les conditions d'existence (pas de division par $0$, pas de log d'un négatif, pas de racine d'un négatif).
+  \item \textbf{Même base} : pour résoudre $a^{u}=a^{v}$, ramener à une base commune, puis égaler les exposants.
+  \item \textbf{Le log fait descendre l'exposant} : $\ln(a^{u})=u\ln a$ — l'arme contre les inconnues en exposant.
+  \item \textbf{Factoriser pour résoudre} : un produit nul $\Rightarrow$ au moins un facteur nul.
+  \item \textbf{Discriminant} $\Delta=B^{2}-4AC$ : son signe donne le nombre de racines sans tout calculer.
+  \item \textbf{Tableau de signes} : la façon sûre de résoudre une inéquation produit/quotient sans erreur de signe.
+  \item \textbf{Systèmes} : substitution ou combinaison à 2 inconnues, pivot de Gauss à 3 inconnues.
+\end{itemize}
+\end{tcolorbox}
+
+\vfill
+\begin{center}
+\small\color{black!55}
+\rule{0.5\textwidth}{0.4pt}\\[4pt]
+Fin de la Fiche 1 — \emph{Rappel d'outils et concepts de base en algèbre}.\\
+Cours rédigé d'après l'extrait du livre ; figures originales en TikZ.
+\end{center}
+
+\end{document}

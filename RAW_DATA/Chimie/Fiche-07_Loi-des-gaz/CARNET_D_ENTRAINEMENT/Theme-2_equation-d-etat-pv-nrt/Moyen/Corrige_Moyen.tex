@@ -1,0 +1,103 @@
+% !TEX program = pdflatex
+% THEME 2 — Moyen — Corrigé
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\atm}{atm}
+\DeclareSIUnit{\bar}{bar}
+\DeclareSIUnit{\mmHg}{mmHg}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\newtcolorbox{rep}[1][]{enhanced,breakable,colback=excol!5,colframe=excol,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,title={#1}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Loi des gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 · Moyen · Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcounter{exo}
+\newenvironment{cor}[1][]{\refstepcounter{exo}\medskip
+  \noindent{\color{primarydark}\bfseries Corrigé \theexo.}\ \textit{#1}\par\nopagebreak\smallskip}{\par}
+\newcommand{\rf}[1]{\textbf{\textcolor{attncol}{#1}}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 2 — Niveau Moyen — Corrigé}
+\end{center}
+\textcolor{primary}{\hrule height 1pt}
+\medskip
+
+\begin{cor}[Peser un gaz]
+\textbf{(a)} $T=27+273=\qty{300}{\kelvin}$, puis $n=\dfrac{pV}{RT}$ :
+\[ n=\frac{\qty{5.0}{\atm}\times\qty{10.0}{\litre}}{\num{0.082}\times\qty{300}{\kelvin}}
+   =\frac{50}{24{,}6}=\rf{\qty{2.03}{\mole}}. \]
+\textbf{(b)} $m=n\times M(\ce{O2})=\qty{2.03}{\mole}\times\qty{32}{\gram\per\mole}=\rf{\qty{65}{\gram}}$
+(environ). La bouteille contient donc $\approx\qty{65}{\gram}$ de dioxygène.
+\end{cor}
+
+\begin{cor}[Retrouver une température]
+On isole $T=\dfrac{pV}{nR}$ :
+\[ T=\frac{\qty{1.5}{\atm}\times\qty{2.0}{\litre}}{\qty{0.10}{\mole}\times\num{0.082}}
+   =\frac{3{,}0}{0{,}0082}=\rf{\qty{366}{\kelvin}}, \]
+soit $\theta=366-273=\rf{\qty{93}{\degreeCelsius}}$.
+\end{cor}
+
+\begin{cor}[L'unité qui change tout]
+\textbf{(a)} La pression est en \si{\atm} et le volume en \si{\litre} : il faut $R=\num{0.082}$, et non
+$R=\num{8.314}$ (réservé aux \si{\pascal}/\si{\meter\cubed} ou \si{\kilo\pascal}/\si{\litre}). L'étudiant
+a \rf{panaché les unités}.\\
+\textbf{(b)} Valeur correcte :
+\[ n=\frac{pV}{RT}=\frac{1{,}0\times5{,}0}{0{,}082\times300}=\frac{5{,}0}{24{,}6}=\rf{\qty{0.20}{\mole}}. \]
+L'étudiant trouvait $0{,}0020$ : il s'est trompé d'un facteur $\dfrac{0{,}20}{0{,}0020}=\rf{100}$
+(soit le rapport $8{,}314/0{,}082\approx101$).
+\end{cor}
+
+\begin{cor}[Deux enceintes à la même température]
+Quantités de matière : $n(\ce{CH4})=\dfrac{32}{16}=\qty{2.0}{\mole}$ et
+$n(\ce{O2})=\dfrac{32}{32}=\qty{1.0}{\mole}$.\\[2pt]
+À la même température, $\dfrac{pV}{n}=RT$ est identique pour les deux gaz :
+\[ \frac{p(\ce{CH4})\,V(\ce{CH4})}{n(\ce{CH4})}=\frac{p(\ce{O2})\,V(\ce{O2})}{n(\ce{O2})}. \]
+On isole $p(\ce{O2})$ :
+\[ p(\ce{O2})=p(\ce{CH4})\times\frac{V(\ce{CH4})}{V(\ce{O2})}\times\frac{n(\ce{O2})}{n(\ce{CH4})}
+   =0{,}20\times\frac{5{,}0}{10{,}0}\times\frac{1{,}0}{2{,}0}
+   =0{,}20\times0{,}5\times0{,}5=\rf{\qty{0.05}{\atm}}. \]
+\emph{Vérification :} $\dfrac{pV}{n}$ vaut $\dfrac{0{,}2\times5}{2}=0{,}5$ pour \ce{CH4} et
+$\dfrac{0{,}05\times10}{1}=0{,}5$ pour \ce{O2} : identiques, donc bien la même température. $\checkmark$
+\end{cor}
+
+\begin{cor}[Le corollaire d'Avogadro]
+Pour chaque ballon, $pV=nRT$, donc $n=\dfrac{pV}{RT}$. Les deux ballons ont le \emph{même} $V$, la
+\emph{même} $p$, la \emph{même} $T$ (et $R$ est universelle). Donc :
+\[ n(\ce{H2})=\frac{pV}{RT}=n(\ce{CO2}). \]
+Les deux contiennent \rf{le même nombre de moles}, donc (en multipliant par le nombre d'Avogadro) le
+\rf{même nombre de molécules}. C'est exactement la loi d'Avogadro : à $p$ et $T$ fixés, des volumes égaux
+renferment le même nombre de molécules, \emph{quelle que soit la nature du gaz}. Les \textbf{masses}
+diffèrent pourtant, car $m=nM$ et $M(\ce{CO2})=\qty{44}{\gram\per\mole}\neq M(\ce{H2})=\qty{2}{\gram\per\mole}$.
+\end{cor}
+
+\end{document}

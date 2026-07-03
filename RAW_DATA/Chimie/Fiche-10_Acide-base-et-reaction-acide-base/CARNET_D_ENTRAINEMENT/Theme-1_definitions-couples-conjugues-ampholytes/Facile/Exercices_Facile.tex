@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{acidecol}{RGB}{205,60,45}
+\definecolor{basecol}{RGB}{40,110,200}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exobox}[1][]{boxbase,colback=primary!4,colframe=primary,title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{consigne}{boxbase,colback=methcol!7,colframe=methcol,sharp corners}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 10} — Thème 1 : couples acide/base}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Exercices — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 --- Niveau Facile}\\[2pt]
+{\color{primary}\itshape Couples acide/base conjugués : le geste $\pm\,\ce{H+}$}
+\end{center}
+
+\begin{consigne}
+\textbf{Objectif du niveau.} Automatiser la construction d'un couple : passer d'un acide à sa base conjuguée
+(on enlève un \ce{H+}) et d'une base à son acide conjugué (on ajoute un \ce{H+}), sans jamais se tromper de
+charge. Aucun calcul : uniquement des formules chimiques.
+\end{consigne}
+
+\begin{exobox}[donner la base conjuguée d'un acide]
+Pour chacun des acides suivants, écrire la \textbf{base conjuguée} (on retire un \ce{H+}), en soignant la charge :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item \ce{HCl}
+  \item \ce{CH3COOH} (acide acétique)
+  \item \ce{NH4+} (ion ammonium)
+  \item \ce{H2CO3} (acide carbonique)
+  \item \ce{HSO4-} (ion hydrogénosulfate)
+\end{enumerate}
+\end{exobox}
+
+\begin{exobox}[donner l'acide conjugué d'une base]
+Pour chacune des bases suivantes, écrire l'\textbf{acide conjugué} (on ajoute un \ce{H+}), en soignant la charge :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item \ce{OH-} (ion hydroxyde)
+  \item \ce{NH3} (ammoniac)
+  \item \ce{CO3^{2-}} (ion carbonate)
+  \item \ce{HCO3-} (ion hydrogénocarbonate)
+  \item \ce{F-} (ion fluorure)
+\end{enumerate}
+\end{exobox}
+
+\begin{exobox}[qui donne, qui capte ?]
+Dans chacune des réactions ci-dessous, désigner \textbf{l'espèce qui joue le rôle d'acide} (celle qui cède
+le \ce{H+}) et \textbf{celle qui joue le rôle de base} (celle qui capte le \ce{H+}).
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=2pt]
+  \item $\ce{HCl + H2O -> Cl- + H3O+}$
+  \item $\ce{NH3 + H2O <=> NH4+ + OH-}$
+  \item $\ce{CH3COOH + H2O <=> CH3COO- + H3O+}$
+\end{enumerate}
+\end{exobox}
+
+\begin{exobox}[écrire la demi-équation d'un couple]
+Écrire la demi-équation acide-base $\ce{acide <=> base + H+}$ associée à chacun des couples suivants :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item couple \ce{HNO2}/\ce{NO2-}
+  \item couple \ce{NH4+}/\ce{NH3}
+  \item couple \ce{HCO3-}/\ce{CO3^{2-}}
+\end{enumerate}
+\end{exobox}
+
+\begin{exobox}[acide ou base de Lewis ?]
+Selon Lewis, un \textbf{acide} accepte un doublet d'électrons (atome à orbitale vide) et une \textbf{base}
+donne un doublet d'électrons. Classer chaque espèce en « acide de Lewis » ou « base de Lewis » :
+\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
+  \item \ce{NH3} (l'azote porte un doublet non liant)
+  \item \ce{BF3} (le bore possède une orbitale vide)
+  \item \ce{H+}
+  \item \ce{H2O} (l'oxygène porte deux doublets non liants)
+\end{enumerate}
+\end{exobox}
+
+\end{document}

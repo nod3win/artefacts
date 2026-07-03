@@ -1,0 +1,192 @@
+% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\molar}{M}
+\DeclareSIUnit{\Molar}{mol\,L^{-1}}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{cationcol}{RGB}{0,90,190}
+\definecolor{anioncol}{RGB}{200,60,55}
+\definecolor{cristalcol}{RGB}{110,105,120}
+\definecolor{eaucol}{RGB}{120,180,220}
+\definecolor{solcol}{RGB}{0,135,90}
+\definecolor{kpscol}{RGB}{198,93,9}
+\definecolor{qcol}{RGB}{120,94,200}
+\definecolor{precipcol}{RGB}{110,70,40}
+\definecolor{exercol}{RGB}{150,98,162}
+\definecolor{corrcol}{RGB}{0,120,100}
+
+% ---------- Macros ----------
+\newcommand{\Kps}{K_{\mathrm{ps}}}
+\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
+
+% ---------- Style des boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox[auto counter]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=exercol!4,colframe=exercol,
+  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{correction}[1][]{%
+  boxbase,colback=corrcol!4,colframe=corrcol,
+  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---------- Environnement « où : » ----------
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
+             minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
+              minimum size=5mm,font=\bfseries\scriptsize,text=white},
+  ptn/.style={circle,fill=black,inner sep=1.1pt}}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+% ---------- Bandeau de titre ----------
+% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
+\newcommand{\bandeau}[3]{%
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,
+      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
+  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
+\end{tikzpicture}
+\end{center}
+\vspace{2mm}}
+\begin{document}
+\bandeau{Thème 3 — Quotient $Q$ \& précipitation}%
+{Exercices — Niveau Moyen}%
+{Précipitation par mélange (avec dilution) et seuils de précipitation}
+
+\noindent\textit{Consigne : pense à \textbf{recalculer les concentrations} après tout mélange (volume
+total !) avant de calculer $Q$.}
+\medskip
+
+\begin{exercice}[précipitation du magnésium marin]
+On extrait le magnésium de l'eau de mer en précipitant \ce{Mg(OH)2} ($\Kps=\num{9{,}0e-12}$ à
+\qty{298}{\kelvin}). Dans l'eau de mer, $[\ce{Mg^2+}]=\qty{0{,}06}{\molar}$. On amène la concentration
+en ions hydroxyde à $[\ce{OH-}]=\qty{2{,}0e-3}{\molar}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item Écris l'expression de $Q$ pour \ce{Mg(OH)2}.
+  \item Calcule $Q$ et compare-le à $\Kps$.
+  \item La précipitation a-t-elle lieu ? Peut-on la dire « complète » ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[mélange qui précipite]
+On mélange \qty{50}{\milli\litre} de nitrate d'argent \ce{AgNO3} à \qty{2{,}0e-4}{\molar} avec
+\qty{50}{\milli\litre} de chlorure de sodium \ce{NaCl} à \qty{2{,}0e-4}{\molar}. On donne
+$\Kps(\ce{AgCl})=\num{1{,}8e-10}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item Calcule $[\ce{Ag+}]$ et $[\ce{Cl-}]$ \emph{après} mélange (attention au volume total).
+  \item Calcule $Q$ et compare à $\Kps$.
+  \item Un précipité de \ce{AgCl} se forme-t-il ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[mélange qui ne précipite pas — le contraste]
+On refait la même expérience, mais avec des solutions \textbf{beaucoup plus diluées} :
+\qty{50}{\milli\litre} de \ce{AgNO3} à \qty{1{,}0e-6}{\molar} et \qty{50}{\milli\litre} de \ce{NaCl} à
+\qty{1{,}0e-6}{\molar}. ($\Kps(\ce{AgCl})=\num{1{,}8e-10}$.)
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item Calcule $[\ce{Ag+}]$ et $[\ce{Cl-}]$ après mélange, puis $Q$.
+  \item Y a-t-il précipitation ? Compare avec l'exercice précédent et explique le rôle de la concentration.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[seuil de précipitation]
+Une solution contient $[\ce{Ca^2+}]=\qty{1{,}0e-2}{\molar}$. On y ajoute progressivement des ions
+fluorure \ce{F-}. On donne $\Kps(\ce{CaF2})=\num{3{,}9e-11}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item Écris la condition de \emph{début} de précipitation de \ce{CaF2} ($Q=\Kps$).
+  \item Calcule la concentration $[\ce{F-}]$ à partir de laquelle \ce{CaF2} commence à précipiter.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[sens d'évolution]
+Une solution est sursaturée en un sel peu soluble ($Q>\Kps$).
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item Dans quel sens le système évolue-t-il ? Que deviennent les concentrations des ions et la valeur
+        de $Q$ au cours du temps ?
+  \item À l'inverse, si l'on \textbf{dilue fortement} une solution juste saturée ($Q=\Kps$), le
+        précipité se forme-t-il ou se dissout-il ? Justifie avec le critère.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

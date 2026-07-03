@@ -1,0 +1,122 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 1 : Les chiffres significatifs
+%  THÈME 3 — Arrondir & opérations (addition/soustraction, mult./division)
+%  Fiche TUTO
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=8pt]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{reglecol}{RGB}{150,98,162}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\newcommand{\cs}{chiffre significatif}
+\newcommand{\CS}{chiffres significatifs}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto · Thème 3}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=1.6mm,bottom=1.6mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{regle}[1][]{boxbase,colback=reglecol!7,colframe=reglecol,
+  title={\textsc{Règle}\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\ : \textmd{\itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\ : \textmd{\itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\ : \textmd{\itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}\setlength{\parskip}{2pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 3 — Arrondir \& opérations}\\[1pt]
+{\large\color{primary} Le résultat n'est jamais plus précis que les données}
+\end{center}
+\vspace{1mm}
+
+Un calcul ne peut pas \emph{fabriquer} de la précision : le résultat doit refléter la donnée la moins
+bien connue. Ce thème entraîne trois gestes : \textbf{arrondir} proprement, puis appliquer la
+\textbf{bonne règle} selon qu'on additionne ou qu'on multiplie.
+
+\begin{regle}[arrondir au rang voulu]
+On regarde le \textbf{premier chiffre supprimé} (juste à droite du dernier chiffre gardé) :
+$0,1,2,3,4 \rightarrow$ on arrondit \textbf{par défaut} (chiffre gardé inchangé) ;
+$5,6,7,8,9 \rightarrow$ on arrondit \textbf{par excès} ($+1$ au chiffre gardé).
+Une \emph{retenue} peut se propager : $\num{2,996}$ à $3$~CS donne $\num{3,00}$ (on garde le
+« $00$ » pour conserver $3$~CS).
+\end{regle}
+
+\begin{regle}[addition et soustraction : on compte les \emph{décimales}]
+Le résultat s'arrondit au \textbf{même nombre de décimales} (chiffres après la virgule) que la donnée
+qui en a le \emph{moins}. (Une somme se fait rang par rang : le rang le moins bien connu contamine ce
+même rang du résultat.)
+\end{regle}
+
+\begin{regle}[multiplication et division : on compte les \CS]
+Le résultat s'arrondit au \textbf{même nombre de \CS} que la donnée qui en a le \emph{moins}.
+\end{regle}
+
+\begin{exemple}[chaque règle sur un cas]
+\textbf{Addition} — la donnée la moins précise a $1$ décimale :
+\[ \num{123,25}+\num{46,0}+\num{86,257}=\num{255,507}\ \xrightarrow{\text{1 décimale}}\ \boxed{\num{255,5}}. \]
+\textbf{Division} — la donnée la moins riche a $3$~CS :
+\[ \frac{\qty{0,0361}{\milli\gram}}{\qty{12,0}{\litre}} = \num{3,00833e-3}\ \xrightarrow{3\ \text{CS}}\ \boxed{\num{3,01e-3}}\ \si{\gram\per\cubic\metre}. \]
+\end{exemple}
+
+\begin{attention}[deux réflexes de survie]
+\textbf{1. On n'arrondit qu'à la fin.} Dans un calcul en plusieurs étapes, on garde des
+\emph{chiffres de garde} et on arrondit \textbf{une seule fois}, au résultat final. Arrondir trop tôt
+amplifie l'erreur.
+
+\smallskip
+\textbf{2. La soustraction de nombres voisins détruit les \CS.} $\num{8,11}-\num{8,0}=\num{0,11}\to\num{0,1}$ :
+de $3$ et $2$~CS, on tombe à $\mathbf{1}$~CS. À éviter en chimie analytique.
+\end{attention}
+
+\begin{methode}[un calcul mixte $+$ et $\times$]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=0pt]
+  \item faire tout le calcul \emph{sans arrondir} (chiffres de garde) ;
+  \item repérer, pour \emph{chaque} étape, la règle adaptée (décimales pour $+/-$, CS pour $\times/\div$) ;
+  \item arrondir \emph{une seule fois}, à la fin, selon l'étape limitante.
+\end{enumerate}
+\end{methode}
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}l l l@{}}
+\toprule
+\textbf{Opération} & \textbf{On compte\dots} & \textbf{Le résultat a\dots}\\
+\midrule
+Addition / soustraction   & les décimales & le minimum de décimales des données\\
+Multiplication / division & les \CS       & le minimum de \CS\ des données\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

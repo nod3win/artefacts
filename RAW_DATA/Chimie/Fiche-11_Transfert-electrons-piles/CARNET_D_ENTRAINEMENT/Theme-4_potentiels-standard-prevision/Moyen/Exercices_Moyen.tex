@@ -1,0 +1,94 @@
+% =====================================================================
+%  FICHE 11 — THEME 4 — Exercices MOYEN — Potentiels standard et prévision
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+\newcommand{\Ered}{\ensuremath{E_{\mathrm{r}}^{\circ}}}
+
+\newcounter{exo}
+\newtcolorbox{exo}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=primary!4,
+  colframe=primary,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Exercice~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+\newtcolorbox{donnees}{enhanced,boxrule=0.7pt,arc=2pt,colback=black!3,colframe=black!45,
+  left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries\small,coltitle=black!70,
+  title={Données — potentiels standard de réduction \Ered\ (à \SI{25}{\celsius})}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 4} — Potentiels standard et prévision}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Niveau Moyen}\\[2pt]
+{\small\itshape Prévoir si une réaction a lieu et l'écrire — situations directement issues du concours.}\\[-4pt]
+{\color{primary}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{donnees}
+\centering\small
+\begin{tabular}{lcccccc}
+Couple & \ce{F2}/\ce{F^-} & \ce{Au^{3+}}/\ce{Au} & \ce{Cl2}/\ce{Cl^-} & \ce{MnO2}/\ce{Mn^{2+}} & \ce{Ag+}/\ce{Ag} & \ce{Cu^{2+}}/\ce{Cu}\\
+\Ered\ (V) & $+2{,}87$ & $+1{,}52$ & $+1{,}39$ & $+1{,}224$ & $+0{,}80$ & $+0{,}34$\\[3pt]
+Couple & \ce{H+}/\ce{H2} & \ce{Fe^{2+}}/\ce{Fe} & \ce{Zn^{2+}}/\ce{Zn} & \ce{Ca^{2+}}/\ce{Ca} & \ce{Fe^{3+}}/\ce{Fe^{2+}} & \\
+\Ered\ (V) & $0{,}00$ & $-0{,}44$ & $-0{,}76$ & $-2{,}84$ & $+0{,}77$ & \\
+\end{tabular}
+\end{donnees}
+
+\begin{exo}[\ce{Ag+} face au cuivre et au zinc — d'après livre QCM 17]
+On plonge une lame de cuivre et une lame de zinc dans une solution de nitrate d'argent \ce{AgNO3}.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item \ce{Ag+} oxyde-t-il le cuivre ? Justifie et écris la réaction éventuelle.
+  \item \ce{Ag+} oxyde-t-il le zinc ? Justifie et écris la réaction éventuelle.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le fluor dissout-il l'or ? — d'après livre QCM 19]
+On place une pièce d'or dans une solution saturée en fluor \ce{F2}. Sachant que l'or est un métal
+très noble, l'or va-t-il se dissoudre ? Justifie par les potentiels et écris l'équation si la
+réaction a lieu.
+\end{exo}
+
+\begin{exo}[le fer dans l'acide chlorhydrique — d'après livre QCM 20]
+On introduit des filaments de fer dans une solution d'acide chlorhydrique \ce{HCl} \SI{1}{mol\per\litre}.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item Y a-t-il oxydation du fer ? Justifie par comparaison de \Ered.
+  \item Observe-t-on un dégagement gazeux ? Si oui, lequel ?
+  \item Le fer s'oxyde-t-il en \ce{Fe^{2+}} ou en \ce{Fe^{3+}} ? Explique.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[qui peut réduire \ce{Ag+} ? — d'après livre QCM 18]
+Parmi les quatre espèces \ce{Ca}, \ce{Cu^{2+}}, \ce{Br2} et \ce{Au}, laquelle est capable de
+\textbf{réduire} l'ion \ce{Ag+} en argent métallique \ce{Ag} ? Justifie pourquoi les trois autres ne
+le peuvent pas.
+\end{exo}
+
+\begin{exo}[le dioxyde de manganèse peut-il oxyder \ce{Cl^-} ?]
+On envisage la réaction : $\ce{MnO2 + 4 H+ + 2 Cl^- -> Mn^{2+} + Cl2 + 2 H2O}$.
+En comparant $\Ered(\ce{MnO2}/\ce{Mn^{2+}})$ et $\Ered(\ce{Cl2}/\ce{Cl^-})$, calcule $\Delta E^{\circ}$
+et conclus : cette réaction est-elle spontanée dans les conditions standard ?
+\end{exo}
+
+\end{document}

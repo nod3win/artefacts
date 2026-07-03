@@ -1,0 +1,97 @@
+% =====================================================================
+%  FICHE 11 — THEME 2 — Corrigé FACILE — Oxydant, réducteur, demi-équations
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corrcol}{RGB}{0,135,90}
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+
+\newcounter{exo}
+\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
+  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 2} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 2 — Corrigé Facile}\\[-2pt]
+{\color{corrcol}\rule{\textwidth}{1pt}}
+\end{center}
+
+\begin{corr}[compléter les définitions]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item son \NO\ \textbf{augmente} et elle \textbf{perd} des électrons.
+  \item l'oxydant \textbf{capte} des électrons ; c'est celle qui est \textbf{réduite}.
+  \item le réducteur \textbf{cède (perd)} des électrons ; c'est celle qui est \textbf{oxydée}.
+  \item du côté de l'\textbf{oxydant}.
+\end{enumerate}
+\emph{Mnémo : « on oxyde un réducteur, on réduit un oxydant ».}
+\end{corr}
+
+\begin{corr}[trois couples classiques]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{Fe^{3+}}/\ce{Fe^{2+}} : $\ce{Fe^{3+} + e^- <=> Fe^{2+}}$, $n=1$.
+        Oxydant \ce{Fe^{3+}} ($+\mathrm{III}$), réducteur \ce{Fe^{2+}} ($+\mathrm{II}$).
+  \item \ce{Cu^{2+}}/\ce{Cu} : $\ce{Cu^{2+} + 2 e^- <=> Cu}$, $n=2$.
+        Oxydant \ce{Cu^{2+}} ($+\mathrm{II}$), réducteur \ce{Cu} ($0$).
+  \item \ce{Ag+}/\ce{Ag} : $\ce{Ag+ + e^- <=> Ag}$, $n=1$.
+        Oxydant \ce{Ag+} ($+\mathrm{I}$), réducteur \ce{Ag} ($0$).
+\end{itemize}
+Dans chaque cas l'électron est bien du côté de la forme oxydée.
+\end{corr}
+
+\begin{corr}[repérer l'oxydation]
+Une oxydation = \NO\ qui \textbf{augmente} = électrons \textbf{produits} (à droite).
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item (1) \ce{Cu(s) -> Cu^{2+} + 2 e^-} : Cu passe de $0$ à $+\mathrm{II}$ $\Rightarrow$ \textbf{oxydation}. \checkmark
+  \item (2) réduction ($+\mathrm{II}\to 0$).
+  \item (3) \ce{Fe^{2+} -> Fe^{3+} + e^-} : Fe passe de $+\mathrm{II}$ à $+\mathrm{III}$ $\Rightarrow$ \textbf{oxydation}. \checkmark
+  \item (4) réduction ($+\mathrm{III}\to +\mathrm{II}$).
+\end{itemize}
+Réponses : \textbf{(1) et (3)}. \emph{(La proposition retenue au livre QCM~11 est la (1).)}
+\end{corr}
+
+\begin{corr}[qui est réduit ?]
+\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{H2} : $\NO(\ce{H})=0$ ; \ce{S} : $\NO(\ce{S})=0$ (corps simples).
+        Dans \ce{H2S} : $\NO(\ce{H})=+\mathrm{I}$ et $\NO(\ce{S})=-\mathrm{II}$.
+  \item L'hydrogène passe de $0$ à $+\mathrm{I}$ : il est \textbf{oxydé}.
+        Le soufre passe de $0$ à $-\mathrm{II}$ : il est \textbf{réduit}.
+  \item L'espèce réduite est le soufre : \ce{S} joue le rôle d'\textbf{oxydant}. \emph{(Réponse B, livre QCM~8.)}
+\end{enumerate}
+\end{corr}
+
+\begin{corr}[identifier Ox et Red par le \NO]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
+  \item \ce{Sn^{4+}}/\ce{Sn^{2+}} : oxydant \ce{Sn^{4+}} ($+\mathrm{IV}$), réducteur \ce{Sn^{2+}} ($+\mathrm{II}$).
+  \item \ce{Cl2}/\ce{Cl^-} : oxydant \ce{Cl2} ($0$), réducteur \ce{Cl^-} ($-\mathrm{I}$).
+  \item \ce{MnO4^-}/\ce{Mn^{2+}} : oxydant \ce{MnO4^-} ($\NO(\ce{Mn})=+\mathrm{VII}$), réducteur \ce{Mn^{2+}} ($+\mathrm{II}$).
+\end{itemize}
+Règle : l'oxydant est \emph{toujours} la forme au \NO\ le plus élevé.
+\end{corr}
+
+\end{document}

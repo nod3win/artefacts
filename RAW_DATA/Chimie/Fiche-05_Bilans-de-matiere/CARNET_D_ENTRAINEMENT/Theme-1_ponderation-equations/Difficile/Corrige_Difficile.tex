@@ -1,0 +1,121 @@
+% =====================================================================
+%  THÈME 1 — Pondération des équations chimiques
+%  Niveau DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{corrcol}{RGB}{176,110,20}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 1 : Pondération}}
+\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Pondération}\\[1pt]
+{\large\color{corrcol}\textbf{Corrigé — Niveau Difficile}}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{cor}[combustion du kérosène \ce{C14H30}]
+\textbf{a)} $14$ atomes C à gauche $\Rightarrow \mathbf{14\,\ce{CO2}}$ à droite.\\
+\textbf{b)} $30$ atomes H $\Rightarrow \mathbf{15\,\ce{H2O}}$ (car $15\times2=30$).\\
+\textbf{c)} Oxygène à droite : $14\times2 + 15\times1 = 28+15 = 43$ atomes. Par paquets de 2, il faut
+$\dfrac{43}{2}\,\ce{O2}$ :
+\[ \ce{C14H30 + 43/2 O2 -> 14 CO2 + 15 H2O}. \]
+\textbf{d)} On multiplie toute l'équation par $2$ :
+\[ \boxed{\ce{2 C14H30 + 43 O2 -> 28 CO2 + 30 H2O}} \]
+\textbf{e)} \emph{Vérif :} C $28=28$ ; H $60=60$ ; O $86=86$ ($43\times2$ vs $28\times2+30$). \checkmark
+\rep{Somme $=2+43+28+30=\boxed{103}$.}
+\end{cor}
+
+\begin{cor}[vérifier et corriger une équation ionique]
+\textbf{a) Inventaire de la version proposée.}
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+Élément & Réactifs & Produits (proposés)\\ \midrule
+\ce{Co} & $3$ & $3$ (\ce{CoCl2}) \quad\checkmark\\
+\ce{K}  & $2$ (\ce{2 KNO3}) & $1$ (\ce{KCl}) \quad\textcolor{red}{$\neq$}\\
+\ce{N}  & $2$ & $2$ (\ce{NO}) \quad\checkmark\\
+\ce{O}  & $6$ (\ce{2 KNO3}) & $2+4=6$ \quad\checkmark\\
+\ce{H}  & $8$ (\ce{HCl}) & $8$ (\ce{4 H2O}) \quad\checkmark\\
+\ce{Cl} & $8$ (\ce{HCl}) & $3\times2+1=7$ \quad\textcolor{red}{$\neq$}\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{b)} Le \textbf{potassium} ($2\to1$) et le \textbf{chlore} ($8\to7$) ne sont pas équilibrés.\\
+\textbf{c)} Il manque un \ce{KCl}. En mettant le coefficient \textbf{2} devant \ce{KCl}, on rétablit
+\emph{simultanément} K ($2\to2$) et Cl ($8\to 6+2=8$) :
+\[ \boxed{\ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 2 KCl + 4 H2O}} \]
+\rep{d) Somme $=3+2+8+2+3+2+4=\boxed{24}$.}
+\end{cor}
+
+\begin{cor}[une équation redox « moléculaire » à plusieurs groupements]
+\textbf{a) Cr et K.} On essaie $2\,\ce{K2Cr2O7}$ : cela donne $4$ Cr et $4$ K à gauche.
+$\Rightarrow 2\,\ce{Cr2(SO4)3}$ (4 Cr) et $2\,\ce{K2SO4}$ (4 K).\\
+\textbf{b) Groupes \ce{SO4}.} À droite : $2\times3$ (dans \ce{Cr2(SO4)3}) $+\,2\times1$ (dans \ce{K2SO4})
+$=8$ groupes \ce{SO4} $\Rightarrow 8\,\ce{H2SO4}$.\\
+\textbf{c) Carbone et hydrogène.} L'hydrogène : $8\,\ce{H2SO4}=16$ H $\Rightarrow 8\,\ce{H2O}$.
+Il reste à fixer le carbone ; le nombre de \ce{CO2} se lit sur l'oxygène et vaut $3$, d'où $3\,\ce{C}$ :
+\[ \boxed{\ce{2 K2Cr2O7 + 3 C + 8 H2SO4 -> 3 CO2 + 2 Cr2(SO4)3 + 2 K2SO4 + 8 H2O}} \]
+\textbf{d) Contrôle oxygène.} Gauche : $2\times7+8\times4=14+32=46$. Droite :
+$3\times2+2\times12+2\times4+8\times1=6+24+8+8=46$. \checkmark
+\rep{Somme $=2+3+8+3+2+2+8=\boxed{28}$.}
+\end{cor}
+
+\begin{cor}[équation ionique redox avec charges : dichromate + fer(II)]
+\textbf{a) Chrome.} \ce{Cr2O7^2-} porte 2 Cr $\Rightarrow 2\,\ce{Cr^3+}$.\\
+\textbf{b) O et H} avec les coefficients donnés :
+\[ \ce{Cr2O7^2- + 14 H3O+ + 6 Fe^2+ -> 2 Cr^3+ + 21 H2O + 6 Fe^3+}. \]
+Oxygène : gauche $7+14=21$, droite $21$. \checkmark\quad
+Hydrogène : gauche $14\times3=42$, droite $21\times2=42$. \checkmark\quad
+Fer : $6=6$. \checkmark\\
+\textbf{c) Charges.}
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+ & Réactifs & Produits\\ \midrule
+Charge & $(-2)+14(+1)+6(+2)=+24$ & $2(+3)+0+6(+3)=+24$\\
+\bottomrule
+\end{tabular}
+\end{center}
+La charge totale vaut $+24$ des deux côtés : l'équation est correctement pondérée en atomes
+\emph{et} en charges.
+\rep{Équation ionique complète : \ce{Cr2O7^2- + 14 H3O+ + 6 Fe^2+ -> 2 Cr^3+ + 21 H2O + 6 Fe^3+}.}
+\end{cor}
+
+\end{document}

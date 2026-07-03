@@ -1,0 +1,98 @@
+% =====================================================================
+%  FICHE 8 — THÈME 2 — NIVEAU MOYEN — CORRIGÉ
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=power,group-separator={\,},group-minimum-digits=5}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{titlesec}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!4,colframe=excol,title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\dH}{\Delta H}
+\newcommand{\dHr}{\Delta H^{\circ}_{\text{r}}}
+\newcommand{\dHf}{\Delta H^{\circ}_{\text{f}}}
+\newcommand{\rep}[1]{\textcolor{primarydark}{\textbf{#1}}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Thème 2 : Enthalpie de formation et loi de Hess}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen — corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=excol,text=white,minimum width=16cm,
+      minimum height=1.1cm,align=center,inner sep=6pt]
+  {{\large\bfseries Thème 2 — Enthalpie de formation et loi de Hess}\\[1pt]{\small Niveau \textsc{Moyen} — corrigé détaillé}};
+\end{tikzpicture}
+\end{center}
+
+\begin{correction}[combustion de l'éthanol]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\dHr = \big[2\,\dHf(\ce{CO2}) + 3\,\dHf(\ce{H2O},l)\big] - \big[\dHf(\ce{C2H5OH},l) + 3\,\dHf(\ce{O2})\big]$.
+  \item Avec $\dHf(\ce{O2})=0$ :
+  \[ \dHr = \big[2(-394) + 3(-286)\big] - (-278) = (-788 - 858) + 278 = \rep{\SI{-1368}{\kilo\joule}}. \]
+  $\dHr<0$ : combustion \rep{exothermique} (comme toute combustion).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[oxydation du dioxyde de soufre — deux méthodes]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\dHr = 2\,\dHf(\ce{SO3}) - \big[2\,\dHf(\ce{SO2}) + \dHf(\ce{O2})\big]
+        = 2(-400) - 2(-300) = -800 + 600 = \rep{\SI{-200}{\kilo\joule}}$.
+  \item Cette valeur correspond à la formation de \rep{2 mol} de $\ce{SO3}$. Par mole :
+        $\dfrac{-200}{2} = \rep{\SI{-100}{\kilo\joule\per\mol}}$ de $\ce{SO3}$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[remonter à un $\dHf$ inconnu]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item $\dHr = \big[2\,\dHf(\ce{H2O},l) + \dHf(\ce{O2})\big] - 2\,\dHf(\ce{H2O2},l)$.
+  \item On isole $\dHf(\ce{H2O2},l)$ :
+  \[ -196 = 2(-286) - 2\,\dHf(\ce{H2O2},l) \;\Longrightarrow\; 2\,\dHf(\ce{H2O2},l) = -572 + 196 = -376, \]
+  \[ \dHf(\ce{H2O2},l) = \rep{\SI{-188}{\kilo\joule\per\mol}}. \]
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[combiner deux réactions]
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=2pt]
+  \item On garde $(1)$ et on \emph{inverse} $(2)$ : la cible est $\;(1) - (2)$.
+  \begin{align*}
+    & \ce{C}(s) + \ce{O2}(g) \rightarrow \ce{CO2}(g) & (\dH_1)\\
+    + \;& \ce{CO2}(g) \rightarrow \ce{CO}(g) + \tfrac12\,\ce{O2}(g) & (-\dH_2)\\
+    \hline
+    & \ce{C}(s) + \tfrac12\,\ce{O2}(g) \rightarrow \ce{CO}(g) &
+  \end{align*}
+  ($\ce{CO2}$ et une partie de $\ce{O2}$ se simplifient).
+  \item $\dH = \dH_1 - \dH_2 = -394 - (-283) = \rep{\SI{-111}{\kilo\joule}}$. La formation du monoxyde de
+        carbone à partir du carbone est \rep{exothermique}.
+\end{enumerate}
+\end{correction}
+
+\end{document}

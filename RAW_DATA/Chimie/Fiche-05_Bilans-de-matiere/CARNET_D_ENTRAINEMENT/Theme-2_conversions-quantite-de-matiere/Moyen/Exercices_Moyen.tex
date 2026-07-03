@@ -1,0 +1,91 @@
+% =====================================================================
+%  THÈME 2 — Conversions en quantité de matière
+%  Niveau MOYEN — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\DeclareSIUnit\atm{atm}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{moycol}{RGB}{198,120,9}
+\newcommand{\gmol}{\si{\gram\per\mole}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 2 : Conversions}}
+\fancyhead[R]{\small\textcolor{moycol}{\textsc{Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=moycol!6,colframe=moycol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 2 — Conversions}\\[1pt]
+{\large\color{moycol}\textbf{Niveau Moyen}}\\[2pt]
+{\itshape Objectif : enchaîner deux conversions (masse, volume, densité, entités).}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\textbf{Données :} $N_A=\SI{6,02e23}{}$ ; $\Vm=\SI{22,4}{\litre\per\mole}$ (TPN).\quad
+Masses molaires (\gmol) fournies dans chaque énoncé.
+
+\begin{exo}[du gramme au volume gazeux]
+On dispose de \SI{16}{\gram} de dioxygène \ce{O2} ($M=\SI{32}{\gram\per\mole}$).
+Quel volume ce gaz occupe-t-il aux conditions TPN ?
+\emph{(Chaîne : masse $\xrightarrow{\div M}$ mole $\xrightarrow{\times \Vm}$ volume.)}
+\end{exo}
+
+\begin{exo}[la densité d'un liquide]
+Le dichlorométhane \ce{CH2Cl2} ($M=\SI{85}{\gram\per\mole}$) a une densité $d=1{,}70$
+(c.-à-d.\ $\SI{1,70}{\gram\per\milli\litre}$). On en prélève \SI{100}{\milli\litre}.
+\textbf{a)} Quelle est la masse prélevée ?\quad
+\textbf{b)} À combien de moles cela correspond-il ?
+\end{exo}
+
+\begin{exo}[peser un nombre voulu de molécules]
+Le mannitol ($M=\SI{182}{\gram\per\mole}$) est un sucre utilisé en perfusion. On souhaite disposer
+d'exactement $\SI{1,20e21}{}$ molécules de mannitol.
+\textbf{a)} À quelle quantité de matière (en mol) cela correspond-il ?\quad
+\textbf{b)} Quelle masse (en mg) faut-il alors peser ?
+\end{exo}
+
+\begin{exo}[du comprimé à la concentration]
+Un comprimé apporte \SI{755}{\milli\gram} de paracétamol \ce{C8H9NO2}
+($M=\SI{151}{\gram\per\mole}$), que l'on dissout dans \SI{200}{\milli\litre} d'eau.
+\textbf{a)} Combien de moles de paracétamol le comprimé contient-il ?\quad
+\textbf{b)} Quelle est la concentration molaire de la solution obtenue ?
+\end{exo}
+
+\begin{exo}[remonter à la masse molaire d'un gaz]
+Un échantillon de \SI{5,0}{\gram} d'un gaz inconnu occupe \SI{5,6}{\litre} aux conditions TPN.
+\textbf{a)} Quelle est sa quantité de matière ?\quad
+\textbf{b)} En déduire sa masse molaire $M$. \emph{(Chaîne : volume $\to$ mole, puis $M=m/n$.)}
+\end{exo}
+
+\end{document}

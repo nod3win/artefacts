@@ -1,0 +1,99 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — CHIMIE — FICHE 3 — THÈME 1
+%  Particules subatomiques — NIVEAU MOYEN — ÉNONCÉS
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=9pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{124,78,140}
+\definecolor{primarydark}{RGB}{74,44,92}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{attncol}{RGB}{200,40,55}
+
+\newcommand{\nuc}[3]{\prescript{#1}{#2}{\mathrm{#3}}}
+\newcommand{\pp}{p^{+}}
+\newcommand{\ee}{e^{-}}
+\newcommand{\nz}{n^{0}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 3 — Thème 1}} : Particules subatomiques}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen — Énoncés}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcounter{exo}
+\newcommand{\exo}[1][]{\stepcounter{exo}\par\medskip%
+  \noindent{\color{primary}\rule[-2pt]{3.5pt}{15pt}}\ \textbf{\color{primarydark}\large Exercice \theexo}%
+  \ifx\relax#1\relax\relax\else\ \textmd{\normalsize\color{black!65}— \itshape #1}\fi\par\nopagebreak\smallskip}
+
+\setlist{leftmargin=1.7em,topsep=2pt,itemsep=3pt}
+
+\begin{document}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=6pt,fill=primary,text=white,
+      minimum width=\textwidth,minimum height=1.35cm,align=center,inner sep=6pt]
+  {\Large\bfseries Thème 1 — Particules subatomiques\\[2pt]
+   \normalsize\mdseries Niveau Moyen — Énoncés};
+\end{tikzpicture}
+
+\vspace{3pt}
+{\small\itshape Données : $e = 1{,}6\times10^{-19}$ C ; $m(\pp)\approx m(\nz)\approx 1{,}7\times10^{-27}$ kg ;
+$m(\ee)\approx 9{,}1\times10^{-31}$ kg. Travaille les puissances de $10$ à la main (multiplier les
+mantisses, additionner les exposants).}
+
+% ---------------------------------------------------------------
+\exo[charge d'un grand nombre de protons]
+Quelle est la charge électrique, en coulombs, d'un ensemble de $10^{12}$ protons ? Détaille le calcul en
+séparant la mantisse et la puissance de $10$.
+
+% ---------------------------------------------------------------
+\exo[charge d'un ensemble d'électrons]
+Un nuage contient $2{,}5\times10^{15}$ électrons. Quelle est sa charge totale, en coulombs ? Précise le
+\textbf{signe} et justifie-le.
+
+% ---------------------------------------------------------------
+\exo[remonter au nombre de particules]
+Un petit corps porte une charge de $+4{,}8\times10^{-18}$ C, due à un \textbf{excès de protons} (il a plus
+de protons que d'électrons). Combien de protons en excès porte-t-il ?
+
+% ---------------------------------------------------------------
+\exo[rapport des masses]
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le rapport $\dfrac{m(\ee)}{m(\pp)}$. Combien de fois, environ, l'électron est-il plus léger
+        que le proton ?
+  \item Un proton est-il plus lourd, aussi lourd, ou plus léger qu'un neutron ?
+\end{enumerate}
+
+% ---------------------------------------------------------------
+\exo[où se cache la masse d'un atome ?]
+On considère un atome dont le noyau contient $6$ protons et $6$ neutrons ; l'atome neutre possède donc
+$6$ électrons.
+\begin{enumerate}[label=\alph*)]
+  \item Estime la masse du \textbf{noyau} (somme des masses des nucléons), en kg.
+  \item Estime la masse totale des $6$ \textbf{électrons}, en kg.
+  \item Compare : quelle fraction de la masse de l'atome les électrons représentent-ils, en ordre de
+        grandeur ? Conclus.
+\end{enumerate}
+
+\end{document}

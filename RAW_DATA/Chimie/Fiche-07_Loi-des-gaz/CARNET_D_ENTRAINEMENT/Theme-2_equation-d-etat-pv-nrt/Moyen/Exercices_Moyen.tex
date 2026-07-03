@@ -1,0 +1,119 @@
+% !TEX program = pdflatex
+% THEME 2 — Moyen — Exercices
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit{\atm}{atm}
+\DeclareSIUnit{\bar}{bar}
+\DeclareSIUnit{\mmHg}{mmHg}
+\usepackage[version=4]{mhchem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,calc,shapes.geometric}
+
+\definecolor{primary}{RGB}{150,98,162}
+\definecolor{primarydark}{RGB}{92,52,110}
+\definecolor{gazcol}{RGB}{0,120,190}
+\definecolor{azote}{RGB}{60,90,200}
+\definecolor{oxygene}{RGB}{210,60,60}
+
+\newtcolorbox{enonce}[1][]{enhanced,breakable,colback=primary!4,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  fonttitle=\bfseries,coltitle=white,title={#1}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Loi des gaz}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 · Moyen · Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcounter{exo}
+\newenvironment{exo}[1][]{\refstepcounter{exo}\medskip
+  \noindent{\color{primarydark}\bfseries Exercice \theexo.}\ \textit{#1}\par\nopagebreak\smallskip}{\par}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 2 — Niveau Moyen}\\[2pt]
+{\color{primary}\itshape Passer par la masse, comparer deux enceintes, surveiller les unités}
+\end{center}
+\textcolor{primary}{\hrule height 1pt}
+\medskip
+
+\begin{enonce}[Données]
+$R=\qty{0.082}{\atm\litre\per\mole\per\kelvin}$ ; \ $n=\dfrac{m}{M}$ ; \
+$M(\ce{O2})=\qty{32}{\gram\per\mole}$, \ $M(\ce{CH4})=\qty{16}{\gram\per\mole}$,
+\ $M(\ce{N2})=\qty{28}{\gram\per\mole}$.
+\end{enonce}
+
+\begin{exo}[Peser un gaz]
+Une bouteille de plongée rigide de volume $V=\qty{10.0}{\litre}$ contient du dioxygène \ce{O2} sous une
+pression $p=\qty{5.0}{\atm}$ à $\theta=\qty{27}{\degreeCelsius}$.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt]
+  \item Calcule la quantité de matière $n$ de dioxygène.
+  \item Quelle masse $m$ de dioxygène la bouteille contient-elle ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Retrouver une température]
+Un récipient rigide de volume $V=\qty{2.0}{\litre}$ contient $n=\qty{0.10}{\mole}$ de gaz sous une
+pression $p=\qty{1.5}{\atm}$. Quelle est la température $T$ du gaz (en kelvins, puis en degrés Celsius) ?
+\end{exo}
+
+\begin{exo}[L'unité qui change tout]
+Un gaz occupe $V=\qty{5.0}{\litre}$ sous $p=\qty{1.0}{\atm}$ à $T=\qty{300}{\kelvin}$. Un étudiant calcule
+la quantité de matière avec $R=\num{8.314}$ et trouve $n\approx\qty{0.0020}{\mole}$.
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=1pt]
+  \item Pourquoi ce résultat est-il faux ? Quel $R$ fallait-il prendre ?
+  \item Donne la valeur correcte de $n$, et le facteur d'erreur commis par l'étudiant.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Deux enceintes à la même température]
+Du méthane gazeux \ce{CH4} de masse $\qty{32}{\gram}$ est enfermé dans une enceinte de volume
+$\qty{5.0}{\litre}$ sous une pression de $\qty{0.20}{\atm}$. Du dioxygène gazeux \ce{O2} de masse
+$\qty{32}{\gram}$ est enfermé dans une autre enceinte de volume $\qty{10.0}{\litre}$.
+
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize]
+  \draw[thick] (0,0) rectangle (2.2,2.2); \fill[gazcol!8](0,0)rectangle(2.2,2.2);
+  \foreach \x/\y in {0.5/0.5,1.2/1.4,1.7/0.7,0.8/1.8}{\fill[azote](\x,\y)circle(2.6pt);}
+  \node[below] at (1.1,-0.15){\ce{CH4} : $\qty{32}{\gram}$};
+  \node[below] at (1.1,-0.6){$\qty{5.0}{\litre}$, $\qty{0.20}{\atm}$};
+  \node[thick] at (3.3,1.1){\Large ?};
+  \draw[thick] (4.4,0) rectangle (6.6,2.2); \fill[gazcol!8](4.4,0)rectangle(6.6,2.2);
+  \foreach \x/\y in {4.9/0.6,5.6/1.5,6.1/0.7,5.1/1.9,6.2/1.6}{\fill[oxygene](\x,\y)circle(3pt);}
+  \node[below] at (5.5,-0.15){\ce{O2} : $\qty{32}{\gram}$};
+  \node[below] at (5.5,-0.6){$\qty{10.0}{\litre}$, $p=?$};
+\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+
+Quelle doit être la pression $p$ dans l'enceinte contenant le dioxygène pour que la \textbf{température
+soit la même} dans les deux enceintes ? \emph{(Indication : à même $T$, la quantité $pV/n$ est identique
+pour les deux gaz ; inutile de calculer $T$.)}
+\end{exo}
+
+\begin{exo}[Le corollaire d'Avogadro, sans nombre]
+Deux ballons \textbf{identiques} (même volume) contiennent, à la \textbf{même température} et sous la
+\textbf{même pression}, l'un du dihydrogène \ce{H2}, l'autre du dioxyde de carbone \ce{CO2}. En partant de
+$pV=nRT$, montre qu'ils contiennent le \emph{même nombre de moles}, et donc le même nombre de molécules,
+bien que les masses de gaz soient très différentes.
+\end{exo}
+
+\end{document}

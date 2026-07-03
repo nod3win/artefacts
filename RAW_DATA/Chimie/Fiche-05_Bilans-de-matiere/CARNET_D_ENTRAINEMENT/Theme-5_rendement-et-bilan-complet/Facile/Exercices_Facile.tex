@@ -1,0 +1,81 @@
+% =====================================================================
+%  THÈME 5 — Rendement et bilan complet
+%  Niveau FACILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 5 : Rendement}}
+\fancyhead[R]{\small\textcolor{excol}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=excol!5,colframe=excol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement}\\[1pt]
+{\large\color{excol}\textbf{Niveau Facile}}\\[2pt]
+{\itshape Objectif : manier la formule $R=n_{\text{réel}}/n_{\text{théorique}}\times100$ dans les deux sens.}\\
+{\color{primary}\rule{0.64\linewidth}{1pt}}
+\end{center}
+
+\begin{exo}[rendement à partir de moles]
+La quantité \textbf{théorique} de produit d'une réaction est \SI{0,100}{\mole}, mais on n'en obtient
+réellement que \SI{0,080}{\mole}. Quel est le rendement $R$ ?
+\end{exo}
+
+\begin{exo}[rendement à partir de masses]
+On attendait \SI{45}{\gram} de produit ; on en récupère \SI{36}{\gram}.
+Quel est le rendement de la réaction ? \emph{(La masse molaire se simplifie : on peut travailler
+directement sur les masses.)}
+\end{exo}
+
+\begin{exo}[quantité réelle à partir du rendement]
+La quantité théorique de produit est \SI{2,0}{\mole} et le rendement vaut \SI{75}{\percent}.
+Quelle quantité de produit obtient-on réellement ?
+\end{exo}
+
+\begin{exo}[masse réelle à partir du rendement]
+Une synthèse a un rendement de \SI{60}{\percent}. La masse théorique de produit est \SI{50}{\gram}.
+Quelle masse récupère-t-on effectivement ?
+\end{exo}
+
+\begin{exo}[vrai ou faux ? notion de rendement]
+Indique si chaque affirmation est \textbf{vraie} ou \textbf{fausse}, et justifie :
+\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item « Le rendement d'une réaction peut dépasser \SI{100}{\percent}. »
+  \item « Mettre un réactif en grand excès garantit un rendement de \SI{100}{\percent}. »
+  \item « Le rendement réel se mesure expérimentalement ; il peut être bien inférieur à la valeur théorique. »
+\end{enumerate}
+\end{exo}
+
+\end{document}

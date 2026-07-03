@@ -1,0 +1,114 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 1
+%  Niveau FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{corcol}{RGB}{0,114,178}
+\definecolor{astucecol}{RGB}{198,93,9}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
+   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
+\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
+   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 1} — Corrigé}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+
+\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Corrigé du niveau Facile}
+\end{center}
+\medskip
+
+\begin{cor}[électrons de valence]
+Le nombre d'électrons de valence est le \textbf{numéro de colonne} de l'élément :
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|cccccccc}
+\toprule
+Atome & \ce{C} & \ce{O} & \ce{Cl} & \ce{H} & \ce{P} & \ce{Na} & \ce{S} & \ce{N}\\
+$N_v$ & 4 & 6 & 7 & 1 & 5 & 1 & 6 & 5\\
+\bottomrule
+\end{tabular}
+\end{center}
+\rep \ce{C}=4, \ce{O}=6, \ce{Cl}=7, \ce{H}=1, \ce{P}=5, \ce{Na}=1, \ce{S}=6, \ce{N}=5.
+\end{cor}
+
+\begin{cor}[duet ou octet ?]
+Seuls l'hydrogène et l'hélium visent le \textbf{duet} (2 électrons, configuration de \ce{He}) ;
+tous les autres visent l'\textbf{octet} (8 électrons).
+\begin{itemize}[leftmargin=1.6em,itemsep=0pt]
+  \item \textbf{Duet (2)} : \ce{H}, \ce{He}.
+  \item \textbf{Octet (8)} : \ce{O}, \ce{C}, \ce{F}, \ce{N}.
+\end{itemize}
+\end{cor}
+
+\begin{cor}[nommer le type de liaison]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item \ce{Cl2} : \textbf{covalente}. Deux atomes identiques (même électronégativité) ne peuvent
+        que \emph{partager} un doublet, chacun apportant un électron.
+  \item \ce{NaCl} : \textbf{ionique}. Métal (\ce{Na}) + non-métal (\ce{Cl}) : \ce{Na} cède son
+        électron, on obtient \ce{Na+} et \ce{Cl-} qui s'attirent.
+  \item 4\textsuperscript{e} liaison \ce{N-H} de \ce{NH4+} : \textbf{covalente de coordination
+        (dative)}. L'azote fournit \emph{les deux} électrons ; le proton \ce{H+} n'en apporte aucun.
+  \item \ce{H2} : \textbf{covalente}. Deux \ce{H} identiques partagent un doublet (chacun atteint son duet).
+\end{enumerate}
+\end{cor}
+
+\begin{cor}[doublets liants et non liants]
+Autour de l'oxygène de \ce{H2O} :
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item \rep \textbf{2 doublets liants} (les deux liaisons \ce{O-H}) ;
+  \item \rep \textbf{2 doublets non liants} (les deux paires libres dessinées au-dessus de l'oxygène).
+\end{enumerate}
+Total autour de \ce{O} : $2\times 2 + 2\times 2 = 8$ électrons $\Rightarrow$ octet respecté.
+\end{cor}
+
+\begin{cor}[l'octet est-il respecté ?]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
+  \item L'azote forme 3 liaisons ($3\times 2 = 6\,e^-$) et porte 1 doublet non liant ($2\,e^-$) :
+        au total $6 + 2 = \mathbf{8}$ électrons.
+  \item \rep \textbf{Oui}, l'azote s'entoure de 8 électrons : la règle de l'octet est respectée.
+\end{enumerate}
+\end{cor}
+
+\begin{astucebox}[le réflexe des doublets]
+Un atome « voit » les électrons d'une liaison \emph{en entier} (les 2 électrons), même s'il n'en
+a apporté qu'un. Pour vérifier l'octet, on compte donc : \;
+(nombre de liaisons)$\times 2$ $+$ (nombre de doublets libres)$\times 2$.
+\end{astucebox}
+
+\end{document}

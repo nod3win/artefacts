@@ -1,0 +1,1041 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 1
+%  Cinématique à une et deux dimensions
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}      % turquoise (couleur du livre)
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+\definecolor{vxc}{RGB}{0,90,200}            % composante x (bleu)
+\definecolor{vyc}{RGB}{210,30,40}           % composante y (rouge)
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Théorème / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  vres/.style={->,>=Stealth,line width=1.1pt,blue!75!black},
+  vx/.style={->,>=Stealth,line width=1pt,vxc},
+  vy/.style={->,>=Stealth,line width=1pt,vyc},
+  traj/.style={line width=1pt,black},
+  proj/.style={dashed,black!55,line width=0.6pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Cinématique à 1 et 2 dimensions}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vv}[1]{\vec{#1}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ms}{\si{\metre\per\second}}
+\newcommand{\mss}{\si{\metre\per\second\squared}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.5cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Cinématique}\\[4pt]
+   {\LARGE\bfseries à une et deux dimensions}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,1}}
+
+\vspace{0.9cm}
+
+% --- Petite illustration de couverture : un tir oblique ---
+\begin{tikzpicture}[scale=1.0]
+  \draw[axe] (-0.3,0) -- (9.3,0) node[right]{$x$};
+  \draw[axe] (0,-0.3) -- (0,4) node[above]{$y$};
+  \draw[traj,primary,line width=1.3pt,domain=0:8,smooth,variable=\x]
+        plot ({\x},{0.45*\x*(8-\x)});
+  \foreach \x in {0,2,4,6,8}{
+     \fill[primary] (\x,{0.45*\x*(8-\x)}) circle (2pt);}
+  \draw[vres] (0,0) -- (1.4,1.4) node[above right]{$\vv{v}_0$};
+  \draw[vx] (4,3.6) -- (5.1,3.6);
+  \node[vxc,above] at (5.1,3.62) {$\vv{v}_x$};
+  \draw[->,>=Stealth,thick,vyc] (4,3.55) -- (4,3.0);
+  \node[align=center,primarydark] at (4,-0.55) {\small portée};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item situer la \emph{cinématique} parmi les branches de la mécanique ;
+  \item définir un \emph{référentiel}, une \emph{trajectoire}, un \emph{vecteur position} ;
+  \item calculer une \emph{vitesse} et une \emph{accélération}, moyennes et instantanées, par dérivation et intégration ;
+  \item décomposer un vecteur vitesse dans le plan (\emph{projection orthogonale}, loi de Chasles) ;
+  \item reconnaître et résoudre les mouvements \textbf{MRU}, \textbf{MRUA/MRUD}, la \textbf{chute libre}, le \textbf{tir horizontal} et le \textbf{tir oblique}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.6cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 1 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{La mécanique et ses branches}
+% =====================================================================
+La \textbf{cinématique} est le point de départ de toute la physique du mouvement.
+Avant de l'étudier, situons-la dans son cadre général : la \emph{mécanique}.
+
+\begin{definition}[la mécanique]
+La \textbf{mécanique} est la science qui étudie les \emph{mouvements des corps matériels}.
+Elle se subdivise en trois branches complémentaires.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\small},node distance=1cm]
+  \node[rectangle,rounded corners=4pt,fill=primary,text=white,
+        font=\bfseries,minimum width=3cm,minimum height=0.9cm] (m) {LA MÉCANIQUE};
+  \node[rectangle,rounded corners=4pt,draw=defcol,fill=defcol!10,
+        text width=3.1cm,align=center,minimum height=1cm,
+        below left=1.3cm and 1.3cm of m] (c) {\textbf{Cinématique}};
+  \node[rectangle,rounded corners=4pt,draw=thmcol,fill=thmcol!12,
+        text width=3.1cm,align=center,minimum height=1cm,
+        below=1.3cm of m] (d) {\textbf{Dynamique}};
+  \node[rectangle,rounded corners=4pt,draw=formulacol,fill=formulacol!12,
+        text width=3.1cm,align=center,minimum height=1cm,
+        below right=1.3cm and 1.3cm of m] (s) {\textbf{Statique}};
+  \draw[->,>=Stealth,thick,primary] (m) -- (c);
+  \draw[->,>=Stealth,thick,primary] (m) -- (d);
+  \draw[->,>=Stealth,thick,primary] (m) -- (s);
+  \node[text width=3.4cm,align=center,below=1pt of c,font=\scriptsize,black!70]
+        {décrit les mouvements \emph{en fonction du temps}, sans en chercher les causes};
+  \node[text width=3.4cm,align=center,below=1pt of d,font=\scriptsize,black!70]
+        {étudie les \emph{forces} qui causent le mouvement et les relie au mouvement};
+  \node[text width=3.4cm,align=center,below=1pt of s,font=\scriptsize,black!70]
+        {étudie les forces sur un corps \emph{en équilibre ou au repos} (ex.\ leviers)};
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[leftmargin=1.8em]
+  \item \textbf{La cinématique} décrit les mouvements des objets en fonction du temps
+        \emph{sans faire appel aux causes ni aux effets} de ces mouvements. C'est l'objet de cette fiche.
+  \item \textbf{La dynamique} étudie les \emph{forces} qui causent les mouvements ; elle relie donc les forces au mouvement (2\textsuperscript{e} loi de Newton, etc.).
+  \item \textbf{La statique} étudie les forces qui s'exercent sur un objet \emph{en équilibre ou au repos} (exemple : l'étude des leviers).
+\end{enumerate}
+
+\subsection{Référentiel, repère, position et trajectoire}
+
+Décrire un mouvement n'a de sens que \emph{par rapport à quelque chose}. Ce « quelque chose » est le référentiel.
+
+\begin{definition}[référentiel]
+La position d'un objet est déterminée dans un \textbf{référentiel}. Ce dernier est constitué :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item d'un \textbf{repère d'espace} (une origine $O$ et des axes orientés, p.\,ex.\ $Ox$, $Oy$) ;
+  \item d'un \textbf{repère de temps} (une origine des dates $t_0$ et une horloge graduée en secondes).
+\end{itemize}
+\end{definition}
+
+\begin{remarque}
+Sauf indication contraire, dans tout ce cours les vitesses et les accélérations sont
+mesurées \textbf{par rapport à la surface de la Terre} (un point fixe sur le sol).
+Le mouvement est une notion \emph{relative} : un passager assis dans un train est immobile
+par rapport au wagon, mais en mouvement par rapport au quai.
+\end{remarque}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+  \draw[axe] (-0.4,0) -- (5,0) node[right]{$x\ (\si{m})$};
+  \draw[axe] (0,-0.4) -- (0,3.4) node[above]{$y\ (\si{m})$};
+  \node[below left] at (0,0) {$O$};
+  \coordinate (M) at (3.6,2.4);
+  \draw[->,>=Stealth,line width=1.1pt,primary] (0,0) -- (M)
+        node[midway,above left]{$\vv{r}=\overrightarrow{OM}$};
+  \fill[primarydark] (M) circle (2pt) node[above right]{$M$};
+  \draw[proj] (M) -- (3.6,0) node[below]{$x_M$};
+  \draw[proj] (M) -- (0,2.4) node[left]{$y_M$};
+  % horloge
+  \draw[black!60] (4.5,2.9) circle (0.32);
+  \draw[black!60,->] (4.5,2.9) -- ++(35:0.22);
+  \draw[black!60,->] (4.5,2.9) -- ++(110:0.16);
+  \node[font=\scriptsize,black!60,below=1pt] at (4.5,2.55) {repère de temps};
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}[vecteur position]
+Le \textbf{vecteur position} $\vv{r}=\overrightarrow{OM}$ repère le point $M$ par rapport à l'origine $O$.
+Dans le plan, ses coordonnées sont $(x_M,\,y_M)$, exprimées en mètres (\si{\metre}).
+\end{definition}
+
+\begin{definition}[trajectoire]
+L'ensemble des \emph{positions successives} qu'occupe un objet au cours du temps est appelé
+\textbf{trajectoire} de l'objet. Selon sa forme, on parle de mouvement \emph{rectiligne}
+(droite), \emph{circulaire} (cercle) ou \emph{curviligne} (courbe quelconque).
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[axe] (-0.3,0) -- (8.5,0) node[right]{$x$};
+  \draw[axe] (0,-0.3) -- (0,3.2) node[above]{$y$};
+  \draw[traj,primary,line width=1.2pt,domain=0:8,smooth,variable=\x]
+        plot ({\x},{0.4*\x*(7.5-\x)/2.4+0.2});
+  \foreach \i/\x in {0/0,1/2,2/4,3/6,4/8}{
+     \pgfmathsetmacro\y{0.4*\x*(7.5-\x)/2.4+0.2}
+     \fill[primarydark] (\x,\y) circle (2pt);
+     \node[font=\scriptsize,below right] at (\x,\y) {$M_{\i}(t_{\i})$};}
+  \node[primary,font=\itshape] at (6.6,2.7) {trajectoire};
+\end{tikzpicture}
+\end{center}
+
+\begin{attention}[distance parcourue $\neq$ déplacement]
+La \textbf{distance parcourue} est la longueur réelle du chemin suivi (toujours positive).
+Le \textbf{déplacement} $\Delta\vv{r}=\overrightarrow{M_iM_f}$ est le vecteur qui joint la position
+initiale à la position finale : il ne dépend que des extrémités, pas du trajet.
+Pour un aller-retour, la distance parcourue est non nulle alors que le déplacement est nul.
+\end{attention}
+
+% =====================================================================
+\section{La vitesse}
+% =====================================================================
+La vitesse mesure \emph{à quelle rapidité} et \emph{dans quel sens} la position change.
+
+\subsection{Vitesse moyenne en une dimension}
+
+\begin{definition}[vitesse moyenne]
+Sur une durée $\Delta t = t_2 - t_1$, si un mobile parcourt (algébriquement)
+$\Delta x = x_2 - x_1$ le long d'un axe, sa \textbf{vitesse moyenne} est le rapport du
+déplacement à la durée.
+\end{definition}
+
+\begin{formule}[vitesse moyenne à une dimension]
+\[ \boxed{\,v_{\text{moy}}=\dfrac{\Delta x}{\Delta t}=\dfrac{x_2-x_1}{t_2-t_1}\,}\qquad(\ms) \]
+\begin{ou}
+  \item $v_{\text{moy}}$ : vitesse moyenne, en mètres par seconde (\si{\metre\per\second}) ;
+  \item $\Delta x = x_2-x_1$ : déplacement algébrique, en mètres (\si{\metre}) ;
+  \item $\Delta t = t_2-t_1$ : durée du trajet, en secondes (\si{\second}) ;
+  \item $x_1,x_2$ : positions (abscisses) aux instants $t_1$ et $t_2$, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Lecture de la formule.} Deux \emph{positions} et deux \emph{temps} sont
+nécessaires pour déterminer une vitesse moyenne : elle résume tout l'intervalle par
+un seul nombre, sans rien dire de ce qui se passe \emph{entre} $t_1$ et $t_2$.
+
+\begin{itemize}[leftmargin=1.6em]
+  \item \textbf{Signe.} Une fois choisi le sens positif de l'axe : $v_{\text{moy}}>0$ si le déplacement se fait \emph{dans le sens de l'axe}, $v_{\text{moy}}<0$ s'il se fait \emph{en sens inverse}.
+  \item \textbf{Trajet à vitesses différentes.} La vitesse moyenne se calcule en divisant la \emph{distance totale} parcourue par la \emph{durée totale} : $v_{\text{moy}}=\dfrac{d_{\text{tot}}}{t_{\text{tot}}}$.
+\end{itemize}
+
+\begin{exemple}
+Une voiture parcourt \qty{90}{\kilo\metre} en \qty{1}{\hour}. Sa vitesse moyenne vaut
+\[ v_{\text{moy}}=\frac{\qty{90}{\kilo\metre}}{\qty{1}{\hour}}=\qty{90}{\kilo\metre\per\hour}
+   =\frac{\num{90}\times\num{1000}}{\num{3600}}\,\ms = \qty{25}{\metre\per\second}. \]
+Conversion utile : \emph{diviser par $3{,}6$} pour passer de \si{\kilo\metre\per\hour} à \ms.
+\end{exemple}
+
+\subsection{Vitesse instantanée en une dimension}
+
+La vitesse moyenne ne suffit pas pour connaître la vitesse \emph{à un instant précis}.
+On fait alors tendre la durée $\Delta t$ vers zéro : c'est la \textbf{dérivée}.
+
+\begin{definition}[vitesse instantanée]
+La \textbf{vitesse instantanée} est la vitesse du mobile \emph{à chaque instant}. On l'obtient
+en dérivant la coordonnée d'espace $x(t)$ par rapport au temps.
+\end{definition}
+
+\begin{formule}[vitesse instantanée (dérivée de la position)]
+\[ \boxed{\,v(t)=\dfrac{\dd x}{\dd t}=\dot{x}(t)\,}\qquad(\ms)
+   \qquad\Longleftrightarrow\qquad \dd x = v(t)\,\dd t \]
+\begin{ou}
+  \item $v(t)$ : vitesse instantanée à la date $t$, en \si{\metre\per\second} ;
+  \item $\dfrac{\dd x}{\dd t}$ : dérivée de la position par rapport au temps ;
+  \item $x(t)$ : équation horaire de la position, en \si{\metre} ;
+  \item $\dot{x}$ : notation abrégée (point de Newton) de la dérivée temporelle.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Interprétation graphique.} $v(t)$ est la \emph{pente de la tangente} à la courbe
+$x(t)$ au point d'abscisse $t$. Là où $x(t)$ monte, $v>0$ ; là où elle descend, $v<0$ ;
+en un extremum de $x(t)$, $v=0$.
+
+\medskip
+La relation $\dd x = v(t)\,\dd t$ s'\emph{intègre} pour retrouver la position : c'est l'opération inverse de la dérivation.
+
+\begin{formule}[position par intégration de la vitesse]
+\[ \int_{t_0}^{t}\dd x=\int_{t_0}^{t} v(t')\,\dd t'
+   \;\Longrightarrow\;
+   \boxed{\,x(t)=x(t_0)+\int_{t_0}^{t} v(t')\,\dd t'\,}\tag{I} \]
+Si $x(t_0)=\qty{0}{\metre}$ et $t_0=\qty{0}{\second}$, alors $\displaystyle x(t)=\int_{0}^{t} v(t')\,\dd t'$.
+\begin{ou}
+  \item $x(t)$ : position à l'instant $t$, en \si{\metre} ;
+  \item $x(t_0)$ : position initiale (à $t_0$), en \si{\metre} ;
+  \item $\displaystyle\int_{t_0}^{t} v\,\dd t'$ : aire algébrique sous la courbe $v(t)$ entre $t_0$ et $t$, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}
+\textbf{Dériver} fait « descendre » dans la liste position $\to$ vitesse $\to$ accélération ;
+\textbf{intégrer} fait « remonter » accélération $\to$ vitesse $\to$ position. Ces deux opérations
+sont les outils de base de toute la cinématique.
+\end{remarque}
+
+\subsection{Grandeurs vectorielles : le plan (deux dimensions)}
+
+À deux dimensions, la vitesse est un \textbf{vecteur} $\vv{v}$. Dans un repère cartésien, on le
+remplace par deux vecteurs perpendiculaires $\vv{v}_x$ et $\vv{v}_y$ portés par les axes : c'est
+la \textbf{projection orthogonale} (ou décomposition).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  \draw[axe] (-0.3,0) -- (4.4,0) node[right]{$x$};
+  \draw[axe] (0,-0.3) -- (0,3.2) node[above]{$y$};
+  % trajectoire
+  \draw[black!45,line width=0.9pt,domain=0:4,smooth,variable=\x]
+        plot ({\x},{1.7*\x*(4-\x)/4});
+  \node[black!45,font=\scriptsize] at (3.4,1.25) {trajectoire};
+  % vecteur vitesse
+  \coordinate (V) at (2.3,1.95);
+  \draw[vres] (0,0) -- (V) node[midway,above left]{$\vv{v}$};
+  % composantes
+  \draw[vx] (0,0) -- (2.3,0) node[midway,below]{$\vv{v}_x$};
+  \draw[vy] (0,0) -- (0,1.95) node[midway,left]{$\vv{v}_y$};
+  \draw[proj] (V) -- (2.3,0);
+  \draw[proj] (V) -- (0,1.95);
+  % angle
+  \draw[primary,thick] (0.7,0) arc (0:40:0.7);
+  \node[primary] at (0.95,0.28) {$\theta$};
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[décomposition du vecteur vitesse]
+\[ \vv{v}=\vv{v}_x+\vv{v}_y,\qquad
+   \boxed{v_x=v\cos\theta},\qquad \boxed{v_y=v\sin\theta},\qquad
+   \boxed{v=\sqrt{v_x^{\,2}+v_y^{\,2}}} \]
+et la direction est donnée par $\displaystyle \theta=\arctan\!\frac{v_y}{v_x}$.
+\begin{ou}
+  \item $v=\lVert\vv{v}\rVert$ : norme (intensité) de la vitesse, en \si{\metre\per\second} ;
+  \item $v_x,\,v_y$ : composantes horizontale et verticale, en \si{\metre\per\second} ;
+  \item $\theta$ : angle entre $\vv{v}$ et l'axe $Ox$, en degrés (\si{\degree}) ou radians (\si{\radian}).
+\end{ou}
+\end{formule}
+
+\noindent La relation $v^2=v_x^2+v_y^2$ n'est autre que le \textbf{théorème de Pythagore} appliqué
+au rectangle des composantes : $\vv{v}_x$ et $\vv{v}_y$ étant perpendiculaires, $\vv{v}$ en est l'hypoténuse.
+
+\begin{theoreme}[addition des vitesses — loi de Chasles]
+La vitesse résultante est la \emph{somme vectorielle} des vitesses composantes :
+\[ \vv{v}=\vv{v}_1+\vv{v}_2,\qquad\text{avec}\qquad
+   \overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}. \]
+La loi de Chasles ne s'applique que si les deux vecteurs ont un point commun
+correspondant à \emph{l'extrémité de l'un et à l'origine de l'autre} : on les place
+« bout à bout ». Sinon, on translate l'un des vecteurs pour réaliser cette condition.
+\end{theoreme}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95,every node/.style={font=\small}]
+  % --- Cas A : bout à bout ---
+  \begin{scope}[xshift=0cm]
+    \draw[vx] (0,0) -- (1.6,0.7) node[midway,below right]{$\vv{v}_1$};
+    \draw[vy] (1.6,0.7) -- (2.7,1.6) node[midway,right]{$\vv{v}_2$};
+    \draw[vres] (0,0) -- (2.7,1.6) node[midway,above left]{$\vv{v}$};
+    \node at (1.35,-0.65) {\textbf{A} : \ $\vv{v}=\vv{v}_1+\vv{v}_2$};
+  \end{scope}
+  % --- Cas B : perpendiculaires ---
+  \begin{scope}[xshift=4.7cm]
+    \draw[vx] (0,0) -- (0,1.7) node[midway,left]{$\vv{v}_2$};
+    \draw[vy] (0,1.7) -- (1.8,1.7) node[midway,above]{$\vv{v}_1$};
+    \draw[vres] (0,0) -- (1.8,1.7) node[midway,below right]{$\vv{v}$};
+    \node at (0.9,-0.65) {\textbf{B} : \ $\vv{v}=\vv{v}_1+\vv{v}_2$};
+  \end{scope}
+  % --- Cas C : translation ---
+  \begin{scope}[xshift=8.8cm]
+    \draw[vx] (0,0) -- (1.5,0.5) node[midway,below]{$\vv{v}_1$};
+    \draw[vy,dashed] (0.2,1.5) -- (1.2,1.9) node[midway,above]{$\vv{v}_2$};
+    \draw[vy] (1.5,0.5) -- (2.5,0.9) node[midway,below right]{$\vv{v}_2$};
+    \draw[vres] (0,0) -- (2.5,0.9) node[midway,above]{$\vv{v}$};
+    \draw[->,>=Stealth,black!50] (0.7,1.6) to[bend right=20] (1.9,0.9);
+    \node at (1.25,-0.7) {\textbf{C} : translation};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[vitesse d'un avion par rapport au sol]
+Le cas \textbf{A} modélise un avion dans le vent :
+$\vv{v}_1$ est la vitesse de l'avion \emph{par rapport à l'air}, $\vv{v}_2$ la vitesse de l'air
+\emph{par rapport au sol} ; la résultante $\vv{v}=\vv{v}_1+\vv{v}_2$ est la vitesse de l'avion
+\emph{par rapport au sol}. Si les deux vitesses sont perpendiculaires (cas B),
+$v=\sqrt{v_1^2+v_2^2}$ et la trajectoire réelle est déviée d'un angle $\arctan(v_2/v_1)$.
+\end{exemple}
+
+\subsection{Vitesse (scalaire) et vecteur vitesse}
+
+\begin{definition}[vecteur vitesse]
+Le \textbf{vecteur vitesse} décrit à la fois trois informations :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item la \textbf{direction} : la droite qui porte le mouvement ;
+  \item le \textbf{sens} : l'orientation sur cette droite (la pointe de la flèche) ;
+  \item la \textbf{norme} (ou intensité) : la « rapidité » $v=\lVert\vv{v}\rVert$, une grandeur scalaire en \si{\metre\per\second}.
+\end{itemize}
+La \emph{grandeur scalaire} d'une vitesse ne mesure que la rapidité ; le \emph{vecteur} ajoute la direction et le sens.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[black!40,thin] (-0.5,0) -- (7,0) node[right,black!60]{droite $(AB)$ : \emph{direction}};
+  \fill (0,0) circle (1.6pt) node[below]{$A$};
+  \fill (5.5,0) circle (1.6pt) node[below]{$B$};
+  \draw[vres] (0,0) -- (5.5,0) node[midway,above]{$\vv{v}$ \ (\emph{sens} : de $A$ vers $B$)};
+  \node[blue!75!black,above] at (2.75,0.42) {};
+  \node[font=\small] at (2.75,-0.9) {norme : $v=\qty{90}{\kilo\metre\per\hour}=\qty{25}{\metre\per\second}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{attention}[« vitesse constante » $\neq$ « vecteur vitesse constant »]
+Dire que la \emph{vitesse} (norme) est constante laisse la direction libre.
+Un \textbf{vecteur vitesse constant} exige que la norme \emph{ET} le sens \emph{ET} la direction
+soient tous constants : c'est le cas du seul mouvement rectiligne uniforme (MRU).
+Ainsi, une voiture allant de $A$ vers $B$ à \qty{90}{\kilo\metre\per\hour} n'a \emph{pas} le même
+vecteur vitesse qu'une voiture allant de $B$ vers $A$ à la même vitesse (sens opposés).
+\end{attention}
+
+% =====================================================================
+\section{L'accélération}
+% =====================================================================
+L'accélération mesure \emph{comment la vitesse change} au cours du temps.
+
+\subsection{Accélération moyenne en une dimension}
+
+\begin{definition}[accélération moyenne]
+L'\textbf{accélération moyenne} est la variation de vitesse rapportée à la durée. Il suffit de
+disposer de \emph{deux vitesses} à \emph{deux instants} quelconques.
+\end{definition}
+
+\begin{formule}[accélération moyenne à une dimension]
+\[ \boxed{\,a_{\text{moy}}=\dfrac{\Delta v}{\Delta t}=\dfrac{v_2-v_1}{t_2-t_1}\,}\qquad(\mss) \]
+\begin{ou}
+  \item $a_{\text{moy}}$ : accélération moyenne, en mètres par seconde au carré (\si{\metre\per\second\squared}) ;
+  \item $\Delta v = v_2 - v_1$ : variation de vitesse, en \si{\metre\per\second} ;
+  \item $\Delta t = t_2 - t_1$ : durée, en \si{\second}.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Signe (sur une même direction).} Le sens positif étant choisi :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item si $a>0$, le mouvement \emph{accéléré} a lieu dans le sens du déplacement ;
+  \item si $a<0$, le mouvement \emph{accéléré} a lieu dans le sens inverse (souvent un \emph{freinage} si la vitesse est positive).
+\end{itemize}
+
+\subsection{Accélération instantanée en une dimension}
+
+\begin{definition}[accélération instantanée]
+L'\textbf{accélération instantanée} est la variation de la vitesse à chaque instant. On l'obtient
+en dérivant la vitesse $v(t)$ par rapport au temps — donc en dérivant \emph{deux fois} la position.
+\end{definition}
+
+\begin{formule}[accélération instantanée]
+\[ \boxed{\,a(t)=\dfrac{\dd v}{\dd t}=\dfrac{\dd^2 x}{\dd t^2}=\ddot{x}(t)\,}\qquad(\mss)
+   \qquad\Longleftrightarrow\qquad \dd v=a(t)\,\dd t \]
+\begin{ou}
+  \item $a(t)$ : accélération instantanée, en \si{\metre\per\second\squared} ;
+  \item $\dfrac{\dd v}{\dd t}$ : dérivée première de la vitesse ;
+  \item $\dfrac{\dd^2 x}{\dd t^2}=\ddot{x}$ : dérivée seconde de la position.
+\end{ou}
+\end{formule}
+
+On retrouve la vitesse en intégrant l'accélération :
+\begin{formule}[vitesse par intégration de l'accélération]
+\[ \int_{t_0}^{t}\dd v=\int_{t_0}^{t} a(t')\,\dd t'
+   \;\Longrightarrow\;
+   \boxed{\,v(t)=v(t_0)+\int_{t_0}^{t} a(t')\,\dd t'\,}\tag{II} \]
+\begin{ou}
+  \item $v(t)$ : vitesse à l'instant $t$, en \si{\metre\per\second} ;
+  \item $v(t_0)$ : vitesse initiale, en \si{\metre\per\second} ;
+  \item $\displaystyle\int_{t_0}^{t} a\,\dd t'$ : aire sous la courbe $a(t)$, en \si{\metre\per\second}.
+\end{ou}
+\end{formule}
+
+\subsection{Le vecteur accélération}
+
+\begin{formule}[vecteur accélération]
+\[ \boxed{\,\vv{a}=\dfrac{\Delta\vv{v}}{\Delta t}\,}\qquad
+   \Bigl(\text{instantané : } \vv{a}=\dfrac{\dd\vv{v}}{\dd t}\Bigr) \]
+\begin{ou}
+  \item $\vv{a}$ : vecteur accélération, en \si{\metre\per\second\squared} ;
+  \item $\Delta\vv{v}$ : variation \emph{vectorielle} de la vitesse, en \si{\metre\per\second} ;
+  \item $\Delta t$ : durée, en \si{\second}.
+\end{ou}
+\end{formule}
+
+\begin{attention}[on peut accélérer à vitesse (norme) constante !]
+Une variation du \emph{vecteur} vitesse peut avoir lieu même si la \emph{norme} reste constante :
+il suffit que la \textbf{direction} change. C'est le cas de tout mouvement à trajectoire courbe.
+\end{attention}
+
+\begin{exemple}[mouvement circulaire uniforme — MCU]
+Un objet en MCU garde une norme de vitesse constante, mais le vecteur $\vv{v}$ (toujours
+\emph{tangent} au cercle) change de direction à chaque instant : il subit donc une accélération,
+dite \emph{centripète}, dirigée vers le centre.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \draw[black!55,thick] (0,0) circle (1.8);
+  \fill (0,0) circle (1.3pt) node[below right]{$O$};
+  \foreach \a in {0,90,180,270}{
+     \coordinate (P) at (\a:1.8);
+     \fill (P) circle (1.6pt);
+     % vitesse tangente (sens trigo)
+     \draw[vres] (P) -- ++($(\a:0)+(\a+90:1.05)$);
+     % accélération centripète
+     \draw[vy] (P) -- ++(\a+180:0.9);
+  }
+  \node[blue!75!black] at (2.5,1.15) {$\vv{v}$ (tangent)};
+  \node[vyc] at (0.95,0.55) {$\vv{a}$};
+\end{tikzpicture}
+\end{center}
+
+% =====================================================================
+\section{Les types de mouvement}
+% =====================================================================
+
+\subsection{Mouvement rectiligne uniforme (MRU)}
+
+\begin{definition}[MRU]
+Le \textbf{MRU} est un mouvement rectiligne où la vitesse reste \emph{constante} au cours du temps
+(le vecteur vitesse est constant : norme, sens et direction fixes).
+\end{definition}
+
+\begin{formule}[équations du MRU]
+\[ v=\dfrac{\Delta x}{\Delta t}=\text{cte}=v_0\quad(\ms);\qquad
+   \boxed{x(t)=x_0+v_0\,(t-t_0)}\ ;\qquad a(t)=\dfrac{\dd v}{\dd t}=0\quad(\mss). \]
+Si $t_0=0$ : $\;x(t)=x_0+v_0\,t$.
+\begin{ou}
+  \item $v_0$ : vitesse constante, en \si{\metre\per\second} ;
+  \item $x_0=x(t_0)$ : position initiale, en \si{\metre} ;
+  \item $a=0$ : l'accélération est \emph{nulle} (la vitesse ne varie pas).
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Allure des courbes.} $v(t)$ est une droite \emph{horizontale} ; $x(t)$ est une droite
+de pente $v_0$ ; $a(t)$ est l'axe des abscisses.
+
+\begin{center}
+\begin{tikzpicture}
+% v(t)
+\begin{axis}[name=vp,width=5.4cm,height=4cm,axis lines=middle,
+   xlabel={$t$},ylabel={$v(t)$},xmin=0,xmax=5,ymin=-3,ymax=3,
+   xtick=\empty,ytick={2,-2},yticklabels={$v_0$,$v_0$},title={\small Vitesse}]
+  \addplot[vxc,line width=1.1pt,domain=0:5]{2};
+  \addplot[vyc,line width=1.1pt,domain=0:5]{-2};
+  \node[vxc,font=\scriptsize,anchor=south] at (axis cs:2.5,2){$v_0>0$};
+  \node[vyc,font=\scriptsize,anchor=north] at (axis cs:2.5,-2){$v_0<0$};
+\end{axis}
+% x(t)
+\begin{axis}[name=xp,at={(vp.right of east)},anchor=left of west,
+   width=5.4cm,height=4cm,axis lines=middle,
+   xlabel={$t$},ylabel={$x(t)$},xmin=0,xmax=5,ymin=-3,ymax=4,
+   xtick=\empty,ytick={1},yticklabels={$x_0$},title={\small Position}]
+  \addplot[vxc,line width=1.1pt,domain=0:4.5]{1+0.55*x};
+  \addplot[vyc,line width=1.1pt,domain=0:4.5]{1-0.7*x};
+\end{axis}
+% a(t)
+\begin{axis}[name=ap,at={(xp.right of east)},anchor=left of west,
+   width=5.4cm,height=4cm,axis lines=middle,
+   xlabel={$t$},ylabel={$a(t)$},xmin=0,xmax=5,ymin=-3,ymax=3,
+   xtick=\empty,ytick={0},title={\small Accélération}]
+  \addplot[attncol,line width=1.1pt,domain=0:5]{0};
+  \node[attncol,font=\scriptsize,anchor=south] at (axis cs:2.5,0){$a=0$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}
+Un mobile part de $x_0=\qty{10}{\metre}$ à $v_0=\qty{4}{\metre\per\second}$ (MRU).
+À $t=\qty{5}{\second}$ : $x=10+4\times5=\qty{30}{\metre}$. L'accélération reste nulle.
+\end{exemple}
+
+\subsection{Mouvement rectiligne uniformément accéléré / décéléré (MRUA / MRUD)}
+
+\begin{definition}[MRUA / MRUD]
+Le \textbf{MRUA} est un mouvement rectiligne où l'\emph{accélération} reste \emph{constante}.
+Si cette constante est \emph{négative} (la vitesse diminue), on parle de \textbf{MRUD}
+(mouvement rectiligne uniformément décéléré) — typiquement un \emph{freinage}.
+\end{definition}
+
+\begin{formule}[équations du MRUA / MRUD]
+\begin{align*}
+ a &= \text{cte}\quad(\mss) \\
+ \boxed{v(t)=v_0+a\,(t-t_0)} &\qquad\text{(III)} \\
+ \boxed{x(t)=x_0+\tfrac{1}{2}\,a\,t^2+v_0\,t} &\qquad(\text{si } t_0=0)
+\end{align*}
+\begin{ou}
+  \item $a$ : accélération constante, en \si{\metre\per\second\squared} ($a>0$ : MRUA ; $a<0$ : MRUD) ;
+  \item $v_0=v(t_0)$ : vitesse initiale, en \si{\metre\per\second} ;
+  \item $x_0=x(t_0)$ : position initiale, en \si{\metre} ;
+  \item $t$ : date, en \si{\second}.
+\end{ou}
+\end{formule}
+
+\begin{theoreme}[relation indépendante du temps (Torricelli)]
+En éliminant le temps entre les équations (III) et celle de la position, on obtient une relation
+très commode qui ne fait pas intervenir $t$ :
+\[ \boxed{\,v^2=v_0^2+2\,a\,(x-x_0)\,}. \]
+Elle relie directement la vitesse à la position : idéale lorsque la durée est inconnue
+(par exemple, calculer la distance de freinage).
+\end{theoreme}
+
+\noindent\textbf{Allure des courbes (cas $a>0$).} $a(t)$ est une horizontale ; $v(t)$ est une droite
+de \emph{pente} $a$ ; $x(t)$ est une \emph{parabole}. En MRUD ($a<0$), la droite $v(t)$ descend et la
+parabole $x(t)$ tourne sa concavité vers le bas.
+
+\begin{center}
+\begin{tikzpicture}
+% v(t)
+\begin{axis}[name=vp,width=5.4cm,height=4.2cm,axis lines=middle,
+   xlabel={$t$},ylabel={$v(t)$},xmin=0,xmax=5,ymin=0,ymax=8,
+   xtick=\empty,ytick=\empty,title={\small Vitesse}]
+  \addplot[vxc,line width=1.2pt,domain=0:4.6]{1.6*x};
+  \draw[densely dashed,black!55] (axis cs:2,3.2)--(axis cs:3,3.2)--(axis cs:3,4.8);
+  \node[font=\scriptsize,anchor=north] at (axis cs:2.5,3.15){$\Delta t$};
+  \node[font=\scriptsize,anchor=west] at (axis cs:3.05,4.0){$\Delta v$};
+  \node[formulacol,font=\scriptsize,anchor=west] at (axis cs:1.15,6.7)
+       {pente $=a=\dfrac{\Delta v}{\Delta t}$};
+\end{axis}
+% a(t)
+\begin{axis}[name=ap,at={(vp.right of east)},anchor=left of west,
+   width=5.4cm,height=4.2cm,axis lines=middle,
+   xlabel={$t$},ylabel={$a(t)$},xmin=0,xmax=5,ymin=-1,ymax=4,
+   xtick=\empty,ytick={1.6},yticklabels={$a$},title={\small Accélération}]
+  \addplot[attncol,line width=1.2pt,domain=0:5]{1.6};
+  \node[attncol,font=\scriptsize,anchor=south] at (axis cs:2.7,1.6){$a>0$ (cte)};
+\end{axis}
+% x(t)
+\begin{axis}[name=xp,at={(ap.right of east)},anchor=left of west,
+   width=5.4cm,height=4.2cm,axis lines=middle,
+   xlabel={$t$},ylabel={$x(t)$},xmin=0,xmax=4,ymin=0,ymax=10,
+   xtick=\empty,ytick={1},yticklabels={$x_0$},title={\small Position}]
+  \addplot[vxc,line width=1.2pt,domain=0:3.4,samples=60]{1+0.72*x*x};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[freinage — MRUD]
+Une voiture roule à $v_0=\qty{20}{\metre\per\second}$ et freine à $a=\qty{-5}{\metre\per\second\squared}$.
+Distance d'arrêt (vitesse finale nulle) par Torricelli :
+\[ 0=v_0^2+2a\,\Delta x \;\Rightarrow\;
+   \Delta x=\frac{-v_0^2}{2a}=\frac{-(20)^2}{2\times(-5)}=\qty{40}{\metre}. \]
+\end{exemple}
+
+\subsection{Corps en chute libre}
+
+\begin{definition}[chute libre]
+La \textbf{chute libre} est le mouvement d'un corps soumis à la \emph{seule} gravité, dans le vide
+(sans frottement de l'air). Tous les corps y tombent avec la \emph{même} accélération $g$,
+indépendamment de leur masse.
+\end{definition}
+
+\begin{formule}[lois de la chute libre]
+\[ a=g=\text{cte}\quad(\mss),\qquad g\approx\qty{9,81}{\metre\per\second\squared}\ \text{(variable selon la latitude)} \]
+\[ \boxed{v(t)=v_0+g\,(t-t_0)},\qquad
+   \boxed{h(t)=h_0+\tfrac12 g\,t^2+v_0\,t}. \]
+Si $h_0=\qty{0}{\metre}$, $t_0=0$, $v_0=0$ : $\;\boxed{h(t)=\tfrac12 g\,t^2}$.
+\begin{ou}
+  \item $g$ : accélération de la pesanteur, $\approx\qty{9,81}{\metre\per\second\squared}$ (on prend souvent \qty{9,8}{} ou \qty{10}{\metre\per\second\squared}) ;
+  \item $v_0$ : vitesse initiale verticale, en \si{\metre\per\second} ;
+  \item $h_0$ : hauteur initiale, en \si{\metre} ; \quad $h(t)$ : hauteur à l'instant $t$, en \si{\metre}.
+\end{ou}
+\end{formule}
+
+\begin{attention}[convention de signe pour $g$]
+Le signe de $g$ dans les formules dépend de \emph{l'orientation choisie pour l'axe vertical} :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item axe orienté \textbf{vers le bas} (chute, tir horizontal) : on prend $a=+g$ ;
+  \item axe orienté \textbf{vers le haut} (tir vers le haut, montée d'un projectile) : on prend $a=-g$.
+\end{itemize}
+La gravité \emph{ne dépend pas de la masse} : une plume et une bille tombent identiquement dans le vide.
+\end{attention}
+
+\subsubsection{Mouvements horizontaux (tir horizontal)}
+
+Un corps lancé \emph{horizontalement} avec une vitesse $\vv{v}_x$ combine deux mouvements indépendants :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item selon $x$ (horizontal) : un \textbf{MRU} (la gravité n'agit pas horizontalement) ;
+  \item selon $y$ (vertical) : un \textbf{MRUA} — c'est une chute libre avec $v_{0y}=0$.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % axes : x vers la droite, y vers le bas
+  \draw[axe] (-0.3,0) -- (6,0) node[right]{$x$};
+  \draw[axe] (0,0.3) -- (0,-4) node[below]{$y$};
+  \node[above left] at (0,0){$O$};
+  % trajectoire (parabole vers le bas)
+  \draw[traj,domain=0:5,smooth,variable=\x] plot ({\x},{-0.18*\x*\x});
+  % points + vecteurs
+  \foreach \i/\x in {0/0,1/1.6,2/2.8,3/3.8}{
+     \pgfmathsetmacro\y{-0.18*\x*\x}
+     \fill (\x,\y) circle (1.6pt);
+     \draw[vx] (\x,\y) -- ++(1.0,0);            % v0x constant
+     \pgfmathsetmacro\vyy{-0.45*\x}              % vy croissant
+     \draw[vy] (\x,\y) -- ++(0,\vyy);
+  }
+  \node[vxc,font=\scriptsize] at (1.15,0.28){$\vv{v}_{0x}$};
+  \node[vyc,font=\scriptsize] at (4.2,-2.2){$\vv{v}_y$ croît};
+  % encadré formules
+  \node[anchor=west,align=left,font=\small] at (6.35,-1.5) {
+    \textcolor{vxc}{$x$ : MRU} \ $v_x=v_{0x}=\dfrac{x}{t}$\\[3pt]
+    \textcolor{vyc}{$\;y$ : MRUA} \ $y=\tfrac12 g\,t^2$\\[3pt]
+    \hphantom{$y$ : MRUA} \ $v_y=g\,t$\\[3pt]
+    $v=\sqrt{v_x^2+v_y^2}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[tir horizontal ($v_{0y}=0$, axe $y$ vers le bas)]
+\[ \underbrace{x(t)=v_{0x}\,t}_{\text{MRU selon }x},\qquad
+   \underbrace{y(t)=\tfrac12 g\,t^2,\quad v_y(t)=g\,t}_{\text{MRUA selon }y},\qquad
+   v=\sqrt{v_x^2+v_y^2}. \]
+\begin{ou}
+  \item $v_{0x}$ : vitesse horizontale (constante), en \si{\metre\per\second} ;
+  \item $v_y$ : vitesse verticale acquise, en \si{\metre\per\second} ($0<v_{1y}<v_{2y}<\dots$) ;
+  \item $v$ : vitesse totale (norme), en \si{\metre\per\second}.
+\end{ou}
+\end{formule}
+
+\subsubsection{Mouvements obliques (tir oblique / balistique)}
+
+Un corps lancé \emph{obliquement} avec une vitesse $\vv{v}_0$ faisant l'angle $\theta$ avec l'horizontale
+combine :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item selon $x$ : un \textbf{MRU} (vitesse horizontale constante) ;
+  \item selon $y$ : un \textbf{MRUD} pendant la montée ($a=-g$) puis un \textbf{MRUA} pendant la descente.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  \draw[axe] (-0.3,0) -- (8.3,0) node[right]{$x$};
+  \draw[axe] (0,-0.3) -- (0,4.1) node[above]{$y$};
+  \node[below left] at (0,0){$O$};
+  % parabole : sommet en (3.5, 2.45), zéros en 0 et 7
+  \draw[traj,line width=1pt,domain=0:7,smooth,variable=\x]
+        plot ({\x},{0.2*\x*(7-\x)});
+  % vitesse initiale décomposée
+  \draw[vres] (0,0) -- (1.3,1.55) node[above]{$\vv{v}_0$};
+  \draw[vx] (0,0) -- (1.3,0) node[midway,below]{$\vv{v}_{0x}$};
+  \draw[vy] (0,0) -- (0,1.55) node[midway,left]{$\vv{v}_{0y}$};
+  \draw[primary,thick] (0.7,0) arc (0:50:0.7);
+  \node[primary] at (0.95,0.3){$\theta$};
+  % sommet
+  \fill[vyc] (3.5,2.45) circle (2.4pt);
+  \draw[vx] (3.5,2.45) -- ++(0.95,0) node[right]{$\vv{v}_{x}$};
+  \node[vyc,font=\scriptsize,anchor=south] at (3.5,2.62){$\vv{v}_y=\vv{0}$ (sommet)};
+  % descente : v0x constant + vy croissant vers le bas
+  \draw[vx] (5.6,1.55) -- ++(0.95,0) node[above]{$\vv{v}_{x}$};
+  \draw[vy] (5.6,1.55) -- ++(0,-0.9) node[right]{$\vv{v}_{y}$};
+  % portée
+  \draw[line width=2pt,excol] (0,-0.35) -- (7,-0.35);
+  \node[excol,font=\small] at (3.5,-0.68){portée $x_p$};
+  % labels montée/descente
+  \node[remarkcol,font=\small\bfseries] at (1.55,3.85){MRUD ($a=-g$)};
+  \node[remarkcol,font=\small\bfseries] at (5.75,3.85){MRUA ($a=+g$)};
+  \draw[densely dashed,black!40] (3.5,0)--(3.5,2.45);
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[décomposition de la vitesse initiale]
+\[ \boxed{v_{0x}=v_0\cos\theta},\qquad \boxed{v_{0y}=v_0\sin\theta}. \]
+\begin{ou}
+  \item $v_0$ : norme de la vitesse de lancement, en \si{\metre\per\second} ;
+  \item $\theta$ : angle de tir avec l'horizontale, en \si{\degree} ;
+  \item $v_{0x}$ (horizontale, MRU) et $v_{0y}$ (verticale, soumise à $g$), en \si{\metre\per\second}.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Temps de montée (jusqu'au sommet).} Au sommet, la vitesse verticale s'annule
+($v_y=0$). En partant de $v_y(t)=v_{0y}-g\,t$ :
+\begin{formule}[instant du sommet]
+\[ -g=\frac{v_{y,\text{sommet}}-v_{0y}}{t_{s}-0}=\frac{0-v_{0y}}{t_s}
+   \;\Longleftrightarrow\;
+   \boxed{\,t_{s}=\dfrac{v_{0y}}{g}=\dfrac{v_0\sin\theta}{g}\,}. \]
+\begin{ou}
+  \item $t_s$ : durée de la montée (instant du sommet), en \si{\second} ;
+  \item $v_{0y}=v_0\sin\theta$ : vitesse verticale initiale, en \si{\metre\per\second}.
+\end{ou}
+\end{formule}
+
+\begin{formule}[hauteur maximale]
+\[ \boxed{\,y_{\max}=\frac{v_{0y}^2}{2g}=\frac{v_0^2\sin^2\theta}{2g}\,}
+   \qquad(\text{en \si{\metre}}). \]
+\begin{ou}
+  \item $y_{\max}$ : altitude du sommet de la parabole (si $y_0=0$), en \si{\metre} ;
+  \item $v_{0y}=v_0\sin\theta$ : vitesse verticale initiale, en \si{\metre\per\second} ;
+  \item $g$ : pesanteur, en \si{\metre\per\second\squared}.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Durée totale et portée.} Le mouvement étant symétrique ($y_0=0$), la durée totale
+vaut $T=2\,t_s$. Comme l'horizontale est un MRU, la \textbf{portée} (projection horizontale du
+point de chute) est $x_p=v_{0x}\times T$ :
+
+\begin{formule}[portée d'un tir oblique]
+\[ x_p=v_{0x}\cdot 2t_s
+      =(v_0\cos\theta)\cdot\frac{2v_0\sin\theta}{g}
+   \;\Longrightarrow\;
+   \boxed{\,x_p=\frac{v_0^2\sin(2\theta)}{g}\,}. \]
+\begin{ou}
+  \item $x_p$ : portée horizontale, en \si{\metre} ;
+  \item $v_0$ : vitesse initiale, en \si{\metre\per\second} ; \quad $\theta$ : angle de tir, en \si{\degree} ;
+  \item on a utilisé l'identité $2\sin\theta\cos\theta=\sin(2\theta)$.
+\end{ou}
+\end{formule}
+
+\begin{theoreme}[portée maximale]
+La portée $x_p=\dfrac{v_0^2\sin(2\theta)}{g}$ est \textbf{maximale} lorsque $\sin(2\theta)=1$,
+c'est-à-dire pour un angle de tir
+\[ \boxed{\theta=\ang{45}}. \]
+À vitesse de lancement donnée, c'est l'angle de \ang{45} qui envoie le projectile le plus loin.
+\end{theoreme}
+
+% =====================================================================
+\section{Synthèse et formulaire}
+% =====================================================================
+
+\subsection{Tableau récapitulatif des mouvements rectilignes}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.3cm}|>{\centering\arraybackslash}p{2.4cm}|>{\centering\arraybackslash}p{4.3cm}|>{\centering\arraybackslash}p{4.6cm}}
+\toprule
+\rowcolor{primary!15}
+\textbf{Mouvement} & \textbf{Accélération} & \textbf{Vitesse} & \textbf{Position} \\
+\midrule
+\textbf{MRU} & $a=0$ & $v=v_0=\text{cte}$ & $x=x_0+v_0\,t$ \\
+\textbf{MRUA / MRUD} & $a=\text{cte}$ & $v=v_0+a\,t$ & $x=x_0+v_0 t+\tfrac12 a t^2$ \\
+\textbf{Chute libre} & $a=g$ & $v=v_0+g\,t$ & $h=h_0+v_0 t+\tfrac12 g t^2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1}
+
+\subsection{Carte des opérations : dériver \& intégrer}
+
+\begin{center}
+\begin{tikzpicture}[node distance=2.4cm,every node/.style={font=\small}]
+  \node[draw=defcol,fill=defcol!10,rounded corners,minimum height=0.9cm,minimum width=2.4cm] (x){Position $x(t)$};
+  \node[draw=thmcol,fill=thmcol!12,rounded corners,minimum height=0.9cm,minimum width=2.4cm,right=2.8cm of x] (v){Vitesse $v(t)$};
+  \node[draw=formulacol,fill=formulacol!12,rounded corners,minimum height=0.9cm,minimum width=2.6cm,right=2.8cm of v] (a){Accélération $a(t)$};
+  \draw[->,>=Stealth,thick,black!70] (x.30) to[bend left=18] node[above,font=\scriptsize]{$\dfrac{\dd}{\dd t}$ (dériver)} (v.150);
+  \draw[->,>=Stealth,thick,black!70] (v.210) to[bend left=18] node[below,font=\scriptsize]{$\displaystyle\int\dd t$ (intégrer)} (x.330);
+  \draw[->,>=Stealth,thick,black!70] (v.30) to[bend left=18] node[above,font=\scriptsize]{$\dfrac{\dd}{\dd t}$} (a.150);
+  \draw[->,>=Stealth,thick,black!70] (a.210) to[bend left=18] node[below,font=\scriptsize]{$\displaystyle\int\dd t$} (v.330);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Formulaire essentiel}
+
+\begin{multicols}{2}
+\noindent\textbf{Vitesse}
+\[ v_{\text{moy}}=\frac{\Delta x}{\Delta t},\qquad v=\frac{\dd x}{\dd t} \]
+\textbf{Accélération}
+\[ a_{\text{moy}}=\frac{\Delta v}{\Delta t},\qquad a=\frac{\dd v}{\dd t}=\frac{\dd^2x}{\dd t^2} \]
+\textbf{Vecteurs (plan)}
+\[ v_x=v\cos\theta,\ \ v_y=v\sin\theta,\ \ v=\sqrt{v_x^2+v_y^2} \]
+
+\columnbreak
+\noindent\textbf{MRUA / chute libre}
+\[ v=v_0+at,\qquad x=x_0+v_0t+\tfrac12 a t^2 \]
+\[ v^2=v_0^2+2a\,(x-x_0) \]
+\textbf{Tir oblique}
+\[ t_s=\frac{v_0\sin\theta}{g},\qquad y_{\max}=\frac{v_0^2\sin^2\theta}{2g} \]
+\[ x_p=\frac{v_0^2\sin(2\theta)}{g}\ \ (\text{max si }\theta=\ang{45}) \]
+\end{multicols}
+
+% =====================================================================
+\section{Exercices d'application corrigés}
+% =====================================================================
+Les exercices suivants sont inspirés de la fiche et reprennent les situations clés.
+
+\begin{exemple}[Vrai / Faux — notions vectorielles]
+Indiquer si chaque affirmation est vraie (V) ou fausse (F).
+\begin{enumerate}[leftmargin=1.8em,label=\textbf{\alph*.}]
+  \item Le vecteur vitesse décrit \emph{uniquement} la norme de la vitesse. \hfill \textbf{F}
+  \item Deux voitures roulant en sens opposé à \qty{100}{\kilo\metre\per\hour} n'ont pas le même vecteur vitesse. \hfill \textbf{V}
+  \item En MCU, le vecteur vitesse change de direction : il n'est pas constant. \hfill \textbf{V}
+  \item Tout corps dont le vecteur vitesse n'est pas constant est en état d'accélération. \hfill \textbf{V}
+\end{enumerate}
+\textbf{Justification (a).} Faux : un vecteur porte \emph{trois} informations — direction, sens \emph{et}
+norme. Réduire la vitesse à sa seule norme, c'est oublier sa nature vectorielle.
+\end{exemple}
+
+\begin{exemple}[Avion dans le vent — composition des vitesses]
+Un avion vole vers le Nord à $v_a=\qty{70}{\metre\per\second}$ (par rapport à l'air) ;
+le vent souffle de l'Est, perpendiculairement, à $v_v=10\sqrt{15}\ \si{\metre\per\second}\approx\qty{38,7}{\metre\per\second}$.
+\textbf{Vitesse par rapport au sol ?}
+
+\textbf{Solution.} Les deux vitesses sont perpendiculaires (cas B de la loi de Chasles), donc
+\[ v=\sqrt{v_a^2+v_v^2}=\sqrt{70^2+(10\sqrt{15})^2}=\sqrt{4900+1500}=\sqrt{6400}=\qty{80}{\metre\per\second}. \]
+La trajectoire réelle est déviée vers l'Ouest d'un angle
+$\alpha=\arctan\!\dfrac{v_v}{v_a}=\arctan\!\dfrac{10\sqrt{15}}{70}$.
+\end{exemple}
+
+\begin{exemple}[Tir oblique — bille lancée]
+Une bille est lancée à $v_0=\qty{20}{\metre\per\second}$ sous un angle $\theta=\ang{60}$
+(on prend $g=\qty{10}{\metre\per\second\squared}$, frottements négligés). \textbf{Hauteur maximale et portée ?}
+
+\textbf{Solution.} Décomposition :
+$v_{0x}=v_0\cos\ang{60}=20\times\tfrac12=\qty{10}{\metre\per\second}$ ;
+$v_{0y}=v_0\sin\ang{60}=20\times\tfrac{\sqrt3}{2}=10\sqrt3\,\ms$.
+\[ y_{\max}=\frac{v_{0y}^2}{2g}=\frac{(10\sqrt3)^2}{2\times10}=\frac{300}{20}=\qty{15}{\metre}. \]
+\[ x_p=\frac{v_0^2\sin(2\theta)}{g}=\frac{20^2\sin(\ang{120})}{10}
+      =\frac{400\times\frac{\sqrt3}{2}}{10}=20\sqrt3\approx\qty{34,6}{\metre}. \]
+\end{exemple}
+
+\begin{exemple}[Chute libre — raisonnement sans calculatrice]
+On lâche un objet sans vitesse initiale d'une hauteur $h=\qty{125}{\metre}$
+($g=\qty{10}{\metre\per\second\squared}$). \textbf{Durée de chute et vitesse au sol ?}
+
+\textbf{Solution.} $h=\tfrac12 g t^2 \Rightarrow t=\sqrt{\dfrac{2h}{g}}=\sqrt{\dfrac{2\times125}{10}}=\sqrt{25}=\qty{5}{\second}$.
+Vitesse au sol : $v=g\,t=10\times5=\qty{50}{\metre\per\second}$.
+Une accélération de \qty{10}{\metre\per\second\squared} signifie que la vitesse \emph{augmente de
+\qty{10}{\metre\per\second} chaque seconde} : \num{0}, \num{10}, \num{20}, \num{30}, \num{40}, \qty{50}{\metre\per\second} aux instants
+\num{0} à \qty{5}{\second}.
+\end{exemple}
+
+\vfill
+\begin{center}
+\textcolor{primary}{\rule{0.5\textwidth}{1pt}}\\[4pt]
+{\small\color{black!60}Fin de la Fiche 1 — Cinématique à une et deux dimensions.}
+\end{center}
+
+\end{document}

@@ -1,0 +1,1447 @@
+% =====================================================================
+%  COURS DE MATHÉMATIQUES — FICHE 2
+%  Calcul vectoriel
+%  Document généré en LaTeX avec figures TikZ tracées « from scratch ».
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}              % virgule décimale correcte en mode maths
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}   % \rowcolor dans les tableaux
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS  (coral / rouge : section « Mathématiques » du livre)
+% =====================================================================
+\definecolor{primary}{RGB}{222,70,80}       % coral-rouge (couleur du livre)
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{defcol}{RGB}{0,114,178}        % bleu  — définitions
+\definecolor{thmcol}{RGB}{0,140,120}        % vert-bleu — théorèmes
+\definecolor{formulacol}{RGB}{198,93,9}     % orange — formules
+\definecolor{remarkcol}{RGB}{120,94,200}    % violet — remarques
+\definecolor{attncol}{RGB}{200,40,55}       % rouge — pièges
+\definecolor{excol}{RGB}{0,135,90}          % vert — exemples
+\definecolor{methcol}{RGB}{90,90,100}       % gris — méthode
+
+% couleurs « vecteurs » réutilisées dans les figures
+\definecolor{vecu}{RGB}{20,20,20}           % vecteur u (noir)
+\definecolor{vecv}{RGB}{0,110,200}          % vecteur v (bleu)
+\definecolor{vecw}{RGB}{198,93,9}           % vecteur résultant (orange)
+\definecolor{axiscol}{RGB}{90,90,90}        % axes
+\definecolor{gridcol}{RGB}{210,210,210}     % grille
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+% ---- Définition (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Théorème / Propriété (numéroté) ----
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Propriété / Théorème}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Formule (numérotée) ----
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+% ---- Remarque ----
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Attention / piège ----
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exemple ----
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Méthode / Comment faire ----
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire ?}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »  (légende des grandeurs d'une formule)
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ RÉUTILISABLES
+% =====================================================================
+\tikzset{
+  vu/.style={->,>=Stealth,line width=1.3pt,vecu},
+  vv/.style={->,>=Stealth,line width=1.3pt,vecv},
+  vw/.style={->,>=Stealth,line width=1.3pt,vecw},
+  axe/.style={->,>=Stealth,line width=0.8pt,axiscol},
+  aux/.style={dash pattern=on 2.5pt off 2pt,line width=0.7pt,black!55},
+  pt/.style={circle,fill=black,inner sep=1.1pt},
+  ptv/.style={circle,fill=vecv,inner sep=1.1pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Mathématiques}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+% Titres de section en couleur
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vc}[1]{\overrightarrow{#1}}        % \vc{AB}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\R}{\mathbb{R}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.0cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.4cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Calcul vectoriel}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de mathématiques — Fiche n\textsuperscript{o}\,2}}
+
+\vspace{0.9cm}
+
+% --- Illustration de couverture : addition de deux vecteurs (règle du parallélogramme) ---
+\begin{tikzpicture}[scale=1.25]
+  % repère léger
+  \draw[axe] (-0.4,0) -- (5.2,0) node[right,axiscol,font=\footnotesize]{$x$};
+  \draw[axe] (0,-0.4) -- (0,3.4) node[above,axiscol,font=\footnotesize]{$y$};
+  \node[axiscol,below left,font=\scriptsize] at (0,0) {$O$};
+  % parallélogramme O, u, u+v, v
+  \coordinate (O) at (0,0);
+  \coordinate (U) at (3.6,0.9);
+  \coordinate (V) at (1.1,2.4);
+  \coordinate (W) at ($(U)+(V)$);
+  \draw[aux] (U) -- (W);
+  \draw[aux] (V) -- (W);
+  \draw[vu] (O) -- (U) node[midway,below right,font=\small,vecu]{$\vec{u}$};
+  \draw[vv] (O) -- (V) node[midway,above left,font=\small,vecv]{$\vec{v}$};
+  \draw[vw] (O) -- (W) node[midway,above,sloped,font=\small,vecw]{$\vec{u}+\vec{v}$};
+  \node[pt] at (O){}; \node[pt] at (U){}; \node[ptv] at (V){};
+  \node[circle,fill=vecw,inner sep=1.1pt] at (W){};
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item définir un \textbf{vecteur} par ses trois caractéristiques (direction, sens, norme) ;
+  \item calculer les \textbf{composantes} et la \textbf{norme} d'un vecteur à partir des coordonnées de deux points ;
+  \item travailler dans une \textbf{base orthonormale} et un \textbf{repère} du plan ;
+  \item additionner et soustraire des vecteurs avec la \textbf{relation de Chasles} et la \textbf{règle du parallélogramme} ;
+  \item multiplier un vecteur par un réel et reconnaître des vecteurs \textbf{colinéaires} (points alignés, droites parallèles) ;
+  \item calculer un \textbf{produit scalaire} de deux manières, en déduire l'\textbf{angle} entre deux vecteurs et tester leur \textbf{orthogonalité}.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 2 (Mathématiques) du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : pourquoi des vecteurs ?}
+% =====================================================================
+Beaucoup de grandeurs se décrivent par un \emph{seul} nombre accompagné de son unité : la masse
+(\qty{70}{\kg}), la température (\qty{37}{\celsius}), une durée (\qty{12}{\s}). On les appelle des
+grandeurs \textbf{scalaires}.
+
+D'autres grandeurs ont besoin, \emph{en plus} d'un nombre, d'une \textbf{direction} et d'un \textbf{sens}
+pour être complètement décrites : un déplacement (« \SI{3}{\km} vers le nord-est »), une vitesse, une force.
+Ce sont des grandeurs \textbf{vectorielles}, et l'outil mathématique qui les représente est le \textbf{vecteur}.
+
+Le calcul vectoriel est donc le langage commun des mathématiques et de la physique : il permet
+d'\emph{additionner} des déplacements, de \emph{composer} des vitesses (le célèbre exemple de l'avion
+dans le vent), de décider si deux directions sont \emph{parallèles} ou \emph{perpendiculaires}, et de
+calculer le \emph{travail} d'une force grâce au produit scalaire. Cette fiche construit cet outil pas à pas,
+des définitions de base jusqu'au produit scalaire, avec de nombreux exemples détaillés.
+
+\begin{remarque}[scalaire ou vecteur ?]
+Un \textbf{scalaire} est un nombre réel (avec éventuellement une unité). Un \textbf{vecteur} possède
+\emph{trois} caractéristiques simultanées : une direction, un sens et une norme. On le note avec une
+flèche : $\vec{u}$, ou $\vc{AB}$ lorsqu'on précise son origine $A$ et son extrémité $B$.
+\end{remarque}
+
+% =====================================================================
+\section{Définitions et notations}
+% =====================================================================
+
+\subsection{Qu'est-ce qu'un vecteur ?}
+
+\begin{definition}[vecteur]
+Un vecteur $\vec{u}$ est un \textbf{ensemble de segments orientés} portant chacun une \emph{origine}
+et une \emph{extrémité}, et se caractérisant tous par :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item la même \textbf{direction} (celle de la droite qui porte le segment) ;
+  \item le même \textbf{sens} (de l'origine vers l'extrémité, indiqué par la pointe de la flèche) ;
+  \item la même \textbf{norme} (la longueur du segment).
+\end{itemize}
+Deux segments orientés qui partagent ces trois caractéristiques représentent \emph{le même} vecteur :
+on dit qu'ils sont \textbf{équipollents}.
+\end{definition}
+
+Concrètement, un vecteur peut être « glissé » n'importe où dans le plan tant qu'on ne change ni sa
+direction, ni son sens, ni sa longueur. La figure~\ref{fig:equipol} illustre cette idée : les segments
+orientés $\vc{AB}$, $\vc{CD}$ et $\vc{EF}$ sont parallèles, de même longueur et de même sens : ils
+représentent donc \emph{tous} le vecteur $\vec{u}$.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.62]
+  % --- grille et axes ---
+  \draw[gridcol,very thin] (-4,-1) grid (5,8);
+  \draw[axe] (-4.3,0) -- (5.4,0) node[right,axiscol,font=\small]{$x$};
+  \draw[axe] (0,-1.3) -- (0,8.3) node[above,axiscol,font=\small]{$y$};
+  \node[axiscol,below left,font=\footnotesize] at (0,0) {$O$};
+  % graduations
+  \foreach \x in {-3,-2,-1,1,2,3,4} \node[axiscol,font=\scriptsize,below] at (\x,0) {$\x$};
+  \foreach \y in {-1,1,2,3,4,5,6,7} \node[axiscol,font=\scriptsize,left] at (0,\y) {$\y$};
+  % --- points ---
+  \coordinate (A) at (2,2);  \coordinate (B) at (4,5);
+  \coordinate (C) at (-3,1); \coordinate (D) at (-1,4);
+  \coordinate (E) at (2,0);  \coordinate (F) at (4,3);
+  \coordinate (G) at (3,7);  \coordinate (H) at (1,4);
+  % --- vecteur u : trois représentants (noir) ---
+  \draw[vu] (A) -- (B) node[midway,right=1pt,font=\small]{$\vec{u}$};
+  \draw[vu] (C) -- (D) node[midway,left=1pt,font=\small]{$\vec{u}$};
+  \draw[vu] (E) -- (F) node[midway,right=1pt,font=\small]{$\vec{u}$};
+  % --- vecteur v = GH (bleu) opposé de u ---
+  \draw[vv] (G) -- (H) node[midway,left=2pt,font=\small,vecv]{$\vec{v}$};
+  % --- étiquettes des points ---
+  \node[pt] at (A){}; \node[below left=0pt,font=\scriptsize] at (A) {$A\,(2;2)$};
+  \node[pt] at (B){}; \node[above right=0pt,font=\scriptsize] at (B) {$B\,(4;5)$};
+  \node[pt] at (C){}; \node[below left=0pt,font=\scriptsize] at (C) {$C\,(-3;1)$};
+  \node[pt] at (D){}; \node[above left=0pt,font=\scriptsize] at (D) {$D\,(-1;4)$};
+  \node[pt] at (E){}; \node[above left=1pt,font=\scriptsize] at (E) {$E\,(2;0)$};
+  \node[pt] at (F){}; \node[right=1pt,font=\scriptsize] at (F) {$F\,(4;3)$};
+  \node[ptv] at (G){}; \node[above right=0pt,font=\scriptsize,vecv] at (G) {$G\,(3;7)$};
+  \node[ptv] at (H){}; \node[below left=1pt,font=\scriptsize,vecv] at (H) {$H\,(1;4)$};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 1}} : un même vecteur $\vec{u}=\vc{AB}=\vc{CD}=\vc{EF}$ représenté
+trois fois (segments équipollents). Le vecteur $\vec{v}=\vc{GH}$ a la même direction et la même norme que
+$\vec{u}$ mais un sens contraire : c'est le \emph{vecteur opposé}, $\vec{v}=-\vec{u}$.}
+\label{fig:equipol}
+\end{figure}
+
+Sur cette figure, on lit les trois caractéristiques de $\vec{u}=\vc{AB}$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{direction} : celle de la droite $(AB)$ — la même que $(CD)$ et $(EF)$, qui sont parallèles ;
+  \item \textbf{sens} : de $A$ vers $B$ (ou de $C$ vers $D$, ou de $E$ vers $F$) ;
+  \item \textbf{norme} : la longueur $AB=\sqrt{(4-2)^2+(5-2)^2}=\sqrt{4+9}=\sqrt{13}$.
+\end{itemize}
+
+\subsection{Norme d'un vecteur}
+
+\begin{definition}[norme]
+La \textbf{norme} d'un vecteur $\vec{u}=\vc{AB}$ est la \emph{longueur} du segment $[AB]$. C'est un
+nombre réel \emph{positif ou nul}. On la note avec des doubles barres :
+\[
+  \norm{\vec{u}} \;=\; \norm{\vc{AB}} \;=\; AB .
+\]
+\end{definition}
+
+\begin{remarque}[unités d'un vecteur]
+En mathématiques « pures », les composantes et la norme d'un vecteur sont de simples \emph{nombres}
+(sans dimension). Mais dès qu'un vecteur \emph{modélise une grandeur physique}, chacune de ses
+composantes \emph{et} sa norme portent l'unité de cette grandeur :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item vecteur \emph{déplacement} : composantes et norme en mètres (\unit{\m}) ;
+  \item vecteur \emph{vitesse} : en mètres par seconde (\unit{\m\per\s}) ;
+  \item vecteur \emph{force} : en newtons (\unit{\N}).
+\end{itemize}
+La norme a \emph{toujours la même unité} que les composantes ; c'est une longueur dans l'espace de
+la grandeur considérée.
+\end{remarque}
+
+\subsection{Vecteur nul, vecteurs opposés}
+
+\begin{definition}[vecteur nul]
+Si l'extrémité $B$ est confondue avec l'origine $A$, le segment se réduit à un point : le vecteur est
+le \textbf{vecteur nul}, noté $\vec{0}$. Il n'a pas de direction ni de sens définis, et sa norme est nulle :
+\[
+  \vc{AA}=\vec{0}, \qquad \norm{\vec{0}}=0 .
+\]
+\end{definition}
+
+\begin{definition}[vecteurs opposés]
+Deux vecteurs sont \textbf{opposés} lorsqu'ils ont la \emph{même direction}, la \emph{même norme} mais
+des \emph{sens contraires}. Sur la figure~\ref{fig:equipol}, $\vec{u}$ et $\vec{v}$ sont opposés :
+\[
+  \vec{u}=-\vec{v}, \qquad\text{c'est-à-dire}\qquad \vc{AB}=-\vc{GH}.
+\]
+En particulier, échanger l'origine et l'extrémité d'un vecteur l'inverse :
+\end{definition}
+
+\begin{formule}[vecteur inverse]
+\[
+  \boxed{\;\vc{AB}=-\vc{BA}\;}
+\]
+\begin{ou}
+  \item $\vc{AB}$ : vecteur d'origine $A$ et d'extrémité $B$ ;
+  \item $\vc{BA}$ : le même segment parcouru en sens inverse (origine $B$, extrémité $A$) ;
+  \item \emph{conséquence} : $\vc{AB}$ et $\vc{BA}$ ont la même norme, $\norm{\vc{AB}}=\norm{\vc{BA}}$,
+        et la même unité physique le cas échéant.
+\end{ou}
+\end{formule}
+
+\subsection{Composantes et norme à partir des coordonnées des points}
+
+C'est l'outil de calcul le plus utilisé de toute la fiche. Dans un repère, un vecteur se ramène à un
+couple de nombres : ses \textbf{composantes}.
+
+\begin{formule}[composantes et norme du vecteur \texorpdfstring{$\vc{AB}$}{AB}]
+Si $A\,(x_A;y_A)$ et $B\,(x_B;y_B)$, alors :
+\[
+  \boxed{\;\vc{AB}\,\bigl(x_B-x_A\,;\,y_B-y_A\bigr)\;}
+  \qquad\text{et}\qquad
+  \boxed{\;\norm{\vc{AB}}=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}\;}
+\]
+\begin{ou}
+  \item $x_A,\;y_A$ : coordonnées (abscisse, ordonnée) du point d'origine $A$ ;
+  \item $x_B,\;y_B$ : coordonnées du point d'extrémité $B$ ;
+  \item $x_B-x_A$ : \emph{première composante} du vecteur (déplacement horizontal) ;
+  \item $y_B-y_A$ : \emph{seconde composante} du vecteur (déplacement vertical) ;
+  \item $\norm{\vc{AB}}$ : norme (longueur) du vecteur, toujours $\geq 0$ ;
+  \item \textbf{unité} : si les coordonnées sont en mètres, composantes \emph{et} norme sont en
+        mètres ; sinon ce sont des nombres purs.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[d'où vient la racine ?]
+La formule de la norme n'est que le \textbf{théorème de Pythagore}. Les deux composantes
+$x_B-x_A$ et $y_B-y_A$ sont les deux côtés d'un triangle rectangle dont le vecteur $\vc{AB}$ est
+l'hypoténuse. La longueur de l'hypoténuse vaut donc la racine carrée de la somme des carrés des deux côtés.
+\end{remarque}
+
+\begin{methode}[calculer les composantes et la norme d'un vecteur $\vc{AB}$]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item Repérer clairement l'\textbf{origine} $A$ et l'\textbf{extrémité} $B$ (la flèche part de $A$).
+  \item Soustraire \emph{« extrémité moins origine »}, coordonnée par coordonnée :
+        $x_B-x_A$ puis $y_B-y_A$. C'est l'erreur classique : on fait toujours \emph{B$-$A}, jamais l'inverse.
+  \item Écrire les composantes entre parenthèses : $\vc{AB}\,(x_B-x_A\,;\,y_B-y_A)$.
+  \item Pour la norme : élever chaque composante au carré, additionner, prendre la racine.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[un calcul complet, pas à pas]
+Soit $A\,(2;2)$ et $B\,(4;5)$ (les points de la figure~\ref{fig:equipol}).
+
+\textbf{Étape 1 — composantes} (extrémité moins origine) :
+\[
+  \vc{AB}\,\bigl(\,x_B-x_A\,;\,y_B-y_A\,\bigr)=\vc{AB}\,(\,4-2\,;\,5-2\,)=\vc{AB}\,(2;3).
+\]
+La première composante $2$ signifie « $2$ vers la droite » ; la seconde $3$ signifie « $3$ vers le haut ».
+
+\textbf{Étape 2 — norme} (Pythagore) :
+\[
+  \norm{\vc{AB}}=\sqrt{(4-2)^2+(5-2)^2}=\sqrt{2^2+3^2}=\sqrt{4+9}=\sqrt{13}\approx 3{,}61 .
+\]
+On retrouve bien la valeur annoncée plus haut. Si ces points repéraient des positions en kilomètres, on
+écrirait $\norm{\vc{AB}}=\sqrt{13}\ \unit{\km}\approx \qty{3.61}{\km}$.
+\end{exemple}
+
+% =====================================================================
+\section{Base et repère du plan}
+% =====================================================================
+
+\subsection{Repère, base orthonormale}
+
+\begin{definition}[repère et base]
+Un \textbf{repère} du plan est la donnée d'un point origine $O$ et de deux vecteurs $\vec{\imath}$ et
+$\vec{\jmath}$ non colinéaires : on le note $(O\,;\vec{\imath},\vec{\jmath})$. Le couple
+$(\vec{\imath},\vec{\jmath})$ s'appelle une \textbf{base} du plan.
+
+La base $(\vec{\imath},\vec{\jmath})$ est dite \textbf{orthonormale} (et le repère
+\textbf{orthonormé}) si et seulement si :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item $\vec{\imath}$ et $\vec{\jmath}$ sont \textbf{orthogonaux} (perpendiculaires) ;
+  \item ils ont chacun pour \textbf{longueur} $1$ : $\norm{\vec{\imath}}=\norm{\vec{\jmath}}=1$.
+\end{itemize}
+\end{definition}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.25]
+  \draw[axe] (-0.5,0) -- (4.4,0) node[right,axiscol,font=\small]{$x$};
+  \draw[axe] (0,-0.5) -- (0,3.2) node[above,axiscol,font=\small]{$y$};
+  \node[axiscol,below left,font=\footnotesize] at (0,0) {$O$};
+  % base i, j (rouge)
+  \draw[->,>=Stealth,line width=1.2pt,primary] (0,0) -- (1,0)
+        node[midway,below,font=\footnotesize,primary]{$\vec{\imath}$};
+  \draw[->,>=Stealth,line width=1.2pt,primary] (0,0) -- (0,1)
+        node[midway,left,font=\footnotesize,primary]{$\vec{\jmath}$};
+  % vecteur u = 3 i + 2 j
+  \coordinate (U) at (3,2);
+  \draw[vu] (0,0) -- (U) node[midway,above left,font=\small]{$\vec{u}$};
+  % projections a i et b j
+  \draw[aux] (U) -- (3,0); \draw[aux] (U) -- (0,2);
+  \draw[->,>=Stealth,line width=1.1pt,vecv] (0,0) -- (3,0)
+        node[midway,below,font=\footnotesize,vecv]{$a\,\vec{\imath}$};
+  \draw[->,>=Stealth,line width=1.1pt,vecv] (3,0) -- (3,2)
+        node[midway,right,font=\footnotesize,vecv]{$b\,\vec{\jmath}$};
+  \node[pt] at (U){};
+  \node[font=\small] at (2.05,2.55) {$\vec{u}=a\,\vec{\imath}+b\,\vec{\jmath}$};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 2}} : décomposition d'un vecteur $\vec{u}$ dans la base
+orthonormale $(\vec{\imath},\vec{\jmath})$. Ici $a=3$ et $b=2$, donc $\vec{u}\,(3;2)$.}
+\label{fig:base}
+\end{figure}
+
+\subsection{Coordonnées d'un vecteur dans une base}
+
+\begin{theoreme}[existence et unicité des coordonnées]
+Pour tout vecteur $\vec{u}$ du plan, il existe un \emph{unique} couple de réels $(a;b)$ tel que
+\[
+  \vec{u}=a\,\vec{\imath}+b\,\vec{\jmath}.
+\]
+Les nombres $a$ et $b$ sont les \textbf{coordonnées} (ou \emph{composantes}) de $\vec{u}$ dans la base
+$(\vec{\imath},\vec{\jmath})$. On note indifféremment
+\[
+  \vec{u}\,(a;b)\qquad\text{ou}\qquad \vec{u}\begin{pmatrix} a\\ b\end{pmatrix}.
+\]
+\end{theoreme}
+
+L'écriture en colonne $\binom{a}{b}$ et l'écriture en ligne $(a;b)$ désignent la même chose. On adoptera
+plus loin la notation $\vec{u}\,(x;y)$ lorsqu'on calcule des produits scalaires.
+
+\subsection{Opérations sur les coordonnées}
+
+Travailler avec les coordonnées transforme la géométrie en \emph{calcul}. Si $\vec{u}\,(a;b)$ et
+$\vec{v}\,(a';b')$ dans la même base, alors :
+
+\begin{formule}[somme, différence, produit par un réel]
+\[
+  \boxed{\;\vec{u}+\vec{v}\;\bigl(a+a'\,;\,b+b'\bigr)\;}\qquad
+  \boxed{\;\vec{u}-\vec{v}\;\bigl(a-a'\,;\,b-b'\bigr)\;}\qquad
+  \boxed{\;k\,\vec{u}\;\bigl(ka\,;\,kb\bigr)\;}
+\]
+\begin{ou}
+  \item $a,\,b$ : composantes de $\vec{u}$ ;
+  \item $a',\,b'$ : composantes de $\vec{v}$ ;
+  \item $k$ : un nombre réel quelconque (un \emph{scalaire}, sans unité) ;
+  \item \textbf{principe} : on additionne, soustrait ou multiplie \emph{composante par composante} ;
+  \item \textbf{unité} : la somme et la différence n'ont de sens que si $\vec{u}$ et $\vec{v}$ portent la
+        \emph{même} unité ; $k\vec{u}$ garde l'unité de $\vec{u}$.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[opérations composante par composante]
+Soit $\vec{u}\,(1;1)$ et $\vec{v}\,(-2;4)$.
+\[
+  \vec{u}+\vec{v}\;(1+(-2)\,;\,1+4)=(-1;5),\qquad
+  \vec{u}-\vec{v}\;(1-(-2)\,;\,1-4)=(3;-3),
+\]
+\[
+  3\,\vec{u}\;(3\times 1\,;\,3\times 1)=(3;3),\qquad
+  -2\,\vec{v}\;(-2\times(-2)\,;\,-2\times 4)=(4;-8).
+\]
+\end{exemple}
+
+\subsection{Vecteur directeur et coefficient directeur d'une droite}
+
+\begin{definition}[vecteur directeur]
+Un \textbf{vecteur directeur} d'une droite $d$ est un vecteur \emph{non nul} qui a la même direction que
+$d$ (il « indique le long de quoi » la droite avance).
+\end{definition}
+
+\begin{formule}[vecteur directeur et pente d'une droite d'équation $ax+by+c=0$]
+Une droite $d$ d'équation $ax+by+c=0$, avec $a$ et $b$ deux réels non tous deux nuls, admet :
+\[
+  \boxed{\;\text{vecteur directeur }\vec{u}\,(-b\,;\,a)\;}\qquad\qquad
+  \boxed{\;\text{coefficient directeur (pente) }\;m=-\dfrac{a}{b}\;}
+\]
+\begin{ou}
+  \item $a,\,b,\,c$ : coefficients de l'équation cartésienne $ax+by+c=0$ ;
+  \item $\vec{u}\,(-b;a)$ : un vecteur directeur (on échange les coefficients $a$ et $b$, et on change un signe) ;
+  \item $m$ : coefficient directeur (ou \emph{pente}, ou \emph{coefficient angulaire}), défini si $b\neq 0$ ;
+  \item \textbf{lien} : la pente $m$ est le rapport « variation de $y$ sur variation de $x$ »
+        $=\dfrac{a_y}{a_x}=\dfrac{a}{-b}=-\dfrac{a}{b}$ à partir des composantes du vecteur directeur.
+\end{ou}
+\end{formule}
+
+Dans un repère \emph{orthonormé}, le coefficient directeur permet de tester très rapidement le
+parallélisme et la perpendicularité de deux droites $d$ et $d'$ de pentes $m$ et $m'$ :
+
+\begin{theoreme}[parallélisme et perpendicularité de deux droites]
+\[
+  d\parallel d' \iff m=m' \qquad\qquad
+  d\perp d' \iff m=-\dfrac{1}{m'} \;\;(\text{soit } m\times m'=-1).
+\]
+Autrement dit : \emph{même pente} pour des droites parallèles ; \emph{le coefficient directeur de
+l'une est l'opposé de l'inverse de l'autre} pour des droites perpendiculaires.
+\end{theoreme}
+
+\begin{methode}[déterminer si deux droites sont parallèles ou perpendiculaires]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item Trouver un \textbf{vecteur directeur} de chaque droite (par exemple $\vc{AB}$ si la droite passe
+        par $A$ et $B$, ou $(-b;a)$ à partir de l'équation $ax+by+c=0$).
+  \item \textbf{Parallèles} : vérifier que les deux vecteurs directeurs sont \emph{colinéaires}
+        (l'un est multiple de l'autre), ou que $m=m'$.
+  \item \textbf{Perpendiculaires} : vérifier que le \emph{produit scalaire} des deux vecteurs directeurs
+        est nul (voir §\ref{sec:ps}), ou que $m\times m'=-1$.
+\end{enumerate}
+\end{methode}
+
+% =====================================================================
+\section{Opérations géométriques sur les vecteurs}
+% =====================================================================
+
+\subsection{Addition : la relation (loi) de Chasles}
+
+\begin{theoreme}[relation de Chasles]
+$A$ et $C$ étant deux points du plan, la translation de $A$ vers $C$ peut se réaliser en passant par un
+point intermédiaire $B$ \emph{quelconque} :
+\[
+  \boxed{\;\vc{AB}+\vc{BC}=\vc{AC}\;}
+\]
+\begin{ou}
+  \item $\vc{AB}$ : premier déplacement (de $A$ vers $B$) ;
+  \item $\vc{BC}$ : second déplacement (de $B$ vers $C$) ;
+  \item $\vc{AC}$ : déplacement \emph{résultant} (de $A$ directement vers $C$) ;
+  \item \textbf{condition d'emploi} : le point $B$ doit être à la fois \emph{l'extrémité} du premier
+        vecteur et \emph{l'origine} du second (les vecteurs se « touchent » bout à bout).
+\end{ou}
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (3.0,1.6);
+  \coordinate (C) at (4.6,-0.4);
+  \draw[vu] (A) -- (B) node[midway,above left,font=\small]{$\vc{AB}$};
+  \draw[vu] (B) -- (C) node[midway,right,font=\small]{$\vc{BC}$};
+  \draw[vw] (A) -- (C) node[midway,below,font=\small,vecw]{$\vc{AC}$};
+  \node[pt] at (A){}; \node[left,font=\small] at (A){$A$};
+  \node[pt] at (B){}; \node[above,font=\small] at (B){$B$};
+  \node[pt] at (C){}; \node[right,font=\small] at (C){$C$};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 3}} : relation de Chasles. Aller de $A$ à $B$ puis de $B$ à $C$
+revient à aller directement de $A$ à $C$ : $\vc{AB}+\vc{BC}=\vc{AC}$.}
+\label{fig:chasles}
+\end{figure}
+
+\begin{attention}[la condition « bout à bout »]
+La relation de Chasles ne s'applique \emph{directement} que si les deux vecteurs ont un point commun :
+l'extrémité de l'un = l'origine de l'autre. Si ce n'est pas le cas, on commence par \emph{translater}
+l'un des vecteurs (sans changer sa direction, son sens ni sa norme) pour amener son origine sur
+l'extrémité de l'autre : on peut le faire car un vecteur peut être glissé librement (équipollence).
+\end{attention}
+
+La relation de Chasles s'enchaîne autant de fois qu'on veut. C'est la « règle bout à bout » :
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  % addition de trois vecteurs bout à bout
+  \coordinate (P0) at (0,0);
+  \coordinate (P1) at (1.6,1.4);
+  \coordinate (P2) at (3.2,2.6);
+  \coordinate (P3) at (5.4,1.9);
+  \draw[vv] (P0) -- (P1) node[midway,above left=-1pt,font=\footnotesize,vecv]{$\vec{v_1}$};
+  \draw[vv] (P1) -- (P2) node[midway,above left=-1pt,font=\footnotesize,vecv]{$\vec{v_2}$};
+  \draw[vv] (P2) -- (P3) node[midway,above right=-1pt,font=\footnotesize,vecv]{$\vec{v_3}$};
+  \draw[vw] (P0) -- (P3);
+  \node[vecw,font=\small,below=2pt] at (2.7,0.95) {$\vec{v}=\vec{v_1}+\vec{v_2}+\vec{v_3}$};
+  \node[ptv] at (P0){}; \node[ptv] at (P1){}; \node[ptv] at (P2){}; \node[ptv] at (P3){};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 4}} : somme de plusieurs vecteurs « bout à bout ». La résultante
+$\vec{v}$ relie l'origine du premier à l'extrémité du dernier :
+$\vc{AB}+\vc{BC}+\vc{CD}+\vc{DF}=\vc{AF}$.}
+\label{fig:somme3}
+\end{figure}
+
+\begin{methode}[additionner / simplifier une somme de vecteurs avec Chasles]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Mettre bout à bout} : repérer (ou créer) des enchaînements où l'extrémité d'un vecteur
+        est l'origine du suivant, du type $\vc{AB}+\vc{BC}=\vc{AC}$.
+  \item \textbf{Faire disparaître les lettres intermédiaires} : la lettre $B$ « s'efface » dans
+        $\vc{AB}+\vc{BC}=\vc{AC}$.
+  \item \textbf{Utiliser les opposés} : remplacer au besoin $\vc{AB}$ par $-\vc{BA}$ pour faire apparaître
+        un enchaînement (cela transforme une soustraction en addition).
+  \item \textbf{Reconnaître le vecteur nul} : $\vc{AA}=\vec{0}$ disparaît de la somme.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[composition de vitesses : l'avion dans le vent]
+La relation de Chasles modélise la \textbf{composition des vitesses}. Un avion vole à la vitesse
+$\vec{v_1}$ \emph{par rapport à l'air}, tandis que l'air se déplace à la vitesse $\vec{v_2}$
+\emph{par rapport au sol}. La vitesse de l'avion \emph{par rapport au sol} est la résultante
+\[
+  \vec{v}=\vec{v_1}+\vec{v_2}.
+\]
+Supposons $\vec{v_1}\,(\qty{200}{\m\per\s}\,;\,0)$ (l'avion pointe plein est) et un vent
+$\vec{v_2}\,(0\,;\,\qty{15}{\m\per\s})$ (du sud vers le nord). Alors
+\[
+  \vec{v}\,(200\,;\,15)\ \unit{\m\per\s},\qquad
+  \norm{\vec{v}}=\sqrt{200^2+15^2}=\sqrt{40000+225}=\sqrt{40225}\approx \qty{200.6}{\m\per\s}.
+\]
+Le vent latéral dévie légèrement la trajectoire réelle et augmente un peu la vitesse-sol. \emph{Toutes}
+les composantes et la norme s'expriment ici en \unit{\m\per\s}.
+\end{exemple}
+
+\subsection{Règle du parallélogramme}
+
+Lorsque deux vecteurs ont la \emph{même origine}, leur somme se construit en complétant un
+parallélogramme : c'est la formulation « point de vue commun » de la relation de Chasles.
+
+\begin{theoreme}[règle du parallélogramme]
+Si $\vc{AB}+\vc{AD}=\vc{AC}$, alors le quadrilatère $ABCD$ est un \textbf{parallélogramme} : la diagonale
+issue de $A$ porte la somme des deux côtés issus de $A$.
+\end{theoreme}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.1]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (2.6,0.5);
+  \coordinate (D) at (1.0,2.0);
+  \coordinate (C) at ($(B)+(D)-(A)$); % C = B + D - A
+  \draw[aux] (B) -- (C); \draw[aux] (D) -- (C);
+  \draw[vu] (A) -- (B) node[midway,below right,font=\small]{$\vc{AB}$};
+  \draw[vv] (A) -- (D) node[midway,above left,font=\small,vecv]{$\vc{AD}$};
+  \draw[vw] (A) -- (C) node[midway,above,sloped,font=\small,vecw]{$\vc{AC}=\vc{AB}+\vc{AD}$};
+  \node[pt] at (A){}; \node[below left,font=\small] at (A){$A$};
+  \node[pt] at (B){}; \node[below right,font=\small] at (B){$B$};
+  \node[ptv] at (D){}; \node[above left,font=\small] at (D){$D$};
+  \node[circle,fill=vecw,inner sep=1.1pt] at (C){}; \node[above right,font=\small] at (C){$C$};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 5}} : règle du parallélogramme. Les deux vecteurs partent du
+\emph{même} point $A$ ; leur somme est la diagonale $\vc{AC}$ du parallélogramme $ABCD$.}
+\label{fig:parallelo}
+\end{figure}
+
+\subsection{Différence de deux vecteurs}
+
+Soustraire un vecteur, c'est ajouter son opposé. On se ramène ainsi toujours à une addition.
+
+\begin{formule}[différence de deux vecteurs]
+\[
+  \boxed{\;\vec{v_1}-\vec{v_2}=\vec{v_1}+\bigl(-\vec{v_2}\bigr)\;}
+\]
+\begin{ou}
+  \item $\vec{v_1}$ : premier vecteur (le « point de départ ») ;
+  \item $\vec{v_2}$ : vecteur que l'on retranche ;
+  \item $-\vec{v_2}$ : opposé de $\vec{v_2}$ (même direction et norme, sens contraire) ;
+  \item \textbf{construction} : on dessine $\vec{v_1}$, puis $-\vec{v_2}$ bout à bout, et on relie.
+\end{ou}
+\end{formule}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  % --- à gauche : v1 puis v2 (bout à bout) ---
+  \coordinate (OL) at (0,0);
+  \coordinate (A1) at (1.2,2.2);     % extrémité de v1
+  \coordinate (B1) at (2.4,3.0);     % extrémité de v2
+  \draw[vv] (OL) -- (A1) node[midway,left,font=\footnotesize,vecv]{$\vec{v_1}$};
+  \draw[vv] (A1) -- (B1) node[midway,above left=-1pt,font=\footnotesize,vecv]{$\vec{v_2}$};
+  \node[ptv] at (OL){}; \node[ptv] at (A1){}; \node[ptv] at (B1){};
+  % --- flèche d'implication ---
+  \node at (3.6,1.5) {\Large$\Rightarrow$};
+  % --- à droite : v1 puis -v2, et la différence v1-v2 ---
+  \coordinate (OR) at (5.0,0);
+  \coordinate (A2) at (6.2,2.2);     % extrémité de v1
+  \coordinate (C2) at (5.0,1.4);     % A2 + (-v2) : -v2=(-1.2,-0.8)
+  \draw[vv] (OR) -- (A2) node[midway,below right=-1pt,font=\footnotesize,vecv]{$\vec{v_1}$};
+  \draw[->,>=Stealth,line width=1.3pt,attncol] (A2) -- (C2)
+        node[midway,above left=-1pt,font=\footnotesize,attncol]{$-\vec{v_2}$};
+  \draw[vw] (OR) -- (C2) node[midway,left,font=\footnotesize,vecw]{$\vec{v_1}-\vec{v_2}$};
+  \node[ptv] at (OR){}; \node[ptv] at (A2){};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 6}} : différence $\vec{v_1}-\vec{v_2}$. On ajoute à $\vec{v_1}$
+l'opposé $-\vec{v_2}$ : $\vec{v}=\vec{v_1}+(-\vec{v_2})=\vec{v_1}-\vec{v_2}$.}
+\label{fig:difference}
+\end{figure}
+
+\subsection{Produit d'un vecteur par un nombre réel}
+
+\begin{definition}[multiplication par un scalaire]
+Le produit d'un vecteur $\vec{v}$ par un réel non nul $k$ est un vecteur $\vec{u}=k\,\vec{v}$ dont les
+caractéristiques sont :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{même direction} que $\vec{v}$ (ils sont \emph{colinéaires}) ;
+  \item \textbf{même sens} si $k>0$, \textbf{sens contraire} si $k<0$ ;
+  \item \textbf{norme} multipliée par la valeur absolue de $k$.
+\end{itemize}
+\end{definition}
+
+\begin{formule}[norme du produit par un scalaire]
+\[
+  \boxed{\;\norm{k\,\vec{v}}=|k|\cdot\norm{\vec{v}}\;}
+\]
+\begin{ou}
+  \item $k$ : le réel multiplicateur (sans unité) ;
+  \item $|k|$ : sa valeur absolue (on prend toujours une longueur positive) ;
+  \item $\norm{\vec{v}}$ : norme du vecteur de départ ;
+  \item $\norm{k\vec{v}}$ : norme du vecteur obtenu, dans la même unité que $\vec{v}$.
+\end{ou}
+\end{formule}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (O) at (0,0);
+  \draw[vv] (O) -- (1.4,0.8) node[midway,above left,font=\footnotesize,vecv]{$\vec{v}$};
+  \draw[vu] (3,0) -- ($(3,0)+(2.8,1.6)$) node[midway,below right,font=\footnotesize]{$2\vec{v}$};
+  \draw[->,>=Stealth,line width=1.3pt,attncol] (7.6,1.2) -- ($(7.6,1.2)+(-2.1,-1.2)$)
+        node[midway,above right,font=\footnotesize,attncol]{$-1{,}5\,\vec{v}$};
+  \node[ptv] at (O){};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 7}} : produit par un scalaire. $2\vec{v}$ est deux fois plus long
+et de même sens ; $-1{,}5\,\vec{v}$ est $1{,}5$ fois plus long et de sens contraire.}
+\label{fig:scalaire}
+\end{figure}
+
+\subsection{Colinéarité, parallélisme, alignement}
+
+C'est l'application la plus fréquente de la multiplication par un scalaire.
+
+\begin{definition}[vecteurs colinéaires]
+Deux vecteurs $\vec{u}$ et $\vec{v}$ (avec $\vec{v}\neq\vec{0}$) sont \textbf{colinéaires} si et
+seulement s'il existe un réel non nul $k$ tel que $\vec{u}=k\,\vec{v}$. Géométriquement, ils ont la
+même direction (ils sont « parallèles »).
+\end{definition}
+
+\begin{theoreme}[parallélisme et alignement]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item Si $\vc{AB}=k\,\vc{CD}$ avec $k\neq 0$, alors les droites $(AB)$ et $(CD)$ sont
+        \textbf{parallèles}.
+  \item Si $\vc{AB}=k\,\vc{AC}$ avec $k\neq 0$, alors les points $A$, $B$ et $C$ sont \textbf{alignés}
+        (car $\vc{AB}$ et $\vc{AC}$ partent du même point $A$).
+\end{itemize}
+\end{theoreme}
+
+\begin{remarque}[test de colinéarité par les coordonnées]
+Avec $\vec{u}\,(x;y)$ et $\vec{v}\,(x';y')$, les deux vecteurs sont colinéaires si et seulement si leur
+\textbf{déterminant} est nul :
+\[
+  xy'-x'y=0.
+\]
+C'est le critère le plus rapide quand on dispose des composantes : pas besoin de chercher la valeur de $k$.
+\end{remarque}
+
+\begin{methode}[montrer que trois points $A$, $B$, $C$ sont alignés]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item Calculer les composantes de $\vc{AB}$ et de $\vc{AC}$ (« extrémité moins origine »).
+  \item Calculer le déterminant $x_{AB}\,y_{AC}-x_{AC}\,y_{AB}$.
+  \item S'il est \textbf{nul}, les vecteurs sont colinéaires : $A$, $B$, $C$ sont alignés. Sinon, ils
+        forment un vrai triangle.
+\end{enumerate}
+\end{methode}
+
+\begin{theoreme}[propriétés algébriques de la multiplication par un scalaire]
+Pour tous réels $a,b$ et tous vecteurs $\vec{u},\vec{v}$ :
+\[
+  a\,(\vec{u}+\vec{v})=a\vec{u}+a\vec{v},\qquad
+  a\,(b\,\vec{u})=(ab)\,\vec{u},\qquad
+  a\,(-b\,\vec{u})=-(ab)\,\vec{u}.
+\]
+La multiplication par un scalaire est \emph{distributive} sur l'addition des vecteurs et
+\emph{associative} avec la multiplication des réels.
+\end{theoreme}
+
+% =====================================================================
+\section{Produit scalaire de deux vecteurs}\label{sec:ps}
+% =====================================================================
+Le produit scalaire est l'opération qui relie les vecteurs aux \emph{angles} et aux \emph{longueurs}.
+Son résultat n'est \textbf{pas} un vecteur, mais un \emph{nombre réel} (un scalaire) — d'où son nom.
+
+\subsection{Deux façons de le calculer}
+
+\begin{formule}[produit scalaire : expression analytique et expression géométrique]
+Soit $\vec{u}\,(x;y)$ et $\vec{v}\,(x';y')$. Le produit scalaire $\vec{u}\cdot\vec{v}$ se calcule de
+deux manières \emph{équivalentes} :
+\[
+  \boxed{\;\vec{u}\cdot\vec{v}=x\,x'+y\,y'\;}\qquad\text{(analytique)}
+\]
+\[
+  \boxed{\;\vec{u}\cdot\vec{v}=\norm{\vec{u}}\times\norm{\vec{v}}\times\cos(\vec{u},\vec{v})\;}\qquad\text{(géométrique)}
+\]
+\begin{ou}
+  \item $x,\,y$ : composantes de $\vec{u}$ ; \quad $x',\,y'$ : composantes de $\vec{v}$ ;
+  \item $\norm{\vec{u}},\,\norm{\vec{v}}$ : normes (longueurs) des deux vecteurs ;
+  \item $(\vec{u},\vec{v})$ : angle géométrique entre les deux vecteurs ; $\cos(\vec{u},\vec{v})$ est
+        un nombre \emph{sans unité} compris entre $-1$ et $1$ ;
+  \item $\vec{u}\cdot\vec{v}$ : un \textbf{nombre réel} (positif, négatif ou nul) ;
+  \item \textbf{unité} : si $\vec{u}$ et $\vec{v}$ sont des grandeurs physiques, l'unité du produit
+        scalaire est le \emph{produit} de leurs unités. Exemple : travail $W=\vec{F}\cdot\vec{d}$ en
+        \unit{\N}$\times$\unit{\m}$=$\unit{\joule} (joules).
+\end{ou}
+\end{formule}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (O) at (0,0);
+  \coordinate (U) at (4,0);     % v = (4,0)
+  \coordinate (V) at (1,2);     % u = (1,2)
+  \draw[axe] (-0.4,0) -- (4.7,0) node[right,axiscol,font=\footnotesize]{$x$};
+  \draw[axe] (0,-0.4) -- (0,2.6) node[above,axiscol,font=\footnotesize]{$y$};
+  \draw[vw] (O) -- (U) node[midway,below,font=\small,vecw]{$\vec{v}\,(4;0)$};
+  \draw[vu] (O) -- (V) node[midway,above left,font=\small]{$\vec{u}\,(1;2)$};
+  % arc d'angle
+  \draw[primary,line width=0.9pt] (0.9,0) arc (0:63.4:0.9);
+  \node[primary,font=\footnotesize] at (1.35,0.45) {$\theta$};
+  \node[pt] at (V){}; \node[circle,fill=vecw,inner sep=1.1pt] at (U){};
+  \node[axiscol,below left,font=\footnotesize] at (O){$O$};
+\end{tikzpicture}
+\caption{\textbf{\textcolor{primary}{Figure 8}} : l'angle $\theta=(\vec{u},\vec{v})$ entre deux vecteurs.
+Le produit scalaire relie cet angle aux composantes : $\vec{u}\cdot\vec{v}=\norm{\vec{u}}\,\norm{\vec{v}}\cos\theta=x x'+y y'$.}
+\label{fig:angle}
+\end{figure}
+
+\subsection{Pourquoi les deux expressions coïncident}
+
+Plaçons-nous dans un repère orthonormé de base $(\vec{\imath},\vec{\jmath})$ et écrivons
+$\vec{u}=x\,\vec{\imath}+y\,\vec{\jmath}$ et $\vec{v}=x'\,\vec{\imath}+y'\,\vec{\jmath}$. En développant
+par bilinéarité :
+\[
+  \vec{u}\cdot\vec{v}=\bigl(x\,\vec{\imath}+y\,\vec{\jmath}\bigr)\cdot\bigl(x'\,\vec{\imath}+y'\,\vec{\jmath}\bigr)
+  =x x'\,(\vec{\imath}\cdot\vec{\imath})+x y'\,(\vec{\imath}\cdot\vec{\jmath})
+  +y x'\,(\vec{\jmath}\cdot\vec{\imath})+y y'\,(\vec{\jmath}\cdot\vec{\jmath}).
+\]
+Or la base est orthonormale : $\vec{\imath}$ et $\vec{\jmath}$ sont \emph{orthogonaux} et de
+\emph{norme $1$}. Donc
+\[
+  \vec{\imath}\cdot\vec{\imath}=1,\qquad \vec{\jmath}\cdot\vec{\jmath}=1,\qquad
+  \vec{\imath}\cdot\vec{\jmath}=\vec{\jmath}\cdot\vec{\imath}=0.
+\]
+Il ne reste que les deux termes « diagonaux » :
+\[
+  \boxed{\;\vec{u}\cdot\vec{v}=x x'+y y'.\;}
+\]
+On passe ainsi de l'expression géométrique (avec le cosinus) à l'expression analytique (avec les
+composantes) : les deux ne sont que deux visages d'une même quantité.
+
+\subsection{Propriétés du produit scalaire}
+
+\begin{theoreme}[propriétés fondamentales]
+Pour tous vecteurs $\vec{u},\vec{v},\vec{w}$ et tout réel $k$ :
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt,label=(\alph*)]
+  \item \textbf{symétrie} : $\vec{u}\cdot\vec{v}=\vec{v}\cdot\vec{u}$ (car la fonction cosinus est paire,
+        $\cos(-\alpha)=\cos\alpha$) ;
+  \item \textbf{carré scalaire} : $\vec{u}\cdot\vec{u}=\norm{\vec{u}}^2$ (car l'angle est nul et
+        $\cos 0=1$) ;
+  \item \textbf{linéarité} : $(k\,\vec{u})\cdot\vec{v}=k\,(\vec{u}\cdot\vec{v})$ et
+        $(\vec{u}+\vec{w})\cdot\vec{v}=\vec{u}\cdot\vec{v}+\vec{w}\cdot\vec{v}$ ;
+  \item \textbf{critère d'orthogonalité} : $\vec{u}\perp\vec{v}\iff\vec{u}\cdot\vec{v}=0$
+        (avec $\vec{u},\vec{v}$ non nuls).
+\end{enumerate}
+\end{theoreme}
+
+\begin{attention}[le critère d'orthogonalité, à retenir absolument]
+Deux vecteurs non nuls sont \textbf{orthogonaux (perpendiculaires)} si et seulement si leur produit
+scalaire est \textbf{nul}. C'est le test le plus rapide pour la perpendicularité : on calcule
+$x x'+y y'$ et on regarde s'il vaut $0$. Pas besoin de l'angle.
+\end{attention}
+
+\subsection{Calculer l'angle entre deux vecteurs}
+
+En égalant les deux expressions du produit scalaire, on isole le cosinus de l'angle :
+
+\begin{formule}[cosinus de l'angle entre deux vecteurs]
+\[
+  \boxed{\;\cos(\vec{u},\vec{v})=\dfrac{\vec{u}\cdot\vec{v}}{\norm{\vec{u}}\times\norm{\vec{v}}}
+  =\dfrac{x x'+y y'}{\sqrt{x^2+y^2}\,\sqrt{x'^2+y'^2}}\;}
+\]
+\begin{ou}
+  \item $\vec{u}\cdot\vec{v}=x x'+y y'$ : produit scalaire (calculé par les composantes) ;
+  \item $\norm{\vec{u}}=\sqrt{x^2+y^2}$, $\norm{\vec{v}}=\sqrt{x'^2+y'^2}$ : les deux normes ;
+  \item $\cos(\vec{u},\vec{v})$ : nombre sans unité dans $[-1;1]$ ; l'angle s'obtient ensuite par
+        $\arccos$ ;
+  \item \emph{signe} : si $\vec{u}\cdot\vec{v}>0$ l'angle est aigu, s'il est $<0$ l'angle est obtus,
+        s'il est nul les vecteurs sont perpendiculaires.
+\end{ou}
+\end{formule}
+
+\begin{methode}[trouver l'angle entre deux vecteurs $\vec{u}$ et $\vec{v}$]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item Calculer le produit scalaire $\vec{u}\cdot\vec{v}=x x'+y y'$.
+  \item Calculer les deux normes $\norm{\vec{u}}$ et $\norm{\vec{v}}$.
+  \item Former le quotient $\cos\theta=\dfrac{\vec{u}\cdot\vec{v}}{\norm{\vec{u}}\,\norm{\vec{v}}}$.
+  \item Prendre $\theta=\arccos(\ldots)$ à la calculatrice (en degrés ou en radians selon l'énoncé).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[angle entre $\vec{u}\,(1;2)$ et $\vec{v}\,(4;0)$ — figure~\ref{fig:angle}]
+\textbf{Produit scalaire} (analytique) :
+\[
+  \vec{u}\cdot\vec{v}=x x'+y y'=1\times 4+2\times 0=4.
+\]
+\textbf{Normes} :
+\[
+  \norm{\vec{u}}=\sqrt{1^2+2^2}=\sqrt{5},\qquad
+  \norm{\vec{v}}=\sqrt{4^2+0^2}=\sqrt{16}=4.
+\]
+\textbf{Cosinus de l'angle} :
+\[
+  \cos\theta=\frac{\vec{u}\cdot\vec{v}}{\norm{\vec{u}}\,\norm{\vec{v}}}
+  =\frac{4}{\sqrt{5}\times 4}=\frac{1}{\sqrt{5}}=\frac{\sqrt{5}}{5}\approx 0{,}447.
+\]
+\textbf{Angle} :
+\[
+  \theta=\arccos\!\left(\frac{\sqrt{5}}{5}\right)\approx 63{,}4^{\circ}.
+\]
+On vérifie la cohérence avec l'expression géométrique :
+$\vec{u}\cdot\vec{v}=\norm{\vec{u}}\,\norm{\vec{v}}\cos\theta=\sqrt5\times4\times\frac{\sqrt5}{5}
+=\frac{4\times5}{5}=4$ — on retrouve bien $4$.
+\end{exemple}
+
+\subsection{Identités remarquables vectorielles}
+
+En développant un carré scalaire à l'aide de la linéarité et de $\vec{u}\cdot\vec{u}=\norm{\vec{u}}^2$,
+on obtient les analogues vectoriels des identités remarquables. Elles servent à passer d'une norme de
+somme à des produits scalaires (très utile pour calculer des angles ou des longueurs).
+
+\begin{formule}[identités remarquables du produit scalaire]
+\[
+  \boxed{\;\norm{\vec{u}+\vec{v}}^2=\norm{\vec{u}}^2+\norm{\vec{v}}^2+2\,\vec{u}\cdot\vec{v}\;}
+\]
+\[
+  \boxed{\;\norm{\vec{u}-\vec{v}}^2=\norm{\vec{u}}^2+\norm{\vec{v}}^2-2\,\vec{u}\cdot\vec{v}\;}
+  \qquad
+  \boxed{\;(\vec{u}+\vec{v})\cdot(\vec{u}-\vec{v})=\norm{\vec{u}}^2-\norm{\vec{v}}^2\;}
+\]
+\begin{ou}
+  \item $\norm{\vec{u}}^2,\ \norm{\vec{v}}^2$ : carrés des normes ($=\vec{u}\cdot\vec{u}$ et $\vec{v}\cdot\vec{v}$) ;
+  \item $\vec{u}\cdot\vec{v}$ : produit scalaire des deux vecteurs ;
+  \item le terme $\pm 2\,\vec{u}\cdot\vec{v}$ est le « double produit », analogue du $2ab$ des identités
+        scalaires $(a\pm b)^2=a^2+b^2\pm 2ab$.
+\end{ou}
+\end{formule}
+
+\textbf{Démonstration} de la première (les autres sont identiques au signe près) :
+\[
+  \norm{\vec{u}+\vec{v}}^2=(\vec{u}+\vec{v})\cdot(\vec{u}+\vec{v})
+  =\underbrace{\vec{u}\cdot\vec{u}}_{\norm{\vec u}^2}+\vec{u}\cdot\vec{v}+\vec{v}\cdot\vec{u}
+  +\underbrace{\vec{v}\cdot\vec{v}}_{\norm{\vec v}^2}
+  =\norm{\vec{u}}^2+\norm{\vec{v}}^2+2\,\vec{u}\cdot\vec{v},
+\]
+où l'on a utilisé la symétrie $\vec{u}\cdot\vec{v}=\vec{v}\cdot\vec{u}$. Enfin, comme les composantes de
+$\vec{u}+\vec{v}$ sont $(x+x'\,;\,y+y')$, on a aussi directement
+$\norm{\vec{u}+\vec{v}}^2=(x+x')^2+(y+y')^2$.
+
+% =====================================================================
+\section{Exemples résolus — applications type concours}
+% =====================================================================
+Cette section reprend, sous forme d'\textbf{exemples entièrement résolus}, les situations classiques de
+calcul vectoriel. Chaque raisonnement est détaillé pas à pas : ce sont des modèles de rédaction à
+imiter.
+
+\subsection{Simplifier une longue somme de vecteurs (relation de Chasles)}
+
+\begin{exemple}[la « chaîne » de vecteurs]
+On considère la grille de points ci-dessous (figure~\ref{fig:grille}) et le vecteur
+\[
+  \vec{v}=\vc{AE}-\vc{DE}+\vc{OL}+\vc{MJ}+2\,\vc{KJ}+\vc{IN}.
+\]
+\textbf{But} : simplifier $\vec{v}$ pour le reconnaître comme un vecteur $\vc{XY}$ simple de la figure.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  % grille 4 x 2
+  \foreach \x in {0,1,2,3,4}{ \draw[black!70] (\x,0) -- (\x,2); }
+  \draw[black!70] (0,0) -- (4,0);
+  \draw[black!70] (0,1) -- (4,1);
+  \draw[black!70] (0,2) -- (4,2);
+  % diagonales "\" dans chaque cellule (haut puis bas)
+  \draw[black!70] (0,2) -- (1,1);  \draw[black!70] (1,2) -- (2,1);
+  \draw[black!70] (2,2) -- (3,1);  \draw[black!70] (3,2) -- (4,1);
+  \draw[black!70] (0,1) -- (1,0);  \draw[black!70] (1,1) -- (2,0);
+  \draw[black!70] (2,1) -- (3,0);  \draw[black!70] (3,1) -- (4,0);
+  % points et labels
+  \foreach \p/\x/\y/\pos in {A/0/2/above,B/1/2/above,C/2/2/above,D/3/2/above,E/4/2/above,
+     L/0/1/left,F/4/1/right, K/0/0/below,J/1/0/below,I/2/0/below,H/3/0/below,G/4/0/below}{
+     \node[pt] at (\x,\y){}; \node[\pos=1pt,font=\footnotesize] at (\x,\y){$\p$};}
+  % M, N, O (milieu, labels en haut-gauche du point)
+  \foreach \p/\x/\y in {M/1/1,N/2/1,O/3/1}{
+     \node[pt] at (\x,\y){}; \node[above left=0pt,font=\footnotesize] at (\x,\y){$\p$};}
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 9}} : grille triangulée de la « chaîne » de vecteurs.}
+\label{fig:grille}
+\end{center}
+
+\textbf{Idée maîtresse} : transformer chaque vecteur opposé pour faire des enchaînements « bout à bout ».
+
+\smallskip
+\emph{Étape 1 — réécrire les opposés et le double.} On utilise $-\vc{DE}=\vc{ED}$, $\vc{OL}=\vc{DA}$
+(car $\vc{OL}$ et $\vc{DA}$ sont équipollents sur la grille), $\vc{MJ}=\vc{LK}$, et $2\,\vc{KJ}=\vc{KJ}+\vc{KJ}$ :
+\[
+  \vec{v}=\vc{AE}+\vc{ED}+\vc{DA}+\bigl(\vc{LK}+\vc{KJ}\bigr)+\vc{KJ}+\vc{IN}.
+\]
+
+\emph{Étape 2 — regrouper les premiers termes par Chasles.}
+\[
+  \vc{AE}+\vc{ED}=\vc{AD},\qquad \vc{AD}+\vc{DA}=\vc{AA}=\vec{0}.
+\]
+Les trois premiers termes disparaissent ! Il reste :
+\[
+  \vec{v}=\vc{LK}+\vc{KJ}+\vc{KJ}+\vc{IN}=\vc{LJ}+\vc{KJ}+\vc{IN}.
+\]
+
+\emph{Étape 3 — utiliser les équipollences restantes.} Sur la grille, $\vc{KJ}=\vc{JI}$ (translation
+d'une case vers la droite sur la rangée du bas). Donc
+\[
+  \vec{v}=\vc{LJ}+\vc{JI}+\vc{IN}.
+\]
+
+\emph{Étape 4 — enchaîner une dernière fois par Chasles.}
+\[
+  \vc{LJ}+\vc{JI}=\vc{LI},\qquad \vc{LI}+\vc{IN}=\vc{LN}.
+\]
+
+\textbf{Conclusion} : $\boxed{\vec{v}=\vc{LN}}$. Le vecteur cherché est tout simplement le vecteur $\vc{LN}$
+de la figure.
+\end{exemple}
+
+\subsection{Vecteurs dans un cube (lecture de coordonnées et produit scalaire)}
+
+\begin{exemple}[le cube $ABCDOFGH$]
+Soit $ABCDOFGH$ un cube dont la \emph{face} $OFGH$ est posée dans le repère orthonormé du plan
+(figure~\ref{fig:cube}). On lit les coordonnées dans ce plan :
+\[
+  O\,(0;0),\quad H\,(2;0),\quad F\,(0;2),\quad G\,(2;2),
+\]
+\[
+  E\,(0;1)\ \text{(milieu de }[OF]),\qquad P\,(2;1)\ \text{(milieu de }[GH]).
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25,every node/.style={font=\footnotesize}]
+  % --- face inférieure OFGH (dans le plan) ---
+  \coordinate (O) at (0,0);
+  \coordinate (H) at (3,0);
+  \coordinate (F) at (-1.0,-1.4);
+  \coordinate (G) at (2.0,-1.4);
+  % --- face supérieure ABCD (élévation +z) ---
+  \coordinate (A) at (0,2.0);
+  \coordinate (B) at (3,2.0);
+  \coordinate (C) at (2.0,0.6);
+  \coordinate (D) at (-1.0,0.6);
+  % milieux
+  \coordinate (E) at (-0.5,-0.7);
+  \coordinate (P) at (2.5,-0.7);
+  % arêtes cachées (pointillés)
+  \draw[aux] (D) -- (F);
+  \draw[aux] (F) -- (G);
+  % face supérieure
+  \draw[black!75] (A) -- (B) -- (C) -- (D) -- cycle;
+  % arêtes verticales
+  \draw[black!75] (O) -- (A);
+  \draw[black!75] (H) -- (B);
+  \draw[black!75] (G) -- (C);
+  % face inférieure visible
+  \draw[black!75] (O) -- (H) -- (G);
+  % axes du repère du plan (O->H = x ; O->F = y)
+  \draw[axe] (O) -- (4.0,0) node[right,axiscol]{$x$};
+  \draw[axe] (O) -- ($(O)!1.35!(F)$) node[below left,axiscol]{$y$};
+  % points + labels
+  \node[pt] at (O){}; \node[above left] at (O){$O\,(0;0)$};
+  \node[pt] at (H){}; \node[above right=1pt] at (H){$H$}; \node[below right] at (H){$(2;0)$};
+  \node[pt] at (F){}; \node[below left] at (F){$F\,(0;2)$};
+  \node[pt] at (G){}; \node[below right] at (G){$G\,(2;2)$};
+  \node[pt] at (E){}; \node[left] at (E){$E\,(0;1)$};
+  \node[pt] at (P){}; \node[right] at (P){$P\,(2;1)$};
+  \node[pt] at (A){}; \node[above left] at (A){$A$};
+  \node[pt] at (B){}; \node[above right] at (B){$B$};
+  \node[pt] at (C){}; \node[above right] at (C){$C$};
+  \node[pt] at (D){}; \node[above left] at (D){$D$};
+\end{tikzpicture}\\[2pt]
+{\small\textbf{\textcolor{primary}{Figure 10}} : le cube $ABCDOFGH$ ; sa face $OFGH$ est dans le plan,
+avec $O$ origine, l'axe $x$ porté par $O\to H$ et l'axe $y$ porté par $O\to F$.}
+\label{fig:cube}
+\end{center}
+
+On vérifie quelques affirmations classiques.
+
+\smallskip
+\textbf{(a) Relation de Chasles dans le cube.}
+\[
+  \vc{GH}=\vc{OH}-\vc{FG}+\vc{FO}\overset{?}{=}\vc{GH}.
+\]
+On réécrit $-\vc{FG}=\vc{GF}$, puis on enchaîne :
+$\vc{OH}+\vc{GF}+\vc{FO}=\vc{GF}+\vc{FO}+\vc{OH}=\vc{GO}+\vc{OH}=\vc{GH}$. \emph{Vrai}.
+
+\smallskip
+\textbf{(b) Composantes et opposé.} En lisant les coordonnées :
+\[
+  \vc{OG}\,(2-0;2-0)=(2;2),\quad
+  \vc{OH}\,(2;0),\quad
+  \vc{GH}\,(2-2;0-2)=(0;-2),\quad
+  \vc{OF}\,(0;2).
+\]
+On a $\vc{GH}=(0;-2)=-(0;2)=-\vc{OF}=\vc{FO}$ : $\vc{GH}$ et $\vc{OF}$ sont \emph{opposés}. \emph{Vrai}.
+
+\smallskip
+\textbf{(c) Carré scalaire.} $\vc{OF}\cdot\bigl(3\,\vc{OF}\bigr)=3\,(\vc{OF}\cdot\vc{OF})=3\,\norm{\vc{OF}}^2
+=3\,(0^2+2^2)=3\times4=12$. \emph{Vrai}.
+
+\smallskip
+\textbf{(d) Norme.} $\sqrt2\,\norm{\vc{OG}}=\sqrt2\times\sqrt{2^2+2^2}=\sqrt2\times\sqrt8=\sqrt{16}=4$.
+(L'affirmation « $\sqrt2\,\norm{\vc{OG}}=4\sqrt2$ » est donc \emph{fausse} : la valeur correcte est $4$.)
+
+\smallskip
+\textbf{(e) Orthogonalité — le test du produit scalaire.}
+\[
+  \vc{OG}\cdot\vc{OH}=2\times2+2\times0=4\neq0 \;\Rightarrow\; \vc{OG}\text{ et }\vc{OH}\text{ ne sont pas orthogonaux},
+\]
+\[
+  \vc{OE}\cdot\vc{OH}=0\times2+1\times0=0 \;\Rightarrow\; \vc{OE}\perp\vc{OH}\ (\textit{vrai, ils sont perpendiculaires}).
+\]
+De même $\vc{EP}\,(2;0)$ et $\vc{GH}\,(0;-2)$ donnent $\vc{EP}\cdot\vc{GH}=2\times0+0\times(-2)=0$ :
+$\vc{EP}\perp\vc{GH}$.
+
+\smallskip
+\textbf{(f) Comparaison de normes.}
+$\norm{\vc{EP}}=\sqrt{2^2+0^2}=2$ et $\norm{2\,\vc{OE}}=2\,\norm{\vc{OE}}=2\times\sqrt{0^2+1^2}=2$ :
+les deux normes sont égales.
+\end{exemple}
+
+\subsection{Norme d'une somme de deux vecteurs}
+
+\begin{exemple}[calculer $\norm{\vec{u}+\vec{v}}$]
+On donne $\vec{u}\,(1;1)$ et $\vec{v}\,(-2;4)$. Calculons $\norm{\vec{u}+\vec{v}}$.
+
+\emph{Méthode directe} (la plus sûre) : on additionne d'abord les composantes, puis on prend la norme.
+\[
+  \vec{u}+\vec{v}\;\bigl(1+(-2)\,;\,1+4\bigr)=(-1;5),
+\]
+\[
+  \norm{\vec{u}+\vec{v}}=\sqrt{(-1)^2+5^2}=\sqrt{1+25}=\sqrt{26}\approx 5{,}10 .
+\]
+\emph{Vérification par l'identité remarquable} : $\norm{\vec u}^2=2$, $\norm{\vec v}^2=20$,
+$\vec u\cdot\vec v=1\times(-2)+1\times4=2$, donc
+$\norm{\vec u+\vec v}^2=2+20+2\times2=26$ : on retrouve $\sqrt{26}$. \quad\textbf{Résultat : }$\sqrt{26}$.
+\end{exemple}
+
+\subsection{Trouver l'amplitude d'un angle}
+
+\begin{exemple}[angle entre $\vec{u}\,(0;2)$ et $\vec{v}\,(2;2\sqrt3)$]
+\[
+  \vec{u}\cdot\vec{v}=0\times2+2\times2\sqrt3=4\sqrt3,\qquad
+  \norm{\vec{u}}=\sqrt{0^2+2^2}=2,
+\]
+\[
+  \norm{\vec{v}}=\sqrt{2^2+(2\sqrt3)^2}=\sqrt{4+12}=4.
+\]
+\[
+  \cos\theta=\frac{\vec{u}\cdot\vec{v}}{\norm{\vec{u}}\,\norm{\vec{v}}}
+  =\frac{4\sqrt3}{2\times4}=\frac{4\sqrt3}{8}=\frac{\sqrt3}{2}
+  \;\Longrightarrow\; \theta=\arccos\!\left(\tfrac{\sqrt3}{2}\right)=30^{\circ}.
+\]
+\textbf{L'angle vaut $30^{\circ}$.}
+\end{exemple}
+
+\subsection{Retrouver une inconnue à partir d'un angle}
+
+\begin{exemple}[déterminer $x$ pour un angle imposé]
+Soit $\vec{u}\,(1;x)$ et $\vec{v}\,(1;\sqrt3)$, avec $x$ réel non nul. On veut que l'angle entre
+$\vec{u}$ et $\vec{v}$ vaille $\dfrac{\pi}{6}=30^{\circ}$.
+
+On part de $\cos(\vec u,\vec v)=\dfrac{\vec u\cdot\vec v}{\norm{\vec u}\,\norm{\vec v}}$ avec
+\[
+  \vec u\cdot\vec v=1\times1+x\times\sqrt3=1+x\sqrt3,\qquad
+  \norm{\vec u}=\sqrt{1+x^2},\qquad
+  \norm{\vec v}=\sqrt{1+3}=2.
+\]
+La condition $\cos 30^\circ=\dfrac{\sqrt3}{2}$ donne :
+\[
+  \frac{1+x\sqrt3}{2\sqrt{1+x^2}}=\frac{\sqrt3}{2}
+  \;\Longrightarrow\; 1+x\sqrt3=\sqrt3\,\sqrt{1+x^2}.
+\]
+On élève au carré (en gardant $1+x\sqrt3\geq0$) :
+\[
+  1+2x\sqrt3+3x^2=3\,(1+x^2)=3+3x^2
+  \;\Longrightarrow\; 1+2x\sqrt3=3
+  \;\Longrightarrow\; 2x\sqrt3=2
+  \;\Longrightarrow\; x=\frac{1}{\sqrt3}=\frac{\sqrt3}{3}.
+\]
+\textbf{La valeur cherchée est $x=\dfrac{\sqrt3}{3}$.} (On vérifie : $1+x\sqrt3=1+1=2\geq0$, et
+$\cos\theta=\frac{2}{2\sqrt{1+1/3}}=\frac{1}{\sqrt{4/3}}=\frac{\sqrt3}{2}$, soit bien $30^\circ$.)
+\end{exemple}
+
+\subsection{Étude complète de deux vecteurs dépendant d'un paramètre}
+
+\begin{exemple}[$\vec{u}\,(a;a)$ et $\vec{v}\,(a;\tfrac{a}{3})$ avec $a>0$, $a\neq1$]
+Calculons une bonne fois toutes les grandeurs utiles, puis lisons les réponses dans le tableau.
+
+\textbf{Normes.}
+\[
+  \norm{\vec u}=\sqrt{a^2+a^2}=\sqrt{2a^2}=a\sqrt2,\qquad
+  \norm{\vec v}=\sqrt{a^2+\tfrac{a^2}{9}}=\sqrt{a^2\cdot\tfrac{10}{9}}=\frac{a\sqrt{10}}{3}.
+\]
+\textbf{Produit scalaire.}
+\[
+  \vec u\cdot\vec v=a\times a+a\times\frac{a}{3}=a^2+\frac{a^2}{3}=\frac{4a^2}{3}.
+\]
+\textbf{Cosinus de l'angle $\alpha$.}
+\[
+  \cos\alpha=\frac{\vec u\cdot\vec v}{\norm{\vec u}\,\norm{\vec v}}
+  =\frac{\tfrac{4a^2}{3}}{a\sqrt2\cdot\tfrac{a\sqrt{10}}{3}}
+  =\frac{\tfrac{4a^2}{3}}{\tfrac{a^2\sqrt{20}}{3}}
+  =\frac{4}{\sqrt{20}}=\frac{4}{2\sqrt5}=\frac{2}{\sqrt5}=\frac{2\sqrt5}{5}\approx0{,}894.
+\]
+\textbf{Sommes et différences.} $\vec u+\vec v\,(2a;\tfrac{4a}{3})$ et $\vec u-\vec v\,(0;\tfrac{2a}{3})$, d'où
+\[
+  \norm{\vec u+\vec v}^2=(2a)^2+\Bigl(\tfrac{4a}{3}\Bigr)^2=4a^2+\frac{16a^2}{9}=\frac{52a^2}{9},
+  \qquad
+  \norm{\vec u-\vec v}^2=0+\Bigl(\tfrac{2a}{3}\Bigr)^2=\frac{4a^2}{9}.
+\]
+\[
+  (\vec u+\vec v)\cdot(\vec u-\vec v)=\norm{\vec u}^2-\norm{\vec v}^2=2a^2-\frac{10a^2}{9}=\frac{8a^2}{9}.
+\]
+\[
+  \norm{3(\vec u-\vec v)}=3\,\norm{\vec u-\vec v}=3\times\frac{2a}{3}=2a.
+\]
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{>{\raggedright\arraybackslash}m{6.7cm} >{\centering\arraybackslash}m{4.2cm} c}
+\toprule
+\rowcolor{primary!12}\textbf{Grandeur} & \textbf{Valeur exacte} & \\
+\midrule
+$\norm{\vec u}$ & $a\sqrt2$ & \\
+$\norm{\vec v}$ & $\dfrac{a\sqrt{10}}{3}$ & \\
+$\vec u\cdot\vec v$ & $\dfrac{4a^2}{3}$ & \\
+$\cos\alpha$ & $\dfrac{2\sqrt5}{5}$ \ (nombre pur) & \\
+$\norm{\vec u+\vec v}^2$ \ (vaut $52$ si $a=3$) & $\dfrac{52a^2}{9}$ & \\
+$(\vec u+\vec v)\cdot(\vec u-\vec v)$ & $\dfrac{8a^2}{9}$ & \\
+$\norm{\vec u-\vec v}^2$ & $\dfrac{4a^2}{9}$ & \\
+$\norm{3(\vec u-\vec v)}$ & $2a$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{attention}[le piège « $a$ ou $a^2$ »]
+Le produit scalaire $\vec u\cdot\vec v=\dfrac{4a^2}{3}$ est \emph{quadratique} en $a$ (il y a un $a^2$).
+Une formulation du type « le produit scalaire vaut $\tfrac{4}{3}a$ » serait donc \textbf{fausse} : les
+normes sont \emph{linéaires} en $a$, mais les produits scalaires et les carrés de normes sont en $a^2$.
+Le \emph{cosinus}, lui, ne dépend \emph{pas} de $a$ (c'est un nombre pur) : tout facteur $a$ se simplifie.
+\end{attention}
+
+\textbf{Une orthogonalité utile.} Le vecteur $\vec w\,(-1;3)$ est perpendiculaire à $\vec v$ car
+\[
+  \vec w\cdot\vec v=(-1)\times a+3\times\frac{a}{3}=-a+a=0.
+\]
+\end{exemple}
+
+\subsection{Colinéarité avec des radicaux}
+
+\begin{exemple}[$\vec u\,(\sqrt2-1\,;\,-\sqrt2)$ et $\vec v\,(1\,;\,-\sqrt2-2)$]
+\textbf{Écriture dans la base.} $\vec u=(\sqrt2-1)\,\vec{\imath}-\sqrt2\,\vec{\jmath}$ : c'est exactement la
+lecture des composantes.
+
+\textbf{Norme de $\vec v$.}
+\[
+  \norm{\vec v}^2=1^2+(-\sqrt2-2)^2=1+(\sqrt2+2)^2=1+(2+4\sqrt2+4)=7+4\sqrt2,
+\]
+donc $\norm{\vec v}=\sqrt{7+4\sqrt2}$ (et non $\sqrt{7-4\sqrt2}$ : attention au signe, $(\sqrt2+2)^2$
+contient $+4\sqrt2$).
+
+\textbf{Colinéarité} (test du déterminant $xy'-x'y$) :
+\[
+  xy'-x'y=(\sqrt2-1)(-\sqrt2-2)-(1)\times(-\sqrt2).
+\]
+On développe $(\sqrt2-1)(-\sqrt2-2)=-2-2\sqrt2+\sqrt2+2=-\sqrt2$, d'où
+\[
+  xy'-x'y=-\sqrt2+\sqrt2=0.
+\]
+Le déterminant est nul : \textbf{$\vec u$ et $\vec v$ sont colinéaires} (on a même $\vec v=(\sqrt2+1)\,\vec u$).
+
+\textbf{Orthogonalité ?}
+$\vec u\cdot\vec v=(\sqrt2-1)\times1+(-\sqrt2)\times(-\sqrt2-2)=(\sqrt2-1)+(2+2\sqrt2)=1+3\sqrt2\neq0$ :
+les vecteurs ne sont \emph{pas} orthogonaux (ce qui est logique, ils sont colinéaires).
+\end{exemple}
+
+\subsection{Alignement, vecteurs directeurs et perpendicularité de droites}
+
+\begin{exemple}[les points $A\,(0;3)$, $B\,(1;5)$, $C\,(-2;-1)$, $D\,(2;2)$]
+\textbf{Vecteurs utiles.}
+\[
+  \vc{AB}\,(1-0;5-3)=(1;2),\quad
+  \vc{AC}\,(-2-0;-1-3)=(-2;-4),\quad
+  \vc{AD}\,(2-0;2-3)=(2;-1).
+\]
+
+\textbf{(a) $A$, $B$, $C$ alignés ?} On compare $\vc{AB}$ et $\vc{AC}$ : $\vc{AC}=(-2;-4)=-2\,(1;2)=-2\,\vc{AB}$.
+Ils sont colinéaires, donc \textbf{$A$, $B$, $C$ sont alignés}.
+
+\textbf{(b) Vecteurs directeurs.} $\vc{AB}\,(1;2)$ est un vecteur directeur de $(AB)$ ;
+$\vc{AD}\,(2;-1)$ est un vecteur directeur de $(AD)$.
+
+\textbf{(c) Un vecteur lié.} $\vec w=2\,\vc{AB}=2\,(1;2)=(2;4)$.
+
+\textbf{(d) $(AB)\perp(AD)$ ?} Test du produit scalaire des vecteurs directeurs :
+\[
+  \vc{AB}\cdot\vc{AD}=1\times2+2\times(-1)=2-2=0\;\Rightarrow\;(AB)\perp(AD).
+\]
+Les droites sont \textbf{perpendiculaires} (et donc \emph{pas} parallèles).
+\end{exemple}
+
+\subsection{Synthèse « vrai / faux » sur deux vecteurs}
+
+\begin{exemple}[$\vec u\,(2;\sqrt5)$ et $\vec v\,(-4;0)$]
+\[
+  \norm{\vec u}=\sqrt{2^2+(\sqrt5)^2}=\sqrt{4+5}=\sqrt9=3,\qquad
+  \norm{\vec v}=\sqrt{(-4)^2+0^2}=4.
+\]
+\[
+  \vec u\cdot\vec v=2\times(-4)+\sqrt5\times0=-8<0 \quad(\text{produit scalaire \emph{négatif} : angle obtus}).
+\]
+\textbf{Carré de la norme de la différence.} $\vec u-\vec v\,(2-(-4);\sqrt5-0)=(6;\sqrt5)$, donc
+\[
+  \norm{\vec u-\vec v}^2=6^2+(\sqrt5)^2=36+5=41.
+\]
+\textbf{Carré de la norme de la somme.} $\vec m=\vec u+\vec v\,(2-4;\sqrt5+0)=(-2;\sqrt5)$, donc
+\[
+  \norm{\vec m}^2=(-2)^2+(\sqrt5)^2=4+5=9,
+\]
+ce qui est bien le carré de la norme du vecteur de composantes $(-2;\sqrt5)$ — c'est $\vec m$ lui-même.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse}
+% =====================================================================
+
+\subsection{Tableau récapitulatif des opérations}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{>{\raggedright\arraybackslash}m{4.1cm} >{\centering\arraybackslash}m{5.0cm} >{\raggedright\arraybackslash}m{5.2cm}}
+\toprule
+\rowcolor{primary!15}\textbf{Opération} & \textbf{Avec les composantes} & \textbf{Interprétation} \\
+\midrule
+Composantes de $\vc{AB}$ & $(x_B-x_A\,;\,y_B-y_A)$ & extrémité moins origine \\
+Norme & $\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}$ & longueur (Pythagore) \\
+Somme $\vec u+\vec v$ & $(x+x'\,;\,y+y')$ & bout à bout (Chasles) \\
+Différence $\vec u-\vec v$ & $(x-x'\,;\,y-y')$ & ajouter l'opposé \\
+Produit par $k$ & $(kx\,;\,ky)$ & étire ($|k|$) et oriente (signe) \\
+Produit scalaire & $x x'+y y'$ & $\norm{\vec u}\norm{\vec v}\cos\theta$ \\
+Colinéarité & $xy'-x'y=0$ & même direction / alignés \\
+Orthogonalité & $x x'+y y'=0$ & perpendiculaires \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Formulaire essentiel}
+
+\begin{tcolorbox}[boxbase,colback=primary!4,colframe=primary,title={\textsc{À retenir absolument}}]
+\begin{multicols}{2}
+\footnotesize
+\textbf{Vecteur $\vc{AB}$}
+\[ \vc{AB}\,(x_B-x_A;y_B-y_A) \]
+\[ \norm{\vc{AB}}=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2} \]
+\[ \vc{AB}=-\vc{BA},\qquad \vc{AA}=\vec0 \]
+
+\textbf{Opérations}
+\[ \vec u\pm\vec v\,(x\pm x';y\pm y'),\quad k\vec u\,(kx;ky) \]
+\[ \norm{k\vec u}=|k|\,\norm{\vec u} \]
+
+\columnbreak
+
+\textbf{Chasles \& colinéarité}
+\[ \vc{AB}+\vc{BC}=\vc{AC} \]
+\[ \vec u=k\vec v \iff \text{colinéaires} \iff xy'-x'y=0 \]
+
+\textbf{Produit scalaire}
+\[ \vec u\cdot\vec v=x x'+y y'=\norm{\vec u}\norm{\vec v}\cos\theta \]
+\[ \vec u\cdot\vec u=\norm{\vec u}^2,\qquad \vec u\perp\vec v\iff\vec u\cdot\vec v=0 \]
+\[ \cos\theta=\frac{\vec u\cdot\vec v}{\norm{\vec u}\,\norm{\vec v}} \]
+\[ \norm{\vec u\pm\vec v}^2=\norm{\vec u}^2+\norm{\vec v}^2\pm2\,\vec u\cdot\vec v \]
+\end{multicols}
+\end{tcolorbox}
+
+\begin{remarque}[le réflexe final]
+Devant un problème de calcul vectoriel, posez-vous trois questions :
+\textbf{(1)} ai-je besoin des \emph{composantes} ? (alors « extrémité moins origine ») ;
+\textbf{(2)} s'agit-il d'une \emph{somme de vecteurs} ? (alors Chasles, bout à bout) ;
+\textbf{(3)} y a-t-il un \emph{angle} ou une \emph{perpendicularité} ? (alors produit scalaire).
+Ces trois réflexes couvrent l'essentiel de la fiche.
+\end{remarque}
+
+\end{document}

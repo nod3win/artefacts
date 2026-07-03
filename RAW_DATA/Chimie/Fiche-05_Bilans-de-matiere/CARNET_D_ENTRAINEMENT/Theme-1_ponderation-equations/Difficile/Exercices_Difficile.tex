@@ -1,0 +1,104 @@
+% =====================================================================
+%  THÈME 1 — Pondération des équations chimiques
+%  Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{difcol}{RGB}{176,40,60}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 1 : Pondération}}
+\fancyhead[R]{\small\textcolor{difcol}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=difcol!5,colframe=difcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Pondération}\\[1pt]
+{\large\color{difcol}\textbf{Niveau Difficile}}\\[2pt]
+{\itshape Objectif : pondérer des équations complexes (longues chaînes, ions, redox) par étapes.}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{exo}[combustion du kérosène \ce{C14H30}]
+Le kérosène (carburant d'avion) est modélisé par \ce{C14H30}. Sa combustion complète s'écrit :
+\[ \ce{C14H30 + O2 -> CO2 + H2O}\qquad\text{(non pondérée).} \]
+Construis la pondération \textbf{étape par étape} :
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Combien de \ce{CO2} le carbone impose-t-il à droite ?
+  \item Combien de \ce{H2O} l'hydrogène impose-t-il à droite ?
+  \item Compte alors les atomes d'oxygène à droite. Quel coefficient \emph{fractionnaire} obtiens-tu
+        devant \ce{O2} ?
+  \item Reviens à des coefficients \textbf{entiers} et écris l'équation finale.
+  \item Vérifie C, H et O, puis donne la \textbf{somme} des coefficients.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vérifier et corriger une équation ionique]
+On propose l'équation de la réaction du cobalt avec le nitrate de potassium en milieu chlorhydrique :
+\[ \ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 1 KCl + 4 H2O}\quad(?) \]
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Dresse l'inventaire complet des atomes (\ce{Co}, \ce{K}, \ce{N}, \ce{O}, \ce{H}, \ce{Cl}),
+        réactifs \emph{vs} produits.
+  \item Quels éléments ne sont \textbf{pas} équilibrés ?
+  \item Corrige l'équation en changeant \emph{un seul} coefficient. Écris l'équation ajustée.
+  \item Donne la somme des coefficients de l'équation correcte.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une équation redox « moléculaire » à plusieurs groupements]
+La réduction du dichromate de potassium par le carbone en milieu sulfurique s'écrit :
+\[ \ce{K2Cr2O7 + C + H2SO4 -> CO2 + Cr2(SO4)3 + K2SO4 + H2O}\qquad\text{(non pondérée).} \]
+Pondère par étapes :
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Équilibre d'abord le \textbf{chrome} (Cr) et le \textbf{potassium} (K) en fixant les
+        coefficients de \ce{K2Cr2O7}, \ce{Cr2(SO4)3} et \ce{K2SO4}. \emph{(Astuce : essaie
+        $2\,\ce{K2Cr2O7}$.)}
+  \item Déduis-en le nombre total de groupements \textbf{\ce{SO4}}, donc le coefficient de \ce{H2SO4}.
+  \item Équilibre le \textbf{carbone} (C $\to$ \ce{CO2}), puis l'\textbf{hydrogène} par l'eau.
+  \item Écris l'équation finale et vérifie l'\textbf{oxygène} pour contrôle. Donne la somme des coefficients.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[équation ionique redox avec charges : dichromate + fer(II)]
+En solution acide, les ions dichromate oxydent les ions fer(II) :
+\[ \ce{Cr2O7^2- + H3O+ + Fe^2+ -> Cr^3+ + H2O + Fe^3+}\qquad\text{(non pondérée).} \]
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Équilibre le \textbf{chrome} (fixe le coefficient de \ce{Cr^3+}).
+  \item On admet les coefficients $14$ devant \ce{H3O+}, $6$ devant \ce{Fe^2+}, $21$ devant \ce{H2O}
+        et $6$ devant \ce{Fe^3+}. Vérifie que l'\textbf{oxygène} et l'\textbf{hydrogène} sont équilibrés.
+  \item Vérifie que la \textbf{charge totale} est identique des deux côtés (c'est la condition décisive
+        d'une équation ionique). Conclus.
+\end{enumerate}
+\end{exo}
+
+\end{document}

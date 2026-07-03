@@ -1,0 +1,173 @@
+% =====================================================================
+%  CARNET D'ENTRAINEMENT — FICHE 11 — THEME 5
+%  Tuto : Piles, formule de Nernst et loi de Faraday
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage[a4paper,margin=1.9cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{primary}{RGB}{146,95,160}
+\definecolor{primarydark}{RGB}{92,52,104}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{eleccol}{RGB}{60,90,210}
+\definecolor{anodecol}{RGB}{150,90,210}
+\definecolor{cathodecol}{RGB}{200,160,40}
+\definecolor{solzn}{RGB}{190,225,255}
+\definecolor{solcu}{RGB}{170,230,200}
+\definecolor{saltbridge}{RGB}{230,175,90}
+\definecolor{wirecol}{RGB}{70,70,75}
+
+\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
+\newcommand{\Ered}{\ensuremath{E_{\mathrm{r}}^{\circ}}}
+\newcommand{\fem}{\ensuremath{\Delta E}}
+\newcommand{\cc}[1]{\left[#1\right]}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,
+   toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{defi}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{regle}[1][]{boxbase,colback=thmcol!6,colframe=thmcol,title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!6,colframe=formulacol,title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11} — Tuto Thème 5}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Piles, Nernst, Faraday}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Piles, formule de Nernst et loi de Faraday}\\[3pt]
+{\color{primary}\rule{10.5cm}{1.2pt}}\\[4pt]
+{\small\itshape À lire avant les exercices — de la pile spontanée à l'électrolyse forcée.}
+\end{center}
+
+\vspace{-2pt}
+\section*{1. Anatomie d'une pile}
+\begin{defi}[anode et cathode]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Anode} (pôle $\boldsymbol{-}$) : siège de l'\textbf{oxydation}, elle \emph{produit} les
+        électrons. C'est le couple de \Ered\ le \textbf{plus faible}.
+  \item \textbf{Cathode} (pôle $\boldsymbol{+}$) : siège de la \textbf{réduction}, elle \emph{consomme}
+        les électrons. C'est le couple de \Ered\ le \textbf{plus élevé}.
+\end{itemize}
+Le \textbf{pont salin} ferme le circuit et maintient l'électroneutralité (les \textbf{anions} migrent
+vers l'anode, les \textbf{cations} vers la cathode).
+\end{defi}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82]
+  % béchers
+  \fill[solzn] (-3.5,-1.6) rectangle (-2.0,0.0);
+  \draw[wirecol,line width=1pt] (-3.5,1.3)--(-3.5,-1.6)--(-2.0,-1.6)--(-2.0,1.3);
+  \fill[solcu] (2.0,-1.6) rectangle (3.5,0.0);
+  \draw[wirecol,line width=1pt] (2.0,1.3)--(2.0,-1.6)--(3.5,-1.6)--(3.5,1.3);
+  % électrodes
+  \fill[anodecol] (-2.85,1.7) rectangle (-2.65,-1.3);
+  \node[white,font=\scriptsize\bfseries,rotate=90] at (-2.75,0.1){Zn};
+  \node[anodecol,font=\scriptsize\bfseries,align=center] at (-2.75,-2.05){Anode\\($-$)};
+  \fill[cathodecol] (2.65,1.7) rectangle (2.85,-1.3);
+  \node[white,font=\scriptsize\bfseries,rotate=90] at (2.75,0.1){Ag};
+  \node[cathodecol!60!black,font=\scriptsize\bfseries,align=center] at (2.75,-2.05){Cathode\\($+$)};
+  \node[primary,font=\scriptsize] at (-2.75,-0.9){\ce{Zn^{2+}}};
+  \node[primary,font=\scriptsize] at (2.75,-0.9){\ce{Ag+}};
+  % pont salin
+  \draw[saltbridge,line width=2.4pt] (-2.75,1.7) .. controls (-2.75,2.7) and (2.75,2.7) .. (2.75,1.7);
+  \node[saltbridge!35!black,font=\scriptsize] at (0,2.85){pont salin};
+  % voltmètre
+  \draw[wirecol,line width=1.2pt] (-2.75,1.7)--(-2.75,3.6)--(-0.8,3.6);
+  \draw[wirecol,line width=1.2pt] (2.75,1.7)--(2.75,3.6)--(0.8,3.6);
+  \draw[wirecol,line width=1.2pt,fill=white] (-0.8,3.1) rectangle (0.8,4.1);
+  \node[primarydark,font=\bfseries] at (0,3.6){V};
+  \node[primary,font=\scriptsize] at (0,4.35){\fem};
+  % électrons
+  \draw[->,>=Stealth,eleccol,line width=1.1pt] (-2.2,3.95)--(-1.3,3.95);
+  \node[eleccol,font=\scriptsize] at (-1.75,4.2){\ce{e^-}};
+  % demi-équations
+  \node[anodecol,font=\scriptsize,align=center] at (-2.75,-2.9){\ce{Zn -> Zn^{2+} + 2e^-}};
+  \node[cathodecol!60!black,font=\scriptsize,align=center] at (2.75,-2.9){\ce{Ag+ + e^- -> Ag}};
+  \node[eleccol,font=\scriptsize,align=center] at (0,0.4){électrons :\\ anode $\to$ cathode};
+\end{tikzpicture}
+\end{center}
+
+\section*{2. Notation et force électromotrice}
+\begin{formule}[notation conventionnelle]
+\[
+(-)\ \text{Anode} \ \big|\ \mathrm{Red}_a,\mathrm{Ox}_a \ \big\|\ \mathrm{Ox}_c,\mathrm{Red}_c\ \big|\ \text{Cathode}\ (+)
+\]
+Anode à \textbf{gauche}, cathode à \textbf{droite} ; \textbar\ = interface électrode/solution ;
+$\big\|$ = pont salin. Exemple : $\ce{(-) Zn | Zn^{2+} || Ag+ | Ag (+)}$.
+\end{formule}
+
+\begin{formule}[force électromotrice]
+\[
+\fem = E_{\text{cathode}} - E_{\text{anode}} \qquad ; \qquad
+\fem^{\circ} = \Ered(\text{cathode}) - \Ered(\text{anode}) > 0.
+\]
+\end{formule}
+
+\section*{3. La formule de Nernst (\SI{25}{\celsius})}
+Hors des conditions standard, le potentiel d'une demi-pile dépend des concentrations :
+\begin{formule}[potentiel d'une demi-pile]
+\[
+E = \Ered + \frac{0{,}06}{n}\,\log\frac{[\mathrm{Ox}]}{[\mathrm{Red}]}
+\]
+avec $n$ le nombre d'électrons du couple. Les solides et le solvant ont une activité de~1
+(ils n'apparaissent pas). Pour \ce{MnO4^-}/\ce{Mn^{2+}}, le \ce{H+} intervient (dépendance au pH).
+\end{formule}
+
+\begin{exemple}[demi-pile de cuivre diluée]
+Pour \ce{Cu^{2+}}/\ce{Cu} avec $\cc{\ce{Cu^{2+}}}=\SI{0.01}{mol\per\litre}$ :
+\[
+E = 0{,}34 + \frac{0{,}06}{2}\log(0{,}01) = 0{,}34 + 0{,}03\times(-2) = \SI{0.28}{V}.
+\]
+Diluer l'oxydant \emph{abaisse} le potentiel.
+\end{exemple}
+
+\section*{4. Électrolyse et loi de Faraday}
+\begin{regle}[pile vs électrolyse]
+Dans une \textbf{pile}, la réaction est spontanée ($\fem^{\circ}>0$) et \emph{produit} du courant.
+Dans une \textbf{électrolyse}, un générateur \emph{impose} le courant pour forcer une réaction non
+spontanée. Règle d'or invariable : \textbf{réduction à la cathode, oxydation à l'anode} — seul le
+\emph{signe} des électrodes s'inverse.
+\end{regle}
+
+\begin{formule}[loi de Faraday]
+\[
+\boxed{\,m = \frac{M\,I\,t}{n\,F}\,}\qquad (Q=It,\quad F=\SI{96485}{C\per mol})
+\]
+$m$ : masse déposée (g) ; $M$ : masse molaire (\si{g\per mol}) ; $I$ : intensité (A) ; $t$ : durée (s) ;
+$n$ : électrons par atome ; $F$ : constante de Faraday.
+\end{formule}
+
+\begin{attention}[ne pas confondre les deux « sens »]
+Dans le \textbf{fil}, ce sont les \textbf{électrons} qui circulent (anode~$\to$~cathode) ; le
+\textbf{courant conventionnel} $i$ va en sens inverse. Dans les \textbf{solutions}, ce sont les
+\textbf{ions} qui portent le courant.
+\end{attention}
+\end{document}

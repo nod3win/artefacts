@@ -1,0 +1,125 @@
+% =====================================================================
+%  THÈME 5 — Rendement et bilan complet
+%  Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=8pt]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{difcol}{RGB}{176,40,60}
+\definecolor{reacB}{RGB}{210,30,40}
+\newcommand{\nq}[1]{n_{\text{#1}}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 5 : Rendement}}
+\fancyhead[R]{\small\textcolor{difcol}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=difcol!5,colframe=difcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement \& bilan complet}\\[1pt]
+{\large\color{difcol}\textbf{Niveau Difficile}}\\[2pt]
+{\itshape Objectif : mener des bilans de matière complets et des dosages par titrage.}\\
+{\color{primary}\rule{0.66\linewidth}{1pt}}
+\end{center}
+
+\textbf{Données :} $\Vm=\SI{22,4}{\litre\per\mole}$ (TPN).
+
+\begin{exo}[bilan complet à partir du réactif limitant : le cobalt]
+On reprend $\ce{3 Co + 2 KNO3 + 8 HCl -> 2 NO + 3 CoCl2 + 2 KCl + 4 H2O}$. Le réactif limitant est
+\ce{HCl}, avec $n(\ce{HCl})=\SI{0,120}{\mole}$ (rendement \SI{100}{\percent}).
+\emph{Donnée :} $M(\ce{CoCl2})=\SI{129,8}{\gram\per\mole}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Calcule la quantité, puis la \textbf{masse} de \ce{CoCl2} formée.
+  \item Calcule la quantité de \ce{KCl} formée.
+  \item Calcule le \textbf{volume} de \ce{NO} gazeux dégagé, aux TPN.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[dosage des ions dichromate par les ions fer(II)]
+On dose des ions dichromate \ce{Cr2O7^2-} de concentration inconnue par une solution d'ions
+ferreux \ce{Fe^2+} (sel de Mohr) à $[\ce{Fe^2+}]=\SI{0,6}{\Molar}$. L'équation est :
+\[ \ce{Cr2O7^2- + 14 H3O+ + 6 Fe^2+ -> 2 Cr^3+ + 21 H2O + 6 Fe^3+}. \]
+On titre $V(\ce{Cr2O7^2-})=\SI{10}{\milli\litre}$ ; l'équivalence est atteinte après ajout de
+$V(\ce{Fe^2+})=\SI{10}{\milli\litre}$.
+\begin{minipage}[t]{0.66\linewidth}
+\vspace{2pt}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Écris la relation stœchiométrique entre $n(\ce{Cr2O7^2-})$ et $n(\ce{Fe^2+})$ à l'équivalence.
+  \item Calcule la quantité de \ce{Fe^2+} versée à l'équivalence.
+  \item En déduire $n(\ce{Cr2O7^2-})$ dosée.
+  \item Calcule la concentration $[\ce{Cr2O7^2-}]$.
+\end{enumerate}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.31\linewidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=0.9]
+  \draw[black!70,line width=1pt] (0,1.4) rectangle (0.5,4.2);
+  \fill[reacB!30] (0.03,1.43) rectangle (0.47,3.7);
+  \node[black!70,font=\scriptsize,align=center,anchor=west] at (0.65,3.7)
+     {burette :\\ \ce{Fe^2+}\\ $0{,}6$ \si{\Molar}};
+  \draw[black!70,line width=1pt] (0.18,1.4)--(0.18,1.05)--(0.32,1.05)--(0.32,1.4);
+  \draw[reacB,line width=1pt,->,>=Stealth] (0.25,1.05)--(0.25,0.6);
+  \draw[black!70,line width=1.1pt] (-0.9,0.5)--(-0.7,-0.55)--(1.2,-0.55)--(1.4,0.5);
+  \fill[primary!22] (-0.78,0.1)--(-0.7,-0.55)--(1.2,-0.55)--(1.28,0.1)--cycle;
+  \node[primarydark,font=\scriptsize,align=center] at (0.25,-0.28)
+     {\ce{Cr2O7^2-}\\ $V=10$ mL};
+\end{tikzpicture}
+\end{minipage}
+\end{exo}
+
+\begin{exo}[dosage du permanganate par l'acide oxalique]
+On dose \SI{10,0}{\milli\litre} d'une solution de permanganate de potassium \ce{KMnO4} de
+concentration inconnue par de l'acide oxalique \ce{(COOH)2} à $C=\SI{0,0200}{\Molar}$, en milieu acide.
+L'équivalence est atteinte après ajout de \SI{15,0}{\milli\litre} d'acide oxalique. L'équation est :
+\[ \ce{2 MnO4- + 5 (COOH)2 + 6 H+ -> 2 Mn^2+ + 10 CO2 + 8 H2O}. \]
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Écris la relation à l'équivalence entre $n(\ce{MnO4-})$ et $n(\ce{(COOH)2})$.
+  \item Calcule la quantité d'acide oxalique versée.
+  \item En déduire $n(\ce{MnO4-})$, puis la concentration $[\ce{KMnO4}]$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[combustion du kérosène : de l'air au volume de \ce{CO2}]
+Le kérosène est modélisé par \ce{C14H30}. Sa combustion complète est
+$\ce{2 C14H30 + 43 O2 -> 28 CO2 + 30 H2O}$. On dispose de \SI{224}{\litre} d'air aux TPN, contenant
+\SI{20}{\percent} de \ce{O2} (en moles).
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=1pt,itemsep=1.5pt]
+  \item Combien de moles de gaz représentent \SI{224}{\litre} d'air aux TPN ? En déduire $n(\ce{O2})$.
+  \item En supposant que tout ce \ce{O2} réagit, combien de moles de \ce{CO2} obtient-on ?
+        \emph{(rapport $43\,\ce{O2}$ pour $28\,\ce{CO2}$)}
+  \item Quel volume de \ce{CO2}, aux TPN, cela représente-t-il ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

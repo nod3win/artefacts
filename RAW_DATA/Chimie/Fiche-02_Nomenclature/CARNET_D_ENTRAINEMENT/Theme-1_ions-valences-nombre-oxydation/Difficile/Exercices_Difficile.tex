@@ -1,0 +1,186 @@
+% =====================================================================
+%  PRÉAMBULE COMMUN — Carnet d'entraînement, Fiche 2 (Nomenclature)
+%  (inséré physiquement dans chaque document pour qu'il soit autonome)
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques & chimie ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Graphismes & mise en page ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,shapes.misc,
+  fit,backgrounds,decorations.pathreplacing}
+\usepackage[a4paper,margin=2.2cm,headheight=28pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE (charte « Chimie » — mauve/prune du cours)
+% =====================================================================
+\definecolor{primary}{RGB}{146,95,161}
+\definecolor{primarydark}{RGB}{92,55,108}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{metalcol}{RGB}{198,150,40}
+\definecolor{nonmetcol}{RGB}{0,140,150}
+\definecolor{oxycol}{RGB}{210,55,45}
+\definecolor{hydcol}{RGB}{60,120,210}
+\definecolor{catcol}{RGB}{200,70,120}
+\definecolor{ancol}{RGB}{40,110,190}
+\definecolor{saltcol}{RGB}{120,90,160}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+
+\newtcolorbox{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{regle}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Règle}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Méthode-clé}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{%
+  boxbase,colback=primary!6,colframe=primary,
+  title={\textsc{Astuce concours}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---- Exercice (numéroté) ----
+\newtcolorbox[auto counter]{exercice}[1][]{%
+  boxbase,colback=primary!4,colframe=primarydark,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% ---- Corrigé (numéroté) ----
+\newtcolorbox[auto counter]{corrige}[1][]{%
+  boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS DE PAGE
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Nomenclature}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{}{0em}{}
+
+% ---- Bandeau de titre réutilisable : \bandeau{Thème}{Sous-titre} ----
+\newcommand{\bandeau}[2]{%
+  \begin{center}
+  \begin{tikzpicture}
+  \node[rectangle,rounded corners=7pt,fill=primary,text=white,
+        minimum width=16.0cm,minimum height=1.7cm,align=center,inner sep=8pt]
+    {{\Large\bfseries #1}\\[3pt]{\normalsize #2}};
+  \end{tikzpicture}
+  \end{center}
+  \vspace{0.3cm}}
+\begin{document}
+\bandeau{Thème 1 — Difficile}{Ions, valences et nombre d'oxydation --- Exercices}
+
+\noindent\textit{Ces exercices sont décomposés en sous-questions (a, b, c\ldots) qui montent progressivement.
+Ils reprennent des mécaniques réellement tombées au concours.}
+\vspace{0.3cm}
+
+\begin{exercice}[le permanganate de potassium, décortiqué]
+On étudie le permanganate de potassium \ce{KMnO4} (données : $Z_{\ce{K}}=19$, $Z_{\ce{Mn}}=25$, $Z_{\ce{O}}=8$).
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item Donne le nombre d'oxydation du potassium et celui de l'oxygène, en citant la convention.
+  \item En écrivant la neutralité de la molécule, déduis-en le nombre d'oxydation du manganèse.
+  \item Combien d'électrons possède alors l'atome de manganèse dans ce composé ?
+  \item Un étudiant affirme : « le n.o.\ du manganèse dans \ce{KMnO4} vaut $+\mathrm{VIII}$ ». Vrai ou faux ?
+        Explique l'erreur.
+  \item Écris les nombres d'oxydation de \emph{chaque} élément sous la forme « \ce{K}\,(\ldots) \ce{Mn}\,(\ldots) \ce{O}\,(\ldots) ».
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[l'oxyde de cuivre \ce{Cu2O}]
+On considère l'oxyde \ce{Cu2O} (données : $\ce{^{63,54}_{29}Cu}$, $\ce{^{16,00}_{8}O}$).
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item Détermine le nombre d'oxydation du cuivre dans \ce{Cu2O}.
+  \item Combien d'électrons possède alors un atome de cuivre ? Et un atome d'oxygène ?
+  \item Un étudiant propose « cuivre $-\mathrm{I}$ ». Pourquoi cette réponse est-elle à écarter d'office ?
+  \item Comment nomme-t-on \ce{Cu2O} ? En quoi diffère-t-il de \ce{CuO} ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[quand le n.o.\ est une moyenne : le thiosulfate]
+On s'intéresse à l'ion thiosulfate \ce{S2O3^2-} et à l'ion sulfate \ce{SO4^2-}.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item Calcule le n.o.\ \emph{moyen} du soufre dans \ce{SO4^2-}.
+  \item Calcule le n.o.\ \emph{moyen} du soufre dans \ce{S2O3^2-}. Que remarques-tu par rapport à (a) ?
+  \item Le résultat de (b) est un nombre « inhabituel ». Explique pourquoi le n.o.\ obtenu par cette méthode
+        est une \emph{moyenne} et pas forcément le degré réel de chaque atome.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[la réaction aluminothermique : transferts d'électrons]
+La réaction aluminothermique s'écrit $\ce{2 Al + Fe2O3 -> Al2O3 + 2 Fe}$.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item Donne le n.o.\ du fer dans \ce{Fe2O3}, puis dans le produit \ce{Fe} (métal).
+  \item Donne le n.o.\ de l'aluminium dans \ce{Al} (métal), puis dans \ce{Al2O3}.
+  \item Combien d'électrons chaque atome d'aluminium cède-t-il au cours de la réaction ?
+  \item Vérifie que le bilan électronique est équilibré (électrons cédés par \ce{Al} $=$ électrons captés par \ce{Fe}).
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[les exceptions : peroxyde et hydrure]
+Les conventions 3 et 4 (\ce{O}$=-\mathrm{II}$, \ce{H}$=+\mathrm{I}$) ont des exceptions.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item Dans l'eau oxygénée \ce{H2O2} (peroxyde d'hydrogène), calcule le n.o.\ de l'oxygène si l'on suppose
+        \ce{H}$=+\mathrm{I}$. Le résultat correspond-il à la valeur « habituelle » $-\mathrm{II}$ ?
+  \item Dans l'hydrure de sodium \ce{NaH}, le sodium (alcalin) vaut $+\mathrm{I}$. Déduis-en le n.o.\ de
+        l'hydrogène. En quoi est-ce inhabituel ?
+  \item Conclus : dans quels deux cas les conventions « \ce{O}$=-\mathrm{II}$ » et « \ce{H}$=+\mathrm{I}$ »
+        sont-elles \emph{mises en défaut} ?
+\end{enumerate}
+\end{exercice}
+\end{document}

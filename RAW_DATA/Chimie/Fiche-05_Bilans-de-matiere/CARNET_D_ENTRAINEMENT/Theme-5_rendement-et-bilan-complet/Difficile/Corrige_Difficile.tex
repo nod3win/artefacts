@@ -1,0 +1,93 @@
+% =====================================================================
+%  THÈME 5 — Rendement et bilan complet
+%  Niveau DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+\DeclareSIUnit\Molar{\mole\per\litre}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
+
+\definecolor{primary}{RGB}{142,93,168}
+\definecolor{primarydark}{RGB}{82,45,108}
+\definecolor{corrcol}{RGB}{176,110,20}
+\newcommand{\nq}[1]{n_{\text{#1}}}
+\newcommand{\Vm}{V_{\mathrm m}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 5 : Rendement}}
+\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
+  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
+  fonttitle=\bfseries,coltitle=white,
+  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+
+\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement \& bilan complet}\\[1pt]
+{\large\color{corrcol}\textbf{Corrigé — Niveau Difficile}}\\
+{\color{primary}\rule{0.6\linewidth}{1pt}}
+\end{center}
+
+\begin{cor}[bilan complet à partir du réactif limitant : le cobalt]
+Tout se calcule à partir de \ce{HCl} (limitant), coefficient 8.\\
+\textbf{a)} $\nq{CoCl2}=n(\ce{HCl})\times\dfrac{3}{8}=0{,}120\times\dfrac{3}{8}=0{,}045$~mol.
+Masse : $m=0{,}045\times129{,}8\approx\boxed{\SI{5,84}{\gram}}$.
+\emph{(Attention : c'est $0{,}045$~mol, \emph{pas} $0{,}045$~g !)}\\
+\textbf{b)} $\nq{KCl}=n(\ce{HCl})\times\dfrac{2}{8}=0{,}120\times\dfrac{1}{4}=\boxed{\SI{0,030}{\mole}}$.\\
+\textbf{c)} $\nq{NO}=n(\ce{HCl})\times\dfrac{2}{8}=0{,}030$~mol ;
+$V=n\Vm=0{,}030\times22{,}4=\boxed{\SI{0,672}{\litre}}$.
+\rep{Les grandes quantités de \ce{Co} et \ce{KNO3} ne servent à rien au-delà de ce que l'acide permet.}
+\end{cor}
+
+\begin{cor}[dosage des ions dichromate par les ions fer(II)]
+\textbf{a)} Coefficients : \ce{Cr2O7^2-} $\to 1$, \ce{Fe^2+} $\to 6$. À l'équivalence :
+$\dfrac{n(\ce{Cr2O7^2-})}{1}=\dfrac{n(\ce{Fe^2+})}{6}$, d'où $n(\ce{Cr2O7^2-})=\dfrac{n(\ce{Fe^2+})}{6}$.\\
+\textbf{b)} $n(\ce{Fe^2+})=[\ce{Fe^2+}]\times V=0{,}6\times0{,}010=\SI{0,006}{\mole}$.\\
+\textbf{c)} $n(\ce{Cr2O7^2-})=\dfrac{0{,}006}{6}=\SI{1e-3}{\mole}$.\\
+\textbf{d)} $[\ce{Cr2O7^2-}]=\dfrac{n(\ce{Cr2O7^2-})}{V}=\dfrac{10^{-3}}{0{,}010}=\boxed{\SI{0,1}{\Molar}}$.
+\rep{Principe du titrage : la stœchiométrie à l'équivalence relie l'inconnu au connu.}
+\end{cor}
+
+\begin{cor}[dosage du permanganate par l'acide oxalique]
+\textbf{a)} Coefficients : \ce{MnO4-} $\to 2$, \ce{(COOH)2} $\to 5$. À l'équivalence :
+$\dfrac{\nq{MnO4-}}{2}=\dfrac{\nq{(COOH)2}}{5}$.\\
+\textbf{b)} $\nq{(COOH)2}=C\times V=0{,}0200\times0{,}0150=\SI{3,00e-4}{\mole}$.\\
+\textbf{c)} $\nq{MnO4-}=\dfrac{2}{5}\times\nq{(COOH)2}=\dfrac{2}{5}\times\SI{3,00e-4}{}=\SI{1,20e-4}{\mole}$ ;
+\[
+[\ce{KMnO4}]=\frac{\nq{MnO4-}}{V}=\frac{\SI{1,20e-4}{}}{0{,}0100}=\boxed{\SI{1,20e-2}{\Molar}}.
+\]
+\end{cor}
+
+\begin{cor}[combustion du kérosène : de l'air au volume de \ce{CO2}]
+\textbf{a)} $n_{\text{air}}=\dfrac{V}{\Vm}=\dfrac{224}{22{,}4}=\SI{10}{\mole}$ de gaz ;
+$n(\ce{O2})=10\times\dfrac{20}{100}=\SI{2}{\mole}$.\\
+\textbf{b)} $\nq{CO2}=n(\ce{O2})\times\dfrac{28}{43}=2\times\dfrac{28}{43}=\dfrac{56}{43}\approx\SI{1,302}{\mole}$.\\
+\textbf{c)} $V(\ce{CO2})=n\Vm=\dfrac{56}{43}\times22{,}4\approx\boxed{\SI{29,2}{\litre}}$.
+\rep{Chaîne complète : volume d'air $\to$ moles $\to$ part de \ce{O2} $\to$ stœchiométrie $\to$ volume de \ce{CO2}.}
+\end{cor}
+
+\end{document}

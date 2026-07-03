@@ -1,0 +1,806 @@
+% =====================================================================
+%  COURS DE PHYSIQUE — FICHE 2
+%  Dynamique (les trois lois de Newton & le mouvement circulaire)
+%  Figures TikZ tracées « from scratch ». Sans section exercices.
+%  Compilation : pdflatex (2 passes pour la table des matières).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+
+% ---------- Unités ----------
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,},per-mode=symbol}
+
+% ---------- Couleurs, boîtes, graphismes ----------
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
+  decorations.markings,angles,quotes,patterns,backgrounds,
+  shapes.geometric,shapes.misc,fadings,intersections,fit}
+\pgfplotsset{compat=1.18}
+
+% ---------- Géométrie de page ----------
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% =====================================================================
+%  PALETTE DE COULEURS
+% =====================================================================
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{vxc}{RGB}{0,90,200}
+\definecolor{vyc}{RGB}{210,30,40}
+
+% =====================================================================
+%  STYLE COMMUN DES BOÎTES
+% =====================================================================
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,
+     toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox[auto counter,number within=section]{definition}[1][]{%
+  boxbase,colback=defcol!5,colframe=defcol,
+  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{theoreme}[1][]{%
+  boxbase,colback=thmcol!6,colframe=thmcol,
+  title={\textsc{Loi / Théorème}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox[auto counter,number within=section]{formule}[1][]{%
+  boxbase,colback=formulacol!6,colframe=formulacol,
+  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{%
+  boxbase,colback=remarkcol!6,colframe=remarkcol,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{%
+  boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{%
+  boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{%
+  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% =====================================================================
+%  ENVIRONNEMENT « où : »
+% =====================================================================
+\newenvironment{ou}{%
+  \par\smallskip\noindent\textbf{où :}\nopagebreak
+  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
+  {\end{itemize}}
+
+% =====================================================================
+%  STYLES TikZ
+% =====================================================================
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  Fvec/.style={->,>=Stealth,line width=1.1pt,vxc},        % force appliquée / générique
+  Gvec/.style={->,>=Stealth,line width=1.1pt,vyc},        % poids (rouge)
+  Nvec/.style={->,>=Stealth,line width=1.1pt,excol!85!black}, % normale (vert)
+  Ffvec/.style={->,>=Stealth,line width=1.1pt,formulacol},% frottement (orange)
+  avec/.style={->,>=Stealth,line width=1.1pt,remarkcol},  % accélération (violet)
+  vvec/.style={->,>=Stealth,line width=1pt,vxc},          % vitesse (bleu)
+  proj/.style={dashed,black!55,line width=0.6pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+}
+
+% =====================================================================
+%  EN-TÊTES ET PIEDS
+% =====================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Dynamique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Physique}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primary!80!black}}{\thesubsubsection}{0.6em}{}
+
+% Raccourcis maths
+\newcommand{\vv}[1]{\vec{#1}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\N}{\si{\newton}}
+\newcommand{\kg}{\si{\kilogram}}
+\newcommand{\ms}{\si{\metre\per\second}}
+\newcommand{\mss}{\si{\metre\per\second\squared}}
+
+% =====================================================================
+\begin{document}
+\sloppy
+
+% ---------------------------------------------------------------------
+%  PAGE DE TITRE
+% ---------------------------------------------------------------------
+\begingroup
+\thispagestyle{empty}
+\centering
+\vspace*{1.5cm}
+
+\begin{tikzpicture}
+\node[rectangle,rounded corners=8pt,fill=primary,text=white,
+      minimum width=15.5cm,minimum height=2.6cm,align=center,inner sep=10pt]
+  {{\Huge\bfseries Dynamique}\\[6pt]
+   {\large\bfseries Les trois lois de Newton \& le mouvement circulaire}};
+\end{tikzpicture}
+
+\vspace{0.4cm}
+{\large\color{primarydark}\textsc{Cours de physique — Fiche n\textsuperscript{o}\,2}}
+
+\vspace{1.0cm}
+
+% --- Illustration de couverture : MCU (pierre au bout d'un fil) ---
+\begin{tikzpicture}[scale=1.0]
+  \def\R{2.6}
+  \draw[primary,line width=1.3pt] (0,0) circle (\R);
+  \fill (0,0) circle (1.6pt) node[below left]{$O$};
+  % vitesses tangentes
+  \foreach \a in {0,45,...,315}{
+     \draw[vvec] (\a:\R) -- ++(\a+90:0.95);}
+  % objet + rayon + force centripète
+  \coordinate (A) at (35:\R);
+  \draw[black!55] (0,0) -- (A);
+  \node[black!70] at (0.82,1.0) {$R$};
+  \fill[primarydark] (A) circle (2.6pt) node[above right]{$A$};
+  \draw[Ffvec,formulacol] (A) -- ($(A)!0.42!(0,0)$) node[midway,below right]{$\vv{F_c}$};
+  \node[primary] at (-1.5,-\R-0.45) {\small sens de rotation};
+  \draw[->,>=Stealth,primary] (-2.0,-\R+0.1) arc (250:200:\R);
+\end{tikzpicture}
+
+\vfill
+
+\begin{tcolorbox}[boxbase,colback=primary!5,colframe=primary,width=15cm,
+    title={\textsc{Objectifs pédagogiques de la fiche}}]
+À l'issue de ce cours, l'étudiant·e sera capable de :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item énoncer et appliquer les \textbf{trois lois de Newton} (inertie, $\vv F = m\vv a$, action–réaction) ;
+  \item distinguer \emph{masse} et \emph{poids}, et traiter la \textbf{chute libre} et la \textbf{chute non libre} ;
+  \item construire un \textbf{bilan des forces} et résoudre le cas du \textbf{plan incliné} (réaction normale, frottements) ;
+  \item relier la force et l'accélération de deux corps en \textbf{interaction} ;
+  \item décrire le \textbf{mouvement circulaire uniforme} (période, fréquence, vitesses linéaire et angulaire, force et accélération centripètes).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+{\small\color{black!60} Document de synthèse rédigé d'après la Fiche 2 du livre — figures originales tracées en TikZ.}
+\par
+\endgroup
+
+% ---------------------------------------------------------------------
+%  TABLE DES MATIÈRES
+% ---------------------------------------------------------------------
+\newpage
+\renewcommand{\contentsname}{\textcolor{primarydark}{Table des matières}}
+\tableofcontents
+\thispagestyle{fancy}
+\newpage
+
+% =====================================================================
+\section{Introduction : qu'est-ce que la dynamique ?}
+% =====================================================================
+Dans la fiche précédente (cinématique), on \emph{décrivait} les mouvements sans se demander
+\emph{pourquoi} ils se produisent. La dynamique répond justement à ce « pourquoi ».
+
+\begin{definition}[la dynamique]
+La \textbf{dynamique} a pour objet la \emph{description des causes des mouvements}, c'est-à-dire
+les \textbf{forces}. Elle \emph{relie les forces au mouvement} : connaissant les forces, on prévoit
+le mouvement ; et inversement, connaissant le mouvement d'un corps, on peut déterminer les
+forces qui agissent sur lui. La dynamique est régie par les \textbf{trois lois de Newton}.
+\end{definition}
+
+\begin{definition}[force, masse, référentiel galiléen]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item Une \textbf{force} $\vv F$ est une action mécanique capable de \emph{modifier le mouvement}
+        d'un corps (ou de le déformer). C'est une grandeur \emph{vectorielle} ; son intensité se
+        mesure en \textbf{newtons} (\si{\newton}).
+  \item La \textbf{masse} $m$ mesure l'\emph{inertie} d'un corps, c'est-à-dire sa résistance à tout
+        changement de mouvement. Elle s'exprime en \textbf{kilogrammes} (\si{\kilogram}) et ne dépend
+        ni du lieu ni des forces.
+  \item Un \textbf{référentiel galiléen} (ou inertiel) est un référentiel dans lequel les lois de
+        Newton s'appliquent (en pratique : la surface de la Terre, pour des mouvements ordinaires).
+\end{itemize}
+\end{definition}
+
+\begin{remarque}
+$\sum\vv F_{\text{ext}}$ (lire « somme des forces extérieures ») désigne la \textbf{résultante} :
+le vecteur obtenu en additionnant toutes les forces qui s'exercent sur le corps (loi de Chasles,
+cf.\ fiche 1). C'est toujours cette résultante qui gouverne le mouvement.
+\end{remarque}
+
+% =====================================================================
+\section{Les trois lois de Newton}
+% =====================================================================
+
+\subsection{Première loi : le principe d'inertie}
+
+\begin{theoreme}[principe d'inertie]
+Dans un référentiel galiléen, lorsqu'un solide est soumis à un ensemble de forces extérieures
+dont la \textbf{résultante est nulle}, ce solide est \emph{au repos} ou en \emph{mouvement rectiligne
+uniforme} (MRU). Réciproquement, son \textbf{accélération est nulle}.
+\[ \sum \vv F_{\text{ext}} = \vv 0 \quad\Longleftrightarrow\quad \vv a = \vv 0
+   \quad(\text{repos ou MRU}). \]
+\end{theoreme}
+
+\noindent\textbf{Lecture.} « Forces équilibrées » ne veut pas dire « immobile » : cela veut dire
+\emph{vitesse constante}. Un corps déjà en mouvement continue tout droit, à la même vitesse, tant
+que rien ne le déséquilibre.
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  % table / sol
+  \fill[black!8] (-2.2,-0.15) rectangle (2.2,0);
+  \draw[thick,black!55] (-2.2,0) -- (2.2,0);
+  % objet
+  \fill[primarydark] (0,0.45) rectangle (0.9,1.15);
+  \node[white] at (0.45,0.8){$m$};
+  % poids et normale
+  \draw[Gvec] (0.45,0.45) -- ++(0,-1.4) node[below]{$\vv G$ (poids)};
+  \draw[Nvec] (0.45,1.15) -- ++(0,1.4) node[above]{$\vv N$ (réaction)};
+  \node[align=center,font=\small] at (4.4,0.6)
+     {$\vv N + \vv G = \vv 0$\\[2pt] $\Rightarrow$ le livre reste \emph{au repos}};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[un livre posé sur une table]
+Le livre subit son poids $\vv G$ (vers le bas) et la réaction $\vv N$ de la table (vers le haut).
+Ces deux forces \emph{se compensent} exactement ($\vv N+\vv G=\vv0$), donc la résultante est nulle :
+le livre reste immobile. \emph{Explication :} il ne « se passe rien » non pas parce qu'il n'y a pas
+de force, mais parce que les forces s'\textbf{annulent}.
+\end{exemple}
+
+\begin{exemple}[le passager et le freinage]
+Quand un bus freine brusquement, le passager est projeté vers l'avant. \emph{Explication :} par
+inertie, son corps « veut » continuer en ligne droite à la vitesse qu'il avait ; ce n'est pas une
+force qui le pousse en avant, c'est l'\textbf{absence} de force suffisante pour le ralentir en même
+temps que le bus. La ceinture fournit alors la force manquante.
+\end{exemple}
+
+\subsection{Deuxième loi : le principe fondamental de la dynamique}
+
+\begin{theoreme}[deuxième loi de Newton]
+Quand la résultante des forces n'est pas nulle, le corps \emph{accélère}. La résultante est égale
+au produit de la masse par l'accélération, et le vecteur force est \textbf{colinéaire} au vecteur
+accélération (même direction, même sens).
+\end{theoreme}
+
+\begin{formule}[principe fondamental de la dynamique (PFD)]
+\[ \boxed{\,\vv F_{\text{résultante}}=\sum\vv F_{\text{ext}}=m\,\vv a\,}\qquad
+   \text{soit}\qquad a=\dfrac{F_{\text{résultante}}}{m}\quad(\mss) \]
+\begin{ou}
+  \item $\vv F_{\text{résultante}}$ : résultante des forces extérieures, en newtons (\si{\newton}) ;
+  \item $m$ : masse du corps, en kilogrammes (\si{\kilogram}) ;
+  \item $\vv a$ : vecteur accélération, en \si{\metre\per\second\squared} ;
+  \item rappel d'unité : $\si{\newton}=\si{\kilogram\metre\per\second\squared}$.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Les deux proportionnalités à retenir.}
+\begin{itemize}[leftmargin=1.6em,topsep=2pt]
+  \item L'accélération est \emph{proportionnelle} à la force : si $F_{\text{résultante}}$ augmente, $a$ augmente d'autant.
+  \item L'accélération est \emph{inversement proportionnelle} à la masse : si $m$ augmente, $a$ diminue d'autant.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[thick,black!55] (-2.6,0) -- (3.2,0);
+  \fill[primarydark] (-1.5,0) rectangle (-0.4,0.9);
+  \node[white] at (-0.95,0.45){$m$};
+  \draw[Fvec] (-0.4,0.45) -- ++(1.7,0) node[right]{$\vv F_{\text{résultante}}$};
+  \draw[avec] (-0.95,1.2) -- ++(1.3,0) node[right]{$\vv a$};
+  \node[font=\small,align=center] at (-0.95,-0.55){même direction et même sens};
+\end{tikzpicture}
+\end{center}
+
+\begin{attention}
+Ce n'est \textbf{pas} l'accélération qui « crée » la force, mais bien la \textbf{force qui provoque}
+l'accélération. La cause, c'est la force ; l'effet, c'est l'accélération.
+\end{attention}
+
+\begin{exemple}[même force, masses différentes]
+On pousse un chariot avec une force résultante de \qty{20}{\newton}.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Chariot vide, $m=\qty{10}{\kilogram}$ : $a=\dfrac{F}{m}=\dfrac{20}{10}=\qty{2}{\metre\per\second\squared}$.
+  \item Chariot plein, $m=\qty{20}{\kilogram}$ : $a=\dfrac{20}{20}=\qty{1}{\metre\per\second\squared}$.
+\end{itemize}
+\emph{Explication :} en doublant la masse, on \emph{divise par deux} l'accélération pour une même
+force — c'est l'inertie qui résiste davantage. Voilà pourquoi un caddie plein est plus « dur à
+lancer » qu'un caddie vide.
+\end{exemple}
+
+\subsection{Troisième loi : le principe des actions réciproques}
+
+\begin{theoreme}[principe des actions réciproques (action–réaction)]
+« Tout corps $A$ exerçant une force sur un corps $B$ subit une force d'\textbf{égale intensité}, de
+\textbf{même direction} mais de \textbf{sens opposé}, exercée par le corps $B$. »
+\[ \vv F_{A\to B}=-\,\vv F_{B\to A}\qquad\bigl(F_{\text{action}}=F_{\text{réaction}}\bigr). \]
+\end{theoreme}
+
+\noindent Les deux forces participent \emph{à parts égales} à une même \textbf{interaction} :
+l'existence de l'une dépend toujours de l'autre. Elles sont parallèles, de sens opposés, et
+s'appliquent sur \emph{deux corps différents} (c'est pourquoi elles ne se compensent jamais entre elles).
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \fill[defcol!70] (-1.8,0) rectangle (-0.6,1.0) node[midway,white]{$A$};
+  \fill[excol!70] (0.6,0) rectangle (1.8,1.0) node[midway,white]{$B$};
+  \draw[Fvec] (-0.6,0.5) -- (0.55,0.5);
+  \node[vxc,above,font=\small] at (0,0.6){$\vv F_{A\to B}$};
+  \draw[Ffvec] (0.6,0.3) -- (-0.55,0.3);
+  \node[formulacol,below,font=\small] at (0,0.22){$\vv F_{B\to A}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{attention}
+Contrairement à la masse (inertie), un objet ne « possède » pas de force en soi. Une force
+n'existe que comme \emph{interaction entre deux objets}. On ne dit jamais « la force d'un corps »,
+mais « la force exercée \emph{par} un corps \emph{sur} un autre ».
+\end{attention}
+
+\begin{exemple}[marcher, nager, fusée]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Marcher} : votre pied pousse le sol vers l'arrière ; en réaction, le sol vous pousse vers l'avant. C'est cette réaction qui vous fait avancer.
+  \item \textbf{Nager} : le nageur pousse l'eau vers l'arrière ; l'eau le propulse vers l'avant.
+  \item \textbf{Fusée / ballon de baudruche} : le gaz est éjecté vers le bas (ou l'arrière) ; en réaction, l'engin est propulsé en sens opposé.
+\end{itemize}
+\emph{Explication commune :} dans chaque cas, on \emph{repousse un milieu} (sol, eau, gaz) et c'est
+la \emph{réaction} de ce milieu qui produit le mouvement.
+\end{exemple}
+
+% =====================================================================
+\section{Le poids et la chute des corps}
+% =====================================================================
+
+\subsection{Le poids (force de pesanteur)}
+
+\begin{formule}[poids d'un corps]
+\[ \boxed{\,\vv G = m\,\vv g\,}\qquad\text{(intensité : } G=m\,g\ \text{en \si{\newton})} \]
+\begin{ou}
+  \item $\vv G$ : poids (force de pesanteur), en newtons (\si{\newton}) ;
+  \item $m$ : masse, en kilogrammes (\si{\kilogram}) ;
+  \item $\vv g$ : champ de pesanteur, $g\approx\qty{9,81}{\metre\per\second\squared}$ (vertical, vers le bas).
+\end{ou}
+\end{formule}
+
+\begin{attention}[ne pas confondre masse et poids]
+La \textbf{masse} ($m$, en \si{\kilogram}) est une quantité de matière, invariable. Le \textbf{poids}
+($G$, en \si{\newton}) est une \emph{force}, qui dépend du lieu via $g$. Sur la Lune, $g$ est environ
+six fois plus faible : la masse d'un astronaute est inchangée, mais son poids est divisé par six.
+\end{attention}
+
+\begin{exemple}[poids d'un corps de \qty{10}{\kilogram}]
+$G = m\,g = 10\times\num{9,81}=\qty{98,1}{\newton}$ sur Terre. Avec l'approximation courante
+$g\approx\qty{10}{\metre\per\second\squared}$, on trouve $G\approx\qty{100}{\newton}$.
+\end{exemple}
+
+\subsection{La chute libre}
+
+\begin{definition}[chute libre]
+Un corps est en \textbf{chute libre} lorsqu'il n'est soumis qu'à son \emph{poids} (gravité seule,
+\emph{sans frottement} de l'air). En appliquant le PFD dans le sens du mouvement :
+\[ \vv G = m\,\vv a \;\Longrightarrow\; a=\frac{G}{m}=\frac{m\,g}{m}=g. \]
+Le mouvement est un MRUA d'accélération $a=g$.
+\end{definition}
+
+\begin{remarque}[pourquoi tous les corps tombent à la même vitesse]
+La masse $m$ se \emph{simplifie} dans $a=\dfrac{mg}{m}=g$. L'accélération de chute ne dépend donc
+\textbf{pas} de la masse : dans le vide, une plume et un marteau tombent exactement de la même
+façon (expérience réalisée sur la Lune par Apollo 15).
+\end{remarque}
+
+\subsection{La chute non libre (avec frottement de l'air)}
+
+En présence de la résistance de l'air $\vv F_f$ (dirigée vers le haut, contre le mouvement), le
+bilan dans le sens de la chute devient $G-F_f=ma$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \fill[defcol] (0,0) circle (0.32) node[white,font=\small]{$m$};
+  \draw[Ffvec] (0,0.32) -- ++(0,1.5) node[above]{$\vv F_f$ (résistance de l'air)};
+  \draw[Gvec] (0,-0.32) -- ++(0,-1.6) node[below]{$\vv G = m\vv g$ (poids)};
+  \draw[avec] (-1.7,0.2) -- ++(0,-1.1) node[below]{$\vv a$};
+  \draw[proj] (-2.4,-1.9) -- (2.4,-1.9) node[right,black!60,font=\small]{sol};
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[accélération en chute non libre]
+\[ G-F_f=ma \;\Longrightarrow\;
+   \boxed{\,a=\frac{G-F_f}{m}=\frac{mg-F_f}{m}=g-\frac{F_f}{m}\,}<g \]
+\begin{ou}
+  \item $F_f$ : intensité de la résistance de l'air, en \si{\newton} (elle \emph{croît avec la vitesse}) ;
+  \item $a<g$ : l'accélération est \emph{toujours inférieure} à $g$. On parle de chute \textbf{non libre}.
+\end{ou}
+\end{formule}
+
+\begin{exemple}[le parachutiste et la vitesse limite]
+Au début du saut, la vitesse est faible donc $F_f$ est petite : $a\approx g$, le parachutiste
+accélère. À mesure que la vitesse augmente, $F_f$ grandit, donc $a=g-\dfrac{F_f}{m}$ diminue.
+Lorsque $F_f$ devient égale au poids ($F_f=G$), on a $a=0$ : la vitesse devient \textbf{constante},
+c'est la \emph{vitesse limite}. \emph{Explication :} le mouvement se stabilise non pas parce que la
+gravité disparaît, mais parce que la résistance de l'air l'équilibre exactement (1\textsuperscript{re} loi de Newton).
+\end{exemple}
+
+% =====================================================================
+\section{Forces de contact : réaction normale et frottement}
+% =====================================================================
+
+\subsection{La réaction normale}
+\begin{definition}[réaction normale]
+Lorsqu'un corps repose sur une surface, celle-ci exerce sur lui une force de contact
+\textbf{perpendiculaire} à la surface, dirigée vers l'extérieur : la \textbf{réaction normale} $\vv N$.
+Elle « empêche » le corps de traverser le support.
+\end{definition}
+
+\subsection{Les forces de frottement}
+\begin{definition}[frottement statique et cinétique]
+La \textbf{force de frottement} $\vv F_f$ s'oppose au glissement : elle est \emph{parallèle} à la
+surface et de \emph{sens opposé} au mouvement (ou à la tendance au mouvement).
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{statique} (corps encore immobile) : $F_f\le \mu_s\,N$ ;
+  \item \textbf{cinétique} (corps qui glisse) : $F_f=\mu_c\,N$.
+\end{itemize}
+\end{definition}
+
+\begin{formule}[intensité du frottement]
+\[ F_{f,\text{statique}}\le \mu_s\,N\qquad\qquad \boxed{F_{f,\text{cinétique}}=\mu_c\,N} \]
+\begin{ou}
+  \item $\mu_s,\ \mu_c$ : coefficients de frottement \emph{statique} et \emph{cinétique} (sans unité), dépendant des deux matériaux en contact ;
+  \item $N$ : intensité de la réaction normale, en \si{\newton} ;
+  \item en général $\mu_c<\mu_s$ : il est plus difficile de « décoller » un objet que de le maintenir en glissement.
+\end{ou}
+\end{formule}
+
+\subsection{Le plan incliné}
+C'est l'application la plus classique des trois lois. Considérons un corps sur un plan incliné
+faisant un angle $\alpha$ avec l'horizontale. On choisit un repère $(Ox,Oy)$ \emph{aligné sur la
+pente} : $Ox$ le long du plan, $Oy$ perpendiculaire au plan.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  % triangle incliné
+  \coordinate (O) at (0,0);
+  \coordinate (B) at (6,0);
+  \coordinate (C) at (6,3.46);          % angle ~30 deg
+  \draw[thick,fill=black!6] (O) -- (B) -- (C) -- cycle;
+  \draw (0.9,0) arc (0:30:0.9);
+  \node at (1.25,0.24){$\alpha$};
+  % objet sur la pente
+  \coordinate (P) at (3.46,1.997);      % point sur l'hypoténuse
+  \fill[defcol] (P) circle (0.14);
+  % forces (angles : pente montante = 30°)
+  \draw[Gvec] (P) -- ++(270:1.85) node[below]{$\vv G=m\vv g$};
+  \draw[Gvec,vyc!70] (P) -- ++(210:0.95) node[left=1pt]{$\vv G_x$};
+  \draw[Gvec,vyc!70] (P) -- ++(300:1.60) node[right=1pt]{$\vv G_y$};
+  \draw[Nvec] (P) -- ++(120:1.60) node[above left]{$\vv N$};
+  \draw[Ffvec] (P) -- ++(30:1.25) node[above right]{$\vv F_f$};
+  % parallélogramme de décomposition (rectangle G_x, G_y)
+  \draw[proj] ($(P)+(210:0.95)$) -- ($(P)+(270:1.85)$);
+  \draw[proj] ($(P)+(300:1.60)$) -- ($(P)+(270:1.85)$);
+  % petit repère Oxy
+  \draw[->,>=Stealth,black!60] (1.7,1.55) -- ++(30:0.8) node[right,font=\scriptsize]{$x$};
+  \draw[->,>=Stealth,black!60] (1.7,1.55) -- ++(120:0.8) node[above,font=\scriptsize]{$y$};
+  % équations
+  \node[align=left,font=\small,anchor=west] at (6.5,2.6)
+    {$G_y=m\,g\cos\alpha$\\[3pt] $G_x=m\,g\sin\alpha$};
+  \node[align=left,font=\small,anchor=west] at (6.5,1.1)
+    {\textcolor{primarydark}{Selon $Oy$ :} $\ G_y-N=0$\\[3pt]
+     \textcolor{primarydark}{Selon $Ox$ :} $\ G_x-F_f=ma$};
+\end{tikzpicture}
+\end{center}
+
+\begin{formule}[bilan sur un plan incliné]
+On projette le poids sur les deux axes, puis on écrit le PFD axe par axe :
+\[ \underbrace{G_y=mg\cos\alpha}_{\perp\ \text{au plan}},\qquad
+   \underbrace{G_x=mg\sin\alpha}_{\text{le long du plan}}, \]
+\[ \text{Selon } Oy:\ \boxed{N=G_y=mg\cos\alpha}\qquad
+   \text{Selon } Ox:\ \boxed{G_x-F_f=ma}. \]
+\begin{ou}
+  \item $G_x=mg\sin\alpha$ : composante \emph{motrice} (entraîne la descente), en \si{\newton} ;
+  \item $G_y=mg\cos\alpha$ : composante \emph{plaquant} le corps sur le plan, en \si{\newton} ;
+  \item $N=G_y$ : la réaction normale équilibre $G_y$ (pas de mouvement perpendiculaire au plan) ;
+  \item $F_f$ : frottement, opposé au glissement le long de $Ox$, en \si{\newton}.
+\end{ou}
+\end{formule}
+
+\begin{remarque}[équilibre ou accélération ?]
+Si le corps est en équilibre (immobile ou MRU), alors $F_f=G_x$ et $a=0$. S'il accélère (MRUA),
+alors $F_f<G_x$ et l'accélération vaut $a=\dfrac{G_x-F_f}{m}=g\sin\alpha-\dfrac{F_f}{m}$.
+\end{remarque}
+
+\begin{exemple}[cycliste sur une pente de \ang{30}]
+Un cycliste descend en roue libre une pente de $\alpha=\ang{30}$. Le poids total (cycliste + vélo)
+vaut $G=\qty{802}{\newton}$, le frottement résultant $F_f=\qty{20}{\newton}$, et $g\approx\qty{10}{\metre\per\second\squared}$.
+\emph{Quelle est son accélération ?}
+
+\textbf{Solution.} Masse : $m=\dfrac{G}{g}=\dfrac{802}{10}=\qty{80,2}{\kilogram}$.
+Composante motrice : $G_x=G\sin\ang{30}=802\times\num{0,5}=\qty{401}{\newton}$.
+Selon $Ox$ :
+\[ a=\frac{G_x-F_f}{m}=\frac{401-20}{80,2}=\frac{381}{80,2}\approx\qty{4,75}{\metre\per\second\squared}. \]
+\emph{Explication :} seule la \emph{composante du poids le long de la pente} ($G_x$) fait avancer le
+cycliste ; le frottement la freine ; la différence, divisée par la masse, donne l'accélération.
+\end{exemple}
+
+\begin{exemple}[à l'équilibre : pente de \ang{4}]
+Sur une pente douce de \ang{4} parcourue à vitesse \emph{constante} (MRU), l'accélération est nulle,
+donc $F_f=G_x=G\sin\ang{4}=802\times\sin\ang{4}\approx\qty{55,9}{\newton}$. Ici, le frottement
+équilibre exactement la composante motrice du poids.
+\end{exemple}
+
+% =====================================================================
+\section{Interaction entre deux corps de masses différentes}
+% =====================================================================
+La troisième loi dit que la force est \emph{la même} pour les deux corps en interaction. Mais comme
+$a=F/m$, les \textbf{accélérations}, elles, diffèrent selon la masse.
+
+\begin{formule}[accélérations dans une interaction]
+Un corps $A$ ($m_A$) et un corps $B$ ($m_B$) échangent une force d'intensité $F$ (action = réaction).
+Leurs accélérations valent :
+\[ \boxed{a_A=\frac{F}{m_A}}\qquad\text{et}\qquad \boxed{a_B=\frac{F}{m_B}}. \]
+\begin{ou}
+  \item $F$ : intensité commune de la force d'action–réaction, en \si{\newton} ;
+  \item $m_A,\ m_B$ : masses des deux corps, en \si{\kilogram} ;
+  \item conséquence : \emph{l'objet le plus léger subit la plus grande accélération}.
+\end{ou}
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  % canon (gros) à gauche, boulet (petit) à droite
+  \fill[black!55] (-3.0,0) rectangle (-1.6,0.85);
+  \node[white,font=\small] at (-2.3,0.42){$m_{\text{canon}}$};
+  \fill[vyc] (0.0,0.42) circle (0.21);
+  \node[font=\small,above] at (0.0,0.62){$m_{\text{boulet}}$};
+  % accélérations tracées SOUS les objets (pas de chevauchement)
+  \draw[avec] (-2.3,-0.5) -- ++(-0.75,0) node[left,font=\small]{$\vv a_{\text{canon}}$};
+  \node[font=\scriptsize,remarkcol] at (-2.35,-0.85){(petite)};
+  \draw[avec] (0.0,-0.5) -- ++(2.0,0) node[right,font=\small]{$\vv a_{\text{boulet}}$};
+  \node[font=\scriptsize,remarkcol] at (1.0,-0.85){(grande)};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[le recul du canon]
+Un canon de \qty{1000}{\kilogram} tire un boulet de \qty{10}{\kilogram}. La force $F$ exercée sur le
+boulet est exactement celle qui s'exerce, en réaction, sur le canon. Le rapport des accélérations
+est :
+\[ \frac{a_{\text{boulet}}}{a_{\text{canon}}}=\frac{F/m_{\text{boulet}}}{F/m_{\text{canon}}}
+   =\frac{m_{\text{canon}}}{m_{\text{boulet}}}=\frac{1000}{10}=100. \]
+\emph{Explication :} le boulet accélère \textbf{100 fois plus} que le canon. Le canon « recule »,
+mais lentement, car sa grande masse résiste (inertie).
+\end{exemple}
+
+\begin{exemple}[autres situations courantes]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Ballon qui se dégonfle} : l'air ($N_2$) est éjecté avec une grande accélération, le ballon (plus léger une fois vidé) part en sens inverse.
+  \item \textbf{Moto sur la route} : la roue pousse la route vers l'arrière ; la route pousse la moto vers l'avant. La Terre, immense, accélère de façon imperceptible ($a_{\text{moto}}\ggg a_{\text{Terre}}$).
+\end{itemize}
+\end{exemple}
+
+% =====================================================================
+\section{Le mouvement circulaire uniforme (MCU)}
+% =====================================================================
+
+\subsection{Définition, période et fréquence}
+
+\begin{definition}[mouvement circulaire uniforme]
+Un objet $A$ (masse $m_A$) décrit un \textbf{MCU} si sa trajectoire est un \emph{cercle} de centre $O$
+et de rayon $R$, parcouru à \textbf{vitesse tangentielle constante} en norme ($v=\text{cte}$).
+\end{definition}
+
+\begin{definition}[période et fréquence]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item La \textbf{période} $T$ est la durée d'un tour complet, en secondes (\si{\second}).
+  \item La \textbf{fréquence} $f$ est le nombre de tours par seconde : $\;f=\dfrac{1}{T}\;$ en hertz (\si{\hertz}, soit \si{\per\second}).
+\end{itemize}
+\end{definition}
+
+\subsection{Vitesse linéaire et vitesse angulaire}
+
+\begin{formule}[vitesses dans le MCU]
+\[ \boxed{v=\frac{2\pi R}{T}=\omega R}\qquad\qquad \boxed{\omega=\frac{\Delta\theta}{\Delta t}=\frac{2\pi}{T}} \]
+\begin{ou}
+  \item $v$ : vitesse \emph{linéaire} (tangentielle), en \si{\metre\per\second} ; c'est la distance $2\pi R$ (périmètre) divisée par $T$ ;
+  \item $\omega$ : vitesse \emph{angulaire}, en radians par seconde (\si{\radian\per\second}) ; c'est l'angle $2\pi$ (un tour) divisé par $T$ ;
+  \item $R$ : rayon du cercle, en \si{\metre} ; \quad $T$ : période, en \si{\second}.
+\end{ou}
+\end{formule}
+
+\noindent\textbf{Lien à comprendre.} En un tour, l'objet parcourt la distance $2\pi R$ (d'où $v$) et
+balaie l'angle $2\pi$ (d'où $\omega$). En combinant : $v=\omega R$. Deux objets de même $\omega$ mais
+de rayons différents n'ont donc pas la même vitesse linéaire.
+
+\subsection{Accélération et force centripètes}
+
+\begin{attention}
+Le MCU est un mouvement \textbf{accéléré}, bien que la vitesse (norme) soit constante ! En effet, la
+\emph{direction} du vecteur vitesse change à chaque instant : le vecteur $\vv v$ n'est pas constant.
+L'accélération \emph{tangentielle} est nulle ($a_t=0$), mais il existe une accélération dirigée vers
+le centre.
+\end{attention}
+
+\begin{formule}[accélération et force centripètes]
+\[ \boxed{a_c=\frac{v^2}{R}}\qquad\qquad \boxed{F_c=m_A\,a_c=m_A\,\frac{v^2}{R}} \]
+\begin{ou}
+  \item $a_c$ : accélération \textbf{centripète} (dirigée vers le centre $O$), en \si{\metre\per\second\squared} ;
+  \item $F_c$ : force \textbf{centripète} (ou normale), en \si{\newton} ; c'est elle qui « courbe » la trajectoire ;
+  \item $m_A$ : masse de l'objet, en \si{\kilogram} ; \quad $v$ : vitesse linéaire ; \quad $R$ : rayon.
+\end{ou}
+\textbf{Direction :} $\vv F_c$ et $\vv a_c$ ont la même direction et le même sens (vers le centre).
+\end{formule}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \def\R{2.4}
+  \draw[black!70,line width=1pt] (0,0) circle (\R);
+  \fill (0,0) circle (1.4pt) node[below left]{$O$};
+  % vitesses tangentes (sens trigo)
+  \foreach \a in {0,40,...,320}{
+     \draw[vvec] (\a:\R) -- ++(\a+90:0.85);}
+  % objet A, rayon, force/accélération centripètes
+  \coordinate (A) at (25:\R);
+  \draw[black!55] (0,0) -- (A);
+  \node[font=\small,black!70] at (0.85,0.82) {$R$};
+  \fill[primarydark] (A) circle (2.4pt) node[above right]{$A$};
+  \draw[Ffvec,formulacol] (A) -- ($(A)!0.45!(0,0)$) node[midway,below,font=\small]{$\vv F_c$};
+  \node[vxc,font=\small] at (25:\R)[above right=6pt]{};
+  \node[vxc,font=\small] at (115:\R)[above left]{$\vv v$};
+  \node[remarkcol,font=\small] at (0.2,-0.5){$a_t=0$};
+  \node[formulacol,font=\small\bfseries] at (0,-\R-0.4){MCU};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[une pierre au bout d'un fil]
+Une pierre de $m=\qty{0,2}{\kilogram}$ tourne au bout d'un fil de rayon $R=\qty{0,5}{\metre}$,
+faisant un tour en $T=\qty{1}{\second}$.
+\[ v=\frac{2\pi R}{T}=\frac{2\pi\times\num{0,5}}{1}\approx\qty{3,14}{\metre\per\second},\qquad
+   \omega=\frac{2\pi}{T}\approx\qty{6,28}{\radian\per\second}. \]
+\[ a_c=\frac{v^2}{R}=\frac{(3,14)^2}{0,5}\approx\qty{19,7}{\metre\per\second\squared},\qquad
+   F_c=m\,a_c=0,2\times19,7\approx\qty{3,9}{\newton}. \]
+\emph{Explication :} c'est la tension du fil qui fournit la force centripète $F_c$. Tant que le fil
+tient, il « tire » constamment la pierre vers le centre et l'oblige à tourner.
+\end{exemple}
+
+\subsection{Force centrifuge et rupture du fil}
+
+\begin{remarque}[la force centrifuge est fictive]
+Si le fil casse, deux points de vue :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Observateur extérieur} (fixe) : l'objet part en \emph{ligne droite}, tangent au cercle, à la vitesse qu'il avait — c'est le \emph{principe d'inertie} (1\textsuperscript{re} loi). Il n'y a aucune force qui le « projette vers l'extérieur ».
+  \item \textbf{Observateur tournant} (lié à l'objet) : il \emph{ressent} une « force centrifuge » qui le pousse vers l'extérieur. Cette force est \textbf{fictive} : elle n'existe que parce que le référentiel tourne (non galiléen). Son effet est subjectif.
+\end{itemize}
+\end{remarque}
+
+\subsection{Rotation d'un solide}
+
+\begin{definition}[rotation uniforme d'un solide]
+Pour un disque solide tournant autour d'un axe passant par son centre $O$, tous les points décrivent
+des cercles concentriques avec la \textbf{même vitesse angulaire} $\omega$. Mais comme $v=\omega R$,
+les points du \emph{bord} vont plus vite que ceux proches du centre.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  % disque + cercles concentriques
+  \foreach \r in {1,2,3}{ \draw[black!35] (0,0) circle (\r); }
+  \fill[primary!12] (0,0) circle (3);
+  \foreach \r in {1,2,3}{ \draw[black!40] (0,0) circle (\r); }
+  \fill (0,0) circle (1.6pt) node[below right]{$O$};
+  % points A, B, C sur le rayon vertical
+  \foreach \r/\lab in {1/A,2/B,3/C}{
+     \fill[primarydark] (90:\r) circle (2.2pt);
+     \node[right,font=\small] at (90:\r){$\lab$};
+     \draw[vvec] (90:\r) -- ++(180:{0.35*\r+0.15});}
+  \node[vxc,font=\small] at (180:1)[above]{};
+  \node[vxc,font=\small,anchor=south] at (-1.55,3.05){$\vv v_C$};
+  \node[vxc,font=\small,anchor=south] at (-0.9,2.05){$\vv v_B$};
+  \node[vxc,font=\small,anchor=south] at (-0.4,1.05){$\vv v_A$};
+  \draw[->,>=Stealth,primary] (3.3,-0.6) arc (-15:35:3.3);
+  \node[primary,font=\small] at (3.7,0.9){sens};
+  \node[align=left,font=\small,anchor=west] at (3.7,-1.6)
+    {$\omega=\text{cte}$ pour tous\\[2pt] $v=\omega R \Rightarrow v_C>v_B>v_A$\\[2pt]
+     accél.\ angulaire nulle};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[le manège et le disque vinyle]
+Sur un manège qui tourne, deux enfants font le même nombre de tours par minute (même $\omega$), mais
+celui assis au \emph{bord} se déplace plus vite (grand $R$) que celui près du centre. De même, sur un
+disque vinyle, le bord « défile » plus vite que l'intérieur sous la pointe de lecture.
+\emph{Explication :} $v=\omega R$ — à $\omega$ fixé, la vitesse linéaire grandit avec le rayon.
+\end{exemple}
+
+% =====================================================================
+\section{Synthèse et formulaire}
+% =====================================================================
+
+\subsection{Les trois lois de Newton en un coup d'œil}
+
+\renewcommand{\arraystretch}{1.4}
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.0cm}|>{\centering\arraybackslash}p{4.2cm}|>{\raggedright\arraybackslash}p{6.6cm}}
+\toprule
+\rowcolor{primary!15}
+\textbf{Loi} & \textbf{Énoncé / formule} & \textbf{Idée clé} \\
+\midrule
+1\textsuperscript{re} — inertie & $\sum\vv F_{\text{ext}}=\vv 0 \Leftrightarrow \vv a=\vv 0$ & forces équilibrées $\Rightarrow$ repos ou MRU \\
+2\textsuperscript{e} — PFD & $\sum\vv F_{\text{ext}}=m\vv a$ & la force \emph{provoque} l'accélération ($a=F/m$) \\
+3\textsuperscript{e} — action–réaction & $\vv F_{A\to B}=-\vv F_{B\to A}$ & forces égales et opposées, sur \emph{deux} corps \\
+\bottomrule
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1}
+
+\subsection{Tableau des forces usuelles}
+
+\renewcommand{\arraystretch}{1.4}
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.2cm}|>{\centering\arraybackslash}p{3.0cm}|>{\raggedright\arraybackslash}p{6.5cm}}
+\toprule
+\rowcolor{primary!15}
+\textbf{Force} & \textbf{Intensité} & \textbf{Direction / sens} \\
+\midrule
+Poids $\vv G$ & $G=mg$ & verticale, vers le bas \\
+Réaction normale $\vv N$ & $N=mg\cos\alpha$ (plan incliné) & perpendiculaire à la surface, vers l'extérieur \\
+Frottement $\vv F_f$ & $F_f\le\mu_s N$ ; $\ F_f=\mu_c N$ & parallèle à la surface, opposé au mouvement \\
+Force centripète $\vv F_c$ & $F_c=m\,v^2/R$ & le long du rayon, vers le centre \\
+\bottomrule
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1}
+
+\subsection{Formulaire essentiel}
+
+\begin{multicols}{2}
+\noindent\textbf{Lois de Newton}
+\[ \sum\vv F_{\text{ext}}=\vv 0 \;\Leftrightarrow\; \vv a=\vv 0 \]
+\[ \sum\vv F_{\text{ext}}=m\,\vv a \qquad a=\frac{F}{m} \]
+\[ \vv F_{A\to B}=-\vv F_{B\to A} \]
+\textbf{Poids \& chute}
+\[ G=mg,\qquad a_{\text{libre}}=g \]
+\[ a_{\text{non libre}}=g-\frac{F_f}{m} \]
+
+\columnbreak
+\noindent\textbf{Plan incliné}
+\[ G_x=mg\sin\alpha,\quad G_y=mg\cos\alpha \]
+\[ N=mg\cos\alpha,\qquad G_x-F_f=ma \]
+\textbf{MCU}
+\[ f=\frac1T,\qquad \omega=\frac{2\pi}{T},\qquad v=\omega R=\frac{2\pi R}{T} \]
+\[ a_c=\frac{v^2}{R},\qquad F_c=m\,\frac{v^2}{R} \]
+\end{multicols}
+
+\vfill
+\begin{center}
+\textcolor{primary}{\rule{0.5\textwidth}{1pt}}\\[4pt]
+{\small\color{black!60}Fin de la Fiche 2 — Dynamique.}
+\end{center}
+
+\end{document}
