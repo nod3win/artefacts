@@ -1,0 +1,87 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[la lame de verre à faces parallèles]
+\begin{enumerate}[label=\alph*)]
+  \item À la 1\iere{} face (air $\to$ verre) : $\sin\hat{\imath}=n\sin\hat r$. Les deux faces sont
+        parallèles, donc l'angle d'incidence \emph{interne} sur la 2\ieme{} face est égal à $\hat r$
+        (angles alternes-internes). À la 2\ieme{} face (verre $\to$ air) :
+        $n\sin\hat r=\sin\hat{\imath}'$. En combinant : $\sin\hat{\imath}'=\sin\hat{\imath}$, d'où
+        $\boxed{\hat{\imath}'=\hat{\imath}}$ : le rayon émergent est \textbf{parallèle} à l'incident.
+  \item Angle dans le verre : $\sin\hat r=\dfrac{\sin\ang{60}}{1{,}5}=\dfrac{0{,}866}{1{,}5}=0{,}577
+        \Rightarrow \hat r\approx\ang{35.3}$. Décalage latéral :
+        \[ d=\frac{e\,\sin(\hat{\imath}-\hat r)}{\cos\hat r}
+             =\frac{4\times\sin(\ang{60}-\ang{35.3})}{\cos\ang{35.3}}
+             =\frac{4\times\sin\ang{24.7}}{\cos\ang{35.3}}
+             =\frac{4\times0{,}418}{0{,}816}\approx\qty{2.05}{cm}. \]
+        La lame ne change pas la direction, elle décale le rayon de $\approx\qty{2}{cm}$ sur le côté.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un empilement de couches parallèles]
+\begin{enumerate}[label=\alph*)]
+  \item Air $\to$ eau : $\sin\hat{\imath}_1=\dfrac{n_0\sin\hat{\imath}_0}{n_1}
+        =\dfrac{\sin\ang{50}}{1{,}33}=\dfrac{0{,}766}{1{,}33}=0{,}576\Rightarrow\hat{\imath}_1\approx\ang{35.2}$.
+  \item Eau $\to$ verre : $\sin\hat{\imath}_2=\dfrac{n_1\sin\hat{\imath}_1}{n_2}$. Mais
+        $n_1\sin\hat{\imath}_1=n_0\sin\hat{\imath}_0=\sin\ang{50}$, donc
+        $\sin\hat{\imath}_2=\dfrac{\sin\ang{50}}{1{,}5}=0{,}511\Rightarrow\hat{\imath}_2\approx\ang{30.7}$.
+  \item À travers des interfaces parallèles, la quantité $n\sin\hat{\imath}$ se conserve :
+        \[ n_0\sin\hat{\imath}_0=n_1\sin\hat{\imath}_1=n_2\sin\hat{\imath}_2. \]
+        L'angle dans le verre ne dépend donc que de $n_0\sin\hat{\imath}_0$ et de $n_2$ : la couche
+        d'eau intermédiaire n'intervient \textbf{pas}. Pour prévoir l'angle final, il suffit de
+        connaître le \emph{milieu de départ} et le \emph{milieu d'arrivée} — les couches parallèles
+        traversées entre les deux sont sans effet sur la \emph{direction} finale.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[imposer la déviation]
+On veut $D=\hat{\imath}_1-\hat{\imath}_2=\ang{20}$, soit $\hat{\imath}_2=\hat{\imath}_1-\ang{20}$.
+La loi de Snell–Descartes air $\to$ verre s'écrit $\sin\hat{\imath}_1=1{,}5\,\sin\hat{\imath}_2$ :
+\[ \sin\hat{\imath}_1=1{,}5\,\sin(\hat{\imath}_1-\ang{20})
+   =1{,}5\big(\sin\hat{\imath}_1\cos\ang{20}-\cos\hat{\imath}_1\sin\ang{20}\big). \]
+On regroupe les termes en $\sin\hat{\imath}_1$ et $\cos\hat{\imath}_1$ :
+\[ \sin\hat{\imath}_1\big(1-1{,}5\cos\ang{20}\big)=-1{,}5\sin\ang{20}\,\cos\hat{\imath}_1. \]
+Avec $\cos\ang{20}=0{,}940$ et $\sin\ang{20}=0{,}342$ : $1-1{,}5\times0{,}940=-0{,}410$, d'où
+\[ \tan\hat{\imath}_1=\frac{1{,}5\times0{,}342}{0{,}410}=\frac{0{,}513}{0{,}410}=1{,}253
+   \;\Longrightarrow\;\boxed{\hat{\imath}_1\approx\ang{51.4}}. \]
+Vérification : $\hat{\imath}_2=\ang{31.4}$, et $1{,}5\sin\ang{31.4}=1{,}5\times0{,}521=0{,}782
+=\sin\ang{51.4}$. La déviation vaut bien $\ang{51.4}-\ang{31.4}=\ang{20}$.
+\end{corrige}
+
+\end{document}

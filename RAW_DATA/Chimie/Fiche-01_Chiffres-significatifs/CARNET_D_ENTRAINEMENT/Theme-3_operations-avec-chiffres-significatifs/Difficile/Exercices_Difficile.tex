@@ -1,0 +1,72 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[dioxyde d'azote dans l'air pollué]
+Une chimiste dose le dioxyde d'azote d'un air pollué : elle trouve $\qty{0,0361}{\milli\gram}$ de
+\ce{NO2} dans un échantillon de $\qty{12,0}{\litre}$ d'air. Calcule la concentration $[\ce{NO2}]$ en
+$\si{\gram\per\cubic\metre}$, en notation scientifique et avec le bon nombre de chiffres significatifs.
+On rappelle $\qty{1}{\milli\gram}=10^{-3}\,\si{\gram}$ et $\qty{1}{\litre}=10^{-3}\,\si{\cubic\metre}$
+(facteurs exacts).
+\end{exo}
+
+\begin{exo}[solubilité du chlorure de sodium]
+On peut dissoudre au maximum $\qty{36}{\gram}$ de \ce{NaCl} dans $\qty{100}{\gram}$ d'eau à
+$\qty{25}{\celsius}$. Quelle masse maximale de \ce{NaCl} se dissout dans $\qty{93,233}{\gram}$ d'eau à la
+même température ? Donne le résultat en kilogrammes à $4$ chiffres significatifs, puis commente la
+précision \emph{réellement} justifiée par les données.
+\end{exo}
+
+\begin{exo}[préparation d'une solution de \ce{NaCl}]
+On dissout $m=\qty{5,00}{\gram}$ de chlorure de sodium ($M=\qty{58,44}{\gram\per\mole}$) dans l'eau, pour
+obtenir $V=\qty{250,0}{\milli\litre}$ de solution.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la quantité de matière $n$ de \ce{NaCl}, avec le bon nombre de CS.
+  \item Déduis la concentration $c=\dfrac{n}{V}$ en $\si{\mol\per\litre}$, avec le bon nombre de CS.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[acidité de deux solutions]
+\begin{enumerate}[label=\alph*)]
+  \item Une solution d'acide chlorhydrique a $[\ce{H3O+}]=4,0\times10^{-2}\ \si{\mol\per\litre}$. Calcule
+        son pH avec le bon nombre de décimales.
+  \item Une autre solution a $\mathrm{pH}=5,00$. Donne $[\ce{H3O+}]$ avec le bon nombre de CS.
+\end{enumerate}
+\end{exo}
+
+\end{document}

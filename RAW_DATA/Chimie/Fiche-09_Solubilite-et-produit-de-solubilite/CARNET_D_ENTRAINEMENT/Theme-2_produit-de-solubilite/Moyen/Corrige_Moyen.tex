@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[expressions de $K_{\mathrm{ps}}$ (sels complexes)]
+Exposant $=$ coefficient de l'ion dans l'équation de dissolution.
+\begin{enumerate}[label=\alph*)]
+  \item $K_{\mathrm{ps}} = [\ce{Ag+}]^{3}\,[\ce{PO4^{3-}}]$.
+  \item $K_{\mathrm{ps}} = [\ce{Al^{3+}}]\,[\ce{OH-}]^{3}$.
+  \item $K_{\mathrm{ps}} = [\ce{Mn^{2+}}]\,[\ce{OH-}]^{2}$.
+  \item $K_{\mathrm{ps}} = [\ce{Ca^{2+}}]^{3}\,[\ce{PO4^{3-}}]^{2}$.
+  \item $K_{\mathrm{ps}} = [\ce{Ba^{2+}}]^{3}\,[\ce{PO4^{3-}}]^{2}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[calcul numérique avec exposants]
+On élève chaque concentration à son exposant, puis on multiplie.
+\begin{enumerate}[label=\alph*)]
+  \item $K_{\mathrm{ps}} = (\num{1.0e-2})(\num{2.0e-2})^{2} = (\num{1.0e-2})(\num{4.0e-4}) = \num{4.0e-6}$.
+  \item $K_{\mathrm{ps}} = (\num{1.3e-4})^{2}(\num{6.5e-5}) = (\num{1.69e-8})(\num{6.5e-5}) = \num{1.1e-12}$.
+  \item $K_{\mathrm{ps}} = (\num{1.0e-10})(\num{3.0e-10})^{3} = (\num{1.0e-10})(\num{2.7e-29}) = \num{2.7e-39}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter de l'expression au type de sel]
+Les exposants donnent directement les coefficients, donc le type.
+\begin{enumerate}[label=\alph*)]
+  \item Exposants $1$ et $2$ $\Rightarrow$ type $1{:}2$. Exemples : \ce{CaF2}, \ce{PbBr2}.
+  \item Exposants $2$ et $1$ $\Rightarrow$ type $2{:}1$. Exemples : \ce{Ag2SO4}, \ce{Ag2CrO4}.
+  \item Exposants $3$ et $2$ $\Rightarrow$ type $3{:}2$. Exemples : \ce{Ca3(PO4)2}, \ce{Ba3(PO4)2}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une seule concentration mesurée]
+On relie les deux ions par la stœchiométrie de la dissolution avant de calculer.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Ag2CrO4} : $[\ce{Ag+}]=2s$ et $[\ce{CrO4^{2-}}]=s$, donc
+        $[\ce{CrO4^{2-}}]=\tfrac{1}{2}[\ce{Ag+}]=\qty{1.0e-4}{\mole\per\litre}$. Alors
+        \[ K_{\mathrm{ps}} = [\ce{Ag+}]^{2}[\ce{CrO4^{2-}}] = (\num{2.0e-4})^{2}(\num{1.0e-4}) = \num{4.0e-12}. \]
+  \item \ce{Mg(OH)2} : $[\ce{OH-}]=2s$ et $[\ce{Mg^{2+}}]=s$, donc
+        $[\ce{Mg^{2+}}]=\tfrac{1}{2}[\ce{OH-}]=\qty{1.5e-4}{\mole\per\litre}$. Alors
+        \[ K_{\mathrm{ps}} = [\ce{Mg^{2+}}][\ce{OH-}]^{2} = (\num{1.5e-4})(\num{3.0e-4})^{2} = \num{1.35e-11}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[repérer l'erreur dans l'expression]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Fausse.} Les exposants sont inversés : \ce{Ca3(PO4)2} libère 3 \ce{Ca^{2+}} et 2
+        \ce{PO4^{3-}}. Correct : $K_{\mathrm{ps}} = [\ce{Ca^{2+}}]^{3}\,[\ce{PO4^{3-}}]^{2}$.
+  \item \textbf{Correcte.}
+  \item \textbf{Fausse.} Le coefficient $3$ est un \emph{exposant}, il ne se met pas \emph{dans} le
+        crochet. Correct : $K_{\mathrm{ps}} = [\ce{Fe^{3+}}]\,[\ce{OH-}]^{3}$.
+\end{enumerate}
+\end{corrige}
+\end{document}

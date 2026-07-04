@@ -1,0 +1,81 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Les fonctions de l'aspirine]
+\begin{enumerate}[label=\alph*)]
+  \item Un groupement $-\ce{COOH}$ $\Rightarrow$ \textbf{acide carboxylique} ; un groupement $\ce{-O-CO-CH3}$ (oxygène du cycle relié à un carbonyle) $\Rightarrow$ \textbf{ester}.
+  \item \textbf{Non.} L'oxygène qui relie le cycle au $\ce{CH3}$ est doublement voisin d'un carbonyle : il fait partie de la fonction \textbf{ester} ($-\ce{CO-O}-$). Ce n'est \emph{pas} un éther libre. C'est le piège classique de l'aspirine.
+  \item Le cycle benzénique porte \textbf{trois} doubles liaisons $\ce{C=C}$ (les doubles liaisons alternées de Kekulé).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Compter et classer les alcools ; effet d'une réduction]
+Repérons \ce{(CH3)2C(OH)}$-$\ce{CH2}$-$\ce{CH(OH)}$-$\ce{CO}$-$\ce{CH3}.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Deux} alcools : celui de $\ce{(CH3)2C(OH)}$ est porté par un carbone lié à $3$ autres carbones $\Rightarrow$ \textbf{tertiaire} ; celui de $\ce{CH(OH)}$ est porté par un carbone lié à $2$ carbones $\Rightarrow$ \textbf{secondaire}.
+  \item Le $\ce{-CO-}$ encadré par deux carbones est une \textbf{cétone}.
+  \item La réduction transforme la cétone en $\ce{CH(OH)}$ : ce nouveau carbone est lié à $2$ carbones $\Rightarrow$ alcool \textbf{secondaire}. La molécule compte alors \textbf{trois} alcools : \textbf{un tertiaire et deux secondaires}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Azote : amine ou amide ?]
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{H2N}-$ (azote sans carbonyle) $\Rightarrow$ \textbf{amine primaire} ; $-\ce{CO-NH}-$ (azote collé au carbonyle) $\Rightarrow$ \textbf{amide} ; $-\ce{COOH}$ $\Rightarrow$ \textbf{acide carboxylique}.
+  \item \textbf{Non}, les deux azotes n'ont pas la même fonction : celui de gauche est une \textbf{amine}, celui du milieu appartient à une \textbf{amide} (car il est lié à un carbonyle).
+  \item \textbf{Non}, ce n'est pas une amine secondaire : dès qu'un carbonyle est accolé à l'azote, c'est une \textbf{amide}. Confondre les deux (à cause de l'enchaînement $\ce{C-N}$) est l'erreur classique.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Une molécule aromatique polyfonctionnelle]
+\begin{enumerate}[label=\alph*)]
+  \item $-\ce{CHO}$ $\Rightarrow$ \textbf{aldéhyde} ; $-\ce{OCH3}$ (oxygène pontant le cycle et un $\ce{CH3}$) $\Rightarrow$ \textbf{éther} ; $-\ce{CH2OH}$ ($-\ce{OH}$ sur un carbone saturé) $\Rightarrow$ \textbf{alcool primaire}.
+  \item C'est un \textbf{éther} : l'oxygène ponte deux carbones (le cycle et le méthyle) \emph{sans} carbonyle voisin. Il faudrait un $\ce{C=O}$ à côté de l'oxygène pour parler d'ester.
+  \item Le cycle aromatique contient \textbf{trois} doubles liaisons $\ce{C=C}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Vrai / faux sur une molécule polyfonctionnelle]
+\ce{CH2=CH-CH2-CO-CH2-CHO} : on repère une $\ce{C=C}$ (alcène), un $\ce{-CO-}$ entre deux C (cétone) et un $\ce{-CHO}$ (aldéhyde).
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai}. La cétone et l'aldéhyde possèdent chacun un carbonyle $\ce{C=O}$ : deux carbonyles.
+  \item \textbf{Faux}. Aucun groupement $-\ce{COOH}$ : le $\ce{-CHO}$ est un aldéhyde, pas un acide.
+  \item \textbf{Vrai}. Trois fonctions : alcène, cétone et aldéhyde.
+  \item \textbf{Faux}. Aucun $-\ce{OH}$ n'apparaît dans la molécule.
+  \item \textbf{Vrai}. Le $-\ce{CHO}$ est un aldéhyde, nécessairement en bout de chaîne (le carbonyle y porte un H).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

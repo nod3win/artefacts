@@ -1,0 +1,217 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+
+\begin{center}
+{\Large\bfseries QCM concours --- Chimie}\\[2pt]
+{\large Fiche 01 --- Les chiffres significatifs}\\[2pt]
+\textit{10 questions, niveau concours difficile --- une seule réponse correcte sur quatre.}
+\end{center}
+\vspace{6pt}\hrule\vspace{10pt}
+
+% ------------------------------------------------------------------ Q1
+\noindent\textbf{CHIM-F01-Q01 --- Comptage des chiffres significatifs (zéros)}\par
+Une concentration mesurée au laboratoire vaut $c = \qty{0.002080}{\mol\per\litre}$. Combien de chiffres significatifs cette mesure comporte-t-elle ?
+\begin{enumerate}[label=\Alph*)]
+\item \num{4}
+\item \num{3}
+\item \num{5}
+\item \num{6}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Les deux zéros de tête ($0{,}00$) ne servent qu'à caler la virgule : ils ne sont \emph{jamais} significatifs. Restent alors : le $2$ (non nul), le $0$ \emph{captif} entre le $2$ et le $8$ (toujours significatif), le $8$ (non nul) et le $0$ \emph{de queue après la virgule} (toujours significatif). On compte donc $2,0,8,0 \Rightarrow \mathbf{4}$ chiffres significatifs.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : oubli du zéro de queue après la virgule, compté comme non significatif ($2,0,8 \to 3$).
+\item C : un zéro de tête compté à tort comme significatif ($0,2,0,8,0 \to 5$).
+\item D : confusion chiffres significatifs / décimales : les six chiffres après la virgule ($0,0,2,0,8,0$) sont comptés ($\to 6$).
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q2
+\noindent\textbf{CHIM-F01-Q02 --- Notation scientifique et conservation des CS}\par
+La constante d'acidité d'un couple acide/base vaut $K_a = \num{0.00006940}$. Écrite en notation scientifique \emph{en conservant sa précision}, elle vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \num{6.94e-5}
+\item \num{6.940e-5}
+\item \num{6.940e-4}
+\item \num{69.40e-6}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+On place la virgule juste après le premier chiffre non nul : $\num{0.00006940} \to \num{6.940}$, la virgule ayant été déplacée de $5$ rangs vers la droite, d'où l'exposant $-5$. Le zéro de queue est significatif ($4$ CS) et doit être conservé : $K_a = \num{6.940e-5}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : suppression du zéro de queue significatif, qui fait perdre un CS ($\num{6.94e-5}$, 3 CS seulement).
+\item C : mauvais comptage du déplacement de la virgule (4 rangs au lieu de 5), d'où un exposant $-4$.
+\item D : mantisse non conforme ($1 \le |a| < 10$ non respecté) : $\num{69.40e-6}$ garde deux chiffres avant la virgule.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q3
+\noindent\textbf{CHIM-F01-Q03 --- Multiplication / division : CS du résultat}\par
+On détermine la masse volumique d'un liquide : une masse $m = \qty{29.30}{\gram}$ occupe un volume $V = \qty{5.0}{\milli\litre}$. Avec le nombre correct de chiffres significatifs, $\rho = m/V$ vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{5.860}{\gram\per\milli\litre}
+\item \qty{6}{\gram\per\milli\litre}
+\item \qty{5.9}{\gram\per\milli\litre}
+\item \qty{5.8}{\gram\per\milli\litre}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Le calcul brut donne $\rho = \num{29.30}/\num{5.0} = \num{5.86}\ \si{\gram\per\milli\litre}$. Pour une division, le résultat porte autant de CS que la donnée la moins riche : $V = \qty{5.0}{\milli\litre}$ a \textbf{2} CS (le zéro de queue est significatif). On arrondit donc $\num{5.86}$ à 2 CS ; le premier chiffre supprimé est $6 \ge 5$, arrondi par excès : $\rho \approx \qty{5.9}{\gram\per\milli\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : aucune réduction au nombre de CS de la donnée la moins précise (on garde les 4 CS du numérateur).
+\item B : le zéro de queue de $\num{5.0}$ jugé non significatif $\Rightarrow$ $V$ compté à 1 CS, résultat arrondi à 1 CS ($\num{5.86} \to 6$).
+\item D : arrondi par défaut erroné du chiffre $6$ (qui doit arrondir par excès).
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q4
+\noindent\textbf{CHIM-F01-Q04 --- Addition : nombre de décimales du résultat}\par
+On additionne trois masses pesées sur des balances de précisions différentes : $\qty{104.7}{\gram}$, $\qty{8.45}{\gram}$ et $\qty{0.663}{\gram}$. Le résultat, exprimé avec le nombre correct de chiffres significatifs, vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{114}{\gram}
+\item \qty{113.81}{\gram}
+\item \qty{113.813}{\gram}
+\item \qty{113.8}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La somme brute vaut $\num{104.7}+\num{8.45}+\num{0.663} = \num{113.813}\ \si{\gram}$. Pour une addition, on garde le nombre de \emph{décimales} de la donnée qui en a le moins : $\qty{104.7}{\gram}$ n'a qu'\textbf{une} décimale. On arrondit donc à une décimale ; le chiffre supprimé est $1 < 5$ : $\approx \qty{113.8}{\gram}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : application de la règle de la multiplication (nombre de CS, minimum $= 3$) au lieu de celle de l'addition $\Rightarrow$ $\qty{114}{\gram}$.
+\item B : mauvais comptage des décimales (2 conservées au lieu d'une seule).
+\item C : oubli complet de l'arrondi (toutes les décimales conservées).
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q5
+\noindent\textbf{CHIM-F01-Q05 --- Soustraction : perte de chiffres significatifs}\par
+Par pesée différentielle, on détermine la masse d'un dépôt : $m = \qty{48.3251}{\gram} - \qty{48.29}{\gram}$. Le résultat, avec le nombre correct de chiffres significatifs, vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.04}{\gram}
+\item \qty{0.0351}{\gram}
+\item \qty{0.035}{\gram}
+\item \qty{0.03}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+La différence brute vaut $\num{48.3251}-\num{48.29} = \num{0.0351}\ \si{\gram}$. La donnée la moins précise ($\qty{48.29}{\gram}$) a \textbf{2} décimales : on arrondit à 2 décimales. Le premier chiffre supprimé est $5$, arrondi par excès : $m \approx \qty{0.04}{\gram}$. La soustraction de deux nombres voisins a fait chuter la précision de 6 et 4 CS à un seul CS.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : oubli de l'arrondi (toutes les décimales de la différence conservées).
+\item C : mauvais comptage des décimales (3 conservées au lieu de 2).
+\item D : arrondi par défaut erroné du chiffre $5$ (qui doit arrondir par excès).
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q6
+\noindent\textbf{CHIM-F01-Q06 --- Logarithme (pH) : décimales et CS}\par
+Une solution a une concentration en ions oxonium $[\ce{H3O+}] = \qty{4.7e-5}{\mol\per\litre}$. Son pH, exprimé avec le nombre correct de décimales, vaut (on donne $\log(\num{4.7}) = \num{0.672}$) :
+\begin{enumerate}[label=\Alph*)]
+\item \num{4.328}
+\item \num{4.32}
+\item \num{4.33}
+\item \num{4.3}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+$\mathrm{pH} = -\log([\ce{H3O+}]) = -\log(\num{4.7e-5}) = 5 - \log(\num{4.7}) = 5 - \num{0.672} = \num{4.328}$. La règle du logarithme impose : le nombre de \emph{décimales} du pH égale le nombre de \emph{CS} de la concentration. Ici $[\ce{H3O+}]$ a \textbf{2} CS, donc le pH garde \textbf{2 décimales} ; le chiffre supprimé est $8 \ge 5$, par excès : $\mathrm{pH} \approx \num{4.33}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oubli de l'arrondi, 3 décimales conservées.
+\item B : arrondi par défaut erroné du chiffre $8$ (qui doit arrondir par excès).
+\item D : confusion CS / décimales : le pH est écrit avec 2 CS (donc 1 décimale) au lieu de 2 décimales.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q7
+\noindent\textbf{CHIM-F01-Q07 --- Nombres exacts et masse molaire}\par
+On calcule la masse molaire de l'eau $\ce{H2O}$ à partir de $M(\ce{H}) = \qty{1.008}{\gram\per\mole}$ et $M(\ce{O}) = \qty{16.00}{\gram\per\mole}$. Avec le nombre correct de chiffres significatifs, $M(\ce{H2O})$ vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{17.01}{\gram\per\mole}
+\item \qty{18.016}{\gram\per\mole}
+\item \qty{20}{\gram\per\mole}
+\item \qty{18.02}{\gram\per\mole}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+$M(\ce{H2O}) = 2\times\num{1.008} + \num{16.00} = \num{2.016} + \num{16.00} = \num{18.016}\ \si{\gram\per\mole}$. L'indice $2$ est un nombre \emph{exact} (comptage d'atomes) : il possède une infinité de CS et ne limite rien. C'est une addition : on garde le nombre de décimales du moins précis ($\num{16.00}$, 2 décimales) $\Rightarrow M(\ce{H2O}) \approx \qty{18.02}{\gram\per\mole}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oubli du coefficient $2$ devant $\ce{H}$ ($\num{1.008}+\num{16.00} = \num{17.008} \to \num{17.01}$).
+\item B : oubli de l'arrondi (3 décimales conservées).
+\item C : l'indice exact $2$ traité comme ayant 1 CS, le résultat étant abusivement ramené à 1 CS ($\to \qty{20}{\gram\per\mole}$).
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q8
+\noindent\textbf{CHIM-F01-Q08 --- Arrondi avec retenue en cascade}\par
+Le résultat brut d'une pesée vaut $\qty{9.9963}{\gram}$. Arrondi à \emph{trois} chiffres significatifs, il vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{9.99}{\gram}
+\item \qty{10.0}{\gram}
+\item \qty{9.996}{\gram}
+\item \qty{10.00}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Les trois premiers CS sont $9, 9, 9$ (soit $\num{9.99}$). Le premier chiffre supprimé est $6 \ge 5$ : on arrondit par excès. Ajouter $1$ au dernier $9$ déclenche une \emph{retenue en cascade} : $\num{9.99}+\num{0.01} = \num{10.00}$, que l'on écrit $\qty{10.0}{\gram}$ pour conserver exactement 3 CS (le zéro de queue étant significatif).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : arrondi par défaut / troncature, la retenue en cascade n'étant pas vue ($\to \num{9.99}$).
+\item C : arrondi au mauvais rang, à 4 CS au lieu de 3 ($\num{9.9963} \to \num{9.996}$).
+\item D : retenue correcte mais un zéro de queue en trop, donnant 4 CS au lieu de 3 ($\to \num{10.00}$).
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q9
+\noindent\textbf{CHIM-F01-Q09 --- Incertitude relative}\par
+Une balance affiche $m = \qty{12.5}{\gram}$. En prenant pour incertitude absolue une unité du dernier chiffre significatif, l'incertitude relative $\Delta m / m$ vaut environ :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.8}{\percent}
+\item \qty{0.08}{\percent}
+\item \qty{8}{\percent}
+\item \qty{0.008}{\percent}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Le dernier chiffre significatif de $\qty{12.5}{\gram}$ est au rang des dixièmes, donc $\Delta m = \qty{0.1}{\gram}$. L'incertitude relative vaut $\dfrac{\Delta m}{m} = \dfrac{\num{0.1}}{\num{12.5}} = \num{0.008} = \qty{0.8}{\percent}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : incertitude absolue mal choisie ($\Delta m = \qty{0.01}{\gram}$ au lieu de $\qty{0.1}{\gram}$) $\Rightarrow \qty{0.08}{\percent}$.
+\item C : erreur de facteur $10$ (virgule mal placée : $\num{0.1}/\num{1.25}$) $\Rightarrow \qty{8}{\percent}$.
+\item D : oubli de la conversion en pourcentage (multiplication par $100$), la fraction $\num{0.008}$ étant annoncée telle quelle en \si{\percent}.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q10
+\noindent\textbf{CHIM-F01-Q10 --- Justesse et fidélité}\par
+Cinq pesées répétées d'un même échantillon donnent $\qty{15.02}{\gram}$, $\qty{15.03}{\gram}$, $\qty{15.01}{\gram}$, $\qty{15.02}{\gram}$ et $\qty{15.03}{\gram}$, alors que la masse vraie de l'échantillon est $\qty{14.50}{\gram}$. Ces mesures sont :
+\begin{enumerate}[label=\Alph*)]
+\item justes et fidèles
+\item ni justes ni fidèles
+\item fidèles mais non justes
+\item justes mais non fidèles
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Les cinq valeurs sont très resserrées (dispersion de $\qty{0.02}{\gram}$) : la mesure est \textbf{fidèle} (reproductible). Mais leur moyenne ($\approx \qty{15.02}{\gram}$) s'écarte systématiquement de la valeur vraie de $\qty{0.52}{\gram}$ : il y a un \emph{biais}, la mesure n'est donc \textbf{pas juste}. La forte précision d'écriture (4 CS) ne corrige jamais ce biais.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : le biais systématique de $\qty{0.52}{\gram}$ par rapport à la valeur vraie est ignoré.
+\item B : la fidélité (mesures resserrées) est confondue avec l'absence de qualité.
+\item D : inversion des deux notions (justesse $\leftrightarrow$ fidélité).
+\end{itemize}
+\vspace{6pt}\hrule
+
+\end{document}

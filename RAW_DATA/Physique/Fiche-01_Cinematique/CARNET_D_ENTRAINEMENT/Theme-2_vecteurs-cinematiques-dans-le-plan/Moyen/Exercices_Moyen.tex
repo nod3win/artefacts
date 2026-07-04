@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[traversée d'une rivière]
+Un bateau dirige son étrave perpendiculairement à la rive et avance à \qty{4}{\metre\per\second}.
+La rivière, large de \qty{60}{\metre}, a un courant de \qty{3}{\metre\per\second} parallèle aux rives.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la vitesse du bateau par rapport au sol ?
+  \item De quel angle sa trajectoire réelle est-elle déviée ?
+  \item Combien de temps met-il pour atteindre l'autre rive ?
+  \item De quelle distance a-t-il été emporté vers l'aval ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[décomposition inverse]
+Une balle part avec une vitesse de norme \qty{20}{\metre\per\second}. On souhaite que sa composante
+verticale soit $v_y=\qty{10}{\metre\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Sous quel angle $\theta$ faut-il la lancer ?
+  \item Que vaut alors sa composante horizontale $v_x$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[addition par composantes]
+Deux vitesses perpendiculaires se composent : $\vv{v}_1=\qty{5}{\metre\per\second}$ vers l'Est et
+$\vv{v}_2=\qty{12}{\metre\per\second}$ vers le Nord.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la norme de la vitesse résultante ?
+  \item Quel angle fait-elle avec la direction Est ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[accélérer à norme constante]
+Un point décrit un cercle à vitesse de norme constante \qty{2}{\metre\per\second} (MCU). On compare le
+vecteur vitesse en deux points séparés d'un quart de tour (les directions font alors un angle de \ang{90}).
+\begin{enumerate}[label=\alph*)]
+  \item Représente $\vv{v}_1$ et $\vv{v}_2$ et détermine la norme de la variation $\Delta\vv{v}=\vv{v}_2-\vv{v}_1$.
+  \item Que peut-on conclure sur l'accélération, alors que la norme de la vitesse n'a pas changé ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[avion dans le vent]
+Un avion vole vers le Nord à \qty{160}{\kilo\metre\per\hour} par rapport à l'air. Un vent d'Ouest
+(soufflant vers l'Est) de \qty{120}{\kilo\metre\per\hour} le pousse perpendiculairement.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la vitesse de l'avion par rapport au sol ?
+  \item De quel angle sa trajectoire est-elle déviée par rapport au Nord ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

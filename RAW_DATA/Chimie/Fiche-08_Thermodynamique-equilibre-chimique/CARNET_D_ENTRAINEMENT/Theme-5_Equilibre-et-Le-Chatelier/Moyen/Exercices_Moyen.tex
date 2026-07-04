@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{exo}[calculer $K$ à partir des concentrations]
+Le système $\ce{H2}(g) + \ce{I2}(g) \rightleftharpoons 2\,\ce{HI}(g)$ est à l'équilibre avec $[\ce{H2}]=\qty{0.20}{\mol\per\litre}$, $[\ce{I2}]=\qty{0.20}{\mol\per\litre}$ et $[\ce{HI}]=\qty{1.6}{\mol\per\litre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Écris l'expression de $K$.
+  \item Calcule sa valeur.
+  \item L'équilibre est-il plutôt du côté des réactifs ou des produits ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'effet de l'écriture sur $K$]
+Pour $\ce{PCl5}(g) \rightleftharpoons \ce{PCl3}(g) + \ce{Cl2}(g)$ à $\qty{300}{\kelvin}$, la constante vaut $K=2$. Que vaut la constante si l'on écrit :
+\begin{enumerate}[label=\alph*)]
+  \item $3\,\ce{PCl5}(g) \rightleftharpoons 3\,\ce{PCl3}(g) + 3\,\ce{Cl2}(g)$ (coefficients triplés) ?
+  \item $\ce{PCl3}(g) + \ce{Cl2}(g) \rightleftharpoons \ce{PCl5}(g)$ (réaction inverse) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[premiers pas avec Le Chatelier]
+La synthèse $\ce{N2}(g) + 3\,\ce{H2}(g) \rightleftharpoons 2\,\ce{NH3}(g)$ est \textbf{exothermique}. Dans quel sens l'équilibre se déplace-t-il si on :
+\begin{enumerate}[label=\alph*)]
+  \item augmente la concentration en $\ce{N2}$ ?
+  \item augmente la température ?
+  \item augmente la pression ?
+  \item ajoute un catalyseur ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[équilibre hétérogène : une pression à trouver]
+À haute température, $\ce{FeO}(s) + \ce{CO}(g) \rightleftharpoons \ce{Fe}(s) + \ce{CO2}(g)$ a une constante $K=0{,}5$. On part de $\ce{FeO}$ en excès et de $\ce{CO}$ sous $p_{\ce{CO}}=\qty{1}{atm}$ ; le nombre total de moles de gaz reste constant, donc $p_{\ce{CO}} + p_{\ce{CO2}} = \qty{1}{atm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Écris $K$ en pressions partielles (les solides sont exclus).
+  \item Détermine $p_{\ce{CO2}}$ à l'équilibre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[degré d'avancement à l'équilibre]
+On introduit $\qty{1.0}{\mol}$ de $\ce{X}$ dans un réacteur de $\qty{1.0}{\litre}$ où s'établit l'équilibre $\ce{X}(g) \rightleftharpoons \ce{Y}(g)$, de constante $K=1{,}5$. On note $x$ la quantité de $\ce{X}$ transformée (en $\si{\mol}$).
+\begin{enumerate}[label=\alph*)]
+  \item Dresse le tableau des concentrations à l'équilibre en fonction de $x$.
+  \item Écris l'équation vérifiée par $x$ et résous-la.
+  \item Quel pourcentage de $\ce{X}$ a été transformé ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

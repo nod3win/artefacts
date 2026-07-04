@@ -1,0 +1,84 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[vrai ou faux : repérer les affirmations correctes]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux} : la vergence est l'\emph{inverse} de $f$ ($C=1/f$), pas son opposé.
+  \item \textbf{Faux} : une loupe est \emph{convergente} (bords minces, $f>0$).
+  \item \textbf{Vrai} : bords épais $\Rightarrow$ divergente $\Rightarrow f<0$.
+  \item \textbf{Faux} : $f=\dfrac{1}{8}=\qty{0.125}{\m}=\qty{12.5}{\cm}$, pas \qty{8}{\cm}.
+  \item \textbf{Vrai} : pour des lentilles accolées, $C_{\text{éq}}=\sum_k C_k$.
+\end{enumerate}
+Bilan : les affirmations correctes sont \textbf{c)} et \textbf{e)}.
+\end{corrige}
+
+\begin{corrige}[un jeu de trois lentilles accolées]
+\begin{enumerate}[label=\alph*)]
+  \item $C_{\text{éq}}=C_1+C_2+C_3=+5-8+1=-2~\delta$.
+  \item $C_{\text{éq}}<0$ : système \textbf{divergent},
+        $f_{\text{éq}}=\dfrac{1}{-2}=-\qty{0.5}{\m}=-\qty{50}{\cm}$.
+  \item Par une \emph{unique} lentille \textbf{divergente} de vergence $-2~\delta$ (focale
+        $-\qty{50}{\cm}$) : elle est optiquement équivalente au jeu des trois.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter à une lentille inconnue]
+\begin{enumerate}[label=\alph*)]
+  \item $C_1=\dfrac{1}{f_1}=\dfrac{1}{0,20}=+5~\delta$.
+  \item $C_2=C_{\text{éq}}-C_1=+2-5=-3~\delta$ : $L_2$ est \textbf{divergente},
+        $f_2=\dfrac{1}{-3}\approx-\qty{0.33}{\m}=-\qty{33}{\cm}$.
+  \item Afocal : $C_1+C_2'=0\Rightarrow C_2'=-C_1=-5~\delta$, soit une divergente de focale
+        $-\qty{20}{\cm}$ (elle annule exactement $L_1$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[qui plie le plus la lumière ?]
+\begin{enumerate}[label=\alph*)]
+  \item $L_1:+2~\delta$ ; $L_2: \dfrac{1}{0,05}=+20~\delta$ ; $L_3:\dfrac{1}{-0,25}=-4~\delta$ ;
+        $L_4:-4~\delta$.\\
+        Convergentes : $L_1,\,L_2$ ($C>0$). Divergentes : $L_3,\,L_4$ ($C<0$).
+  \item Par $|C|$ décroissant :
+        \[ L_2\,(20)\ >\ L_3\,(4)\ =\ L_4\,(4)\ >\ L_1\,(2). \]
+        $L_2$ « plie » le plus fortement la lumière (plus grande vergence en valeur absolue, focale la
+        plus courte). $L_3$ et $L_4$ dévient autant l'une que l'autre, mais en \emph{écartant} les
+        rayons (divergentes).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

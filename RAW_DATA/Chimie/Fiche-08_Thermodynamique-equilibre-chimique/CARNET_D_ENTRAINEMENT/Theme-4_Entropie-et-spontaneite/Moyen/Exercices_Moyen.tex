@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{exo}[vrai ou faux : « le désordre augmente »]
+Pour chaque réaction, l'affirmation «\,$\Delta S>0$ (le désordre augmente)\,» est-elle \textbf{vraie} ou \textbf{fausse} ? Justifie.
+\begin{enumerate}[label=\alph*)]
+  \item $2\,\ce{CO}(g) + \ce{O2}(g) \rightarrow 2\,\ce{CO2}(g)$
+  \item $\ce{NaCl}(s) \rightarrow \ce{Na+}(aq) + \ce{Cl-}(aq)$
+  \item $\ce{I2}(s) \rightarrow \ce{I2}(g)$
+  \item $\ce{N2}(g) + \ce{O2}(g) \rightarrow 2\,\ce{NO}(g)$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[comparer des entropies]
+Range chaque liste par entropie \emph{croissante}.
+\begin{enumerate}[label=\alph*)]
+  \item à même température : $\ce{H2O}(g)$, $\ce{H2O}(s)$, $\ce{H2O}(l)$ ;
+  \item une mole de $\ce{Br2}(l)$ et une mole de $\ce{Br2}(g)$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[prévoir le signe de $\Delta S$]
+Donne le signe de $\Delta S$ pour chaque réaction, en justifiant par le décompte des gaz.
+\begin{enumerate}[label=\alph*)]
+  \item $2\,\ce{SO2}(g) + \ce{O2}(g) \rightarrow 2\,\ce{SO3}(g)$
+  \item $\ce{PCl5}(g) \rightarrow \ce{PCl3}(g) + \ce{Cl2}(g)$
+  \item $\ce{CaO}(s) + \ce{CO2}(g) \rightarrow \ce{CaCO3}(s)$
+  \item $2\,\ce{KClO3}(s) \rightarrow 2\,\ce{KCl}(s) + 3\,\ce{O2}(g)$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le 3\textsuperscript{e} principe et l'origine des entropies]
+\begin{enumerate}[label=\alph*)]
+  \item Énonce le 3\textsuperscript{e} principe de la thermodynamique.
+  \item Deux échantillons identiques de cuivre sont portés l'un à $\qty{300}{\kelvin}$, l'autre à $\qty{500}{\kelvin}$. Lequel a la plus grande entropie ?
+  \item Pourquoi peut-on donner une valeur \emph{absolue} de l'entropie, alors qu'on ne connaît que des \emph{variations} d'enthalpie ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[quand le nombre de moles de gaz ne change pas]
+On considère $\ce{H2}(g) + \ce{I2}(g) \rightarrow 2\,\ce{HI}(g)$.
+\begin{enumerate}[label=\alph*)]
+  \item Compte les moles de gaz de chaque côté.
+  \item Que peut-on dire du signe et de la valeur de $\Delta S$ ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

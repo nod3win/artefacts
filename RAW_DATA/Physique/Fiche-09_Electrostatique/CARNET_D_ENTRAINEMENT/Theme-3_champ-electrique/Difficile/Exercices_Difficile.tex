@@ -1,0 +1,129 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[quelle charge rend le champ horizontal ?]
+Quatre charges ponctuelles occupent les sommets d'un carré de \SI{10}{\centi\metre} de côté :
+$\SI{2}{\nano\coulomb}$ (haut-gauche), $\SI{1}{\nano\coulomb}$ (haut-droite),
+$\SI{-1}{\nano\coulomb}$ (bas-gauche) et $Q$ (bas-droite).
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth,font=\footnotesize,
+    ch/.style={circle,minimum size=8.5mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \node[ch,fill=attncol] (TL) at (-1.7,1.7) {$2\,\mathrm{nC}$};
+  \node[ch,fill=attncol] (TR) at (1.7,1.7) {$1\,\mathrm{nC}$};
+  \node[ch,fill=defcol] (BL) at (-1.7,-1.7) {$-1$};
+  \node[ch,fill=methcol] (BR) at (1.7,-1.7) {$Q$};
+  \draw[black!30] (TL.center)--(TR.center)--(BR.center)--(BL.center)--cycle;
+  \node[circle,fill=black,inner sep=1.2pt] (O) at (0,0) {}; \node[font=\scriptsize,above right] at (O) {$O$};
+\end{tikzpicture}
+\end{center}
+On veut que le champ électrique total au \textbf{centre} $O$ soit \textbf{horizontal}.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle condition cela impose-t-il sur les composantes \emph{verticales} des quatre champs ?
+  \item En déduire la valeur (et le signe) de $Q$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deviner les signes à partir du champ]
+Deux corps chargés $A$ (à gauche) et $B$ (à droite) portent des charges de \textbf{même grandeur}.
+Au point $P$, milieu de $[AB]$, le champ électrique résultant est \textbf{horizontal et pointe vers
+la droite}.
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth,font=\footnotesize,
+    ch/.style={circle,fill=black!25,draw=black!55,minimum size=8mm,inner sep=0pt,font=\bfseries\scriptsize}]
+  \node[ch] (A) at (0,0) {$A$}; \node[ch] (B) at (5,0) {$B$};
+  \node[circle,fill=black,inner sep=1.2pt] (P) at (2.5,0) {}; \node[below,font=\scriptsize] at (2.5,-0.35) {$P$};
+  \draw[->,line width=1.4pt,excol] (2.5,0) -- (3.6,0) node[above,font=\scriptsize]{$\vv{E}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Le champ en $P$ étant non nul, que peut-on déjà conclure sur les \emph{signes} de $A$ et
+        $B$ (mêmes ou opposés) ?
+  \item Compte tenu du sens (vers la droite), précise le signe de $A$ et celui de $B$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[champ sur la médiatrice]
+Deux charges identiques $+q$ sont en $A$ et $B$, distants de $2r$. $C$ est le milieu de $[AB]$ et
+$D$ un point de la médiatrice tel que $DC = r$.
+\begin{center}
+\begin{tikzpicture}[scale=0.95,>=Stealth,font=\footnotesize,
+    ch/.style={circle,fill=attncol,minimum size=7.5mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \node[ch] (A) at (-2,0) {$+q$}; \node[below,font=\scriptsize] at (-2,-0.45) {$A$};
+  \node[ch] (B) at (2,0) {$+q$}; \node[below,font=\scriptsize] at (2,-0.45) {$B$};
+  \node[circle,fill=black,inner sep=1.2pt] (C) at (0,0) {}; \node[below right,font=\scriptsize] at (0,0) {$C$};
+  \node[circle,fill=black,inner sep=1.2pt] (D) at (0,2) {}; \node[right,font=\scriptsize] at (0.1,2) {$D$};
+  \draw[black!40,dashed] (0,-0.4)--(0,2.4);
+  \draw[<->,black!40] (-2,-0.9)--(2,-0.9) node[midway,below,font=\scriptsize]{$2r$};
+  \draw[<->,black!40] (0.15,0)--(0.15,2) node[midway,right,font=\scriptsize]{$r$};
+\end{tikzpicture}
+\end{center}
+On note $E_A$ l'intensité du champ créé par \emph{une seule} charge au point $D$.
+\begin{enumerate}[label=\alph*)]
+  \item Que vaut le champ total au point $C$ ?
+  \item Montre que le champ total en $D$ vaut $E_D = \sqrt{2}\,E_A$.
+  \item Quelle est la direction du champ total en tout point de la médiatrice ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[superposition de deux charges inégales]
+Une charge $q$ (positive) est en $C$ et une charge $4q$ en $O$, avec $CO = r$. Le point $B$ est sur
+la droite $(CO)$, au-delà de $O$, tel que $OB = r$ (donc $CB = 2r$).
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth,font=\footnotesize,
+    ch/.style={circle,fill=attncol,minimum size=7mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \draw[black!35] (-0.6,0)--(5.6,0);
+  \node[ch] at (0,0) {$q$}; \node[below,font=\scriptsize] at (0,-0.45) {$C$};
+  \node[ch,minimum size=8.5mm] at (2.4,0) {$4q$}; \node[below,font=\scriptsize] at (2.4,-0.45) {$O$};
+  \node[circle,fill=black,inner sep=1.2pt] at (4.8,0) {}; \node[below,font=\scriptsize] at (4.8,-0.4) {$B$};
+  \draw[<->,black!40] (0,0.6)--(2.4,0.6) node[midway,above,font=\scriptsize]{$r$};
+  \draw[<->,black!40] (2.4,0.6)--(4.8,0.6) node[midway,above,font=\scriptsize]{$r$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Les champs créés en $B$ par $q$ et par $4q$ ont-ils même sens ? S'ajoutent-ils ou se
+        retranchent-ils ?
+  \item Calcule le champ total $E(B)$ en fonction de $Kq/r^2$.
+  \item Compare $E(B)$ au champ $E'$ que créerait \emph{la seule} charge $4q$ à un point $D$ tel que
+        $OD = 2r$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

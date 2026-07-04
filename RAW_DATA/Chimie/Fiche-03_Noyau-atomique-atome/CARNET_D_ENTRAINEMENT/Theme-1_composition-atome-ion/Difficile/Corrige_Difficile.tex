@@ -1,0 +1,97 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[identifier un ion par sa composition]
+On calcule $\big(n(p^+)=Z,\ n(n^0)=A-Z,\ n(e^-)=Z-q\big)$ pour chacun.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{^{52}_{24}Cr^{2+}}$ : $(24,\ 28,\ 22)$.
+  \item $\ce{^{56}_{26}Fe^{2+}}$ : $(26,\ 30,\ 24)$. \quad\textbf{$30$ neutrons et $24$ électrons : c'est lui.}
+  \item $\ce{^{58}_{28}Ni^{2+}}$ : $(28,\ 30,\ 26)$.
+  \item $\ce{^{64}_{30}Zn^{2+}}$ : $(30,\ 34,\ 28)$.
+\end{enumerate}
+Seul $\ce{^{56}_{26}Fe^{2+}}$ vérifie les deux conditions ($30$ neutrons \emph{et} $24$ électrons).
+\end{corrige}
+
+\begin{corrige}[comparer neutrons et électrons]
+On compare $n(n^0)=A-Z$ et $n(e^-)=Z-q$.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{^{14}_{7}N}$ : $n(n^0)=14-7=7$ et $n(e^-)=7$. \quad\textbf{Égaux ($7=7$) : c'est cette espèce.}
+  \item $\ce{^{24}_{12}Mg^{2+}}$ : $n(n^0)=12$, $n(e^-)=10$. Différents.
+  \item $\ce{^{37}_{17}Cl^{-}}$ : $n(n^0)=20$, $n(e^-)=18$. Différents.
+  \item $\ce{^{39}_{19}K^{+}}$ : $n(n^0)=20$, $n(e^-)=18$. Différents.
+\end{enumerate}
+C'est l'atome neutre \emph{léger} $\ce{^{14}_{7}N}$ qui a autant d'électrons que de neutrons (pour un
+atome léger neutre, $A \approx 2Z$, donc $n^0 \approx Z = n(e^-)$).
+\end{corrige}
+
+\begin{corrige}[charge d'un grand nombre de particules]
+La charge totale est $Q = N \times (\text{charge d'une particule})$.
+\begin{enumerate}[label=\alph*)]
+  \item $Q = 2\times10^{13} \times (+\SI{1,6e-19}{\coulomb}) = +3{,}2\times10^{\,13-19} = +\SI{3,2e-6}{\coulomb}$.
+  \item Les électrons portent $-e$ : $Q = 5\times10^{10} \times (-\SI{1,6e-19}{\coulomb})
+        = -8{,}0\times10^{\,10-19} = -\SI{8,0e-9}{\coulomb}$.
+  \item $N = \dfrac{Q}{e} = \dfrac{\SI{1,6e-7}{\coulomb}}{\SI{1,6e-19}{\coulomb}}
+        = 1 \times 10^{\,-7-(-19)} = 10^{12}$ protons.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[mise en situation : le chlorure de calcium]
+Le noyau ne change pas en formant un ion : $n(p^+)=Z$ et $n(n^0)=A-Z$ ; seul $n(e^-)=Z-q$ varie.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Ca^{2+}}$ (de $\ce{^{40}_{20}Ca}$) : $n(p^+)=20$, $n(n^0)=40-20=20$, $n(e^-)=20-2=18$.
+  \item $\ce{Cl^{-}}$ (de $\ce{^{35}_{17}Cl}$) : $n(p^+)=17$, $n(n^0)=35-17=18$, $n(e^-)=17+1=18$.
+  \item Total protons : $20 + 2\times17 = 54$. \quad Total électrons : $18 + 2\times18 = 54$.
+        Comme $54 = 54$, le motif est \textbf{neutre} : la charge $+2$ du $\ce{Ca^{2+}}$ compense
+        exactement les deux charges $-1$ des $\ce{Cl^{-}}$ ($+2 + 2\times(-1) = 0$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux — synthèse]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{\textcolor{excol}{VRAI}} : par définition $A = n(p^+) + n(n^0)$, le nombre de nucléons.
+  \item \textbf{\textcolor{attncol}{FAUX}} : former l'ion ne touche que les électrons. Le noyau est
+        intact, donc $\ce{Ca}$ et $\ce{Ca^{2+}}$ ont le même nombre de neutrons ($20$).
+  \item \textbf{\textcolor{excol}{VRAI}} : $\ce{Ca^{2+}}$ a $n(e^-)=20-2=18$ ; $\ce{Ar}$ neutre a
+        $n(e^-)=18$. Ils sont isoélectroniques ($18$ électrons chacun).
+  \item \textbf{\textcolor{attncol}{FAUX}} : le noyau ne contient \emph{jamais} d'électrons. Il y a
+        $0$ électron dans le noyau (les $18$ électrons de $\ce{K^{+}}$ sont dans le nuage électronique).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

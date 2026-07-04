@@ -1,0 +1,117 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Champ magnétique : sens (main droite) et superposition
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 1 — Champ magnétique : sens et superposition}
+\end{center}
+
+\noindent Avant de \emph{calculer} l'intensité d'un champ magnétique (Thème 2), il faut savoir
+en trouver la \textbf{direction} et le \textbf{sens}, puis \textbf{additionner} correctement
+plusieurs champs. Ce thème entraîne ces deux réflexes purement géométriques.
+
+\begin{cle}[le vecteur champ magnétique $\vv{B}$]
+En chaque point de l'espace, le champ magnétique est un \textbf{vecteur} $\vv{B}$ caractérisé par :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item une \textbf{direction} : tangente à la ligne de champ passant par le point ;
+  \item un \textbf{sens} : celui de la ligne de champ (à l'extérieur d'un aimant, du pôle
+        \textbf{Nord vers le Sud}) ;
+  \item une \textbf{intensité} $B$, en \textbf{teslas} (\si{\tesla}).
+\end{itemize}
+Les lignes de champ forment des \textbf{boucles fermées}, ne se croisent jamais, et sont d'autant
+plus \textbf{resserrées} que le champ est \textbf{intense}. Un champ \textbf{uniforme} $=$ des lignes
+\textbf{parallèles et également espacées}.
+\end{cle}
+
+\begin{methode}[la règle de la main droite]
+C'est l'outil universel pour trouver le \emph{sens} de $\vv{B}$ créé par un courant.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Fil rectiligne} : on « empoigne » le fil, \textbf{pouce} dans le sens du courant $I$ ;
+        les \textbf{doigts qui s'enroulent} donnent le sens des lignes de champ (des cercles autour
+        du fil).
+  \item \textbf{Spire / solénoïde} : on courbe les \textbf{doigts} dans le sens du courant $I$ ;
+        le \textbf{pouce} pointe vers le champ $\vv{B}$ à l'intérieur, c'est-à-dire vers la face
+        \textbf{Nord}.
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  % fil vertical, courant vers le haut
+  \draw[red!80!black,line width=2pt] (0,-1.3) -- (0,1.3);
+  \draw[red!80!black,->,line width=2pt] (0,0.4) -- (0,1.0);
+  \node[red!80!black,right] at (0.08,1.1) {$I$};
+  % cercles de champ autour, sens trigo vu de dessus (haut)
+  \foreach \r in {0.7,1.15}{
+    \draw[blue!70!black,line width=0.9pt] (0,0) circle (\r);
+    \draw[blue!70!black,->,line width=0.9pt] (\r,0.02) arc (0:35:\r);
+  }
+  \draw[blue!70!black,->,line width=1.3pt] (1.15,-0.6) -- (0.55,-0.6) node[below,black]{$\vv{B}$};
+  \node[align=center,font=\footnotesize] at (3.6,0.2)
+     {pouce $\uparrow$ (sens de $I$)\\ doigts enroulés $=$ sens de $\vv{B}$};
+\end{tikzpicture}
+\end{center}
+\end{methode}
+
+\begin{piege}[« superposer » veut dire additionner des \emph{vecteurs}]
+Quand plusieurs sources créent chacune un champ en un point $M$, le champ total est la
+\textbf{somme vectorielle} $\vv{B}_{\text{tot}}=\sum_i \vv{B}_i$, \textbf{jamais} la somme des normes.
+Trois cas à connaître par cœur :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item champs de \textbf{même sens} : $B_{\text{tot}}=B_1+B_2$ ;
+  \item champs de \textbf{sens opposés} : $B_{\text{tot}}=|B_1-B_2|$ (ils peuvent s'\textbf{annuler}) ;
+  \item champs \textbf{perpendiculaires} : $B_{\text{tot}}=\sqrt{B_1^{2}+B_2^{2}}$ (Pythagore),
+        et la direction fait un angle $\tan\theta=B_2/B_1$ avec $\vv{B}_1$.
+\end{itemize}
+\end{piege}
+
+\begin{exemplebox}[deux champs orthogonaux de même norme]
+Deux aimants créent en $M$ deux champs perpendiculaires, chacun d'intensité $B=\qty{2e-4}{\tesla}$.
+Le champ résultant vaut
+\[ B_{\text{tot}}=\sqrt{B^2+B^2}=B\sqrt{2}=\num{2e-4}\times1{,}414\approx\qty{2.83e-4}{\tesla}, \]
+et il pointe suivant la \textbf{bissectrice} de l'angle droit ($\theta=\ang{45}$, car
+$\tan\theta=B/B=1$).
+\end{exemplebox}
+
+\begin{remarque}[convention « entrant / sortant du plan »]
+Un vecteur \textbf{perpendiculaire à la feuille} se note $\odot$ s'il \textbf{sort} vers vous
+(on voit la pointe de la flèche) et $\otimes$ s'il \textbf{entre} dans la feuille (on voit
+l'empennage). Cette convention sert partout : courant dans un fil vu en bout, champ $\vv{B}$
+traversant une figure, etc.
+\end{remarque}
+
+\end{document}

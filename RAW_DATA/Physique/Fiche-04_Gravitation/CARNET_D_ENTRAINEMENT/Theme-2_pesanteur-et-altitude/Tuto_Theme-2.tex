@@ -1,0 +1,120 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: La pesanteur $g$ et sa variation avec l'altitude
+\sisetup{per-mode=symbol}
+
+Quand l'un des deux corps est la \textbf{Terre}, la force de gravitation devient le
+\textbf{poids}. En simplifiant la masse de l'objet dans $mg=\mathcal{G}M_T m/d^2$, on
+obtient l'intensité de pesanteur $g$, qui ne dépend que de l'astre et de l'altitude.
+
+\begin{cle}[pesanteur à l'altitude $h$]
+\[
+\boxed{\,g_h=\dfrac{\mathcal{G}\,M_T}{(R_T+h)^2}\,}
+\qquad\text{et au sol }(h=0):\quad
+\boxed{\,g_0=\dfrac{\mathcal{G}\,M_T}{R_T^{\,2}}\,}
+\]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item $g_h$ : pesanteur à l'altitude $h$, en \si{\metre\per\second\squared}
+        (= \si{\newton\per\kilogram}) ;
+  \item $M_T=\qty{6.0e24}{\kilogram}$, $R_T=\qty{6400}{\kilo\metre}=\qty{6.4e6}{\metre}$ ;
+  \item la distance au \emph{centre} est $d=R_T+h$ (surface $+$ altitude).
+\end{itemize}
+Valeurs de référence : $\mathcal{G}M_T=\qty{4.0e14}{}$ (unités SI), $g_0\approx\qty{9.8}{\metre\per\second\squared}$.
+\end{cle}
+
+\begin{cle}[poids et masse : à ne pas confondre]
+Le \textbf{poids} $P=mg$ (en \si{\newton}) est une \emph{force} : il dépend du lieu
+via $g$. La \textbf{masse} $m$ (en \si{\kilogram}) mesure la quantité de matière :
+elle est \emph{invariable} (identique sur Terre, sur la Lune, dans l'espace).
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \shade[ball color=blue!45] (0,0) circle (1.3);
+  \node[white,font=\small\bfseries] at (0,-0.1) {$M_T$};
+  \fill[white] (0,0) circle (0.045);
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (4.7,2.55);
+  \draw[dashed,black!60,line width=0.7pt] (O)--(A);
+  \fill[black] (A) circle (0.09);
+  \node[right=1pt of A,font=\itshape\small] {objet ($m$)};
+  \coordinate (S) at ($(O)!1.3cm!(A)$);
+  \fill[white] (S) circle (0.05);
+  \draw[->,white,line width=0.8pt] (O)--($(O)!1.3cm!(A)$);
+  \node[sloped,below,font=\scriptsize] at ($(O)!0.62cm!(A)$) {$R_T$};
+  \draw[<->,defcol,line width=0.8pt] ($(S)+(0.22,-0.15)$)--($(A)+(0.22,-0.15)$)
+        node[midway,below,sloped,font=\scriptsize,defcol]{$h$};
+  \node[sloped,above,font=\itshape\small] at ($(O)!0.68!(A)$) {$d=R_T+h$};
+  \draw[->,attncol,line width=1.3pt] (A)--($(A)!1.2cm!(O)$)
+        node[midway,above right=-2pt,sloped,font=\small]{$m\vv g$};
+\end{tikzpicture}\\[-1pt]
+{\footnotesize La distance au centre vaut $d=R_T+h$, jamais la seule altitude $h$.}
+\end{center}
+
+\begin{methode}[calculer $g$ à une altitude]
+1) Calculer la distance au centre $d=R_T+h$ (tout en mètres). \quad
+2) Élever au carré : $d^2$. \quad
+3) Diviser : $g_h=\mathcal{G}M_T/d^2=\num{4.0e14}/d^2$.
+\end{methode}
+
+\begin{exemplebox}[à $h=\qty{800}{\kilo\metre}$]
+$d=R_T+h=6400+800=\qty{7200}{\kilo\metre}=\qty{7.2e6}{\metre}$, donc
+\[
+g_h=\frac{\num{4.0e14}}{(\num{7.2e6})^2}=\frac{\num{4.0e14}}{\num{5.18e13}}
+\approx\qty{7.7}{\metre\per\second\squared}.
+\]
+Même à \qty{800}{\kilo\metre}, $g$ vaut encore $\approx 80\,\%$ de $g_0$ : la gravité
+reste très présente en orbite basse.
+\end{exemplebox}
+
+\begin{piege}[altitude $h$ $\ne$ distance au centre $d$]
+$g$ dépend de $d=R_T+h$, pas de $h$ seul. \textbf{Réduire l'altitude de moitié} ne
+divise \emph{pas} $d$ par $2$ (à cause du gros terme $R_T$), donc ne multiplie pas $g$
+par $4$. De même, tous les corps tombent avec la \emph{même} accélération $g$
+\emph{quelle que soit leur masse} (dans $mg=ma$, la masse se simplifie) : deux objets
+lâchés ensemble touchent le sol en même temps.
+\end{piege}
+
+\begin{remarque}
+$g$ décroît avec l'altitude (loi en $1/(R_T+h)^2$) mais ne s'annule jamais. Sur un
+autre astre, $g$ change : sur la Lune $g_{\text{Lune}}\approx\qty{1.6}{\metre\per\second\squared}$,
+donc on y pèse $\approx 6$ fois moins (mais la masse, elle, ne change pas).
+\end{remarque}
+
+\end{document}

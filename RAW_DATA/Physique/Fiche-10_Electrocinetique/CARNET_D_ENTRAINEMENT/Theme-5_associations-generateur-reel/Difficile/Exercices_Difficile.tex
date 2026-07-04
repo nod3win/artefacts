@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\usetikzlibrary{babel}
+\begin{exo}[bloc parallèle en série : retrouver $R$]
+Le circuit ci-dessous est alimenté par un générateur de $\qty{20}{\volt}$. Trois résistances de
+$\qty{12}{\ohm}$ sont en parallèle, l'ensemble étant en série avec une résistance $R$. La puissance
+totale dissipée est de $\qty{40}{\watt}$.
+\begin{center}
+\begin{circuitikz}[scale=0.78,transform shape]
+  \coordinate (A) at (3,1.6); \coordinate (B) at (6.4,1.6);
+  \draw (0,-1.4) to[battery1,l_=$\qty{20}{\volt}$] (0,1.6) to[R,l=$R$] (A);
+  \draw (A) -- (3,2.6) to[R,l=$\qty{12}{\ohm}$] (6.4,2.6) -- (B);
+  \draw (A) to[R,l=$\qty{12}{\ohm}$] (B);
+  \draw (A) -- (3,0.6) to[R,l=$\qty{12}{\ohm}$] (6.4,0.6) -- (B);
+  \draw (B) -- (6.4,-1.4) -- (0,-1.4);
+  \fill (A) circle(1.4pt); \fill (B) circle(1.4pt);
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la résistance équivalente du bloc parallèle, puis la résistance équivalente totale
+        (utiliser $P=U^2/R_{\text{eq}}$).
+  \item En déduire la valeur de $R$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[réduire un réseau mixte pour trouver $I$]
+Quelle est l'intensité $I$ débitée par le générateur du circuit suivant ?
+\begin{center}
+\begin{circuitikz}[scale=0.78,transform shape]
+  \coordinate (A) at (2.6,1.6); \coordinate (B) at (5.6,1.6);
+  \draw (0,-1.2) to[battery1,l_=$\qty{24}{\volt}$] (0,1.6) to[R,l=$\qty{5}{\ohm}$] (A);
+  \draw (A) -- (2.6,2.5) to[R,l=$\qty{30}{\ohm}$] (5.6,2.5) -- (B);
+  \draw (A) -- (2.6,0.7) to[R,l=$\qty{30}{\ohm}$] (5.6,0.7) -- (B);
+  \draw (B) to[R,l=$\qty{4}{\ohm}$] (7.8,1.6) -- (7.8,-1.2) -- (0,-1.2);
+  \fill (A) circle(1.4pt); \fill (B) circle(1.4pt);
+\end{circuitikz}
+\end{center}
+\end{exo}
+
+\begin{exo}[diviseur de courant et puissance d'une branche]
+Deux résistances $\qty{2}{\ohm}$ et $\qty{4}{\ohm}$ sont en parallèle. Le courant dans la résistance de
+$\qty{2}{\ohm}$ vaut $\qty{1}{\ampere}$.
+\begin{center}
+\begin{circuitikz}[scale=0.85,transform shape,>=Stealth]
+  \coordinate (A) at (0,0); \coordinate (B) at (3.6,0);
+  \draw[thick] (A)--(0,1); \draw (0,1) to[R,l_=$\qty{2}{\ohm}$] (3.6,1); \draw[thick](3.6,1)--(B);
+  \draw[thick] (A)--(0,-1); \draw (0,-1) to[R,l=$\qty{4}{\ohm}$] (3.6,-1); \draw[thick](3.6,-1)--(B);
+  \draw (A)--(-0.7,0); \draw (B)--(4.3,0);
+  \node[primary,font=\scriptsize] at (1.8,1.55){$I_{2\Omega}=\qty{1}{\ampere}$};
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la tension commune aux deux résistances.
+  \item En déduire la puissance dissipée dans la résistance de $\qty{4}{\ohm}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remplacer une résistance]
+Trois résistances de $\qty{30}{\ohm}$ sont en parallèle et parcourues, au total, par un courant
+$I=\qty{2}{\ampere}$ (la tension du générateur reste fixe).
+\begin{center}
+\begin{circuitikz}[scale=0.75,transform shape,>=Stealth]
+  \coordinate (A) at (0,0); \coordinate (B) at (3.8,0);
+  \draw[thick] (A)--(0,1.3); \draw (0,1.3) to[R,l=$\qty{30}{\ohm}$] (3.8,1.3); \draw[thick](3.8,1.3)--(B);
+  \draw (A) to[R,l=$\qty{30}{\ohm}$] (B);
+  \draw[thick] (A)--(0,-1.3); \draw (0,-1.3) to[R,l=$\qty{30}{\ohm}$] (3.8,-1.3); \draw[thick](3.8,-1.3)--(B);
+  \draw[->,primary,line width=1pt] (-1.4,0)--(-0.12,0) node[midway,above,font=\footnotesize,primary]{$I$};
+  \draw (B)--(4.5,0); \fill (A) circle(1.4pt);
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $R_{\text{eq}}$ puis la tension du générateur.
+  \item On remplace \emph{une} des résistances de $\qty{30}{\ohm}$ par une de $\qty{7.5}{\ohm}$. Que
+        devient le courant total $I$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[pile réelle : à vide, en charge, en court-circuit]
+Une pile a une f.é.m. $E=\qty{9}{\volt}$ et une résistance interne $r=\qty{1}{\ohm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est sa tension à vide ?
+  \item Quelle tension fournit-elle quand elle débite $I=\qty{2}{\ampere}$ ?
+  \item Calcule l'intensité de court-circuit $I_{\text{cc}}$.
+  \item Quelle puissance est alors dissipée dans la résistance interne ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

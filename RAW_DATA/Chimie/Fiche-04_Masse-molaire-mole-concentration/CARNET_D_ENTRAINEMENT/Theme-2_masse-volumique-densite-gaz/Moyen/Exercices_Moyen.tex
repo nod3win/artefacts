@@ -1,98 +1,84 @@
-% =====================================================================
-%  FICHE 4 — THEME 2 — Exercices niveau MOYEN
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit\Molar{M}
-\DeclareSIUnit\atm{atm}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{defcol}{RGB}{0,114,178}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
-   toptitle=0.5mm,bottomtitle=0.5mm}}
-\newtcolorbox{donnees}{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Données}}}
-\newcounter{exo}
-\newenvironment{exo}[1][]{%
-  \par\medskip\refstepcounter{exo}%
-  \noindent\begin{tcolorbox}[boxbase,colback=primary!7,colframe=primary,
-     title={\textsc{Exercice \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
-  {\end{tcolorbox}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Moyen}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\newcommand{\NA}{N_{\!\text{A}}}
-\setlength{\parindent}{0pt}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
 
-\begin{center}
-{\LARGE\bfseries\color{primarydark} Thème 2 --- Niveau Moyen}\\[2pt]
-{\color{primary}\itshape Enchaîner volume, masse et quantité de matière}
-\end{center}
+\begin{center}{\large\bfseries\color{primarydark} Thème 2 — Niveau Moyen}\end{center}
+\emph{Données (\si{\gram\per\mole}) :} $\ce{H}=1$, $\ce{C}=12$, $\ce{O}=16$, $\ce{Cl}=35{,}5$,
+$\ce{He}=4$. \quad $V_m = \SI{22.4}{\litre\per\mole}$ (CNTP), $N_{\mathrm{A}} = 6{,}02\times10^{23}\ \si{\per\mole}$.
 
-\begin{donnees}
-Masses molaires atomiques (\si{\gram\per\mole}) : $\ce{H}=1$ ; $\ce{C}=12$ ; $\ce{O}=16$ ;
-$\ce{Cl}=35{,}5$.\quad $V_m=\SI{22.4}{\litre\per\mole}$ aux CNTP.
-\end{donnees}
-
-\begin{exo}[chaîne volume $\to$ masse $\to$ quantité]
-Le dichlorométhane \ce{CH2Cl2} est un solvant de densité $d=1{,}70$. On en prélève
-$\SI{100}{\milli\litre}$.
-\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
-  \item Déterminer la masse de dichlorométhane prélevée.
-  \item Calculer sa masse molaire, puis la quantité de matière correspondante.
+\begin{exo}[chaîne volume $\to$ masse $\to$ moles (liquide)]
+Détermine la quantité de matière contenue dans :
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{100}{\milli\litre}$ de dichlorométhane \ce{CH2Cl2} ($d = 1{,}70$, $M = \SI{85}{\gram\per\mole}$) ;
+  \item $\SI{50}{\milli\litre}$ d'eau \ce{H2O} ($d = 1{,}00$, $M = \SI{18}{\gram\per\mole}$).
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[masse molaire d'un gaz]
-Un échantillon de $\SI{5.0}{\gram}$ d'un gaz occupe, aux CNTP, un volume de $\SI{5.6}{\litre}$.
-\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
-  \item Quelle quantité de matière de gaz cela représente-t-il ?
-  \item En déduire la masse molaire du gaz.
+\begin{exo}[masse d'un gaz]
+Quelle est la masse des échantillons gazeux suivants, pris aux CNTP~?
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{11.2}{\litre}$ de dioxygène \ce{O2} ($M = \SI{32}{\gram\per\mole}$) ;
+  \item $\SI{5.6}{\litre}$ de dioxyde de carbone \ce{CO2} ($M = \SI{44}{\gram\per\mole}$).
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[masse volumique et conversions « piégeuses »]
-La masse volumique de l'or vaut $\rho=\SI{19.3}{\gram\per\cubic\centi\metre}$. On dispose d'un
-lingot d'or de masse $\SI{7.72}{\hecto\gram}$.\\
-Quel volume (en \si{\milli\litre}) occupe ce lingot ? \emph{(Attention à l'unité de masse : le
-hectogramme.)}
+\begin{exo}[nombre de molécules d'un gaz]
+Combien de molécules contiennent, aux CNTP~:
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{44.8}{\litre}$ de dihydrogène \ce{H2}~;
+  \item $\SI{2.24}{\litre}$ d'hélium \ce{He}~?
+\end{enumerate}
 \end{exo}
 
-\begin{exo}[du gaz au volume]
-On dispose de $\SI{16}{\gram}$ de dioxygène \ce{O2} à $\SI{0}{\celsius}$ sous $\SI{1}{\atm}$.
-Quel volume ce gaz occupe-t-il ?
+\begin{exo}[CNTP ou conditions standard~?]
+On considère $\SI{0.5}{\mole}$ d'un gaz parfait.
+\begin{enumerate}[label=\alph*)]
+  \item Quel volume occupe-t-il aux CNTP ($V_m = \SI{22.4}{\litre\per\mole}$)~?
+  \item Quel volume occupe-t-il à $\SI{25}{\celsius}$ ($V_m = \SI{24.4}{\litre\per\mole}$)~?
+  \item Commente l'écart.
+\end{enumerate}
 \end{exo}
 
-\begin{exo}[masse volumique par déplacement d'eau]
-Un cylindre gradué contient $\SI{10.0}{\milli\litre}$ d'eau. On y plonge entièrement un solide non
-soluble de masse $\SI{20.0}{\gram}$ ; le niveau d'eau monte alors jusqu'à $\SI{15.0}{\milli\litre}$.
-\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,topsep=2pt,itemsep=2pt]
-  \item Quel est le volume du solide ?
-  \item En déduire sa masse volumique.
+\begin{exo}[masse volumique d'un gaz]
+La masse volumique d'un gaz vaut $\rho = M / V_m$ (aux CNTP, $V$ en litres). Calcule $\rho$ (en \si{\gram\per\litre}) pour :
+\begin{enumerate}[label=\alph*)]
+  \item le dioxygène \ce{O2} ($M = \SI{32}{\gram\per\mole}$) ;
+  \item le dioxyde de carbone \ce{CO2} ($M = \SI{44}{\gram\per\mole}$).
 \end{enumerate}
 \end{exo}
 

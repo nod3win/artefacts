@@ -1,0 +1,104 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Force de Lorentz (force sur une particule chargée)
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 4 — Force de Lorentz}
+\end{center}
+
+\noindent Une particule \textbf{chargée} qui se déplace dans un champ magnétique subit la
+\textbf{force de Lorentz}. Elle est au cœur des accélérateurs, spectromètres de masse et écrans
+cathodiques. Deux réflexes : calculer $F$ (et le rayon de la trajectoire), et repérer les cas où la
+force est \emph{nulle}.
+
+\begin{cle}[intensité de la force de Lorentz]
+Pour une particule de charge $q$, de vitesse $\vv{v}$, dans un champ $\vv{B}$ :
+\[ \boxed{\,F = B\,|q|\,v\,\sin\alpha\,}\qquad(\text{en newtons}), \]
+où $\alpha$ est l'angle entre $\vv{v}$ et $\vv{B}$. Le \textbf{sens} se trouve par la règle de la main
+droite (pouce $=\vv{v}$, index $=\vv{B}$, majeur $=\vv{F}$) — mais \textbf{on inverse} pour une charge
+\textbf{négative} (électron, ion $-$).
+\end{cle}
+
+\begin{cle}[la force magnétique ne travaille jamais $\Rightarrow$ cercle]
+$\vv{F}$ est \textbf{toujours perpendiculaire} à $\vv{v}$ : elle ne modifie pas la \emph{norme} de la
+vitesse (travail nul), seulement sa direction. Si $\vv{v}\perp\vv{B}$, la particule décrit un
+\textbf{mouvement circulaire uniforme} de rayon
+\[ \boxed{\,R=\dfrac{m\,v}{|q|\,B}\,}. \]
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \foreach \x/\y in {-1.7/1.3,0/1.5,1.7/1.3,-1.7/-1.3,0/-1.5,1.7/-1.3}{
+    \draw[blue!45!black,line width=0.6pt] (\x,\y) circle (0.10);
+    \draw[blue!45!black,line width=0.6pt] (\x-0.07,\y-0.07)--(\x+0.07,\y+0.07);
+    \draw[blue!45!black,line width=0.6pt] (\x-0.07,\y+0.07)--(\x+0.07,\y-0.07);}
+  \node[blue!60!black,font=\footnotesize] at (2.1,1.3){$\vv{B}$ (entrant)};
+  \draw[black,line width=0.9pt] (0,0) circle (0.95);
+  \fill[red!80!black] (0.95,0) circle (2.2pt) node[below right,black,font=\footnotesize]{$q>0$};
+  \draw[orange!80!black,->,line width=1.4pt] (0.95,0)--(0.95,0.9) node[right,font=\footnotesize]{$\vv{v}$};
+  \draw[excol,->,line width=1.4pt] (0.95,0)--(0.1,0) node[above,font=\footnotesize]{$\vv{F}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{piege}[le piège vedette : la force nulle]
+La force de Lorentz est \textbf{nulle} dans trois cas :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item particule \textbf{neutre} ($q=0$) : un neutron, ou un rayon X (photon), n'est \emph{jamais}
+        dévié par $\vv{B}$, même en mouvement ;
+  \item particule \textbf{au repos} ($v=0$) : sans vitesse, pas de force ;
+  \item vitesse \textbf{parallèle} au champ ($\alpha=0$ ou $\pi$) : $\sin\alpha=0$.
+\end{itemize}
+« Il y a toujours une force » est \textbf{faux} : c'est le distracteur préféré du concours.
+\end{piege}
+
+\begin{exemplebox}[proton dans un champ]
+Proton ($q=+e=\qty{1.6e-19}{\coulomb}$, $m=\qty{1.67e-27}{\kilogram}$), $v=\qty{1e7}{\metre\per\second}$,
+$B=\qty{2}{\tesla}$, $\alpha=\ang{90}$ :
+\[ F=B|q|v=2\times1{,}6\cdot10^{-19}\times10^{7}=\qty{3.2e-12}{\newton};\quad
+   R=\frac{mv}{|q|B}=\frac{1{,}67\cdot10^{-27}\times10^{7}}{1{,}6\cdot10^{-19}\times2}\approx\qty{5.2}{\centi\metre}. \]
+\end{exemplebox}
+
+\begin{remarque}[le sélecteur de vitesse]
+Si l'on superpose un champ électrique $\vv{E}$ et un champ magnétique $\vv{B}$ croisés, une particule
+n'est pas déviée lorsque les deux forces se compensent : $qE=qvB$, d'où $\boxed{v=\dfrac{E}{B}=\dfrac{U}{d\,B}}$.
+Seules les particules de cette vitesse passent tout droit : c'est le principe du \textbf{spectromètre
+de masse}.
+\end{remarque}
+
+\end{document}

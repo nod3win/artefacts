@@ -1,0 +1,98 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[MCU : lesquelles sont fausses ?]
+Un objet $A$ de masse $m_A$ tourne au bout d'un fil et fait un tour en \qty{0,25}{\second} (MCU).
+Indique la ou les propositions \textbf{fausses} et corrige-les.
+\begin{enumerate}[label=\Alph*.]
+  \item L'accélération tangentielle de l'objet est nulle.
+  \item Les vecteurs force centripète et vitesse linéaire ont toujours la même direction et le même sens.
+  \item Le vecteur vitesse tangentielle est perpendiculaire au vecteur force centripète.
+  \item La force centripète dépend de la masse, de la vitesse angulaire $\omega$ et du rayon $R$.
+  \item Pour doubler la norme de la vitesse tangentielle, il faut doubler la force centripète.
+  \item Si le fil casse, le mouvement suit une trajectoire rectiligne tangente au cercle.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[rotation d'un disque]
+Un disque plein tourne uniformément autour de son centre $O$. Trois points A, B, C sont alignés sur un
+rayon (A proche du centre, C au bord). Réponds par \textbf{Vrai} ou \textbf{Faux} : une seule affirmation
+est incorrecte.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.72]
+  \fill[primary!12] (0,0) circle (3);
+  \foreach \r in {1,2,3}{ \draw[black!40] (0,0) circle (\r); }
+  \fill (0,0) circle (1.7pt) node[below right]{$O$};
+  \foreach \r/\lab in {1/A,2/B,3/C}{
+     \fill[primarydark] (90:\r) circle (2.3pt);
+     \node[right,font=\small] at (90:\r){$\lab$};
+     \draw[->,defcol,line width=0.9pt] (90:\r) -- ++(180:{0.32*\r+0.18});}
+  \draw[->,primary] (3.5,-0.6) arc (-12:32:3.5);
+  \node[primary,font=\small] at (4.0,0.8){sens};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*.]
+  \item La vitesse tangentielle d'un point est nulle s'il est placé exactement au centre $O$.
+  \item La vitesse angulaire d'un point est nulle lorsqu'il est placé au centre $O$.
+  \item Toutes les parties du disque tournent à la même vitesse angulaire.
+  \item Un point du bord (C) a une vitesse linéaire plus grande qu'un point proche du centre (A).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la fronde : capstone]
+On fait tourner une pierre de masse $m=\qty{0,3}{\kilogram}$ au bout d'un fil de longueur
+$R=\qty{0,4}{\metre}$, à raison de \num{2} tours par seconde ($\pi\approx\num{3,14}$).
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la période $T$ et la vitesse angulaire $\omega$.
+  \item Calcule la vitesse linéaire $v$.
+  \item Calcule l'accélération centripète $a_c$, puis la force centripète $F_c$ (tension du fil).
+  \item Le fil casse. Décris la trajectoire ultérieure de la pierre et nomme la loi invoquée.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le virage d'une voiture]
+Une voiture de masse $m$ prend un virage circulaire de rayon $R$ à la vitesse $v$. C'est le frottement
+des pneus qui fournit la force centripète $F_c=\dfrac{mv^2}{R}$.
+\begin{enumerate}[label=\alph*)]
+  \item Si la voiture double sa vitesse (même $R$), par quel facteur la force centripète nécessaire est-elle multipliée ?
+  \item Si le rayon du virage est divisé par deux (même vitesse), par quel facteur $F_c$ est-elle multipliée ?
+\end{enumerate}
+\end{exo}
+\end{document}

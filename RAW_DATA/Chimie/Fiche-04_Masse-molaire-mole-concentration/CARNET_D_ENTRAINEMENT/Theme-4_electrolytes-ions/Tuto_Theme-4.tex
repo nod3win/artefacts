@@ -1,0 +1,93 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+% THEME_TITLE: Électrolytes forts et concentration des ions
+\noindent
+Beaucoup de solutés sont des \textbf{électrolytes} : dissous dans l'eau, ils se \emph{dissocient} en
+ions. La concentration des \emph{ions} produits n'est pas toujours celle du soluté : tout dépend de la
+\textbf{stœchiométrie} de la dissociation.
+
+\begin{cle}[électrolyte fort]
+Un \textbf{électrolyte fort} se dissocie \textbf{totalement} en ions dans l'eau (sels solubles,
+acides forts \ce{HCl}/\ce{HClO4}, bases fortes \ce{NaOH}/\ce{Ba(OH)2}). Ce sont ces ions mobiles qui
+rendent la solution \textbf{conductrice} : plus elle est riche en ions, mieux elle conduit (l'eau
+pure, très peu dissociée, conduit très mal ; le glucose, non ionique, ne conduit pas).
+\end{cle}
+
+\begin{cle}[concentration des ions]
+Pour une dissociation \ce{A_xB_y -> x A + y B} d'un électrolyte de concentration $C$ :
+\[ \boxed{\,[\ce{A}] = x\,C \qquad [\ce{B}] = y\,C\,}. \]
+La concentration d'un ion est celle du sel \textbf{multipliée par son coefficient stœchiométrique}.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1,ion/.style={circle,inner sep=0pt,minimum size=0.6cm,font=\scriptsize\bfseries,text=white}]
+  \node[font=\footnotesize] (sel) at (0,0) {\ce{CaCl2}};
+  \draw[-{Stealth[length=2.2mm]},line width=1pt,primarydark] (0.7,0) -- node[above,font=\scriptsize]{eau} (2.4,0);
+  \node[ion,fill=attncol] (ca) at (3.3,0.05) {Ca};
+  \node[font=\scriptsize] at (3.9,0.35) {$2{+}$};
+  \node[font=\footnotesize] at (4.4,0) {$+$};
+  \node[ion,fill=defcol] (cl1) at (5.2,0.05) {Cl};
+  \node[font=\scriptsize] at (5.7,0.35) {$-$};
+  \node[ion,fill=defcol] (cl2) at (6.5,0.05) {Cl};
+  \node[font=\scriptsize] at (7.0,0.35) {$-$};
+  \node[font=\footnotesize,primarydark] at (10.0,0) {$[\ce{Ca^2+}]=C,\ \ [\ce{Cl-}]=2C$};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[mélange : plusieurs sources d'un même ion]
+Quand un ion provient de \emph{plusieurs} sels (ou qu'on mélange plusieurs solutions) :
+\begin{enumerate}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item on calcule la \emph{quantité de matière} de l'ion apportée par chaque source
+        ($n = \text{coeff}\times C\times V$) ;
+  \item on \textbf{additionne} ces quantités ;
+  \item on \textbf{divise par le volume total} de la solution finale.
+\end{enumerate}
+\end{methode}
+
+\begin{piege}[trois réflexes]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item Ne pas oublier le \textbf{coefficient} : $\SI{1}{\mole}$ de \ce{CaCl2} libère $\SI{2}{\mole}$ de \ce{Cl-}.
+  \item Distinguer une \emph{quantité} (\si{\mole}, à diviser par $V$) d'une \emph{concentration}
+        (\si{\mole\per\litre}, déjà ramenée au litre).
+  \item Dans un mélange, diviser par le volume \textbf{total}, pas par un volume initial.
+\end{itemize}
+\end{piege}
+
+\end{document}

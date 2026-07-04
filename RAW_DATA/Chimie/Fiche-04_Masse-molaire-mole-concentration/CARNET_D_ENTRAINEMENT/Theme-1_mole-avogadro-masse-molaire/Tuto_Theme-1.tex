@@ -1,0 +1,99 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+% THEME_TITLE: La mole, le nombre d'Avogadro et la masse molaire
+\noindent
+Une réaction chimique met en jeu un nombre colossal d'entités : on ne les compte jamais une à une,
+on les regroupe en \textbf{paquets} de taille fixe, la \textbf{mole}. Tout ce thème consiste à
+circuler entre trois grandeurs — un \emph{nombre d'entités} $N$, une \emph{quantité de matière} $n$
+(en moles) et une \emph{masse} $m$ (en grammes) — à l'aide de deux « ponts » seulement.
+
+\begin{cle}[la mole et le nombre d'Avogadro]
+La \textbf{mole} (\si{\mole}) est l'unité de \textbf{quantité de matière}. Une mole contient
+$N_{\mathrm{A}} = 6{,}02\times10^{23}$ entités élémentaires (le \textbf{nombre d'Avogadro}).
+\[ \boxed{\,N = n\times N_{\mathrm{A}}\,}\qquad\Longleftrightarrow\qquad n = \dfrac{N}{N_{\mathrm{A}}}. \]
+On \textbf{multiplie} par $N_{\mathrm{A}}$ pour aller des moles aux entités, on \textbf{divise} par $N_{\mathrm{A}}$ pour
+faire l'inverse. Il faut \emph{toujours} préciser la nature de l'entité : une mole \emph{d'atomes},
+\emph{de molécules} ou \emph{d'ions}.
+\end{cle}
+
+\begin{methode}[calculer une masse molaire $M$]
+La \textbf{masse molaire} $M$ est la masse d'une mole ; elle s'exprime en \si{\gram\per\mole}.
+Pour une molécule, on \textbf{additionne} les masses molaires atomiques de tous les atomes de la
+formule (lues dans la classification périodique) :
+\[ \boxed{\,M(\text{composé}) = \sum_i \nu_i\, M(\text{élément}_i)\,} \]
+où $\nu_i$ est le nombre d'atomes de l'élément $i$ dans la formule brute.
+\end{methode}
+
+\begin{exemplebox}[masse molaire de l'acide sulfurique \ce{H2SO4}]
+Avec $M(\ce{H})=1$, $M(\ce{S})=32$, $M(\ce{O})=16$ (en \si{\gram\per\mole}) :
+\[ M(\ce{H2SO4}) = \underbrace{2\times 1}_{\ce{H}} + \underbrace{32}_{\ce{S}} + \underbrace{4\times 16}_{\ce{O}}
+   = 2+32+64 = \SI{98}{\gram\per\mole}. \]
+\end{exemplebox}
+
+\begin{cle}[le pont masse $\leftrightarrow$ moles]
+\[ \boxed{\,n = \dfrac{m}{M}\,}\qquad\Longleftrightarrow\qquad m = n\times M. \]
+On \textbf{divise} une masse par $M$ pour obtenir des moles ; on \textbf{multiplie} des moles par
+$M$ pour obtenir une masse. Vérification des unités : $\dfrac{\si{\gram}}{\si{\gram\per\mole}}=\si{\mole}$.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1,
+   box/.style={draw,rounded corners=3pt,align=center,font=\footnotesize,minimum height=1cm,minimum width=2.7cm,line width=0.9pt}]
+  \node[box,draw=primary,fill=primary!8] (m) at (0,0) {Masse\\ $m$ (\si{\gram})};
+  \node[box,draw=excol,fill=excol!8] (n) at (4.6,0) {Quantité\\ $n$ (\si{\mole})};
+  \node[box,draw=defcol,fill=defcol!8] (N) at (9.2,0) {Nombre d'entités\\ $N$};
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=4pt]m.east) -- node[above,font=\scriptsize]{$\div M$} ([yshift=4pt]n.west);
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=-6pt]n.west) -- node[below,font=\scriptsize]{$\times M$} ([yshift=-6pt]m.east);
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=4pt]n.east) -- node[above,font=\scriptsize]{$\times N_{\mathrm{A}}$} ([yshift=4pt]N.west);
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=-6pt]N.west) -- node[below,font=\scriptsize]{$\div N_{\mathrm{A}}$} ([yshift=-6pt]n.east);
+\end{tikzpicture}
+\end{center}
+\begin{center}\footnotesize\itshape La quantité de matière $n$ est le carrefour : tout passe par les moles.\end{center}
+
+\begin{piege}[deux erreurs classiques]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item La masse molaire s'exprime en \si{\gram\per\mole}, \textbf{jamais en uma} (l'uma sert à peser
+        \emph{un} atome, pas une mole).
+  \item « Une mole \emph{de quoi} ? » : $\SI{1}{\mole}$ de \ce{CO2} contient $\SI{2}{\mole}$ d'atomes
+        d'oxygène. On multiplie par l'indice de la formule.
+\end{itemize}
+\end{piege}
+
+\end{document}

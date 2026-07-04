@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[précipitation sélective]
+Chaque sel précipite dès que son propre $Q$ atteint son $K_{\mathrm{ps}}$.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{AgCl} : $[\ce{Ag+}]=\dfrac{K_{\mathrm{ps}}}{[\ce{Cl-}]}=\dfrac{\num{1.8e-10}}{0{,}010}
+        =\qty{1.8e-8}{\mole\per\litre}$.
+  \item \ce{Ag2CrO4} : $K_{\mathrm{ps}}=[\ce{Ag+}]^{2}[\ce{CrO4^{2-}}]$, donc
+        $[\ce{Ag+}]=\sqrt{\dfrac{K_{\mathrm{ps}}}{[\ce{CrO4^{2-}}]}}=\sqrt{\dfrac{\num{1.1e-12}}{0{,}010}}
+        =\sqrt{\num{1.1e-10}}=\qty{1.05e-5}{\mole\per\litre}$.
+  \item \ce{AgCl} précipite en premier : il suffit de $[\ce{Ag+}]=\qty{1.8e-8}{\mole\per\litre}$, très
+        inférieur au seuil de \ce{Ag2CrO4} ($\qty{1.05e-5}{\mole\per\litre}$). C'est le principe du
+        dosage de Mohr.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'effet d'ion commun sous forme littérale]
+\begin{enumerate}[label=\alph*)]
+  \item $[\ce{Ag+}]=s'$ et $[\ce{Cl-}]$ imposée, donc $K_{\mathrm{ps}}=s'\,[\ce{Cl-}]$, d'où
+        $s'=\dfrac{K_{\mathrm{ps}}}{[\ce{Cl-}]}$.
+  \item Avec $[\ce{Cl-}]=0{,}10=10^{-1}$ :
+        $s'=\dfrac{K_{\mathrm{ps}}}{10^{-1}}=10\times K_{\mathrm{ps}}$.
+  \item $s'=10\times\num{1.8e-10}=\qty{1.8e-9}{\mole\per\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[ion commun apporté par le cation]
+\begin{enumerate}[label=\alph*)]
+  \item $[\ce{Ca^{2+}}]\approx C$ et $[\ce{F-}]=2s'$, donc
+        \[ K_{\mathrm{ps}} = [\ce{Ca^{2+}}][\ce{F-}]^{2} = C\,(2s')^{2} = 4\,C\,s'^{2}. \]
+  \item On isole $s'$ :
+        \[ s' = \sqrt{\dfrac{K_{\mathrm{ps}}}{4C}} = \sqrt{\dfrac{\num{3.9e-11}}{4\times 0{,}10}}
+             = \sqrt{\num{9.75e-11}} = \qty{9.9e-6}{\mole\per\litre}. \]
+  \item $s'=\qty{9.9e-6}{\mole\per\litre}$ contre $s_0=\qty{2.14e-4}{\mole\per\litre}$ : la solubilité
+        est divisée par $\sim 22$. L'ion commun \ce{Ca^{2+}} réduit bien la solubilité.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[mélange et précipitation d'un sel $2{:}1$]
+\begin{enumerate}[label=\alph*)]
+  \item Volume total \qty{200}{\milli\litre} (dilution par 2) :
+        \[ [\ce{Ag+}] = \num{2.0e-3}\times\dfrac{100}{200} = \qty{1.0e-3}{\mole\per\litre}, \qquad
+           [\ce{CrO4^{2-}}] = \qty{1.0e-3}{\mole\per\litre}. \]
+  \item $Q = [\ce{Ag+}]^{2}[\ce{CrO4^{2-}}] = (\num{1.0e-3})^{2}(\num{1.0e-3}) = \num{1.0e-9}$. Comme
+        $Q=\num{1.0e-9} > K_{\mathrm{ps}}=\num{1.1e-12}$, la solution est sursaturée : \textbf{\ce{Ag2CrO4}
+        précipite} (précipité rouge brique).
+\end{enumerate}
+\end{corrige}
+\end{document}

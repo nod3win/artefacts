@@ -1,0 +1,84 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\usetikzlibrary{babel}
+\begin{exo}[à quelle température la résistance double-t-elle ?]
+Un fil d'aluminium a une résistance $R_0=\qty{50}{\ohm}$ à $\qty{0}{\degreeCelsius}$ et un coefficient
+de température $\alpha=\qty{4e-3}{\per\degreeCelsius}$.
+\begin{enumerate}[label=\alph*)]
+  \item À quelle température $T$ sa résistance est-elle \emph{doublée} ($R=\qty{100}{\ohm}$) ?
+  \item À quelle température serait-elle \emph{triplée} ?
+  \item Ces valeurs sont-elles à prendre au pied de la lettre ? (penser à la validité du modèle)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois composés : trouver l'affirmation fausse]
+Trois composés ont pour résistivités $\rho_1=\qty{1.6e-8}{\ohm\metre}$,
+$\rho_2=\qty{22e-8}{\ohm\metre}$ et $\rho_3=\qty{3e6}{\ohm\metre}$. On en fait des fils de même
+longueur et de même section. Indique si chaque affirmation est \textbf{vraie} ou \textbf{fausse} :
+\begin{enumerate}[label=\alph*)]
+  \item le composé 3 peut être un isolant ;
+  \item parmi les trois, le composé 1 est le meilleur conducteur électrique ;
+  \item la conductivité du composé 1 est supérieure à celle du composé 2 ;
+  \item la conductivité du composé 3 est supérieure à celle du composé 1.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[dimensionner une section]
+On veut qu'un fil de longueur $L=\qty{10}{\metre}$ et de résistivité $\rho=\qty{22e-8}{\ohm\metre}$ ait
+une résistance $R=\qty{2}{\ohm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle section $S$ faut-il lui donner ? Exprime-la en \si{\metre\squared} puis en
+        \si{\milli\metre\squared}.
+  \item Vrai ou faux : « la section doit valoir $\qty{2.2}{\milli\metre\squared}$ ». Justifie.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[câble de cuivre : synthèse]
+Un câble de cuivre ($\rho=\qty{1.7e-8}{\ohm\metre}$) a une longueur $L=\qty{100}{\metre}$ et une
+section $S=\qty{2}{\milli\metre\squared}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule sa résistance $R$ à $\qty{0}{\degreeCelsius}$.
+  \item Pour diviser cette résistance par 2 sans changer ni le matériau ni la longueur, quelle
+        nouvelle section faut-il ?
+  \item En service, le câble s'échauffe à $\qty{50}{\degreeCelsius}$ ($\alpha=\qty{3.9e-3}{\per\degreeCelsius}$).
+        Que devient la résistance de la question a) ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

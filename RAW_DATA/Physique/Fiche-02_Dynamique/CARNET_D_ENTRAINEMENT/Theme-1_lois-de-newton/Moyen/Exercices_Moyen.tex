@@ -1,0 +1,103 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[deux forces de même sens]
+Deux personnes poussent une caisse de masse $m=\qty{8}{\kilogram}$ dans le \emph{même sens}, avec des
+forces horizontales $F_1=\qty{30}{\newton}$ et $F_2=\qty{10}{\newton}$ (frottements négligés).
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \draw[thick,black!55] (-2.8,0) -- (3.2,0);
+  \fill[primarydark] (-1.4,0) rectangle (-0.5,0.8); \node[white,font=\small] at (-0.95,0.4){$m$};
+  \draw[->,line width=1.1pt,defcol] (-0.5,0.55) -- ++(1.6,0) node[right]{$\vv F_1$};
+  \draw[->,line width=1.1pt,defcol] (-0.5,0.25) -- ++(0.9,0) node[right]{$\vv F_2$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité de la résultante.
+  \item En déduis l'accélération de la caisse.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux forces opposées]
+On tire une luge ($m=\qty{6}{\kilogram}$) avec une force $\vv F=\qty{50}{\newton}$ vers l'avant ;
+le frottement $\vv F_f=\qty{20}{\newton}$ s'oppose au mouvement.
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \draw[thick,black!55] (-2.8,0) -- (3.2,0);
+  \fill[primarydark] (-0.45,0) rectangle (0.45,0.8); \node[white,font=\small] at (0,0.4){$m$};
+  \draw[->,line width=1.1pt,defcol] (0.45,0.4) -- ++(1.6,0) node[right]{$\vv F$};
+  \draw[->,line width=1.1pt,methcol] (-0.45,0.4) -- ++(-1.1,0) node[left]{$\vv F_f$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la résultante (intensité et sens).
+  \item En déduis l'accélération.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[du mouvement vers la force]
+Un objet de masse $m=\qty{4}{\kilogram}$ posé sur un sol horizontal subit une force motrice $\vv F$ et
+un frottement $\vv F_f=\qty{5}{\newton}$ opposé. On observe qu'il accélère à
+$a=\qty{2}{\metre\per\second\squared}$ dans le sens de $\vv F$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est l'intensité de la résultante ?
+  \item En déduis l'intensité de la force motrice $F$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[accélération à partir d'une variation de vitesse]
+Une voiture de masse $m=\qty{1000}{\kilogram}$ passe de \qty{0}{\metre\per\second} à
+\qty{20}{\metre\per\second} en \qty{4}{\second}, en ligne droite.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule son accélération (supposée constante).
+  \item En déduis l'intensité de la force résultante qui la propulse.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[force du moteur]
+Un scooter de masse $m=\qty{120}{\kilogram}$ roule en ligne droite. Le frottement total qui le freine
+vaut $\vv F_f=\qty{90}{\newton}$. Le conducteur veut maintenir une accélération
+$a=\qty{1,5}{\metre\per\second\squared}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle résultante faut-il selon le PFD ?
+  \item Quelle force motrice le moteur doit-il alors fournir ?
+\end{enumerate}
+\end{exo}
+\end{document}

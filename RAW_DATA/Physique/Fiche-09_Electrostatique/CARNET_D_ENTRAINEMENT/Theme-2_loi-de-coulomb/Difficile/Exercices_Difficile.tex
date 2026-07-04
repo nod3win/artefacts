@@ -1,0 +1,125 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[où la force résultante s'annule-t-elle ?]
+Deux charges fixes $q_1 = \SI{+1}{\micro\coulomb}$ et $q_2 = \SI{+4}{\micro\coulomb}$ sont distantes
+de $L = \SI{30}{\centi\metre}$. On dépose une troisième charge $q$ sur la droite $(q_1 q_2)$ de sorte
+que la force résultante qu'elle subit soit \textbf{nulle}.
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth,font=\footnotesize,
+    ch/.style={circle,fill=attncol,minimum size=7mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \draw[black!35] (-0.6,0) -- (5.4,0);
+  \node[ch] at (0,0) {$q_1$}; \node[below,font=\scriptsize] at (0,-0.45) {$+1$};
+  \node[ch,minimum size=8.5mm] at (4.8,0) {$q_2$}; \node[below,font=\scriptsize] at (4.8,-0.45) {$+4$};
+  \draw[<->,black!45,dashed] (0,0.6) -- (4.8,0.6) node[midway,above,font=\scriptsize]{$L=\SI{30}{\centi\metre}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Le point cherché est-il \emph{entre} les charges, à \emph{gauche} de $q_1$ ou à
+        \emph{droite} de $q_2$ ? Justifie sans calcul.
+  \item Calcule sa position (distance à $q_1$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[quelle charge annule la force sur une autre ?]
+Trois charges sont alignées : une charge $Q$ inconnue, puis $q_1 = \SI{+3}{\nano\coulomb}$, puis
+$q_2 = \SI{+12}{\nano\coulomb}$. On donne $Q q_1 = \SI{10}{\centi\metre}$ et
+$q_1 q_2 = \SI{20}{\centi\metre}$. On veut que la force résultante exercée sur $q_1$ (charge du
+milieu) soit \textbf{nulle}.
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth,font=\footnotesize,
+    ch/.style={circle,minimum size=7mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \draw[black!35] (-0.6,0) -- (6.0,0);
+  \node[ch,fill=methcol] at (0,0) {$Q$}; \node[below,font=\scriptsize] at (0,-0.45) {$Q$ ?};
+  \node[ch,fill=attncol] at (1.6,0) {$+$}; \node[below,font=\scriptsize] at (1.6,-0.45) {$q_1$};
+  \node[ch,fill=attncol,minimum size=8.5mm] at (4.8,0) {$+$}; \node[below,font=\scriptsize] at (4.8,-0.45) {$q_2$};
+  \draw[<->,black!45,dashed] (0,0.6) -- (1.6,0.6) node[midway,above,font=\scriptsize]{$\SI{10}{\centi\metre}$};
+  \draw[<->,black!45,dashed] (1.6,0.6) -- (4.8,0.6) node[midway,above,font=\scriptsize]{$\SI{20}{\centi\metre}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quel doit être le \emph{signe} de $Q$ ? Raisonne sur le sens des deux forces sur $q_1$.
+  \item Calcule la valeur de $|Q|$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[direction de la résultante : le carré]
+Quatre charges positives occupent les sommets d'un carré : $+Q$ (haut-gauche), $+2Q$ (haut-droite),
+$+Q$ (bas-gauche), $+2Q$ (bas-droite). Une charge $+q$ est placée au \textbf{centre} $O$.
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth,font=\footnotesize,
+    ch/.style={circle,fill=attncol,minimum size=8mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \node[ch] (TL) at (-1.8,1.8) {$+Q$};
+  \node[ch,minimum size=9.5mm] (TR) at (1.8,1.8) {$+2Q$};
+  \node[ch] (BL) at (-1.8,-1.8) {$+Q$};
+  \node[ch,minimum size=9.5mm] (BR) at (1.8,-1.8) {$+2Q$};
+  \draw[black!30] (TL.center)--(TR.center)--(BR.center)--(BL.center)--cycle;
+  \node[circle,fill=defcol,minimum size=6mm,inner sep=0pt,text=white,font=\bfseries\scriptsize] (O) at (0,0) {$+q$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Par symétrie, quelle composante (horizontale ou verticale) de la force sur $+q$ s'annule ?
+  \item En déduire la \emph{direction} et le \emph{sens} de la force résultante sur $+q$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[direction de la résultante : sur l'axe]
+Deux charges positives identiques $+Q$ sont placées sur l'axe vertical, en $(0,+a)$ et $(0,-a)$. On
+place une charge \textbf{négative} $-Q$ au point $P = (D,0)$ situé sur l'axe horizontal, à droite de
+l'origine.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,font=\footnotesize,
+    ch/.style={circle,minimum size=7.5mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \draw[black!30,->] (-0.6,0)--(4.6,0) node[right]{$x$};
+  \draw[black!30,->] (0,-2.2)--(0,2.2) node[above]{$y$};
+  \node[ch,fill=attncol] (A) at (0,1.7) {$+Q$};
+  \node[ch,fill=attncol] (B) at (0,-1.7) {$+Q$};
+  \node[ch,fill=defcol] (P) at (3.6,0) {$-Q$};
+  \node[below,font=\scriptsize] at (3.6,-0.5) {$P$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Pourquoi les composantes verticales des deux forces sur $-Q$ se compensent-elles ?
+  \item Quelle est la direction et le sens de la force résultante sur $-Q$ ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

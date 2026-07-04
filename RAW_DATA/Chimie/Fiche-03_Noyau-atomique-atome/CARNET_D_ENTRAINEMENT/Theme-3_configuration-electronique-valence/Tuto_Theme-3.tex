@@ -1,0 +1,95 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Configuration électronique en couches et électrons de valence
+
+Les électrons se répartissent autour du noyau sur des \textbf{couches} successives. Savoir les remplir
+donne la \textbf{configuration électronique}, d'où l'on lit les \textbf{électrons de valence} qui
+gouvernent toute la chimie de l'atome.
+
+\begin{cle}[les couches et leur capacité]
+Les couches se notent K, L, M, N\dots\ (numérotées $n = 1, 2, 3, 4\dots$). La couche $n$ contient au
+maximum $\mathbf{2n^2}$ électrons :
+\[ \text{K}:2,\qquad \text{L}:8,\qquad \text{M}:18,\qquad \text{N}:32. \]
+On remplit \textbf{de l'intérieur vers l'extérieur} (K, puis L, puis M\dots). Dans ce modèle simplifié,
+la \textbf{couche la plus externe ne dépasse jamais $8$ électrons} : dès qu'elle atteint $8$, on ouvre
+la couche suivante.
+\end{cle}
+
+\begin{cle}[configuration et électrons de valence]
+La \textbf{configuration électronique} s'écrit $(\mathrm{K})^a(\mathrm{L})^b(\mathrm{M})^c\dots$, où les
+exposants comptent les électrons de chaque couche ; leur somme vaut $n(e^-)$ (donc $Z$ pour un atome
+neutre). La \textbf{couche de valence} est la \emph{dernière} couche occupée, et ses électrons sont les
+\textbf{électrons de valence}.
+\end{cle}
+
+\begin{methode}[établir la configuration d'un atome neutre]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item compter les électrons : $n(e^-) = Z$ ;
+  \item remplir K ($2$ au plus), puis L ($8$), puis M\dots, en gardant la couche externe $\le 8$ ;
+  \item la dernière couche occupée est la couche de valence ; ses électrons sont les électrons de valence.
+\end{enumerate}
+Pour un \textbf{ion} : on part de l'atome neutre, puis on \emph{retire} (cation) ou \emph{ajoute}
+(anion) le bon nombre d'électrons.
+\end{methode}
+
+\begin{exemplebox}[le phosphore $Z = 15$]
+$15$ électrons : K$^2$, puis L$^8$ ($2+8=10$), puis les $5$ restants sur M. D'où
+$(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^5$ : la couche de valence est $\mathbf{(M)^5}$, avec $5$
+électrons de valence.
+\end{exemplebox}
+
+\begin{piege}[la couche de valence est la dernière occupée]
+Pour le phosphore, la valence est $(\mathrm{M})^5$, \textbf{pas} $(\mathrm{L})^5$ : la couche L est
+\emph{saturée} à $8$. On ne « saute » jamais une couche interne pour désigner la valence.
+\end{piege}
+
+\begin{remarque}[la couche M : tantôt $8$, tantôt $18$]
+Tant que M est la couche \emph{externe}, elle est plafonnée à $8$ (argon : $(\mathrm{K})^2(\mathrm{L})^8
+(\mathrm{M})^8$). Dès qu'une couche N s'ouvre au-dessus, M devient \emph{interne} et peut se remplir
+jusqu'à $18$ (brome : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^7$).
+\end{remarque}
+
+\begin{cle}[symbole de Lewis]
+On dispose les \textbf{électrons de valence} en points autour du symbole, un par côté d'abord, puis on
+les \textbf{apparie} : les paires sont des \textbf{doublets}, les points restés seuls des
+\textbf{électrons célibataires}. Exemple : l'oxygène ($6$ électrons de valence) $\to$ $2$ doublets et
+$2$ célibataires.
+\end{cle}
+
+\end{document}

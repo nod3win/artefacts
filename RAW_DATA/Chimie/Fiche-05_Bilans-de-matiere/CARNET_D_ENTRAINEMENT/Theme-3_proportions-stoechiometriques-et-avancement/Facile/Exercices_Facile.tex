@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[synthèse de l'ammoniac]
+On donne l'équation pondérée $\ce{N2 + 3 H2 -> 2 NH3}$ (rendement \qty{100}{\percent}).
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité de \ce{H2} réagit avec \qty{2}{\mole} de \ce{N2} ?
+  \item Quelle quantité de \ce{NH3} se forme à partir de \qty{2}{\mole} de \ce{N2} ?
+  \item Quelle quantité de \ce{N2} faut-il pour former \qty{5}{\mole} de \ce{NH3} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[combustion du méthane]
+Pour $\ce{CH4 + 2 O2 -> CO2 + 2 H2O}$ :
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité de \ce{O2} faut-il pour brûler \qty{3}{\mole} de \ce{CH4} ?
+  \item Quelle quantité de \ce{CO2} obtient-on à partir de \qty{0.5}{\mole} de \ce{CH4} ?
+  \item Quelle quantité de \ce{H2O} obtient-on à partir de \qty{0.5}{\mole} de \ce{CH4} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[chlorure d'aluminium]
+Pour $\ce{2 Al + 3 Cl2 -> 2 AlCl3}$ :
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité de \ce{Cl2} réagit avec \qty{4}{\mole} de \ce{Al} ?
+  \item Quelle quantité de \ce{AlCl3} se forme à partir de \qty{4}{\mole} de \ce{Al} ?
+  \item Quelle quantité de \ce{Al} faut-il pour former \qty{1}{\mole} de \ce{AlCl3} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[lire un tableau d'avancement]
+Pour $\ce{N2 + 3 H2 -> 2 NH3}$, on part de $n_0(\ce{N2})=\qty{1}{\mole}$ et
+$n_0(\ce{H2})=\qty{3}{\mole}$. La réaction atteint l'avancement $\xi=\qty{0.5}{\mole}$.
+Calcule à cet instant :
+\begin{enumerate}[label=\alph*)]
+  \item la quantité de \ce{N2} restante ;
+  \item la quantité de \ce{H2} restante ;
+  \item la quantité de \ce{NH3} formée.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[proportion puis reconversion]
+On brûle \qty{4}{\mole} de \ce{H2} selon $\ce{2 H2 + O2 -> 2 H2O}$. On donne
+$M(\ce{H2O})=\qty{18}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité d'eau se forme ?
+  \item Quelle masse d'eau cela représente-t-il ?
+  \item Quelle quantité de \ce{O2} a été consommée ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

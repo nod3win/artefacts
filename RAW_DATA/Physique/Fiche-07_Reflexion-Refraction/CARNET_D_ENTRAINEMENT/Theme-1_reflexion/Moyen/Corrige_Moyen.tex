@@ -1,0 +1,101 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[le miroir qui tourne]
+\begin{enumerate}[label=\alph*)]
+  \item Faire tourner le miroir de $\alpha$ fait tourner la normale de $\alpha$. Le rayon incident
+        étant fixe, l'angle d'incidence augmente de $\alpha$ : $\hat{\imath}'=\ang{30}+\ang{12}=\ang{42}$.
+  \item Le rayon réfléchi fait toujours l'angle $\hat{r}'=\hat{\imath}'$ de l'autre côté de la normale ;
+        comme la normale a tourné de $\alpha$ et que l'angle réfléchi a augmenté de $\alpha$, le rayon
+        réfléchi tourne au total de $2\alpha=\ang{24}$.
+        \[ \boxed{\text{Règle : un miroir qui tourne de }\alpha\text{ fait tourner le rayon réfléchi de }2\alpha.} \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[réflecteur en coin : deux miroirs perpendiculaires]
+\begin{enumerate}[label=\alph*)]
+  \item Loi de la réflexion en $A$ : $\hat{r}_1=\hat{\imath}_1=\ang{35}$.
+  \item Les deux miroirs sont perpendiculaires, donc leurs normales aussi. Le rayon $AB$ fait
+        $\ang{35}$ avec la normale de $M_1$, donc $\ang{90}-\ang{35}=\ang{55}$ avec la normale de $M_2$ :
+        \[ \hat{\imath}_2=\ang{55}. \]
+        (On retrouve la règle $\hat{\imath}_1+\hat{\imath}_2=\ang{90}$ pour deux miroirs perpendiculaires.)
+  \item Prenons les axes $Ox$ (miroir $M_2$) et $Oy$ (miroir $M_1$). La réflexion sur $M_1$ (vertical)
+        inverse la composante horizontale de la direction : $(u_x,u_y)\to(-u_x,u_y)$. La réflexion sur
+        $M_2$ (horizontal) inverse la composante verticale : $(-u_x,u_y)\to(-u_x,-u_y)=-\vv{u}$. Le rayon
+        sortant a donc la direction $-\vv{u}$ : il est \textbf{antiparallèle} au rayon entrant, quel que
+        soit l'angle d'entrée. C'est le principe du catadioptre.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le périscope]
+\begin{enumerate}[label=\alph*)]
+  \item Le miroir est incliné à $\ang{45}$ ; sa normale fait donc $\ang{45}$ avec l'horizontale. Le
+        rayon horizontal arrive sous un angle d'incidence $\hat{\imath}=\ang{45}$.
+  \item Réflexion sur le miroir 1 : $\hat{r}=\ang{45}$, le rayon est dévié de $2\hat{\imath}=\ang{90}$
+        et repart \textbf{verticalement vers le bas}. Il frappe le miroir 2 (aussi à $\ang{45}$) sous
+        $\ang{45}$, subit une seconde déviation de $\ang{90}$ et repart \textbf{horizontalement}. La
+        direction finale est donc \textbf{parallèle} au rayon entrant (et de même sens), simplement
+        décalée vers le bas : c'est ce qui permet de « voir par-dessus » un obstacle.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[se voir en entier dans un miroir]
+On applique $\hat{\imath}=\hat{r}$ aux rayons issus du sommet du crâne et des pieds, qui doivent tous
+deux parvenir à l'\oe il après réflexion.
+\begin{enumerate}[label=\alph*)]
+  \item Le rayon venant du sommet du crâne se réfléchit à mi-hauteur entre le crâne et les yeux ; le
+        rayon venant des pieds se réfléchit à mi-hauteur entre les pieds et les yeux. La portion utile
+        du miroir s'étend donc du milieu [pieds–yeux] au milieu [crâne–yeux], soit une hauteur égale à
+        la \textbf{moitié de la taille} :
+        \[ h_{\min}=\frac{H}{2}=\frac{\qty{1.80}{m}}{2}=\qty{0.90}{m}. \]
+  \item \textbf{Non} : le calcul ne fait intervenir que les hauteurs, jamais la distance au miroir. La
+        hauteur minimale reste $H/2$, que la personne soit près ou loin du miroir.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[retrouver l'angle entre deux miroirs]
+Par la loi de la réflexion, le rayon interne (entre les deux miroirs) fait le même angle avec chaque
+miroir que, respectivement, le rayon entrant et le rayon sortant : il fait donc $\ang{30}$ avec le
+miroir inférieur et $\ang{40}$ avec le miroir supérieur. Ces deux angles sont ceux du triangle formé
+par les deux miroirs et le trajet interne, dont le troisième sommet ($O$) porte l'angle $\theta$. La
+somme des angles d'un triangle vaut $\ang{180}$ :
+\[ \theta+\ang{30}+\ang{40}=\ang{180}\;\Longrightarrow\;\boxed{\theta=\ang{110}}. \]
+\end{corrige}
+
+\end{document}

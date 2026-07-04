@@ -1,0 +1,105 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Solutions tampons, titrages et hydrolyse des sels
+\sisetup{per-mode=symbol}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 5 — Tampons, titrages \& hydrolyse des sels}\\[2pt]
+{\color{primary}\itshape Trois applications directes de l'équation de Henderson et du $\mathrm{p}K_a$}
+\end{center}
+
+\medskip
+Ce dernier thème met en œuvre tout ce qui précède sur trois applications-phares : les \textbf{solutions
+tampons}, les \textbf{titrages} et l'\textbf{hydrolyse des sels}.
+
+\begin{cle}[solution tampon]
+Un \textbf{tampon} est un mélange d'un \textbf{acide faible} et de sa \textbf{base conjuguée} en proportions
+notables. Son pH, donné par Henderson $\mathrm{pH} = \mathrm{p}K_a + \log\frac{[\ce{A-}]}{[\ce{HA}]}$, est
+\textbf{voisin du $\mathrm{p}K_a$} et \textbf{varie très peu} si l'on ajoute un peu d'acide/base ou si l'on
+dilue. Zone d'efficacité : $\mathrm{p}K_a \pm 1$. Un ajout d'acide fort est consommé par \ce{A-}
+($\ce{A- + H3O+ -> HA}$) ; un ajout de base forte, par \ce{HA} ($\ce{HA + OH- -> A- + H2O}$).
+\end{cle}
+
+\begin{cle}[titrage : la relation à l'équivalence]
+À l'équivalence, réactifs mélangés en proportions stœchiométriques. Pour un monoacide/monobase :
+\[ \boxed{C_a V_a = C_b V_b}. \]
+Pour un \textbf{diacide} (\ce{H2SO4}) ou un \textbf{triacide} (\ce{H3PO4}) titré par une monobase, on introduit
+le nombre d'acidités : $\,2\,C_a V_a = C_b V_b\,$ (diacide), $\,3\,C_a V_a = C_b V_b\,$ (triacide).
+\end{cle}
+
+% --- courbe de titrage compacte (auto-contenue) ---
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=9.2cm,height=4.6cm,xlabel={\footnotesize $V$ de base versé (mL)},ylabel={\footnotesize pH},
+  xmin=0,xmax=30,ymin=0,ymax=14,xtick={0,10,20,30},ytick={0,7,14},
+  axis lines=left,tick label style={font=\scriptsize},grid=none,every axis plot/.append style={line width=1.1pt}]
+  \addplot[attncol,smooth] coordinates {(0,1)(5,1.5)(12,2.1)(18,2.8)(19.5,3.6)(20,7)(20.5,10.4)(24,11.6)(30,12.2)};
+  \draw[dashed,black!45] (axis cs:20,0) -- (axis cs:20,14);
+  \node[black!55,font=\scriptsize] at (axis cs:24.5,6){équivalence};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\vspace{-2mm}
+{\footnotesize\itshape Courbe d'un acide fort par une base forte : saut de pH brutal centré sur l'équivalence
+(ici $\mathrm{pH}_E = 7$).}
+
+\begin{cle}[pH à l'équivalence \& hydrolyse d'un sel (à \qty{25}{\celsius})]
+Le pH à l'équivalence — et le caractère d'une solution de sel — dépend de la force des partenaires :
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Sel de\ldots} & \textbf{Exemple} & \textbf{Solution} \\
+\midrule
+acide fort + base forte  & \ce{NaCl}       & \textbf{neutre} (pH $=7$) \\
+acide faible + base forte & \ce{CH3COONa}  & \textbf{basique} (pH $>7$) \\
+acide fort + base faible  & \ce{NH4Cl}     & \textbf{acide} (pH $<7$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+La base conjuguée \ce{A-} d'un acide faible capte un \ce{H+} de l'eau (libère \ce{OH-}) ; l'acide conjugué
+\ce{NH4+} d'une base faible cède un \ce{H+} à l'eau (libère \ce{H3O+}).
+\end{cle}
+
+\begin{piege}[deux réflexes de contrôle]
+\textbf{(1)} À l'équivalence, $[\ce{H3O+}]$ n'est \emph{jamais} nul (l'autoprotolyse en maintient $\geq
+10^{-7}$). \quad \textbf{(2)} À la \textbf{demi-équivalence} d'un acide faible, $\mathrm{pH} = \mathrm{p}K_a$
+(la moitié de l'acide est neutralisée : $[\ce{HA}] = [\ce{A-}]$).
+\end{piege}
+
+\end{document}

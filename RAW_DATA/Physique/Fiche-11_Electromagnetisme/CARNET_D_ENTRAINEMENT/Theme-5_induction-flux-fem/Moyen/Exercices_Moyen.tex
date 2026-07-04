@@ -1,0 +1,104 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[calculer une f.é.m. induite]
+Une bobine de $N=100$ spires voit le flux à travers chaque spire passer de \qty{2e-3}{\weber} à
+\qty{8e-3}{\weber} en une durée $\Delta t=\qty{0.05}{\second}$. Calcule la valeur (en norme) de la
+f.é.m. induite.
+\end{exo}
+
+\begin{exo}[l'angle avec le plan]
+Une spire d'aire $S=\qty{0.05}{\metre\squared}$ est plongée dans un champ $B=\qty{0.2}{\tesla}$. On
+donne l'angle $\beta=\ang{30}$ entre $\vv{B}$ et le \textbf{plan} de la spire.
+\begin{enumerate}[label=\alph*)]
+  \item Quel est l'angle $\alpha$ entre $\vv{B}$ et le vecteur surface $\vv{S}$ ?
+  \item Calcule le flux magnétique. (On donne $\cos\ang{60}=0{,}5$.)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[sens du courant induit]
+On approche le pôle \textbf{Nord} d'un aimant d'une bobine, puis on l'éloigne.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \foreach \x in {-1.4,-1.05,...,-0.35}{\draw[orange!75!black,line width=1pt] (\x,-0.6) .. controls (\x+0.1,0) and (\x+0.2,0) .. (\x+0.1,0.6);}
+  \draw[black,line width=0.8pt] (-1.4,0.6)--(-1.4,1.1)--(0.2,1.1); \draw[black,fill=white,line width=0.8pt] (0.2,1.1) circle (0.25); \node[font=\footnotesize] at (0.2,1.1){A};
+  \draw[black,line width=0.8pt] (0.2,0.85)--(0.2,-0.6)--(-1.4,-0.6);
+  \fill[red!75] (1.5,-0.3) rectangle (2.2,0.3); \fill[blue!65] (2.2,-0.3) rectangle (2.9,0.3);
+  \node[white,font=\bfseries\footnotesize] at (1.85,0){N}; \node[white,font=\bfseries\footnotesize] at (2.55,0){S};
+  \draw[primary,->,line width=1.2pt] (3.0,0.6)--(1.3,0.6); \node[primary,above,font=\footnotesize] at (2.1,0.6){on approche};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Pendant l'\textbf{approche}, quelle face (Nord ou Sud) la bobine présente-t-elle à l'aimant ?
+        L'attire-t-elle ou le repousse-t-elle ?
+  \item Pendant l'\textbf{éloignement}, mêmes questions.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[f.é.m. maximale d'un alternateur]
+Une bobine de $N=100$ spires, d'aire $S=\qty{0.02}{\metre\squared}$, tourne à la fréquence
+$f=\qty{50}{\hertz}$ dans un champ $B=\qty{0.1}{\tesla}$. La f.é.m. induite est
+$e(t)=N\omega BS\sin(\omega t)$, avec $\omega=2\pi f$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la pulsation $\omega$.
+  \item Calcule la valeur maximale $e_{\max}=N\omega BS$ de la f.é.m.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le disque freiné (courants de Foucault)]
+Un disque métallique oscille comme un pendule entre les deux pôles d'un électro-aimant.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[black,line width=0.8pt] (0,1.4)--(0,1.7); \fill (0,1.7) circle (1.3pt);
+  \draw[black,line width=0.8pt] (0,1.7)--(-0.5,0.2);
+  \draw[gray!70,fill=gray!25,line width=0.8pt] (-0.5,0.2) circle (0.55);
+  \fill[red!75] (-1.9,-0.45) rectangle (-1.3,0.55); \node[white,font=\bfseries\footnotesize] at (-1.6,0.05){N};
+  \fill[blue!65] (0.4,-0.45) rectangle (1.0,0.55); \node[white,font=\bfseries\footnotesize] at (0.7,0.05){S};
+  \foreach \y in {-0.15,0.15,0.45}{\draw[blue!60!black,line width=0.9pt,->] (-1.25,\y)--(0.35,\y);}
+  \node[blue!60!black,font=\footnotesize] at (-0.45,-0.75){$\vv{B}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Le disque est \textbf{plein}. Que se passe-t-il quand on allume l'électro-aimant ? Pourquoi ?
+  \item On remplace le disque plein par un disque \textbf{fendu} (entaillé de fentes radiales). Que
+        devient le freinage ? Quel principe des transformateurs cela illustre-t-il ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

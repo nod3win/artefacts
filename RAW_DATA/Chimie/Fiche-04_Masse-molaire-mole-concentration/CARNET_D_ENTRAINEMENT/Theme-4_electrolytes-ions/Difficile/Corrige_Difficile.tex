@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}{\large\bfseries\color{primarydark} Thème 4 — Corrigé Difficile}\end{center}
+
+\begin{corrige}[trois sources d'ions chlorure]
+On somme les \ce{Cl-} apportés (coefficients $1$, $2$, $3$), volume total $\SI{1}{\litre}$ :
+\[ n(\ce{Cl-}) = 0{,}05\times 1 + 0{,}03\times 2 + 0{,}02\times 3 = 0{,}05 + 0{,}06 + 0{,}06 = \SI{0.17}{\mole}. \]
+\[ [\ce{Cl-}] = \frac{0{,}17}{1} = \SI{0.17}{\mole\per\litre}. \]
+\end{corrige}
+
+\begin{corrige}[mélange de deux nitrates]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{NO3-}) = \underbrace{0{,}050\times 0{,}010\times 2}_{\ce{Mg(NO3)2}}
+        + \underbrace{0{,}050\times 0{,}020\times 3}_{\ce{Al(NO3)3}} = 0{,}001 + 0{,}003 = \SI{4.0e-3}{\mole}$,
+        d'où $[\ce{NO3-}] = \dfrac{4{,}0\times10^{-3}}{0{,}100} = \SI{0.040}{\mole\per\litre}$.
+  \item Chaque cation est simplement dilué dans $\SI{100}{\milli\litre}$ :
+        $[\ce{Mg^2+}] = \dfrac{0{,}050\times 0{,}010}{0{,}100} = \SI{5.0e-3}{\mole\per\litre}$ ;
+        $[\ce{Al^3+}] = \dfrac{0{,}050\times 0{,}020}{0{,}100} = \SI{1.0e-2}{\mole\per\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[électroneutralité]
+La somme des charges positives égale la somme des charges négatives :
+\[ 1\times[\ce{Na+}] + 2\times[\ce{Ca^2+}] = 1\times[\ce{Cl-}]. \]
+\[ [\ce{Cl-}] = 0{,}10 + 2\times 0{,}05 = \SI{0.20}{\mole\per\litre}. \]
+\end{corrige}
+
+\begin{corrige}[remonter à la masse de sel]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CaCl2 -> Ca^2+ + 2 Cl-} donne $[\ce{Cl-}] = 2C$, donc $C = \dfrac{0{,}40}{2} = \SI{0.20}{\mole\per\litre}$.
+  \item $n(\ce{CaCl2}) = C\,V = 0{,}20\times 0{,}250 = \SI{0.050}{\mole}$, soit
+        $m = 0{,}050\times 111 = \SI{5.55}{\gram}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[toutes les concentrations d'ions]
+$n(\ce{NaCl}) = \dfrac{5{,}85}{58{,}5} = \SI{0.100}{\mole}$ ; $n(\ce{CaCl2}) = \dfrac{11{,}1}{111} = \SI{0.100}{\mole}$ ; $V = \SI{0.500}{\litre}$.
+\begin{enumerate}[label=\alph*)]
+  \item $[\ce{Na+}] = \dfrac{0{,}100}{0{,}500} = \SI{0.200}{\mole\per\litre}$ ;
+        $[\ce{Ca^2+}] = \dfrac{0{,}100}{0{,}500} = \SI{0.200}{\mole\per\litre}$.
+  \item $n(\ce{Cl-}) = 0{,}100\times 1 + 0{,}100\times 2 = \SI{0.300}{\mole}$, donc
+        $[\ce{Cl-}] = \dfrac{0{,}300}{0{,}500} = \SI{0.600}{\mole\per\litre}$.
+  \item Charges $+$ : $1\times 0{,}200 + 2\times 0{,}200 = 0{,}600$ ; charges $-$ : $1\times 0{,}600 = 0{,}600$.
+        Égales : la solution est bien neutre.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,98 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Les lois historiques et les transformations d'un gaz
+
+Chaque loi historique décrit une transformation où \textbf{deux} des quatre variables sont
+\textbf{fixées} : on relie alors les deux autres par une égalité de rapports. Tout le thème repose sur
+une seule question : \emph{qu'est-ce qui reste constant ?}
+
+\begin{cle}[Les quatre transformations élémentaires]
+\begin{center}\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{l l l l}
+\toprule
+\rowcolor{primary!12}
+\textbf{Transformation} & \textbf{Constant} & \textbf{Relation} & \textbf{Nom}\\
+\midrule
+isotherme  & $n,\ T$ & $p_1 V_1 = p_2 V_2$              & Boyle-Mariotte\\
+isobare    & $n,\ p$ & $\dfrac{V_1}{T_1}=\dfrac{V_2}{T_2}$ & Charles--Gay-Lussac\\
+isochore   & $n,\ V$ & $\dfrac{p_1}{T_1}=\dfrac{p_2}{T_2}$ & (à $V$ constant)\\
+\multicolumn{1}{l}{$p,T$ constants} & $p,\ T$ & $\dfrac{V_1}{n_1}=\dfrac{V_2}{n_2}$ & Avogadro\\
+\bottomrule
+\end{tabular}
+\end{center}
+Toutes se déduisent de l'équation d'état $pV=nRT$ en fixant deux variables.
+\end{cle}
+
+\begin{cle}[La loi combinée (deux variables changent)]
+Quand seule $n$ est constante et que $p$, $V$ \emph{et} $T$ varient tous, on combine tout :
+\[ \boxed{\,\dfrac{p_1 V_1}{T_1}=\dfrac{p_2 V_2}{T_2}\,} \]
+Les trois lois historiques en sont des cas particuliers (il suffit de simplifier la variable qui ne
+change pas).
+\end{cle}
+
+\begin{methode}[Résoudre une transformation]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Repère ce qui est constant} ($T$ ? $p$ ? $V$ ?) $\to$ choisis la relation.
+  \item \textbf{Convertis les températures en kelvins} (indispensable dès qu'un $T$ apparaît dans un
+        rapport).
+  \item \textbf{Isole l'inconnue} littéralement, \emph{puis} remplace par les valeurs.
+  \item \textbf{Vérifie le sens} : comprimer $\Rightarrow$ $p\!\uparrow$ ; chauffer à $p$ constant
+        $\Rightarrow$ $V\!\uparrow$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[proportions directes et inverses]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Boyle} (à $T$ constante) : $p$ et $V$ sont \emph{inversement} proportionnels. Doubler
+        $p$ $\Rightarrow$ diviser $V$ par $2$.
+  \item \textbf{Charles} (à $p$ constante) : $V$ et $T$ sont \emph{directement} proportionnels. Doubler
+        $T$ (en \si{\kelvin}) $\Rightarrow$ doubler $V$.
+  \item \textbf{Isochore} (à $V$ constant) : $p$ et $T$ sont \emph{directement} proportionnels. C'est
+        pourquoi la pression d'un pneu monte quand il chauffe.
+\end{itemize}
+\end{exemplebox}
+
+\begin{piege}[le rapport de températures se fait en kelvins]
+Une transformation « de \qty{27}{\degreeCelsius} à \qty{87}{\degreeCelsius} » à $p$ constant ne
+multiplie \emph{pas} le volume par $87/27$, mais par $\dfrac{360}{300}=1{,}2$. Toujours convertir en
+kelvins \emph{avant} de former le rapport. En revanche, pour Boyle ($p_1V_1=p_2V_2$), aucune
+température n'intervient : seules $p$ et $V$ comptent, dans n'importe quelle unité cohérente.
+\end{piege}
+
+\end{document}

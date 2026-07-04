@@ -1,0 +1,134 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[quel est le signe de la charge ?]
+Voici deux spectres de charges ponctuelles isolées.
+\begin{center}
+\begin{tikzpicture}[scale=0.62,>=Stealth,font=\scriptsize,
+    ch/.style={circle,minimum size=6.5mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \begin{scope}[xshift=-3.2cm]
+    \foreach \a in {0,45,...,315}{\draw[->,excol,line width=0.8pt] (0,0)--(\a:1.7);}
+    \node[ch,fill=black!45] at (0,0) {?};
+    \node[primarydark,font=\bfseries] at (0,-2.4) {spectre I};
+  \end{scope}
+  \begin{scope}[xshift=3.2cm]
+    \foreach \a in {0,45,...,315}{\draw[->,excol,line width=0.8pt] (\a:1.7)--(0,0);}
+    \node[ch,fill=black!45] at (0,0) {?};
+    \node[primarydark,font=\bfseries] at (0,-2.4) {spectre II};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le signe de la charge du spectre I ?
+  \item Quel est le signe de la charge du spectre II ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[lecture d'un dipôle]
+Le spectre ci-dessous est celui de deux charges opposées.
+\begin{center}
+\begin{tikzpicture}[scale=0.8,>=Stealth,font=\scriptsize,
+    ch/.style={circle,minimum size=7mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \node[ch,fill=black!45] (p) at (-1.6,0) {$X$};
+  \node[ch,fill=black!45] (n) at (1.6,0) {$Y$};
+  \draw[->,excol,line width=0.8pt] (-1.25,0)--(1.25,0);
+  \foreach \s in {0.75,1.4}{
+    \draw[->,excol,line width=0.8pt] (-1.35,0.16*\s) .. controls (-0.6,\s) and (0.6,\s) .. (1.35,0.16*\s);
+    \draw[->,excol,line width=0.8pt] (-1.35,-0.16*\s) .. controls (-0.6,-\s) and (0.6,-\s) .. (1.35,-0.16*\s);}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Laquelle des deux charges ($X$ ou $Y$) est positive ?
+  \item Justifie en une phrase à partir du sens des lignes.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[où le champ est-il le plus fort ?]
+Autour d'une charge ponctuelle, on repère deux points : $P$ (proche de la charge) et $Q$ (éloigné).
+\begin{center}
+\begin{tikzpicture}[scale=0.7,>=Stealth,font=\scriptsize,
+    ch/.style={circle,minimum size=6.5mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  \foreach \a in {0,45,...,315}{\draw[->,excol,line width=0.8pt] (0,0)--(\a:2.4);}
+  \node[ch,fill=attncol] at (0,0) {$+$};
+  \node[circle,fill=black,inner sep=1.3pt,label=above:{$P$}] at (0.95,0.0) {};
+  \node[circle,fill=black,inner sep=1.3pt,label=above:{$Q$}] at (2.15,0.0) {};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item En quel point le champ est-il le plus intense ? Justifie par la densité des lignes.
+  \item Si l'on \emph{double} la charge, les lignes de champ deviennent-elles plus denses ou plus
+        espacées ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le condensateur plan]
+Un condensateur plan a son armature \textbf{supérieure} chargée $+$ et son armature
+\textbf{inférieure} chargée $-$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,font=\scriptsize]
+  \fill[attncol!35] (-2.4,1.1) rectangle (2.4,1.25); \node[attncol,font=\bfseries] at (2.9,1.18){$+$};
+  \fill[defcol!35] (-2.4,-1.25) rectangle (2.4,-1.1); \node[defcol,font=\bfseries] at (2.9,-1.18){$-$};
+  \foreach \x in {-1.8,-0.9,0,0.9,1.8}{\draw[->,excol,line width=0.9pt] (\x,1.0)--(\x,-1.0);}
+  \node[left,font=\scriptsize] at (-2.5,1.18){$A$}; \node[left,font=\scriptsize] at (-2.5,-1.18){$B$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Dans quel sens est orienté le champ $\vv{E}$ entre les armatures ?
+  \item Quelle armature ($A$ ou $B$) est au potentiel le plus élevé ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une propriété interdite]
+On propose le spectre suivant, où deux lignes de champ \textbf{se croisent} au point $X$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,font=\scriptsize]
+  \draw[->,excol,line width=0.9pt] (-2,-1) .. controls (-0.3,0.2) and (0.3,0.2) .. (2,-1);
+  \draw[->,excol,line width=0.9pt] (-2,1) .. controls (-0.3,-0.2) and (0.3,-0.2) .. (2,1);
+  \node[circle,fill=black,inner sep=1.3pt,label=below:{$X$}] at (0,0.02) {};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Ce spectre est-il physiquement possible ? Justifie.
+  \item Quelle propriété fondamentale des lignes de champ est violée en $X$ ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

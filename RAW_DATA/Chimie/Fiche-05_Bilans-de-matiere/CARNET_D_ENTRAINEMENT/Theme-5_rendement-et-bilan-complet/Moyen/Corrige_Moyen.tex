@@ -1,94 +1,81 @@
-% =====================================================================
-%  THÈME 5 — Rendement et bilan complet
-%  Niveau MOYEN — Corrigé
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{142,93,168}
-\definecolor{primarydark}{RGB}{82,45,108}
-\definecolor{corrcol}{RGB}{176,110,20}
-\newcommand{\nq}[1]{n_{\text{#1}}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 5 : Rendement}}
-\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Moyen}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
-  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
-  fonttitle=\bfseries,coltitle=white,
-  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-
-\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[rendement d'une fermentation]
+\begin{enumerate}[label=\alph*)]
+  \item $n_{\text{théo}}(\ce{C2H5OH})=n(\ce{glucose})\times\dfrac{2}{1}=0,5\times2=\qty{1}{\mole}.$
+  \item $n_{\text{réel}}=\dfrac{11,5}{46}=\qty{0.25}{\mole}.$
+  \item $R=\dfrac{0,25}{1}\times100=\qty{25}{\percent}.$
+\end{enumerate}
+\end{corrige}
 
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement}\\[1pt]
-{\large\color{corrcol}\textbf{Corrigé — Niveau Moyen}}\\
-{\color{primary}\rule{0.6\linewidth}{1pt}}
-\end{center}
+\begin{corrige}[calcination du calcaire]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{CaCO3})=\dfrac{100}{100}=\qty{1}{\mole}$ ; rapport $1:1$ donc
+        $n_{\text{théo}}(\ce{CaO})=\qty{1}{\mole}$, soit $m_{\text{théo}}=1\times56=\qty{56}{\gram}.$
+  \item $R=\dfrac{42}{56}\times100=\qty{75}{\percent}.$
+\end{enumerate}
+\end{corrige}
 
-\begin{cor}[fermentation du glucose]
-\textbf{a)} Ratio \ce{C6H12O6}:\ce{C2H5OH}$=1:2$ :
-$\nq{éthanol,théo}=2\times0{,}50=1{,}0$~mol, soit $m_{\text{théo}}=1{,}0\times46=\SI{46}{\gram}$.\\
-\textbf{b)} $R=\dfrac{m_{\text{réel}}}{m_{\text{théo}}}\times100=\dfrac{11{,}5}{46}\times100=\boxed{\SI{25}{\percent}}$.
-\rep{Ou en moles : $n_{\text{réel}}=11{,}5/46=0{,}25$~mol, $R=0{,}25/1{,}0=25\,\%$.}
-\end{cor}
+\begin{corrige}[remonter du produit voulu au réactif]
+\begin{enumerate}[label=\alph*)]
+  \item $n_{\text{théo}}=\dfrac{n_{\text{réel}}}{R/100}=\dfrac{0,9}{0,75}=\qty{1.2}{\mole}.$
+  \item $n(\ce{N2})=n_{\text{théo}}(\ce{NH3})\times\dfrac{1}{2}=1,2\times0,5=\qty{0.6}{\mole}.$
+\end{enumerate}
+\end{corrige}
 
-\begin{cor}[aluminothermie du fer]
-\textbf{a)} $\nq{FeO}=\dfrac{144}{72}=2$~mol ; $\nq{Al}=\dfrac{27}{27}=1$~mol. Rapports :
-$\frac{2}{3}\approx0{,}667$ et $\frac{1}{2}=0{,}5$. \boxed{\text{\ce{Al} est limitant}}.\\
-\textbf{b)} $\nq{Fe,théo}=\nq{Al}\times\dfrac{3}{2}=1\times1{,}5=1{,}5$~mol, soit
-$m_{\text{théo}}=1{,}5\times56=\SI{84}{\gram}$.\\
-\textbf{c)} $R=\dfrac{42}{84}\times100=\boxed{\SI{50}{\percent}}$.
-\end{cor}
+\begin{corrige}[rendement à partir du limitant]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{Al})=\dfrac{2,7}{27}=\qty{0.1}{\mole}$ ; $n(\ce{ZnCl2})=0,5\times0,200=\qty{0.1}{\mole}$.
+        Rapports : \ce{ZnCl2} $\frac{0,1}{3}\approx0,033$ ; \ce{Al} $\frac{0,1}{2}=0,05$.
+        \textbf{\ce{ZnCl2} est limitant} ; $n_{\text{théo}}(\ce{Zn})=0,1\times\frac{3}{3}=\qty{0.1}{\mole}.$
+  \item $m_{\text{théo}}=0,1\times65,4=\qty{6.54}{\gram}.$
+  \item $R=\dfrac{3,27}{6,54}\times100=\qty{50}{\percent}.$
+\end{enumerate}
+\end{corrige}
 
-\begin{cor}[synthèse du carbure de silicium]
-\textbf{a)} $\nq{SiO2}=\dfrac{120000}{60}=2000$~mol ; $\nq{C}=\dfrac{36000}{12}=3000$~mol. Rapports :
-$\frac{2000}{1}=2000$ et $\frac{3000}{3}=1000$. \boxed{\text{le carbone \ce{C} est limitant}}.\\
-\textbf{b)} $\nq{SiC,théo}=\nq{C}\times\dfrac{1}{3}=1000$~mol, soit
-$m_{\text{théo}}=1000\times40=\SI{40000}{\gram}=\SI{40}{\kilo\gram}$.\\
-\textbf{c)} $R=\dfrac{32}{40}\times100=\boxed{\SI{80}{\percent}}$.
-\end{cor}
-
-\begin{cor}[préparation du carbonate de sodium]
-\textbf{a)} $\nq{NaCl}=\dfrac{29{,}25}{58{,}5}=0{,}50$~mol ; $\nq{CaCO3}=\dfrac{45{,}0}{100}=0{,}45$~mol.
-Rapports : $\frac{0{,}50}{2}=0{,}25$ et $\frac{0{,}45}{1}=0{,}45$. \boxed{\text{\ce{NaCl} est limitant}}.\\
-\textbf{b)} $\nq{Na2CO3,théo}=\nq{NaCl}\times\dfrac{1}{2}=0{,}25$~mol, soit
-$m_{\text{théo}}=0{,}25\times106=\SI{26,5}{\gram}$.
-\[
-R=\frac{13{,}25}{26{,}5}\times100=\boxed{\SI{50}{\percent}}.
-\]
-\end{cor}
-
-\begin{cor}[combustion du sulfure d'hydrogène avec pertes]
-\textbf{a)} $\nq{H2S}=\dfrac{10{,}2}{34}=0{,}30$~mol ; $\nq{O2}=\dfrac{9{,}6}{32}=0{,}30$~mol. Rapports :
-$\frac{0{,}30}{2}=0{,}15$ et $\frac{0{,}30}{3}=0{,}10$. \boxed{\text{\ce{O2} est limitant}}.\\
-\textbf{b)} Théorique : $\nq{SO2,théo}=\nq{O2}\times\dfrac{2}{3}=0{,}30\times\dfrac{2}{3}=0{,}20$~mol.
-Avec $R=\SI{50}{\percent}$ : $\nq{SO2,réel}=\dfrac{50}{100}\times0{,}20=0{,}10$~mol, soit
-$m=0{,}10\times64=\boxed{\SI{6,4}{\gram}}$.
-\end{cor}
+\begin{corrige}[synthèse du trioxyde de soufre]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{SO2})=\dfrac{128}{64}=\qty{2}{\mole}$ ; rapport $2:2$ donc
+        $n_{\text{théo}}(\ce{SO3})=\qty{2}{\mole}$, soit $m_{\text{théo}}=2\times80=\qty{160}{\gram}.$
+  \item $R=\dfrac{120}{160}\times100=\qty{75}{\percent}.$
+\end{enumerate}
+\end{corrige}
 
 \end{document}

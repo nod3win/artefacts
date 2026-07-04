@@ -1,0 +1,125 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[deux forces, deux configurations]
+Sur un solide plan, deux forces parallèles sont appliquées en $A$ et $B$, distants de
+$\overline{AB}=\qty{70}{cm}$ : $F_1=\qty{1}{N}$ et $F_2=\qty{2.5}{N}$. On considère le cas \textbf{a)}
+où elles sont de même sens, et le cas \textbf{b)} où elles sont de sens opposé.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.95]
+  \begin{scope}
+    \draw[primary!60,line width=1.4pt] (-2,0)--(2,0);
+    \fill (-1.5,0) circle (1.2pt) node[above=2pt]{$A$};
+    \fill (1.5,0) circle (1.2pt) node[above=2pt]{$B$};
+    \draw[->,line width=1pt,defcol] (-1.5,0)--(-1.5,-0.8) node[below]{\scriptsize $\vv F_1$};
+    \draw[->,line width=1pt,attncol] (1.5,0)--(1.5,-1.5) node[below]{\scriptsize $\vv F_2$};
+    \node at (0,-2.1){\footnotesize a) même sens};
+  \end{scope}
+  \begin{scope}[shift={(6,0)}]
+    \draw[primary!60,line width=1.4pt] (-2,0)--(2,0);
+    \fill (-1.5,0) circle (1.2pt) node[below=2pt]{$A$};
+    \fill (1.5,0) circle (1.2pt) node[above=2pt]{$B$};
+    \draw[->,line width=1pt,defcol] (-1.5,0)--(-1.5,-0.8) node[below]{\scriptsize $\vv F_1$};
+    \draw[->,line width=1pt,attncol] (1.5,0)--(1.5,1.5) node[above]{\scriptsize $\vv F_2$};
+    \node at (0,-2.1){\footnotesize b) sens opposé};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+Pour chaque proposition, dis si elle est \textbf{correcte} ou non (en justifiant) :
+\begin{enumerate}[label=\alph*)]
+  \item Dans les deux cas, la résultante est parallèle à $\vv F_1$ et $\vv F_2$.
+  \item Dans le cas b), l'intensité de la résultante vaut \qty{1.5}{N}.
+  \item Dans le cas a), le point d'application de la résultante est situé entre $A$ et $B$, à
+        \qty{20}{cm} de $B$.
+  \item Dans le cas b), la résultante s'applique à l'extérieur de $[AB]$, du côté de $A$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[tige maintenue horizontale par une masse]
+Une tige horizontale rigide, de masse négligeable, subit à ses extrémités $A$ et $B$
+($\overline{AB}=\qty{100}{cm}$) deux forces parallèles de \textbf{même sens} dirigées vers le haut :
+$F_1=\qty{1}{N}$ en $A$ et $F_2=\qty{2.5}{N}$ en $B$. Pour la maintenir horizontale, on suspend un
+objet de masse $m$ en un point $O$ ($g=\qty{10}{N/kg}$).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[primary!60,line width=1.5pt] (-2.6,0)--(2.6,0);
+  \fill (-2.2,0) circle (1.3pt) node[below=2pt]{$A$};
+  \fill (2.2,0) circle (1.3pt) node[below=2pt]{$B$};
+  \fill (0.9,0) circle (1.3pt) node[above=2pt]{$O$};
+  \draw[->,line width=1pt,defcol] (-2.2,0)--(-2.2,1) node[above]{\scriptsize $\vv F_1$};
+  \draw[->,line width=1pt,attncol] (2.2,0)--(2.2,1.6) node[above]{\scriptsize $\vv F_2$};
+  \draw[orange,line width=1pt] (0.9,0)--(0.9,-0.7);
+  \draw[fill=primary!25,draw=primary!70](0.7,-1.05) rectangle (1.1,-0.7);
+  \draw[->,line width=1pt,orange] (0.9,-1.05)--(0.9,-1.7) node[below]{\scriptsize $\vv G$};
+\end{tikzpicture}
+\end{center}
+Indique si chaque proposition est \textbf{correcte} ou \textbf{fausse}, en justifiant.
+\begin{enumerate}[label=\alph*)]
+  \item La masse de l'objet suspendu vaut \qty{35}{g}.
+  \item Le rapport $\dfrac{\overline{AO}}{\overline{BO}}$ vaut $2{,}5$.
+  \item La somme des moments des forces par rapport à l'axe passant par $O$ est nulle.
+  \item Cette somme des moments par rapport à $O$ est égale à
+        $F_2\times\overline{BO} - F_1\times\overline{AO} + G\times 0 > 0$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[composition de trois forces parallèles]
+Trois forces parallèles de \textbf{même sens} sont appliquées sur une règle, aux points $A$, $B$, $C$
+alignés : $F_1=\qty{10}{N}$ en $A$, $F_2=\qty{20}{N}$ en $B$, $F_3=\qty{30}{N}$ en $C$. On repère les
+positions par leur abscisse : $x_A=0$, $x_B=\qty{30}{cm}$, $x_C=\qty{60}{cm}$. On compose
+\emph{de proche en proche}.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine l'intensité et la position de la résultante $\vv R_{12}$ de $\vv F_1$ et $\vv F_2$.
+  \item Compose ensuite $\vv R_{12}$ avec $\vv F_3$ : donne l'intensité et la position de la
+        résultante \emph{globale}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[résultante et force équilibrante]
+Sur une barre, $F_1=\qty{3}{N}$ (en $A$, vers le bas) et $F_2=\qty{8}{N}$ (en $B$, vers le haut) sont
+parallèles et \textbf{de sens opposé}, avec $\overline{AB}=\qty{40}{cm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité et le sens de la résultante $\vv F_r$.
+  \item Situe son point d'application $O$ (côté et distance à $B$).
+  \item Quelle force équilibrante faut-il appliquer en $O$, et de quel sens, pour immobiliser la
+        barre ? Vérifie que $\sum\vv F=\vv 0$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

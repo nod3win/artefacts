@@ -1,0 +1,135 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[quelle force a la plus grande intensité ?]
+Une barre est en équilibre autour d'un pivot central $O$. Trois forces verticales s'y appliquent :
+$\vv F_1$ (vers le bas, à $\qty{0.4}{m}$ à gauche de $O$), $\vv F_3$ (vers le bas, à $\qty{0.2}{m}$ à
+droite de $O$) et $\vv F_2$ (vers le haut, appliquée \emph{en} $O$). On donne $F_1=\qty{10}{N}$. \emph{Les
+longueurs dessinées ne reflètent pas les intensités réelles.}
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \fill[primary!75] (0,0)--(-0.35,-0.65)--(0.35,-0.65)--cycle;
+  \node[below=4pt] at (0,-0.55){\scriptsize $O$};
+  \draw[primarydark,line width=2pt] (-2.6,0.12)--(2.6,0.12);
+  \draw[->,line width=1.2pt,defcol] (-2,0.12)--(-2,-0.9) node[below]{\scriptsize $\vv F_1$};
+  \draw[->,line width=1.2pt,defcol] (1.3,0.12)--(1.3,-0.9) node[below]{\scriptsize $\vv F_3$};
+  \draw[->,line width=1.2pt,attncol] (0,0.12)--(0,1.5) node[above]{\scriptsize $\vv F_2$};
+  \draw[<->,black!55] (-2,0.55)--(0,0.55) node[midway,fill=white,inner sep=1pt]{\scriptsize \qty{0.4}{m}};
+  \draw[<->,black!55] (0,0.9)--(1.3,0.9) node[midway,fill=white,inner sep=1pt]{\scriptsize \qty{0.2}{m}};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item En écrivant l'équilibre de rotation autour de $O$, exprime $F_3$ en fonction de $F_1$, et calcule $F_3$.
+  \item En écrivant l'équilibre de translation, calcule $F_2$.
+  \item Classe les trois forces de la plus faible à la plus intense.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[barre articulée tenue par un dynamomètre]
+Une barre horizontale rigide $AB$, de masse négligeable et de longueur \qty{0.8}{m}, est
+\textbf{articulée} au mur en $A$ (charnière). Un dynamomètre vertical, accroché au plafond, retient
+l'extrémité $B$ et maintient la barre horizontale. Une masse $m=\qty{3}{kg}$ est suspendue à
+$\qty{0.6}{m}$ de $A$ ($g=\qty{10}{N/kg}$).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \fill[pattern=north east lines,pattern color=black!45] (-0.35,-0.6) rectangle (0,1);
+  \draw[black!60,line width=1pt] (0,-0.6)--(0,1);
+  \draw[primarydark,line width=2pt] (0,0)--(4,0);
+  \draw[fill=white,draw=black!60] (0,0) circle (0.09); \node[below left=-1pt] at (0,0){\scriptsize $A$};
+  \node[below right=-1pt] at (4,0){\scriptsize $B$};
+  \draw[black!55,line width=1pt] (3.4,2)--(4.6,2);
+  \foreach \x in {3.5,3.8,...,4.6}\draw[black!45](\x,2)--(\x-0.18,2.2);
+  \draw[excol,line width=1pt] (4,0)--(4,2); \node[excol,right] at (4.05,1){\scriptsize $\vv T$};
+  \draw[orange,line width=1pt] (3,0)--(3,-0.7);
+  \draw[fill=primary!25,draw=primary!70] (2.8,-1.05) rectangle (3.2,-0.7);
+  \draw[->,line width=1pt,orange] (3,-1.05)--(3,-1.6) node[below]{\scriptsize $\vv G$};
+  \draw[<->,black!55] (0,-0.35)--(3,-0.35) node[midway,fill=white,inner sep=1pt]{\scriptsize \qty{0.6}{m}};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item En prenant les moments autour de l'articulation $A$, calcule l'intensité $T$ lue par le
+        dynamomètre.
+  \item En déduis la force verticale $R_A$ exercée par l'articulation sur la barre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la table à deux pieds]
+Une table homogène de masse \qty{4}{kg} repose sur deux pieds $A$ et $C$ distants de \qty{1}{m}. Son
+poids s'applique en son milieu (\qty{0.5}{m} de chaque pied). On dépose une masse de \qty{2}{kg} au
+point $B$, à \qty{0.25}{m} du pied $A$ ($g=\qty{10}{N/kg}$).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[primarydark,line width=2pt] (0,0)--(4,0);
+  \draw[black!60,line width=1.5pt] (0.2,0)--(0.2,-0.9); \node[below] at (0.2,-0.9){\scriptsize $A$};
+  \draw[black!60,line width=1.5pt] (3.8,0)--(3.8,-0.9); \node[below] at (3.8,-0.9){\scriptsize $C$};
+  \draw[fill=primary!25,draw=primary!70] (0.9,0) rectangle (1.5,0.5); \node at (1.2,0.25){\scriptsize $B$};
+  \draw[->,line width=1pt,orange] (1.2,0)--(1.2,-0.75) node[below]{\scriptsize \qty{20}{N}};
+  \draw[->,line width=1pt,orange] (2,0)--(2,-0.75) node[below]{\scriptsize \qty{40}{N}};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la force supportée par chaque pied, $R_A$ et $R_C$.
+  \item Un étudiant affirme : « le pied $A$ supporte \qty{25}{N} et le pied $C$ supporte \qty{35}{N} ».
+        A-t-il raison ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la passerelle : jusqu'où avancer sans basculer ?]
+Une passerelle homogène de masse \qty{20}{kg} et de longueur \qty{4}{m} repose sur deux appuis $A$
+($x=0$) et $B$ ($x=\qty{3}{m}$) ; elle dépasse en porte-à-faux jusqu'à $x=\qty{4}{m}$. Son poids
+s'applique en son milieu ($x=\qty{2}{m}$). Une personne de \qty{40}{kg} s'y tient ($g=\qty{10}{N/kg}$).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[primarydark,line width=2.5pt] (0,0)--(4.4,0);
+  \fill[black!55] (0,0)--(-0.28,-0.5)--(0.28,-0.5)--cycle; \node[below] at (0,-0.5){\scriptsize $A$};
+  \fill[black!55] (3.3,0)--(3.02,-0.5)--(3.58,-0.5)--cycle; \node[below] at (3.3,-0.5){\scriptsize $B$};
+  \draw[->,line width=1pt,orange] (2.2,0)--(2.2,-0.8) node[below]{\scriptsize \qty{200}{N}};
+  \draw[<->,black!45] (0,0.5)--(3.3,0.5) node[midway,fill=white,inner sep=1pt]{\scriptsize \qty{3}{m}};
+  \node[black!55] at (4.2,0.25){\scriptsize \qty{4}{m}};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item La personne se tient au milieu, en $x=\qty{2}{m}$. Calcule les réactions $R_A$ et $R_B$.
+  \item Elle avance jusqu'à l'extrémité libre, en $x=\qty{4}{m}$. Recalcule $R_A$ et $R_B$. Que
+        constate-t-on pour $R_A$ ?
+  \item À partir de quelle position la passerelle commence-t-elle à basculer (décollement en $A$) ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

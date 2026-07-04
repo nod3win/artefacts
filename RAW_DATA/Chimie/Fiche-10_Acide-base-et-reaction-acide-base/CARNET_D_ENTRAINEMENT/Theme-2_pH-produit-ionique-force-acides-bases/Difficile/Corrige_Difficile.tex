@@ -1,0 +1,99 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[l'acidité, une échelle logarithmique]
+Une différence de pH se traduit par un facteur $10^{\Delta\mathrm{pH}}$ sur $[\ce{H3O+}]$.
+\begin{enumerate}[label=\alph*)]
+  \item $\dfrac{[\ce{H3O+}]_{\text{gastrique}}}{[\ce{H3O+}]_{\text{sang}}} = \dfrac{10^{-1{,}4}}{10^{-7{,}4}}
+        = 10^{7{,}4 - 1{,}4} = 10^{6} = \mathbf{e6}$ (un million de fois plus acide).
+  \item Une baisse de \num{3} unités de pH multiplie $[\ce{H3O+}]$ par $10^{3} = \mathbf{1000}$.
+  \item De pH $6$ à pH $3$ : $\Delta\mathrm{pH} = 3$, donc l'acidité est \textbf{1000 fois plus élevée} (et non
+        « 2 fois »).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[ce qu'implique « basique » (à \qty{25}{\celsius})]
+Basique $\Leftrightarrow \mathrm{pH} > 7 \Leftrightarrow [\ce{H3O+}] < 10^{-7} < [\ce{OH-}]$.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai.} C'est la définition même d'une solution basique.
+  \item \textbf{Faux.} Au contraire $[\ce{H3O+}] < 10^{-7}$ \si{mol\per L}.
+  \item \textbf{Faux.} Puisque $[\ce{OH-}] > [\ce{H3O+}]$ et leur produit vaut $10^{-14}$, on a
+        $[\ce{OH-}] > 10^{-7}$ \si{mol\per L}.
+  \item \textbf{Vrai.} $\mathrm{pH} > 7 \Rightarrow \mathrm{pOH} = 14 - \mathrm{pH} < 7$.
+  \item \textbf{Faux.} $[\ce{H3O+}]$ n'est jamais nul : l'autoprotolyse en maintient toujours ($\geq$ une trace).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[lire une table de $K_a$]
+Plus $K_a$ est grand, plus l'acide est fort ; la force des bases conjuguées est \emph{inversée}.
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item a) \textbf{correcte} : $K_a(\ce{HF}) = 6{,}3\times10^{-4} > 1{,}8\times10^{-5} = K_a(\ce{CH3COOH})$.
+  \item b) \textbf{correcte} : \ce{HClO} ($3{,}0\times10^{-8}$) est plus faible que \ce{HF} ($6{,}3\times10^{-4}$),
+        donc sa base conjuguée \ce{ClO-} est plus forte que \ce{F-}.
+  \item c) \textbf{correcte} : c'est la relation générale à \qty{25}{\celsius}.
+  \item d) \textbf{INCORRECTE}. \ce{NH4+} a le plus petit $K_a$ ($5{,}6\times10^{-10}$) : c'est l'acide le plus
+        faible, donc \ce{NH3} est la base \emph{la plus forte} du tableau — en particulier \textbf{plus forte}
+        que \ce{CH3COO-}, pas plus faible.
+\end{itemize}
+\textbf{Correction :} « \ce{NH3} est une base plus \emph{forte} que \ce{CH3COO-} ».
+\end{corrige}
+
+\begin{corrige}[une seule proposition correcte sur la force]
+La seule correcte est \textbf{d)}.
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item a) fausse : un acide faible est d'autant plus fort que son $\mathrm{p}K_a$ est \emph{petit} (pas élevé).
+  \item b) fausse : une base est d'autant plus \emph{forte} (pas plus faible) que $K_b$ est élevé.
+  \item c) fausse : la relation est $\mathrm{p}K_a + \mathrm{p}K_b = 14$ (à \qty{25}{\celsius}), pas $7$.
+  \item d) \textbf{vraie} : $\mathrm{p}K_a$ grand $\Rightarrow$ acide faible $\Rightarrow$ base conjuguée forte
+        $\Rightarrow$ $K_b$ élevé (via $\mathrm{p}K_b = 14 - \mathrm{p}K_a$ petit).
+\end{itemize}
+\end{corrige}
+
+\begin{corrige}[le bon produit ionique, et les variations croisées]
+\begin{enumerate}[label=\alph*)]
+  \item La bonne expression est $\boxed{K_e = [\ce{OH-}][\ce{H3O+}]}$. L'eau est le \textbf{solvant} en très
+        large excès : sa concentration est quasi constante et déjà incorporée dans $K_e$. On n'écrit donc
+        \emph{jamais} $[\ce{H2O}]$ (ni au numérateur, ni au dénominateur). Les deux autres écritures sont fausses.
+  \item À $T$ constante, $K_e = [\ce{H3O+}][\ce{OH-}]$ est \textbf{fixe}. Si $[\ce{H3O+}]$ augmente, alors
+        $[\ce{OH-}]$ doit \textbf{diminuer} pour que le produit reste égal à $10^{-14}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

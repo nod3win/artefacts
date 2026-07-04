@@ -1,0 +1,99 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Géométrie VSEPR — notation AXnEm
+\newcommand{\AX}[2]{\ensuremath{\mathrm{AX_{#1}E_{#2}}}}
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 4 — Géométrie VSEPR : la notation \AX{n}{m}}
+\end{center}
+
+\smallskip
+La structure de Lewis est plane ; la théorie \textbf{VSEPR} (Gillespie) prédit la forme dans
+l'espace, à partir d'une idée simple : \emph{les doublets de la couche de valence se repoussent et
+s'écartent au maximum}.
+
+\begin{cle}[La notation \AX{n}{m}]
+Autour de l'atome central \textbf{A} : \textbf{X} $=$ un atome \emph{lié} ($n$ = leur nombre),
+\textbf{E} $=$ un \emph{doublet non liant} ($m$ = leur nombre). Le nombre de \textbf{sites de
+répulsion} est $n+m$ ; il fixe la \textbf{géométrie de répulsion}.
+\emph{\textbf{Attention} : une liaison multiple (double ou triple) ne compte que pour \textbf{un
+seul} site.}
+\end{cle}
+
+\begin{methode}[Trouver la géométrie d'une molécule]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1pt]
+  \item Construire la structure de Lewis (thème 2).
+  \item Compter $n$ (atomes liés à A) et $m$ (doublets libres sur A) $\Rightarrow$ écrire \AX{n}{m}.
+  \item $n+m$ donne la \textbf{géométrie de répulsion}.
+  \item « Masquer » les doublets libres (E) $\Rightarrow$ \textbf{géométrie moléculaire}
+        (ou lire la table).
+\end{enumerate}
+\end{methode}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.12}\setlength{\tabcolsep}{4.5pt}\footnotesize
+\begin{tabular}{c c l l c}
+\toprule
+\rowcolor{primary!18}
+\textbf{Sites} & \textbf{Type} & \textbf{Géom. de répulsion} & \textbf{Géométrie moléculaire} & \textbf{Exemple}\\
+\midrule
+$2$ & \AX{2}{0} & linéaire & linéaire & \ce{CO2}\\
+$3$ & \AX{3}{0} & triangulaire & trigonale plane & \ce{BF3}\\
+$3$ & \AX{2}{1} & triangulaire & coudée & \ce{SnCl2}\\
+$4$ & \AX{4}{0} & tétraédrique & tétraédrique & \ce{CH4}\\
+$4$ & \AX{3}{1} & tétraédrique & pyramidale (base triang.) & \ce{NH3}\\
+$4$ & \AX{2}{2} & tétraédrique & coudée & \ce{H2O}\\
+$5$ & \AX{5}{0} & bipyramide trig. & bipyramide trigonale & \ce{PCl5}\\
+$5$ & \AX{4}{1} & bipyramide trig. & à bascule (papillon) & \ce{SF4}\\
+$5$ & \AX{3}{2} & bipyramide trig. & en T & \ce{ClF3}\\
+$5$ & \AX{2}{3} & bipyramide trig. & linéaire & \ce{XeF2}\\
+$6$ & \AX{6}{0} & octaédrique & octaédrique & \ce{SF6}\\
+$6$ & \AX{5}{1} & octaédrique & pyramide à base carrée & \ce{BrF5}\\
+$6$ & \AX{4}{2} & octaédrique & plane carrée & \ce{XeF4}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{piege}[répulsion $\neq$ moléculaire]
+\ce{CH4}, \ce{NH3} et \ce{H2O} ont tous une géométrie de \emph{répulsion} \textbf{tétraédrique}
+($4$ sites), mais des géométries \emph{moléculaires} différentes (tétraédrique, pyramidale,
+coudée) selon le nombre de doublets libres. Ces doublets, plus « volumineux », \textbf{compriment}
+les angles : $109{,}5^\circ \to 107^\circ \to 104{,}5^\circ$.
+\end{piege}
+
+\end{document}

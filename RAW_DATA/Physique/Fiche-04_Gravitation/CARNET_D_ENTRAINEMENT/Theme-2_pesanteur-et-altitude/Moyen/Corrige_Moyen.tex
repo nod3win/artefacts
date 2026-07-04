@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= CORRIGÉ MOYEN =================
+
+\begin{corrige}[pesanteur à \qty{1600}{\kilo\metre}]
+$d=R_T+h=6400+1600=\qty{8000}{\kilo\metre}=\qty{8.0e6}{\metre}$, donc
+\[
+g_h=\frac{\num{4.0e14}}{(\num{8.0e6})^2}=\frac{\num{4.0e14}}{\num{6.4e13}}
+\approx\qty{6.3}{\metre\per\second\squared}.
+\]
+Soit environ $64\,\%$ de $g_0$ : la pesanteur a nettement diminué, sans s'annuler.
+\end{corrige}
+
+\begin{corrige}[à quelle altitude $g$ est-elle divisée par 4 ?]
+\begin{enumerate}[label=\alph*)]
+  \item $\ds \frac{g_h}{g_0}=\frac{\mathcal{G}M_T/(R_T+h)^2}{\mathcal{G}M_T/R_T^2}
+        =\frac{R_T^2}{(R_T+h)^2}$. Imposer $g_h=g_0/4$ donne
+        $\dfrac{R_T^2}{(R_T+h)^2}=\dfrac14$, soit $(R_T+h)^2=4R_T^2$, d'où $R_T+h=2R_T$.
+  \item $h=2R_T-R_T=R_T=\qty{6400}{\kilo\metre}$. À une altitude égale au rayon
+        terrestre, $g$ n'est déjà plus que le quart de sa valeur au sol.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la pesanteur sur Mars]
+\[
+g=\frac{\mathcal{G}M}{R^2}
+ =\frac{\num{6.67e-11}\times\num{6.4e23}}{(\num{3.4e6})^2}
+ =\frac{\num{4.27e13}}{\num{1.16e13}}\approx\qty{3.7}{\metre\per\second\squared}.
+\]
+On y pèse donc environ $2{,}6$ fois moins que sur Terre.
+\end{corrige}
+
+\begin{corrige}[« peser » la Terre]
+On isole $M_T=\dfrac{g_0\,R_T^2}{\mathcal{G}}$ :
+\[
+M_T=\frac{9{,}8\times(\num{6.4e6})^2}{\num{6.67e-11}}
+   =\frac{9{,}8\times\num{4.1e13}}{\num{6.67e-11}}
+   =\frac{\num{4.0e14}}{\num{6.67e-11}}\approx\qty{6.0e24}{\kilogram}.
+\]
+On retrouve bien la masse de la Terre : une simple mesure de $g_0$ et de $R_T$ suffit.
+\end{corrige}
+
+\begin{corrige}[le poids en altitude]
+Le poids est $P=mg$ ; à masse constante, $P_h/P_0=g_h/g_0$.
+\begin{enumerate}[label=\alph*)]
+  \item $\ds \frac{P_h}{P_0}=\frac{g_h}{g_0}=\left(\frac{R_T}{R_T+h}\right)^2$.
+  \item Pour $h=R_T$ : $\ds \left(\frac{R_T}{2R_T}\right)^2=\left(\frac12\right)^2=\frac14$.
+  \item $P_h=\dfrac{P_0}{4}=\dfrac{8000}{4}=\qty{2000}{\newton}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

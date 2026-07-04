@@ -1,0 +1,86 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[prédominance d'un diacide : le carbonate]
+La famille du carbonate met en jeu deux couples : \ce{H2CO3/HCO3-} ($\mathrm{p}K_{a1} = 6{,}4$) et
+\ce{HCO3-/CO3^{2-}} ($\mathrm{p}K_{a2} = 10{,}4$).
+\begin{enumerate}[label=\alph*)]
+  \item Quelle espèce prédomine à $\mathrm{pH} = 7{,}4$ (pH du sang) ?
+  \item Quelle espèce prédomine à $\mathrm{pH} = 11$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Henderson dans le sens inverse]
+Un mélange du couple \ce{HCOOH/HCOO-} ($\mathrm{p}K_a = 3{,}8$) a un pH mesuré de $4{,}8$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le rapport $\dfrac{[\ce{HCOO-}]}{[\ce{HCOOH}]}$.
+  \item Y a-t-il plus de forme acide ou de forme basique ? Dans quel rapport ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[prévoir une réaction de bout en bout]
+On mélange de l'acide acétique \ce{CH3COOH} ($\mathrm{p}K_a = 4{,}8$) et l'ion cyanure \ce{CN-} (couple
+\ce{HCN/CN-}, $\mathrm{p}K_a = 9{,}2$).
+\begin{enumerate}[label=\alph*)]
+  \item Écris l'équation de la réaction acide-base.
+  \item Identifie l'acide réactif et l'acide formé, puis calcule $\Delta\mathrm{p}K_a$ et $K_{\text{équi}}$.
+  \item Conclus sur la nature de la réaction.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[avec quel acide la base réagit-elle le mieux ?]
+On fait réagir l'ammoniac \ce{NH3} (couple \ce{NH4+/NH3}, $\mathrm{p}K_a = 9{,}2$) tour à tour avec trois
+acides : \ce{HNO2} ($3{,}3$), \ce{CH3COOH} ($4{,}8$), \ce{HClO} ($7{,}5$).
+\begin{enumerate}[label=\alph*)]
+  \item Pour chaque acide, calcule $\Delta\mathrm{p}K_a$ de la réaction $\ce{HA + NH3 -> A- + NH4+}$.
+  \item Avec lequel la réaction est-elle la \textbf{plus complète} ? Justifie.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[fractions d'un diagramme de distribution]
+Pour un couple \ce{HA/A-}, la fraction de base vaut $\alpha_{\ce{A-}} = \dfrac{K_a}{[\ce{H3O+}] + K_a}$. On
+prend $\mathrm{p}K_a = 4{,}8$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la fraction de \ce{A-} lorsque $\mathrm{pH} = \mathrm{p}K_a$ ?
+  \item Montre qu'à $\mathrm{pH} = \mathrm{p}K_a + 1$, la base représente environ $91\,\%$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

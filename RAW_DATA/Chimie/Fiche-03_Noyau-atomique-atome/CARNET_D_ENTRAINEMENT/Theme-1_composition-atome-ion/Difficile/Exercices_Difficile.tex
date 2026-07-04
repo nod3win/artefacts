@@ -1,0 +1,104 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{exo}[identifier un ion par sa composition]
+\textit{Données :} $Z(\mathrm{Cr})=24$, $Z(\mathrm{Fe})=26$, $Z(\mathrm{Ni})=28$, $Z(\mathrm{Zn})=30$.
+
+\smallskip
+Parmi les quatre cations ci-dessous, un seul possède \textbf{exactement $30$ neutrons et $24$ électrons}.
+Détermine la composition $\big(n(p^+),n(n^0),n(e^-)\big)$ de chacun, puis désigne le bon.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{^{52}_{24}Cr^{2+}}$
+  \item $\ce{^{56}_{26}Fe^{2+}}$
+  \item $\ce{^{58}_{28}Ni^{2+}}$
+  \item $\ce{^{64}_{30}Zn^{2+}}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[comparer neutrons et électrons]
+\textit{Données :} $Z(\mathrm{N})=7$, $Z(\mathrm{Mg})=12$, $Z(\mathrm{Cl})=17$, $Z(\mathrm{K})=19$.
+
+\smallskip
+Pour chaque espèce, donne le nombre de neutrons et le nombre d'électrons, puis réponds : pour
+\emph{laquelle} le nombre d'électrons est-il \textbf{égal} au nombre de neutrons ?
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{^{14}_{7}N}$
+  \item $\ce{^{24}_{12}Mg^{2+}}$
+  \item $\ce{^{37}_{17}Cl^{-}}$
+  \item $\ce{^{39}_{19}K^{+}}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[charge d'un grand nombre de particules]
+On donne la charge élémentaire $e = \SI{1,6e-19}{\coulomb}$. Travaille avec les puissances de dix.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la charge d'un ensemble de $2 \times 10^{13}$ protons ?
+  \item Une gouttelette a capté $5 \times 10^{10}$ électrons en excès. Quelle est sa charge ?
+  \item Combien de protons faut-il rassembler pour porter une charge totale de
+        $+\SI{1,6e-7}{\coulomb}$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[mise en situation : le chlorure de calcium]
+Le chlorure de calcium $\ce{CaCl2}$ est un solide ionique formé d'ions calcium et chlorure. On
+considère les isotopes $\ce{^{40}_{20}Ca}$ et $\ce{^{35}_{17}Cl}$.
+\begin{enumerate}[label=\alph*)]
+  \item Donne la composition $\big(n(p^+),n(n^0),n(e^-)\big)$ de l'ion calcium $\ce{Ca^{2+}}$.
+  \item Donne la composition de l'ion chlorure $\ce{Cl^{-}}$.
+  \item Dans un motif $\ce{CaCl2}$ (un $\ce{Ca^{2+}}$ et deux $\ce{Cl^{-}}$), compte le nombre
+        \emph{total} de protons et le nombre \emph{total} d'électrons. Vérifie que le motif est
+        électriquement neutre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux — synthèse]
+\textit{Données :} $Z(\mathrm{Ar})=18$, $Z(\mathrm{K})=19$, $Z(\mathrm{Ca})=20$.
+
+\smallskip
+Pour chaque proposition, indique si elle est \textbf{vraie} ou \textbf{fausse}, en justifiant d'une
+phrase.
+\begin{enumerate}[label=\alph*)]
+  \item Le nombre de masse $A$ est la somme du nombre de protons et du nombre de neutrons du noyau.
+  \item En passant de l'atome $\ce{^{40}_{20}Ca}$ à l'ion $\ce{Ca^{2+}}$, le nombre de neutrons diminue.
+  \item L'ion $\ce{^{40}_{20}Ca^{2+}}$ possède le même nombre d'électrons que l'atome $\ce{^{40}_{18}Ar}$.
+  \item Dans le noyau de l'ion $\ce{^{39}_{19}K^{+}}$, il y a $18$ électrons.
+\end{enumerate}
+\end{exo}
+
+\end{document}

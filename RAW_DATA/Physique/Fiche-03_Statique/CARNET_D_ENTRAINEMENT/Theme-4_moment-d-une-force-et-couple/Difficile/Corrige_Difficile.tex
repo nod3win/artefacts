@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[quatre forces réductibles à un couple]
+\begin{enumerate}[label=\alph*)]
+  \item Vers le bas : $2+4=\qty{6}{N}$ ; vers le haut : $4+2=\qty{6}{N}$. La résultante est
+        \textbf{nulle} : le système ne peut pas se réduire à une force unique, mais à un \textbf{couple}.
+  \item Avec $\mathcal{M}=x\times F_y$ ($F_y>0$ vers le haut) :
+        \[ \mathcal{M} = 0\cdot(-2) + 0{,}3\cdot(-4) + 0{,}8\cdot(+4) + 1{,}0\cdot(+2)
+        = 0 - 1{,}2 + 3{,}2 + 2 = +\qty{4}{N.m}. \]
+  \item \textbf{Non} : pour un système de résultante nulle, le moment d'un couple est le \emph{même}
+        quel que soit le point choisi. Le moment vaut \qty{4}{N.m}, positif $\Rightarrow$ rotation dans
+        le sens \textbf{anti-horaire}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pousser perpendiculairement]
+\begin{enumerate}[label=\alph*)]
+  \item Perpendiculaire $\Rightarrow$ bras $=L$ : $\mathcal{M} = F\times L = 50\times 0{,}3 = \qty{15}{N.m}$.
+  \item $b = L\sin\ang{30} = 0{,}3\times 0{,}5 = \qty{0.15}{m}$, donc
+        $\mathcal{M} = F\times b = 50\times 0{,}15 = \qty{7.5}{N.m}$.
+  \item Le bras de levier est \textbf{maximal} ($b=L$) quand la force est perpendiculaire ; toute autre
+        orientation donne $b=L\sin\alpha < L$, donc un moment plus faible. Pousser perpendiculairement
+        maximise l'effet de rotation pour une même force.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux sur le moment]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Fausse.} Même unité, mais grandeurs différentes : le travail est une énergie (en
+        joules, déplacement \emph{parallèle}) ; le moment n'est pas une énergie (bras
+        \emph{perpendiculaire}).
+  \item \textbf{Correcte.} Ligne d'action passant par l'axe $\Rightarrow b=0 \Rightarrow \mathcal{M}=0$.
+  \item \textbf{Correcte.} Résultante nulle, mais moment $\mathcal{M}=F\times d\neq 0$ : c'est la
+        définition même du couple.
+  \item \textbf{Fausse.} Le bras de levier est la distance \emph{perpendiculaire} de l'axe à la
+        \textbf{ligne d'action}, pas au point d'application.
+\end{enumerate}
+\textbf{Bilan :} deux affirmations correctes (\emph{b} et \emph{c}).
+\end{corrige}
+
+\begin{corrige}[force unique, couple ou équilibre ?]
+\begin{enumerate}[label=\alph*)]
+  \item Deux forces de même sens : $\sum\vv F = 5+5 = \qty{10}{N}$ (vers le haut) $\neq\vv 0$. Le
+        système se réduit à une \textbf{force résultante unique} de \qty{10}{N} vers le haut (appliquée
+        au milieu, en $x=\qty{0.2}{m}$, par symétrie).
+  \item Sens opposé, lignes distinctes : $\sum\vv F=\vv 0$, mais $\mathcal{M}=F\times d=5\times 0{,}4
+        =\qty{2}{N.m}\neq 0$. C'est un \textbf{couple} de moment \qty{2}{N.m}.
+  \item Sens opposé, \emph{même} ligne d'action : $\sum\vv F=\vv 0$ et $d=0\Rightarrow\mathcal{M}=0$.
+        Le système est en \textbf{équilibre} (les deux forces se compensent totalement).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

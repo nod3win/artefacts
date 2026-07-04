@@ -1,0 +1,79 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[une pesée dans toutes les unités]
+Changer d'unité ne fait que déplacer la virgule : les $3$ CS de la mantisse ($4,50$) sont conservés.
+\begin{enumerate}[label=\alph*)]
+  \item $\qty{1}{\gram}=10^{3}\ \si{\milli\gram}$ : $m = 4,50\times10^{0}\ \si{\milli\gram} = \qty{4,50}{\milli\gram}$.
+  \item $\qty{1}{\gram}=10^{6}\ \si{\micro\gram}$ : $m = 4,50\times10^{3}\ \si{\micro\gram}$.
+  \item $\qty{1}{\gram}=10^{-3}\ \si{\kilo\gram}$ : $m = 4,50\times10^{-6}\ \si{\kilo\gram}$.
+\end{enumerate}
+Les quatre écritures ont toutes $3$ CS.
+\end{corrige}
+
+\begin{corrige}[un même calcul, trois précisions]
+On garde le nombre de CS voulu et l'on regarde le premier chiffre supprimé de $15,625$.
+\begin{enumerate}[label=\alph*)]
+  \item $4$ CS : chiffre supprimé $5\ge5 \Rightarrow \boxed{15,63}$ (par excès).
+  \item $3$ CS : on garde $15,6$ ; chiffre supprimé $2<5 \Rightarrow \boxed{15,6}$.
+  \item $2$ CS : on garde $15$ ; chiffre supprimé $6\ge5 \Rightarrow \boxed{16}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[énergie de combustion par kilogramme]
+Comme $\qty{1}{\gram}=10^{-3}\ \si{\kilo\gram}$ (facteur exact) :
+\[ \frac{4,307\times10^{4}\ \si{\joule}}{\qty{1}{\gram}}
+   =\frac{4,307\times10^{4}\ \si{\joule}}{10^{-3}\ \si{\kilo\gram}}
+   =4,307\times10^{7}\ \si{\joule\per\kilo\gram}. \]
+Arrondi à $3$ CS (chiffre supprimé $7\ge5$, par excès) :
+$\boxed{\approx 4,31\times10^{7}\ \si{\joule\per\kilo\gram}}$.
+\end{corrige}
+
+\begin{corrige}[vrai ou faux, justifié]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai.} On garde $0,79$ ; le chiffre supprimé $9\ge5$ fait remonter une retenue :
+        $0,79\to 0,80$ (les deux CS sont bien affichés).
+  \item \textbf{Vrai.} $2,5\times10^{-3}=0,0025$ : c'est le même nombre, seule l'écriture change.
+  \item \textbf{Faux.} La mantisse doit vérifier $1\le|a|<10$ : $12,5$ est interdit, on écrit $1,25\times10^{1}$.
+  \item \textbf{Faux.} Arrondir trop tôt propage l'erreur : on ne doit arrondir qu'\emph{une seule fois},
+        à la fin, en gardant des chiffres de garde aux étapes intermédiaires.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

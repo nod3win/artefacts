@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\newcommand{\AX}[2]{\ensuremath{\mathrm{AX_{#1}E_{#2}}}}
+\begin{exo}[écrire la notation \AX{n}{m}]
+On donne, autour de l'atome central, le nombre $n$ d'atomes liés et le nombre $m$ de doublets non
+liants. Écris la notation \AX{n}{m}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH4} : $n=4$, $m=0$.
+  \item \ce{NH3} : $n=3$, $m=1$.
+  \item \ce{H2O} : $n=2$, $m=2$.
+  \item \ce{CO2} : $n=2$, $m=0$.
+  \item \ce{BF3} : $n=3$, $m=0$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[nombre de sites $\to$ géométrie de répulsion]
+Donne le nom de la géométrie de répulsion associée à ce nombre de sites $n+m$.
+\begin{enumerate}[label=\alph*)]
+  \item $2$ sites
+  \item $3$ sites
+  \item $4$ sites
+  \item $5$ sites
+  \item $6$ sites
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[\AX{n}{m} $\to$ géométrie moléculaire]
+Donne la géométrie moléculaire correspondante (aide-toi de la table du tutoriel).
+\begin{enumerate}[label=\alph*)]
+  \item \AX{2}{0}
+  \item \AX{3}{0}
+  \item \AX{4}{0}
+  \item \AX{3}{1}
+  \item \AX{2}{2}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[compter les sites de répulsion]
+Combien de sites de répulsion entourent l'atome central ? (rappel : une liaison multiple $=$ un
+seul site).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CO2} (carbone : $2$ doubles liaisons)
+  \item \ce{SO2} (soufre : $2$ atomes liés, $1$ doublet libre)
+  \item \ce{HCN} (carbone : une triple et une simple liaison)
+  \item \ce{BF3} (bore : $3$ liaisons, aucun doublet libre)
+  \item \ce{H2O} (oxygène : $2$ liaisons, $2$ doublets libres)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'angle idéal]
+Donne l'angle « idéal » entre deux liaisons pour chaque géométrie de répulsion.
+\begin{enumerate}[label=\alph*)]
+  \item linéaire
+  \item triangulaire (trigonale plane)
+  \item tétraédrique
+  \item octaédrique
+\end{enumerate}
+\end{exo}
+
+\end{document}

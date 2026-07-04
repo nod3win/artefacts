@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[Masse molaire de petites molécules]
+Calcule la masse molaire (données : $M(\ce{C})=12$, $M(\ce{H})=1$, $M(\ce{O})=16$ en \si{\gram\per\mole}).
+\begin{enumerate}[label=\alph*)]
+  \item méthane \ce{CH4}
+  \item méthanol \ce{CH4O}
+  \item éthane \ce{C2H6}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Molécules oxygénées courantes]
+Calcule la masse molaire de chaque composé.
+\begin{enumerate}[label=\alph*)]
+  \item éthanol \ce{C2H6O}
+  \item propanone (acétone) \ce{C3H6O}
+  \item acide éthanoïque \ce{C2H4O2}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Masse molaire ou masse moléculaire relative ?]
+On considère le méthanal \ce{CH2O}.
+\begin{enumerate}[label=\alph*)]
+  \item Donne sa masse molaire $M$ (avec son unité).
+  \item Donne sa masse moléculaire relative $M_r$ (grandeur sans unité).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Pourcentage massique d'un élément]
+On considère le méthane \ce{CH4} (de masse molaire \qty{16}{\gram\per\mole}).
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le pourcentage massique du carbone ?
+  \item Quel est le pourcentage massique de l'hydrogène ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[De la structure à la masse molaire]
+On considère la molécule \ce{CH3-CO-CH3}.
+\begin{enumerate}[label=\alph*)]
+  \item Donne sa formule brute.
+  \item Calcule sa masse molaire.
+\end{enumerate}
+\end{exo}
+
+\end{document}

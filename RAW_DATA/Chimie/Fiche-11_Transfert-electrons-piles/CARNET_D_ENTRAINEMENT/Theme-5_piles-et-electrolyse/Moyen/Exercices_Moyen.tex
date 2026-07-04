@@ -1,0 +1,84 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{center}\color{primarydark}\large\bfseries Thème 5 — Piles et électrolyse \quad$\bullet$\quad Niveau Moyen\end{center}
+
+\begin{exo}[décrire complètement une pile]
+On construit une pile avec les couples \ce{Cu^{2+}}/\ce{Cu} ($E_{\mathrm{r}}^{\circ}=+0{,}34$~V) et
+\ce{Ni^{2+}}/\ce{Ni} ($E_{\mathrm{r}}^{\circ}=-0{,}26$~V).
+\begin{enumerate}[label=\alph*)]
+  \item Identifie l'anode et la cathode (avec leur signe).
+  \item Écris les deux demi-équations et l'équation globale.
+  \item Donne la notation conventionnelle et la f.é.m.\ standard $\Delta E^{\circ}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[que devient chaque électrode ?]
+Pile $\ce{(-) Cu | Cu^{2+} || Ag+ | Ag (+)}$ avec un pont salin de \ce{KNO3}. En fonctionnement :
+\begin{enumerate}[label=\alph*)]
+  \item Vers quel compartiment migrent les anions \ce{NO3^-} du pont salin ? les cations \ce{K+} ?
+  \item L'électrode d'argent s'épaissit-elle ou s'amincit-elle ? Justifie.
+  \item Même question pour l'électrode de cuivre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[masse déposée par électrolyse]
+On électrolyse une solution de chlorure d'aluminium : à la cathode
+\ce{Al^{3+} + 3 e^- -> Al} ($n=3$, $M(\ce{Al})=\qty{27}{g\per mol}$). Le courant vaut
+$I=\qty{5.0}{A}$ pendant $t=\qty{1}{h}$. Quelle masse d'aluminium se dépose ?
+($F=\qty{96485}{C\per mol}$.)
+\end{exo}
+
+\begin{exo}[combien de temps ?]
+Combien de temps faut-il, avec $I=\qty{5.0}{A}$, pour déposer $m=\qty{10}{g}$ d'argent à la cathode ?
+Données : \ce{Ag+ + e^- -> Ag} ($n=1$), $M(\ce{Ag})=\qty{108}{g\per mol}$,
+$F=\qty{96485}{C\per mol}$. Exprime le résultat en secondes puis en minutes.
+\end{exo}
+
+\begin{exo}[pile ou électrolyse ?]
+\begin{enumerate}[label=\alph*)]
+  \item Quelle différence essentielle y a-t-il entre une \textbf{pile} et une \textbf{cuve
+        d'électrolyse} (spontanéité, rôle du générateur) ?
+  \item Dans une électrolyse, à quelle électrode a lieu la \textbf{réduction} ? À quel pôle du
+        générateur est-elle reliée ?
+  \item À quelle électrode a lieu l'\textbf{oxydation} ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

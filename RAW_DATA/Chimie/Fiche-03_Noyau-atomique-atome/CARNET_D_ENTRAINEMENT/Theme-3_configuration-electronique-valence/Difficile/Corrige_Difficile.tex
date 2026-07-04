@@ -1,0 +1,97 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[quand la couche M se remplit jusqu'à 18]
+On remplit K$^2$, L$^8$, M$^{18}$ ($=28$ électrons), puis le reste sur N.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Se}$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^6$ ; $6$ électrons de valence.
+  \item $\ce{Br}$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^7$ ; $7$ électrons de
+        valence (halogène).
+  \item $\ce{Kr}$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^8$ ; $8$ électrons de
+        valence (octet : gaz noble).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[reconnaître un halogène à son $Z$]
+On lit le nombre d'électrons de la couche externe.
+\begin{enumerate}[label=\alph*)]
+  \item $Z=9$ : $(\mathrm{K})^2(\mathrm{L})^7$ $\to 7$ de valence : \textbf{halogène} (fluor).
+  \item $Z=16$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^6$ $\to 6$ de valence : \emph{non} (soufre).
+  \item $Z=17$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^7$ $\to 7$ de valence : \textbf{halogène} (chlore).
+  \item $Z=35$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^7$ $\to 7$ de valence :
+        \textbf{halogène} (brome).
+\end{enumerate}
+Les halogènes sont $Z = 9,\ 17,\ 35$.
+\end{corrige}
+
+\begin{corrige}[isoélectronie]
+On compte les électrons, puis on écrit la configuration.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Ar}$ : $18$ e$^-$ $\to (\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$.
+  \item $\ce{K^{+}}$ : $19-1=18 \to (\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$.
+  \item $\ce{Ca^{2+}}$ : $20-2=18 \to (\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$.
+  \item $\ce{S^{2-}}$ : $16+2=18 \to (\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$.
+  \item $\ce{Na^{+}}$ : $11-1=10 \to (\mathrm{K})^2(\mathrm{L})^8$.
+\end{enumerate}
+\textbf{Groupe isoélectronique} $\{a, b, c, d\}$ : tous ont $18$ électrons (configuration de l'argon).
+L'espèce (e) $\ce{Na^{+}}$ est à part ($10$ électrons, configuration du néon).
+\end{corrige}
+
+\begin{corrige}[trouver un élément par sa période et son groupe]
+Période $\Rightarrow$ couche de valence ; groupe $\Rightarrow$ nombre d'électrons de valence.
+\begin{enumerate}[label=\alph*)]
+  \item valence $(\mathrm{M})^2$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^2$, $Z=12$ : magnésium $\ce{Mg}$.
+  \item valence $(\mathrm{L})^6$ : $(\mathrm{K})^2(\mathrm{L})^6$, $Z=8$ : oxygène $\ce{O}$.
+  \item valence $(\mathrm{M})^7$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^7$, $Z=17$ : chlore $\ce{Cl}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux — synthèse]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{\textcolor{attncol}{FAUX}} : la couche \emph{externe} ne dépasse pas $8$. C'est une
+        couche \emph{interne} (comme M dans le brome) qui peut atteindre $18$.
+  \item \textbf{\textcolor{excol}{VRAI}} : $\ce{Mg^{2+}}$ a $10$ électrons, $(\mathrm{K})^2(\mathrm{L})^8$,
+        comme le néon.
+  \item \textbf{\textcolor{excol}{VRAI}} : $2+8+18+7 = 35 = Z$, et la couche externe N porte $7$
+        électrons de valence.
+  \item \textbf{\textcolor{excol}{VRAI}} : une couche de valence saturée à $8$ (octet) caractérise les
+        gaz nobles, chimiquement très stables.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

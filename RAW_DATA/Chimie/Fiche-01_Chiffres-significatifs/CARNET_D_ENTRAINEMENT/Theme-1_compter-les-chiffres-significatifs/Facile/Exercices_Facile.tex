@@ -1,89 +1,90 @@
-% =====================================================================
-%  THÈME 1 — Compter les chiffres significatifs — EXERCICES — Niveau FACILE
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage[version=4]{mhchem}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{150,98,162}
-\definecolor{primarydark}{RGB}{92,52,110}
-\newcommand{\cs}{chiffre significatif}
-\newcommand{\CS}{chiffres significatifs}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Exercices · Facile · Thème 1}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
-  colback=primary!4,colframe=primary,left=3mm,right=3mm,top=2mm,bottom=2mm,
-  fonttitle=\bfseries,coltitle=white,
-  title={Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
-
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-
-\begin{center}
-{\Large\bfseries\color{primarydark} Exercices — Niveau Facile}\\[1pt]
-{\color{primary} Thème 1 : compter les chiffres significatifs}
-\end{center}
-\vspace{1mm}
-\textit{Objectif : dénombrer les CS d'un nombre écrit sous forme décimale, en maîtrisant le rôle des
-zéros. Pour chaque item, donne le nombre de CS (et rien d'autre).}
-\vspace{2mm}
-
-\begin{exo}[Chiffres non nuls uniquement]
-Donne le nombre de \CS\ de chacun des nombres suivants :
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item $\num{837}$ \qquad b) $\num{42,5}$ \qquad c) $\num{6,1234}$ \qquad d) $\num{9}$ \qquad e) $\num{318,49}$
+\sisetup{per-mode=symbol}
+\begin{exo}[chiffres non nuls]
+Aucun de ces nombres ne contient de zéro. Donne, pour chacun, le nombre de chiffres significatifs.
+\begin{enumerate}[label=\alph*)]
+  \item $837$
+  \item $42,5$
+  \item $6,1234$
+  \item $128,77$
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[Zéros de tête]
-Combien de \CS\ possède chacune de ces mesures ? Justifie mentalement par le rôle des zéros.
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item $\num{0,007}$ \qquad b) $\num{0,42}$ \qquad c) $\num{0,00305}$ \qquad d) $\num{0,000010}$ \qquad e) $\num{0,68}$
+\begin{exo}[zéros de tête]
+Ici tous les zéros sont \emph{devant} le premier chiffre non nul. Donne le nombre de chiffres
+significatifs.
+\begin{enumerate}[label=\alph*)]
+  \item $0,007$
+  \item $0,052$
+  \item $0,0035$
+  \item $0,4$
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[Zéros captifs et zéros de queue]
-Donne le nombre de \CS. Attention à bien distinguer les deux familles de zéros « significatifs ».
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item $\num{2005}$ \qquad b) $\num{60,0}$ \qquad c) $\num{1,004}$ \qquad d) $\num{15,200}$ \qquad e) $\num{40,080}$
+\begin{exo}[zéros captifs]
+Chaque zéro est ici coincé \emph{entre} deux chiffres non nuls. Combien de chiffres significatifs ?
+\begin{enumerate}[label=\alph*)]
+  \item $205$
+  \item $4007$
+  \item $3,05$
+  \item $60,2$
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[Chiffres significatifs contre décimales]
-Pour chacun des nombres, donne \textbf{deux} informations : le nombre de \emph{décimales}
-(chiffres après la virgule) \emph{et} le nombre de \CS. Conclus sur le fait que ce sont deux
-comptages différents.
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item $\num{0,007}$ \qquad b) $\num{42,5}$ \qquad c) $\num{15,200}$ \qquad d) $\num{3,0}$
+\begin{exo}[zéros de queue après la virgule]
+Attention aux zéros \emph{finaux} placés après la virgule. Donne le nombre de chiffres significatifs.
+\begin{enumerate}[label=\alph*)]
+  \item $15,200$
+  \item $0,0100$
+  \item $3,40$
+  \item $8,000$
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[Le rôle de chaque zéro]
-On considère la masse $m = \qty{0,04080}{\gram}$.
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item Recopie le nombre et, pour \emph{chaque} zéro, indique s'il est significatif ou non, en
-        précisant sa catégorie (de tête, captif, ou de queue).
-  \item Déduis-en le nombre total de \CS\ de $m$.
+\begin{exo}[tous les cas à la fois]
+Ces nombres mélangent les trois règles sur les zéros. Compte les chiffres significatifs.
+\begin{enumerate}[label=\alph*)]
+  \item $0,0035070$
+  \item $1030,0$
+  \item $0,004080$
+  \item $20,08$
 \end{enumerate}
 \end{exo}
 

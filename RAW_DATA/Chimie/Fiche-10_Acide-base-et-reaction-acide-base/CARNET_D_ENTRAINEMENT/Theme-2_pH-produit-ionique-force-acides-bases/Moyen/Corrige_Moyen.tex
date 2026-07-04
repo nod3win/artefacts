@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[pH non entier, dans les deux sens]
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH} = -\log(2{,}0\times10^{-5}) = 5 - \log 2 = 5 - 0{,}30 = \mathbf{4{,}70}$.
+  \item $\mathrm{pH} = 3 + \log 2$, donc $[\ce{H3O+}] = 10^{-(3+\log 2)} = \dfrac{10^{-3}}{2} = \qty{5,0e-4}{mol\per L}$.
+  \item $[\ce{OH-}] = \dfrac{10^{-14}}{2{,}0\times10^{-5}} = 0{,}5\times10^{-9} = \qty{5,0e-10}{mol\per L}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[passer de $\mathrm{p}K_a$ à $\mathrm{p}K_b$]
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{p}K_b = 14 - \mathrm{p}K_a = 14 - 9{,}2 = \mathbf{4{,}8}$.
+  \item $K_b = 10^{-4{,}8} = 10^{0{,}2}\times10^{-5}$. Or $\log 1{,}6 = 4\log 2 - 1 = 0{,}20$, donc $10^{0{,}2} = 1{,}6$ :
+        \[ K_b \approx \qty{1,6e-5}{}. \]
+  \item $K_b \ll 1$ (et $\mathrm{p}K_b = 4{,}8$ n'est pas négatif) : \ce{NH3} est une \textbf{base faible}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[force croisée d'un couple]
+\begin{enumerate}[label=\alph*)]
+  \item La force des bases conjuguées est \emph{inversée} par rapport à celle des acides. \ce{HClO} est l'acide
+        le plus faible ($\mathrm{p}K_a = 7{,}5$), donc \ce{ClO-} est la base la plus forte :
+        \[ \ce{ClO-} \;>\; \ce{CH3COO-} \;>\; \ce{NO2-}. \]
+  \item Pour un même couple, $\mathrm{p}K_a + \mathrm{p}K_b = 14$ (constant). Un $\mathrm{p}K_a$ \emph{grand}
+        (acide faible) impose un $\mathrm{p}K_b$ \emph{petit} (base forte). D'où la règle.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[par le pOH]
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pOH} = -\log(5{,}0\times10^{-3}) = 3 - \log 5 = 3 - 0{,}70 = \mathbf{2{,}30}$.
+  \item $\mathrm{pH} = 14 - \mathrm{pOH} = 14 - 2{,}30 = \mathbf{11{,}70}$.
+  \item $\mathrm{pH} = 11{,}70 > 7$ : la solution est bien \textbf{basique}, cohérent avec une forte présence
+        d'ions \ce{OH-}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[quand la température change le pH neutre]
+\begin{enumerate}[label=\alph*)]
+  \item En milieu neutre $[\ce{H3O+}]=[\ce{OH-}]$, donc $K_e = [\ce{H3O+}]^2$ :
+        \[ [\ce{H3O+}] = \sqrt{4{,}0\times10^{-14}} = \qty{2,0e-7}{mol\per L}. \]
+  \item $\mathrm{pH}_{\text{neutre}} = -\log(2{,}0\times10^{-7}) = 7 - \log 2 = 7 - 0{,}30 = \mathbf{6{,}70}$.
+  \item Le pH neutre vaut $6{,}70$ à cette température. Une solution à $\mathrm{pH}=7 > 6{,}70$ a
+        $[\ce{H3O+}] < [\ce{OH-}]$ : elle est \textbf{légèrement basique}. (La frontière « 7 » n'est valable
+        qu'à \qty{25}{\celsius}.)
+\end{enumerate}
+\end{corrige}
+
+\end{document}

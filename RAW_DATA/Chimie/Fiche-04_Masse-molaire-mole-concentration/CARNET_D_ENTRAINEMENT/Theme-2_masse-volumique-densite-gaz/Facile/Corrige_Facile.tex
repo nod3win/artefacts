@@ -1,95 +1,88 @@
-% =====================================================================
-%  FICHE 4 — THEME 2 — Corrige niveau FACILE
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit\Molar{M}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{excol}{RGB}{0,135,90}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
-   toptitle=0.5mm,bottomtitle=0.5mm}}
-\newcounter{exo}
-\newenvironment{corr}[1][]{%
-  \par\medskip\refstepcounter{exo}%
-  \noindent\begin{tcolorbox}[boxbase,colback=excol!5,colframe=excol,
-     title={\textsc{Correction \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
-  {\end{tcolorbox}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Corrigé Facile}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\newcommand{\NA}{N_{\!\text{A}}}
-\setlength{\parindent}{0pt}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
 
-\begin{center}
-{\LARGE\bfseries\color{primarydark} Thème 2 --- Corrigé Facile}
-\end{center}
+\begin{center}{\large\bfseries\color{primarydark} Thème 2 — Corrigé Facile}\end{center}
 
-\begin{corr}[masse volumique à partir d'une pesée]
-\textbf{a)} La masse d'urine est la différence des pesées :
-$m=80{,}36-50{,}00=\SI{30.36}{\gram}$.\\[2pt]
-\textbf{b)} $\rho=\dfrac{m}{V}=\dfrac{30{,}36}{30}=\SI{1.012}{\gram\per\milli\litre}$, soit
-$\rho=1{,}012\times1000=\SI{1012}{\gram\per\litre}$.
-\[ \boxed{\rho=\SI{1.012}{\gram\per\milli\litre}=\SI{1012}{\gram\per\litre}} \]
-\end{corr}
+\begin{corrige}[calculer une masse volumique]
+\begin{enumerate}[label=\alph*)]
+  \item $\rho = \dfrac{24}{30} = \SI{0.80}{\gram\per\milli\litre}$.
+  \item $\rho = \dfrac{79}{100} = \SI{0.79}{\gram\per\milli\litre}$.
+  \item $\rho = \dfrac{13{,}55}{1} = \SI{13.55}{\gram\per\milli\litre}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[de la masse volumique à la densité]
-\textbf{a)} $d=\dfrac{\rho}{\rho_{\text{eau}}}=\dfrac{13{,}6}{1}=13{,}6$ (sans unité).\\[2pt]
-\textbf{b)} $\SI{1}{\litre}=\SI{1000}{\milli\litre}$, donc
-$m=\rho\,V=13{,}6\times1000=\SI{13600}{\gram}=\SI{13.6}{\kilo\gram}$.
-\[ \boxed{d=13{,}6\ ;\quad m(\SI{1}{\litre})=\SI{13.6}{\kilo\gram}} \]
-\end{corr}
+\begin{corrige}[de la masse volumique à la masse]
+On convertit d'abord le volume en \si{\milli\litre}, puis $m = \rho\,V$.
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{1}{\litre} = \SI{1000}{\milli\litre}$ : $m = 1{,}10\times 1000 = \SI{1100}{\gram}$.
+  \item $m = 0{,}80\times 250 = \SI{200}{\gram}$.
+  \item $\SI{2}{\litre} = \SI{2000}{\milli\litre}$ : $m = 1{,}20\times 2000 = \SI{2400}{\gram}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[du volume à la masse]
-On part du volume et l'on veut la masse : on \textbf{multiplie} par $\rho$.
-\[ m=\rho\,V=0{,}79\times250=\SI{197.5}{\gram}. \]
-\[ \boxed{m\approx\SI{198}{\gram} \ \text{d'éthanol}} \]
-\end{corr}
+\begin{corrige}[densité et masse volumique]
+On utilise $d = \rho / \rho_{\text{eau}}$ avec $\rho_{\text{eau}} = \SI{1}{\gram\per\milli\litre}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\rho = d\times\rho_{\text{eau}} = 0{,}79\times 1 = \SI{0.79}{\gram\per\milli\litre}$.
+  \item $d = \dfrac{13{,}6}{1} = 13{,}6$ (sans unité).
+  \item $\rho = 1{,}03\times 1 = \SI{1.03}{\gram\per\milli\litre}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[volume molaire d'un gaz]
-\textbf{a)} On multiplie la quantité de matière par $V_m$ :
-\[ V=n\,V_m=0{,}250\times22{,}4=\SI{5.60}{\litre}. \]
-\textbf{b)} On passe d'abord de la masse à la quantité ($n=m/M$), puis au volume :
-\[ n=\frac{2{,}0}{2}=\SI{1.0}{\mole}\ \Rightarrow\ V=1{,}0\times22{,}4=\SI{22.4}{\litre}. \]
-\[ \boxed{V(\ce{CO2})=\SI{5.60}{\litre};\quad V(\ce{H2})=\SI{22.4}{\litre}} \]
-\textit{Remarque :} la nature du gaz n'intervient pas dans $V=nV_m$ ; seule la quantité de matière compte.
-\end{corr}
+\begin{corrige}[volume d'un gaz aux CNTP]
+$V = n\times 22{,}4$.
+\begin{enumerate}[label=\alph*)]
+  \item $V = 1\times 22{,}4 = \SI{22.4}{\litre}$.
+  \item $V = 0{,}5\times 22{,}4 = \SI{11.2}{\litre}$.
+  \item $V = 0{,}25\times 22{,}4 = \SI{5.60}{\litre}$.
+  \item $V = 2\times 22{,}4 = \SI{44.8}{\litre}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[conversions d'unités de masse volumique]
-\textbf{a)} $\SI{1}{\cubic\centi\metre}=\SI{1}{\milli\litre}$, donc
-$\rho=\SI{2.0}{\gram\per\milli\litre}$.\\[2pt]
-\textbf{b)} $\SI{1}{\litre}=\SI{1000}{\milli\litre}$ :
-$\rho=2{,}0\times1000=\SI{2000}{\gram\per\litre}$.\\[2pt]
-\textbf{c)} $\SI{1000}{\gram}=\SI{1}{\kilo\gram}$ :
-$\rho=\SI{2.0}{\kilo\gram\per\litre}$.
-\[ \boxed{\rho=\SI{2.0}{\gram\per\milli\litre}=\SI{2000}{\gram\per\litre}=\SI{2.0}{\kilo\gram\per\litre}} \]
-\textit{À retenir :} la \emph{valeur numérique} en \si{\gram\per\milli\litre} et en \si{\kilo\gram\per\litre}
-est identique.
-\end{corr}
+\begin{corrige}[du volume de gaz à la quantité de matière]
+$n = V / 22{,}4$.
+\begin{enumerate}[label=\alph*)]
+  \item $n = \dfrac{22{,}4}{22{,}4} = \SI{1.00}{\mole}$.
+  \item $n = \dfrac{11{,}2}{22{,}4} = \SI{0.500}{\mole}$.
+  \item $n = \dfrac{44{,}8}{22{,}4} = \SI{2.00}{\mole}$.
+  \item $n = \dfrac{5{,}6}{22{,}4} = \SI{0.250}{\mole}$.
+\end{enumerate}
+\end{corrige}
 
 \end{document}

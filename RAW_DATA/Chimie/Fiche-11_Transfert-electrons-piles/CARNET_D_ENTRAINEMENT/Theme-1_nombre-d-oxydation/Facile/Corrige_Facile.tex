@@ -1,99 +1,99 @@
-% =====================================================================
-%  FICHE 11 — THEME 1 — Corrigé FACILE — Le nombre d'oxydation
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{enumitem}
-\usepackage[most]{tcolorbox}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{corrcol}{RGB}{0,135,90}
-\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
-
-\newcounter{exo}
-\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
-  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Corrigé}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 1 — Corrigé Facile}\\[-2pt]
-{\color{corrcol}\rule{\textwidth}{1pt}}
-\end{center}
+\begin{center}\color{primarydark}\large\bfseries Thème 1 — Corrigé \quad$\bullet$\quad Niveau Facile\end{center}
 
-\begin{corr}[corps simples et ions monoatomiques]
-\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{O2} : corps simple (règle R1) $\Rightarrow \NO(\ce{O})=0$.
-  \item \ce{Na+} : ion monoatomique de charge $+1$ (R2) $\Rightarrow \NO(\ce{Na})=+\mathrm{I}$.
-  \item \ce{Al^{3+}} : ion monoatomique de charge $+3$ (R2) $\Rightarrow \NO(\ce{Al})=+\mathrm{III}$.
-  \item \ce{Cl^-} : ion monoatomique de charge $-1$ (R2) $\Rightarrow \NO(\ce{Cl})=-\mathrm{I}$.
-  \item \ce{Fe(s)} : corps simple, métal à l'état natif (R1) $\Rightarrow \NO(\ce{Fe})=0$.
-  \item \ce{P4} : corps simple (R1) $\Rightarrow \NO(\ce{P})=0$.
-\end{itemize}
-\textbf{Retenir :} corps simple $\to 0$ ; ion monoatomique $\to$ sa charge. Aucun calcul.
-\end{corr}
-
-\begin{corr}[le \NO\ de l'oxygène]
-\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{CaO} : cas général $\Rightarrow \NO(\ce{O})=-\mathrm{II}$ (on vérifie : $\NO(\ce{Ca})=+\mathrm{II}$, somme $=0$).
-  \item \ce{CO2} : cas général $\Rightarrow \NO(\ce{O})=-\mathrm{II}$.
-  \item \ce{H2O2} : \textbf{peroxyde} (liaison \ce{O-O}), exception R4 $\Rightarrow \NO(\ce{O})=-\mathrm{I}$
-        (vérif. : $2(+1)+2x=0\Rightarrow x=-1$).
-  \item \ce{Na2O2} : \textbf{peroxyde} de sodium, exception R4 $\Rightarrow \NO(\ce{O})=-\mathrm{I}$
-        (vérif. : $2(+1)+2x=0\Rightarrow x=-1$).
-\end{itemize}
-\textbf{Piège classique :} reconnaître un peroxyde ($-\mathrm{I}$) et non un oxyde ordinaire ($-\mathrm{II}$).
-\end{corr}
-
-\begin{corr}[le \NO\ de l'hydrogène]
-\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{HCl} : cas général $\Rightarrow \NO(\ce{H})=+\mathrm{I}$.
-  \item \ce{NH3} : cas général $\Rightarrow \NO(\ce{H})=+\mathrm{I}$.
-  \item \ce{CaH2} : \textbf{hydrure métallique} (exception R3) $\Rightarrow \NO(\ce{H})=-\mathrm{I}$.
-  \item \ce{H2} : corps simple (R1) $\Rightarrow \NO(\ce{H})=0$.
-\end{itemize}
-L'\textbf{hydrure} est \ce{CaH2} : le calcium (métal) est moins électronégatif que l'hydrogène, qui
-joue alors le rôle d'anion hydrure \ce{H^-}. On vérifie : $\NO(\ce{Ca})=+\mathrm{II}$ et
-$(+\mathrm{II})+2(-\mathrm{I})=0$.
-\end{corr}
-
-\begin{corr}[un seul atome inconnu]
-On écrit à chaque fois $\sum\NO=0$ (molécules neutres), avec $\NO(\ce{H})=+\mathrm{I}$ et $\NO(\ce{O})=-\mathrm{II}$.
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{SO2} : $x+2(-2)=0 \Rightarrow x=+4$, donc $\NO(\ce{S})=+\mathrm{IV}$.
-  \item \ce{CH4} : $x+4(+1)=0 \Rightarrow x=-4$, donc $\NO(\ce{C})=-\mathrm{IV}$.
-  \item \ce{NH3} : $x+3(+1)=0 \Rightarrow x=-3$, donc $\NO(\ce{N})=-\mathrm{III}$.
+\begin{corrige}[corps simples et ions monoatomiques]
+Corps simple $\Rightarrow \mathrm{n.o.}=0$ ; ion monoatomique $\Rightarrow \mathrm{n.o.}=$ charge.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{O2} est un corps simple : $\mathrm{n.o.}(\ce{O})=0$.
+  \item \ce{Fe} métallique est un corps simple : $\mathrm{n.o.}(\ce{Fe})=0$.
+  \item $\mathrm{n.o.}(\ce{Ca^{2+}})=+\mathrm{II}$.
+  \item $\mathrm{n.o.}(\ce{Cl^-})=-\mathrm{I}$.
+  \item $\mathrm{n.o.}(\ce{Al^{3+}})=+\mathrm{III}$.
 \end{enumerate}
-\end{corr}
+\end{corrige}
 
-\begin{corr}[vérifier une attribution]
-Avec $\NO(\ce{S})=+\mathrm{IV}$ et $\NO(\ce{O})=-\mathrm{II}$, et 1~atome de S pour 2~atomes de O :
-\[
-\sum\NO = (+4) + 2\times(-2) = +4 - 4 = 0.
-\]
-La somme vaut bien $0$, ce qui est \textbf{cohérent} avec le caractère neutre de \ce{SO2}.
-L'attribution proposée est donc correcte. \emph{Toujours utiliser cette égalité comme contrôle final.}
-\end{corr}
+\begin{corrige}[les exceptions de O et de H]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{H2O} : $2(+1)+x=0\Rightarrow x=-2$, soit $\mathrm{n.o.}(\ce{O})=-\mathrm{II}$ (cas général).
+  \item \ce{H2O2} : \emph{peroxyde} (liaison \ce{O-O}) ; $2(+1)+2x=0\Rightarrow x=-1$, soit
+        $\mathrm{n.o.}(\ce{O})=-\mathrm{I}$.
+  \item \ce{HCl} : $\mathrm{n.o.}(\ce{H})=+\mathrm{I}$ (cas général).
+  \item \ce{NaH} : \emph{hydrure} d'un métal ; H y est plus électronégatif que Na, donc
+        $\mathrm{n.o.}(\ce{H})=-\mathrm{I}$ (et l'on vérifie $+\mathrm{I}+(-\mathrm{I})=0$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[atome central d'une molécule neutre]
+Molécule neutre : la somme des n.o.\ vaut $0$ ; on pose $x=\mathrm{n.o.}$ de l'atome cherché.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{H2S} : $2(+1)+x=0\Rightarrow x=-2$, soit $\mathrm{n.o.}(\ce{S})=-\mathrm{II}$.
+  \item \ce{SO2} : $x+2(-2)=0\Rightarrow x=+4$, soit $\mathrm{n.o.}(\ce{S})=+\mathrm{IV}$.
+  \item \ce{NH3} : $x+3(+1)=0\Rightarrow x=-3$, soit $\mathrm{n.o.}(\ce{N})=-\mathrm{III}$.
+  \item \ce{CH4} : $x+4(+1)=0\Rightarrow x=-4$, soit $\mathrm{n.o.}(\ce{C})=-\mathrm{IV}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[atome au sein d'un ion polyatomique]
+Ici la somme des n.o.\ vaut la \textbf{charge de l'ion}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{SO4^{2-}} : $x+4(-2)=-2\Rightarrow x=+6$, soit $\mathrm{n.o.}(\ce{S})=+\mathrm{VI}$.
+  \item \ce{NO3^-} : $x+3(-2)=-1\Rightarrow x=+5$, soit $\mathrm{n.o.}(\ce{N})=+\mathrm{V}$.
+  \item \ce{MnO4^-} : $x+4(-2)=-1\Rightarrow x=+7$, soit $\mathrm{n.o.}(\ce{Mn})=+\mathrm{VII}$.
+  \item \ce{Cr2O7^{2-}} : $2x+7(-2)=-2\Rightarrow 2x=12\Rightarrow x=+6$, soit
+        $\mathrm{n.o.}(\ce{Cr})=+\mathrm{VI}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[oxydation ou réduction ?]
+n.o.\ qui \textbf{augmente} $=$ oxydation (perte d'électrons) ; qui \textbf{diminue} $=$ réduction
+(gain d'électrons).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Fe}$(0)\to$\ce{Fe^{2+}}$(+\mathrm{II})$ : $\Delta=+2$, \textbf{oxydation}, l'atome
+        \textbf{perd} 2 électrons.
+  \item \ce{Cl2}$(0)\to$\ce{Cl^-}$(-\mathrm{I})$ : $\Delta=-1$ par atome, \textbf{réduction}, chaque
+        atome \textbf{capte} 1 électron.
+  \item \ce{Cu^{2+}}$(+\mathrm{II})\to$\ce{Cu}$(0)$ : $\Delta=-2$, \textbf{réduction}, l'ion
+        \textbf{capte} 2 électrons.
+  \item S : de $-\mathrm{II}$ (dans \ce{H2S}) à $+\mathrm{IV}$ (dans \ce{SO2}) : $\Delta=+6$,
+        \textbf{oxydation}, le soufre \textbf{perd} 6 électrons.
+\end{enumerate}
+\end{corrige}
 
 \end{document}

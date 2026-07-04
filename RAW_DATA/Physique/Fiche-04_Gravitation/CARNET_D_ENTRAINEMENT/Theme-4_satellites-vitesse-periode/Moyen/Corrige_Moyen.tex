@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= CORRIGÉ MOYEN =================
+
+\begin{corrige}[vitesse et période à \qty{1600}{\kilo\metre}]
+\begin{enumerate}[label=\alph*)]
+  \item $v=\sqrt{\dfrac{\num{4.0e14}}{\num{8.0e6}}}=\sqrt{\num{5.0e7}}
+        \approx\qty{7071}{\metre\per\second}\;(\approx\qty{7.1}{\kilo\metre\per\second})$.
+  \item $T=\dfrac{2\pi r}{v}=\dfrac{2\pi\times\num{8.0e6}}{7071}
+        =\dfrac{\num{5.03e7}}{7071}\approx\qty{7109}{\second}\approx\qty{118}{\minute}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la période par la loi de Kepler]
+\[
+T^2=\frac{4\pi^2 r^3}{\mathcal{G}M_T}
+   =\frac{39{,}5\times(\num{1.0e7})^3}{\num{4.0e14}}
+   =\frac{39{,}5\times\num{1.0e21}}{\num{4.0e14}}=\num{9.87e7}.
+\]
+\[
+T=\sqrt{\num{9.87e7}}\approx\qty{9.9e3}{\second}\approx\qty{166}{\minute}.
+\]
+\end{corrige}
+
+\begin{corrige}[le satellite géostationnaire]
+\begin{enumerate}[label=\alph*)]
+  \item $\omega=\dfrac{2\pi}{T}=\dfrac{2\pi}{86400}\approx\qty{7.27e-5}{\radian\per\second}$.
+  \item $v=\omega\,r=\num{7.27e-5}\times\num{4.22e7}\approx\qty{3.1e3}{\metre\per\second}
+        \;(\approx\qty{3.1}{\kilo\metre\per\second})$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[comparer deux vitesses]
+\begin{enumerate}[label=\alph*)]
+  \item $\ds \frac{v_A}{v_B}=\frac{\sqrt{\mathcal{G}M_T/r_A}}{\sqrt{\mathcal{G}M_T/r_B}}
+        =\sqrt{\frac{r_B}{r_A}}$.
+  \item $\ds \sqrt{\frac{\num{2.0e7}}{\num{8.0e6}}}=\sqrt{2{,}5}\approx 1{,}58$.
+        Comme $v_A/v_B>1$, c'est $A$ (le plus bas) qui va le plus vite.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux périodes par Kepler]
+\begin{enumerate}[label=\alph*)]
+  \item $T^2\propto r^3$ donne $T\propto r^{3/2}$, donc
+        $\ds \frac{T_2}{T_1}=\left(\frac{r_2}{r_1}\right)^{3/2}=8^{3/2}$.
+  \item $8^{3/2}=(\sqrt{8})^3=8\sqrt{8}\approx 22{,}6$. Le satellite le plus lointain met
+        environ $23$ fois plus de temps à faire un tour.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

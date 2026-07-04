@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[l'avion, le vent et le cap]
+\begin{enumerate}[label=\alph*)]
+  \item Vitesses perpendiculaires : $v=\sqrt{v_a^2+v_v^2}=\sqrt{80^2+60^2}=\sqrt{10000}=\qty{100}{\metre\per\second}$.
+  \item $\theta=\arctan\dfrac{v_v}{v_a}=\arctan\dfrac{60}{80}=\arctan0{,}75\approx\ang{36,9}$, déviée vers l'\textbf{Est} (poussée par le vent).
+  \item La composante vers le Nord reste $v_a=\qty{80}{\metre\per\second}$ : $t=\dfrac{1200}{80}=\qty{15}{\second}$. Dérive latérale $=v_v\,t=60\times15=\qty{900}{\metre}$ vers l'Est.
+  \item Il faut incliner le cap \emph{face au vent}, vers l'Ouest, d'un angle tel que la composante Est de sa vitesse propre annule le vent : $\sin\alpha=\dfrac{60}{80}=0{,}75 \Rightarrow \alpha\approx\ang{48,6}$ à l'Ouest du Nord. (À ce cap, la composante Nord vaut $80\cos\ang{48,6}\approx\qty{53}{\metre\per\second}$.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux stratégies pour traverser]
+\begin{enumerate}[label=\alph*)]
+  \item Cap droit sur l'autre rive : la composante de traversée est \qty{5}{\metre\per\second}, donc $t=\dfrac{100}{5}=\qty{20}{\second}$. Dérive $=3\times20=\qty{60}{\metre}$ vers l'aval.
+  \item Pour accoster en face, la composante \emph{amont} du canoë doit compenser le courant : $\sin\alpha=\dfrac{3}{5}\Rightarrow\alpha\approx\ang{36,9}$ vers l'amont. La vitesse effective de traversée devient $\sqrt{5^2-3^2}=\qty{4}{\metre\per\second}$, d'où $t=\dfrac{100}{4}=\qty{25}{\second}$.
+  \item La \emph{stratégie 1} est plus rapide (\qty{20}{\second} contre \qty{25}{\second}) car toute la vitesse sert à traverser ; mais elle fait dériver de \qty{60}{\metre}. La stratégie 2 arrive pile en face au prix d'un temps plus long : on « gaspille » une partie de la vitesse à lutter contre le courant.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[composer trois vitesses]
+\begin{enumerate}[label=\alph*)]
+  \item Est$-$Ouest : $v_x=6-2=\qty{4}{\metre\per\second}$ (vers l'Est) ; Nord : $v_y=\qty{3}{\metre\per\second}$.
+  \item $v=\sqrt{4^2+3^2}=\qty{5}{\metre\per\second}$ ; direction $\theta=\arctan\dfrac{3}{4}\approx\ang{36,9}$ au Nord de l'Est.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai/faux sur les grandeurs vectorielles]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux} : le vecteur vitesse porte \emph{trois} informations — direction, sens et norme.
+  \item \textbf{Faux} : même norme, mais sens opposés $\Rightarrow$ vecteurs différents.
+  \item \textbf{Vrai} : la direction (tangente au cercle) tourne sans cesse.
+  \item \textbf{Vrai} : c'est la définition d'un vecteur.
+  \item \textbf{Vrai} : direction changeante $\Rightarrow$ vecteur vitesse variable $\Rightarrow$ accélération (centripète au minimum).
+\end{enumerate}
+\textbf{Bilan : 3 affirmations vraies} (c, d, e).
+\end{corrige}
+
+\end{document}

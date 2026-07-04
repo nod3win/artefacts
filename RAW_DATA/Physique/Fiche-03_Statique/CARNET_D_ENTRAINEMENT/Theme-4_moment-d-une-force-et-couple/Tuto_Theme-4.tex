@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Le moment d'une force et le couple
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Le moment d'une force et le couple}\\[2pt]
+{\color{primary}\itshape Statique — Fiche 3}
+\end{center}
+\vspace{1mm}
+
+Une force ne fait pas que déplacer un solide : elle peut le faire \textbf{tourner}. La grandeur qui
+mesure cet effet de rotation autour d'un axe $\Delta$ est le \textbf{moment} de la force.
+
+\begin{cle}[moment d'une force]
+\[
+\boxed{\;\mathcal{M}_\Delta(\vv F) = \pm\, F\times b\;}
+\]
+$\mathcal{M}$ en newtons-mètres (\si{\newton\metre}) ; $F$ en \si{\newton} ; $b$ = \textbf{bras de
+levier} = distance \emph{perpendiculaire} de l'axe $\Delta$ à la \textbf{ligne d'action} de la force,
+en \si{\metre}. Le signe $\pm$ indique le sens de rotation.
+\end{cle}
+
+\begin{piege}[le bras de levier est la distance \emph{perpendiculaire}]
+$b$ n'est \emph{pas} la distance « de l'axe au point d'application », mais la distance la plus courte
+(perpendiculaire) de l'axe à la \emph{ligne d'action}. Si cette ligne \textbf{passe par l'axe}, alors
+$b=0$ et le moment est \textbf{nul} : la force ne fait pas tourner le solide (c'est le cas de la
+réaction au pivot).
+\end{piege}
+
+\begin{remarque}[convention de signe]
+On choisit un sens positif, par exemple : moment $+$ si la force tend à faire tourner dans le
+\textbf{sens horaire}, $-$ dans le sens anti-horaire. Le choix inverse est valable — l'essentiel est de
+rester \emph{cohérent} dans tout le problème.
+\end{remarque}
+
+\begin{cle}[couple de forces]
+Un \textbf{couple} est un ensemble de \emph{deux} forces parallèles, de \textbf{même intensité}, de
+\textbf{sens opposé}, à lignes d'action \emph{distinctes}. Sa résultante est \emph{nulle} (aucune
+translation) mais il fait \textbf{tourner} le solide. Son moment :
+\[
+\boxed{\;\mathcal{M} = F\times d\;}
+\]
+où $d$ est la distance \emph{entre les deux lignes d'action}. Le solide tourne jusqu'à ce que les deux
+forces deviennent colinéaires ($d=0$, moment nul).
+\end{cle}
+
+\begin{exemplebox}[moment autour d'un pivot]
+Une clé serre un boulon : on pousse avec $F=\qty{40}{N}$ à $b=\qty{0.25}{m}$ de l'axe.
+$\mathcal{M}=F\times b = 40\times 0{,}25 = \qty{10}{N.m}$. En poussant \emph{plus loin} (grand $b$), on
+obtient le même effet avec \emph{moins} de force : c'est le principe du bras de levier.
+\end{exemplebox}
+
+\begin{piege}[ne pas confondre travail et moment]
+Le \textbf{travail} $W=F\times d$ (déplacement $d$ \emph{parallèle} à la force) est une \emph{énergie},
+en \textbf{joules}. Le \textbf{moment} $\mathcal{M}=F\times b$ (bras $b$ \emph{perpendiculaire}) n'est
+\emph{pas} une énergie, on le laisse en \si{\newton\metre}. Même unité $\si{\newton}\times\si{\metre}$,
+mais grandeurs \textbf{différentes}.
+\end{piege}
+
+\end{document}

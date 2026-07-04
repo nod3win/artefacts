@@ -1,0 +1,70 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[Le paracétamol : fonctions, masse molaire et nombre de molécules]
+\begin{enumerate}[label=\alph*)]
+  \item Une \textbf{amide} : l'azote est directement lié à un carbonyle ($-\ce{CO-NH}-$). Ce n'est \emph{pas} une amine (qui exigerait un azote sans carbonyle voisin). La molécule porte aussi un groupement hydroxyle $-\ce{OH}$ sur le cycle et un cycle aromatique.
+  \item Formule brute \ce{C8H9NO2}. $M=8\times12+9\times1+14+2\times16=96+9+14+32=\qty{151}{\gram\per\mole}$.
+  \item $n=\dfrac{m}{M}=\dfrac{0,500}{151}=\num{3.31e-3}$~mol, donc
+  $N=n\,N_{\mathrm{A}}=3{,}31\times10^{-3}\times6{,}02\times10^{23}\approx\num{2.0e21}$ molécules.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Le glycérol : compter et classer les alcools]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Trois} alcools : les deux $-\ce{CH2-OH}$ des extrémités sont portés par des carbones liés à $1$ carbone $\Rightarrow$ \textbf{primaires} ; le $-\ce{CH(OH)}-$ central est porté par un carbone lié à $2$ carbones $\Rightarrow$ \textbf{secondaire}. Donc $2$ primaires $+$ $1$ secondaire.
+  \item Formule brute \ce{C3H8O3}. $M=3\times12+8\times1+3\times16=36+8+48=\qty{92}{\gram\per\mole}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[La valine, un acide aminé]
+\begin{enumerate}[label=\alph*)]
+  \item Un $-\ce{COOH}$ (\textbf{acide carboxylique}) et un $-\ce{NH2}$ (\textbf{amine primaire}).
+  \item Parce qu'elle porte à la fois une fonction \textbf{acide} (carboxylique) et une fonction \textbf{amine} : c'est la définition d'un acide aminé.
+  \item Formule brute \ce{C5H11NO2}. $M=5\times12+11\times1+14+2\times16=60+11+14+32=\qty{117}{\gram\per\mole}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Masse molaire ou masse moléculaire relative : le piège du QCM]
+\begin{enumerate}[label=\alph*)]
+  \item $12\times6+1\times14+14\times2=72+14+28=114$ : c'est la \textbf{valeur numérique} de la masse de la molécule.
+  \item La \textbf{masse moléculaire relative} est \emph{sans unité} : lui accoler «\,\si{\gram\per\mole}\,» est \textbf{faux}. L'unité \si{\gram\per\mole} n'est correcte que pour la \emph{masse molaire}.
+  \item Masse molaire : $M=\qty{114}{\gram\per\mole}$. \quad Masse moléculaire relative : $M_r=114$ (nombre sans unité).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

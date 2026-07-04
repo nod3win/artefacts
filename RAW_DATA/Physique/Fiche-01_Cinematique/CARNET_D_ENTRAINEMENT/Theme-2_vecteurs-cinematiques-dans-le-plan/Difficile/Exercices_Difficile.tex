@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[l'avion, le vent et le cap]
+Un avion se dirige plein Nord à $v_a=\qty{80}{\metre\per\second}$ par rapport à l'air. Un vent d'Est
+souffle perpendiculairement à $v_v=\qty{60}{\metre\per\second}$. Les points $A$ (départ) et $B$ (arrivée)
+sont distants de \qty{1200}{\metre} selon la direction Nord.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,font=\small]
+  \draw[->,black!55] (-1.6,0)--(-1.6,1) node[above]{N};
+  \draw[->,black!55] (-1.6,0)--(-0.9,0) node[right]{E};
+  \node[below,black!55] at (-1.6,-0.15){S};
+  \coordinate (A) at (0,0);
+  \draw[->,line width=1.1pt,methcol] (A)--(0,3) node[midway,left]{$\vv{v}_a$};
+  \draw[->,line width=1pt,defcol] (A)--(1.5,0) node[midway,below]{$\vv{v}_v$};
+  \draw[->,line width=1.2pt,primary] (A)--(1.5,3) node[right]{$\vv{v}$};
+  \fill (A) circle (1.6pt) node[below left]{$A$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la vitesse de l'avion par rapport au sol s'il maintient son cap au Nord ?
+  \item De quel angle sa trajectoire réelle est-elle déviée, et vers où ?
+  \item Combien de temps met-il pour parcourir les \qty{1200}{\metre} vers le Nord, et de quelle distance dérive-t-il alors sur le côté ?
+  \item Pour atteindre réellement $B$ (droit devant), dans quelle direction doit-il orienter son cap ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux stratégies pour traverser]
+Une rivière large de \qty{100}{\metre} a un courant de \qty{3}{\metre\per\second}. Un canoë avance à
+\qty{5}{\metre\per\second} par rapport à l'eau.
+\begin{enumerate}[label=\alph*)]
+  \item \emph{Stratégie 1} : il pointe droit vers l'autre rive. Combien de temps met-il à traverser et de combien dérive-t-il vers l'aval ?
+  \item \emph{Stratégie 2} : il veut accoster juste en face du point de départ. Sous quel angle doit-il pointer, quelle est alors sa vitesse effective de traversée et combien de temps met-il ?
+  \item Quelle stratégie est la plus rapide ? Explique le compromis.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[composer trois vitesses]
+Un nageur est soumis à trois vitesses simultanées : $\vv{v}_1=\qty{6}{\metre\per\second}$ vers l'Est,
+$\vv{v}_2=\qty{2}{\metre\per\second}$ vers l'Ouest et $\vv{v}_3=\qty{3}{\metre\per\second}$ vers le Nord.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine les composantes $v_x$ (Est$-$Ouest) et $v_y$ (Nord) de la vitesse résultante.
+  \item Calcule la norme et la direction de la vitesse résultante.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai/faux sur les grandeurs vectorielles]
+Indique pour chaque affirmation si elle est vraie ou fausse, puis compte les affirmations vraies.
+\begin{enumerate}[label=\alph*)]
+  \item Le vecteur vitesse décrit uniquement la norme (la « rapidité ») du mouvement.
+  \item Deux voitures roulant en sens opposés à \qty{100}{\kilo\metre\per\hour} ont le même vecteur vitesse.
+  \item En mouvement circulaire uniforme, le vecteur vitesse change de direction : il n'est pas constant.
+  \item Une grandeur vectorielle possède une norme, un sens et une direction.
+  \item Tout corps décrivant une trajectoire courbe est en état d'accélération.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,93 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Puissance et énergie électriques (loi de Joule)
+\usetikzlibrary{babel}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 4 — Puissance et énergie (loi de Joule)}\\[2pt]
+{\color{primary}\itshape $P=UI=RI^2=U^2/R$, énergie de Joule et effet thermique}
+\end{center}
+
+\begin{cle}[puissance électrique]
+La \textbf{puissance} est l'énergie échangée par unité de temps : $P=\dfrac{W}{t}=U\,I$, en
+\textbf{watts} (\si{\watt}). Pour un conducteur \emph{ohmique}, trois écritures équivalentes :
+\[ \boxed{\;P=U\,I=R\,I^{2}=\dfrac{U^{2}}{R}\;} \]
+On passe de l'une à l'autre avec la loi d'Ohm $U=RI$.
+\end{cle}
+
+\begin{cle}[loi de Joule (énergie thermique)]
+La chaleur libérée dans un conducteur de résistance $R$ parcouru par $I$ pendant $t$ vaut :
+\[ \boxed{\;W_{\text{th}}=R\,I^{2}\,t = P\,t\;} \]
+en \textbf{joules} (\si{\joule}). Elle provient des chocs des électrons contre les atomes : c'est
+l'\textbf{effet Joule}.
+\end{cle}
+
+\begin{center}
+\begin{circuitikz}[scale=0.9,transform shape,>=Stealth]
+  \draw (0,0) to[battery1,l_=$U$] (0,2) -- (2,2) to[R,l=$R$] (5,2) -- (5,0) -- (0,0);
+  \draw[->,line width=1pt,primary] (2.7,2.4) -- (3.5,2.4) node[midway,above,font=\footnotesize,primary]{$I$};
+  \node[font=\footnotesize] at (2.5,0.55){$P=UI=RI^2=U^2/R$};
+\end{circuitikz}
+\end{center}
+
+\begin{cle}[énergie et unités]
+$W=P\,t$ : penser à mettre $t$ \textbf{en secondes} ($\qty{1}{\hour}=\qty{3600}{\second}$). Sur une
+facture on utilise le \textbf{kilowattheure} : $\qty{1}{\kilo\watt\hour}=\qty{3.6e6}{\joule}$.
+\end{cle}
+
+\begin{methode}[exploiter une plaque signalétique ($P$, $U$)]
+\begin{enumerate}[leftmargin=1.7em,topsep=1pt,itemsep=0pt]
+  \item \textbf{Intensité absorbée} : $I=\dfrac{P}{U}$.
+  \item \textbf{Résistance équivalente} : $R=\dfrac{U^{2}}{P}$ (ou $R=U/I$).
+\end{enumerate}
+\end{methode}
+
+\begin{remarque}[fusible et transport à haute tension]
+Le \textbf{fusible} exploite l'effet Joule : son fil \emph{fond} dès que $I$ dépasse un seuil (ex.
+\qty{16}{\ampere}), coupant le circuit. Pour \textbf{transporter} une puissance $P=UI$ donnée, on
+\emph{augmente $U$} : à $P$ constante $I=P/U$ diminue, et comme les pertes en ligne valent
+$R_{\text{ligne}}I^{2}$, \textbf{doubler $U$ divise les pertes par 4}.
+\end{remarque}
+
+\begin{piege}[ne pas confondre les formes]
+$P=R\,I^{2}$ (et non $R^2 I$) ; $P=U^{2}/R$ (et non $U/R^2$). Les trois formes $UI$, $RI^2$,
+$U^2/R$ ne sont \emph{équivalentes} que pour un dipôle \textbf{ohmique} (où $U=RI$).
+\end{piege}
+
+\end{document}

@@ -1,0 +1,102 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[vrai ou faux sur la nature de l'image]
+Réponds par \textbf{vrai} ou \textbf{faux} et justifie brièvement.
+\begin{enumerate}[label=\alph*)]
+  \item Un objet placé entre une lentille convergente et son foyer objet donne une image \emph{droite
+        et virtuelle}.
+  \item Une lentille convergente ne peut \emph{jamais} donner d'image réelle plus grande que l'objet.
+  \item Une lentille convergente peut donner une image à la fois \emph{virtuelle et renversée}.
+  \item Pour une lentille divergente, un objet réel donne toujours une image \emph{virtuelle, droite
+        et réduite}.
+  \item Une image \emph{réelle} peut être droite.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le rayon issu de la base de l'objet]
+La base $A$ de l'objet est sur l'axe optique ; son image $A'$ (déjà construite) est marquée sur la
+figure. Un rayon issu de $A$ monte vers le bord de la lentille convergente. Quel tracé (1 à 4) le
+représente correctement après la lentille, et pourquoi ?
+\begin{center}
+\begin{tikzpicture}[scale=0.82,>=Stealth,font=\footnotesize]
+  \draw[black!35,dash pattern=on 3pt off 2pt] (-6.0,0)--(4.6,0);
+  \draw[line width=1.5pt,<->,black!65] (0,-2)--(0,2);
+  \fill[black] (0,0) circle (1.2pt); \node[above right] at (0,0) {$O$};
+  \fill[primary] (2,0) circle (1.4pt); \node[below] at (2,0) {$F'$};
+  \fill[primary] (-2,0) circle (1.4pt); \node[below] at (-2,0) {$F$};
+  % objet
+  \draw[attncol,line width=1.8pt,->] (-5,0)--(-5,1.4); \node[attncol,left] at (-5,0.7) {$B$};
+  \node[attncol,below] at (-5,0) {$A$};
+  % image base A' marquee
+  \fill[excol] (3.33,0) circle (1.6pt); \node[excol,above] at (3.33,0.05) {$A'$};
+  % rayon incident de A vers le bord haut de la lentille
+  \draw[black!80,line width=1.0pt,->] (-5,0)--(0,1.4);
+  % candidats
+  \draw[defcol,line width=0.8pt,->] (0,1.4)--(3.8,1.4) node[right]{1};
+  \draw[defcol,line width=0.8pt,->] (0,1.4)--(4.15,-0.34) node[right]{2};
+  \draw[defcol,line width=0.8pt,->] (0,1.4)--(2.4,2.1) node[right]{3};
+  \draw[defcol,line width=0.8pt,->] (0,1.4)--(2.0,-1.5) node[right]{4};
+\end{tikzpicture}
+\end{center}
+\end{exo}
+
+\begin{exo}[l'objet glisse de $2F$ vers $F$]
+On déplace un objet réel du point $2F$ jusqu'au foyer objet $F$ d'une lentille convergente. Parmi les
+affirmations suivantes, indique celles qui sont \textbf{correctes}.
+\begin{enumerate}[label=\alph*)]
+  \item L'image se déplace de $2F'$ jusqu'à l'infini.
+  \item L'image reste réelle et renversée.
+  \item L'image est de plus en plus petite.
+  \item L'image se forme du même côté de la lentille que l'objet.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois situations, trois instruments]
+Une lentille convergente de focale $f$ est utilisée de trois façons. Pour chaque cas, donne la
+\textbf{nature complète} de l'image (réelle/virtuelle, sens, taille) et nomme l'\textbf{instrument}
+correspondant.
+\begin{enumerate}[label=\alph*)]
+  \item objet au-delà de $2F$ (objet lointain) ;
+  \item objet entre $F$ et $2F$ ;
+  \item objet entre $O$ et $F$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,86 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[expressions de $K_{\mathrm{ps}}$ (sels complexes)]
+Écris l'expression littérale du produit de solubilité de chacun de ces sels.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Ag3PO4}
+  \item \ce{Al(OH)3}
+  \item \ce{Mn(OH)2}
+  \item \ce{Ca3(PO4)2}
+  \item \ce{Ba3(PO4)2}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[calcul numérique avec exposants]
+Dans chaque solution saturée, calcule $K_{\mathrm{ps}}$ à partir des concentrations mesurées (attention
+aux exposants).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{PbBr2} : $[\ce{Pb^{2+}}]=\qty{1.0e-2}{\mole\per\litre}$, $[\ce{Br-}]=\qty{2.0e-2}{\mole\per\litre}$.
+  \item \ce{Ag2CrO4} : $[\ce{Ag+}]=\qty{1.3e-4}{\mole\per\litre}$, $[\ce{CrO4^{2-}}]=\qty{6.5e-5}{\mole\per\litre}$.
+  \item \ce{Fe(OH)3} : $[\ce{Fe^{3+}}]=\qty{1.0e-10}{\mole\per\litre}$, $[\ce{OH-}]=\qty{3.0e-10}{\mole\per\litre}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remonter de l'expression au type de sel]
+Pour chaque expression de $K_{\mathrm{ps}}$, indique le type $p{:}q$ du sel et donne un exemple concret.
+\begin{enumerate}[label=\alph*)]
+  \item $K_{\mathrm{ps}} = [\ce{M^{2+}}]\,[\ce{X-}]^{2}$
+  \item $K_{\mathrm{ps}} = [\ce{M+}]^{2}\,[\ce{X^{2-}}]$
+  \item $K_{\mathrm{ps}} = [\ce{M^{2+}}]^{3}\,[\ce{X^{3-}}]^{2}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une seule concentration mesurée]
+On mesure une seule concentration ionique dans une solution saturée. Déduis-en l'autre par la
+stœchiométrie, puis calcule $K_{\mathrm{ps}}$.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Ag2CrO4} : on mesure $[\ce{Ag+}]=\qty{2.0e-4}{\mole\per\litre}$.
+  \item \ce{Mg(OH)2} : on mesure $[\ce{OH-}]=\qty{3.0e-4}{\mole\per\litre}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[repérer l'erreur dans l'expression]
+Pour chaque sel, l'expression de $K_{\mathrm{ps}}$ proposée est-elle correcte ? Sinon, corrige-la.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Ca3(PO4)2} : $K_{\mathrm{ps}} = [\ce{Ca^{2+}}]^{2}\,[\ce{PO4^{3-}}]^{3}$.
+  \item \ce{PbBr2} : $K_{\mathrm{ps}} = [\ce{Pb^{2+}}]\,[\ce{Br-}]^{2}$.
+  \item \ce{Fe(OH)3} : $K_{\mathrm{ps}} = [\ce{Fe^{3+}}]\,[3\,\ce{OH-}]^{3}$.
+\end{enumerate}
+\end{exo}
+\end{document}

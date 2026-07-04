@@ -1,0 +1,75 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{exo}[Nommer entièrement une molécule à deux fonctions]
+On considère la molécule \ce{HOOC-CH2-CH(OH)-CH3}.
+\begin{enumerate}[label=\alph*)]
+  \item Repère ses fonctions et classe-les par priorité.
+  \item Quelle fonction donne le suffixe ? Quelle fonction devient un préfixe, et lequel ?
+  \item Numérote la chaîne (attention au carbone imposé en n$^\circ$1) et donne le nom complet.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Trois fonctions, une seule principale]
+On considère la molécule \ce{CH2=CH-CH(OH)-CO-CH3}.
+\begin{enumerate}[label=\alph*)]
+  \item Identifie ses trois fonctions.
+  \item Classe-les par ordre de priorité.
+  \item Laquelle fixe le suffixe ? Comment les deux autres apparaissent-elles dans le nom ?
+  \item Propose le nom complet de la molécule.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Du nom à la structure : le préfixe « oxo- »]
+On donne le nom «\,acide 3-oxobutanoïque\,».
+\begin{enumerate}[label=\alph*)]
+  \item Combien de carbones compte la chaîne principale, et quelle est la fonction principale ?
+  \item Que signifie le préfixe «\,oxo-\,» en position 3 ?
+  \item Écris la formule semi-développée, puis la formule brute.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Acide et aldéhyde en compétition]
+On considère la molécule \ce{OHC-CH2-COOH}.
+\begin{enumerate}[label=\alph*)]
+  \item Quelles sont ses deux fonctions ?
+  \item Laquelle est la fonction principale ? Justifie par l'échelle de priorité.
+  \item L'aldéhyde n'étant pas la fonction principale, sous quel préfixe apparaît-il ? Donne le nom complet.
+  \item Donne la formule brute de la molécule.
+\end{enumerate}
+\end{exo}
+
+\end{document}

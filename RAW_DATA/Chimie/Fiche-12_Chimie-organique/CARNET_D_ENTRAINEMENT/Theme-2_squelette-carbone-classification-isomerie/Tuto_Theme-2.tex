@@ -1,0 +1,79 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+% THEME_TITLE: Le squelette carboné : représentations, classification des carbones \& isomérie
+
+Une même molécule s'écrit de plusieurs façons, et une même formule brute cache parfois plusieurs molécules. Savoir \emph{lire} un squelette carboné --- compter les atomes, classer chaque carbone --- est la compétence de base de toute la chimie organique.
+
+\begin{cle}[Les représentations d'une molécule]
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Brute} : composition globale ($\ce{C4H10O}$).
+  \item \textbf{Développée} : \emph{toutes} les liaisons dessinées, y compris les C--H.
+  \item \textbf{Semi-développée} : les liaisons C--H ne sont pas écrites (\ce{CH3-CH2-CH2-OH}).
+  \item \textbf{Topologique} (squelette en zigzag) : seuls les traits de la chaîne ; \textbf{chaque sommet et chaque extrémité est un carbone}, les H sont sous-entendus.
+\end{itemize}
+\end{cle}
+
+\begin{cle}[Compter les hydrogènes portés par un carbone]
+Le carbone est \textbf{tétravalent} (toujours $4$ liaisons). Le nombre de H qu'il porte est donc :
+\[
+n_{\text{H}} = 4 - (\text{nombre de liaisons vers d'autres atomes que H}),
+\]
+en comptant une double liaison pour $2$ et une triple pour $3$. Ainsi $\ce{-CH2-}$ (2 liaisons C) porte $2$~H, $\ce{=CH-}$ (une double $+$ une simple) porte $1$~H, $\ce{-CH3}$ porte $3$~H.
+\end{cle}
+
+\begin{cle}[Classer un carbone : primaire / secondaire / tertiaire / quaternaire]
+On compte le nombre d'\textbf{autres carbones} directement liés :
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+carbones voisins & $1$ & $2$ & $3$ & $4$ \\
+classe & primaire (I) & secondaire (II) & tertiaire (III) & quaternaire (IV) \\
+\bottomrule
+\end{tabular}
+\end{center}
+Un carbone quaternaire ne porte \textbf{aucun} H. Cette classification sert aussi aux alcools et amines (primaires / II / III).
+\end{cle}
+
+\begin{methode}[Préfixes des chaînes carbonées]
+méth(1), éth(2), prop(3), but(4), pent(5), hex(6), hept(7), oct(8), non(9), déc(10). L'alcane linéaire à $n$ carbones porte ce préfixe suivi de \textit{-ane}.
+\end{methode}
+
+\begin{piege}[Isomères de constitution vs stéréoisomères cis/trans]
+Deux \textbf{isomères de constitution} ont la même formule brute mais un \emph{enchaînement différent} des atomes (ex.\ butane et 2-méthylpropane, $\ce{C4H10}$). Les \textbf{isomères cis/trans} (\emph{Z/E}), eux, ont le même enchaînement mais une \emph{géométrie} figée par une double liaison $\ce{C=C}$. La condition : \textbf{chaque} carbone de la double liaison doit porter \textbf{deux groupes différents}. Le but-2-ène en a (cis et trans existent), pas le but-1-ène.
+\end{piege}
+
+\end{document}

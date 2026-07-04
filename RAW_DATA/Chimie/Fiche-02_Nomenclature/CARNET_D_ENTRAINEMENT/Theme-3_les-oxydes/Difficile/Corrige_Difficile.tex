@@ -1,0 +1,87 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[le double piège du cuivre et de l'azote]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CuO} : oxyde de cuivre(II) ; \ce{Cu2O} : oxyde de cuivre(I).
+  \item \ce{NO} : monoxyde d'azote ; \ce{NO2} : dioxyde d'azote.
+  \item \textbf{Incorrect.} Dans \ce{N2O}, le rapport O/N vaut $1/2$ : c'est l'\emph{hémioxyde d'azote}.
+        Le composé nommé « dioxyde d'azote » (O/N $=2$) est \ce{NO2}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[repérer le nom incorrect]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux} : dans \ce{Cu2O} le cuivre est $+\mathrm{I}$ ; c'est « oxyde de cuivre\textbf{(I)} ».
+  \item \textbf{Correct} : \ce{Fe2O3} $\Rightarrow$ fer $+\mathrm{III}$ $\Rightarrow$ oxyde de fer(III).
+  \item \textbf{Faux} : le rapport O/N vaut $5/2$ ; c'est un « \textbf{hémipent}oxyde d'azote », pas un pentoxyde.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[de l'hydroxyde à l'oxyde métallique]
+Le métal garde sa valence ; l'oxyde s'obtient en croisant cette valence avec \ce{O^2-}.
+\begin{enumerate}[label=\alph*)]
+  \item fer(III) $\Rightarrow$ \ce{Fe2O3}, oxyde de fer(III).
+  \item calcium(II) $\Rightarrow$ \ce{CaO}, oxyde de calcium.
+  \item aluminium(III) $\Rightarrow$ \ce{Al2O3}, oxyde d'aluminium.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'oxyde acide et son oxacide (anhydride)]
+On calcule le n.o.\ du soufre ($\ce{O}=-\mathrm{II}$, molécule neutre).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{SO3} : $x+3(-2)=0 \Rightarrow x=+\mathrm{VI}$. Même degré que \ce{H2SO4} : l'oxacide est
+        l'\textbf{acide sulfurique}.
+  \item \ce{SO2} : $x+2(-2)=0 \Rightarrow x=+\mathrm{IV}$. Même degré que \ce{H2SO3} : l'oxacide est
+        l'\textbf{acide sulfureux}.
+  \item Non : dans \ce{SO3} comme dans \ce{H2SO4}, le soufre est à $+\mathrm{VI}$. L'ajout d'eau (dont H et
+        O gardent $+\mathrm{I}$ et $-\mathrm{II}$) ne modifie pas le n.o.\ du soufre : ce n'est pas une réaction d'oxydoréduction.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[synthèse : nom $\to$ formule $\to$ n.o.]
+\begin{enumerate}[label=\alph*)]
+  \item hémipentoxyde de phosphore : rapport O/P $=5/2$, deux phosphores $\Rightarrow$ \ce{P2O5}.
+  \item $2x+5(-2)=0 \Rightarrow 2x=+10 \Rightarrow x=+\mathrm{V}$ : le phosphore est au degré $+\mathrm{V}$.
+  \item Charges : $2\times(+5)=+10$ pour les phosphores, $5\times(-2)=-10$ pour les oxygènes ; total nul.
+        La molécule est bien neutre.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,118 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Réflexion totale et angle limite
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 4 — Réflexion totale et angle limite}\\[2pt]
+{\color{primary}\itshape Fibres optiques, prismes à réflexion totale, périscopes}
+\end{center}
+
+\begin{cle}[l'angle limite]
+Quand la lumière passe d'un milieu \textbf{plus} réfringent vers un milieu \textbf{moins} réfringent
+($n_1>n_2$), le rayon réfracté s'éloigne de la normale. Il existe un angle d'incidence pour lequel
+l'angle de réfraction atteint $\ang{90}$ (le rayon réfracté rase le dioptre) : c'est l'\textbf{angle
+limite} $\hat{\imath}_{\text{lim}}$. En posant $\sin\hat{\imath}_2=1$ dans $n_1\sin\hat{\imath}_1=n_2\sin\hat{\imath}_2$ :
+\[ \boxed{\;\hat{\imath}_{\text{lim}}=\arcsin\!\left(\dfrac{n_2}{n_1}\right)\;}\qquad(n_1>n_2). \]
+\end{cle}
+
+\begin{cle}[la condition de réflexion totale]
+La \textbf{réflexion totale} (toute la lumière est réfléchie, il n'y a plus de rayon réfracté) se
+produit si \emph{et seulement si} les \textbf{deux} conditions sont réunies :
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,topsep=2pt,itemsep=1pt]
+  \item on part du milieu \textbf{le plus réfringent} vers le moins réfringent ($n_1>n_2$) ;
+  \item l'angle d'incidence dépasse l'angle limite : $\hat{\imath}_1>\hat{\imath}_{\text{lim}}$.
+\end{enumerate}
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15,>=Stealth]
+  \fill[defcol!30] (-3.2,-1.9) rectangle (3.2,0);
+  \draw[primary,line width=1.6pt] (-3.2,0) -- (3.2,0);
+  \draw[dash pattern=on 3pt off 2pt,black!60] (0,-1.9) -- (0,1.9);
+  \node[black!60,above,font=\scriptsize] at (0,1.9){normale};
+  \node[font=\scriptsize] at (-2.6,0.6){air ($n_2$)};
+  \node[font=\scriptsize] at (-2.6,-0.7){verre ($n_1$)};
+  % rayon 1 : petit i -> refracte
+  \draw[->,line width=1pt] ({-1.6*sin(25)},{-1.6*cos(25)}) -- (0,0);
+  \draw[->,line width=1pt,excol] (0,0) -- ({1.7*sin(43)},{1.7*cos(43)});
+  \node[excol,font=\scriptsize,above] at ({1.7*sin(43)},{1.7*cos(43)}){réfracté};
+  % rayon 2 : i = i_lim -> rase
+  \draw[->,line width=1pt] ({-1.6*sin(41.8)},{-1.6*cos(41.8)}) -- (0,0);
+  \draw[->,line width=1pt,excol] (0,0) -- (2.7,0.05);
+  \node[excol,font=\scriptsize,above right] at (2.2,0.05){$\hat{\imath}_2=\ang{90}$};
+  \node[font=\scriptsize,fill=white,inner sep=1pt] at ({-1.95*sin(41.8)},{-1.95*cos(41.8)}){$\hat{\imath}_{\text{lim}}$};
+  % rayon 3 : i > i_lim -> reflexion totale
+  \draw[->,line width=1pt] ({-1.6*sin(62)},{-1.6*cos(62)}) -- (0,0);
+  \draw[->,line width=1.1pt,primary] (0,0) -- ({1.7*sin(62)},{-1.7*cos(62)});
+  \node[primary,font=\scriptsize,below] at ({1.7*sin(62)},{-1.7*cos(62)}){réflexion totale};
+  \fill (0,0) circle (1.3pt);
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[tester la réflexion totale]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item Vérifier qu'on part bien du milieu \textbf{le plus réfringent} (sinon : jamais de réflexion
+        totale, la réfraction a toujours lieu).
+  \item Calculer $\hat{\imath}_{\text{lim}}=\arcsin(n_2/n_1)$.
+  \item Comparer : $\hat{\imath}_1>\hat{\imath}_{\text{lim}}\Rightarrow$ réflexion totale ;
+        $\hat{\imath}_1<\hat{\imath}_{\text{lim}}\Rightarrow$ réfraction (le rayon sort).
+  \item \emph{Astuce} : la réflexion est totale dès que $\dfrac{n_1}{n_2}\sin\hat{\imath}_1>1$ (le
+        « $\sin\hat{\imath}_2$ » deviendrait $>1$, impossible).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[angle limite verre $\to$ air]
+Verre ($n_1=1{,}5$) vers air ($n_2=1$) : $\hat{\imath}_{\text{lim}}=\arcsin(1/1{,}5)=\arcsin(0{,}667)
+\approx\ang{41.8}$. Tout rayon frappant la surface verre/air à plus de $\ang{41.8}$ est
+\emph{intégralement} réfléchi dans le verre.
+\end{exemplebox}
+
+\begin{exemplebox}[le prisme à $\ang{45}$ des jumelles]
+Dans un prisme en verre à section triangle rectangle isocèle ($\ang{45}$–$\ang{45}$–$\ang{90}$), un
+rayon entrant perpendiculairement frappe l'hypoténuse à $\ang{45}$. Comme $\ang{45}>\ang{41.8}$, la
+réflexion y est totale : l'hypoténuse agit comme un \emph{miroir parfait}. C'est le principe des
+jumelles et des périscopes.
+\end{exemplebox}
+
+\begin{piege}[le sens compte, et $n_2/n_1<1$]
+La réflexion totale n'existe que du milieu \emph{dense} vers le \emph{moins dense}. De l'air vers le
+verre, jamais de réflexion totale. Dans la formule, $n_2/n_1<1$ (petit indice divisé par grand) :
+un rapport $>1$ signalerait une erreur de sens.
+\end{piege}
+\end{document}

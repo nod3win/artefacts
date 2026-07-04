@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}{\large\bfseries\color{primarydark} Thème 3 — Corrigé Difficile}\end{center}
+
+\begin{corrige}[molarité d'un acide concentré]
+Sur $\SI{1}{\litre}$ de solution : $m_{\text{sol}} = 1000\times 2{,}00 = \SI{2000}{\gram}$.
+Masse de \ce{H2SO4} pur : $m = 2000\times\dfrac{98}{100} = \SI{1960}{\gram}$.
+\[ n = \frac{m}{M} = \frac{1960}{98} = \SI{20.0}{\mole}\ \text{dans}\ \SI{1}{\litre}
+   \ \Rightarrow\ \boxed{C = \SI{20.0}{\mole\per\litre}}. \]
+\end{corrige}
+
+\begin{corrige}[le raisonnement inverse]
+Sur $\SI{1}{\litre}$ : la molarité donne $n = C\,V = 5{,}00\times 1 = \SI{5.00}{\mole}$, soit une masse
+de soluté $m = n\,M = 5{,}00\times 40 = \SI{200}{\gram}$. La masse de solution est
+$m_{\text{sol}} = 1000\times 1{,}10 = \SI{1100}{\gram}$.
+\[ \%\,\text{massique} = \frac{200}{1100}\times 100 = \boxed{18{,}2\,\%}. \]
+\end{corrige}
+
+\begin{corrige}[du pourcentage massique à la molarité]
+Sur $\SI{1}{\litre}$ : $m_{\text{sol}} = 1000\times 1{,}00 = \SI{1000}{\gram}$, dont
+$m(\ce{NaF}) = 1000\times\dfrac{21}{100} = \SI{210}{\gram}$.
+\[ n = \frac{210}{42} = \SI{5.00}{\mole}\ \text{dans}\ \SI{1}{\litre}
+   \ \Rightarrow\ \boxed{C = \SI{5.00}{\mole\per\litre}}. \]
+\end{corrige}
+
+\begin{corrige}[préparer une concentration massique visée]
+\begin{enumerate}[label=\alph*)]
+  \item $m = C_m\,V = 550\times 1{,}00 = \SI{550}{\gram}$ d'éthylène glycol.
+  \item Comme $\rho = \SI{1.10}{\gram\per\milli\litre}$ : $V = \dfrac{m}{\rho} = \dfrac{550}{1{,}10} = \SI{500}{\milli\litre}$
+        de glycol pur (que l'on complète à $\SI{1}{\litre}$ avec de l'eau).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[acide nitrique concentré]
+\begin{enumerate}[label=\alph*)]
+  \item Sur $\SI{1}{\litre}$ : $m_{\text{sol}} = 1000\times 1{,}40 = \SI{1400}{\gram}$, dont
+        $m(\ce{HNO3}) = 1400\times 0{,}63 = \SI{882}{\gram}$, soit $n = \dfrac{882}{63} = \SI{14.0}{\mole}$.
+        Donc $C = \SI{14.0}{\mole\per\litre}$.
+  \item Dans $\SI{100}{\milli\litre} = \SI{0.1}{\litre}$ : $n = 14{,}0\times 0{,}1 = \SI{1.40}{\mole}$,
+        soit $m = 1{,}40\times 63 = \SI{88.2}{\gram}$ de \ce{HNO3}.
+  \item $V = \dfrac{n}{C} = \dfrac{1}{14{,}0} = \SI{0.0714}{\litre} = \SI{71.4}{\milli\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

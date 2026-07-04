@@ -1,102 +1,80 @@
-% =====================================================================
-%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 5
-%  Niveau MOYEN — Exercices
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,}}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{excol}{RGB}{0,135,90}
-\definecolor{atomO}{RGB}{220,55,45}
-\definecolor{bondcol}{RGB}{60,60,70}
-\definecolor{piecol}{RGB}{198,93,9}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
-\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!5,colframe=primary,
-   title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 5 — La résonance}}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\Large\bfseries\color{primarydark}Thème 5 — Niveau Moyen}\\[2pt]
-{\small\itshape Justifier chaque réponse. La double flèche de résonance se note $\longleftrightarrow$.}
-\end{center}
-\medskip
-
 \begin{exo}[l'ozone \ce{O3}]
-La molécule d'ozone est coudée, avec un atome d'oxygène central lié à deux oxygènes.
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
-  \item Écrire les \textbf{deux} formes limites de l'ozone reliées par la flèche $\longleftrightarrow$.
-  \item Expliquer pourquoi les deux liaisons \ce{O-O} \emph{réelles} sont identiques, et préciser
-        comment se compare leur longueur à celle d'une liaison simple et d'une liaison double.
+\begin{enumerate}[label=\alph*)]
+  \item Écris les deux formes limites de l'ozone (connectivité \ce{O-O-O}) et indique où se
+        trouvent la charge $+$ et la charge $-$ dans chaque forme.
+  \item Que peut-on dire des deux liaisons \ce{O-O} dans la molécule réelle (l'hybride) ?
+  \item La géométrie (coudée) change-t-elle d'une forme à l'autre ?
 \end{enumerate}
 \end{exo}
 
 \begin{exo}[l'ion carbonate \ce{CO3^2-}]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
-  \item Expliquer pourquoi il existe \textbf{trois} formes limites équivalentes pour cet ion.
-  \item En déduire ce que l'on peut dire des trois liaisons \ce{C-O} réelles.
-  \item La charge globale de l'ion est $-2$. Comment se répartit-elle en moyenne sur les trois
-        oxygènes ? Donner la charge portée par chaque oxygène.
+\begin{enumerate}[label=\alph*)]
+  \item Combien de formes limites équivalentes peut-on écrire ? Pourquoi ce nombre ?
+  \item Comment la charge $-2$ est-elle répartie sur les oxygènes dans l'hybride ?
+  \item Les trois liaisons \ce{C-O} sont-elles simples, doubles, ou intermédiaires ?
 \end{enumerate}
 \end{exo}
 
 \begin{exo}[l'ion nitrate \ce{NO3-}]
-L'ion nitrate a la même structure « à trois oxygènes autour d'un atome central » que le carbonate.
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
-  \item Par analogie avec \ce{CO3^2-}, indiquer le nombre de formes limites équivalentes de \ce{NO3-}.
-  \item En déduire ce que l'on prévoit pour les longueurs des trois liaisons \ce{N-O}.
+\begin{enumerate}[label=\alph*)]
+  \item Combien de formes limites équivalentes ?
+  \item Répartition de la charge $-1$ sur les trois oxygènes.
+  \item Longueur relative des trois liaisons \ce{N-O}.
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[deux flèches à ne pas confondre]
-On considère d'une part la résonance de l'ozone \ce{O=O-O <-> O-O=O}, d'autre part l'équilibre
-d'ionisation de l'eau \ce{2 H2O <=> H3O+ + OH-}.
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
-  \item Lequel de ces deux schémas met en jeu \emph{une seule} espèce ? Lequel en met en jeu
-        \emph{deux} (ou plus) ?
-  \item Expliquer la différence de \textbf{sens physique} entre les symboles $\longleftrightarrow$
-        et $\rightleftharpoons$.
+\begin{exo}[l'ion acétate \ce{CH3COO-}]
+Le groupe carboxylate \ce{-CO2^-} porte une charge $-1$ sur l'un de ses deux oxygènes.
+\begin{enumerate}[label=\alph*)]
+  \item Écris les deux formes limites (la double liaison \ce{C=O} passe d'un oxygène à l'autre).
+  \item Sur quels atomes la charge $-1$ est-elle réellement délocalisée ?
+  \item Les deux liaisons \ce{C-O} du carboxylate sont-elles identiques dans l'hybride ?
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[l'ion perchlorate \ce{ClO4-}]
-Dans \ce{ClO4-}, les quatre oxygènes sont expérimentalement \emph{équivalents} et les quatre liaisons
-\ce{Cl-O} ont la même longueur.
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=1pt]
-  \item La « meilleure » structure de Lewis place la charge $-1$ sur \emph{un} oxygène précis et des
-        doubles liaisons sur les autres. En quoi cela semble-t-il \emph{contredire} la réalité ?
-  \item Expliquer comment la résonance résout ce paradoxe, et donner le nombre de formes limites
-        équivalentes.
+\begin{exo}[le dioxyde de soufre \ce{SO2}]
+\begin{enumerate}[label=\alph*)]
+  \item Combien de formes limites équivalentes possède \ce{SO2} ?
+  \item Les deux liaisons \ce{S-O} sont-elles identiques ?
+  \item La géométrie coudée est-elle modifiée par la résonance ?
 \end{enumerate}
 \end{exo}
 

@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[est-ce un tampon ?]
+Il faut un acide faible \emph{et} sa base conjuguée.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Oui} : \ce{CH3COOH} (acide faible) + \ce{CH3COO-} (sa base conjuguée, apportée par \ce{CH3COONa}).
+  \item \textbf{Non} : \ce{HCl} est un acide \emph{fort} et \ce{Cl-} une base négligeable.
+  \item \textbf{Oui} : \ce{NH4+} (acide faible, via \ce{NH4Cl}) + \ce{NH3} (sa base conjuguée).
+  \item \textbf{Non} : deux bases fortes, aucun couple acide faible / base conjuguée.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pH d'un tampon par Henderson]
+$\mathrm{pH} = 4{,}8 + \log\frac{[\ce{CH3COO-}]}{[\ce{CH3COOH}]}$.
+\begin{enumerate}[label=\alph*)]
+  \item rapport $= 1$ : $\mathrm{pH} = 4{,}8 + \log 1 = \mathbf{4{,}8}$ (le pH d'un tampon équimolaire vaut $\mathrm{p}K_a$).
+  \item rapport $= 10$ : $\mathrm{pH} = 4{,}8 + \log 10 = 4{,}8 + 1 = \mathbf{5{,}8}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la relation à l'équivalence]
+\begin{enumerate}[label=\alph*)]
+  \item $C_b = \dfrac{C_a V_a}{V_b} = \dfrac{0{,}10 \times 20}{25} = \qty{0,080}{mol\per L}$.
+  \item $V_b = \dfrac{C_a V_a}{C_b} = \dfrac{0{,}10 \times 10}{0{,}20} = \qty{5,0}{mL}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pH à l'équivalence selon la force]
+\begin{enumerate}[label=\alph*)]
+  \item fort + forte : il ne reste que des ions spectateurs $\Rightarrow$ \textbf{neutre} ($\mathrm{pH}=7$).
+  \item faible + forte : la base conjuguée \ce{CH3COO-} reste en solution $\Rightarrow$ \textbf{basique} ($>7$).
+  \item fort + faible : l'acide conjugué \ce{NH4+} reste en solution $\Rightarrow$ \textbf{acide} ($<7$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[hydrolyse d'un sel]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{KCl} (acide fort \ce{HCl} + base forte \ce{KOH}) : \textbf{neutre}. Ni \ce{K+} ni \ce{Cl-} ne réagit.
+  \item \ce{CH3COONa} (acide faible + base forte) : \textbf{basique}. \ce{CH3COO- + H2O <=> CH3COOH + OH-}.
+  \item \ce{NH4Cl} (acide fort + base faible) : \textbf{acide}. \ce{NH4+ + H2O <=> NH3 + H3O+}.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

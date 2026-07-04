@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{exo}[deux miroirs formant un angle quelconque]
+Deux miroirs plans $M_1$ et $M_2$ se coupent en $O$ en formant entre eux un angle $\theta$. Un rayon
+frappe $M_1$ en $A$ (angle d'incidence $\alpha$), se réfléchit vers $M_2$ qu'il frappe en $B$ (angle
+d'incidence $\beta$), puis ressort.
+\begin{center}
+\begin{tikzpicture}[scale=1.15,>=Stealth]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (3.2,0);
+  \coordinate (B) at (2.05,1.72);
+  \draw[black,line width=1.3pt] (O) -- (3.8,0);
+  \draw[black,line width=1.3pt] (O) -- (2.72,2.28);
+  \node[black!70,right,font=\footnotesize] at (3.8,0){$M_1$};
+  \node[black!70,above,font=\footnotesize] at (2.72,2.28){$M_2$};
+  \draw[line width=0.6pt] (0.7,0) arc (0:40:0.7);
+  \node[font=\footnotesize] at (0.72,0.32){$\theta$};
+  \draw[->,line width=1.1pt] (4.4,1.5) -- (A);
+  \draw[->,line width=1.1pt,primary] (A) -- (B);
+  \draw[->,line width=1.1pt,primary] (B) -- (0.7,2.55);
+  \draw[dash pattern=on 2pt off 2pt,black!55] (A) -- (3.2,1.2);
+  \draw[dash pattern=on 2pt off 2pt,black!55] (B) -- ($(B)!1.2cm!90:(O)$);
+  \fill (A) circle (1.1pt); \node[below,font=\footnotesize] at (A){$A$};
+  \fill (B) circle (1.1pt); \node[right,font=\footnotesize] at (B){$B$};
+  \node[font=\footnotesize] at (2.95,0.42){$\alpha$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item En considérant le triangle $OAB$, montre que $\alpha+\beta=\theta$.
+  \item Sachant qu'une réflexion sous incidence $\alpha$ dévie le rayon de $180^\circ-2\alpha$, exprime
+        la déviation totale $D$ du rayon en fonction de $\theta$ seul.
+  \item Applique à $\theta=\ang{120}$. Pour quelle valeur de $\theta$ le rayon ressort-il exactement
+        antiparallèle à sa direction d'entrée ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le scanner à miroir tournant]
+Un petit miroir plan renvoie un faisceau laser vers un mur situé à la distance $D=\qty{2.5}{m}$.
+Au départ, le faisceau réfléchi frappe le mur perpendiculairement en un point $S_0$. On fait tourner
+le miroir d'un angle $\alpha=\ang{6}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \draw[black!55,line width=1.4pt] (5,-1.2) -- (5,1.6);
+  \node[black!70,right,font=\footnotesize] at (5,1.3){mur};
+  \draw[black,line width=1.4pt] (0,-0.5) -- (0,0.9);
+  \node[left,font=\footnotesize] at (0,0.2){miroir};
+  \draw[->,line width=1.0pt] (-1.4,0.2) -- (0,0.2);
+  \draw[->,line width=1.0pt,primary] (0,0.2) -- (5,0.2);
+  \fill (5,0.2) circle (1.2pt); \node[right,font=\scriptsize] at (5.05,0.2){$S_0$};
+  \draw[->,line width=1.0pt,primary!55!black] (0,0.2) -- (4.9,1.25);
+  \node[below,font=\scriptsize] at (2.5,0.2){$D=\qty{2.5}{m}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item De quel angle tourne le faisceau réfléchi ?
+  \item De quelle distance le point d'impact se déplace-t-il sur le mur ? (On donnera l'expression
+        littérale puis la valeur ; $\tan\ang{12}=0{,}2126$.)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux miroirs parallèles face à face]
+Deux miroirs plans sont \textbf{parallèles et se font face}, séparés d'une distance $d=\qty{60}{cm}$.
+Un petit objet ponctuel $P$ est placé entre eux, à $a=\qty{20}{cm}$ du miroir $M_1$ (donc à
+$\qty{40}{cm}$ de $M_2$). On rappelle que l'image d'un objet dans un miroir plan est son
+\emph{symétrique} par rapport au plan du miroir.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \draw[black,line width=1.5pt] (0,-1) -- (0,1.4);
+  \draw[black,line width=1.5pt] (4,-1) -- (4,1.4);
+  \fill[pattern=north east lines,pattern color=black!35] (-0.25,-1) rectangle (0,1.4);
+  \fill[pattern=north east lines,pattern color=black!35] (4,-1) rectangle (4.25,1.4);
+  \node[black!70,above,font=\footnotesize] at (0,1.4){$M_1$};
+  \node[black!70,above,font=\footnotesize] at (4,1.4){$M_2$};
+  \fill[primary] (1.33,0.2) circle (1.6pt);
+  \node[primary,above,font=\footnotesize] at (1.33,0.28){$P$};
+  \draw[<->,black!55] (0,-0.7) -- (1.33,-0.7); \node[below,font=\scriptsize] at (0.66,-0.7){$a$};
+  \draw[<->,black!55] (0,-1.25) -- (4,-1.25); \node[below,font=\scriptsize] at (2,-1.25){$d$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Donne la position (distance et côté) de la première image de $P$ formée par $M_1$, puis de
+        celle formée par $M_2$.
+  \item Explique pourquoi l'observateur voit en réalité une \textbf{infinité} d'images.
+\end{enumerate}
+\end{exo}
+
+\end{document}

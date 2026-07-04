@@ -1,0 +1,106 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[trouver une masse sur un levier]
+Un levier repose sur un pivot. À gauche, une masse $m_1=\qty{2}{kg}$ est à $d_1=\qty{0.4}{m}$ du
+pivot ; à droite, une masse $m_2$ (inconnue) est à $d_2=\qty{0.5}{m}$. L'ensemble est en équilibre
+horizontal.
+\begin{enumerate}[label=\alph*)]
+  \item Écris l'égalité des moments (avec $G=mg$) et simplifie par $g$.
+  \item Calcule $m_2$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[poutre sur deux appuis]
+Une poutre horizontale de masse négligeable, de longueur \qty{2}{m}, repose sur deux appuis $A$ (à
+$x=0$) et $B$ (à $x=\qty{2}{m}$). On y pose une charge de \qty{100}{N}.
+\begin{enumerate}[label=\alph*)]
+  \item La charge est au \emph{milieu} ($x=\qty{1}{m}$). Que valent les réactions $R_A$ et $R_B$ ?
+  \item La charge est déplacée en $x=\qty{0.5}{m}$ (près de $A$). Recalcule $R_A$ et $R_B$ (utilise
+        l'équilibre des moments autour de $A$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la balance romaine]
+Une balance romaine porte l'objet à peser à $d_1=\qty{0.1}{m}$ du pivot ; on équilibre en faisant
+coulisser un contrepoids de \qty{5}{N} le long du fléau. L'équilibre est atteint quand le contrepoids
+est à $d_2=\qty{0.4}{m}$ du pivot.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \fill[primary!75] (0,0)--(-0.3,-0.6)--(0.3,-0.6)--cycle;
+  \draw[primarydark,line width=1.8pt] (-0.7,0.1)--(3,0.1);
+  \draw[->,line width=1pt,orange] (-0.5,0.1)--(-0.5,-0.7) node[below]{\scriptsize objet $W$};
+  \draw[->,line width=1pt,defcol] (2,0.1)--(2,-0.7) node[below]{\scriptsize \qty{5}{N}};
+  \draw[<->,black!55] (-0.5,0.5)--(0,0.5) node[midway,above,font=\scriptsize]{$d_1$};
+  \draw[<->,black!55] (0,0.8)--(2,0.8) node[midway,above,font=\scriptsize]{$d_2$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le poids $W$ de l'objet.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la brouette]
+Une brouette est un levier : la roue sert de pivot. Une charge de \qty{200}{N} est placée à
+$\qty{0.4}{m}$ de l'axe de la roue ; on soulève les poignées situées à $\qty{1.2}{m}$ de cet axe.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[primarydark,line width=1.8pt] (0,0)--(4.4,0.5);
+  \draw[fill=black!15,draw=black!60] (0,0) circle (0.3);
+  \fill (0,0) circle (1.5pt); \node[below=4pt] at (0,-0.1){\scriptsize roue (pivot)};
+  \draw[->,line width=1pt,orange] (1.5,0.17)--(1.5,-0.8) node[below]{\scriptsize \qty{200}{N}};
+  \draw[->,line width=1pt,excol] (4.2,0.48)--(4.2,1.3) node[above]{\scriptsize $\vv F$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle force verticale $F$ faut-il exercer sur les poignées pour soulever la charge ?
+  \item Pourquoi la brouette « démultiplie »-t-elle l'effort ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[où placer le pivot ?]
+On veut équilibrer une tige portant deux masses fixes : $m_1=\qty{3}{kg}$ en $x=0$ et
+$m_2=\qty{6}{kg}$ en $x=\qty{0.9}{m}$, en la posant sur un unique pivot.
+\begin{enumerate}[label=\alph*)]
+  \item À quelle position $x$ faut-il placer le pivot pour que la tige reste horizontale ?
+  \item Quel point remarquable de l'ensemble ce pivot coïncide-t-il avec ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,94 +1,85 @@
-% =====================================================================
-%  FICHE 4 — THEME 2 — Corrige niveau MOYEN
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit\Molar{M}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{excol}{RGB}{0,135,90}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
-   toptitle=0.5mm,bottomtitle=0.5mm}}
-\newcounter{exo}
-\newenvironment{corr}[1][]{%
-  \par\medskip\refstepcounter{exo}%
-  \noindent\begin{tcolorbox}[boxbase,colback=excol!5,colframe=excol,
-     title={\textsc{Correction \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
-  {\end{tcolorbox}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Corrigé Moyen}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\newcommand{\NA}{N_{\!\text{A}}}
-\setlength{\parindent}{0pt}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
 
-\begin{center}
-{\LARGE\bfseries\color{primarydark} Thème 2 --- Corrigé Moyen}
-\end{center}
+\begin{center}{\large\bfseries\color{primarydark} Thème 2 — Corrigé Moyen}\end{center}
 
-\begin{corr}[chaîne volume $\to$ masse $\to$ quantité]
-\textbf{a)} Densité $1{,}70\Leftrightarrow\rho=\SI{1.70}{\gram\per\milli\litre}$, donc
-$m=\rho\,V=1{,}70\times100=\SI{170}{\gram}$.\\[2pt]
-\textbf{b)} $M(\ce{CH2Cl2})=12+2(1)+2(35{,}5)=12+2+71=\SI{85}{\gram\per\mole}$, d'où
-\[ n=\frac{m}{M}=\frac{170}{85}=\SI{2.0}{\mole}. \]
-\[ \boxed{n(\ce{CH2Cl2})=\SI{2.0}{\mole}} \]
-\end{corr}
+\begin{corrige}[chaîne volume $\to$ masse $\to$ moles (liquide)]
+On enchaîne $V \xrightarrow{\times \rho} m \xrightarrow{\div M} n$ (avec $\rho = d\times\SI{1}{\gram\per\milli\litre}$).
+\begin{enumerate}[label=\alph*)]
+  \item $m = 1{,}70\times 100 = \SI{170}{\gram}$, puis $n = \dfrac{170}{85} = \SI{2.00}{\mole}$.
+  \item $m = 1{,}00\times 50 = \SI{50}{\gram}$, puis $n = \dfrac{50}{18} = \SI{2.78}{\mole}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[masse molaire d'un gaz]
-\textbf{a)} Pour un gaz, $n=\dfrac{V}{V_m}$ :
-\[ n=\frac{5{,}6}{22{,}4}=\SI{0.25}{\mole}. \]
-\textbf{b)} La masse molaire est la masse d'une mole, soit $M=\dfrac{m}{n}$ :
-\[ M=\frac{5{,}0}{0{,}25}=\SI{20}{\gram\per\mole}. \]
-\[ \boxed{M=\SI{20}{\gram\per\mole}} \]
-\end{corr}
+\begin{corrige}[masse d'un gaz]
+On enchaîne $V \xrightarrow{\div V_m} n \xrightarrow{\times M} m$.
+\begin{enumerate}[label=\alph*)]
+  \item $n = \dfrac{11{,}2}{22{,}4} = \SI{0.5}{\mole}$, puis $m = 0{,}5\times 32 = \SI{16.0}{\gram}$.
+  \item $n = \dfrac{5{,}6}{22{,}4} = \SI{0.25}{\mole}$, puis $m = 0{,}25\times 44 = \SI{11.0}{\gram}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[masse volumique et conversions « piégeuses »]
-On convertit d'abord la masse : $\SI{7.72}{\hecto\gram}=7{,}72\times100=\SI{772}{\gram}$.
-On isole le volume dans $\rho=m/V$ :
-\[ V=\frac{m}{\rho}=\frac{772}{19{,}3}=\SI{40}{\cubic\centi\metre}=\SI{40}{\milli\litre}. \]
-\[ \boxed{V=\SI{40}{\milli\litre}} \]
-\textit{Piège :} oublier de convertir le hectogramme ($\SI{1}{\hecto\gram}=\SI{100}{\gram}$) mène à
-un résultat 100 fois trop petit.
-\end{corr}
+\begin{corrige}[nombre de molécules d'un gaz]
+On enchaîne $V \xrightarrow{\div V_m} n \xrightarrow{\times N_{\mathrm{A}}} N$.
+\begin{enumerate}[label=\alph*)]
+  \item $n = \dfrac{44{,}8}{22{,}4} = \SI{2}{\mole}$, puis $N = 2\times 6{,}02\times10^{23} = 1{,}20\times10^{24}$ molécules.
+  \item $n = \dfrac{2{,}24}{22{,}4} = \SI{0.1}{\mole}$, puis $N = 0{,}1\times 6{,}02\times10^{23} = 6{,}02\times10^{22}$ atomes.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[du gaz au volume]
-$M(\ce{O2})=\SI{32}{\gram\per\mole}$. On passe par la quantité de matière :
-\[ n=\frac{16}{32}=\SI{0.50}{\mole}\ \Rightarrow\ V=n\,V_m=0{,}50\times22{,}4=\SI{11.2}{\litre}. \]
-\[ \boxed{V=\SI{11.2}{\litre}} \]
-\end{corr}
+\begin{corrige}[CNTP ou conditions standard~?]
+\begin{enumerate}[label=\alph*)]
+  \item $V = 0{,}5\times 22{,}4 = \SI{11.2}{\litre}$.
+  \item $V = 0{,}5\times 24{,}4 = \SI{12.2}{\litre}$.
+  \item Le même nombre de moles occupe un volume \emph{plus grand} à $\SI{25}{\celsius}$ (le gaz s'est
+        dilaté en chauffant), d'où l'importance de vérifier les conditions avant d'utiliser
+        $\SI{22.4}{\litre\per\mole}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[masse volumique par déplacement d'eau]
-\textbf{a)} Le volume du solide est l'\textbf{augmentation} du niveau d'eau :
-$V=15{,}0-10{,}0=\SI{5.0}{\milli\litre}$.\\[2pt]
-\textbf{b)} $\rho=\dfrac{m}{V}=\dfrac{20{,}0}{5{,}0}=\SI{4.0}{\gram\per\milli\litre}
-=\SI{4.0}{\gram\per\cubic\centi\metre}$.
-\[ \boxed{V=\SI{5.0}{\milli\litre};\quad \rho=\SI{4.0}{\gram\per\cubic\centi\metre}} \]
-\textit{Piège :} prendre le niveau final ($\SI{15}{\milli\litre}$) au lieu de l'augmentation
-($\SI{5}{\milli\litre}$).
-\end{corr}
+\begin{corrige}[masse volumique d'un gaz]
+Une mole occupe $\SI{22.4}{\litre}$ aux CNTP et pèse $M$ grammes, d'où $\rho = M/22{,}4$.
+\begin{enumerate}[label=\alph*)]
+  \item $\rho(\ce{O2}) = \dfrac{32}{22{,}4} = \SI{1.43}{\gram\per\litre}$.
+  \item $\rho(\ce{CO2}) = \dfrac{44}{22{,}4} = \SI{1.96}{\gram\per\litre}$.
+\end{enumerate}
+Le \ce{CO2} est plus dense que le \ce{O2} : à volume égal, il est plus lourd.
+\end{corrige}
 
 \end{document}

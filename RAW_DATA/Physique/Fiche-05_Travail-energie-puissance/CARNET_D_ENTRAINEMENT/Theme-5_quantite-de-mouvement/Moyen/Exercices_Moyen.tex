@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[une voiture et un camion à la même vitesse]
+Une voiture de masse $m_1=\qty{2000}{\kilogram}$ et un camion de masse $m_2=\qty{4000}{\kilogram}$
+roulent à la \emph{même} vitesse $v=\qty{80}{\kilo\metre\per\hour}$.
+\begin{enumerate}[label=\alph*)]
+  \item Convertis la vitesse en \si{\metre\per\second} (arrondis à $\qty{22,2}{\metre\per\second}$).
+  \item Calcule la quantité de mouvement de chacun des deux véhicules.
+  \item Par quel facteur la quantité de mouvement du camion dépasse-t-elle celle de la voiture ?
+        Lequel est le plus difficile à arrêter ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[même quantité de mouvement, vitesses différentes]
+Une bille de masse $m_1=\qty{2}{\kilogram}$ et un chariot de masse $m_2=\qty{8}{\kilogram}$ ont la
+\emph{même} quantité de mouvement $p=\qty{16}{\kilogram\metre\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la vitesse de la bille.
+  \item Calcule la vitesse du chariot. Que constates-tu par rapport à la bille ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[quantité de mouvement et énergie cinétique quand la vitesse double]
+Un mobile de masse $m=\qty{2}{\kilogram}$ se déplace à $v=\qty{10}{\metre\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule sa quantité de mouvement $p$ et son énergie cinétique $E_c$.
+  \item Sa vitesse double et passe à $\qty{20}{\metre\per\second}$. Que valent alors $p$ et $E_c$ ?
+        Par quel facteur chacune a-t-elle été multipliée ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[classer trois mobiles]
+Trois mobiles sont en mouvement :
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item $A$ : $m_A=\qty{1000}{\kilogram}$ à $v_A=\qty{20}{\metre\per\second}$ ;
+  \item $B$ : $m_B=\qty{2000}{\kilogram}$ à $v_B=\qty{15}{\metre\per\second}$ ;
+  \item $C$ : $m_C=\qty{1500}{\kilogram}$ à $v_C=\qty{18}{\metre\per\second}$.
+\end{itemize}
+Calcule la quantité de mouvement de chacun, puis classe-les de la plus grande à la plus petite.
+\end{exo}
+\end{document}

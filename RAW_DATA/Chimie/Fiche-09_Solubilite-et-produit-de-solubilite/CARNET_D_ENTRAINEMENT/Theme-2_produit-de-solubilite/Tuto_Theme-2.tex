@@ -1,0 +1,103 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Le produit de solubilité Kps
+\sisetup{per-mode=symbol}
+\section*{\color{primarydark}Thème 2 — Le produit de solubilité $K_{\mathrm{ps}}$}
+
+Le \textbf{produit de solubilité} $K_{\mathrm{ps}}$ est simplement la \emph{constante d'équilibre} de
+la réaction de dissolution. Ce thème apprend à l'\textbf{écrire} correctement à partir de l'équation de
+dissolution, puis à le \textbf{calculer} à partir des concentrations des ions. C'est une mécanique très
+mécanique : bien poser l'équation, et le reste suit.
+
+\begin{cle}[l'expression du produit de solubilité]
+Pour un sel $\mathrm{M}_p\mathrm{X}_q$ qui se dissout selon
+$\ce{M_{p}X_{q}(s) <=> p M^{q+}(aq) + q X^{p-}(aq)}$, le produit de solubilité est le
+\textbf{produit des concentrations des ions}, chacune \textbf{élevée à son coefficient} :
+\[ \boxed{\,K_{\mathrm{ps}} = [\ce{M^{q+}}]^{\,p}\,[\ce{X^{p-}}]^{\,q}\,} \]
+\textbf{Règle d'or :} \emph{l'exposant de chaque ion dans $K_{\mathrm{ps}}$ est son coefficient dans
+l'équation de dissolution.} Le solide, lui, n'apparaît pas.
+\end{cle}
+
+\begin{cle}[pourquoi le solide n'apparaît pas : activité $=1$]
+L'\textbf{activité} d'un solide pur (ou du solvant eau) vaut \textbf{1} par convention : sa
+« concentration efficace » ne dépend pas de la quantité présente. On l'« efface » donc de l'expression
+de $K_{\mathrm{ps}}$ — seuls comptent les ions \emph{dissous}.
+\end{cle}
+
+\begin{methode}[écrire $K_{\mathrm{ps}}$ en deux temps]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Écrire l'équation de dissolution} avec les bons coefficients $p$ et $q$.
+  \item \textbf{Recopier} chaque concentration ionique en l'élevant à la puissance égale à son
+        coefficient, et multiplier le tout.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[trois expressions typiques]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item $\ce{AgCl(s) <=> Ag^{+} + Cl^{-}}$ \ $\Rightarrow$ \ $K_{\mathrm{ps}} = [\ce{Ag+}]\,[\ce{Cl-}]$.
+  \item $\ce{Fe(OH)3(s) <=> Fe^{3+} + 3 OH^{-}}$ \ $\Rightarrow$ \
+        $K_{\mathrm{ps}} = [\ce{Fe^{3+}}]\,[\ce{OH-}]^{3}$.
+  \item $\ce{Ag3PO4(s) <=> 3 Ag^{+} + PO4^{3-}}$ \ $\Rightarrow$ \
+        $K_{\mathrm{ps}} = [\ce{Ag+}]^{3}\,[\ce{PO4^{3-}}]$.
+\end{itemize}
+\end{exemplebox}
+
+\begin{piege}[coefficient = exposant, pas facteur]
+Le « 3 » de \ce{Ag3PO4} devient un \textbf{exposant}, jamais un facteur multiplicatif :
+\[ K_{\mathrm{ps}} = [\ce{Ag+}]^{3}[\ce{PO4^{3-}}] \quad\text{(correct)}, \qquad
+   K_{\mathrm{ps}} \neq 3\,[\ce{Ag+}][\ce{PO4^{3-}}] \quad\text{(faux !)}. \]
+\end{piege}
+
+\begin{piege}[$K_{\mathrm{ps}}$ est SANS UNITÉ]
+C'est une constante d'équilibre : on écrit $K_{\mathrm{ps}}(\ce{AgCl})=\num{1.8e-10}$ \emph{sans unité}.
+Ne jamais lui coller des \si{\mole\per\litre} ni des « $\mathrm{M}^5$ ». En revanche la
+\textbf{solubilité} $s$, elle, s'exprime bien en \si{\mole\per\litre}.
+\end{piege}
+
+\begin{cle}[cas particulier $MX_n$ (formule du livre)]
+Pour un sel $\mathrm{MX}_n$ (un cation, $n$ anions), comme \ce{AgCl} ($n=1$), \ce{PbBr2} ($n=2$),
+\ce{Fe(OH)3} ($n=3$) :
+\[ K_{\mathrm{ps}}(\mathrm{MX}_n) = [\ce{M^{n+}}]\,[\ce{X^{-}}]^{\,n}. \]
+\end{cle}
+
+\begin{remarque}[calcul numérique]
+Une fois l'expression écrite, calculer $K_{\mathrm{ps}}$ ne demande que de remplacer chaque
+concentration \emph{à saturation} par sa valeur et de multiplier. Le résultat est un nombre pur (souvent
+très petit, $10^{-10}$ ou moins).
+\end{remarque}
+\end{document}

@@ -1,0 +1,119 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[deux fils symétriques]
+Un lustre de masse $m=\qty{8}{kg}$ est suspendu par \textbf{deux fils identiques}, inclinés
+symétriquement par rapport à la verticale ($g=\qty{10}{N/kg}$).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[black!55,line width=1pt] (-2,2)--(2,2);
+  \foreach \x in {-1.8,-1.4,...,1.9}\draw[black!45](\x,2)--(\x-0.2,2.22);
+  \coordinate (o) at (0,0.3);
+  \draw[defcol,line width=1.1pt] (-1.2,2)--(o);
+  \draw[defcol,line width=1.1pt] (1.2,2)--(o);
+  \draw[fill=primary!25,draw=primary!70] (-0.35,-0.25) rectangle (0.35,0.3);
+  \draw[->,line width=1.2pt,orange] (0,-0.25)--(0,-1.2) node[below]{$\vv G$};
+  \node[defcol] at (-1.05,1.25){$\vv T_1$};
+  \node[defcol] at (1.05,1.25){$\vv T_2$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le poids $G$ du lustre.
+  \item Que vaut la somme des contributions verticales des deux tensions ?
+  \item Par symétrie, quelle est l'indication de chacun des deux dynamomètres, mesurée verticalement ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une force de plus sur la table]
+Un bloc de masse $m=\qty{4}{kg}$ est posé sur une table ; on \emph{appuie} en plus verticalement
+dessus avec une force $\vv F$ d'intensité $F=\qty{12}{N}$ dirigée vers le bas ($g=\qty{10}{N/kg}$).
+\begin{enumerate}[label=\alph*)]
+  \item Fais le bilan des forces verticales qui s'exercent sur le bloc.
+  \item Le bloc restant immobile, détermine l'intensité $R$ de la réaction de la table.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois forces alignées]
+Un anneau est tiré horizontalement par deux forces opposées $\vv F_1$ (vers la gauche,
+$F_1=\qty{7}{N}$) et $\vv F_2$ (vers la droite, $F_2=\qty{12}{N}$). On veut le maintenir immobile en
+ajoutant une troisième force horizontale $\vv F_3$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \fill (0,0) circle (2pt) node[above=3pt]{anneau};
+  \draw[->,line width=1.2pt,defcol] (0,0)--(-1.6,0) node[left]{$\vv F_1$};
+  \draw[->,line width=1.2pt,attncol] (0,0)--(2.4,0) node[right]{$\vv F_2$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle doit être l'intensité de $\vv F_3$ ?
+  \item Dans quel sens (gauche ou droite) doit-elle pointer ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[plaque suspendue : conservation de la charge]
+Une plaque horizontale est suspendue par deux dynamomètres $D_1$ et $D_2$ à ses extrémités. Au
+départ, chacun indique \qty{300}{N}. On déplace ensuite une charge vers $D_2$, et $D_1$ ne lit plus
+que \qty{220}{N}. Le système reste en équilibre.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la charge totale supportée (poids total de l'ensemble) ?
+  \item Que lit alors $D_2$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux fils asymétriques]
+Un objet est suspendu par deux fils \textbf{d'inclinaisons différentes} : le fil de gauche est presque
+vertical, celui de droite est très incliné.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[black!55,line width=1pt] (-2.2,2)--(2.2,2);
+  \foreach \x in {-2,-1.6,...,2.1}\draw[black!45](\x,2)--(\x-0.2,2.22);
+  \coordinate (o) at (0,0.3);
+  \draw[defcol,line width=1.1pt] (-0.35,2)--(o) node[midway,left]{$\vv T_g$};
+  \draw[attncol,line width=1.1pt] (1.9,2)--(o) node[midway,above right]{$\vv T_d$};
+  \draw[fill=primary!25,draw=primary!70] (-0.3,-0.25) rectangle (0.3,0.3);
+  \draw[->,line width=1.2pt,orange] (0,-0.25)--(0,-1.2) node[below]{$\vv G$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item La somme des deux tensions dépend-elle de l'inclinaison des fils ?
+  \item Lequel des deux dynamomètres affiche la plus grande valeur ? Justifie.
+\end{enumerate}
+\end{exo}
+
+\end{document}

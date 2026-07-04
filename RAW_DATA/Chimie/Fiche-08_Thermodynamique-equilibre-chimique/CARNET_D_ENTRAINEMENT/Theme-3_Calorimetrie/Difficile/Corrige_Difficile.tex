@@ -1,0 +1,83 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{corrige}[escalier complet : de la glace à la vapeur]
+Avec $m=\qty{0.050}{\kilogram}$.
+\begin{enumerate}[label=\alph*)]
+  \item les cinq contributions :
+  \begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+    \item glace $-40\to 0$ : $0{,}050\times 2{,}060\times 40 = \qty{4.12}{\kilo\joule}$ ;
+    \item fusion : $0{,}050\times 334 = \qty{16.7}{\kilo\joule}$ ;
+    \item eau $0\to 100$ : $0{,}050\times 4{,}185\times 100 = \qty{20.925}{\kilo\joule}$ ;
+    \item vaporisation : $0{,}050\times 2257 = \qty{112.85}{\kilo\joule}$ ;
+    \item vapeur $100\to 120$ : $0{,}050\times 1{,}85\times 20 = \qty{1.85}{\kilo\joule}$.
+  \end{itemize}
+  \item $Q = 4{,}12 + 16{,}7 + 20{,}925 + 112{,}85 + 1{,}85 = \qty{156.445}{\kilo\joule}$.
+  \item la \textbf{vaporisation} domine ($\qty{112.85}{\kilo\joule}$, soit environ $72\,\%$ du total) car $L_{\text{vap}}$ est très grand devant les autres termes.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[dissolution : compter aussi le calorimètre]
+$\Delta T = 24{,}0-21{,}0 = \qty{3.0}{\celsius}$.
+\begin{enumerate}[label=\alph*)]
+  \item $Q_{\text{eau}} = m_e\,c_e\,\Delta T = 0{,}25\times 4{,}185\times 3{,}0 = \qty{3.139}{\kilo\joule}$.
+  \item la moitié du verre s'échauffe : $Q_{\text{verre}} = \dfrac{0{,}30}{2}\times 0{,}8368\times 3{,}0 = 0{,}15\times 0{,}8368\times 3{,}0 = \qty{0.377}{\kilo\joule}$.
+  \item la dissolution \emph{cède} $|Q_{\text{eau}}+Q_{\text{verre}}| = 3{,}139+0{,}377 = \qty{3.516}{\kilo\joule}$ ; rapportée à la mole :
+  \[ \Delta H = \dfrac{-(Q_{\text{eau}}+Q_{\text{verre}})}{n} = \dfrac{-3{,}516}{0{,}10} = \qty{-35.2}{\kilo\joule\per\mol}\quad(\text{exothermique}). \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une barre de fer froide : congélation partielle]
+\begin{enumerate}[label=\alph*)]
+  \item $Q_{\text{fer}} = m_{\text{fer}}\,c_{\text{fer}}\,\Delta T = 0{,}60\times 0{,}5\times\big(0-(-35)\big) = 0{,}60\times 0{,}5\times 35 = \qty{10.5}{\kilo\joule}$.
+  \item $|Q_{\text{eau}}| = m_{\text{eau}}\,c_{\text{eau}}\,|\Delta T| = 0{,}25\times 4\times|0-4| = \qty{4}{\kilo\joule}$.
+  \item l'eau ne peut céder que $\qty{4}{\kilo\joule}$, il manque $10{,}5-4 = \qty{6.5}{\kilo\joule}$ ; cette énergie vient de la \textbf{congélation}. Si toute l'eau gelait, elle libérerait $0{,}25\times 334 = \qty{83.5}{\kilo\joule}\gg\qty{6.5}{\kilo\joule}$ : donc \emph{seule une partie} gèle.
+  \item bilan $\sum Q_i = 0$ : $10{,}5 = 4 + m\times 334 \Rightarrow m = \dfrac{6{,}5}{334} = \qty{0.0195}{\kilogram}\approx\qty{19.5}{\gram}$.
+  \item la température finale d'équilibre est $\qty{0}{\celsius}$, avec coexistence de glace et d'eau liquide.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux — calorimétrie]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai} : toute la chaleur sert à briser/reformer les liaisons, la température ne change pas.
+  \item \textbf{Vrai} : une \emph{variation} a la même valeur dans les deux échelles.
+  \item \textbf{Vrai} : aucune chaleur ne sort de l'enceinte, donc $\sum_i Q_i = 0$.
+  \item \textbf{Faux} : $\qty{4.185}{\kilo\joule} = \qty{4185}{\joule}$ (facteur $1000$), et non $\qty{41.85}{\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[la bonne expression parmi quatre]
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Ag3PO4(s) <=> 3 Ag^{+}(aq) + PO4^{3-}(aq)}$.
+  \item La bonne réponse est \textbf{D} : $K_{\mathrm{ps}} = [\ce{Ag+}]^{3}\,[\ce{PO4^{3-}}]$.
+  \item Les erreurs :
+    \begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+      \item \textbf{A} : le coefficient $3$ est mis en \emph{facteur} au lieu d'être un
+            \emph{exposant} ($[\ce{Ag+}]^{3}$, pas $3[\ce{Ag+}]$).
+      \item \textbf{B} : la charge de l'ion argent est fausse — c'est \ce{Ag+} (et non \ce{Ag^{3+}}),
+            et l'exposant $3$ a disparu.
+      \item \textbf{C} : les concentrations d'un $K_{\mathrm{ps}}$ se \emph{multiplient}, elles ne
+            s'\emph{additionnent} pas.
+    \end{itemize}
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[assertions sur les unités : \ce{Pb3(PO4)2}]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Fausse.} La solubilité est une concentration molaire : son unité est \si{\mole\per\litre}
+        (soit M), \emph{jamais} $\mathrm{M}^{5}$. La puissance $5$ n'apparaît que dans
+        $K_{\mathrm{ps}}=p^{p}q^{q}s^{p+q}$, pas dans $s$.
+  \item \textbf{Fausse.} $K_{\mathrm{ps}}$ est une constante d'équilibre : il est \textbf{sans unité},
+        même si l'expression $[\ce{Pb^{2+}}]^{3}[\ce{PO4^{3-}}]^{2}$ « contiendrait »
+        formellement des $\mathrm{mol^{5}\,L^{-5}}$.
+  \item \textbf{Correcte.} Par définition, $K_{\mathrm{ps}}$ est la constante d'équilibre de la
+        dissolution.
+  \item \textbf{Correcte.} Comme toute constante d'équilibre, $K_{\mathrm{ps}}$ dépend de $T$.
+\end{enumerate}
+Les assertions correctes sont \textbf{c} et \textbf{d}.
+\end{corrige}
+
+\begin{corrige}[trois solutions saturées analysées]
+On applique l'expression de $K_{\mathrm{ps}}$ propre à chaque type de sel.
+\begin{enumerate}[label=\alph*)]
+  \item $K_{\mathrm{ps}} = [\ce{Ca^{2+}}][\ce{F-}]^{2} = (\num{2.0e-4})(\num{4.0e-4})^{2}
+         = (\num{2.0e-4})(\num{1.6e-7}) = \num{3.2e-11}$.
+  \item $K_{\mathrm{ps}} = [\ce{Ag+}]^{3}[\ce{PO4^{3-}}] = (\num{6.0e-5})^{3}(\num{2.0e-5})
+         = (\num{2.16e-13})(\num{2.0e-5}) = \num{4.3e-18}$.
+  \item $K_{\mathrm{ps}} = [\ce{Ca^{2+}}]^{3}[\ce{PO4^{3-}}]^{2} = (\num{3.0e-7})^{3}(\num{2.0e-7})^{2}
+         = (\num{2.7e-20})(\num{4.0e-14}) = \num{1.1e-33}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter à la formule du sel]
+\begin{enumerate}[label=\alph*)]
+  \item Les exposants donnent les indices : 2 cations \ce{M^{3+}} et 3 anions \ce{SO4^{2-}}. La
+        formule est \ce{M2(SO4)3} (la charge est bien neutre : $2(+3)+3(-2)=0$).
+  \item $\ce{M2(SO4)3(s) <=> 2 M^{3+}(aq) + 3 SO4^{2-}(aq)}$.
+  \item \textbf{Non} : un sel $\mathrm{MX}_n$ n'a qu'\emph{un seul} cation, or ici il y en a 2. Le sel
+        est de type $2{:}3$.
+\end{enumerate}
+\end{corrige}
+\end{document}

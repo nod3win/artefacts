@@ -1,0 +1,111 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: L'équation d'état pV=nRT et le volume molaire aux CNTP
+
+Une seule équation relie les quatre variables d'un gaz parfait : l'\textbf{équation d'état}. Ce thème
+entraîne à l'utiliser dans les deux sens (trouver $n$, $p$, $V$ ou $T$) et à exploiter le raccourci du
+\textbf{volume molaire} aux conditions normales.
+
+\begin{cle}[Équation d'état des gaz parfaits]
+\[ \boxed{\,p\,V = n\,R\,T\,} \]
+$p$ pression, $V$ volume, $n$ quantité de matière (\si{\mole}), $T$ température absolue (\si{\kelvin}),
+$R$ constante des gaz parfaits. On en isole n'importe quelle grandeur :
+\[ n=\frac{pV}{RT},\qquad p=\frac{nRT}{V},\qquad V=\frac{nRT}{p},\qquad T=\frac{pV}{nR}. \]
+\end{cle}
+
+\begin{cle}[Choisir la bonne valeur de $R$]
+\begin{center}\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c c c c}
+\toprule
+\rowcolor{primary!12}
+\textbf{Valeur de $R$} & \textbf{$p$} & \textbf{$V$} & \textbf{$T$}\\
+\midrule
+$\qty{0.082}{atm.L.mol^{-1}.K^{-1}}$ & \si{atm} & \si{\litre} & \si{\kelvin}\\
+$\qty{8.314}{\joule\per\mole\per\kelvin}$ & \si{\pascal} & \si{\meter\cubed} & \si{\kelvin}\\
+\bottomrule
+\end{tabular}
+\end{center}
+On \emph{ne panache jamais} : on choisit une ligne et on convertit toutes les données pour lui
+correspondre. En chimie, $R=\num{0,082}$ (couple \si{atm}/\si{\litre}) est le plus commode.
+\end{cle}
+
+\begin{cle}[Conditions normales (CNTP) et volume molaire]
+Aux \textbf{CNTP} (= TPN = PTN) : $p=\qty{1}{atm}$ et $T=\qty{273}{\kelvin}$. Alors \textbf{une mole de
+n'importe quel gaz parfait} occupe le \textbf{volume molaire}
+\[ \boxed{\,V_{\mathrm{m}}=\frac{RT}{p}=\qty{22.4}{\litre\per\mole}\,}
+   \qquad\Longrightarrow\qquad
+   n=\frac{V}{\qty{22.4}{\litre\per\mole}},\quad V=n\times\qty{22.4}{\litre\per\mole}. \]
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[box/.style={draw,thick,rounded corners=2pt,align=center,inner sep=5pt,font=\small},
+   >=Stealth,node distance=8mm]
+  \node[box,fill=defcol!10] (m) {masse $m$ (\si{\gram})};
+  \node[box,fill=primary!10,right=22mm of m] (n) {quantité $n$ (\si{\mole})};
+  \node[box,fill=excol!12,right=22mm of n] (v) {volume $V$ (\si{\litre}, CNTP)};
+  \draw[->] (m) -- node[above,font=\scriptsize]{$\div\,M$} (n);
+  \draw[->] (n) -- node[above,font=\scriptsize]{$\times\,22{,}4$} (v);
+  \draw[->] (v) to[bend left=30] node[below,font=\scriptsize]{$\div\,22{,}4$} (n);
+  \draw[->] (n) to[bend left=30] node[below,font=\scriptsize]{$\times\,M$} (m);
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[Résoudre un problème avec $pV=nRT$]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item Convertir : $T$ en \si{\kelvin} ; $p$, $V$ cohérents avec le $R$ choisi.
+  \item Isoler l'inconnue littéralement.
+  \item Application numérique, puis vérifier l'ordre de grandeur.
+  \item \textbf{Cas CNTP} ($\qty{1}{atm}$, \qty{273}{\kelvin}) : passer par $V_{\mathrm{m}}=\qty{22.4}{\litre\per\mole}$
+        est plus rapide.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[deux calculs types]
+$n=\qty{0.50}{\mole}$ de \ce{O2} dans $V=\qty{5.0}{\litre}$ à \qty{27}{\degreeCelsius} :
+$p=\dfrac{nRT}{V}=\dfrac{0{,}50\times0{,}082\times300}{5{,}0}=\qty{2.46}{atm}$. \\[2pt]
+$V=\qty{44.8}{\litre}$ de gaz aux CNTP : $n=\dfrac{44{,}8}{22{,}4}=\qty{2.0}{\mole}$.
+\end{exemplebox}
+
+\begin{piege}[le volume molaire n'est valable qu'aux CNTP]
+$\qty{22.4}{\litre\per\mole}$ suppose $p=\qty{1}{atm}$ \emph{et} $T=\qty{273}{\kelvin}$. Hors de ces
+conditions (autre pression, autre température), il faut repasser par $pV=nRT$. Et toujours : $T$ en
+kelvins !
+\end{piege}
+
+\end{document}

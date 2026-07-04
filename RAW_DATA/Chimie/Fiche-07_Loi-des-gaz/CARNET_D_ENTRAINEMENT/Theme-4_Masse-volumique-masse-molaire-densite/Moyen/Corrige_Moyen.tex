@@ -1,0 +1,75 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[masse volumique hors CNTP]
+On applique $\rho=\dfrac{pM}{RT}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\rho=\dfrac{2{,}0\times32}{0{,}082\times300}=\dfrac{64}{24{,}6}=\qty{2.60}{\gram\per\litre}$.
+  \item $\rho=\dfrac{1{,}0\times28}{0{,}082\times250}=\dfrac{28}{20{,}5}=\qty{1.37}{\gram\per\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[identifier un gaz]
+On calcule $M$ puis on compare aux masses molaires connues.
+\begin{enumerate}[label=\alph*)]
+  \item $M=\rho\times22{,}4=1{,}43\times22{,}4\approx\qty{32}{\gram\per\mole}$ : c'est \ce{O2}.
+  \item $M=28{,}8\times d=28{,}8\times1{,}53\approx\qty{44}{\gram\per\mole}$ : c'est \ce{CO2}
+        (ou \ce{N2O}).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[influence de la température sur $\rho$]
+$\rho=\dfrac{pM}{RT}$ : à $p$ et $M$ fixés, $\rho\propto\dfrac{1}{T}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\rho_1 T_1=\rho_2 T_2$, soit $\rho_2=\rho_1\times\dfrac{T_1}{T_2}$.
+  \item $\rho_2=1{,}50\times\dfrac{273}{410}\approx\qty{1.00}{\gram\per\litre}$ : en chauffant, le gaz
+        se dilate et devient moins dense.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[masse molaire par pesée d'un gaz]
+On part de $pV=nRT=\dfrac{m}{M}RT$.
+\begin{enumerate}[label=\alph*)]
+  \item $M=\dfrac{mRT}{pV}$.
+  \item $M=\dfrac{1{,}80\times0{,}082\times300}{1{,}0\times1{,}0}=\qty{44.3}{\gram\per\mole}$ :
+        c'est \ce{CO2} ($M=\qty{44}{\gram\per\mole}$).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

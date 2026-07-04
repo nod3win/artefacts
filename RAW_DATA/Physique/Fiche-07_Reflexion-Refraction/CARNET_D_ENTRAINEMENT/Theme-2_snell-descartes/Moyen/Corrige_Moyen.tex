@@ -1,0 +1,94 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[l'angle mesuré par rapport au dioptre]
+\begin{enumerate}[label=\alph*)]
+  \item $n_1\sin\ang{30}=n_2\sin\hat{\imath}_2 \Rightarrow \sin\hat{\imath}_2
+        =\dfrac{1{,}3\times\sin\ang{30}}{1}=1{,}3\times0{,}5=0{,}65$, d'où
+        $\hat{\imath}_2=\arcsin(0{,}65)\approx\ang{40.5}$. (On part d'un milieu plus réfringent
+        vers un moins réfringent : le rayon s'éloigne de la normale, $\hat{\imath}_2>\ang{30}$, cohérent.)
+  \item L'angle avec le dioptre est le complémentaire de l'angle avec la normale :
+        \[ \beta=\ang{90}-\hat{\imath}_2=\ang{90}-\arcsin(0{,}65)\approx\ang{49.5}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[verre vers eau]
+\begin{enumerate}[label=\alph*)]
+  \item $\sin\hat{\imath}_2=\dfrac{n_1\sin\hat{\imath}_1}{n_2}=\dfrac{1{,}5\times\sin\ang{40}}{1{,}33}
+        =\dfrac{1{,}5\times0{,}643}{1{,}33}=\dfrac{0{,}964}{1{,}33}=0{,}725$, d'où
+        $\hat{\imath}_2=\arcsin(0{,}725)\approx\ang{46.5}$.
+  \item $n_2<n_1$ (l'eau est moins réfringente que le verre) : le rayon \textbf{s'éloigne} de la
+        normale. Cohérent : $\ang{46.5}>\ang{40}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'angle de déviation]
+\begin{enumerate}[label=\alph*)]
+  \item $\sin\hat{\imath}_2=\dfrac{1\times\sin\ang{50}}{1{,}5}=\dfrac{0{,}766}{1{,}5}=0{,}511
+        \Rightarrow \hat{\imath}_2=\arcsin(0{,}511)\approx\ang{30.7}$.
+  \item Sans dioptre, le rayon aurait continué sous l'angle $\hat{\imath}_1$ ; il repart en réalité
+        sous $\hat{\imath}_2$. La déviation est l'écart entre les deux :
+        \[ D=\hat{\imath}_1-\hat{\imath}_2=\ang{50}-\ang{30.7}=\ang{19.3}. \]
+        (En entrant dans un milieu plus réfringent, le rayon est « rabattu » vers la normale de $D$.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[identifier un milieu inconnu]
+On isole $n_2$ dans la loi de Snell–Descartes :
+\[ n_2=\frac{n_1\sin\hat{\imath}_1}{\sin\hat{\imath}_2}=\frac{1\times\sin\ang{45}}{\sin\ang{30}}
+   =\frac{0{,}707}{0{,}5}=1{,}41\;(\approx\sqrt{2}). \]
+Le liquide a un indice $n_2\approx1{,}41$ : plus réfringent que l'air, ce qui explique bien que le
+rayon se soit rapproché de la normale ($\ang{30}<\ang{45}$).
+\end{corrige}
+
+\begin{corrige}[choisir le bon tracé]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1pt]
+  \item À la 1\iere{} interface ($n_1\to n_2$, plus réfringent) : le rayon \textbf{se rapproche} de la
+        normale.
+  \item À la 2\ieme{} interface ($n_2\to$ air, moins réfringent) : le rayon \textbf{s'éloigne} de la
+        normale.
+\end{itemize}
+Les faces étant parallèles, l'invariant $n\sin\hat{\imath}$ se conserve : $n_1\sin\hat{\imath}_1
+=1\times\sin\hat{\imath}_{\text{air}}$, donc $\sin\hat{\imath}_{\text{air}}=n_1\sin\hat{\imath}_1
+>\sin\hat{\imath}_1$ (car $n_1>1$). L'angle final dans l'air est donc \textbf{plus grand} que l'angle
+initial dans $n_1$ : le rayon ressort plus incliné qu'il n'est entré, la couche intermédiaire $n_2$
+ne modifie pas cette conclusion.
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Incertitude, justesse et fidélité
+\sisetup{per-mode=symbol}
+
+Les chiffres significatifs disent la \emph{précision d'écriture} d'un nombre. Mais une mesure peut être
+précise sans être correcte : il faut deux notions de plus, et une façon de \emph{chiffrer} le doute.
+
+\begin{cle}[justesse et fidélité]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Justesse} : proximité de la mesure à la \emph{vraie} valeur (mesure non biaisée).
+  \item \textbf{Fidélité} : proximité des mesures \emph{entre elles} quand on répète (mesure reproductible).
+\end{itemize}
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[
+   ring/.pic={
+     \fill[attncol!12] (0,0) circle (1.2); \fill[white] (0,0) circle (0.8);
+     \fill[attncol!12] (0,0) circle (0.4);
+     \draw[black!55] (0,0) circle (1.2); \draw[black!55] (0,0) circle (0.8);
+     \draw[black!55] (0,0) circle (0.4); \fill[black!65] (0,0) circle (0.045);}]
+  \begin{scope}
+     \pic{ring};
+     \fill[primary](0,0)circle(0.075);\fill[primary](0.13,0.09)circle(0.075);
+     \fill[primary](-0.09,0.12)circle(0.075);\fill[primary](0.07,-0.11)circle(0.075);
+     \node[below,align=center,font=\scriptsize] at (0,-1.55){juste\\ \& fidèle};
+  \end{scope}
+  \begin{scope}[xshift=3.4cm]
+     \pic{ring};
+     \fill[primary](0.75,0.62)circle(0.075);\fill[primary](0.88,0.72)circle(0.075);
+     \fill[primary](0.64,0.72)circle(0.075);\fill[primary](0.80,0.52)circle(0.075);
+     \node[below,align=center,font=\scriptsize] at (0,-1.55){fidèle,\\ non juste};
+  \end{scope}
+  \begin{scope}[xshift=6.8cm]
+     \pic{ring};
+     \fill[primary](-0.72,0.22)circle(0.075);\fill[primary](0.62,-0.45)circle(0.075);
+     \fill[primary](0.16,0.75)circle(0.075);\fill[primary](-0.30,-0.70)circle(0.075);
+     \node[below,align=center,font=\scriptsize] at (0,-1.55){juste,\\ non fidèle};
+  \end{scope}
+  \begin{scope}[xshift=10.2cm]
+     \pic{ring};
+     \fill[primary](0.70,0.78)circle(0.075);\fill[primary](1.00,0.42)circle(0.075);
+     \fill[primary](-0.82,-0.30)circle(0.075);\fill[primary](0.30,-0.92)circle(0.075);
+     \node[below,align=center,font=\scriptsize] at (0,-1.55){ni juste\\ ni fidèle};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{cle}[incertitude absolue]
+On écrit une mesure sous la forme $x=x_{\text{mes}}\pm\Delta x$, où $\Delta x$ (même unité que $x$) est
+l'«~épaisseur de doute~». Par convention, le \emph{dernier chiffre significatif écrit} fixe l'ordre de
+$\Delta x$.
+\end{cle}
+
+\begin{exemplebox}[de l'écriture à l'incertitude]
+$m=\qty{13,02}{\gram}$ sous-entend $\Delta m=\qty{0,01}{\gram}$, donc $m=(13,02\pm0,01)\ \si{\gram}$ : la
+vraie masse est comprise entre $\qty{13,01}{\gram}$ et $\qty{13,03}{\gram}$.
+\end{exemplebox}
+
+\begin{cle}[incertitude relative]
+\[ \frac{\Delta x}{x}\quad\text{(sans unité, souvent en \%)}. \]
+Elle mesure le \emph{poids relatif} du doute et permet de comparer la qualité de mesures de grandeurs
+différentes.
+\end{cle}
+
+\begin{exemplebox}[lien chiffres significatifs $\leftrightarrow$ incertitude relative]
+Le nombre de CS et l'incertitude relative vont de pair. Ordres de grandeur typiques :
+\begin{center}\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{c c c c}
+\toprule
+\textbf{CS} & $2$ & $3$ & $4$\\
+\midrule
+\textbf{incertitude relative} & $\sim 1\%$ & $\sim 0,1\%$ & $\sim 0,01\%$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Plus il y a de CS, plus l'incertitude relative est faible : le nombre de CS \emph{est} une lecture
+directe de la précision relative.
+\end{exemplebox}
+
+\begin{piege}[les CS mesurent la fidélité, pas la justesse]
+Une balance déréglée peut afficher $\qty{13,02}{\gram}$ ($4$ CS, très «~précis~») tout en étant
+\emph{fausse} de $\qty{2}{\gram}$. Les CS traduisent la \emph{fidélité} (finesse de lecture), jamais la
+\emph{justesse} : ils ne corrigent aucun biais.
+\end{piege}
+
+\end{document}

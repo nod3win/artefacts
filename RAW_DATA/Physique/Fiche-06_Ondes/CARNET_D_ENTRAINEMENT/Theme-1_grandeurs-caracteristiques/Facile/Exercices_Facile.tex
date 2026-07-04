@@ -1,0 +1,143 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 1 — Niveau Facile}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[période et fréquence]
+Deux ondes sont décrites par leurs caractéristiques temporelles.
+\begin{enumerate}[label=\alph*)]
+  \item Une onde a une fréquence $f=\SI{50}{\hertz}$. Calcule sa période $T$.
+  \item Une autre onde a une période $T=\SI{4}{\milli\second}$. Calcule sa fréquence $f$
+        (en \si{\hertz}).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[lire la période sur un graphe]
+On enregistre l'élongation $y$ d'un point du milieu \emph{en fonction du temps}.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11cm,height=5.2cm,
+  xmin=0,xmax=1.5,ymin=-3.6,ymax=3.6,
+  xtick={0,0.25,0.5,0.75,1,1.25,1.5},
+  ytick={-3,0,3},
+  grid=both,grid style={black!12},axis lines=left,
+  xlabel={$t$ (s)},ylabel={$y$ (cm)},
+  xlabel style={at={(axis description cs:0.5,-0.12)}},
+  tick label style={font=\footnotesize},samples=200,clip=false]
+  \addplot[primary,line width=1.3pt,domain=0:1.5]{3*sin(deg(2*pi*x/0.5))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Lis la période $T$ de l'onde sur le graphe.
+  \item Déduis-en la fréquence $f$.
+  \item Quelle est l'amplitude $A$ de l'onde ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[lire la longueur d'onde sur un graphe]
+Voici cette fois une \emph{photographie} de l'onde à un instant donné : l'élongation $y$
+est tracée \emph{en fonction de la position} $x$ le long du milieu.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11cm,height=5.2cm,
+  xmin=0,xmax=12,ymin=-2.6,ymax=2.6,
+  xtick={0,2,4,6,8,10,12},
+  ytick={-2,0,2},
+  grid=both,grid style={black!12},axis lines=left,
+  xlabel={$x$ (m)},ylabel={$y$ (cm)},
+  xlabel style={at={(axis description cs:0.5,-0.12)}},
+  tick label style={font=\footnotesize},samples=240,clip=false]
+  \addplot[defcol,line width=1.3pt,domain=0:12]{2*sin(deg(2*pi*x/4))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Lis la longueur d'onde $\lambda$ sur le graphe.
+  \item Quelle est l'amplitude $A$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[relier $\lambda$, $v$ et $f$]
+On travaille sur des ondes dans différents milieux.
+\begin{enumerate}[label=\alph*)]
+  \item Une onde de fréquence $f=\SI{200}{\hertz}$ se propage à $v=\SI{340}{\metre\per\second}$
+        dans l'air. Calcule sa longueur d'onde $\lambda$.
+  \item Une onde de longueur d'onde $\lambda=\SI{2}{\metre}$ et de fréquence $f=\SI{5}{\hertz}$
+        avance sur l'eau. Calcule sa célérité $v$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[longitudinale ou transversale ?]
+Deux dispositifs produisent une onde. En haut, on comprime périodiquement un long ressort~;
+en bas, on secoue verticalement l'extrémité d'une corde tendue horizontalement.
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % --- ressort (onde longitudinale) ---
+  \begin{scope}[yshift=1.4cm]
+    \node[left] at (-0.2,0) {(1)};
+    \draw[black!75,line width=0.7pt,decorate,
+          decoration={coil,aspect=0.6,segment length=2.2pt,amplitude=4pt}](0,0)--(1.6,0);
+    \draw[black!75,line width=0.7pt,decorate,
+          decoration={coil,aspect=0.6,segment length=5pt,amplitude=4pt}](1.6,0)--(8,0);
+    \draw[->,>=Stealth,primary,line width=1pt](0.3,0.5)--(1.3,0.5)
+          node[midway,above,black]{$\vv v$};
+  \end{scope}
+  % --- corde (onde transversale) ---
+  \begin{scope}[yshift=-0.6cm]
+    \node[left] at (-0.2,0) {(2)};
+    \draw[defcol,line width=1.6pt,smooth,samples=120,domain=0:8]
+          plot(\x,{0.45*sin(deg(2*pi*\x/2.6))});
+    \draw[->,>=Stealth,black!70](-0.05,-0.75)--(-0.05,0.75)node[left]{$y$};
+    \draw[->,>=Stealth,primary,line width=1pt](3.2,0.95)--(4.2,0.95)
+          node[midway,above,black]{$\vv v$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+Pour chacun des deux cas, indique s'il s'agit d'une onde \textbf{longitudinale} ou
+\textbf{transversale}, et justifie en une phrase.
+\end{exo}
+
+\end{document}

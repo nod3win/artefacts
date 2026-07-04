@@ -1,0 +1,105 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: pH, pOH, produit ionique $K_e$ et force des acides/bases
+\sisetup{per-mode=symbol}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 — pH, $K_e$ et force des acides/bases}\\[2pt]
+{\color{primary}\itshape Mesurer l'acidité, relier $[\ce{H3O+}]$, pH, $K_e$, et classer les acides par $\mathrm{p}K_a$}
+\end{center}
+
+\medskip
+Ce thème installe les \textbf{outils de mesure} de l'acidité : le produit ionique $K_e$, le pH, le pOH, puis les
+constantes $K_a$ et $K_b$ qui \emph{quantifient} la force d'un acide ou d'une base. Tout repose sur le
+logarithme décimal ($\log 10^{-n} = -n$).
+
+\begin{cle}[autoprotolyse de l'eau et produit ionique $K_e$]
+Deux molécules d'eau s'échangent un proton : $\ce{2 H2O <=> H3O+ + OH-}$. La constante associée est le
+\textbf{produit ionique} :
+\[ \boxed{K_e = [\ce{H3O+}]\times[\ce{OH-}]},\qquad K_e = 1{,}0\times10^{-14}\ \text{à \qty{25}{\celsius}}. \]
+L'eau, solvant en large excès, \emph{n'apparaît jamais} dans $K_e$.
+\end{cle}
+
+\begin{cle}[pH, pOH et leur relation]
+\[ \mathrm{pH} = -\log[\ce{H3O+}],\quad [\ce{H3O+}] = 10^{-\mathrm{pH}};\qquad \mathrm{pOH} = -\log[\ce{OH-}]. \]
+En prenant $-\log$ de $K_e$ : $\boxed{\mathrm{pH} + \mathrm{pOH} = 14}$ (à \qty{25}{\celsius}). Plus généralement,
+$\mathrm{p}X = -\log X$.
+\end{cle}
+
+% --- petite échelle de pH (auto-contenue, sans dégradé) ---
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize]
+  \fill[attncol!75] (0,0) rectangle (7,0.55);
+  \fill[excol!70]   (7,0) rectangle (7.9,0.55);
+  \fill[defcol!70]  (7.9,0) rectangle (14,0.55);
+  \draw[black!55,line width=0.5pt] (0,0) rectangle (14,0.55);
+  \foreach \x in {0,1,...,14}{\draw (\x,0)--(\x,-0.1); \node[below] at (\x,-0.1){\x};}
+  \node[white] at (3.5,0.28){\bfseries ACIDE};
+  \node[white] at (11,0.28){\bfseries BASIQUE};
+  \node[excol,below=9pt,font=\scriptsize] at (7,-0.1){neutre ($\mathrm{pH}=7$)};
+\end{tikzpicture}
+\end{center}
+
+\begin{cle}[caractère d'une solution à \qty{25}{\celsius}]
+\textbf{acide} : $\mathrm{pH}<7$ ($[\ce{H3O+}]>[\ce{OH-}]$) ;\quad \textbf{neutre} : $\mathrm{pH}=7$
+($[\ce{H3O+}]=[\ce{OH-}]=10^{-7}$) ;\quad \textbf{basique} : $\mathrm{pH}>7$ ($[\ce{H3O+}]<[\ce{OH-}]$).
+À $T$ constante, $K_e$ est fixe : si $[\ce{H3O+}]$ augmente, $[\ce{OH-}]$ diminue (leur produit reste $K_e$).
+\end{cle}
+
+\begin{cle}[force d'un acide : $K_a$ et $\mathrm{p}K_a$]
+Pour $\ce{HA + H2O <=> A- + H3O+}$ :
+\[ K_a = \frac{[\ce{A-}]\,[\ce{H3O+}]}{[\ce{HA}]},\qquad \mathrm{p}K_a = -\log K_a. \]
+De même pour une base $\ce{B + H2O <=> BH+ + OH-}$ : $K_b = \dfrac{[\ce{BH+}]\,[\ce{OH-}]}{[\ce{B}]}$,
+$\mathrm{p}K_b = -\log K_b$. Reliés, pour un \textbf{même couple} :
+\[ \boxed{K_a\times K_b = K_e}\qquad\Longleftrightarrow\qquad \boxed{\mathrm{p}K_a + \mathrm{p}K_b = 14}\ (\text{à \qty{25}{\celsius}}). \]
+\end{cle}
+
+\begin{piege}[le sens du $\mathrm{p}K_a$ à ne jamais inverser]
+$K_a$ \emph{grand} $\Leftrightarrow$ $\mathrm{p}K_a$ \emph{petit} $\Leftrightarrow$ acide \textbf{fort}. Le
+logarithme inverse le sens : un acide fort a un $\mathrm{p}K_a$ \emph{petit} (souvent $<0$). Conséquence : plus
+un acide est faible, plus sa base conjuguée est forte ($\mathrm{p}K_a + \mathrm{p}K_b = 14$).
+\end{piege}
+
+\begin{piege}[« basique $\Leftrightarrow$ pH $>7$ » : seulement à \qty{25}{\celsius}]
+$K_e$ augmente avec la température (autoprotolyse endothermique) : le pH neutre \emph{diminue} alors sous $7$.
+Ne jamais écrire « basique $=$ pH $>7$ » sans préciser $T$ : on compare toujours au pH \textbf{neutre}
+$= \tfrac12\,\mathrm{p}K_e$.
+\end{piege}
+
+\end{document}

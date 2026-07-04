@@ -1,0 +1,108 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{exo}[la lame de verre à faces parallèles]
+Un rayon lumineux traverse une lame de verre ($n=1{,}5$) à \textbf{faces parallèles}, d'épaisseur
+$e=\qty{4}{cm}$, entourée d'air. Il arrive sur la première face sous un angle d'incidence
+$\hat{\imath}=\ang{60}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.05,>=Stealth]
+  \fill[defcol!16] (-2.8,-0.8) rectangle (2.8,0.8);
+  \draw[primary,line width=1.4pt] (-2.8,0.8) -- (2.8,0.8);
+  \draw[primary,line width=1.4pt] (-2.8,-0.8) -- (2.8,-0.8);
+  \node[font=\scriptsize] at (-2.3,0){verre};
+  \node[font=\scriptsize] at (2.2,1.15){air}; \node[font=\scriptsize] at (2.2,-1.15){air};
+  \draw[<->,black!55] (-3.05,-0.8) -- (-3.05,0.8); \node[left,font=\scriptsize] at (-3.05,0){$e$};
+  \coordinate (E) at (-1.1,0.8); \coordinate (S) at (0.05,-0.8);
+  \draw[->,line width=1pt] (-2.25,1.55) -- (E);
+  \draw[line width=1pt,primary] (E) -- (S);
+  \draw[->,line width=1pt] (S) -- (1.1,-1.55);
+  \draw[dash pattern=on 3pt off 2pt,black!60] (E) -- (-1.1,1.55);
+  \draw[dash pattern=on 3pt off 2pt,black!60] (E) -- (-1.1,0.05);
+  \draw[dash pattern=on 3pt off 2pt,black!60] (S) -- (0.05,-0.05);
+  \draw[dash pattern=on 3pt off 2pt,black!60] (S) -- (0.05,-1.55);
+  \node[font=\scriptsize] at (-0.78,1.2){$\hat{\imath}$}; \node[font=\scriptsize] at (-0.78,0.35){$\hat r$};
+  \fill (E) circle (1pt); \fill (S) circle (1pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Montre que le rayon émergent est \textbf{parallèle} au rayon incident ($\hat{\imath}'=\hat{\imath}$).
+  \item L'angle de réfraction dans le verre est $\hat r$ tel que $\sin\hat r=\sin\hat{\imath}/n$.
+        Sachant que le décalage latéral du rayon vaut $d=\dfrac{e\,\sin(\hat{\imath}-\hat r)}{\cos\hat r}$,
+        calcule $d$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un empilement de couches parallèles]
+Un rayon issu de l'air ($n_0=1$) sous une incidence $\hat{\imath}_0=\ang{50}$ traverse une couche
+d'eau ($n_1=1{,}33$), puis un bloc de verre ($n_2=1{,}5$). Les trois interfaces sont \textbf{parallèles}.
+\begin{center}
+\begin{tikzpicture}[scale=0.95,>=Stealth]
+  \fill[defcol!8] (-2.8,1.4) rectangle (2.8,2.6);
+  \fill[defcol!20] (-2.8,0) rectangle (2.8,1.4);
+  \fill[defcol!34] (-2.8,-1.4) rectangle (2.8,0);
+  \draw[primary,line width=1.2pt] (-2.8,1.4) -- (2.8,1.4);
+  \draw[primary,line width=1.2pt] (-2.8,0) -- (2.8,0);
+  \node[font=\scriptsize] at (2.25,2.0){air $n_0$};
+  \node[font=\scriptsize] at (2.25,0.7){eau $n_1$};
+  \node[font=\scriptsize] at (2.25,-0.7){verre $n_2$};
+  \draw[dash pattern=on 3pt off 2pt,black!55] (-1.0,-1.4) -- (-1.0,2.6);
+  \draw[->,line width=1pt] (-2.1,2.5) -- (-1.0,1.4);
+  \node[font=\scriptsize] at (-0.72,1.75){$\hat{\imath}_0$};
+  \fill (-1.0,1.4) circle (1pt); \fill (-1.0,0) circle (1pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'angle du rayon dans l'eau.
+  \item Calcule l'angle du rayon dans le verre.
+  \item Montre que l'angle dans le verre ne dépend \emph{pas} de la présence de la couche d'eau.
+        Que faut-il connaître pour prévoir l'angle final ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[imposer la déviation]
+Un rayon passe de l'air ($n_1=1$) au verre ($n_2=1{,}5$). On souhaite que la déviation
+$D=\hat{\imath}_1-\hat{\imath}_2$ du rayon soit exactement égale à $\ang{20}$.
+
+En posant $\hat{\imath}_2=\hat{\imath}_1-\ang{20}$ dans la loi de Snell–Descartes, détermine l'angle
+d'incidence $\hat{\imath}_1$. \emph{(Indication : développe $\sin(\hat{\imath}_1-\ang{20})$ puis
+regroupe pour obtenir $\tan\hat{\imath}_1$.)}
+\end{exo}
+
+\end{document}

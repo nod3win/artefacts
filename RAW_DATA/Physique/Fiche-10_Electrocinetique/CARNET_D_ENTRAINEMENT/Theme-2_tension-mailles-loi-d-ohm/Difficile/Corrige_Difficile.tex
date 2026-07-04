@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\usetikzlibrary{babel}
+\begin{corrige}[trois caractéristiques : lequel suit la loi d'Ohm ?]
+\begin{enumerate}[label=\alph*)]
+  \item Le conducteur \textbf{(1)} : sa caractéristique est une droite \emph{passant par l'origine},
+        donc $U/I$ est constant (loi d'Ohm). (2) est une courbe (non ohmique) ; (3) est une droite mais
+        qui \emph{ne passe pas par l'origine}.
+  \item Pente de (1) : elle passe par $(2\,\si{\ampere},\,4\,\si{\volt})$, donc
+        $R=\dfrac{4}{2}=\qty{2}{\ohm}$.
+  \item \textbf{Faux}. Une droite ne suffit pas : pour être ohmique, elle doit \emph{passer par
+        l'origine}. Celle de (3) a une ordonnée à l'origine non nulle, donc $U/I$ n'est pas constant.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[loi des mailles avec deux sources]
+\begin{enumerate}[label=\alph*)]
+  \item En parcourant la maille, $E_1$ est motrice ($+$), $E_2$ est en opposition ($-$) et $R$ subit une
+        chute $U_R=RI$ : \[ E_1-E_2-R\,I=0. \]
+  \item $I=\dfrac{E_1-E_2}{R}=\dfrac{9-3}{2}=\qty{3}{\ampere}$.
+  \item $U_R=R\,I=2\times3=\qty{6}{\volt}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[même courant, quelle tension ?]
+Les deux résistances sont en série : elles sont traversées par le \emph{même} courant $I$. La loi
+d'Ohm donne $U_1=R_1 I$ et $U_2=R_2 I$, donc à même $I$ la tension est proportionnelle à la
+résistance. Comme $R_1<R_2$ :
+\[ \boxed{U_1<U_2.} \]
+(Les valeurs $\qty{1}{\volt}$ et $\qty{2}{\volt}$ des sources ne servent qu'à fixer le courant ; elles
+n'inversent pas cette comparaison.)
+\end{corrige}
+
+\begin{corrige}[la lampe : une résistance qui change]
+\begin{enumerate}[label=\alph*)]
+  \item Point 1 : $\dfrac{U_1}{I_1}=\dfrac{2}{0{,}5}=\qty{4}{\ohm}$. \quad
+        Point 2 : $\dfrac{U_2}{I_2}=\dfrac{6}{1}=\qty{6}{\ohm}$.
+  \item \textbf{Non} : le rapport $U/I$ n'est pas constant ($4\,\Omega$ puis $6\,\Omega$), donc la lampe
+        n'est pas ohmique.
+  \item Quand $I$ augmente, le filament chauffe ; or la résistance d'un métal \emph{croît} avec la
+        température. La « résistance » de la lampe augmente donc avec l'intensité : sa caractéristique
+        s'incurve vers le haut.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{exo}[constante à partir d'un taux de décomposition]
+On introduit $\qty{0.50}{\mol}$ de $\ce{PCl5}$ dans un réacteur fermé de $\qty{1.0}{\litre}$ maintenu à température $T$, où s'établit l'équilibre $\ce{PCl5}(g) \rightleftharpoons \ce{PCl3}(g) + \ce{Cl2}(g)$. À l'équilibre, $\qty{40}{\percent}$ du $\ce{PCl5}$ s'est décomposé.
+\begin{enumerate}[label=\alph*)]
+  \item Dresse le tableau d'avancement (en moles).
+  \item Donne les concentrations à l'équilibre.
+  \item Calcule la constante d'équilibre $K_c$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[concentration à l'équilibre : une équation du second degré]
+Le tétraoxyde d'azote se dissocie selon $\ce{N2O4}(g) \rightleftharpoons 2\,\ce{NO2}(g)$, de constante $K=2{,}0$. On introduit $\qty{1.0}{\mol}$ de $\ce{N2O4}$ dans une enceinte de $\qty{1.0}{\litre}$. On note $x$ la quantité de $\ce{N2O4}$ dissociée.
+\begin{enumerate}[label=\alph*)]
+  \item Exprime les concentrations à l'équilibre en fonction de $x$.
+  \item Écris l'équation vérifiée par $x$ et résous-la.
+  \item En déduis $[\ce{NO2}]$ et $[\ce{N2O4}]$ à l'équilibre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[équilibre hétérogène : pression totale]
+On place de l'hydrogénocarbonate de sodium solide sous vide dans une enceinte fermée, où s'établit à température $T$ :
+\[ 2\,\ce{NaHCO3}(s) \rightleftharpoons \ce{Na2CO3}(s) + \ce{H2O}(g) + \ce{CO2}(g),\qquad K_p = \qty{0.25}{atm\squared}. \]
+\begin{enumerate}[label=\alph*)]
+  \item Écris $K_p$ (les solides sont exclus).
+  \item Quelle relation lie $p_{\ce{H2O}}$ et $p_{\ce{CO2}}$, et pourquoi ?
+  \item Calcule la pression totale à l'équilibre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Le Chatelier : réaction endothermique]
+À volume constant, la réaction \textbf{endothermique} $\ce{C}(s) + \ce{CO2}(g) \rightleftharpoons 2\,\ce{CO}(g)$ est à l'équilibre. Pour chaque opération, indique si elle \emph{augmente} le rendement en $\ce{CO}$ (déplacement vers la droite). Justifie.
+\begin{enumerate}[label=\alph*)]
+  \item augmenter la température ;
+  \item ajouter un catalyseur ;
+  \item augmenter le volume du récipient ;
+  \item ajouter du carbone solide ;
+  \item retirer une partie du $\ce{CO}$ formé.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Le Chatelier : réaction exothermique (procédé de contact)]
+À volume constant, on étudie l'oxydation \textbf{exothermique} $2\,\ce{SO2}(g) + \ce{O2}(g) \rightleftharpoons 2\,\ce{SO3}(g)$. Pour chaque opération, indique si elle \emph{augmente} le rendement en $\ce{SO3}$. Justifie.
+\begin{enumerate}[label=\alph*)]
+  \item introduire de l'oxygène en excès ;
+  \item abaisser la température ;
+  \item augmenter la pression ;
+  \item introduire un catalyseur ;
+  \item ajouter de l'argon (gaz inerte) à volume constant.
+\end{enumerate}
+\end{exo}
+
+\end{document}

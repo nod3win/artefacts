@@ -1,0 +1,93 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Hydroxydes, sels et lecture des formules
+
+\begin{cle}[un sel : un cation et un anion assemblés]
+Un \textbf{sel} associe un \textbf{cation} (métal ou \ce{NH4+}) et un \textbf{anion} en une formule neutre.
+On le nomme toujours \textbf{« [anion] de [cation] »} (l'anion d'abord). Cas particuliers :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{hydroxyde} (une \emph{base}) : l'anion est \ce{OH-} $\Rightarrow$ « hydroxyde de [métal] » ;
+  \item \textbf{sel acide} : il reste un \ce{H} $\Rightarrow$ préfixe « (di/mono)hydrogéno » sur l'anion ;
+  \item \textbf{hydrure} : l'anion est \ce{H-} $\Rightarrow$ « hydrure de [métal] ».
+\end{itemize}
+\end{cle}
+
+\begin{methode}[nommer / écrire un sel, un hydroxyde, un sel acide]
+\textbf{Écrire} : identifier cation et anion (+ valence), \emph{croiser les valences}, simplifier,
+parenthéser un ion polyatomique d'indice $\geq 2$. \\
+\textbf{Nommer} : énoncer l'anion, « de », puis le cation (avec sa valence si elle varie). Pour un
+\textbf{sel acide}, préfixer l'anion de « hydrogéno » (ou « dihydrogéno ») selon le nombre de \ce{H} restants :
+\ce{NaHCO3} $=$ hydrogénocarbonate de sodium ; \ce{Na2HPO4} $=$ monohydrogénophosphate de sodium.
+\end{methode}
+
+\begin{cle}[lire les chiffres d'une formule]
+Il faut distinguer trois sortes de chiffres :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item l'\textbf{indice} (petit, dans la formule) : nombre d'atomes d'une sorte \emph{dans un motif}
+        (\ce{Na2CO3} : 2 \ce{Na}, 1 \ce{C}, 3 \ce{O}) ;
+  \item le \textbf{coefficient} (grand, \emph{devant}) : multiplie \emph{toute} la formule
+        (\ce{2 Na2CO3} $=$ 2 motifs) ;
+  \item l'\textbf{eau de cristallisation} \ce{. $n$ H2O} (\emph{hydrate}) : $n$ molécules d'eau par motif
+        (\ce{CuSO4 . 5 H2O}).
+\end{itemize}
+\end{cle}
+
+\begin{exemplebox}[six lectures types]
+\ce{NaCl} : chlorure de sodium ; \ce{K2SO4} : sulfate de potassium ; \ce{Ca(OH)2} : hydroxyde de
+calcium ; \ce{Fe(NO3)3} : nitrate de fer(III) ; \ce{NaHCO3} : hydrogénocarbonate de sodium ;
+\ce{CuSO4 . 5 H2O} : sulfate de cuivre(II) pentahydraté.
+\end{exemplebox}
+
+\begin{piege}[erreurs fréquentes au concours]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1pt]
+  \item \textbf{coefficient $\neq$ indice} : \ce{2 Na2CO3} représente \emph{2 molécules} (pas « 4 »), soit
+        $2\times6=12$ atomes.
+  \item l'écriture \ce{. $n$ H2O} n'ajoute \emph{pas} d'atomes au motif de base : \ce{CaCO3 . 2 H2O} reste
+        un motif \ce{CaCO3} accompagné de 2 \ce{H2O}.
+  \item dans le nom, l'\textbf{anion vient d'abord} : \ce{K2SO4} est « sulfate \emph{de} potassium ».
+\end{itemize}
+\end{piege}
+
+\begin{remarque}[le vieux préfixe « bi- »]
+On rencontre encore « bicarbonate » pour \ce{HCO3-} (hydrogénocarbonate) et « bisulfate » pour \ce{HSO4-}
+(hydrogénosulfate) ; « bichromate de potassium » \ce{K2Cr2O7} désigne le \emph{dichromate}. La forme
+« hydrogéno\ldots » (ou « di\ldots ») est préférable.
+\end{remarque}
+
+\end{document}

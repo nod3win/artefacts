@@ -1,98 +1,105 @@
-% =====================================================================
-%  FICHE 11 — THEME 1 — Corrigé MOYEN — Le nombre d'oxydation
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{enumitem}
-\usepackage[most]{tcolorbox}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{corrcol}{RGB}{0,135,90}
-\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
-
-\newcounter{exo}
-\newtcolorbox{corr}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=corrcol!4,
-  colframe=corrcol,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-  title={Corrigé~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Corrigé}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 1 — Corrigé Moyen}\\[-2pt]
-{\color{corrcol}\rule{\textwidth}{1pt}}
-\end{center}
+\begin{center}\color{primarydark}\large\bfseries Thème 1 — Corrigé \quad$\bullet$\quad Niveau Moyen\end{center}
 
-\begin{corr}[le chrome dans deux espèces]
-$\NO(\ce{O})=-\mathrm{II}$ partout.
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{K2Cr2O7} (neutre) : $2(+1)+2x+7(-2)=0 \Rightarrow 2+2x-14=0 \Rightarrow x=+6$.
-        Donc $\NO(\ce{Cr})=+\mathrm{VI}$.
-  \item \ce{CrO4^{2-}} (charge $-2$) : $x+4(-2)=-2 \Rightarrow x=+6$. Donc $\NO(\ce{Cr})=+\mathrm{VI}$.
+\begin{corrige}[un même élément à plusieurs degrés : le manganèse]
+On isole $x=\mathrm{n.o.}(\ce{Mn})$ dans chaque espèce ($\mathrm{n.o.}(\ce{O})=-\mathrm{II}$).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{MnO4^-} : $x+4(-2)=-1\Rightarrow x=+7$, soit $+\mathrm{VII}$.
+  \item \ce{MnO2} : $x+2(-2)=0\Rightarrow x=+4$, soit $+\mathrm{IV}$.
+  \item \ce{Mn^{2+}} : ion monoatomique, $+\mathrm{II}$.
+  \item \ce{Mn} : corps simple, $0$.
 \end{enumerate}
-\textbf{Oui}, le chrome vaut $+\mathrm{VI}$ dans les deux : le dichromate et le chromate sont deux formes
-du chrome $(+\mathrm{VI})$. \emph{(Réf. livre QCM~2.)}
-\end{corr}
+Classement du plus oxydé au plus réduit : $\ce{MnO4^-}\,(+\mathrm{VII}) > \ce{MnO2}\,(+\mathrm{IV})
+> \ce{Mn^{2+}}\,(+\mathrm{II}) > \ce{Mn}\,(0)$.
+\end{corrige}
 
-\begin{corr}[le manganèse dans toute sa gamme]
-$\NO(\ce{O})=-\mathrm{II}$, $\NO(\ce{K})=+\mathrm{I}$.
-\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{MnO4^-} : $x+4(-2)=-1 \Rightarrow x=+\mathrm{VII}$.
-  \item \ce{Mn^{2+}} : ion monoatomique $\Rightarrow +\mathrm{II}$.
-  \item \ce{MnO2} : $x+2(-2)=0 \Rightarrow x=+\mathrm{IV}$.
-  \item \ce{Mn(s)} : corps simple $\Rightarrow 0$.
-  \item \ce{KMnO4} : $(+1)+x+4(-2)=0 \Rightarrow x=+\mathrm{VII}$.
-\end{itemize}
-Ordre croissant : $\ce{Mn}(0) < \ce{Mn^{2+}}(+\mathrm{II}) < \ce{MnO2}(+\mathrm{IV}) < \ce{MnO4^-}(+\mathrm{VII}) = \ce{KMnO4}(+\mathrm{VII})$.
-\emph{(Réf. livre QCM~7 ; annales 2025-Q10, 2020-Q1.)}
-\end{corr}
-
-\begin{corr}[l'azote sous plusieurs formes]
-$\NO(\ce{H})=+\mathrm{I}$, $\NO(\ce{O})=-\mathrm{II}$.
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{N2H4} (neutre) : $2x+4(+1)=0 \Rightarrow 2x=-4 \Rightarrow x=-2$, soit $\NO(\ce{N})=-\mathrm{II}$. \emph{(livre QCM~3.)}
-  \item \ce{NO3^-} (charge $-1$) : $x+3(-2)=-1 \Rightarrow x=+5$, soit $\NO(\ce{N})=+\mathrm{V}$.
-  \item \ce{NH4+} (charge $+1$) : $x+4(+1)=+1 \Rightarrow x=-3$, soit $\NO(\ce{N})=-\mathrm{III}$.
+\begin{corrige}[variation du n.o. entre deux formes]
+\begin{enumerate}[label=\alph*)]
+  \item C : $-\mathrm{IV}$ (\ce{CH4}) $\to +\mathrm{IV}$ (\ce{CO2}), $\Delta=+8$ : \textbf{oxydation}.
+  \item S : $+\mathrm{IV}$ (\ce{SO2}) $\to +\mathrm{VI}$ (\ce{SO4^{2-}}), $\Delta=+2$ : \textbf{oxydation}.
+  \item N : $+\mathrm{II}$ (\ce{NO}) $\to +\mathrm{V}$ (\ce{NO3^-}), $\Delta=+3$ : \textbf{oxydation}.
+  \item Cr : $+\mathrm{VI}$ (\ce{Cr2O7^{2-}}) $\to +\mathrm{III}$ (\ce{Cr^{3+}}), $\Delta=-3$ :
+        \textbf{réduction}.
 \end{enumerate}
-L'azote couvre ici de $-\mathrm{III}$ à $+\mathrm{V}$ : c'est ce qui en fait un acteur majeur du redox.
-\end{corr}
+\end{corrige}
 
-\begin{corr}[le soufre dans les oxoanions]
-$\NO(\ce{O})=-\mathrm{II}$, charge $-2$ à chaque fois.
-\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{SO4^{2-}} : $x+4(-2)=-2 \Rightarrow x=+6$, soit $\NO(\ce{S})=+\mathrm{VI}$.
-  \item \ce{SO3^{2-}} : $x+3(-2)=-2 \Rightarrow x=+4$, soit $\NO(\ce{S})=+\mathrm{IV}$.
-  \item \ce{S2O3^{2-}} : $2x+3(-2)=-2 \Rightarrow 2x=4 \Rightarrow x=+2$, soit $\NO(\ce{S})=+\mathrm{II}$ (moyenne des deux S).
-\end{itemize}
-\end{corr}
-
-\begin{corr}[une somme de deux nombres d'oxydation]
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1.5pt]
-  \item \ce{CH4} : $x+4(+1)=0 \Rightarrow \NO(\ce{C})=-\mathrm{IV}$. \quad
-        \ce{CO2} : $x+2(-2)=0 \Rightarrow \NO(\ce{C})=+\mathrm{IV}$.
-  \item Somme : $(-4)+(+4)=\mathbf{0}$. \emph{(Réf. livre QCM~6.)}
-  \item Le carbone passe de $-\mathrm{IV}$ à $+\mathrm{IV}$ : son \NO\ \textbf{augmente} $\Rightarrow$ c'est une
-        \textbf{oxydation} (le carbone perd des électrons). C'est le principe de toute combustion du carbone.
+\begin{corrige}[lire une équation redox globale]
+On suit l'atome dont le n.o.\ varie. \emph{Rappel : le réducteur est l'espèce oxydée, l'oxydant est
+l'espèce réduite.}
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Zn}$(0)\to$\ce{Zn^{2+}}$(+\mathrm{II})$ : \ce{Zn} est \textbf{oxydé} (réducteur) ;
+        \ce{Cu^{2+}}$(+\mathrm{II})\to$\ce{Cu}$(0)$ est \textbf{réduit}, donc \ce{Cu^{2+}} est
+        l'\textbf{oxydant}.
+  \item \ce{Fe}$(0)\to$\ce{Fe^{2+}}$(+\mathrm{II})$ : \ce{Fe} est \textbf{oxydé} (réducteur) ;
+        \ce{H+}$(+\mathrm{I})\to$\ce{H2}$(0)$ est \textbf{réduit}, donc \ce{H+} est l'\textbf{oxydant}.
+  \item \ce{Al}$(0)\to +\mathrm{III}$ : \ce{Al} est \textbf{oxydé} (réducteur) ;
+        \ce{Cl}$(0)\to -\mathrm{I}$ dans \ce{AlCl3} est \textbf{réduit}, donc \ce{Cl2} est
+        l'\textbf{oxydant}.
 \end{enumerate}
-\end{corr}
+\end{corrige}
+
+\begin{corrige}[cas piégeux : exceptions et n.o.\ moyens]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{OF2} : le fluor est \emph{plus électronégatif} que l'oxygène, donc
+        $\mathrm{n.o.}(\ce{F})=-\mathrm{I}$. Alors $x+2(-1)=0\Rightarrow x=+2$ :
+        $\mathrm{n.o.}(\ce{O})=+\mathrm{II}$ (rare exception où O est positif).
+  \item \ce{Fe3O4} : $3x+4(-2)=0\Rightarrow 3x=8\Rightarrow x=+\tfrac{8}{3}\approx +2{,}67$. C'est un
+        \textbf{n.o.\ moyen} : la magnétite contient en réalité un mélange de \ce{Fe^{2+}} et de
+        \ce{Fe^{3+}} (un \ce{Fe^{2+}} pour deux \ce{Fe^{3+}}).
+  \item \ce{S2O3^{2-}} : $2x+3(-2)=-2\Rightarrow 2x=4\Rightarrow x=+2$ :
+        $\mathrm{n.o.}(\ce{S})=+\mathrm{II}$ (n.o.\ moyen des deux soufres).
+  \item \ce{NH4+} : $x+4(+1)=+1\Rightarrow x=-3$ : $\mathrm{n.o.}(\ce{N})=-\mathrm{III}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[combien d'électrons échange un couple ?]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{MnO4^-}/\ce{Mn^{2+}} : Mn passe de $+\mathrm{VII}$ à $+\mathrm{II}$, $n=7-2=5$ électrons.
+  \item \ce{Cr2O7^{2-}}/\ce{Cr^{3+}} : Cr passe de $+\mathrm{VI}$ à $+\mathrm{III}$, soit $3$ par atome ;
+        mais il y a \textbf{2} atomes de Cr, donc $n=2\times 3=6$ électrons. (Piège classique !)
+  \item \ce{NO3^-}/\ce{NO} : N passe de $+\mathrm{V}$ à $+\mathrm{II}$, $n=5-2=3$ électrons.
+  \item \ce{S4O6^{2-}}/\ce{S2O3^{2-}} : le soufre passe d'un n.o.\ moyen de $+2{,}5$ (dans
+        \ce{S4O6^{2-}}) à $+\mathrm{II}$ (dans \ce{S2O3^{2-}}), soit $0{,}5$ par atome ; sur les
+        \textbf{4} atomes de soufre, $n=4\times 0{,}5=2$ électrons. La demi-équation est donc
+        $\ce{S4O6^{2-} + 2 e^- <=> 2 S2O3^{2-}}$.
+\end{enumerate}
+\end{corrige}
 
 \end{document}

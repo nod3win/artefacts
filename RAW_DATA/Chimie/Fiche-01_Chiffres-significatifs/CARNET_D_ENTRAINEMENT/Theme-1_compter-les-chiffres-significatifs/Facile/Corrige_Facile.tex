@@ -1,125 +1,93 @@
-% =====================================================================
-%  THÈME 1 — Compter les chiffres significatifs — CORRIGÉ — Niveau FACILE
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage[version=4]{mhchem}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{150,98,162}
-\definecolor{primarydark}{RGB}{92,52,110}
-\definecolor{sigcol}{RGB}{0,90,200}
-\definecolor{nosigcol}{RGB}{210,30,40}
-\newcommand{\cs}{chiffre significatif}
-\newcommand{\CS}{chiffres significatifs}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Facile · Thème 1}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
-  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
-  fonttitle=\bfseries,coltitle=white,
-  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
-
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-
-\begin{center}
-{\Large\bfseries\color{primarydark} Corrigé — Niveau Facile}\\[1pt]
-{\color{primary} Thème 1 : compter les chiffres significatifs}
-\end{center}
-\vspace{2mm}
-
-\begin{cor}[Chiffres non nuls uniquement]
-Tout chiffre non nul est toujours significatif : il suffit de les compter.
-\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
-  \item a) $\num{837}$ : $\mathbf{3}$~CS. \quad b) $\num{42,5}$ : $\mathbf{3}$~CS. \quad
-        c) $\num{6,1234}$ : $\mathbf{5}$~CS.
-  \item d) $\num{9}$ : $\mathbf{1}$~CS. \quad e) $\num{318,49}$ : $\mathbf{5}$~CS.
-\end{itemize}
-La position de la virgule n'a aucune importance : seul le nombre de chiffres compte.
-\end{cor}
-
-\begin{cor}[Zéros de tête]
-Les zéros situés à gauche du premier chiffre non nul ne servent qu'à caler la virgule : ils ne
-comptent \emph{jamais}. Le comptage démarre au premier chiffre non nul.
-\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
-  \item a) $\num{0,007}$ : les $0{,}00$ sont de tête $\rightarrow$ seul le $7$ compte $\Rightarrow \mathbf{1}$~CS.
-  \item b) $\num{0,42}$ : $\rightarrow \mathbf{2}$~CS.\qquad
-        c) $\num{0,00305}$ : $3$, $0$ (captif), $5 \Rightarrow \mathbf{3}$~CS.
-  \item d) $\num{0,000010}$ : zéros de tête non sig. ; le $1$ et le zéro de queue comptent
-        $\Rightarrow \mathbf{2}$~CS.\qquad e) $\num{0,68}$ : $\mathbf{2}$~CS.
-\end{itemize}
-\end{cor}
-
-\begin{cor}[Zéros captifs et zéros de queue]
-\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
-  \item a) $\num{2005}$ : les deux zéros sont \emph{captifs} (entre $2$ et $5$) $\Rightarrow \mathbf{4}$~CS.
-  \item b) $\num{60,0}$ : zéro captif ? non — c'est $6$, puis un zéro, puis un zéro de queue après
-        virgule. Les deux zéros comptent $\Rightarrow \mathbf{3}$~CS.
-  \item c) $\num{1,004}$ : deux zéros captifs $\Rightarrow \mathbf{4}$~CS.
-  \item d) $\num{15,200}$ : deux zéros de queue après la virgule, significatifs $\Rightarrow \mathbf{5}$~CS.
-  \item e) $\num{40,080}$ : $4$, zéro captif, $8$, zéro de queue $\Rightarrow \mathbf{5}$~CS.
-\end{itemize}
-\end{cor}
-
-\begin{cor}[Chiffres significatifs contre décimales]
-Les décimales se comptent \emph{après la virgule} ; les CS se comptent \emph{à partir du premier
-chiffre non nul}. Ce sont deux comptages indépendants.
-\begin{center}\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{c c c}
-\toprule
-\textbf{Nombre} & \textbf{Décimales} & \textbf{CS}\\
-\midrule
-$\num{0,007}$   & $3$ & $1$\\
-$\num{42,5}$    & $1$ & $3$\\
-$\num{15,200}$  & $3$ & $5$\\
-$\num{3,0}$     & $1$ & $2$\\
-\bottomrule
-\end{tabular}
-\end{center}
-\textbf{Conclusion :} un nombre peut avoir beaucoup de décimales et peu de CS ($\num{0,007}$), ou peu
-de décimales et beaucoup de CS ($\num{42,5}$). Ne jamais confondre les deux.
-\end{cor}
-
-\begin{cor}[Le rôle de chaque zéro]
-$m = \qty{0,04080}{\gram}$.
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item Lecture chiffre par chiffre :
-  \begin{center}
-  \begin{tikzpicture}[font=\small]
-    \node[font=\Large] at (0,0)
-      {$0,\textcolor{nosigcol}{0}\,\textbf{4}\,\textcolor{sigcol}{\textbf 0}\,\textbf{8}\,\textcolor{sigcol}{\textbf 0}$};
-  \end{tikzpicture}
-  \end{center}
-  \begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=0pt]
-    \item le premier zéro ($0{,}0$) est un \textcolor{nosigcol}{zéro de tête} $\rightarrow$ \emph{non} significatif ;
-    \item le $4$ est non nul $\rightarrow$ significatif ;
-    \item le zéro suivant est \textcolor{sigcol}{captif} (entre $4$ et $8$) $\rightarrow$ significatif ;
-    \item le $8$ est non nul $\rightarrow$ significatif ;
-    \item le dernier zéro est un \textcolor{sigcol}{zéro de queue après la virgule} $\rightarrow$ significatif.
-  \end{itemize}
-  \item Chiffres significatifs : $4,\,0,\,8,\,0 \Rightarrow \boxed{\mathbf{4}\ \text{CS}}$.
+\sisetup{per-mode=symbol}
+\begin{corrige}[chiffres non nuls]
+Tout chiffre non nul est toujours significatif : on compte simplement les chiffres.
+\begin{enumerate}[label=\alph*)]
+  \item $837$ : $\mathbf{3}$ CS.
+  \item $42,5$ : $\mathbf{3}$ CS (la virgule ne compte pas).
+  \item $6,1234$ : $\mathbf{5}$ CS.
+  \item $128,77$ : $\mathbf{5}$ CS.
 \end{enumerate}
-\end{cor}
+\end{corrige}
+
+\begin{corrige}[zéros de tête]
+Les zéros de tête (à gauche du premier chiffre non nul) ne servent qu'à caler la virgule : ils ne
+sont \emph{jamais} significatifs. On compte à partir du premier chiffre non nul.
+\begin{enumerate}[label=\alph*)]
+  \item $0,00\mathbf{7}$ : $\mathbf{1}$ CS.
+  \item $0,0\mathbf{52}$ : $\mathbf{2}$ CS.
+  \item $0,00\mathbf{35}$ : $\mathbf{2}$ CS.
+  \item $0,\mathbf{4}$ : $\mathbf{1}$ CS.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[zéros captifs]
+Un zéro captif (entre deux chiffres non nuls) est \emph{toujours} significatif.
+\begin{enumerate}[label=\alph*)]
+  \item $205$ : $\mathbf{3}$ CS.
+  \item $4007$ : $\mathbf{4}$ CS (les deux zéros sont captifs).
+  \item $3,05$ : $\mathbf{3}$ CS.
+  \item $60,2$ : $\mathbf{3}$ CS.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[zéros de queue après la virgule]
+Un zéro de queue placé après la virgule est \emph{toujours} significatif : on ne l'écrirait pas s'il
+n'était pas le fruit d'une mesure.
+\begin{enumerate}[label=\alph*)]
+  \item $15,200$ : $\mathbf{5}$ CS (les deux zéros finaux comptent).
+  \item $0,0100$ : $\mathbf{3}$ CS (zéros de tête non sig.\ ; les deux zéros de queue le sont).
+  \item $3,40$ : $\mathbf{3}$ CS.
+  \item $8,000$ : $\mathbf{4}$ CS.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[tous les cas à la fois]
+On lit de gauche à droite en appliquant les trois règles sur les zéros.
+\begin{enumerate}[label=\alph*)]
+  \item $0,0035070$ : tête non sig.\ ; captif et queue sig.\ $\Rightarrow \mathbf{5}$ CS.
+  \item $1030,0$ : la présence de la virgule rend \emph{tous} les chiffres significatifs
+        (captif et zéro de queue) $\Rightarrow \mathbf{5}$ CS.
+  \item $0,004080$ : tête non sig.\ ; le $0$ captif et le $0$ de queue sont sig.\ $\Rightarrow \mathbf{4}$ CS.
+  \item $20,08$ : $\mathbf{4}$ CS (le $0$ captif et le $0$ après la virgule comptent).
+\end{enumerate}
+\end{corrige}
 
 \end{document}

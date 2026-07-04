@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Suffixe $\rightarrow$ fonction]
+\begin{enumerate}[label=\alph*)]
+  \item \textit{-ol} : \textbf{alcool}.
+  \item \textit{-al} : \textbf{aldéhyde}.
+  \item \textit{-one} : \textbf{cétone}.
+  \item \textit{acide \dots-oïque} : \textbf{acide carboxylique}.
+  \item \textit{-amine} : \textbf{amine}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Groupement $\rightarrow$ nom de la fonction]
+\begin{enumerate}[label=\alph*)]
+  \item $-\ce{OH}$ : \textbf{alcool}.
+  \item $-\ce{COOH}$ : \textbf{acide carboxylique}.
+  \item $-\ce{O}-$ (pont) : \textbf{éther}.
+  \item $-\ce{C#N}$ : \textbf{nitrile}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Aldéhyde ou cétone ?]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3-CHO} : le carbonyle porte un \textbf{H} $\Rightarrow$ \textbf{aldéhyde} (éthanal).
+  \item \ce{CH3-CO-CH3} : le carbonyle est encadré par \textbf{deux carbones} $\Rightarrow$ \textbf{cétone} (propanone).
+\end{enumerate}
+La seule différence est le voisinage du $\ce{C=O}$.
+\end{corrige}
+
+\begin{corrige}[Identifier la fonction d'une petite molécule]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3-CH2-OH} : $-\ce{OH}$ terminal $\Rightarrow$ \textbf{alcool} (éthanol).
+  \item \ce{CH3-O-CH3} : oxygène entre deux carbones $\Rightarrow$ \textbf{éther} (diméthyléther).
+  \item \ce{CH3-NH2} : azote sans carbonyle $\Rightarrow$ \textbf{amine} (méthylamine).
+  \item \ce{CH3-CH2-SH} : groupement $-\ce{SH}$ $\Rightarrow$ \textbf{thiol} (éthanethiol).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Classer un alcool]
+On regarde le nombre de carbones liés au carbone porteur du $-\ce{OH}$.
+\begin{enumerate}[label=\alph*)]
+  \item propan-1-ol : le $\ce{C}$--OH est lié à $1$ carbone $\Rightarrow$ alcool \textbf{primaire}.
+  \item propan-2-ol : le $\ce{C}$--OH est lié à $2$ carbones $\Rightarrow$ alcool \textbf{secondaire}.
+  \item 2-méthylpropan-2-ol : le $\ce{C}$--OH est lié à $3$ carbones $\Rightarrow$ alcool \textbf{tertiaire}.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

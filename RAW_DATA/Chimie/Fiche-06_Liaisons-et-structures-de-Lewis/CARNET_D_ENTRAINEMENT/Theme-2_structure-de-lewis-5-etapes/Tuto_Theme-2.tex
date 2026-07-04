@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Structure de Lewis — la méthode des 5 étapes
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 2 — Structure de Lewis : la méthode des 5 étapes}
+\end{center}
+
+\smallskip
+La structure de Lewis montre \emph{tous} les électrons de valence : les doublets liants (les
+liaisons) et les doublets non liants. On la construit avec un petit jeu de quatre grandeurs.
+
+\begin{cle}[Les quatre grandeurs clés]
+\[ \boxed{n_{\max} = 8a + 2b} \qquad \boxed{n_{v} = \Big(\textstyle\sum_i N_i^{\text{val}}\Big) - q} \]
+\[ \boxed{n_{l} = n_{\max} - n_{v}} \;\Rightarrow\; \text{nb liaisons} = \tfrac{n_l}{2}
+   \qquad \boxed{n_{nl} = n_{v} - n_{l}} \;\Rightarrow\; \text{nb doublets libres} = \tfrac{n_{nl}}{2} \]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item $a$ : nombre d'atomes visant l'\textbf{octet} (tous sauf \ce{H}) ; $b$ : nombre d'atomes
+        visant le \textbf{duet} (les \ce{H}).
+  \item $N_i^{\text{val}}$ : électrons de valence de l'atome $i$ (numéro de colonne) ; $q$ :
+        \textbf{charge} de l'édifice.
+\end{itemize}
+\end{cle}
+
+\begin{methode}[Les 5 étapes, dans l'ordre]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Formule brute} et \textbf{atome central} (le moins électronégatif ; \ce{H} n'est
+        \emph{jamais} central).
+  \item Calculer $n_{\max} = 8a + 2b$.
+  \item Calculer $n_{v} = \sum N_i^{\text{val}} - q$ \; (nombre de doublets disponibles $= n_v/2$).
+  \item Calculer $n_{l} = n_{\max} - n_{v}$, puis $n_l/2 = $ nombre de \textbf{liaisons}.
+  \item Calculer $n_{nl} = n_{v} - n_{l}$, puis $n_{nl}/2 = $ nombre de \textbf{doublets libres},
+        répartis pour compléter les octets.
+\end{enumerate}
+\end{methode}
+
+\begin{piege}[signe de la charge \& cas particuliers]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item Dans $n_v = \sum N^{\text{val}} - q$ : pour un \textbf{anion} $-1$ on \emph{ajoute} $1$
+        ($-q = +1$) ; pour un \textbf{cation} $+1$ on \emph{retranche} $1$.
+  \item \textbf{Molécule radicalaire} ($n_v$ impair) : on corrige par $n_l = n_{\max} - n_v - 1$,
+        et il restera un électron célibataire.
+  \item La méthode simplifiée \emph{échoue} pour quelques hypervalents (ex. \ce{SF6}) : elle donne
+        $4$ liaisons alors que le soufre en forme $6$.
+\end{itemize}
+\end{piege}
+
+\begin{exemplebox}[l'ammoniac \ce{NH3} en 5 étapes]
+Atome central \ce{N} ; $a=1$, $b=3$. \;
+$n_{\max} = 8 + 6 = 14$. \;
+$n_v = 5 + 3 = 8$. \;
+$n_l = 14 - 8 = 6 \Rightarrow 3$ liaisons \ce{N-H}. \;
+$n_{nl} = 8 - 6 = 2 \Rightarrow 1$ doublet libre sur \ce{N}. Octet de \ce{N} : $3\times2+2 = 8$. \checkmark
+\end{exemplebox}
+
+\end{document}

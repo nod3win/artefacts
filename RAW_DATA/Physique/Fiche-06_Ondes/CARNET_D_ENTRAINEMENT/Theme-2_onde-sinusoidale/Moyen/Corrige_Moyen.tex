@@ -1,0 +1,102 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{excol} Thème 2 — Corrigé Moyen}\\[-2pt]
+{\color{excol}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{corrige}[écrire l'équation d'une onde]
+On calcule $\omega$ et $k$ puis on assemble $y=A\sin(\omega t - kx)$ (attention : $A$ en \si{\metre}).
+\begin{enumerate}[label=\alph*)]
+  \item $\omega=2\pi f=2\pi\times 25=50\pi\approx\SI{157}{\radian\per\second}.$
+  \item $\lambda=\dfrac{v}{f}=\dfrac{10}{25}=\SI{0.4}{\metre}$, puis
+        $k=\dfrac{2\pi}{\lambda}=\dfrac{2\pi}{0{,}4}=5\pi\approx\SI{15.7}{\radian\per\metre}.$
+  \item Avec $A=\SI{3}{\centi\metre}=\SI{0.03}{\metre}$ :
+        \[ y(x,t)=0{,}03\,\sin\!\left(50\pi\,t - 5\pi\,x\right)\quad\text{(SI)}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[tout tirer d'une équation]
+On identifie $\omega$ (facteur de $t$) et $k$ (facteur de $x$), puis on remonte à $f,T,\lambda,v$.
+\begin{enumerate}[label=\alph*)]
+  \item $A=\SI{0.02}{\metre}$ ; $\omega=100\pi\ \si{\radian\per\second}$ ;
+        $f=\dfrac{\omega}{2\pi}=\dfrac{100\pi}{2\pi}=\SI{50}{\hertz}$ ;
+        $T=\dfrac{1}{f}=\SI{0.02}{\second}.$
+  \item $k=5\pi\ \si{\radian\per\metre}$ ;
+        $\lambda=\dfrac{2\pi}{k}=\dfrac{2\pi}{5\pi}=\SI{0.4}{\metre}.$
+  \item $v=\lambda f=0{,}4\times 50=\SI{20}{\metre\per\second}$
+        (ou $v=\dfrac{\omega}{k}=\dfrac{100\pi}{5\pi}=\SI{20}{\metre\per\second}$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[déphasage dans le temps]
+Un retard temporel $\Delta t$ correspond à un angle proportionnel : $2\pi$ pour une période entière.
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta\varphi=2\pi\,\dfrac{\Delta t}{T}=2\pi\times\dfrac{0{,}5}{2}=\dfrac{\pi}{2}\ \si{\radian}.$
+  \item $\Delta\varphi=\pi/2$ : ce n'est ni $2\pi n$ (concordance) ni $(2n+1)\pi$ (opposition).
+        Les points sont \textbf{en quadrature} : ni concordance, ni opposition.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[déphasage dans l'espace]
+On applique $\Delta\varphi=2\pi\,d/\lambda$ avec $\lambda=\SI{6}{\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta\varphi=2\pi\times\dfrac{1{,}5}{6}=\dfrac{\pi}{2}$ : \textbf{quadrature}
+        (ni concordance, ni opposition), car $d=\lambda/4$.
+  \item $\Delta\varphi=2\pi\times\dfrac{3}{6}=\pi$ : \textbf{opposition de phase},
+        car $d=\lambda/2$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le point va-t-il plus vite que l'onde ?]
+La vitesse d'un point du milieu ($v_{\max}=A\omega$) n'a rien à voir avec la célérité $v$ de
+l'onde : ce sont deux vitesses différentes.
+\begin{enumerate}[label=\alph*)]
+  \item $\omega=2\pi f=2\pi\times 20=40\pi\ \si{\radian\per\second}$, donc
+        \[ v_{\max}=A\omega=0{,}05\times 40\pi=2\pi\approx\SI{6.3}{\metre\per\second}. \]
+  \item $v_{\max}\approx\SI{6.3}{\metre\per\second}$ tandis que $v=\SI{8}{\metre\per\second}$ :
+        \textbf{ce ne sont pas les mêmes vitesses}. Ici le point oscille (vers le haut/bas) un
+        peu moins vite, au maximum, que l'onde ne se propage (vers la droite). Les deux
+        peuvent d'ailleurs être dans n'importe quel ordre selon $A$, $f$ et $v$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

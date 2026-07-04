@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[différence de potentiel]
+En deux points d'un champ électrique, les potentiels valent $V_A = \SI{12}{\volt}$ et
+$V_B = \SI{-3}{\volt}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la différence de potentiel $U_{AB} = V_A - V_B$.
+  \item Que vaut $U_{BA}$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[travail de la force électrique]
+On déplace une charge sous une différence de potentiel $U_{AB} = \SI{100}{\volt}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le travail $W = q\,U_{AB}$ pour une charge $q = \SI{+2}{\micro\coulomb}$.
+  \item Même question pour une charge $q = \SI{-2}{\micro\coulomb}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[à quoi correspond un volt ?]
+La différence de potentiel se mesure en volts.
+\begin{enumerate}[label=\alph*)]
+  \item À partir de $U = W/q$, exprime le volt en fonction du joule et du coulomb.
+  \item Sachant que $\SI{1}{\joule} = \SI{1}{\newton\metre}$, exprime le volt en \si{\newton\metre\per\coulomb}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[champ dans un condensateur]
+Un condensateur plan est soumis à une tension $U_{AB} = \SI{60}{\volt}$, ses armatures étant
+séparées de $d = \SI{3}{\centi\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité du champ uniforme entre les armatures.
+  \item Exprime ta réponse aussi en \si{\newton\per\coulomb} (rappel : $\SI{1}{\volt\per\metre} = \SI{1}{\newton\per\coulomb}$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le travail double avec la charge]
+Pour déplacer une charge $Q$ de $A$ vers $B$ dans un champ électrique, il faut fournir un travail
+$x$ (en joules).
+\begin{enumerate}[label=\alph*)]
+  \item La différence de potentiel entre $A$ et $B$ dépend-elle de la charge déplacée ?
+  \item Quel travail faut-il fournir pour déplacer une charge $10\,Q$ sur le \emph{même} trajet ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

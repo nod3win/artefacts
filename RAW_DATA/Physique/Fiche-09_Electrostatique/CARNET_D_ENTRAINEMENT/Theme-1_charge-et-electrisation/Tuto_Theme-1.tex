@@ -1,0 +1,134 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Charge, quantification et électrisation
+\sisetup{per-mode=symbol}
+
+\begin{center}\large\bfseries\color{primarydark}
+Thème 1 — Charge, quantification et électrisation
+\end{center}
+
+La matière est électriquement neutre car elle contient \emph{autant} de protons ($+e$) que
+d'électrons ($-e$). \textbf{Électriser} un corps, c'est simplement lui faire gagner ou perdre des
+électrons : la charge $q$ obtenue n'est jamais quelconque, elle est toujours un \emph{multiple
+entier} de la charge élémentaire.
+
+\begin{cle}[charge élémentaire et quantification]
+La plus petite charge isolable est la \textbf{charge élémentaire}
+\[ e = \num{1.6e-19}\ \si{\coulomb}. \]
+Toute charge d'un corps s'écrit $q = N\,e$, avec $N \in \Z$ le nombre (algébrique) de charges
+élémentaires en excès ou en défaut. Le nombre d'électrons transférés se retrouve donc par
+\[ \boxed{\,N = \dfrac{|q|}{e}\,}. \]
+\end{cle}
+
+\begin{cle}[signe de la charge = un simple comptage]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Corps \textbf{positif} : il a \emph{perdu} des électrons ($N_p > N_e$).
+  \item Corps \textbf{négatif} : il a \emph{gagné} des électrons ($N_e > N_p$).
+  \item Corps \textbf{neutre} : $N_p = N_e$.
+\end{itemize}
+\textbf{Conservation de la charge} : frotter ou toucher ne \emph{crée} jamais de charge, on ne fait
+que \emph{transférer} des électrons d'un corps à l'autre.
+\end{cle}
+
+\begin{cle}[conducteur ou isolant ?]
+\textbf{Isolant} (verre, plastique, ébonite\dots) : charges \emph{liées}, immobiles $\Rightarrow$
+s'électrise \emph{durablement par frottement}, la charge reste localisée.
+\textbf{Conducteur} (métaux : cuivre, argent, or\dots) : charges \emph{libres} $\Rightarrow$ toute
+charge se redistribue aussitôt et s'écoule vers la terre. Un métal nu ne se charge donc \emph{pas}
+par frottement.
+\end{cle}
+
+\begin{methode}[les trois modes d'électrisation]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Frottement} : deux isolants échangent des électrons $\rightarrow$ charges
+        \emph{opposées et égales}.
+  \item \textbf{Contact} : un corps chargé touche un conducteur $\rightarrow$ les deux finissent
+        chargés \emph{du même signe}.
+  \item \textbf{Influence} (sans contact) : un corps chargé approché d'un conducteur neutre
+        \emph{redistribue} ses charges libres (attirées d'un côté, repoussées de l'autre) ; le
+        conducteur reste \emph{globalement neutre} mais polarisé.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[combien d'électrons pour $\SI{6.4}{\micro\coulomb}$ ?]
+Un électroscope chargé par contact porte $|q| = \SI{6.4}{\micro\coulomb}$. Nombre d'électrons
+échangés :
+\[ N = \frac{|q|}{e} = \frac{\num{6.4e-6}}{\num{1.6e-19}}
+     = \frac{6{,}4}{1{,}6}\times 10^{13} = \num{4e13}\ \text{électrons}. \]
+\end{exemplebox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,
+    charge/.style={circle,draw=black!55,minimum size=6.5mm,inner sep=0pt,font=\footnotesize\bfseries,text=white}]
+  % --- influence : baton isolant negatif approche d'une sphere conductrice ---
+  \node[font=\bfseries\small,primarydark] at (0,2.5) {Électrisation par influence (sans contact)};
+  % sphere
+  \draw[fill=black!6,line width=0.9pt] (0,0) circle (1.2);
+  \foreach \y in {-0.7,-0.25,0.2,0.65}{\node[charge,fill=defcol,scale=0.6] at (0.85,\y) {$-$};}
+  \foreach \y in {-0.7,-0.25,0.2,0.65}{\node[charge,fill=attncol,scale=0.6] at (-0.85,\y) {$+$};}
+  \node[font=\scriptsize] at (0,-1.55) {conducteur neutre};
+  % baton
+  \draw[fill=defcol!25,line width=0.9pt] (-4.3,-0.35) rectangle (-2.6,0.35);
+  \foreach \x in {-4.0,-3.6,-3.2,-2.85}{\node[charge,fill=defcol,scale=0.6] at (\x,0) {$-$};}
+  \node[defcol,font=\scriptsize,above] at (-3.45,0.45) {isolant $(-)$};
+  \draw[->,defcol,dashed,line width=0.7pt] (-2.55,0) -- (-1.25,0);
+  \node[defcol,font=\scriptsize,above] at (-1.9,0.03) {influence};
+\end{tikzpicture}
+\end{center}
+
+\begin{piege}[les erreurs classiques du thème]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{« On crée de la charge en frottant »} : \emph{faux}, on transfère des électrons
+        (conservation).
+  \item \textbf{Charger un métal par frottement} : impossible s'il est nu ; il faut un
+        \emph{manche isolant}.
+  \item \textbf{Contact vs influence} : le contact laisse les deux corps de \emph{même signe} ;
+        l'influence laisse le conducteur \emph{globalement neutre}.
+  \item \textbf{« Libre » $\ne$ « qui apparaît »} : les électrons libres d'un métal existent déjà.
+\end{itemize}
+\end{piege}
+
+\begin{remarque}[l'électroscope]
+L'électroscope détecte une charge : ses deux feuilles, portant des charges de \emph{même signe},
+se \textbf{repoussent} et s'écartent d'autant plus que la charge est grande. Le relier à la terre
+le décharge (les feuilles retombent).
+\end{remarque}
+
+\end{document}

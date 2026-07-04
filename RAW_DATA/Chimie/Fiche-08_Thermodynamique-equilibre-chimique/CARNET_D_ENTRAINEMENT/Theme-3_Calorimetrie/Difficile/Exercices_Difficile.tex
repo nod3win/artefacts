@@ -1,0 +1,93 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{exo}[escalier complet : de la glace à la vapeur]
+On veut la chaleur totale $Q$ pour transformer $\qty{50}{\gram}$ de glace prise à $\qty{-40}{\celsius}$ en vapeur portée à $\qty{120}{\celsius}$. Données : $c_{\text{glace}}=\num{2.060}$, $c_{\text{eau}}=\num{4.185}$, $c_{\text{vapeur}}=\num{1.85}$ (tous en $\si{\kilo\joule\per\kelvin\per\kilogram}$), $L_{\text{fus}}=\qty{334}{\kilo\joule\per\kilogram}$, $L_{\text{vap}}=\qty{2257}{\kilo\joule\per\kilogram}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,every node/.style={font=\scriptsize}]
+  \draw[->,line width=1.1pt,defcol] (0,0)--(2.1,0);
+  \node[above] at (1.05,0) {$m\,c_{\text{glace}}\Delta T$};
+  \node[below left] at (0,0) {$\qty{-40}{\celsius}$}; \node[below] at (0,-0.38) {glace};
+  \draw[->,line width=1.1pt,attncol] (2.1,0)--(2.1,1.0);
+  \node[right] at (2.1,0.5) {$m\,L_{\text{fus}}$}; \node[below] at (2.1,0) {$\qty{0}{\celsius}$};
+  \draw[->,line width=1.1pt,defcol] (2.1,1.0)--(5.1,1.0);
+  \node[above] at (3.6,1.0) {$m\,c_{\text{eau}}\Delta T$};
+  \draw[->,line width=1.1pt,attncol] (5.1,1.0)--(5.1,2.0);
+  \node[right] at (5.1,1.5) {$m\,L_{\text{vap}}$}; \node[below] at (5.1,1.0) {$\qty{100}{\celsius}$};
+  \draw[->,line width=1.1pt,defcol] (5.1,2.0)--(7.5,2.0);
+  \node[above] at (6.3,2.0) {$m\,c_{\text{vap}}\Delta T$};
+  \node[above right] at (7.5,2.0) {$\qty{120}{\celsius}$}; \node[below] at (7.5,2.0) {vapeur};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule les cinq contributions séparément.
+  \item En déduis $Q$ total.
+  \item Quelle étape domine le bilan ? Justifie.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[dissolution : compter aussi le calorimètre]
+Un calorimètre en verre de masse $\qty{0.30}{\kilogram}$ contient $\qty{0.25}{\kilogram}$ d'eau à $\qty{21.0}{\celsius}$. On y dissout $\qty{0.10}{\mol}$ d'un sel ; la température monte à $\qty{24.0}{\celsius}$. On suppose que \emph{seule la moitié} du verre s'échauffe. Données : $c_{\text{verre}}=\qty{0.8368}{\kilo\joule\per\kelvin\per\kilogram}$, $c_{\text{eau}}=\qty{4.185}{\kilo\joule\per\kelvin\per\kilogram}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la chaleur captée par l'eau.
+  \item Calcule la chaleur captée par le verre.
+  \item En déduis l'enthalpie molaire de dissolution $\Delta H$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une barre de fer froide : congélation partielle]
+Un calorimètre adiabatique (capacité négligeable) contient $\qty{0.25}{\kilogram}$ d'eau à $\qty{4}{\celsius}$. On y plonge une barre de fer de $\qty{0.60}{\kilogram}$ sortant d'un congélateur à $\qty{-35}{\celsius}$. Données : $c_{\text{eau}}=\qty{4}{\kilo\joule\per\kelvin\per\kilogram}$, $c_{\text{fer}}=\qty{0.5}{\kilo\joule\per\kelvin\per\kilogram}$, $L_{\text{fus}}=\qty{334}{\kilo\joule\per\kilogram}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle énergie faut-il fournir au fer pour l'amener de $\qty{-35}{\celsius}$ à $\qty{0}{\celsius}$ ?
+  \item Quelle énergie l'eau peut-elle céder en se refroidissant de $\qty{4}{\celsius}$ à $\qty{0}{\celsius}$ ?
+  \item Montre qu'une partie seulement de l'eau gèle.
+  \item Calcule la masse d'eau gelée.
+  \item Quelle est la température finale d'équilibre ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux — calorimétrie]
+Indique si chaque affirmation est \textbf{vraie} ou \textbf{fausse}, et justifie brièvement.
+\begin{enumerate}[label=\alph*)]
+  \item « Pendant un changement d'état, la température du corps reste constante. »
+  \item « Une variation de $\qty{40}{\kelvin}$ correspond à une variation de $\qty{40}{\celsius}$. »
+  \item « Dans un calorimètre adiabatique, la somme des chaleurs échangées entre les corps présents est nulle. »
+  \item « $\qty{4.185}{\kilo\joule}$ valent $\qty{41.85}{\joule}$. »
+\end{enumerate}
+\end{exo}
+
+\end{document}

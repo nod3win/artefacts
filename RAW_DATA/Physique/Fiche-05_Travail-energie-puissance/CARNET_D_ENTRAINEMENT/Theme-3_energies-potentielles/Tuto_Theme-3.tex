@@ -1,0 +1,115 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Les énergies potentielles (pesanteur et élastique)
+\sisetup{per-mode=symbol}
+
+Un corps peut stocker de l'énergie \emph{grâce à sa position} : c'est l'\textbf{énergie potentielle}.
+Ce thème couvre ses deux formes : de \textbf{pesanteur} (liée à l'altitude) et \textbf{élastique}
+(liée à la déformation d'un ressort).
+
+\begin{cle}[énergie potentielle de pesanteur]
+\[
+\boxed{\;E_p=mgh\;}\qquad(\text{en }\si{\joule})
+\]
+$m$ en \si{\kilogram}, $g=\qty{9,81}{\metre\per\second\squared}$ (souvent $\approx\qty{10}{\metre\per\second\squared}$),
+$h$ l'altitude au-dessus d'un niveau de référence (\si{\metre}). Le « zéro » d'altitude est
+\emph{arbitraire} : seule la \emph{variation} $\Delta E_p=mg(h_B-h_A)$ a un sens physique. On choisit
+en général $E_p=0$ au point le plus bas.
+\end{cle}
+
+\begin{cle}[théorème de l'énergie potentielle]
+Le travail du poids est l'\emph{opposé} de la variation d'énergie potentielle :
+\[
+\boxed{\;W(\vv G)=-\Delta E_p=-\bigl(E_p(B)-E_p(A)\bigr)\;}
+\]
+\emph{Descente} : $E_p$ diminue, $W(\vv G)>0$ (moteur). \emph{Montée} : $E_p$ augmente, $W(\vv G)<0$
+(résistant).
+\end{cle}
+
+\begin{cle}[énergie potentielle élastique et loi de Hooke]
+Un ressort de raideur $k$ (\si{\newton\per\metre}) écarté de $x$ de sa position d'équilibre exerce une
+force de rappel $F=k\,x$ (loi de Hooke) et stocke une énergie
+\[
+\boxed{\;E_p=\tfrac12\,k\,x^2\;}\qquad(\text{en }\si{\joule}).
+\]
+Comme $F=kx$ croît linéairement, le travail (donc $E_p$) est l'\emph{aire du triangle} sous la droite
+$F(x)$ : $\tfrac12\times x\times(kx)=\tfrac12 kx^2$. La dépendance est \emph{en carré} : doubler $x$
+\emph{quadruple} $E_p$.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=9cm,height=4.4cm,axis lines=left,
+     xlabel={\small élongation $x$ (\si{\centi\metre})},ylabel={\small $F$ (\si{\newton})},
+     xmin=0,xmax=11,ymin=0,ymax=3,xtick={0,2,4,6,8,10},ytick={0,1,2},
+     tick label style={font=\footnotesize},label style={font=\footnotesize}]
+    \addplot[attncol,line width=1.3pt,domain=0:10,samples=2]{0.25*x};
+    \node[attncol] at (axis cs:6.4,2.4){\small $F=k\,x$};
+    \addplot[draw=excol!60,pattern=north east lines,pattern color=excol!35]
+       coordinates {(0,0) (10,0) (10,2.5)} -- cycle;
+    \node[excol] at (axis cs:7.2,0.8){\small $E_p=\tfrac12 k x^2$};
+    \draw[dashed,black!45] (axis cs:10,0)--(axis cs:10,2.5);
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{cle}[oscillations d'un ressort]
+Écarté puis lâché, un ressort de raideur $k$ portant une masse $m$ oscille avec
+\[
+\boxed{\;T=2\pi\sqrt{\dfrac{m}{k}}\;}\qquad\qquad\boxed{\;f=\dfrac1T=\dfrac{1}{2\pi}\sqrt{\dfrac{k}{m}}\;}
+\]
+$T$ en \si{\second}, $f$ en \si{\hertz}. Plus le ressort est \emph{raide} ($k$ grand), plus il oscille
+\emph{vite} ; plus la masse est \emph{lourde}, plus il oscille \emph{lentement}.
+\end{cle}
+
+\begin{exemplebox}[énergie d'un ressort étiré]
+Un ressort tel que $F=\qty{2,5}{\newton}$ pour $x=\qty{10}{\centi\metre}=\qty{0,10}{\metre}$ a une raideur
+$k=\dfrac{F}{x}=\dfrac{2,5}{0,10}=\qty{25}{\newton\per\metre}$, et stocke
+$E_p=\tfrac12\times25\times(0,10)^2=\qty{0,125}{\joule}$.
+\end{exemplebox}
+
+\begin{piege}[erreurs fréquentes]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Confondre \textbf{force} $F=kx$ et \textbf{énergie} $E_p=\tfrac12 kx^2$ (facteur $\tfrac12$ et carré).
+  \item Oublier de convertir $x$ en \textbf{mètres} avant le calcul de $E_p$.
+  \item Croire que doubler l'élongation double $E_p$ : elle \emph{quadruple} ($E_p\propto x^2$).
+\end{itemize}
+\end{piege}
+\end{document}

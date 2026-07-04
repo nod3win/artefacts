@@ -1,0 +1,111 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[reconnaître la famille]
+Pour chacune des trois lentilles ci-dessous (vue en coupe), dis si elle est \textbf{convergente} ou
+\textbf{divergente}, en te fondant uniquement sur l'épaisseur de ses bords.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  % (a) biconvexe
+  \begin{scope}
+    \fill[defcol!25] plot[smooth cycle] coordinates {(0,0.9) (0.22,0) (0,-0.9) (-0.22,0)};
+    \draw[defcol!80,line width=0.5pt] plot[smooth cycle] coordinates {(0,0.9) (0.22,0) (0,-0.9) (-0.22,0)};
+    \node[font=\footnotesize] at (0,-1.3) {(a)};
+  \end{scope}
+  % (b) biconcave
+  \begin{scope}[shift={(3,0)}]
+    \fill[defcol!25] (-0.30,-0.9)--(0.30,-0.9)--(0.07,0)--(0.30,0.9)--(-0.30,0.9)--(-0.07,0)--cycle;
+    \draw[defcol!80,line width=0.5pt] (-0.30,-0.9)--(0.30,-0.9)--(0.07,0)--(0.30,0.9)--(-0.30,0.9)--(-0.07,0)--cycle;
+    \node[font=\footnotesize] at (0,-1.3) {(b)};
+  \end{scope}
+  % (c) plan-convexe
+  \begin{scope}[shift={(6,0)}]
+    \fill[defcol!25] (-0.16,-0.9)--(-0.16,0.9) .. controls (0.5,0.5) and (0.5,-0.5) .. (-0.16,-0.9)--cycle;
+    \draw[defcol!80,line width=0.5pt] (-0.16,-0.9)--(-0.16,0.9) .. controls (0.5,0.5) and (0.5,-0.5) .. (-0.16,-0.9);
+    \node[font=\footnotesize] at (0,-1.3) {(c)};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{exo}
+
+\begin{exo}[symbole et signe de $f$]
+On schématise une lentille par un segment fléché sur l'axe optique. Pour chacun des deux symboles,
+donne la \textbf{famille} de la lentille et le \textbf{signe} de sa distance focale $f$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \begin{scope}
+    \draw[black!35,dash pattern=on 3pt off 2pt] (-1.3,0)--(1.3,0);
+    \draw[line width=1.6pt,<->,black!70] (0,-1)--(0,1);
+    \node[font=\footnotesize] at (0,-1.35) {(a)};
+  \end{scope}
+  \begin{scope}[shift={(4,0)}]
+    \draw[black!35,dash pattern=on 3pt off 2pt] (-1.3,0)--(1.3,0);
+    \draw[line width=1.6pt,>-<,>=Stealth,black!70] (0,-1)--(0,1);
+    \node[font=\footnotesize] at (0,-1.35) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{exo}
+
+\begin{exo}[de la distance focale à la vergence]
+Calcule la vergence $C$ (en dioptries) de chaque lentille convergente. \emph{Pense à convertir $f$ en
+mètres.}
+\begin{enumerate}[label=\alph*)]
+  \item $f=+\qty{50}{\cm}$ ;
+  \item $f=+\qty{10}{\cm}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[de la vergence à la distance focale]
+On donne la vergence ; retrouve la distance focale $f$ (en cm) et précise la famille.
+\begin{enumerate}[label=\alph*)]
+  \item $C=+4~\delta$ ;
+  \item $C=-5~\delta$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux lentilles accolées]
+On accole deux lentilles minces convergentes de vergences $C_1=+3~\delta$ et $C_2=+2~\delta$.
+\begin{enumerate}[label=\alph*)]
+  \item Donne la vergence $C_{\text{éq}}$ du système.
+  \item Le système est-il convergent ou divergent ? Quelle est sa distance focale $f_{\text{éq}}$ ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

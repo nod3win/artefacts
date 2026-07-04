@@ -1,0 +1,87 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{center}\color{primarydark}\large\bfseries Thème 2 — Demi-équations et équilibrage \quad$\bullet$\quad Niveau Facile\end{center}
+
+\begin{exo}[la partie électronique d'un couple]
+Pour chaque couple monoatomique, donne le nombre $n$ d'électrons échangés puis écris la demi-équation
+$\mathrm{Ox}+n\,\ce{e^-}\rightleftharpoons\mathrm{Red}$.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Fe^{3+}}/\ce{Fe^{2+}}
+  \item \ce{Cu^{2+}}/\ce{Cu}
+  \item \ce{Zn^{2+}}/\ce{Zn}
+  \item \ce{Al^{3+}}/\ce{Al}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[demi-équations sans oxygène]
+Équilibre chaque demi-équation (atomes, électrons, charge). Aucun oxygène n'intervient.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Cl2 <=> Cl^-}
+  \item \ce{I2 <=> I^-}
+  \item \ce{Fe <=> Fe^{2+}}
+  \item \ce{Ag+ <=> Ag}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[demi-équations avec oxygène, en milieu acide]
+Équilibre en milieu acide (ajoute \ce{H2O} puis \ce{H+}), puis vérifie la charge.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{NO3^- <=> NO} \quad (l'azote passe de $+\mathrm{V}$ à $+\mathrm{II}$)
+  \item \ce{SO4^{2-} <=> SO2} \quad (le soufre passe de $+\mathrm{VI}$ à $+\mathrm{IV}$)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[additionner deux demi-équations]
+On te donne deux demi-équations. Écris l'équation globale (les électrons doivent s'éliminer).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Zn <=> Zn^{2+} + 2 e^-} \quad et \quad \ce{Cu^{2+} + 2 e^- <=> Cu}
+  \item \ce{Cu <=> Cu^{2+} + 2 e^-} \quad et \quad \ce{Ag+ + e^- <=> Ag}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[repérer les ions spectateurs]
+Dans chaque réaction en solution, identifie le(s) ion(s) \textbf{spectateur(s)} (dont le n.o.\ ne
+change pas), puis écris l'équation ionique \textbf{simplifiée}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Zn + CuSO4 -> ZnSO4 + Cu}
+  \item \ce{Fe + 2 AgNO3 -> Fe(NO3)2 + 2 Ag}
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{exo}[le rebond de base]
+Un rayon lumineux frappe un miroir plan avec un angle d'incidence $\hat{\imath}=\ang{28}$, mesuré
+\emph{par rapport à la normale}.
+\begin{center}
+\begin{tikzpicture}[scale=1.05,>=Stealth]
+  \fill[pattern=north east lines,pattern color=black!40] (-2.8,-0.28) rectangle (2.8,0);
+  \draw[black,line width=1.4pt] (-2.8,0) -- (2.8,0);
+  \node[black!70,right,font=\footnotesize] at (2.8,-0.16){miroir};
+  \draw[dash pattern=on 3pt off 2pt,black!60] (0,0) -- (0,2.4);
+  \node[black!60,above,font=\footnotesize] at (0,2.4){normale};
+  \draw[->,line width=1.1pt] (-1.7,2.2) -- (0,0);
+  \node[left,font=\footnotesize] at (-1.7,2.05){rayon incident};
+  \draw[line width=0.7pt] (0,1) arc (90:127:1);
+  \node[font=\footnotesize] at (-0.42,1.2){$\hat{\imath}$};
+  \fill (0,0) circle (1.3pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Donne la valeur de l'angle de réflexion $\hat{r}$.
+  \item Calcule l'angle formé \emph{entre} le rayon incident et le rayon réfléchi.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[angle donné par rapport au miroir]
+Un rayon lumineux arrive sur un miroir plan en faisant un angle de $\ang{35}$ \emph{avec la surface
+du miroir} (et non avec la normale).
+\begin{center}
+\begin{tikzpicture}[scale=1.05,>=Stealth]
+  \fill[pattern=north east lines,pattern color=black!40] (-2.8,-0.28) rectangle (2.8,0);
+  \draw[black,line width=1.4pt] (-2.8,0) -- (2.8,0);
+  \node[black!70,right,font=\footnotesize] at (2.8,-0.16){miroir};
+  \draw[dash pattern=on 3pt off 2pt,black!60] (0,0) -- (0,2.4);
+  \node[black!60,above,font=\footnotesize] at (0,2.4){normale};
+  \draw[->,line width=1.1pt] (-2.2,1.54) -- (0,0);
+  \draw[line width=0.7pt] (-1,0) arc (180:145:1);
+  \node[font=\footnotesize] at (-1.2,0.28){$\ang{35}$};
+  \fill (0,0) circle (1.3pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quel est l'angle d'incidence $\hat{\imath}$ (par rapport à la normale) ?
+  \item Quel est l'angle de réflexion $\hat{r}$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[miroir posé au sol]
+Un miroir plan est posé horizontalement sur le sol. Un rayon lumineux descend et le frappe en faisant
+un angle d'incidence $\hat{\imath}=\ang{60}$ avec la normale (verticale).
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \fill[pattern=north east lines,pattern color=black!40] (-2.8,-0.28) rectangle (2.8,0);
+  \draw[black,line width=1.4pt] (-2.8,0) -- (2.8,0);
+  \node[black!70,right,font=\footnotesize] at (2.8,-0.16){sol (miroir)};
+  \draw[dash pattern=on 3pt off 2pt,black!60] (0,0) -- (0,2.2);
+  \node[black!60,above,font=\footnotesize] at (0,2.2){normale};
+  \draw[->,line width=1.1pt] ({-2.2*sin(60)},{2.2*cos(60)}) -- (0,0);
+  \draw[line width=0.7pt] (0,0.9) arc (90:150:0.9);
+  \node[font=\footnotesize] at (-0.62,0.95){$\hat{\imath}$};
+  \fill (0,0) circle (1.3pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Donne l'angle de réflexion $\hat{r}$.
+  \item Quel angle le rayon réfléchi fait-il avec le sol ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[incidence perpendiculaire]
+Un rayon lumineux arrive sur un miroir plan \emph{perpendiculairement} à sa surface, c'est-à-dire le
+long de la normale ($\hat{\imath}=\ang{0}$).
+\begin{enumerate}[label=\alph*)]
+  \item Que vaut l'angle de réflexion $\hat{r}$ ?
+  \item Décris la direction du rayon réfléchi par rapport au rayon incident.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[rayon réfléchi perpendiculaire à l'incident]
+On souhaite que le rayon réfléchi reparte \textbf{perpendiculairement} au rayon incident, c'est-à-dire
+que l'angle entre les deux rayons soit exactement $\ang{90}$.
+
+Quel doit être l'angle d'incidence $\hat{\imath}$ ? (On rappelle que l'angle entre le rayon incident et
+le rayon réfléchi vaut $2\hat{\imath}$.)
+\end{exo}
+
+\end{document}

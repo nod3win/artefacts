@@ -1,0 +1,79 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[projeter un vecteur vitesse]
+\begin{enumerate}[label=\alph*)]
+  \item $v_x=10\cos\ang{30}=10\cdot\frac{\sqrt3}{2}=5\sqrt3\approx\qty{8,66}{\metre\per\second}$ ; $v_y=10\sin\ang{30}=\qty{5}{\metre\per\second}$.
+  \item $v_x=10\cos\ang{60}=\qty{5}{\metre\per\second}$ ; $v_y=10\sin\ang{60}=5\sqrt3\approx\qty{8,66}{\metre\per\second}$.
+\end{enumerate}
+(Les rôles de $v_x$ et $v_y$ s'échangent entre \ang{30} et \ang{60} : ce sont des angles complémentaires.)
+\end{corrige}
+
+\begin{corrige}[reconstituer la norme et l'angle]
+\begin{enumerate}[label=\alph*)]
+  \item $v=\sqrt{6^2+8^2}=\sqrt{100}=\qty{10}{\metre\per\second}$ ; $\theta=\arctan\frac{8}{6}\approx\ang{53}$.
+  \item $v=\sqrt{5^2+12^2}=\sqrt{169}=\qty{13}{\metre\per\second}$ ; $\theta=\arctan\frac{12}{5}\approx\ang{67}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[composition à angle droit]
+\begin{enumerate}[label=\alph*)]
+  \item Les deux vitesses sont perpendiculaires : $v=\sqrt{8^2+6^2}=\sqrt{100}=\qty{10}{\metre\per\second}$.
+  \item Déviation $\theta=\arctan\dfrac{v_{\text{courant}}}{v_{\text{bateau}}}=\arctan\dfrac{6}{8}\approx\ang{36,9}$ vers l'aval.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[composition sur une même droite]
+Vitesses colinéaires : on les ajoute algébriquement.
+\begin{enumerate}[label=\alph*)]
+  \item Même sens : $1{,}5+0{,}8=\qty{2,3}{\metre\per\second}$.
+  \item Sens opposé : $1{,}5-0{,}8=\qty{0,7}{\metre\per\second}$ (dans le sens de la marche, car le voyageur va plus vite que le tapis).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[norme constante ou vecteur constant ?]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux} : la direction peut changer (trajectoire courbe) tout en gardant la même norme ; le vecteur vitesse varie alors, et le mobile accélère.
+  \item \textbf{Vrai} : rectiligne (direction fixe) et uniforme (norme fixe), et le sens ne change pas : les trois caractéristiques du vecteur sont constantes.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

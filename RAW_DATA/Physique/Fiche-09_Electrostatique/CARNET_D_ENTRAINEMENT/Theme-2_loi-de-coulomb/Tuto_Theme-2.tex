@@ -1,0 +1,127 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Loi de Coulomb et superposition des forces
+\sisetup{per-mode=symbol}
+
+\begin{center}\large\bfseries\color{primarydark}
+Thème 2 — Loi de Coulomb et superposition des forces
+\end{center}
+
+Deux charges ponctuelles exercent l'une sur l'autre une force dont \emph{Coulomb} a établi
+l'intensité. Tout le thème consiste à calculer cette force, à en trouver le sens, et à
+\textbf{additionner vectoriellement} plusieurs forces.
+
+\begin{cle}[loi de Coulomb]
+Deux charges ponctuelles $q_1$ et $q_2$ séparées d'une distance $d$ se repoussent (mêmes signes) ou
+s'attirent (signes contraires) le long de la droite qui les joint, avec l'intensité
+\[ \boxed{\,F = K\,\dfrac{|q_1|\,|q_2|}{d^{2}}\,},\qquad K \approx \num{9e9}\ \si{\newton\metre\squared\per\coulomb\squared}. \]
+Les deux forces $\vv{F}_{1/2}$ et $\vv{F}_{2/1}$ ont \emph{même intensité} et sont de \emph{sens
+opposés} (action--réaction), quelles que soient les valeurs de $q_1$ et $q_2$.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth,font=\footnotesize,
+    ch/.style={circle,minimum size=7mm,inner sep=0pt,text=white,font=\bfseries\small}]
+  % attraction
+  \node[font=\bfseries,primarydark] at (-3.3,1.4) {signes opposés : attraction};
+  \node[ch,fill=attncol] (a) at (-4.7,0.4) {$+$};
+  \node[ch,fill=defcol] (b) at (-1.9,0.4) {$-$};
+  \draw[->,line width=1.2pt,attncol] (-4.1,0.4) -- (-3.1,0.4);
+  \draw[->,line width=1.2pt,defcol] (-2.5,0.4) -- (-3.5,0.4);
+  \draw[<->,black!55,dashed] (-4.7,-0.35) -- (-1.9,-0.35) node[midway,below]{$d$};
+  % repulsion
+  \node[font=\bfseries,primarydark] at (3.3,1.4) {mêmes signes : répulsion};
+  \node[ch,fill=attncol] (c) at (1.9,0.4) {$+$};
+  \node[ch,fill=attncol] (e) at (4.7,0.4) {$+$};
+  \draw[->,line width=1.2pt,attncol] (2.5,0.4) -- (1.5,0.4);
+  \draw[->,line width=1.2pt,attncol] (4.1,0.4) -- (5.1,0.4);
+  \draw[<->,black!55,dashed] (1.9,-0.35) -- (4.7,-0.35) node[midway,below]{$d$};
+\end{tikzpicture}
+\end{center}
+
+\begin{cle}[trois réflexes de proportionnalité]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item $F \propto |q_1|\,|q_2|$ : doubler une charge \emph{double} $F$ ; doubler les deux la
+        \emph{quadruple}.
+  \item $F \propto 1/d^2$ : doubler $d$ \emph{divise} $F$ par $4$ ; tripler $d$ la divise par $9$.
+  \item Diviser \emph{charges et distance par le même facteur} laisse $F$ \textbf{inchangée}
+        (numérateur et dénominateur divisés pareil).
+\end{itemize}
+\end{cle}
+
+\begin{methode}[superposition : additionner les forces]
+La force totale sur une charge est la \textbf{somme vectorielle} des forces exercées par chacune des
+autres, comme si elles étaient seules :
+$\vv{F}_{\text{tot}} = \sum_i \vv{F}_{i}$.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Forces alignées} : on \emph{ajoute} (même sens) ou on \emph{soustrait} (sens
+        opposés) les intensités.
+  \item \textbf{Forces perpendiculaires} : $F_{\text{tot}} = \sqrt{F_1^{2}+F_2^{2}}$ (Pythagore),
+        direction $\tan\theta = F_2/F_1$.
+  \item \textbf{Symétrie} (triangle, carré, milieu) : la résultante est portée par l'axe de
+        symétrie ; on projette sur cet axe.
+\end{itemize}
+\end{methode}
+
+\begin{methode}[point où la force résultante s'annule (charges alignées)]
+On cherche le point $M$ où les deux forces se compensent. On l'égalise :
+$K\,\dfrac{|q_1|}{x^2} = K\,\dfrac{|q_2|}{(L-x)^2}$, puis on prend la \textbf{racine carrée} pour
+obtenir une équation \emph{linéaire} : $\dfrac{L-x}{x} = \sqrt{\dfrac{|q_2|}{|q_1|}}$. Le point est
+toujours plus près de la \emph{petite} charge.
+\end{methode}
+
+\begin{exemplebox}[application numérique directe]
+$q_1 = \SI{+4}{\micro\coulomb}$, $q_2 = \SI{-1}{\micro\coulomb}$, $d = \SI{30}{\centi\metre}$ :
+\[ F = \num{9e9}\times\frac{(\num{4e-6})(\num{1e-6})}{(0{,}30)^2}
+     = \num{9e9}\times\frac{\num{4e-12}}{0{,}09} \approx \SI{0.40}{\newton}\ \text{(attractive)}. \]
+\end{exemplebox}
+
+\begin{piege}[les fautes qui coûtent des points]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Oublier les \textbf{valeurs absolues} : une intensité est toujours positive ; le sens se
+        décide à part.
+  \item Oublier de convertir : $\si{\micro\coulomb}\to\si{\coulomb}$, $\si{\centi\metre}\to\si{\metre}$
+        \emph{avant} de calculer.
+  \item Additionner les intensités \emph{sans tenir compte des sens} : une somme de forces est
+        \textbf{vectorielle}.
+\end{itemize}
+\end{piege}
+
+\end{document}

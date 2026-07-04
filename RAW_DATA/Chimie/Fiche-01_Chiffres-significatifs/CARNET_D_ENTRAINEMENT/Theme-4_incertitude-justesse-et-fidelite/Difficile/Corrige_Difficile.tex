@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[vrai ou faux, justifié]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux.} Une mesure fidèle est reproductible, mais toutes les valeurs peuvent être décalées
+        de la même quantité (biais) : fidèle $\neq$ juste.
+  \item \textbf{Vrai.} Plus de CS $\Rightarrow$ incertitude relative plus faible ($2$ CS $\sim1\%$,
+        $4$ CS $\sim0,01\%$).
+  \item \textbf{Faux.} L'incertitude relative est un rapport $\Delta x/x$ : elle est \emph{sans unité}
+        (exprimée en \%).
+  \item \textbf{Faux.} Les $4$ CS traduisent la \emph{fidélité}, pas la \emph{justesse} : une balance
+        biaisée peut afficher $4$ CS et rester fausse.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[analyse d'une série de titrages]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Fidèle} (les cinq valeurs sont resserrées, écart maximal $\qty{0,04}{\milli\litre}$) et
+        \textbf{juste} (leur moyenne coïncide avec la référence).
+  \item $\bar V=\dfrac{12,45+12,47+12,44+12,46+12,48}{5}=\dfrac{62,30}{5}=\qty{12,46}{\milli\litre}$.
+  \item $\dfrac{\Delta V}{V}=\dfrac{0,01}{12,46}=8,0\times10^{-4}\approx\boxed{0,080\,\%}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le piège de la pesée différentielle]
+\begin{enumerate}[label=\alph*)]
+  \item $m=125,78-125,46=\boxed{\qty{0,32}{\gram}}$ ($2$ décimales, imposées par les données).
+  \item $\dfrac{\Delta}{m_1}=\dfrac{0,01}{125,46}\approx 0,008\,\%$, mais
+        $\dfrac{\Delta}{m}=\dfrac{0,01}{0,32}\approx \boxed{3\,\%}$. La soustraction de deux nombres voisins
+        \emph{amplifie} l'incertitude relative (facteur $\approx 400$ ici) : mieux vaut tarer le bécher et
+        peser directement le précipité.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la même balance, deux échantillons]
+\begin{enumerate}[label=\alph*)]
+  \item $\approx\qty{2}{\gram}$ : $\dfrac{0,01}{2}=\boxed{0,5\,\%}$. \quad
+        $\approx\qty{200}{\gram}$ : $\dfrac{0,01}{200}=\boxed{0,005\,\%}$.
+  \item La balance suffit pour la pesée de $\qty{200}{\gram}$ ($0,005\%\le0,1\%$), mais pas pour celle de
+        $\qty{2}{\gram}$ ($0,5\%>0,1\%$) : il faudrait alors une balance au milligramme. Une même
+        incertitude \emph{absolue} pèse bien plus lourd en \emph{relatif} sur une petite masse.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,83 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[centre de gravité de formes usuelles]
+\begin{enumerate}[label=\alph*)]
+  \item Le \textbf{centre} du cube (intersection des diagonales / des axes de symétrie).
+  \item Le \textbf{centre} du rectangle (intersection des diagonales).
+  \item Le \textbf{milieu} du segment joignant les centres des deux bases (au centre du cylindre).
+\end{enumerate}
+Dans les trois cas, le corps étant homogène et symétrique, $G$ est sur son axe de symétrie.
+\end{corrige}
+
+\begin{corrige}[le triangle]
+\begin{enumerate}[label=\alph*)]
+  \item $G$ est l'\textbf{intersection des trois médianes} du triangle (chaque médiane joint un sommet
+        au milieu du côté opposé).
+  \item Il est \textbf{à l'intérieur} de la plaque (le point de concours des médianes est toujours
+        intérieur au triangle).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux masses identiques]
+\begin{enumerate}[label=\alph*)]
+  \item Les deux masses étant égales, le centre de gravité est \textbf{au milieu} de la tige, à
+        \qty{30}{cm} de chaque extrémité. (Formellement $x_G=\dfrac{m\cdot 0 + m\cdot 60}{2m}=\qty{30}{cm}$.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux masses différentes]
+\begin{enumerate}[label=\alph*)]
+  \item $x_G = \dfrac{m_1 x_1 + m_2 x_2}{m_1+m_2} = \dfrac{1\times 0 + 3\times 40}{1+3}
+        = \dfrac{120}{4} = \qty{30}{cm}$.
+  \item Il est plus proche de $m_2$ (à \qty{10}{cm} de $m_2$, contre \qty{30}{cm} de $m_1$).
+        C'est cohérent : le centre de gravité penche du côté de la masse la plus lourde.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un centre de gravité dans le vide]
+\begin{enumerate}[label=\alph*)]
+  \item Par symétrie, $G$ est au \textbf{centre} de l'anneau — c'est-à-dire dans le trou, \emph{hors de
+        la matière}.
+  \item \textbf{Non}, elle est fausse : le centre de gravité peut se trouver hors de la matière (anneau,
+        fer à cheval, boomerang). C'est néanmoins là que s'applique tout le poids du corps.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

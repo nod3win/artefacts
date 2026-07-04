@@ -1,83 +1,95 @@
-% =====================================================================
-%  FICHE 11 — THEME 1 — Exercices DIFFICILE — Le nombre d'oxydation
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{enumitem}
-\usepackage[most]{tcolorbox}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
-
-\newcounter{exo}
-\newtcolorbox{exo}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=primary!4,
-  colframe=primary,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-  title={Exercice~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Le nombre d'oxydation}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 1 — Niveau Difficile}\\[2pt]
-{\small\itshape Les sous-questions construisent le raisonnement. Contexte inspiré des annales du concours.}\\[-4pt]
-{\color{primary}\rule{\textwidth}{1pt}}
-\end{center}
+\begin{center}\color{primarydark}\large\bfseries Thème 1 — Nombre d'oxydation \quad$\bullet$\quad Niveau Difficile\end{center}
 
-\begin{exo}[la réaction aluminothermique — d'après annales 2025]
-La réaction aluminothermique fait réagir l'aluminium métallique avec l'oxyde de fer(III), selon
-l'équation non pondérée :
+\begin{exo}[vrai ou faux : les définitions]
+Pour chaque proposition, indique si elle est \textbf{vraie} ou \textbf{fausse} (et corrige les
+fausses). Combien de propositions sont vraies ?
+\begin{enumerate}[label=\alph*)]
+  \item Le nombre d'oxydation d'un ion monoatomique est égal à sa charge.
+  \item Lorsqu'un élément s'oxyde, son nombre d'oxydation diminue.
+  \item L'oxydant est l'espèce qui capte des électrons et qui est réduite au cours de la réaction.
+  \item Le nombre d'oxydation de l'hydrogène vaut toujours $+\mathrm{I}$.
+  \item Dans un corps simple, le nombre d'oxydation d'un atome est nul.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[tous les éléments d'un composé, et un piège]
+On s'intéresse au permanganate de potassium \ce{KMnO4}.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le nombre d'oxydation de \textbf{chaque} élément : \ce{K}, \ce{Mn} et \ce{O}.
+  \item Un étudiant écrit $\mathrm{n.o.}(\ce{Mn})=+\mathrm{VIII}$. Explique son erreur et donne la
+        bonne valeur.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[reconnaître une réaction d'oxydo-réduction]
+Parmi les réactions suivantes, lesquelles sont des réactions d'\textbf{oxydo-réduction} ? Justifie en
+repérant les atomes dont le nombre d'oxydation \textbf{varie}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{NaCl + AgNO3 -> AgCl v + NaNO3}
+  \item \ce{Cu + 4 HNO3 -> Cu(NO3)2 + 2 NO2 ^ + 2 H2O}
+  \item \ce{2 Na + 2 H2O -> 2 NaOH + H2 ^}
+  \item \ce{CO2 + H2O -> H2CO3}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un élément oxydé \emph{et} réduit à la fois]
+On considère la réaction (non équilibrée)
 \[
-w\,\ce{Al} + x\,\ce{Fe2O3} \;\longrightarrow\; y\,\ce{Al2O3} + z\,\ce{Fe}.
+\ce{MnSO4 + KMnO4 + H2O -> MnO2 + H2SO4 + K2SO4}.
 \]
-Réponds uniquement à l'aide des nombres d'oxydation (l'équilibrage complet sera vu au thème~3).
-\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
-  \item Détermine $\NO(\ce{Fe})$ dans \ce{Fe2O3}.
-  \item Détermine $\NO(\ce{Fe})$ dans le produit \ce{Fe}.
-  \item Détermine $\NO(\ce{Al})$ dans le réactif \ce{Al}, puis dans le produit \ce{Al2O3}.
-  \item Combien d'électrons chaque \textbf{atome} d'aluminium échange-t-il ? Et chaque atome de fer ?
-  \item Déduis-en quel élément est le \textbf{réducteur} et lequel est l'\textbf{oxydant} de la réaction.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le nombre d'oxydation du manganèse dans \ce{MnSO4}, \ce{KMnO4} et \ce{MnO2}.
+  \item Quel manganèse est \textbf{oxydé} ? Lequel est \textbf{réduit} ?
+  \item Le permanganate \ce{KMnO4} joue-t-il le rôle d'oxydant ou de réducteur ?
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[permanganate de potassium : démonter une erreur — d'après annales 2020]
-Un étudiant affirme : \og{}dans le permanganate de potassium \ce{KMnO4}, le nombre d'oxydation du
-manganèse vaut $+\mathrm{VIII}$\fg{}. On veut vérifier cette affirmation pas à pas.
-\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
-  \item Donne $\NO(\ce{O})$ et $\NO(\ce{K})$ dans \ce{KMnO4}, en citant la règle utilisée.
-  \item En posant $x=\NO(\ce{Mn})$, écris l'équation $\sum\NO=0$ et résous-la.
-  \item L'affirmation de l'étudiant est-elle correcte ? Donne la valeur exacte.
-  \item Sachant que le manganèse appartient au groupe~7, quel est son \NO\ \emph{maximal} possible ?
-        L'affirmation $+\mathrm{VIII}$ était-elle même envisageable ?
-\end{enumerate}
-\end{exo}
-
-\begin{exo}[quand le nombre d'oxydation n'est pas entier : la magnétite]
-La magnétite \ce{Fe3O4} est un oxyde de fer mixte, très courant (aimants naturels, rouille noire).
-\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=2pt,itemsep=2pt]
-  \item Calcule le nombre d'oxydation \emph{moyen} du fer dans \ce{Fe3O4}.
-  \item Ce résultat n'est pas un entier. Propose une interprétation en termes d'un mélange d'atomes
-        de fer à deux nombres d'oxydation entiers différents (indice : $+\mathrm{II}$ et $+\mathrm{III}$).
-  \item Vérifie ton interprétation en montrant que \ce{Fe3O4} peut s'écrire comme la combinaison
-        formelle $\ce{FeO} \cdot \ce{Fe2O3}$, et retrouve le \NO\ moyen à partir de cette écriture.
+\begin{exo}[relier n.o., formule et sens de la réaction]
+Les sels de fer usuels sont le sulfate de fer(II) \ce{FeSO4} et le sulfate de fer(III)
+\ce{Fe2(SO4)3} (l'ion sulfate est \ce{SO4^{2-}}).
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le nombre d'oxydation du fer dans \ce{FeSO4} ?
+  \item Quel est le nombre d'oxydation du fer dans \ce{Fe2(SO4)3} ?
+  \item Lorsqu'on transforme \ce{FeSO4} en \ce{Fe2(SO4)3}, le fer est-il oxydé ou réduit ? Combien
+        d'électrons chaque atome de fer échange-t-il ?
 \end{enumerate}
 \end{exo}
 

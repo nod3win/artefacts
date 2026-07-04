@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 3 — Niveau Moyen}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[les trois premiers harmoniques]
+Une corde de guitare de longueur $L=\SI{0.8}{\metre}$ est fixée à ses deux extrémités. La
+célérité des ondes sur la corde vaut $c=\SI{160}{\metre\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\lambda_1$ et la fréquence fondamentale $f_1$.
+  \item Calcule $\lambda_2$ et $f_2$.
+  \item Calcule $\lambda_3$ et $f_3$. Vérifie que $f_2=2f_1$ et $f_3=3f_1$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver le fondamental]
+On observe qu'une corde de longueur $L=\SI{1.2}{\metre}$, fixée à ses deux bouts, vibre en
+formant \textbf{3 fuseaux} à la fréquence $f=\SI{180}{\hertz}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le numéro $n$ de cet harmonique ?
+  \item Déduis-en la fréquence fondamentale $f_1$.
+  \item Calcule la célérité $c$ des ondes sur la corde ($c=2L f_1$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[compter les ventres selon la fréquence]
+Une corde fixée à ses deux extrémités vibre avec \textbf{2 ventres} à la fréquence
+$f=\SI{120}{\hertz}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la fréquence fondamentale $f_1$ de cette corde ?
+  \item À quelle fréquence obtiendrait-on \textbf{5 ventres} ?
+  \item Si l'on triple la fréquence de départ (\SI{360}{\hertz}), combien de ventres observe-t-on ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[de l'écart des nœuds à la fréquence]
+Une corde vibrante forme une onde stationnaire. On mesure que deux nœuds consécutifs sont
+distants de \SI{0.25}{\metre}. La célérité des ondes sur la corde est $c=\SI{200}{\metre\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Déduis la longueur d'onde $\lambda$ de l'onde stationnaire.
+  \item Calcule la fréquence $f$ de vibration.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[corde à une extrémité libre]
+Une corde de longueur $L=\SI{0.5}{\metre}$ a une extrémité fixe et une extrémité libre ; la
+célérité vaut $c=\SI{100}{\metre\per\second}$. On rappelle $\lambda_n=\dfrac{4L}{2n-1}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\lambda_1$ et $f_1$ (mode fondamental, $n=1$).
+  \item Calcule $\lambda_2$ et $f_2$ (mode suivant, $n=2$).
+  \item Compare $f_2$ à $f_1$ : les fréquences propres sont-elles tous les multiples de $f_1$,
+        ou seulement certains ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

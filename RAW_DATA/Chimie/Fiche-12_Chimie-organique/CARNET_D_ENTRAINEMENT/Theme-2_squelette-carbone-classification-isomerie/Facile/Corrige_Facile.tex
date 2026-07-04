@@ -1,0 +1,83 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Nommer les alcanes linéaires]
+\begin{enumerate}[label=\alph*)]
+  \item méth- $\rightarrow$ \textbf{méthane} ($\ce{CH4}$).
+  \item but- $\rightarrow$ \textbf{butane} ($\ce{C4H10}$).
+  \item hex- $\rightarrow$ \textbf{hexane} ($\ce{C6H14}$).
+  \item oct- $\rightarrow$ \textbf{octane} ($\ce{C8H18}$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[De la semi-développée à la formule brute]
+On additionne les C, les H (ceux écrits) et les autres atomes.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3-CH2-CH2-CH3} : $4$~C et $3+2+2+3=10$~H $\Rightarrow \ce{C4H10}$.
+  \item \ce{CH3-CH2-OH} : $2$~C, $3+2+1=6$~H, $1$~O $\Rightarrow \ce{C2H6O}$.
+  \item \ce{CH3-CO-CH3} : $3$~C, $3+0+3=6$~H, $1$~O $\Rightarrow \ce{C3H6O}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Combien d'hydrogènes sur ce carbone ?]
+On applique $n_{\text{H}}=4-k$ où $k$ est le nombre de carbones voisins.
+\begin{enumerate}[label=\alph*)]
+  \item $4-1=\textbf{3}$~H (un groupement $\ce{-CH3}$).
+  \item $4-2=\textbf{2}$~H (un groupement $\ce{-CH2-}$).
+  \item $4-3=\textbf{1}$~H (un groupement $>\!\ce{CH}\!-$).
+  \item $4-4=\textbf{0}$~H (carbone quaternaire).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Nommer la classe d'un carbone]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{primaire} (I).
+  \item \textbf{secondaire} (II).
+  \item \textbf{tertiaire} (III).
+  \item \textbf{quaternaire} (IV).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Classer les carbones du propane]
+Dans \ce{CH3-CH2-CH3} :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item les deux carbones des bouts ($\ce{CH3}$) sont liés à \textbf{1} seul autre carbone $\Rightarrow$ \textbf{primaires} ;
+  \item le carbone central ($\ce{CH2}$) est lié à \textbf{2} autres carbones $\Rightarrow$ \textbf{secondaire}.
+\end{itemize}
+Bilan : deux carbones primaires, un carbone secondaire.
+\end{corrige}
+
+\end{document}

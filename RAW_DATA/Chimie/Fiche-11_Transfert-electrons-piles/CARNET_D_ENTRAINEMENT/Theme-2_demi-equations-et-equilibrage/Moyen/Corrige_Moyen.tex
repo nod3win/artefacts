@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{center}\color{primarydark}\large\bfseries Thème 2 — Corrigé \quad$\bullet$\quad Niveau Moyen\end{center}
+
+\begin{corrige}[le piège du « rapport 1 pour 1 »]
+\begin{enumerate}[label=\alph*)]
+  \item Il y a \textbf{2} Cr ($+\mathrm{VI}\to+\mathrm{III}$, soit $2\times 3=6$ électrons) :
+        \[\ce{Cr2O7^{2-} + 14 H+ + 6 e^- <=> 2 Cr^{3+} + 7 H2O}\]
+        (charge : gauche $-2+14-6=+6$, droite $2\times(+3)=+6$).
+  \item $n=7-2=5$ : \ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O}.
+  \item $n=6-0=6$ : \ce{SO4^{2-} + 8 H+ + 6 e^- <=> S + 4 H2O}
+        (charge : gauche $-2+8-6=0$, droite $0$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[équation globale en milieu acide]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O} \quad et \quad
+        \ce{Fe^{2+} <=> Fe^{3+} + e^-}.
+  \item La 2\textsuperscript{e} échange 1 électron : on la multiplie par 5, puis on additionne (les
+        5 électrons s'éliminent) :
+        \[\ce{MnO4^- + 8 H+ + 5 Fe^{2+} -> Mn^{2+} + 4 H2O + 5 Fe^{3+}}\]
+  \item Réactifs : $1+8+5=\mathbf{14}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[transposer en milieu basique]
+\begin{enumerate}[label=\alph*)]
+  \item En acide, $n=7-4=3$, il manque 2 O à droite :
+        \ce{MnO4^- + 4 H+ + 3 e^- <=> MnO2 + 2 H2O}.
+  \item On ajoute 4 \ce{OH^-} des deux côtés ; les $4\,(\ce{H+}+\ce{OH^-})$ donnent 4 \ce{H2O} à
+        gauche, dont on simplifie 2 avec celles de droite :
+        \[\ce{MnO4^- + 2 H2O + 3 e^- <=> MnO2 + 4 OH^-}\]
+        (charge : gauche $-1-3=-4$, droite $4\times(-1)=-4$). \checkmark
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pondérer et comparer les coefficients]
+Demi-équations : \ce{Sn + 2 H2O <=> SnO2 + 4 H+ + 4 e^-} (oxydation, $n=4$) et
+\ce{NO3^- + 2 H+ + e^- <=> NO2 + H2O} (réduction, $n=1$).
+\begin{enumerate}[label=\alph*)]
+  \item On multiplie la seconde par 4, on additionne et on simplifie \ce{H+} et \ce{H2O} :
+        \[\ce{Sn + 4 NO3^- + 4 H+ -> SnO2 + 4 NO2 + 2 H2O}\]
+  \item Réactifs : $1+4+4=9$ ; produits : $1+4+2=7$. La somme des réactifs est \textbf{supérieure}
+        à celle des produits.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[compter les électrons d'une réaction globale]
+\begin{enumerate}[label=\alph*)]
+  \item Réduction : Mn passe de $+\mathrm{VII}$ à $+\mathrm{II}$, soit $5$ électrons par Mn, donc
+        $2\times 5=10$ pour les 2 \ce{MnO4^-}. Oxydation : dans \ce{H2O2} l'oxygène est à
+        $-\mathrm{I}$ et devient $0$ dans \ce{O2}, soit $2$ électrons par \ce{H2O2}, donc
+        $5\times 2=10$. Les deux comptes coïncident : \textbf{10 électrons} échangés.
+  \item L'oxydant est \ce{MnO4^-} (il est réduit) ; le réducteur est \ce{H2O2} (il est oxydé en
+        \ce{O2}).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

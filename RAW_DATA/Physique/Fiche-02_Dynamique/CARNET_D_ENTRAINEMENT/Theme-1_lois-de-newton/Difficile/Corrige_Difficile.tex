@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[la force demandée au moteur]
+Le long de la route (horizontale), le PFD s'écrit $F_{\text{moteur}}-F_f=ma$.
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta x=\tfrac12 a t^2 \Rightarrow a=\dfrac{2\,\Delta x}{t^2}=\dfrac{2\times 500}{20^2}
+        =\dfrac{1000}{400}=\qty{2,5}{\metre\per\second\squared}$.
+  \item Poids : $G=mg=2000\times 10=\qty{20000}{\newton}$ ; donc $F_f=\num{0,05}\times G=\num{0,05}\times 20000=\qty{1000}{\newton}$.
+  \item $F_{\text{moteur}}=F_f+ma=1000+2000\times\num{2,5}=1000+5000=\qty{6000}{\newton}$.
+        Comme $6000>5700$, oui, elle dépasse \qty{5700}{\newton}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[$\vv F$ est la seule force : quel mouvement est possible ?]
+$\vv F$ étant l'unique force, le PFD impose $\vv a=\vv F/m$ : $\vv a$ a nécessairement la
+\textbf{même direction et le même sens} que $\vv F$. La vitesse $\vv v$, elle, peut avoir n'importe
+quel sens (elle indique seulement le mouvement à cet instant).
+\begin{itemize}[leftmargin=1.4em,topsep=2pt]
+  \item \textbf{Cas A} : \emph{impossible}. $\vv a$ est horizontale alors que $\vv F$ est verticale :
+        elles n'ont pas la même direction.
+  \item \textbf{Cas B} : \emph{impossible}. $\vv a$ pointe vers le haut, $\vv F$ vers le bas : même
+        direction mais \emph{sens opposés}.
+  \item \textbf{Cas C} : \emph{possible}. $\vv a$ et $\vv F$ sont toutes deux vers le bas (colinéaires,
+        même sens). La vitesse est vers le haut : le corps monte en \emph{ralentissant} (mouvement retardé).
+\end{itemize}
+\end{corrige}
+
+\begin{corrige}[les trois lois : le vrai du faux]
+Correctes : \textbf{2 et 3}.
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Faux}. Résultante nulle $\Rightarrow$ repos \emph{ou} mouvement rectiligne uniforme (vitesse constante), pas forcément immobile.
+  \item \textbf{Vrai}. C'est exactement $a=F_{\text{rés}}/m$.
+  \item \textbf{Vrai}. $\vv a$ est colinéaire à la résultante, de même sens.
+  \item \textbf{Faux}. Elles s'exercent sur \emph{deux corps différents} ; elles ne peuvent donc pas se compenser (on ne les additionne jamais sur le même corps).
+  \item \textbf{Faux}. Une force n'existe que comme \emph{interaction} entre deux corps.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter au frottement]
+Le long du sol, $F-F_f=ma$.
+\begin{enumerate}[label=\alph*)]
+  \item $a=\dfrac{\Delta v}{\Delta t}=\dfrac{12}{3}=\qty{4}{\metre\per\second\squared}$ ; résultante
+        $F_{\text{rés}}=ma=5\times 4=\qty{20}{\newton}$.
+  \item $F_f=F-F_{\text{rés}}=40-20=\qty{20}{\newton}$.
+  \item Sans frottement, $a'=\dfrac{F}{m}=\dfrac{40}{5}=\qty{8}{\metre\per\second\squared}$ (l'accélération double).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la tension du câble d'un ascenseur]
+\begin{enumerate}[label=\alph*)]
+  \item Deux forces : la tension $\vv T$ (vers le haut) et le poids $\vv G=m\vv g$ (vers le bas).
+        PFD sur l'axe vertical (vers le haut) : $\ T-mg=ma$.
+  \item $T=m(g+a)=600\times(10+2)=\qty{7200}{\newton}$.
+  \item Vitesse constante $\Rightarrow a=0 \Rightarrow T=mg=600\times 10=\qty{6000}{\newton}$
+        (la tension équilibre alors exactement le poids).
+\end{enumerate}
+\end{corrige}
+\end{document}

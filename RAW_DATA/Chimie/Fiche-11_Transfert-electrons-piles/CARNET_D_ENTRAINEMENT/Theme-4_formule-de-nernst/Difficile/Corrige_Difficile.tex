@@ -1,0 +1,84 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{center}\color{primarydark}\large\bfseries Thème 4 — Corrigé \quad$\bullet$\quad Niveau Difficile\end{center}
+
+\begin{corrige}[f.é.m.\ complète d'une pile]
+\begin{enumerate}[label=\alph*)]
+  \item $E_{\text{cath}}=0{,}80+0{,}06\log(0{,}10)=0{,}80-0{,}06=+0{,}74$~V.
+  \item $E_{\text{anode}}=-0{,}76+\dfrac{0{,}06}{2}\log(0{,}010)=-0{,}76+0{,}03\times(-2)=-0{,}82$~V.
+  \item $\Delta E=E_{\text{cath}}-E_{\text{anode}}=0{,}74-(-0{,}82)=+1{,}56$~V.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'influence du pH sur le permanganate]
+Le rapport $\dfrac{[\ce{MnO4^-}]}{[\ce{Mn^{2+}}]}=1$, il reste $\dfrac{0{,}06}{5}\log[\ce{H+}]^{8}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH}=0$ : $[\ce{H+}]=1$, $\log(1)=0$ : $E=+1{,}51$~V.
+  \item $\mathrm{pH}=3$ : $[\ce{H+}]^{8}=(10^{-3})^{8}=10^{-24}$, donc
+        $E=1{,}51+\dfrac{0{,}06}{5}\times(-24)=1{,}51-0{,}288\approx +1{,}22$~V.
+  \item Le potentiel \textbf{chute} quand le milieu devient moins acide : le permanganate est un
+        oxydant \textbf{bien plus fort en milieu très acide}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter à la concentration]
+$0{,}25=0{,}34+0{,}03\log[\ce{Cu^{2+}}]\Rightarrow 0{,}03\log[\ce{Cu^{2+}}]=-0{,}09
+\Rightarrow \log[\ce{Cu^{2+}}]=-3$, donc $[\ce{Cu^{2+}}]=10^{-3}=0{,}001$~mol/L.
+\end{corrige}
+
+\begin{corrige}[de la f.é.m.\ standard à la constante d'équilibre]
+$\log K=\dfrac{n\,\Delta E^{\circ}}{0{,}06}=\dfrac{2\times 1{,}10}{0{,}06}\approx 37$, donc
+$K\approx 10^{37}$. La constante est \textbf{gigantesque} : la réaction
+$\ce{Zn + Cu^{2+} -> Zn^{2+} + Cu}$ est \textbf{quasi totale} (le zinc réduit presque tout le
+\ce{Cu^{2+}}).
+\end{corrige}
+
+\begin{corrige}[une pile de concentration]
+\begin{enumerate}[label=\alph*)]
+  \item La demi-pile la \textbf{plus concentrée} en \ce{Cu^{2+}} a le potentiel le plus élevé
+        (Nernst) : c'est la \textbf{cathode} ($[\ce{Cu^{2+}}]=1$~mol/L). L'autre est l'anode.
+  \item $E_{\text{cath}}=0{,}34+0{,}03\log(1)=0{,}34$~V ;
+        $E_{\text{anode}}=0{,}34+0{,}03\log(0{,}01)=0{,}34-0{,}06=0{,}28$~V.
+        \[\Delta E=0{,}34-0{,}28=+0{,}06~\text{V}.\]
+        Bien que $\Delta E^{\circ}=0$, la \textbf{différence de concentration} suffit à faire débiter
+        la pile.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

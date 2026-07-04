@@ -1,0 +1,116 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Onde sinusoïdale et déphasage
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 — Onde sinusoïdale}\\[2pt]
+{\large\color{primary} Équation, pulsation, nombre d'onde, déphasage}
+\end{center}
+
+\medskip
+Quand la source oscille de façon \emph{sinusoïdale}, chaque point du milieu reproduit ce
+mouvement avec du retard. L'onde est alors décrite par une seule équation, fonction du temps
+$t$ \emph{et} de la position $x$. Ce thème apprend à \textbf{lire} et \textbf{écrire} cette
+équation, à en tirer $\omega$, $k$, $f$, $\lambda$, et à manier le \textbf{déphasage}.
+
+\begin{cle}[l'équation d'une onde sinusoïdale progressive]
+\[ \boxed{\;y(x,t)=A\,\sin\!\left(\omega t - k x + \varphi\right)\;} \]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item $A$ : \textbf{amplitude} (élongation maximale, toujours $>0$), en \si{\metre} ;
+  \item $\omega$ : \textbf{pulsation}, en \si{\radian\per\second} ;
+  \item $k$ : \textbf{nombre d'onde}, en \si{\radian\per\metre} ;
+  \item $\varphi$ : \textbf{phase à l'origine}, en \si{\radian} ;
+  \item $(\omega t - kx + \varphi)$ : \textbf{phase} de l'onde.
+\end{itemize}
+Le signe $-kx$ traduit une propagation vers les $x$ \emph{croissants}.
+\end{cle}
+
+\begin{cle}[les deux « ponts » vers T, f, $\lambda$, v]
+\[ \boxed{\;\omega = 2\pi f = \frac{2\pi}{T}\;}\qquad
+   \boxed{\;k=\frac{2\pi}{\lambda}\;}\qquad
+   \frac{\omega}{k}=\lambda f = v \]
+$\omega$ = « radians balayés par seconde » (un tour $2\pi$ par période)~;
+$k$ = « radians par mètre » (un tour $2\pi$ par longueur d'onde).
+\end{cle}
+
+\begin{methode}[écrire l'équation à partir de A, f et $\lambda$ (ou v)]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt,label=\arabic*.]
+  \item Calcule $\omega = 2\pi f$ (si on te donne $T$ : $\omega=2\pi/T$).
+  \item Calcule $k = 2\pi/\lambda$ (si on te donne $v$ : $\lambda=v/f$ d'abord).
+  \item Reporte : $y = A\sin(\omega t - kx)$ (ajoute $+\varphi$ si une phase à l'origine est imposée).
+\end{enumerate}
+\emph{Lecture inverse :} dans $y=A\sin(\omega t - kx)$, le facteur devant $t$ est $\omega$,
+celui devant $x$ est $k$ ; on remonte à $f=\omega/2\pi$ et $\lambda=2\pi/k$.
+\end{methode}
+
+\begin{cle}[vitesse et accélération d'un point du milieu]
+En dérivant $y$ \emph{par rapport au temps} (à $x$ fixé) :
+\[ v_{\mathrm P}=A\omega\cos(\omega t - kx),\qquad
+   a_{\mathrm P}=-A\omega^{2}\sin(\omega t - kx)=-\omega^{2}\,y. \]
+D'où les valeurs \textbf{maximales} :
+\[ \boxed{\,v_{\max}=A\,\omega\,}\quad\text{(au passage par l'équilibre)},\qquad
+   \boxed{\,a_{\max}=A\,\omega^{2}\,}\quad\text{(aux crêtes et aux creux)}. \]
+\end{cle}
+
+\begin{cle}[déphasage entre deux points (ou deux ondes)]
+\[ \Delta\varphi = 2\pi\,\frac{\Delta t}{T}\quad(\text{décalage dans le temps}),
+   \qquad
+   \Delta\varphi = 2\pi\,\frac{d}{\lambda}\quad(\text{décalage dans l'espace}). \]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Concordance de phase} : $d=n\lambda$ $\Rightarrow$ $\Delta\varphi=2\pi n$
+        (les points vibrent \emph{à l'identique}) ;
+  \item \textbf{Opposition de phase} : $d=(2n+1)\dfrac{\lambda}{2}$ $\Rightarrow$
+        $\Delta\varphi=(2n+1)\pi$ (l'un monte quand l'autre descend).
+\end{itemize}
+Repère utile : un décalage de $\lambda/4$ vaut $\pi/2$ ; de $\lambda/2$ vaut $\pi$.
+\end{cle}
+
+\begin{piege}[trois confusions fréquentes]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item $\omega\ne f$ : il y a un facteur $2\pi$. Une pulsation \SI{100}{\radian\per\second}
+        n'est pas \SI{100}{\hertz} !
+  \item La vitesse $v_{\mathrm P}$ d'un point (transversale, elle oscille) n'est pas la
+        célérité $v$ de l'onde (propagation, constante). Souvent $v_{\max}\ne v$.
+  \item Pour connaître le \emph{sens} de déplacement d'un point, ne devine pas :
+        un point « imite » le voisin situé du côté \emph{d'où vient} l'onde.
+\end{itemize}
+\end{piege}
+
+\end{document}

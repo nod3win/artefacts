@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[notation scientifique — nombres $\ge 10$]
+On place la virgule après le premier chiffre non nul ; l'exposant est positif.
+\begin{enumerate}[label=\alph*)]
+  \item $4275 = 4,275\times10^{3}$.
+  \item $38,6 = 3,86\times10^{1}$.
+  \item $902,5 = 9,025\times10^{2}$.
+  \item $1506 = 1,506\times10^{3}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[notation scientifique — nombres $< 1$]
+On avance la virgule jusqu'après le premier chiffre non nul ; l'exposant est négatif.
+\begin{enumerate}[label=\alph*)]
+  \item $0,0458 = 4,58\times10^{-2}$.
+  \item $0,000602 = 6,02\times10^{-4}$.
+  \item $0,0090 = 9,0\times10^{-3}$ (le zéro de queue est significatif : on le garde).
+  \item $0,7 = 7\times10^{-1}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[retour à l'écriture décimale]
+On déplace la virgule dans le sens indiqué par l'exposant.
+\begin{enumerate}[label=\alph*)]
+  \item $3,2\times10^{3} = 3200$.
+  \item $5,04\times10^{-2} = 0,0504$.
+  \item $6,0\times10^{-4} = 0,00060$.
+  \item $1,25\times10^{2} = 125$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[arrondir au nombre de CS demandé]
+On garde $n$ CS et on regarde le premier chiffre supprimé.
+\begin{enumerate}[label=\alph*)]
+  \item $3,142 \to 3,14$ (chiffre supprimé $2<5$, par défaut).
+  \item $0,06237 \to 0,062$ (chiffre supprimé $3<5$).
+  \item $45,83 \to 46$ (chiffre supprimé $8\ge5$, par excès).
+  \item $2,7149 \to 2,71$ (chiffre supprimé $4<5$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[arrondir avec retenue en cascade]
+Quand on arrondit par excès un chiffre $9$, la retenue se propage.
+\begin{enumerate}[label=\alph*)]
+  \item $2,996 \to 3,00$ (on garde les deux zéros pour conserver $3$ CS).
+  \item $9,98 \to 10$, soit $1,0\times10^{1}$ pour afficher clairement $2$ CS.
+  \item $0,04996 \to 0,0500$.
+  \item $19,97 \to 20,0$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

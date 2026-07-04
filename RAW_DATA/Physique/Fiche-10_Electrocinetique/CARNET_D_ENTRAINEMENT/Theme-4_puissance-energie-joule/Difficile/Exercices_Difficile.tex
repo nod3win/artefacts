@@ -1,0 +1,101 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\usetikzlibrary{babel}
+\begin{exo}[filament : résistance à chaud et à froid]
+Une lampe à incandescence porte les indications $\qty{200}{\volt}$ et $\qty{100}{\watt}$ (valeurs
+lampe \emph{allumée}). La résistance du filament allumé est \textbf{dix fois} plus grande que celle du
+filament éteint.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la résistance du filament lorsque la lampe est allumée.
+  \item En déduire sa résistance lorsqu'elle est éteinte.
+  \item Pourquoi la résistance dépend-elle de l'état (allumé/éteint) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[série ou parallèle : quel montage chauffe le plus ?]
+Deux résistances \emph{identiques} $R$ sont montées, sous la même tension $U$ et pendant la même
+durée $t$, soit en série (circuit 1), soit en parallèle (circuit 2).
+\begin{center}
+\begin{minipage}{0.46\textwidth}\centering
+\begin{circuitikz}[scale=0.78,transform shape]
+  \draw (0,0) to[battery1,l_=$U$] (0,2) to[R,l=$R$] (2.2,2) to[R,l=$R$] (4.4,2) -- (4.4,0) -- (0,0);
+\end{circuitikz}\\[1pt]{\footnotesize Circuit 1 — série}
+\end{minipage}\hfill
+\begin{minipage}{0.46\textwidth}\centering
+\begin{circuitikz}[scale=0.78,transform shape]
+  \draw (0,0) to[battery1,l_=$U$] (0,2) -- (3.2,2);
+  \draw (0,0) -- (3.2,0);
+  \draw (1.7,2) to[R,l=$R$] (1.7,0);
+  \draw (3.2,2) to[R,l=$R$] (3.2,0);
+\end{circuitikz}\\[1pt]{\footnotesize Circuit 2 — parallèle}
+\end{minipage}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Exprime la chaleur dégagée $W_1$ (série) puis $W_2$ (parallèle) en fonction de $U$, $R$, $t$.
+  \item Calcule le rapport $W_2/W_1$. Quel montage chauffe le plus ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[chaleur dégagée par deux résistances en série]
+Deux résistances $R_1=\qty{10}{\ohm}$ et $R_2=\qty{50}{\ohm}$ sont en série, sous une tension
+constante $U=\qty{20}{\volt}$ pendant $t=\qty{9}{\hour}$.
+\begin{center}
+\begin{circuitikz}[scale=0.85,transform shape]
+  \draw (0,0) to[battery1,l_=$U$] (0,2) to[R,l=$R_1$] (2.4,2) to[R,l=$R_2$] (4.8,2) -- (4.8,0) -- (0,0);
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la résistance équivalente et l'intensité $I$ (la même partout en série).
+  \item En déduire l'énergie thermique totale dégagée (en kJ).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[pourquoi transporter à haute tension ?]
+Une ligne électrique de résistance $R_{\text{ligne}}=\qty{1}{\ohm}$ transporte une puissance
+$P=\qty{1000}{\watt}$.
+\begin{enumerate}[label=\alph*)]
+  \item Sous une tension de transport $U_1=\qty{100}{\volt}$, calcule l'intensité puis les pertes par
+        effet Joule dans la ligne.
+  \item On transporte la même puissance sous $U_2=\qty{200}{\volt}$. Recalcule l'intensité et les
+        pertes. Par quel facteur ont-elles été divisées ?
+  \item Vrai ou faux : « pour réduire les pertes, il faut augmenter l'intensité dans la ligne ».
+\end{enumerate}
+\end{exo}
+
+\end{document}

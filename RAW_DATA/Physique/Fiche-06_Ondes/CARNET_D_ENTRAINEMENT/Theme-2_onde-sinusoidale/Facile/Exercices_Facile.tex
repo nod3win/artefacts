@@ -1,0 +1,111 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 2 — Niveau Facile}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[calculer la pulsation $\omega$]
+On rappelle $\omega=2\pi f=2\pi/T$.
+\begin{enumerate}[label=\alph*)]
+  \item Une onde a pour fréquence $f=\SI{10}{\hertz}$. Calcule sa pulsation $\omega$
+        (valeur exacte en fonction de $\pi$, puis valeur approchée en \si{\radian\per\second}).
+  \item Une autre onde a pour période $T=\SI{0.5}{\second}$. Calcule sa pulsation $\omega$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[calculer le nombre d'onde $k$]
+On rappelle $k=2\pi/\lambda$.
+\begin{enumerate}[label=\alph*)]
+  \item Une onde a pour longueur d'onde $\lambda=\SI{0.5}{\metre}$. Calcule $k$.
+  \item Une autre a $\lambda=\SI{0.2}{\metre}$. Calcule $k$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[lire les paramètres dans l'équation]
+Une onde est décrite (unités SI) par
+\[ y(x,t)=0{,}05\,\sin\!\left(10\pi\,t - 4\pi\,x\right). \]
+\begin{enumerate}[label=\alph*)]
+  \item Donne l'amplitude $A$.
+  \item Donne la pulsation $\omega$ et le nombre d'onde $k$.
+  \item L'onde se propage-t-elle vers les $x$ croissants ou décroissants ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vitesse et accélération maximales d'un point]
+Un point d'une corde oscille avec l'amplitude $A=\SI{0.02}{\metre}$ et la pulsation
+$\omega=\SI{50}{\radian\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule sa vitesse maximale $v_{\max}=A\omega$.
+  \item Calcule son accélération maximale $a_{\max}=A\omega^{2}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[concordance ou opposition de phase ?]
+La photo ci-dessous montre une onde de longueur d'onde $\lambda=\SI{4}{\metre}$. Trois points
+$M$, $N$, $P$ sont repérés.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=12cm,height=4.8cm,
+  xmin=0,xmax=10,ymin=-2.4,ymax=2.4,
+  xtick={0,1,2,3,4,5,6,7,8,9,10},ytick=\empty,
+  grid=both,grid style={black!12},axis lines=middle,
+  xlabel={$x$ (m)},
+  xlabel style={at={(axis description cs:0.5,-0.02)},anchor=north},
+  tick label style={font=\footnotesize},samples=200,clip=false]
+  \addplot[defcol,line width=1.3pt,domain=0:10]{2*sin(deg(2*pi*x/4))};
+  \addplot[only marks,mark=*,primary,mark size=2.4pt] coordinates {(1,2)(3,-2)(5,2)};
+  \node[above,primary,font=\bfseries] at (axis cs:1,2){$M$};
+  \node[below,primary,font=\bfseries] at (axis cs:3,-2){$N$};
+  \node[above,primary,font=\bfseries] at (axis cs:5,2){$P$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Pour chaque paire, dis si les points vibrent en \textbf{concordance} ou en \textbf{opposition}
+de phase (calcule d'abord la distance qui les sépare).
+\begin{enumerate}[label=\alph*)]
+  \item $M$ et $P$.
+  \item $M$ et $N$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

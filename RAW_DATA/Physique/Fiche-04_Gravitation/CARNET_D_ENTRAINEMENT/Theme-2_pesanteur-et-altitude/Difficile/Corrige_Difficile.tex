@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= CORRIGÉ DIFFICILE =================
+
+\begin{corrige}[masse ou poids ? --- vrai ou faux]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai.} La masse (quantité de matière) est invariable.
+  \item \textbf{Vrai.} Au sommet, l'altitude est un peu plus grande, donc $g$ un peu
+        plus petit, donc $P=mg$ légèrement plus faible.
+  \item \textbf{Faux.} La masse ne change \emph{jamais} : elle est identique sur la Lune.
+  \item \textbf{Vrai.} $g_{\text{Lune}}\approx g_{\text{Terre}}/6$, donc le poids $P=mg$
+        est lui aussi divisé par $\approx 6$.
+\end{enumerate}
+Correctes : a, b, d. (Seule la masse reste constante ; le poids, lui, suit $g$.)
+\end{corrige}
+
+\begin{corrige}[deux masses en chute libre]
+\begin{enumerate}[label=\alph*)]
+  \item L'objet n'est soumis qu'à son poids $P=mg$ (vers le bas). La 2\up{e} loi
+        s'écrit $mg=ma$ ; la masse se simplifie : $\boxed{a=g}$, indépendante de $m$.
+  \item \textbf{Oui.} Les deux objets ont la même accélération $a=g$ et partent
+        ensemble de la même hauteur : ils ont exactement le même mouvement et touchent
+        le sol \emph{en même temps} (leur masse différente ne joue aucun rôle).
+  \item Sur la Lune, $g$ est plus faible, donc l'accélération $a=g$ est plus faible :
+        la chute serait \textbf{plus lente} (mais toujours identique pour les deux masses).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'astronaute sur la Lune]
+\begin{enumerate}[label=\alph*)]
+  \item $P_{\text{Terre}}=m\,g_{\text{Terre}}=90\times 9{,}8=\qty{882}{\newton}$.
+  \item $P_{\text{Lune}}=m\,g_{\text{Lune}}=90\times 1{,}6=\qty{144}{\newton}$.
+  \item $\ds \frac{P_{\text{Terre}}}{P_{\text{Lune}}}=\frac{882}{144}\approx 6{,}1\approx 6$
+        (c'est aussi $g_{\text{Terre}}/g_{\text{Lune}}=9{,}8/1{,}6$). \checkmark
+  \item Sa masse vaut toujours $\qty{90}{\kilogram}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[abaisser un satellite : le piège de l'altitude]
+\begin{enumerate}[label=\alph*)]
+  \item $d=R_T+h=6400+6400=\qty{12800}{\kilo\metre}$ et
+        $d'=R_T+h'=6400+3200=\qty{9600}{\kilo\metre}$.
+        $d'/d=9600/12800=0{,}75$ : la distance au centre n'est \emph{pas} divisée par
+        $2$, elle n'est réduite que d'un quart.
+  \item La force est en $1/d^2$, donc elle est multipliée par
+        $\ds \left(\frac{d}{d'}\right)^2=\left(\frac{12800}{9600}\right)^2
+        =\left(\frac43\right)^2=\frac{16}{9}\approx 1{,}8$.
+  \item \textbf{Non} : $\times 1{,}8$, et non $\times 4$. Diviser l'\emph{altitude} par
+        $2$ ne divise pas la \emph{distance au centre} par $2$ (le gros terme $R_T$
+        domine). Il faut toujours raisonner sur $d=R_T+h$, jamais sur $h$ seul.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

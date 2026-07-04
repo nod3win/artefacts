@@ -1,0 +1,129 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Unités et conversions des grandeurs des gaz
+
+Avant toute loi des gaz, il faut savoir \textbf{parler dans les bonnes unités}. Un gaz est décrit par
+quatre grandeurs : la pression $p$, le volume $V$, la quantité de matière $n$ et la température $T$.
+Une erreur d'unité (surtout sur la température) est \emph{la} première cause de fautes. Ce thème
+entraîne uniquement la \textbf{conversion} de ces grandeurs.
+
+\begin{cle}[Les quatre grandeurs et leurs unités]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Pression $p$} : unité SI le pascal (\si{\pascal}). Unités usuelles : \si{\kilo\pascal},
+        \si{bar}, \si{atm}, \si{mmHg}.
+  \item \textbf{Volume $V$} : unité SI le \si{\meter\cubed}. Unité usuelle en chimie : le litre
+        (\si{\litre}).
+  \item \textbf{Quantité de matière $n$} : la mole (\si{\mole}).
+  \item \textbf{Température $T$} : \textbf{toujours} en kelvins (\si{\kelvin}) dans les lois des gaz.
+\end{itemize}
+\end{cle}
+
+\begin{cle}[Conversions de pression à connaître par cœur]
+\[ \qty{1}{atm}=\qty{101325}{\pascal}\approx\qty{101.3}{\kilo\pascal}
+   =\qty{760}{mmHg}=\qty{1.013}{bar}. \]
+\[ \qty{1}{bar}=\qty{e5}{\pascal}=\qty{100}{\kilo\pascal}
+   \qquad;\qquad \qty{1}{\kilo\pascal}=\qty{1000}{\pascal}. \]
+\end{cle}
+
+\begin{cle}[Conversions de volume à connaître par cœur]
+\[ \qty{1}{\litre}=\qty{1}{\deci\meter\cubed}=\qty{1000}{\milli\litre}=\qty{1000}{\centi\meter\cubed}
+   =\qty{e-3}{\meter\cubed} \qquad;\qquad \qty{1}{\meter\cubed}=\qty{1000}{\litre}. \]
+\end{cle}
+
+\begin{cle}[Température : passage Celsius $\leftrightarrow$ Kelvin]
+\[ \boxed{\,T(\si{\kelvin})=\theta(\si{\degreeCelsius})+273\,}\qquad\text{(on utilise }+273\text{ dans cette fiche).} \]
+Une variation de \qty{1}{\degreeCelsius} vaut une variation de \qty{1}{\kelvin} : seules les
+\emph{origines} des deux échelles diffèrent.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[thick,->,>=Stealth] (-0.4,0) -- (10.4,0);
+  \draw[thick,->,>=Stealth] (-0.4,1.4) -- (10.4,1.4);
+  \foreach \xc/\cel/\kel in {0.4/-273/0, 7.0/0/273, 7.7/27/300, 9.5/100/373}{
+     \draw (\xc,1.25)--(\xc,1.55); \draw (\xc,-0.15)--(\xc,0.15);
+     \node[primarydark,font=\scriptsize] at (\xc,1.85) {\kel\,K};
+     \node[font=\scriptsize] at (\xc,-0.45) {\cel\,\textdegree C};}
+  \node[left,font=\small\bfseries] at (-0.4,1.4) {K};
+  \node[left,font=\small\bfseries] at (-0.4,0) {\textdegree C};
+  \draw[densely dashed,attncol] (0.4,-0.6)--(0.4,2.1);
+  \node[attncol,font=\scriptsize,above] at (0.4,2.1) {zéro absolu};
+  \draw[<->,>=Stealth,primary] (0.4,0.7)--(7.0,0.7);
+  \node[primary,font=\scriptsize,fill=white] at (3.7,0.7) {décalage $+273$};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[Convertir sans se tromper]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Température} : additionner (ou soustraire) $273$. Ce n'est \emph{pas} une
+        multiplication.
+  \item \textbf{Pression et volume} : multiplier par le \emph{facteur de conversion} adapté. Pour
+        savoir s'il faut multiplier ou diviser, vérifie que le résultat va dans le bon sens (une plus
+        petite unité $\Rightarrow$ un plus grand nombre).
+  \item \textbf{Vérifie l'ordre de grandeur} : \qty{2}{atm} font environ \qty{1520}{mmHg} (grand
+        nombre), \qty{0.5}{\litre} font \qty{500}{\milli\litre}, etc.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[trois conversions typiques]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=2pt]
+  \item $\theta=\qty{27}{\degreeCelsius}\ \Rightarrow\ T=27+273=\qty{300}{\kelvin}$.
+  \item $p=\qty{3}{atm}\ \Rightarrow\ p=3\times760=\qty{2280}{mmHg}$.
+  \item $V=\qty{5}{\litre}\ \Rightarrow\ V=5\times\num{e-3}=\qty{0.005}{\meter\cubed}
+        =\qty{5000}{\milli\litre}$.
+\end{itemize}
+\end{exemplebox}
+
+\begin{piege}[les deux fautes classiques]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Oublier les kelvins.} Un calcul « à \qty{27}{\degreeCelsius} » se fait avec
+        $T=\qty{300}{\kelvin}$, jamais avec $27$. On ne divise jamais deux températures en \si{\degreeCelsius}.
+  \item \textbf{Confondre \si{atm} et \si{bar}.} $\qty{1}{atm}=\qty{1.013}{bar}\neq\qty{1}{bar}$.
+        Elles sont \emph{proches} mais pas égales.
+\end{itemize}
+\end{piege}
+
+\begin{remarque}
+Choisir ses unités, c'est aussi choisir la valeur de la constante $R$ (thème suivant) : le couple
+$(\si{atm},\si{\litre})$ va avec $R=\qty{0.082}{atm.L.mol^{-1}.K^{-1}}$, le couple
+$(\si{\pascal},\si{\meter\cubed})$ avec $R=\qty{8.314}{\joule\per\mole\per\kelvin}$. D'où l'importance
+de savoir convertir vite et juste.
+\end{remarque}
+
+\end{document}

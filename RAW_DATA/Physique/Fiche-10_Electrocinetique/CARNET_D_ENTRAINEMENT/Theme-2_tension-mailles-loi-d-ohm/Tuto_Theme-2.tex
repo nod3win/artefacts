@@ -1,0 +1,139 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Tension, loi des mailles et loi d'Ohm
+\usetikzlibrary{babel}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 — Tension, loi des mailles et loi d'Ohm}\\[2pt]
+{\color{primary}\itshape Différence de potentiel, additivité, et le lien $U=RI$}
+\end{center}
+
+\begin{cle}[tension (différence de potentiel) et voltmètre]
+Aux bornes d'un dipôle, la \textbf{tension} (ou différence de potentiel, d.d.p.) est
+$U=V_A-V_B$, en \textbf{volts} (\si{\volt}). On la mesure avec un \textbf{voltmètre}, toujours branché
+\textbf{en parallèle} (en dérivation) aux bornes du dipôle.
+\end{cle}
+
+\begin{cle}[loi des mailles (deuxième loi de Kirchhoff)]
+Une \textbf{maille} est un chemin fermé. La somme des tensions le long d'une maille est \textbf{nulle} :
+\[ \boxed{\;\sum_{\text{maille}} U = 0\;} \]
+On choisit un \emph{sens de parcours} : les tensions fléchées \emph{dans} ce sens comptent $+$, celles
+en sens contraire comptent $-$.
+\end{cle}
+
+\begin{center}
+\begin{minipage}{0.46\textwidth}\centering
+\begin{circuitikz}[scale=0.82,transform shape,>=Stealth]
+  \draw (0,0) to[battery1,l_=$G$] (0,2.4) -- (3,2.4) -- (3,1.5)
+        to[R,l_=$R$] (3,0.5) -- (3,0) -- (0,0);
+  \draw (3,1.5) to[short,-*] (4.3,1.5) to[voltmeter](4.3,0.5) to[short,-*] (3,0.5);
+  \draw[defcol,->,line width=1pt] (0.28,0.4) -- (0.28,2.0) node[midway,left,font=\scriptsize,defcol]{$U$};
+\end{circuitikz}\\[1pt]
+{\footnotesize Voltmètre \textbf{en parallèle} sur $R$.}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}\centering
+\begin{circuitikz}[scale=0.82,transform shape,>=Stealth]
+  \draw (0,0) to[battery1,l_=$U$] (0,2.4) -- (3.4,2.4) -- (3.4,1.6)
+        to[R,l_=$U'$] (3.4,0.8) -- (3.4,0) -- (0,0);
+  \draw[primary,->,line width=1pt] (1.4,1.95) arc[start angle=120,end angle=-160,radius=0.55];
+  \node[primary,font=\scriptsize] at (1.7,2.35){parcours};
+  \draw[defcol,->,line width=1pt] (0.28,0.4)--(0.28,2.0) node[midway,left,font=\scriptsize,defcol]{$U$};
+  \draw[attncol,->,line width=1pt] (3.68,1.55)--(3.68,0.85) node[midway,right,font=\scriptsize,attncol]{$U'$};
+\end{circuitikz}\\[1pt]
+{\footnotesize Maille : $+U-U'=0\Rightarrow U=U'$.}
+\end{minipage}
+\end{center}
+
+\begin{cle}[additivité des tensions selon le montage]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{En série} : les tensions \emph{s'ajoutent}, $U=U_1+U_2+\cdots+U_n$.
+  \item \textbf{En parallèle} : les tensions sont \emph{égales}, $U=U_1=U_2=\cdots=U_n$.
+\end{itemize}
+\end{cle}
+
+\begin{cle}[loi d'Ohm et caractéristique]
+Pour un conducteur \textbf{ohmique} de résistance $R$ :
+\[ \boxed{\;U=R\,I\;}\qquad\Longleftrightarrow\qquad I=\dfrac{U}{R}. \]
+Sa \textbf{caractéristique} $U=f(I)$ est une \emph{droite passant par l'origine}, de pente $R$. Un dipôle
+\textbf{non ohmique} (lampe à filament) a une caractéristique \emph{courbe} : le rapport $U/I$
+n'est pas constant.
+\end{cle}
+
+\begin{center}
+\begin{minipage}{0.48\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=6cm,height=4.2cm,axis lines=middle,xlabel={$I$ (A)},ylabel={$U$ (V)},
+  xmin=0,xmax=3.2,ymin=0,ymax=7,xtick={0,1,2,3},ytick={0,2,4,6},
+  tick label style={font=\scriptsize},label style={font=\footnotesize}]
+  \addplot[excol,thick,domain=0:3,samples=2]{2*x};
+  \node[excol,font=\scriptsize] at (axis cs:2,5.2){$U=RI$};
+  \node[excol,font=\scriptsize] at (axis cs:2.4,3.7){pente $=R$};
+\end{axis}
+\end{tikzpicture}\\[1pt]
+{\footnotesize\textbf{Ohmique} : droite par l'origine.}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=6cm,height=4.2cm,axis lines=middle,xlabel={$I$ (A)},ylabel={$U$ (V)},
+  xmin=0,xmax=3.2,ymin=0,ymax=7,xtick={0,1,2,3},ytick={0,2,4,6},
+  tick label style={font=\scriptsize},label style={font=\footnotesize}]
+  \addplot[attncol,thick,domain=0:3,samples=60]{2*x*(1+0.22*x)};
+  \node[attncol,font=\scriptsize] at (axis cs:1.4,5.8){non ohmique};
+  \node[attncol,font=\scriptsize] at (axis cs:1.7,2.6){(lampe)};
+\end{axis}
+\end{tikzpicture}\\[1pt]
+{\footnotesize\textbf{Non ohmique} : $U/I$ croît avec $I$.}
+\end{minipage}
+\end{center}
+
+\begin{methode}[appliquer la loi des mailles]
+\begin{enumerate}[leftmargin=1.7em,topsep=1pt,itemsep=1pt]
+  \item Choisir la maille (chemin fermé) et un sens de parcours.
+  \item Tension fléchée \emph{dans} le sens du parcours : signe $+$ ; en sens contraire : signe $-$.
+  \item Écrire $\sum U=0$, puis isoler l'inconnue.
+\end{enumerate}
+\end{methode}
+
+\begin{piege}[deux confusions classiques]
+\textbf{Appareils} : ampèremètre \textbf{en série}, voltmètre \textbf{en parallèle} (ne pas
+inverser). \textbf{Ohmique} : la caractéristique doit être une droite \emph{passant par l'origine} ;
+une droite qui ne passe pas par l'origine, ou une courbe, n'est \emph{pas} ohmique.
+\end{piege}
+
+\end{document}

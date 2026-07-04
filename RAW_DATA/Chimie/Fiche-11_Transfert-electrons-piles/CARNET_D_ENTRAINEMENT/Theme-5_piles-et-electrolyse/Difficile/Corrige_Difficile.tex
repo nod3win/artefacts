@@ -1,0 +1,86 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{center}\color{primarydark}\large\bfseries Thème 5 — Corrigé \quad$\bullet$\quad Niveau Difficile\end{center}
+
+\begin{corrige}[vrai ou faux : une pile fer--argent]
+La cathode est le couple de $E_{\mathrm{r}}^{\circ}$ le plus haut (\ce{Ag+}/\ce{Ag}), l'anode le plus
+bas (\ce{Fe^{2+}}/\ce{Fe}).
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux} : \ce{Fe^{2+}}/\ce{Fe} ($-0{,}44$) est le couple bas $\Rightarrow$ c'est
+        l'\textbf{anode}.
+  \item \textbf{Vrai} : $\Delta E^{\circ}=0{,}80-(-0{,}44)=+1{,}24$~V.
+  \item \textbf{Faux} : l'argent est à la cathode ; \ce{Ag+} y est \emph{réduit} en \ce{Ag} (dépôt),
+        l'argent métallique n'est pas oxydé.
+  \item \textbf{Vrai} : les électrons vont de l'anode (\ce{Fe}) vers la cathode (\ce{Ag}).
+\end{enumerate}
+\textbf{Bilan : 2 propositions vraies} (b et d).
+\end{corrige}
+
+\begin{corrige}[la bonne notation avec des électrodes inertes]
+\begin{enumerate}[label=\alph*)]
+  \item Le couple \ce{Fe^{3+}}/\ce{Fe^{2+}} ($+0{,}77$) est le plus haut : c'est la \textbf{cathode}.
+        L'étain ($+0{,}15$) est l'anode.
+  \item \[\ce{(-) Pt | Sn^{2+}, Sn^{4+} || Fe^{3+}, Fe^{2+} | Pt (+)}\]
+        Les électrodes de \ce{Pt}, inertes, se placent aux extrémités ; l'anode est à gauche.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[électrolyse : de la charge à la masse]
+\begin{enumerate}[label=\alph*)]
+  \item $Q=I\,t=2{,}0\times 965=\qty{1930}{C}$, soit $n_{\ce{e^-}}=\dfrac{1930}{96485}=\qty{0.02}{mol}$.
+  \item Il faut $2$ électrons par \ce{Cu} : $n_{\ce{Cu}}=\dfrac{0{,}02}{2}=\qty{0.01}{mol}$, d'où
+        $m=0{,}01\times 63{,}5=\qty{0.635}{g}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[quelle intensité pour argenter ?]
+$n_{\ce{Ag}}=\dfrac{3{,}24}{108}=\qty{0.03}{mol}$, et comme $n=1$, $n_{\ce{e^-}}=\qty{0.03}{mol}$, soit
+$Q=0{,}03\times 96485\approx\qty{2895}{C}$. Donc $I=\dfrac{Q}{t}=\dfrac{2895}{1930}=\qty{1.5}{A}$.
+\end{corrige}
+
+\begin{corrige}[électrolyse de l'eau et volume de gaz]
+\begin{enumerate}[label=\alph*)]
+  \item $Q=9{,}65\times 1000=\qty{9650}{C}$, soit $n_{\ce{e^-}}=\dfrac{9650}{96485}=\qty{0.1}{mol}$.
+  \item $2$ électrons donnent $1$ \ce{H2} : $n_{\ce{H2}}=\dfrac{0{,}1}{2}=\qty{0.05}{mol}$.
+  \item $V=n_{\ce{H2}}\times 22{,}4=0{,}05\times 22{,}4=\qty{1.12}{L}$ de \ce{H2} aux CNTP.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

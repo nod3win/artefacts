@@ -1,0 +1,86 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= CORRIGÉ FACILE =================
+
+\begin{corrige}[la pesanteur au sol]
+\[
+g_0=\frac{\mathcal{G}M_T}{R_T^2}
+   =\frac{\num{6.67e-11}\times\num{6.0e24}}{(\num{6.4e6})^2}
+   =\frac{\num{4.0e14}}{\num{4.10e13}}\approx\qty{9.8}{\metre\per\second\squared}.
+\]
+On retrouve la valeur familière de la pesanteur au sol.
+\end{corrige}
+
+\begin{corrige}[distance au centre]
+On ajoute simplement l'altitude au rayon terrestre.
+\begin{enumerate}[label=\alph*)]
+  \item $d=6400+600=\qty{7000}{\kilo\metre}=\qty{7.0e6}{\metre}$.
+  \item $d=6400+1600=\qty{8000}{\kilo\metre}=\qty{8.0e6}{\metre}$.
+  \item $d=6400+35800=\qty{42200}{\kilo\metre}=\qty{4.22e7}{\metre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pesanteur en altitude]
+Distance au centre : $d=R_T+h=6400+3600=\qty{10000}{\kilo\metre}=\qty{1.0e7}{\metre}$. Puis
+\[
+g_h=\frac{\mathcal{G}M_T}{d^2}=\frac{\num{4.0e14}}{(\num{1.0e7})^2}
+   =\frac{\num{4.0e14}}{\num{1.0e14}}=\qty{4.0}{\metre\per\second\squared}.
+\]
+\end{corrige}
+
+\begin{corrige}[poids sur la Terre et sur la Lune]
+Le poids est une force, $P=mg$ ; la masse ne change pas.
+\begin{enumerate}[label=\alph*)]
+  \item $P_T=m\,g_0=60\times 9{,}8=\qty{588}{\newton}$.
+  \item $P_L=m\,g_{\text{Lune}}=60\times 1{,}6=\qty{96}{\newton}$.
+  \item Sa masse reste $\qty{60}{\kilogram}$ (invariable, où qu'il soit).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[du poids à la masse]
+On inverse $P=mg$ en $m=P/g$ ; la masse est la même partout.
+\begin{enumerate}[label=\alph*)]
+  \item $m=\dfrac{P}{g}=\dfrac{500}{10}=\qty{50}{\kilogram}$.
+  \item $P_{\text{Mars}}=m\,g_{\text{Mars}}=50\times 3{,}7=\qty{185}{\newton}$.
+  \item Sa masse est toujours $\qty{50}{\kilogram}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

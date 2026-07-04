@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[le projecteur de diapositives]
+Un projecteur doit agrandir une diapositive de hauteur $o=\qty{2.4}{\cm}$ en une image de hauteur
+$|i|=\qty{120}{\cm}$ sur un écran. La diapositive est à $u=\qty{6}{\cm}$ de l'objectif.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le grandissement $\gamma$ (avec son signe), puis la distance $v$ écran--objectif.
+  \item En déduire la distance focale $f$ de l'objectif.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'appareil photo saisit un immeuble]
+Un objectif de focale $f=\qty{50}{\mm}$ photographie un immeuble de hauteur \qty{20}{\m} situé à
+$u=\qty{50}{\m}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la position $v$ de l'image (travaille en mètres).
+  \item Calcule le grandissement $\gamma$ et la hauteur $i$ de l'image sur le capteur.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[grossissement d'un microscope]
+Un objet de taille $o=\qty{0.01}{\mm}$ est observé avec un objectif de grandissement $|\gamma_1|=40$,
+puis un oculaire de grossissement $\times 10$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la taille de l'image intermédiaire donnée par l'objectif ?
+  \item Estime le grossissement total du microscope.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la loupe en action]
+Une loupe de focale $f=\qty{5}{\cm}$ observe une lettre de hauteur $o=\qty{3}{\mm}$ placée à
+$u=\qty{4}{\cm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $v$ ; l'image est-elle réelle ou virtuelle ?
+  \item Calcule $\gamma$ et la hauteur $i$ perçue.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[faire la mise au point]
+Dans un appareil photo, le capteur est à distance fixe derrière l'objectif. On photographie d'abord un
+objet lointain, puis un objet proche.
+\begin{enumerate}[label=\alph*)]
+  \item Quand l'objet se rapproche ($u$ diminue), la distance image $v$ augmente-t-elle ou diminue-t-elle ?
+  \item Faut-il alors \emph{rapprocher} ou \emph{éloigner} l'objectif du capteur pour garder l'image nette ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

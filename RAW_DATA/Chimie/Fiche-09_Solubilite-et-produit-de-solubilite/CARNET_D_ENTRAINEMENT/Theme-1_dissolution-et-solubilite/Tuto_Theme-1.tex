@@ -1,0 +1,101 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Dissolution et solubilité
+\sisetup{per-mode=symbol}
+\section*{\color{primarydark}Thème 1 — Dissolution et solubilité}
+
+Quand on plonge un sel (un composé \textbf{ionique}) dans l'eau, celle-ci « casse » le cristal :
+les ions se séparent et partent en solution, entourés de molécules d'eau. Ce thème installe les deux
+outils de base de toute la fiche : \textbf{écrire l'équation de dissolution} avec les bons
+coefficients, et \textbf{manier la solubilité} $s$ (molaire et massique).
+
+\begin{cle}[l'équation de dissolution]
+Un sel de formule $\mathrm{M}_p\mathrm{X}_q$ (cation $\ce{M^{q+}}$, anion $\ce{X^{p-}}$) se dissout selon
+\[ \ce{M_{p}X_{q}(s) <=> p M^{q+}(aq) + q X^{p-}(aq)}. \]
+Le solide est noté $(s)$, les ions dissous $(aq)$. Les coefficients $p$ et $q$ sont \emph{exactement}
+les indices de la formule : une unité de sel libère $p$ cations et $q$ anions.
+\end{cle}
+
+\begin{piege}[ne jamais oublier les coefficients]
+$\ce{Ag3PO4}$ libère \textbf{3} ions \ce{Ag+} (pas un seul) :
+\[ \ce{Ag3PO4(s) <=> 3 Ag^{+}(aq) + PO4^{3-}(aq)}. \]
+Ce « 3 » est capital : il deviendra un \emph{exposant} dans le produit de solubilité (Thème 2).
+\end{piege}
+
+\begin{cle}[solubilité molaire $s$]
+La \textbf{solubilité} $s$ est le nombre \emph{maximal} de moles de sel que l'on peut dissoudre dans
+\textbf{un litre} de solution, à une température donnée : au-delà, la solution est \textbf{saturée} et
+le surplus reste solide. À saturation, les concentrations des ions sont fixées par $s$ et la
+stœchiométrie :
+\[ [\ce{M^{q+}}] = p\,s \qquad\text{et}\qquad [\ce{X^{p-}}] = q\,s. \]
+Ainsi pour \ce{PbBr2} ($p=1$, $q=2$) : $[\ce{Pb^{2+}}]=s$ et $[\ce{Br-}]=2s$.
+\end{cle}
+
+\begin{cle}[solubilité massique $s_m$ et conversion]
+La \textbf{solubilité massique} $s_m$ est la masse maximale dissoute par litre, en \si{\gram\per\litre}.
+On passe de l'une à l'autre par la masse molaire $M$ du sel :
+\[ \boxed{\,s_m = s\times M\,} \qquad\Longleftrightarrow\qquad \boxed{\,s = \dfrac{s_m}{M}\,} \]
+\emph{Moyen mnémotechnique :} $s_m$ est la solubilité « à la balance » (en g), $s$ est celle « des
+calculs » (en mol) — on passe de l'une à l'autre par $M$, exactement comme pour une concentration.
+\end{cle}
+
+\begin{exemplebox}[du massique au molaire : \ce{PbBr2}]
+On donne $s_m(\ce{PbBr2})=\qty{4.84}{\gram\per\litre}$ et $M(\ce{PbBr2})=\qty{367.0}{\gram\per\mole}$.
+\[ s = \dfrac{s_m}{M} = \dfrac{\qty{4.84}{\gram\per\litre}}{\qty{367.0}{\gram\per\mole}}
+     = \qty{1.32e-2}{\mole\per\litre}. \]
+Un litre d'eau saturée contient donc \qty{1.32e-2}{\mole} de \ce{PbBr2}, soit $[\ce{Pb^{2+}}]=s$ et
+$[\ce{Br-}]=2s=\qty{2.64e-2}{\mole\per\litre}$.
+\end{exemplebox}
+
+\begin{piege}[« insoluble » ne veut pas dire « zéro »]
+Même un sel réputé insoluble se dissout \emph{un peu} : \ce{AgCl} a $s\approx\qty{1.3e-5}{\mole\per\litre}$.
+Cette quantité minuscule mais bien réelle est l'objet de toute la fiche. On ne dit jamais « il ne se
+dissout pas du tout ».
+\end{piege}
+
+\begin{methode}[dissoudre une quantité donnée : quel volume ?]
+La solubilité relie moles et volume par une simple règle de trois : dans \qty{1}{\litre} on dissout au
+plus $s$ moles. Pour dissoudre $n$ moles il faut donc
+\[ s\times V = n \quad\Longrightarrow\quad V = \dfrac{n}{s}. \]
+\end{methode}
+
+\begin{remarque}
+La solubilité dépend de la \textbf{température} : il faut toujours la préciser. La plupart des sels sont
+plus solubles à chaud (dissolution endothermique) — comme le sucre dans un café brûlant.
+\end{remarque}
+\end{document}

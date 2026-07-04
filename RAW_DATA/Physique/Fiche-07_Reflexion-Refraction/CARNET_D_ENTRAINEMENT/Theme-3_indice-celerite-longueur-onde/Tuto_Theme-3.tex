@@ -1,0 +1,93 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Indice, célérité et longueur d'onde
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 3 — Indice, célérité, longueur d'onde}\\[2pt]
+{\color{primary}\itshape Ce qui change (et ce qui ne change pas) d'un milieu à l'autre}
+\end{center}
+
+\begin{cle}[l'indice de réfraction]
+L'indice $n_i$ d'un milieu mesure à quel point il « ralentit » la lumière :
+\[ \boxed{\,n_i=\dfrac{c}{c_i}\,}\qquad\Longleftrightarrow\qquad c_i=\dfrac{c}{n_i} \]
+avec $c\approx\qty{3.0e8}{m/s}$ la célérité dans le vide et $c_i$ la célérité dans le milieu. Comme
+$c_i\le c$, on a toujours $n_i\ge1$. \textbf{Plus $n$ est grand, plus la lumière est lente.}
+\end{cle}
+
+\begin{cle}[la relation d'onde et l'invariant fréquence]
+Pour une onde : $\boxed{\,c_i=\lambda_i\,f\,}$, soit $\lambda_i=c_i/f$.
+
+Lorsque la lumière change de milieu, la \textbf{fréquence $f$ reste constante} (elle est imposée par
+la source). Ce sont la \emph{célérité} $c_i$ et la \emph{longueur d'onde} $\lambda_i$ qui changent.
+\begin{center}\itshape « $f$ fixe ; $c$ et $\lambda$ variables. »\end{center}
+\end{cle}
+
+\begin{cle}[la chaîne des rapports]
+En combinant $n_i=c/c_i$, $\lambda_i=c_i/f$ ($f$ constante) et la loi de Snell–Descartes, tous les
+rapports s'enchaînent :
+\[ \boxed{\;\dfrac{\sin\hat{\imath}_1}{\sin\hat{\imath}_2}=\dfrac{n_2}{n_1}=\dfrac{c_1}{c_2}
+   =\dfrac{\lambda_1}{\lambda_2}\;} \]
+\end{cle}
+
+\begin{methode}[relier deux grandeurs entre deux milieux]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item Écrire la chaîne et \textbf{repérer les deux rapports} utiles (angles, indices, célérités
+        ou longueurs d'onde).
+  \item Attention à l'\textbf{inversion} : les indices $n_2/n_1$ sont dans le sens inverse des
+        célérités $c_1/c_2$ (grand indice $\Rightarrow$ petite vitesse).
+  \item Les longueurs d'onde suivent les célérités : $\lambda_1/\lambda_2=c_1/c_2$.
+  \item Pour une longueur d'onde dans un milieu depuis celle dans le vide : $\lambda_i=\lambda_0/n_i$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[air $\to$ verre, ce qui change]
+Une lumière verte ($f=\qty{5.0e14}{Hz}$) passe de l'air ($n_1=1$) au verre ($n_2=1{,}5$) :
+\[ c_1=\frac{c}{1}=\qty{3.0e8}{m/s},\quad c_2=\frac{c}{1{,}5}=\qty{2.0e8}{m/s}, \]
+\[ \lambda_1=\frac{c_1}{f}=\qty{600}{nm},\quad \lambda_2=\frac{c_2}{f}=\qty{400}{nm},\quad f\ \text{inchangée}. \]
+La vitesse et la longueur d'onde ont été divisées par $1{,}5$ ; la fréquence (donc la couleur) est
+restée la même.
+\end{exemplebox}
+
+\begin{piege}[ne pas inverser les rapports]
+Un \emph{grand} indice correspond à une \emph{petite} vitesse : c'est pourquoi $n_2/n_1$ et $c_1/c_2$
+sont « à l'envers » l'un de l'autre. En revanche $\lambda$ suit $c$ (même sens). Vérifiez toujours par
+le bon sens : dans un milieu plus réfringent, la lumière est plus \emph{lente} et sa longueur d'onde
+plus \emph{courte}.
+\end{piege}
+\end{document}

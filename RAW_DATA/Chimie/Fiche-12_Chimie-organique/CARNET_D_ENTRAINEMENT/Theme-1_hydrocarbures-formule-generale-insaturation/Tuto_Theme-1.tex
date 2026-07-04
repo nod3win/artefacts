@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+% THEME_TITLE: Familles d'hydrocarbures : formule générale \& degré d'insaturation
+\sisetup{per-mode=symbol}
+
+Un \textbf{hydrocarbure} n'est fait que de carbone et d'hydrogène. On le range dans une des trois familles selon le type de liaison C--C qu'il contient. Toute cette première mécanique repose sur une idée : \emph{le nombre d'hydrogènes est imposé par le nombre de carbones}.
+
+\begin{cle}[Les trois formules générales à connaître par cœur]
+Pour un hydrocarbure \textbf{acyclique} (chaîne ouverte) à $n$ carbones :
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+  \item \textbf{Alcane} (que des liaisons simples, \emph{saturé}) : $\ce{C_nH_{2n+2}}$, $n\geq 1$.
+  \item \textbf{Alcène} (une double liaison $\ce{C=C}$) : $\ce{C_nH_{2n}}$, $n\geq 2$.
+  \item \textbf{Alcyne} (une triple liaison $\ce{C#C}$) : $\ce{C_nH_{2n-2}}$, $n\geq 2$.
+\end{itemize}
+Chaque \textbf{insaturation} (double liaison ou fermeture d'un cycle) retire $2$~hydrogènes ; une triple liaison en retire $4$ (elle compte double).
+\end{cle}
+
+\begin{cle}[Degré d'insaturation (indice de déficience en hydrogène)]
+Pour une formule brute $\ce{C_nH_mN_pX_qO_r}$ ($X$ = halogène ; l'oxygène est \emph{ignoré}) :
+\[
+\boxed{\,I=\dfrac{2n+2+p-m-q}{2}\,}
+\]
+$I$ compte le nombre total de \textbf{liaisons $\pi$ $+$ cycles} de la molécule. Un hydrocarbure saturé acyclique donne toujours $I=0$.
+\end{cle}
+
+\begin{methode}[Reconnaître la famille / calculer $I$]
+\begin{enumerate}[leftmargin=1.6em,itemsep=1pt]
+  \item Repérer $n$ (nombre de C) et $m$ (nombre de H).
+  \item Comparer $m$ à $2n+2$ : \; égal $\Rightarrow$ alcane ; \; $2n \Rightarrow$ une insaturation ; \; $2n-2 \Rightarrow$ deux insaturations.
+  \item En cas de doute, calculer $I$ : $I=0$ saturé acyclique, $I=1$ un $\pi$ \emph{ou} un cycle, $I=2$ deux $\pi$/cycles (dont la triple liaison).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[$\ce{C4H10}$, $\ce{C4H8}$, $\ce{C4H6}$]
+Pour $n=4$ : $2n+2=10$. \;$\ce{C4H10}$ ($I=0$) est un \textbf{alcane} (butane) ; $\ce{C4H8}$ ($I=1$) un \textbf{alcène} (ou un cycle) ; $\ce{C4H6}$ ($I=2$) un \textbf{alcyne} (ou un diène, ou un cycle insaturé).
+\end{exemplebox}
+
+\begin{piege}[$\ce{C_nH_{2n}}$ : alcène \emph{ou} cycloalcane]
+La formule $\ce{C_nH_{2n}}$ ($I=1$) ne prouve pas qu'on a un alcène ! Un \textbf{cycloalcane} (ex.\ cyclohexane $\ce{C6H12}$) a la même formule : ici l'insaturation est le \emph{cycle}, pas une double liaison. $I$ ne distingue jamais un cycle d'une liaison $\pi$.
+\end{piege}
+
+\begin{remarque}[L'hydrogénation, lecture inverse de $I$]
+Additionner $\ce{H2}$ sur une double liaison $\ce{C=C}$ (\textbf{hydrogénation}) ajoute \textbf{2~H} et fait disparaître une insaturation. Hydrogéner \emph{toutes} les $\ce{C=C}$ d'une molécule, c'est ajouter $2\times(\text{nombre de }\ce{C=C})$ hydrogènes : la différence de H entre la molécule et son produit saturé donne directement le nombre de doubles liaisons.
+\end{remarque}
+
+\end{document}

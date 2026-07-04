@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Analyse d'une formule brute $\ce{C5H12}$]
+Pour $n=5$ : $2n+2=12$, et $I=\frac{12-12}{2}=0$.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai}. $m=12=2n+2$ : c'est exactement la formule d'un alcane.
+  \item \textbf{Faux}. Un composé cyclique aurait au moins un cycle, donc $I\geq1$ et la formule $\ce{C5H10}$ (cyclopentane) au plus. Avec $I=0$, la molécule est nécessairement \textbf{acyclique}.
+  \item \textbf{Vrai}. On vient de calculer $I=0$ : ni liaison $\pi$, ni cycle.
+  \item \textbf{Vrai}. C'est le \textbf{2,2-diméthylpropane} (néopentane) : ses quatre groupements $\ce{-CH3}$ périphériques sont quatre carbones liés chacun à $3$~H, le carbone central étant quaternaire (aucun H).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[La colchicine, degré d'insaturation et hydrogénation]
+\begin{enumerate}[label=\alph*)]
+  \item $I=\dfrac{2\cdot22+2+1-25}{2}=\dfrac{44+2+1-25}{2}=\dfrac{22}{2}=11$ (l'oxygène n'intervient pas).
+  \item $I=(\text{liaisons }\pi)+(\text{cycles})$, donc $\pi=I-3=11-3=\textbf{8 liaisons }\pi$.
+  \item On passe de $\ce{C22H25NO6}$ à $\ce{C22H37NO6}$ : $37-25=12$ hydrogènes additionnés. Comme chaque $\ce{C=C}$ additionne $2$~H, cela fait $\frac{12}{2}=\textbf{6 liaisons }\ce{C=C}$.
+  \item \textbf{Non}, $6\neq8$. L'hydrogénation ne touche que les doubles liaisons \emph{carbone--carbone}. Les $8-6=2$ liaisons $\pi$ restantes sont des doubles liaisons $\ce{C=O}$ (carbonyles de l'ester, de l'amide, etc.), comptées par $I$ mais \emph{non} hydrogénées ici. Le degré d'insaturation compte \textbf{toutes} les liaisons $\pi$, pas seulement les $\ce{C=C}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[$\ce{C6H12}$ : lever l'ambiguïté alcène / cycle]
+\begin{enumerate}[label=\alph*)]
+  \item Pour $n=6$ : $2n+2=14$, donc $I=\frac{14-12}{2}=1$ pour les deux (même formule brute $\Rightarrow$ même $I$).
+  \item C'est l'\textbf{hex-2-ène} qui réagit : sa liaison $\ce{C=C}$ additionne $\ce{H2}$ et donne l'hexane $\ce{C6H14}$ (saturé, $I=0$).
+  \item Le \textbf{cyclohexane} reste inchangé : son unique insaturation est un \emph{cycle}, qui ne s'ouvre pas par simple hydrogénation. Conclusion : $I$ signale une insaturation mais ne dit pas si c'est une liaison $\pi$ (réactive à l'hydrogénation) ou un cycle (inerte) --- seule la structure tranche.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Que peut cacher $I=2$ ?]
+\begin{enumerate}[label=\alph*)]
+  \item $I=\dfrac{2\cdot5+2-8}{2}=\dfrac{4}{2}=2$.
+  \item Quatre structures possibles, toutes avec $\pi+\text{cycles}=2$ :
+  \begin{itemize}[leftmargin=1.6em,itemsep=1pt]
+    \item un \textbf{alcyne} (pent-1-yne) : $2$~liaisons $\pi$ (la triple liaison $=1\,\sigma+2\,\pi$), $0$ cycle ;
+    \item un \textbf{diène} (penta-1,3-diène) : $2$~liaisons $\pi$ (deux $\ce{C=C}$), $0$ cycle ;
+    \item un \textbf{cyclo-alcène} (cyclopentène) : $1$~liaison $\pi$ $+$ $1$~cycle ;
+    \item un \textbf{bicycle} (bicyclopentane) : $0$~liaison $\pi$ $+$ $2$~cycles.
+  \end{itemize}
+\end{enumerate}
+\end{corrige}
+
+\end{document}

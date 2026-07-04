@@ -1,0 +1,141 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[vrai ou faux : combien de propositions correctes ?]
+Pour chaque proposition, indique si elle est \textbf{vraie} ou \textbf{fausse}, puis donne le
+\emph{nombre total} de propositions correctes.
+\begin{enumerate}[label=\alph*)]
+  \item En frottant deux corps l'un contre l'autre, on peut créer une charge électrique nouvelle.
+  \item La charge d'un corps est toujours un multiple entier de la charge élémentaire $e$.
+  \item Un excellent conducteur comme l'argent s'électrise \emph{durablement} par frottement.
+  \item Un corps électrisé peut attirer un petit corps \emph{neutre} et léger.
+  \item Une particule neutre peut posséder plus de neutrons que d'électrons.
+  \item Si l'on arrache des électrons à un isolant, les électrons des atomes voisins se déplacent
+        pour combler le manque.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'électroscope sous influence]
+Un électroscope est chargé \textbf{positivement} : ses deux feuilles sont écartées. Sans toucher la
+boule, on en approche une baguette de verre elle aussi chargée \textbf{positivement}.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,
+    pe/.style={circle,draw=black!50,minimum size=4mm,inner sep=0pt,font=\scriptsize,text=white}]
+  % boitier
+  \draw[fill=defcol!5,draw=defcol!45,line width=0.8pt] (-1.1,-1.6) rectangle (1.1,0.7);
+  % boule
+  \draw[fill=attncol!20,line width=0.9pt] (0,1.25) circle (0.42);
+  \node[pe,fill=attncol,scale=0.85] at (0,1.25) {$+$};
+  % tige
+  \draw[line width=1.6pt,black!55] (0,0.83) -- (0,-0.3);
+  % feuilles ecartees
+  \draw[line width=1.2pt,attncol] (0,-0.3) -- (-0.5,-1.4);
+  \draw[line width=1.2pt,attncol] (0,-0.3) -- (0.5,-1.4);
+  \node[font=\scriptsize,below] at (0,-1.55) {feuilles écartées};
+  % baguette de verre +
+  \draw[fill=attncol!12,line width=0.8pt] (2.0,1.05) rectangle (3.7,1.45);
+  \foreach \x in {2.3,2.65,3.0,3.35}{\node[pe,fill=attncol,scale=0.75] at (\x,1.25) {$+$};}
+  \node[font=\scriptsize,above] at (2.85,1.5) {verre $(+)$};
+  \draw[->,dashed] (1.95,1.25) -- (0.55,1.25);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Comment évolue la \emph{charge de la boule} et l'\emph{écartement des feuilles} ? Justifie
+        par le déplacement des électrons.
+  \item Mêmes questions si l'on approche plutôt une baguette chargée \textbf{négativement}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux barres sous influence]
+Deux barres métalliques \textbf{neutres} $A$ et $B$ sont posées bout à bout, en contact. On approche
+(sans les toucher) un isolant chargé \textbf{positivement} de l'extrémité libre de $A$. Après
+quelques instants — le bâton restant en place — on \emph{sépare} les deux barres, puis on éloigne le
+bâton.
+\begin{center}
+\begin{tikzpicture}[scale=0.85,>=Stealth,
+    pe/.style={circle,draw=black!50,minimum size=4mm,inner sep=0pt,font=\scriptsize,text=white}]
+  \draw[fill=attncol!12,line width=0.8pt] (-4.6,-0.3) rectangle (-3.2,0.3);
+  \foreach \x in {-4.3,-3.95,-3.6,-3.35}{\node[pe,fill=attncol,scale=0.72] at (\x,0) {$+$};}
+  \node[font=\scriptsize,above] at (-3.9,0.4) {isolant $(+)$};
+  \draw[->,dashed] (-3.15,0) -- (-2.35,0);
+  \draw[fill=black!7,line width=0.9pt] (-2.2,-0.4) rectangle (0,0.4);
+  \node[font=\small] at (-1.1,0) {$A$};
+  \draw[fill=black!7,line width=0.9pt] (0,-0.4) rectangle (2.2,0.4);
+  \node[font=\small] at (1.1,0) {$B$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le signe de la charge finale de $A$ (barre proche) et de $B$ (barre éloignée) ?
+  \item Que vaut la somme $q_A + q_B$ ? Quel principe l'impose ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux pendules électrostatiques]
+Deux petites boules identiques (\emph{même masse}) pendent de deux fils accrochés au même point.
+On les électrise \emph{positivement}, la boule $A$ recevant une charge \textbf{4~fois} plus grande
+que la boule $B$. Elles se repoussent et s'écartent de la verticale d'angles $\alpha_A$ et
+$\alpha_B$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,
+    bl/.style={circle,draw=black!55,fill=attncol!20,minimum size=7mm,inner sep=0pt,font=\scriptsize}]
+  \coordinate (O) at (0,2.2);
+  \fill (O) circle (1.2pt);
+  \node[font=\scriptsize,above] at (O) {O};
+  \draw[dashed,black!40] (O) -- (0,-0.2);
+  \draw[line width=0.8pt] (O) -- (-1.3,0.1);
+  \draw[line width=0.8pt] (O) -- (1.3,0.1);
+  \node[bl] (A) at (-1.5,0.0) {$A$};
+  \node[bl] (B) at (1.5,0.0) {$B$};
+  \node[font=\scriptsize] at (-1.5,-0.6) {$q_A=4q$};
+  \node[font=\scriptsize] at (1.5,-0.6) {$q_B=q$};
+  \draw[->,defcol] (A) -- ++(-0.9,0) node[left,font=\scriptsize]{$\vv{F}_{B/A}$};
+  \draw[->,defcol] (B) -- ++(0.9,0) node[right,font=\scriptsize]{$\vv{F}_{A/B}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Compare les intensités des forces $\vv{F}_{B/A}$ (subie par $A$) et $\vv{F}_{A/B}$ (subie
+        par $B$).
+  \item En déduire la comparaison des angles $\alpha_A$ et $\alpha_B$. La boule la plus chargée
+        s'écarte-t-elle davantage ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

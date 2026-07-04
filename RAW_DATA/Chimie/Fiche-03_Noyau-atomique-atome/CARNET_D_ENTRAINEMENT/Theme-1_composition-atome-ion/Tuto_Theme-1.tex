@@ -1,0 +1,100 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Composition d'un atome ou d'un ion : compter p+, n0, e-
+
+Toute la mécanique de ce thème tient dans \textbf{deux nombres} lus dans la notation d'un noyau
+et \textbf{trois particules} à compter. On apprend ici à passer, en quelques secondes et sans hésiter,
+de la notation $^{A}_{Z}\mathrm{X}$ (ou d'un ion $\mathrm{X}^{q}$) au triplet
+$\big(n(p^+),\,n(n^0),\,n(e^-)\big)$.
+
+\begin{cle}[les deux nombres du noyau]
+Pour une espèce notée $^{A}_{Z}\mathrm{X}$ :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item le \textbf{numéro atomique} $Z = n(p^+)$ : c'est le nombre de protons, et c'est \emph{lui seul}
+        qui définit l'élément (tout atome de carbone a $Z=6$, etc.) ;
+  \item le \textbf{nombre de masse} $A = n(p^+) + n(n^0)$ : c'est le nombre total de \textbf{nucléons}
+        (protons \emph{et} neutrons) du noyau ;
+  \item on en déduit le nombre de neutrons par différence : $\boxed{\,n(n^0) = A - Z\,}$.
+\end{itemize}
+Le $Z$ est en \emph{bas} à gauche, le $A$ en \emph{haut} à gauche : $^{A}_{Z}\mathrm{X}$. On a toujours
+$A \ge Z$.
+\end{cle}
+
+\begin{cle}[compter les électrons]
+Les électrons sont dans le nuage électronique, jamais dans le noyau.
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{atome neutre} : autant d'électrons que de protons, $n(e^-) = n(p^+) = Z$ ;
+  \item \textbf{ion de charge $q$} (signée) : $\boxed{\,n(e^-) = Z - q\,}$. Un \textbf{cation}
+        $\mathrm{X}^{n+}$ a perdu $n$ électrons ; un \textbf{anion} $\mathrm{X}^{n-}$ en a gagné $n$.
+\end{itemize}
+\end{cle}
+
+\begin{methode}[compter $p^+$, $n^0$, $e^-$ d'une espèce $^{A}_{Z}\mathrm{X}^{q}$]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Protons} : $n(p^+) = Z$ \quad(toujours, atome comme ion).
+  \item \textbf{Neutrons} : $n(n^0) = A - Z$ \quad(toujours ; le noyau ne change pas quand on forme un ion).
+  \item \textbf{Électrons} : $n(e^-) = Z - q$ \quad($q$ signé : on \emph{retire} $n$ pour un cation
+        $\mathrm{X}^{n+}$, on \emph{ajoute} $n$ pour un anion $\mathrm{X}^{n-}$).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[l'ion scandium $\mathrm{Sc}^{3+}$]
+Composition de $\ce{^{45}_{21}Sc^{3+}}$ ?
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item protons : $n(p^+) = Z = 21$ ;
+  \item neutrons : $n(n^0) = A - Z = 45 - 21 = 24$ ;
+  \item électrons : la charge est $q = +3$, donc $n(e^-) = Z - q = 21 - 3 = 18$.
+\end{itemize}
+Bilan : $\big(21\ p^+,\ 24\ n^0,\ 18\ e^-\big)$.
+\end{exemplebox}
+
+\begin{piege}[le noyau ne contient jamais d'électrons]
+« Combien d'électrons \emph{dans le noyau} ? » $\Rightarrow$ \textbf{toujours $0$} : le noyau ne contient
+que des \emph{nucléons} (protons et neutrons). De même, former un ion ne touche \textbf{que} les
+électrons : $Z$ et $n(n^0)$ restent \emph{inchangés}. Ainsi $\ce{Ca}$ et $\ce{Ca^{2+}}$ ont exactement
+le même noyau ; ils ne diffèrent que par le nombre d'électrons.
+\end{piege}
+
+\begin{remarque}[charge d'un ensemble de particules]
+La \textbf{charge élémentaire} vaut $e = \SI{1,6e-19}{\coulomb}$. Un proton porte $+e$, un électron
+$-e$, un neutron $0$. La charge portée par $N$ protons est donc $Q = N \times (+e)$ ; celle de $N$
+électrons, $Q = N \times (-e)$. C'est une simple proportionnalité.
+\end{remarque}
+
+\end{document}

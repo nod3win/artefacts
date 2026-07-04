@@ -1,0 +1,94 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[force de Lorentz avec un angle]
+Un proton ($q=\qty{1.6e-19}{\coulomb}$) se déplace à $v=\qty{2e6}{\metre\per\second}$ en faisant un
+angle $\alpha=\ang{30}$ avec un champ $B=\qty{0.4}{\tesla}$. Calcule l'intensité de la force de
+Lorentz. (On donne $\sin\ang{30}=0{,}5$.)
+\end{exo}
+
+\begin{exo}[rayon et doublement de la vitesse]
+Un proton ($m=\qty{1.67e-27}{\kilogram}$, $q=\qty{1.6e-19}{\coulomb}$) décrit un cercle dans un champ
+$B=\qty{0.4}{\tesla}$ avec une vitesse $v=\qty{2e6}{\metre\per\second}$ ($\vv{v}\perp\vv{B}$).
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le rayon $R$ de sa trajectoire.
+  \item Quel devient ce rayon si l'on \textbf{double} la vitesse (à $B$ constant) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[nature de la trajectoire d'un électron]
+Un faisceau d'électrons pénètre \textbf{horizontalement} dans une région où règne un champ magnétique
+uniforme \textbf{vertical}. On néglige le poids des électrons.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[blue!70!black,->,line width=1.6pt] (0,-1.2)--(0,1.2) node[above]{$\vv{B}$};
+  \draw[orange!85!black,->,line width=1.8pt] (-2.4,0)--(-0.4,0) node[above,font=\footnotesize]{$\vv{v}$};
+  \fill[red!80!black] (-2.4,0) circle (2pt); \node[below,font=\footnotesize] at (-2.4,-0.1){$e^-$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item La force de Lorentz modifie-t-elle la \emph{norme} de la vitesse ? Justifie.
+  \item Quelle est alors la nature de la trajectoire du faisceau ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le sens pour une charge négative]
+Un \textbf{électron} ($q<0$) se déplace vers la \textbf{droite} dans un champ $\vv{B}$ dirigé vers
+le \textbf{haut} (plan de la feuille).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \fill[red!80!black] (0,0) circle (2.5pt); \node[below left,font=\footnotesize] at (0,0){$e^-$};
+  \draw[orange!85!black,->,line width=1.8pt] (0,0)--(2,0) node[right]{$\vv{v}$};
+  \draw[blue!70!black,->,line width=1.6pt] (0,0)--(0,1.6) node[above]{$\vv{B}$};
+\end{tikzpicture}
+\end{center}
+Dans quel sens pointe la force $\vv{F}$ : sort-elle ($\odot$) ou entre-t-elle ($\otimes$) dans la
+feuille ? (Attention au signe de la charge.)
+\end{exo}
+
+\begin{exo}[la force qui ne travaille pas]
+Une particule chargée tourne dans un champ magnétique uniforme.
+\begin{enumerate}[label=\alph*)]
+  \item La force magnétique peut-elle modifier la \textbf{vitesse} (en norme) de la particule ? Pourquoi ?
+  \item Si l'on \textbf{double} le champ $B$ (à vitesse inchangée), que deviennent le rayon $R$ et
+        l'énergie cinétique de la particule ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

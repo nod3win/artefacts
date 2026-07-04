@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Le suffixe de chaque fonction]
+\begin{enumerate}[label=\alph*)]
+  \item acide carboxylique : \textit{acide \dots-oïque}.
+  \item aldéhyde : \textit{-al}.
+  \item cétone : \textit{-one}.
+  \item alcool : \textit{-ol}.
+  \item amine : \textit{-amine}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Qui est prioritaire ?]
+On lit l'échelle $-\ce{COOH} > \dots > -\ce{CHO} > -\ce{CO}- > -\ce{OH} > -\ce{NH2} > -\ce{O}- > \ce{C=C}$.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{acide carboxylique} (le plus prioritaire de tous).
+  \item \textbf{cétone} ($-\ce{CO}-$ passe avant $-\ce{NH2}$).
+  \item \textbf{alcool} ($-\ce{OH}$ passe avant $\ce{C=C}$).
+  \item \textbf{aldéhyde} ($-\ce{CHO}$ passe avant $-\ce{O}-$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Lire un nom, retrouver la fonction principale]
+\begin{enumerate}[label=\alph*)]
+  \item acide propano\textbf{ïque} : \textbf{acide carboxylique}.
+  \item butan-2-\textbf{one} : \textbf{cétone}.
+  \item pentan-1-\textbf{ol} : \textbf{alcool}.
+  \item propan\textbf{al} : \textbf{aldéhyde}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Nommer une molécule à une seule fonction]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3-CH2-CHO} : $3$~C, aldéhyde (C n$^\circ$1) $\Rightarrow$ \textbf{propanal}.
+  \item \ce{CH3-CH2-CH2-OH} : $3$~C, alcool sur le premier carbone $\Rightarrow$ \textbf{propan-1-ol}.
+  \item \ce{CH3-CO-CH2-CH3} : $4$~C, cétone sur le carbone n$^\circ$2 $\Rightarrow$ \textbf{butan-2-one}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Où commence la numérotation ?]
+\begin{enumerate}[label=\alph*)]
+  \item le carbone du $-\ce{COOH}$ porte \textbf{le numéro 1} (toujours).
+  \item le carbone du $-\ce{CHO}$ porte \textbf{le numéro 1} (toujours).
+\end{enumerate}
+Pour ces fonctions (acide, ester, aldéhyde, amide), inutile de préciser l'indice.
+\end{corrige}
+
+\end{document}

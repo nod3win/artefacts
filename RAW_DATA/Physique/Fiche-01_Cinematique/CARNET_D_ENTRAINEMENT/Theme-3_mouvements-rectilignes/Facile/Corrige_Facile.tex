@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[mouvement rectiligne uniforme]
+\begin{enumerate}[label=\alph*)]
+  \item $x(5)=x_0+v_0t=10+4\times5=\qty{30}{\metre}$.
+  \item $50=10+4t \Rightarrow t=\dfrac{40}{4}=\qty{10}{\second}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[mouvement uniformément accéléré]
+\begin{enumerate}[label=\alph*)]
+  \item $v(4)=v_0+at=2+3\times4=\qty{14}{\metre\per\second}$.
+  \item $x=v_0t+\tfrac12 at^2=2\times4+\tfrac12\times3\times4^2=8+24=\qty{32}{\metre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[temps d'arrêt au freinage]
+\begin{enumerate}[label=\alph*)]
+  \item $v=v_0+at=0 \Rightarrow t=\dfrac{-v_0}{a}=\dfrac{-30}{-6}=\qty{5}{\second}$.
+  \item L'accélération est négative (la vitesse diminue) : c'est un \textbf{MRUD} (freinage).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Torricelli sans le temps]
+\begin{enumerate}[label=\alph*)]
+  \item $v^2=0+2\times2\times25=100 \Rightarrow v=\qty{10}{\metre\per\second}$.
+  \item Parce que la durée n'est ni donnée ni demandée : Torricelli relie directement vitesse et distance, sans passer par le temps.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[reconnaître le mouvement]
+\begin{enumerate}[label=\alph*)]
+  \item MRU (vitesse constante) : $x(t)=x_0+12\,t$.
+  \item MRUA (accélération constante, $v_0=0$) : $x(t)=x_0+\tfrac12\times4\times t^2=x_0+2t^2$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,81 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[deux enceintes à la même température]
+On relie tout par $pV=nRT$.
+\begin{enumerate}[label=\alph*)]
+  \item $n_1=\dfrac{16}{16}=\qty{1.0}{\mole}$ de \ce{CH4}.
+  \item $n_2=\dfrac{16}{32}=\qty{0.5}{\mole}$ de \ce{O2}.
+  \item Même $T$ : $T=\dfrac{p_1 V_1}{n_1 R}=\dfrac{p_2 V_2}{n_2 R}$, d'où
+        $p_2=p_1\times\dfrac{V_1}{V_2}\times\dfrac{n_2}{n_1}$.
+  \item $p_2=0{,}4\times\dfrac{5{,}0}{10{,}0}\times\dfrac{0{,}5}{1{,}0}=0{,}4\times0{,}5\times0{,}5
+        =\qty{0.1}{atm}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[combustion du méthane : volumes de gaz aux CNTP]
+Chaîne \emph{masse} $\to$ \emph{moles} $\to$ (stœchiométrie) $\to$ \emph{volume}.
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{CH4})=\dfrac{8{,}0}{16}=\qty{0.5}{\mole}$.
+  \item Coefficients $1:1$ pour \ce{CH4} et \ce{CO2} : $n(\ce{CO2})=\qty{0.5}{\mole}$.
+  \item $V(\ce{CO2})=0{,}5\times22{,}4=\qty{11.2}{\litre}$ aux CNTP.
+  \item $n(\ce{O2})=2\times n(\ce{CH4})=\qty{1.0}{\mole}$, soit $V(\ce{O2})=1{,}0\times22{,}4=\qty{22.4}{\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[gaz d'un airbag : de la masse au volume]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{NaN3})=\dfrac{6{,}5}{65}=\qty{0.10}{\mole}$.
+  \item Coefficients : $2$ \ce{NaN3} donnent $3$ \ce{N2}, donc
+        $n(\ce{N2})=\dfrac{3}{2}\times0{,}10=\qty{0.15}{\mole}$.
+  \item $V(\ce{N2})=0{,}15\times22{,}4=\qty{3.36}{\litre}$ aux CNTP.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[transformation d'un gaz depuis les CNTP]
+\begin{enumerate}[label=\alph*)]
+  \item $n=\dfrac{0{,}20}{2}=\qty{0.10}{\mole}$.
+  \item Aux CNTP : $V_1=n\times22{,}4=0{,}10\times22{,}4=\qty{2.24}{\litre}$.
+  \item $V_2=\dfrac{nRT}{p}=\dfrac{0{,}10\times0{,}082\times300}{1{,}5}=\dfrac{2{,}46}{1{,}5}=\qty{1.64}{\litre}$.
+  \item $\Delta V=V_2-V_1=1{,}64-2{,}24=\qty{-0.60}{\litre}$ : le gaz s'est \emph{contracté}
+        (la hausse de pression l'emporte sur la hausse de température).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

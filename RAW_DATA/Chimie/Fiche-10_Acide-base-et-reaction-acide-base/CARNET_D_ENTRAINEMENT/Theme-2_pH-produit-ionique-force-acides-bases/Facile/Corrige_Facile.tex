@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[de la concentration au pH]
+$\mathrm{pH} = -\log[\ce{H3O+}]$ ; rappel $\log 10^{-n} = -n$.
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH} = -\log 10^{-3} = 3$.
+  \item $\mathrm{pH} = -\log 10^{-11} = 11$.
+  \item $\mathrm{pH} = -\log 10^{-5} = 5$.
+  \item $[\ce{H3O+}] = 0,010 = 10^{-2}$, donc $\mathrm{pH} = 2$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[du pH à la concentration]
+$[\ce{H3O+}] = 10^{-\mathrm{pH}}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\qty{e-2}{mol\per L}$.
+  \item $\qty{e-9}{mol\per L}$.
+  \item $\qty{e-7}{mol\per L}$.
+  \item $\qty{e-1}{mol\per L} = \qty{0,1}{mol\per L}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le produit ionique de l'eau]
+On utilise $[\ce{OH-}] = \dfrac{10^{-14}}{[\ce{H3O+}]}$ et $\mathrm{pH}+\mathrm{pOH}=14$.
+\begin{enumerate}[label=\alph*)]
+  \item $[\ce{OH-}] = \dfrac{10^{-14}}{10^{-4}} = \qty{e-10}{mol\per L}$.
+  \item $[\ce{H3O+}] = \dfrac{10^{-14}}{10^{-2}} = \qty{e-12}{mol\per L}$.
+  \item $\mathrm{pOH} = 14 - \mathrm{pH} = 14 - 4 = 10$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[acide, neutre ou basique ? (à \qty{25}{\celsius})]
+Repère par rapport à $\mathrm{pH}=7$ (ou $[\ce{H3O+}]=10^{-7}$).
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH}=3 < 7$ : \textbf{acide}.
+  \item $\mathrm{pH}=7$ : \textbf{neutre}.
+  \item $\mathrm{pH}=11 > 7$ : \textbf{basique}.
+  \item $[\ce{H3O+}]=10^{-9} < 10^{-7}$, soit $\mathrm{pH}=9 > 7$ : \textbf{basique}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[de $K_a$ au $\mathrm{p}K_a$, et classement des forces]
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{p}K_a = -\log(10^{-5}) = 5$.
+  \item Plus le $\mathrm{p}K_a$ est \emph{petit}, plus l'acide est \emph{fort}. Du plus fort au plus faible :
+        \[ \ce{HF}\ (3{,}2) \;>\; \ce{CH3COOH}\ (4{,}8) \;>\; \ce{HClO}\ (7{,}5) \;>\; \ce{NH4+}\ (9{,}2). \]
+\end{enumerate}
+\end{corrige}
+
+\end{document}

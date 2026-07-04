@@ -1,0 +1,102 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 3 — Niveau Facile}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[compter sur une onde stationnaire]
+Une corde fixée à ses deux extrémités (murs verts) vibre selon le mode ci-dessous.
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \def\Ls{9.0}\def\A{0.8}
+  \draw[excol,line width=3pt] (0,-0.7)--(0,0.7);
+  \draw[excol,line width=3pt] (\Ls,-0.7)--(\Ls,0.7);
+  \draw[defcol,line width=1.1pt,smooth,samples=200,domain=0:\Ls] plot(\x,{\A*sin(\x*(3*180/\Ls))});
+  \draw[black,line width=1.1pt,smooth,samples=200,domain=0:\Ls] plot(\x,{-\A*sin(\x*(3*180/\Ls))});
+  \foreach \k in {0,1,2,3}{\fill[primarydark] (\k*\Ls/3,0) circle (2.6pt);}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Combien de \textbf{fuseaux} la corde comporte-t-elle ?
+  \item Combien de \textbf{ventres} ?
+  \item Combien de \textbf{nœuds} (extrémités comprises) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[distances sur une onde stationnaire]
+Sur une corde vibrante, l'onde stationnaire a pour longueur d'onde $\lambda=\SI{0.6}{\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la distance entre deux nœuds consécutifs ?
+  \item Quelle est la distance entre un nœud et le ventre voisin ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[longueurs d'onde des modes (deux bouts fixes)]
+Une corde de longueur $L=\SI{1.5}{\metre}$ est fixée à ses deux extrémités. On rappelle
+$\lambda_n=2L/n$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\lambda_1$ (mode fondamental).
+  \item Calcule $\lambda_2$ (2\textsuperscript{e} harmonique).
+  \item Calcule $\lambda_3$ (3\textsuperscript{e} harmonique).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[les harmoniques sont des multiples]
+Le mode fondamental d'une corde a pour fréquence $f_1=\SI{40}{\hertz}$. On rappelle $f_n=n\,f_1$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la fréquence $f_2$ de la 2\textsuperscript{e} harmonique.
+  \item Calcule $f_3$.
+  \item Calcule $f_5$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[corde à une extrémité libre]
+Une corde de longueur $L=\SI{0.6}{\metre}$ possède une extrémité fixe et une extrémité
+\emph{libre}. La célérité des ondes sur la corde est $c=\SI{240}{\metre\per\second}$. Le mode
+fondamental correspond à $\lambda_1=4L$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\lambda_1$.
+  \item Calcule la fréquence fondamentale $f_1=c/\lambda_1$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

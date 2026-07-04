@@ -1,0 +1,93 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[repérer la liaison dative]
+Le proton \ce{H+} n'a aucun électron (case vide) : c'est toujours l'\textbf{accepteur}. L'atome
+qui possède un doublet non liant est le \textbf{donneur}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{NH4+} : une des quatre liaisons \ce{N-H} est dative. Donneur $=$ \textbf{azote}
+        (il apporte son doublet non liant) ; accepteur $=$ \textbf{\ce{H+}}. Les quatre liaisons
+        deviennent ensuite identiques.
+  \item \ce{H3O+} : une des trois liaisons \ce{O-H} est dative. Donneur $=$ \textbf{oxygène}
+        (un de ses doublets libres) ; accepteur $=$ \textbf{\ce{H+}}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[nombre total d'électrons de valence]
+On additionne les électrons de valence de tous les atomes, puis on retranche la charge $q$
+(on ajoute $|q|$ pour un anion, on retranche $q$ pour un cation).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CO2} : $4 + 2\times 6 = \mathbf{16}$.
+  \item \ce{NH4+} : $5 + 4\times 1 - 1 = \mathbf{8}$ (cation : $-1$).
+  \item \ce{SO4^2-} : $6 + 4\times 6 + 2 = \mathbf{32}$ (anion : $+2$).
+  \item \ce{CH4} : $4 + 4\times 1 = \mathbf{8}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[octet, lacune ou octet étendu ?]
+On compte les électrons autour de l'atome central ($2$ par liaison).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{C} dans \ce{CH4} : $4$ liaisons $= 8$~e$^-$ $\Rightarrow$ \textbf{octet}.
+  \item \ce{B} dans \ce{BF3} : $3$ liaisons $= 6$~e$^-$ $\Rightarrow$ \textbf{lacune} (sous-octet).
+  \item \ce{S} dans \ce{SF6} : $6$ liaisons $= 12$~e$^-$ $\Rightarrow$ \textbf{octet étendu}.
+  \item \ce{P} dans \ce{PCl5} : $5$ liaisons $= 10$~e$^-$ $\Rightarrow$ \textbf{octet étendu}.
+  \item \ce{Be} dans \ce{BeCl2} : $2$ liaisons $= 4$~e$^-$ $\Rightarrow$ \textbf{lacune}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[qui peut dépasser l'octet ?]
+Seuls les éléments de la \textbf{3\textsuperscript{e} période et au-delà} (orbitales $d$
+accessibles) peuvent dépasser l'octet.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{N} : \textbf{non} ($2^{\text{e}}$ période, strictement $8$~e$^-$).
+  \item \ce{S} : \textbf{oui} ($3^{\text{e}}$ période).
+  \item \ce{O} : \textbf{non} ($2^{\text{e}}$ période).
+  \item \ce{Cl} : \textbf{oui} ($3^{\text{e}}$ période).
+  \item \ce{C} : \textbf{non} ($2^{\text{e}}$ période).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[électronégativité et caractère ionique]
+Le caractère ionique croît avec la \textbf{différence d'électronégativité} $\Delta\chi$.
+\[ \ce{Cl2} : \Delta\chi = 0 \;<\; \ce{HCl} : |3{,}2-2{,}2| = 1{,}0 \;<\;
+   \ce{NaCl} : |3{,}2-0{,}9| = 2{,}3 \;<\; \ce{NaF} : |4{,}0-0{,}9| = 3{,}1. \]
+Classement final : $\ce{Cl2} < \ce{HCl} < \ce{NaCl} < \ce{NaF}$. La liaison \ce{Cl2} est purement
+covalente ($\Delta\chi = 0$), \ce{NaF} est la plus ionique.
+\end{corrige}
+
+\end{document}

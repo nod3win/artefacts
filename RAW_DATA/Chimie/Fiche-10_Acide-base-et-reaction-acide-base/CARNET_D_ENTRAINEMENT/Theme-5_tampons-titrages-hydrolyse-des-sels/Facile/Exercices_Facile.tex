@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[est-ce un tampon ?]
+Un tampon est un mélange d'un acide faible et de sa base conjuguée. Pour chaque mélange, dis si c'est un
+tampon.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3COOH} + \ce{CH3COONa}
+  \item \ce{HCl} + \ce{NaCl}
+  \item \ce{NH4Cl} + \ce{NH3}
+  \item \ce{NaOH} + \ce{KOH}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[pH d'un tampon par Henderson]
+On considère un tampon du couple \ce{CH3COOH/CH3COO-} ($\mathrm{p}K_a = 4{,}8$). Calcule le pH pour chaque
+composition.
+\begin{enumerate}[label=\alph*)]
+  \item $[\ce{CH3COO-}] = [\ce{CH3COOH}]$
+  \item $[\ce{CH3COO-}] = 10\,[\ce{CH3COOH}]$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la relation à l'équivalence]
+On titre un monoacide par une monobase : à l'équivalence, $C_a V_a = C_b V_b$.
+\begin{enumerate}[label=\alph*)]
+  \item On dose \qty{20}{mL} de \ce{HCl} à \qty{0,10}{mol\per L}. L'équivalence est atteinte pour \qty{25}{mL}
+        de \ce{NaOH}. Calcule $C_b$.
+  \item Quel volume de \ce{NaOH} à \qty{0,20}{mol\per L} faut-il pour doser \qty{10}{mL} de \ce{HCl} à
+        \qty{0,10}{mol\per L} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[pH à l'équivalence selon la force]
+Indique si le pH au point d'équivalence est \textbf{acide}, \textbf{neutre} ou \textbf{basique}.
+\begin{enumerate}[label=\alph*)]
+  \item acide fort \ce{HCl} dosé par base forte \ce{NaOH}
+  \item acide faible \ce{CH3COOH} dosé par base forte \ce{NaOH}
+  \item acide fort \ce{HCl} dosé par base faible \ce{NH3}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[hydrolyse d'un sel]
+Indique si la solution du sel est \textbf{acide}, \textbf{basique} ou \textbf{neutre} à \qty{25}{\celsius}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{KCl}
+  \item \ce{CH3COONa}
+  \item \ce{NH4Cl}
+\end{enumerate}
+\end{exo}
+
+\end{document}

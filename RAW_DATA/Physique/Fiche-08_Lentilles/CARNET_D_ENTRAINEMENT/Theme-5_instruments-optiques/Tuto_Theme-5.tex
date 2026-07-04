@@ -1,0 +1,120 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+% THEME_TITLE: Les instruments d'optique
+\sisetup{per-mode=symbol}
+
+Une lentille convergente devient un \textbf{instrument} selon la position de l'objet. Le même jeu de
+formules explique la loupe, l'appareil photo, le projecteur et le microscope.
+
+\begin{cle}[instruments à une lentille convergente]
+\begin{center}\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{>{\bfseries}l l l}
+\toprule
+Instrument & Position de l'objet & Image \\
+\midrule
+\rowcolor{excol!8} Loupe & $0<u<f$ & virtuelle, droite, \textbf{agrandie} \\
+Appareil photo & $u>2f$ (objet lointain) & réelle, renversée, \textbf{réduite} (sur le capteur) \\
+\rowcolor{defcol!8} Projecteur & $f<u<2f$ & réelle, renversée, \textbf{agrandie} (sur l'écran) \\
+\bottomrule
+\end{tabular}
+\end{center}
+Photo et projecteur donnent une image \textbf{réelle} (sur un écran/capteur) ; la loupe une image
+\textbf{virtuelle} (regardée à l'\oe il).
+\end{cle}
+
+\begin{cle}[le microscope : deux convergentes en série]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item L'\textbf{objectif} (courte focale $f_1$) : l'objet est \emph{juste au-delà} de $F_1$
+        ($f_1<u_1<2f_1$) ; il en donne une image intermédiaire \textbf{réelle, renversée, très
+        agrandie}.
+  \item L'\textbf{oculaire} (focale $f_2$) agit comme une \textbf{loupe} sur cette image
+        intermédiaire : image finale \textbf{virtuelle, agrandie}, observée à l'\oe il.
+  \item \textbf{Réglage à l'infini} : l'image intermédiaire est placée dans le \emph{plan focal objet
+        de l'oculaire} ($F_2$) $\Rightarrow$ les rayons sortent parallèles, l'\oe il n'accommode pas.
+\end{itemize}
+Le grossissement total vaut $G\approx |\gamma_1|\times G_{\text{oculaire}}$, avec
+$G_{\text{oculaire}}\propto 1/f_2$ (oculaire court $=$ fort grossissement).
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82,>=Stealth,font=\scriptsize]
+  \draw[black!35,dash pattern=on 3pt off 2pt] (-2.2,0)--(8.6,0);
+  % objectif
+  \draw[line width=1.4pt,<->,black!65] (0,-1.7)--(0,1.7);
+  \node[black!70,above] at (0,1.7) {objectif};
+  \fill[primary] (-1,0) circle (1.3pt); \node[below] at (-1,0) {$F_1$};
+  \fill[primary] (1,0) circle (1.3pt); \node[below right] at (1,0) {$F'_1$};
+  % oculaire
+  \draw[line width=1.4pt,<->,black!65] (5.53,-1.7)--(5.53,1.7);
+  \node[black!70,above] at (5.53,1.7) {oculaire};
+  \fill[primary] (4.33,0) circle (1.3pt); \node[above left] at (4.33,0) {$F_2$};
+  \fill[primary] (6.73,0) circle (1.3pt); \node[below] at (6.73,0) {$F'_2$};
+  % objet
+  \draw[attncol,line width=1.6pt,->] (-1.3,0)--(-1.3,0.45); \node[attncol,left] at (-1.3,0.25) {$AB$};
+  % image intermediaire A1B1 en (4.33,-1.5)
+  \draw[excol,line width=1.6pt,->] (4.33,0)--(4.33,-1.5); \node[excol,right] at (4.33,-0.8) {$A_1B_1$};
+  % rayons objectif : by O1 et parallele->F1'
+  \draw[black!75,line width=0.7pt] (-1.3,0.45)--(0,0); \draw[defcol,line width=0.7pt] (0,0)--(4.33,-1.5);
+  \draw[black!75,line width=0.7pt] (-1.3,0.45)--(0,0.45); \draw[defcol,line width=0.7pt] (0,0.45)--(4.33,-1.5);
+  % sortie oculaire : rayons paralleles (B1 en F2)
+  \draw[defcol,line width=0.7pt,->] (4.33,-1.5)--(5.53,0)--(8.2,3.34);
+  \draw[defcol,line width=0.7pt,->] (5.53,-1.5)--(8.2,-1.5);
+  \node[primary,align=center] at (7.6,1.2) {sortie parallèle\\ (image à l'infini)};
+  % oeil
+  \node[font=\large] at (8.4,-1.5) {$\bullet\!\!<$};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[reconnaître l'instrument]
+Regarde \textbf{où est l'objet} par rapport à $f$ et $2f$, puis lis la \emph{nature} de l'image dans
+le tableau : image réelle réduite $\to$ photo ; réelle agrandie $\to$ projecteur ; virtuelle agrandie
+$\to$ loupe. Deux lentilles en série $\to$ microscope.
+\end{methode}
+
+\begin{piege}[confusions fréquentes]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item Appareil photo ($u>2f$, image \emph{réduite}) et projecteur ($f<u<2f$, image \emph{agrandie})
+        utilisent tous deux un objectif convergent : c'est la \emph{position de l'objet} qui les
+        distingue.
+  \item L'\textbf{oculaire} d'un microscope est \textbf{convergent} (une loupe), jamais divergent.
+  \item L'image intermédiaire de l'objectif est \textbf{renversée} (pas droite).
+\end{itemize}
+\end{piege}
+
+\end{document}

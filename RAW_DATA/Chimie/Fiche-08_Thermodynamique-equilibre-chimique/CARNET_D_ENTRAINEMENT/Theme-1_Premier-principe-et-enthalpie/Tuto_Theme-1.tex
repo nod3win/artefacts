@@ -1,0 +1,101 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Premier principe et enthalpie
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 1 — Premier principe et enthalpie}\\[2pt]
+{\color{primary}\small Énergie interne, chaleur, travail, et signe de $\Delta H$}
+\end{center}
+
+\begin{cle}[le premier principe et les conventions de signe]
+Toute matière possède une réserve d'\textbf{énergie interne} $U$ (mouvement des molécules, liaisons chimiques). Lors d'une transformation, cette énergie est échangée avec le milieu extérieur sous deux formes : la \textbf{chaleur} $Q$ et le \textbf{travail} $W$. Le premier principe (conservation de l'énergie) s'écrit :
+\[ \boxed{\;\Delta U = Q + W\;} \]
+\textbf{Convention (point de vue du système)} : ce qui est \emph{reçu} est \textbf{positif}, ce qui est \emph{cédé} est \textbf{négatif}.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item chaleur reçue $\Rightarrow Q>0$ ; chaleur cédée $\Rightarrow Q<0$ ;
+  \item travail reçu $\Rightarrow W>0$ ; travail cédé $\Rightarrow W<0$.
+\end{itemize}
+Pour un système \textbf{isolé}, $Q=0$ et $W=0$, donc $\Delta U = 0$ : son énergie interne est constante.
+\end{cle}
+
+\begin{methode}[les trois réflexes du thème]
+\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Travail des forces de pression} (à pression extérieure constante) :
+  \[ W = -\,p\,\Delta V,\qquad \Delta V = V_{\text{final}}-V_{\text{initial}}. \]
+  Le gaz se \emph{dilate} ($\Delta V>0$) $\Rightarrow$ il cède du travail $\Rightarrow W<0$. Il se \emph{contracte} ($\Delta V<0$) $\Rightarrow W>0$. \emph{Pense aux unités} : $p$ en $\si{\pascal}$, $V$ en $\si{\cubic\metre}$ (\;$\qty{1}{\litre}=\qty{1e-3}{\cubic\metre}$\;), $W$ en $\si{\joule}$.
+  \item \textbf{Chaleur à pression constante = enthalpie} : $\;Q_p = \Delta H$. Mesurer la chaleur d'une réaction à l'air libre, c'est mesurer son $\Delta H$.
+  \item \textbf{Lire le signe de $\Delta H$} sur un diagramme enthalpique : $\Delta H = H_{\text{produits}} - H_{\text{réactifs}}$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[classer une réaction à partir du signe de $\Delta H$]
+La synthèse $\ce{N2}+3\,\ce{H2}\rightarrow 2\,\ce{NH3}$ a $\Delta H = \qty{-92}{\kilo\joule}$. Le signe est \emph{négatif} : la réaction est \textbf{exothermique} (elle \emph{dégage} $\qty{92}{\kilo\joule}$). Comme $\Delta H = H_{\text{prod.}}-H_{\text{réac.}}<0$, l'enthalpie des réactifs est \emph{plus haute} que celle des produits.
+\end{exemplebox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.92]
+% --- exothermique ---
+\begin{scope}
+  \draw[->,thick] (0,-0.3)--(0,3.7) node[above,font=\small]{$H$};
+  \draw[excol,very thick] (0.5,2.9)--(2.2,2.9) node[midway,above,font=\scriptsize]{réactifs};
+  \draw[excol,very thick] (3.1,0.9)--(4.8,0.9) node[midway,above,font=\scriptsize]{produits};
+  \draw[->,thick] (2.65,2.9)--(2.65,0.9) node[midway,right,font=\scriptsize]{$\Delta H<0$};
+  \draw[dashed,gray] (2.2,2.9)--(3.1,2.9); \draw[dashed,gray] (2.2,0.9)--(3.1,0.9);
+  \node[excol,font=\bfseries\small] at (2.6,3.45) {exothermique};
+\end{scope}
+% --- endothermique ---
+\begin{scope}[xshift=7.0cm]
+  \draw[->,thick] (0,-0.3)--(0,3.7) node[above,font=\small]{$H$};
+  \draw[defcol,very thick] (0.5,0.9)--(2.2,0.9) node[midway,above,font=\scriptsize]{réactifs};
+  \draw[defcol,very thick] (3.1,2.9)--(4.8,2.9) node[midway,above,font=\scriptsize]{produits};
+  \draw[->,thick] (2.65,0.9)--(2.65,2.9) node[midway,right,font=\scriptsize]{$\Delta H>0$};
+  \draw[dashed,gray] (2.2,0.9)--(3.1,0.9); \draw[dashed,gray] (2.2,2.9)--(3.1,2.9);
+  \node[defcol,font=\bfseries\small] at (2.6,3.45) {endothermique};
+\end{scope}
+\end{tikzpicture}\\[2pt]
+{\small Le sens de la flèche verticale donne immédiatement le signe de $\Delta H$.}
+\end{center}
+
+\begin{piege}[trois confusions classiques]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{athermique} $\ne$ \textbf{adiabatique} : \emph{athermique} qualifie une \emph{réaction} qui n'échange pas de chaleur ($\Delta H\approx 0$) ; \emph{adiabatique} qualifie une \emph{enceinte} qu'aucune chaleur ne traverse.
+  \item \textbf{Signe} : « dégage de la chaleur » $\Rightarrow \Delta H<0$ ; « absorbe » $\Rightarrow \Delta H>0$. Ne pas inverser.
+  \item \textbf{Unités} : $\qty{1}{\kilo\joule}=\qty{1000}{\joule}$. Convertir les litres en $\si{\cubic\metre}$ avant d'appliquer $W=-p\Delta V$.
+\end{itemize}
+\end{piege}
+
+\end{document}

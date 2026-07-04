@@ -1,0 +1,102 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{center}\small\itshape
+$N_A=\qty{6.02e23}{}$ ; aux TPN $V_{\mathrm{m}}=\qty{22.4}{\litre\per\mole}$.
+\end{center}
+
+\begin{exo}[du comprimé aux ions]
+Un comprimé de fer contient \qty{304}{\milli\gram} de sulfate de fer(II) \ce{FeSO4}, de masse molaire
+$M=\qty{152}{\gram\per\mole}$. On donne $M(\ce{Fe})=\qty{56}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité de matière de \ce{FeSO4} le comprimé contient-il ?
+  \item Combien d'ions \ce{Fe^2+} cela représente-t-il ?
+  \item Quelle masse de fer (élément) le comprimé apporte-t-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[d'un acide concentré à la solution de travail]
+L'acide chlorhydrique commercial titre \qty{36.5}{\percent} en masse et a une masse volumique
+$\rho=\qty{1.20}{\gram\per\milli\litre}$. On donne $M(\ce{HCl})=\qty{36.5}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine la concentration molaire $C$ de cet acide concentré (raisonne sur \qty{1}{\litre}).
+  \item Quel volume de cet acide faut-il prélever pour préparer \qty{500}{\milli\litre} de solution
+        à \qty{0.60}{\mole\per\litre} ?
+  \item Décris en une phrase le protocole de préparation.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[dilutions]
+La dilution conserve la quantité de matière de soluté : $C_1V_1=C_2V_2$.
+\begin{enumerate}[label=\alph*)]
+  \item Quel volume d'acide sulfurique à \qty{12.0}{\mole\per\litre} faut-il pour préparer
+        \qty{50.0}{\milli\litre} de solution à \qty{1.00}{\mole\per\litre} ?
+  \item On dilue \qty{10}{\milli\litre} d'\ce{HCl} à \qty{2.5}{\mole\per\litre} avec de l'eau jusqu'à
+        un volume total de \qty{250}{\milli\litre}. Quelle est la concentration finale ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[identifier un gaz par sa masse molaire]
+Un échantillon gazeux de masse \qty{5.0}{\gram} occupe \qty{5.6}{\litre} aux TPN.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est sa quantité de matière ?
+  \item En déduire sa masse molaire.
+  \item Parmi \ce{Ne} ($M=20$), \ce{CH4} ($M=16$) et \ce{Ar} ($M=40$), lequel ce gaz peut-il être ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[classer quatre échantillons]
+On considère quatre échantillons. On donne $M(\ce{O2})=\qty{32}{\gram\per\mole}$.
+\begin{center}\small
+\begin{tabular}{cl}
+\toprule
+A & \qty{16}{\gram} de dioxygène \ce{O2}\\
+B & \qty{5.6}{\litre} de diazote \ce{N2} pris aux TPN\\
+C & \qty{200}{\milli\litre} de solution de \ce{NaCl} à \qty{2.0}{\mole\per\litre}\\
+D & \num{3.01e23} molécules de \ce{CO2}\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la quantité de matière de chaque échantillon.
+  \item Classe A, B, C, D par quantité de matière \textbf{croissante}.
+\end{enumerate}
+\end{exo}
+
+\end{document}

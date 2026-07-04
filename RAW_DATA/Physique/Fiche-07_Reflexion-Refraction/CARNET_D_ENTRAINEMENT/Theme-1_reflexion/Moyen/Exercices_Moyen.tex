@@ -1,0 +1,157 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{exo}[le miroir qui tourne]
+Un rayon lumineux \emph{fixe} frappe un miroir plan en un point $O$ sous un angle d'incidence
+$\hat{\imath}=\ang{30}$. On fait ensuite \textbf{pivoter le miroir} d'un angle $\alpha=\ang{12}$
+autour de $O$ (le rayon incident, lui, ne bouge pas).
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le nouvel angle d'incidence après rotation du miroir ?
+  \item De quel angle a tourné le rayon réfléchi ? Énonce la règle générale reliant la rotation du
+        miroir à celle du rayon réfléchi.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[réflecteur en coin : deux miroirs perpendiculaires]
+Deux miroirs plans $M_1$ et $M_2$ sont disposés \textbf{perpendiculairement}. Un rayon frappe d'abord
+$M_1$ sous un angle d'incidence $\hat{\imath}_1=\ang{35}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.05,>=Stealth]
+  \draw[black,line width=1.4pt] (0,0) -- (0,3.2);
+  \draw[black,line width=1.4pt] (0,0) -- (4.2,0);
+  \fill[pattern=north east lines,pattern color=black!35] (-0.28,0) rectangle (0,3.2);
+  \fill[pattern=north east lines,pattern color=black!35] (0,-0.28) rectangle (4.2,0);
+  \node[black!70,left,font=\footnotesize] at (0,2.9){$M_1$};
+  \node[black!70,below,font=\footnotesize] at (3.6,0){$M_2$};
+  \coordinate (A) at (0,2.0);
+  \coordinate (B) at (2.5,0);
+  \draw[->,line width=1.1pt] (1.6,3.05) -- (A);
+  \draw[dash pattern=on 3pt off 2pt,black!55] (A) -- (1.3,2.0);
+  \fill (A) circle (1.2pt); \node[left,font=\footnotesize] at (-0.05,2.0){$A$};
+  \draw[->,line width=1.1pt,primary] (A) -- (B);
+  \fill (B) circle (1.2pt); \node[below,font=\footnotesize] at (2.5,-0.05){$B$};
+  \draw[dash pattern=on 3pt off 2pt,black!55] (B) -- (2.5,1.3);
+  \node[font=\footnotesize] at (0.86,3.0){rayon entrant};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Donne l'angle de réflexion en $A$ (sur $M_1$).
+  \item Le rayon réfléchi va frapper $M_2$ en $B$. Quel est l'angle d'incidence $\hat{\imath}_2$ en $B$ ?
+        (On pourra utiliser que les deux normales sont perpendiculaires.)
+  \item Montre que le rayon qui ressort après les deux réflexions est \textbf{antiparallèle} au rayon
+        entrant.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le périscope]
+Un périscope est formé de \textbf{deux miroirs parallèles}, chacun incliné à $\ang{45}$, l'un au-dessus
+de l'autre. Un rayon horizontal entre par le haut.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \draw[black,line width=1.4pt] (0.4,3.4) -- (1.9,1.9);
+  \draw[black,line width=1.4pt] (0.4,1.1) -- (1.9,-0.4);
+  \node[black!70,right,font=\footnotesize] at (1.9,2.6){miroir 1 ($\ang{45}$)};
+  \node[black!70,right,font=\footnotesize] at (1.9,0.3){miroir 2 ($\ang{45}$)};
+  \coordinate (P) at (1.15,2.65);
+  \coordinate (Q) at (1.15,0.35);
+  \draw[->,line width=1.1pt] (-1.3,2.65) -- (P);
+  \node[above,font=\footnotesize] at (-0.4,2.68){rayon entrant};
+  \draw[->,line width=1.1pt,primary] (P) -- (Q);
+  \draw[->,line width=1.1pt,primary] (Q) -- (3.6,0.35);
+  \fill (P) circle (1.1pt); \fill (Q) circle (1.1pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quel est l'angle d'incidence du rayon sur le miroir 1 ?
+  \item Décris la direction du rayon après le miroir 1, puis après le miroir 2. Quelle est la
+        direction finale par rapport au rayon entrant ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[se voir en entier dans un miroir]
+Une personne de taille $H=\qty{1.80}{m}$ se tient debout face à un miroir plan vertical. On veut la
+plus petite hauteur de miroir qui lui permette de se voir \emph{en entier} (des pieds au sommet du
+crâne). On utilisera la loi $\hat{\imath}=\hat{r}$ pour les rayons issus des pieds et du sommet.
+\begin{center}
+\begin{tikzpicture}[scale=0.85,>=Stealth]
+  \draw[black,line width=1.6pt] (3,0) -- (3,3.6);
+  \node[black!70,above,font=\footnotesize] at (3,3.6){miroir};
+  \draw[black!55,line width=0.8pt] (-0.2,0) -- (3.4,0);
+  \draw[primary,line width=1pt] (0,0) -- (0,3.2);
+  \node[primary,left,font=\footnotesize] at (0,1.6){personne};
+  \fill (0,3.2) circle (1.3pt); \node[left,font=\scriptsize] at (0,3.2){tête};
+  \fill (0,0) circle (1.3pt); \node[left,font=\scriptsize] at (0,0){pieds};
+  \fill (0,2.9) circle (1.1pt); \node[right,font=\scriptsize] at (0.05,2.75){yeux};
+  \draw[->,dash pattern=on 2pt off 2pt,black!60] (0,3.2) -- (3,3.05) -- (0,2.9);
+  \draw[->,dash pattern=on 2pt off 2pt,black!60] (0,0) -- (3,1.45) -- (0,2.9);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la hauteur minimale du miroir ?
+  \item Cette hauteur dépend-elle de la distance entre la personne et le miroir ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver l'angle entre deux miroirs]
+Deux miroirs plans se coupent en $O$ en formant entre eux un angle $\theta$ \emph{inconnu}. Un rayon
+lumineux entre en faisant $\ang{30}$ avec le miroir \emph{inférieur}, se réfléchit une fois sur chaque
+miroir, puis ressort en faisant $\ang{40}$ avec le miroir \emph{supérieur}.
+\begin{center}
+\begin{tikzpicture}[scale=1.1,>=Stealth]
+  \coordinate (O) at (0,0);
+  \draw[black,line width=1.3pt] (O) -- (4.2,0);
+  \draw[black,line width=1.3pt] (O) -- (3.15,2.36);
+  \node[black!70,right,font=\footnotesize] at (4.2,0){miroir inférieur};
+  \node[black!70,above,font=\footnotesize] at (3.15,2.36){miroir supérieur};
+  \draw[line width=0.6pt] (0.8,0) arc (0:36.8:0.8);
+  \node[font=\footnotesize] at (0.86,0.3){$\theta$};
+  \coordinate (A) at (3.0,0);
+  \coordinate (B) at (1.9,1.42);
+  \draw[->,line width=1.1pt] (4.0,1.2) -- (A);
+  \draw[->,line width=1.1pt,primary] (A) -- (B);
+  \draw[->,line width=1.1pt,primary] (B) -- (0.75,2.05);
+  \fill (A) circle (1.1pt); \fill (B) circle (1.1pt);
+  \node[font=\footnotesize] at (2.72,0.24){\ang{30}};
+  \node[font=\footnotesize] at (2.05,1.0){\ang{40}};
+\end{tikzpicture}
+\end{center}
+Détermine la valeur de l'angle $\theta$ entre les deux miroirs.
+\end{exo}
+
+\end{document}

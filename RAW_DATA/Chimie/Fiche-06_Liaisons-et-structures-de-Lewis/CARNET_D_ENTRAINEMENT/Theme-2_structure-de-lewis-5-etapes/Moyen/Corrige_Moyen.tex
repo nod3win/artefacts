@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[l'eau \ce{H2O}]
+Atome central \ce{O} ; $a=1$ (l'oxygène), $b=2$ (les \ce{H}).
+\[ n_{\max} = 8 + 2\times 2 = 12,\qquad n_v = 6 + 2\times 1 = 8. \]
+\[ n_l = 12 - 8 = 4 \Rightarrow 2\ \text{liaisons \ce{O-H}},\qquad
+   n_{nl} = 8 - 4 = 4 \Rightarrow 2\ \text{doublets libres sur \ce{O}}. \]
+Structure : l'oxygène est lié à $2$ \ce{H} et porte $2$ doublets non liants ; son octet est
+complet ($2\times2 + 2\times2 = 8$).
+\end{corrige}
+
+\begin{corrige}[le méthane \ce{CH4}]
+Atome central \ce{C} ; $a=1$, $b=4$.
+\[ n_{\max} = 8 + 2\times 4 = 16,\qquad n_v = 4 + 4\times 1 = 8. \]
+\[ n_l = 16 - 8 = 8 \Rightarrow 4\ \text{liaisons \ce{C-H}},\qquad
+   n_{nl} = 8 - 8 = 0 \Rightarrow \text{aucun doublet libre}. \]
+Le carbone forme $4$ liaisons $= 8$~e$^-$ : \textbf{l'octet est respecté}, sans aucun doublet
+libre.
+\end{corrige}
+
+\begin{corrige}[le dioxyde de carbone \ce{CO2}]
+Atome central \ce{C} ; $a=3$ (\ce{C} et $2$ \ce{O}), $b=0$.
+\[ n_{\max} = 8\times 3 = 24,\qquad n_v = 4 + 2\times 6 = 16. \]
+\[ n_l = 24 - 16 = 8 \Rightarrow 4\ \text{liaisons},\qquad
+   n_{nl} = 16 - 8 = 8 \Rightarrow 4\ \text{doublets libres}. \]
+Le carbone est lié à $2$ oxygènes : les $4$ liaisons se répartissent en \textbf{deux doubles
+liaisons} \ce{O=C=O}. Chaque oxygène porte $2$ doublets libres, le carbone aucun.
+\end{corrige}
+
+\begin{corrige}[l'ion ammonium \ce{NH4+}]
+Atome central \ce{N} ; $a=1$, $b=4$. Charge $q=+1$.
+\[ n_{\max} = 8 + 2\times 4 = 16,\qquad n_v = 5 + 4\times 1 - 1 = 8. \]
+\[ n_l = 16 - 8 = 8 \Rightarrow 4\ \text{liaisons \ce{N-H}},\qquad
+   n_{nl} = 8 - 8 = 0 \Rightarrow \textbf{0 doublet libre}. \]
+L'azote forme $4$ liaisons (dont une dative) et ne porte \emph{aucun} doublet libre : son octet
+est complet.
+\end{corrige}
+
+\begin{corrige}[l'ion carbonate \ce{CO3^2-}]
+Atome central \ce{C} ; $a=4$ (\ce{C} et $3$ \ce{O}), $b=0$. Charge $q=-2$.
+\[ n_{\max} = 8\times 4 = 32,\qquad n_v = 4 + 3\times 6 + 2 = 24. \]
+\[ n_l = 32 - 24 = 8 \Rightarrow 4\ \text{liaisons},\qquad
+   n_{nl} = 24 - 8 = 16 \Rightarrow 8\ \text{doublets libres}. \]
+Le carbone est lié à $3$ oxygènes : $2$ liaisons simples $+$ $1$ double liaison ($=4$ liaisons).
+Les $8$ doublets libres se placent \textbf{sur les trois oxygènes} (le carbone n'en porte aucun) :
+l'oxygène doublement lié en porte $2$, chaque oxygène simplement lié en porte $3$.
+\end{corrige}
+
+\end{document}

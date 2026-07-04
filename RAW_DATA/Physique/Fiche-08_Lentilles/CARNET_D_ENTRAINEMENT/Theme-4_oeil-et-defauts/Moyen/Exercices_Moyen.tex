@@ -1,0 +1,113 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[repos puis accommodation]
+Un \oe il normal a sa rétine à \qty{16}{\mm} du centre optique.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule sa vergence \textbf{au repos} (objet à l'infini).
+  \item L'\oe il fixe maintenant un objet à \qty{25}{\cm}. Calcule la nouvelle vergence nécessaire,
+        puis l'effort d'accommodation (variation de vergence).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le verre d'un myope]
+Un myope ne voit pas nettement au-delà de \qty{90}{\cm} (son point le plus lointain vu net). On veut
+qu'il voie un objet situé \textbf{à l'infini}.
+\begin{enumerate}[label=\alph*)]
+  \item Où le verre doit-il former l'image de cet objet lointain ? En déduire $v$ (avec son signe).
+  \item Calcule la distance focale $f$ et la vergence $C$ du verre. Convergent ou divergent ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le verre d'un hypermétrope]
+Un hypermétrope ne voit net qu'au-delà de \qty{100}{\cm}. Il veut lire un texte placé à \qty{25}{\cm}.
+Le verre doit donner de ce texte une image virtuelle à \qty{100}{\cm} (là où l'\oe il voit net).
+\begin{enumerate}[label=\alph*)]
+  \item Écris $u$ et $v$ (avec leurs signes), puis calcule $f$.
+  \item Donne la vergence $C$ et confirme la nature (convergent/divergent) du verre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[reconnaître le défaut sur un schéma]
+Pour chacun des deux yeux ci-dessous, un objet est à l'infini. Indique où se forme l'image, le
+\textbf{défaut} correspondant et le \textbf{verre} qui le corrige.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth,font=\scriptsize]
+  % oeil 1 : myope, image en avant
+  \begin{scope}
+    \node[black!70] at (0.2,1.9) {\oe il (1)};
+    \draw[black!35,dash pattern=on 2pt off 2pt] (-2.6,0)--(2.2,0);
+    \draw[line width=1.4pt,<->,black!65] (0,-1.2)--(0,1.2);
+    \fill[attncol!35] (2.0,-1.1) rectangle (2.18,1.1);
+    \draw[attncol!80,line width=0.7pt] (2.0,-1.1)--(2.0,1.1);
+    \node[attncol!70!black,below] at (2.0,-1.15) {rétine};
+    \foreach \y in {0.7,-0.7}{ \draw[black!75,line width=0.7pt] (-2.4,\y)--(0,\y);
+       \draw[defcol,line width=0.7pt] (0,\y)--(1.2,0);}
+    \draw[defcol,line width=0.7pt] (1.2,0)--(2.0,0.53);
+    \draw[defcol,line width=0.7pt] (1.2,0)--(2.0,-0.53);
+    \fill[black] (1.2,0) circle (1.3pt); \node[below] at (1.2,-0.06) {image};
+  \end{scope}
+  % oeil 2 : hypermetrope, image en arriere
+  \begin{scope}[shift={(6.4,0)}]
+    \node[black!70] at (0.2,1.9) {\oe il (2)};
+    \draw[black!35,dash pattern=on 2pt off 2pt] (-2.6,0)--(3.0,0);
+    \draw[line width=1.4pt,<->,black!65] (0,-1.2)--(0,1.2);
+    \fill[attncol!35] (1.9,-1.1) rectangle (2.08,1.1);
+    \draw[attncol!80,line width=0.7pt] (1.9,-1.1)--(1.9,1.1);
+    \node[attncol!70!black,below] at (1.9,-1.15) {rétine};
+    \foreach \y in {0.7,-0.7}{ \draw[black!75,line width=0.7pt] (-2.4,\y)--(0,\y);
+       \draw[defcol,line width=0.7pt] (0,\y)--(1.9,{0.7*(2.7-1.9)/2.7*sign(\y)});}
+    \draw[defcol,line width=0.6pt,dash pattern=on 2pt off 1.5pt] (1.9,0.207)--(2.7,0);
+    \draw[defcol,line width=0.6pt,dash pattern=on 2pt off 1.5pt] (1.9,-0.207)--(2.7,0);
+    \fill[black] (2.7,0) circle (1.3pt); \node[below] at (2.7,-0.06) {image};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{exo}
+
+\begin{exo}[de combien accommoder ?]
+Un \oe il a sa rétine à \qty{16}{\mm}. On lui présente un objet d'abord à l'infini, puis à
+\qty{20}{\cm}.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la vergence dans les deux cas.
+  \item De combien de dioptries l'\oe il a-t-il dû accommoder ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

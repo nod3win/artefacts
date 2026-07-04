@@ -1,0 +1,133 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: La force de gravitation --- la loi de Newton en $1/d^2$
+\sisetup{per-mode=symbol}
+
+Toute la fiche découle d'une seule loi : deux corps qui possèdent une masse
+s'attirent. On apprend ici à \textbf{calculer} cette force, à décrire ses
+\textbf{caractéristiques} et à \textbf{comparer} deux situations par la méthode
+des rapports.
+
+\begin{cle}[la loi de la gravitation universelle]
+Deux corps $A$ et $B$, de masses $m_A$ et $m_B$, dont les centres sont séparés
+d'une distance $d$, s'attirent avec une force d'intensité
+\[
+\boxed{\,F=\mathcal{G}\,\dfrac{m_A\times m_B}{d^{\,2}}\,}
+\]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item $F$ : intensité de la force, en newtons (\si{\newton}) ;
+  \item $\mathcal{G}=\num{6.67e-11}\ \si{\newton\metre\squared\per\kilogram\squared}$ :
+        constante de gravitation universelle ;
+  \item $m_A,\,m_B$ : masses des deux corps, en \si{\kilogram} ;
+  \item $d$ : distance entre les \emph{centres} des deux corps, en \si{\metre}.
+\end{itemize}
+\end{cle}
+
+\begin{cle}[les deux forces : quatre caractéristiques]
+$A$ et $B$ exercent l'un sur l'autre \emph{deux} forces $\vv{F}_{A/B}$ (de $A$ sur $B$)
+et $\vv{F}_{B/A}$ (de $B$ sur $A$). Elles sont :
+\textbf{(1) attractives}, \textbf{(2) de sens opposés}, \textbf{(3) portées par la
+droite $(AB)$} qui joint les centres, \textbf{(4) de même intensité}
+$F_{A/B}=F_{B/A}$. C'est un couple action--réaction (3\up{e} loi de Newton).
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[dashed,black!55,line width=0.7pt] (-1,-0.55)--(9,1.35);
+  \shade[ball color=black!35] (0.4,-0.3) circle (0.4);
+  \node[below=6pt of {(0.4,-0.3)},font=\itshape\small] {$A\ (m_A)$};
+  \shade[ball color=black!35] (7.4,1.0) circle (0.5);
+  \node[above=5pt of {(7.4,1.0)},font=\itshape\small] {$B\ (m_B)$};
+  \draw[->,line width=1.3pt,attncol] (0.85,-0.18)--(2.6,0.28)
+        node[midway,above,sloped,font=\small]{$\vv F_{B/A}$};
+  \draw[->,line width=1.3pt,attncol] (6.9,0.86)--(5.15,0.4)
+        node[midway,above,sloped,font=\small]{$\vv F_{A/B}$};
+  \draw[<->,black!70,line width=0.6pt] (0.4,-0.95)--(7.4,0.25)
+        node[midway,below,sloped,font=\itshape]{$d$};
+\end{tikzpicture}\\[-1pt]
+{\footnotesize Les deux forces sont attractives, opposées, sur $(AB)$, de même
+intensité.}
+\end{center}
+
+\begin{methode}[calculer une force pas à pas]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=0pt,label=\arabic*.]
+  \item Convertir toutes les grandeurs en unités SI (kg, m).
+  \item Calculer le \emph{numérateur} $\mathcal{G}\,m_A m_B$ (regrouper les
+        puissances de $10$).
+  \item Calculer le \emph{dénominateur} $d^2$.
+  \item Diviser. Donner le résultat en notation scientifique, en \si{\newton}.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[attraction Terre--Lune]
+$M_T=\num{6.0e24}\,\si{\kilogram}$, $M_L=\num{7.3e22}\,\si{\kilogram}$,
+$d=\num{3.84e8}\,\si{\metre}$.
+\[
+F=\mathcal{G}\frac{M_T M_L}{d^2}
+ =\frac{\num{6.67e-11}\times\num{6.0e24}\times\num{7.3e22}}{(\num{3.84e8})^2}
+ =\frac{\num{2.92e37}}{\num{1.47e17}}\approx\num{2.0e20}\,\si{\newton}.
+\]
+\end{exemplebox}
+
+\begin{methode}[comparer deux situations : la méthode des rapports]
+Pour comparer deux forces régies par la même loi, on écrit leur \textbf{rapport} :
+les constantes communes ($\mathcal{G}$, une masse partagée\dots) se simplifient.
+Si les masses sont identiques,
+\[
+\frac{F_1}{F_2}=\frac{\ \mathcal{G}\,m^2/d_1^2\ }{\ \mathcal{G}\,m^2/d_2^2\ }
+=\left(\frac{d_2}{d_1}\right)^{2}.
+\]
+\end{methode}
+
+\begin{piege}[la loi est en $1/d^2$, pas en $1/d$]
+Si l'on \textbf{double} la distance, la force est divisée par $2^2=\mathbf{4}$ (pas par
+$2$) ; si on la \textbf{triple}, elle est divisée par $3^2=9$. Et si on double
+\emph{une} masse, $F$ double ; si on double \emph{les deux} masses \emph{et} la
+distance : $F\to \dfrac{2\times 2}{2^2}F=F$ (inchangée !). Traitez toujours
+séparément l'effet des masses (au numérateur) et de la distance (au carré, au
+dénominateur).
+\end{piege}
+
+\begin{remarque}
+$\mathcal{G}$ est minuscule ($10^{-11}$) : entre objets courants la gravitation est
+imperceptible. Elle ne domine que si \emph{au moins une} masse est astronomique
+(planète, étoile).
+\end{remarque}
+
+\end{document}

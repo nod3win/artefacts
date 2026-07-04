@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[trouver l'autre isotope]
+Les deux abondances totalisent $100\,\%$ : $\ce{^{69}Ga}$ à $60\,\% = 0{,}60$, l'autre à
+$40\,\% = 0{,}40$. On écrit la masse moyenne, l'inconnue étant $A_2$ :
+\[ \overline{A} = 0{,}60\times 69 + 0{,}40\times A_2 = 69{,}8
+   \;\Longrightarrow\; 41{,}4 + 0{,}40\,A_2 = 69{,}8. \]
+D'où $0{,}40\,A_2 = 28{,}4$, soit $A_2 = 71$. L'autre isotope est $\ce{^{71}_{31}Ga}$.
+\end{corrige}
+
+\begin{corrige}[retrouver les deux abondances]
+On note $p$ l'abondance de $\ce{^{79}Br}$ et $1-p$ celle de $\ce{^{81}Br}$ :
+\[ \overline{A} = 79p + 81(1-p) = 81 - 2p = 79{,}9 \;\Longrightarrow\; 2p = 1{,}1 \;\Longrightarrow\;
+   p = 0{,}55. \]
+Donc $\ce{^{79}Br}$ a une abondance de $\mathbf{55\,\%}$ et $\ce{^{81}Br}$ de $45\,\%$.
+\end{corrige}
+
+\begin{corrige}[mise en situation : la fluorine $\ce{CaF2}$]
+$\ce{^{40}_{20}Ca}$ : $20$ protons, $20$ neutrons. \quad $\ce{^{19}_{9}F}$ : $9$ protons,
+$10$ neutrons. Le motif $\ce{CaF2}$ contient un $\ce{Ca}$ et deux $\ce{F}$.
+\begin{enumerate}[label=\alph*)]
+  \item Protons : $20 + 2\times 9 = 38$.
+  \item Neutrons : $20 + 2\times 10 = 40$.
+  \item Rapport : $\dfrac{38}{40} = \dfrac{19}{20} = 0{,}95$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[de l'uma à la mole]
+\begin{enumerate}[label=\alph*)]
+  \item $m(\ce{^{24}Mg}) \approx 24 \times \SI{1,66e-27}{\kilo\gram} = \SI{3,98e-26}{\kilo\gram}$.
+  \item $\SI{1}{uma} = \SI{1,66e-27}{\kilo\gram} = \SI{1,66e-24}{\gram}$
+        \big($= \tfrac{1}{N_{\!A}}\,\si{\gram}$\big).
+  \item Un atome de $\ce{^{12}C}$ pèse $12$ uma $= 12\times \SI{1,66e-24}{\gram}$. Pour une mole, on
+        multiplie par $N_{\!A}$ :
+        \[ m = 12 \times \SI{1,66e-24}{\gram} \times \SI{6,02e23}{} \approx \SI{12}{\gram}. \]
+        Une mole de $\ce{^{12}C}$ pèse $\approx \SI{12}{\gram}$ : c'est cohérent avec la définition
+        (la masse molaire du $\ce{^{12}C}$ vaut exactement $\SI{12}{\gram\per\mole}$), justement parce
+        que $\SI{1}{uma} = \tfrac{1}{N_{\!A}}\,\si{\gram}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux — synthèse]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{\textcolor{excol}{VRAI}} : même $Z$ $\Rightarrow$ même nombre de protons, donc même
+        nombre d'électrons à l'état neutre.
+  \item \textbf{\textcolor{attncol}{FAUX}} : c'est une moyenne pondérée, en général \emph{décimale}
+        (par ex.\ $\overline{A} = 35{,}5$ pour le chlore).
+  \item \textbf{\textcolor{excol}{VRAI}} : $0{,}33\,\% = \dfrac{0{,}33}{100} = 0{,}0033$. (Ne pas
+        confondre avec $0{,}33$, qui vaudrait $33\,\%$.)
+  \item \textbf{\textcolor{attncol}{FAUX}} : ils ont le \emph{même} nombre de protons (même élément) ;
+        c'est le nombre de \emph{neutrons} qui est plus grand.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,120 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\usetikzlibrary{babel}
+\begin{exo}[combien d'électrons par seconde ?]
+Un fil conducteur est parcouru par un courant continu d'intensité $I=\qty{3.2}{\ampere}$.
+On donne $e=\qty{1.6e-19}{\coulomb}$ et le nombre d'Avogadro $N_A=6{,}02\times10^{23}$.
+\begin{enumerate}[label=\alph*)]
+  \item Combien d'électrons traversent une section du fil \emph{chaque seconde} ?
+  \item Ce nombre représente-t-il plus ou moins d'une mole d'électrons ? Justifie par un rapport.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[répartition dans trois branches en parallèle]
+Trois récepteurs sont montés en parallèle. L'intensité totale débitée par le générateur est
+$I=\qty{6}{\ampere}$. On mesure $I_1=\qty{1.5}{\ampere}$ dans la première branche et
+$I_3=\qty{2}{\ampere}$ dans la troisième.
+\begin{center}
+\begin{circuitikz}[scale=0.85,transform shape,>=Stealth]
+  \coordinate (A) at (0,0); \coordinate (B) at (4.4,0);
+  \draw[thick] (A) -- (0,1.4); \draw (0,1.4) to[R,l=$R_1$] (4.4,1.4); \draw[thick] (4.4,1.4) -- (B);
+  \draw (A) to[R,l=$R_2$] (B);
+  \draw[thick] (A) -- (0,-1.4); \draw (0,-1.4) to[R,l=$R_3$] (4.4,-1.4); \draw[thick] (4.4,-1.4) -- (B);
+  \draw[->,primary,line width=1pt] (-1.5,0) -- (-0.12,0) node[midway,above,font=\footnotesize,primary]{$I$};
+  \draw[->,primary] (0.15,0.6) -- (0.5,1.15) node[right,font=\scriptsize,primary]{$I_1$};
+  \draw[->,primary] (0.7,0) -- (1.2,0) node[above,font=\scriptsize,primary]{$I_2$};
+  \draw[->,primary] (0.15,-0.6) -- (0.5,-1.15) node[right,font=\scriptsize,primary]{$I_3$};
+  \fill (A) circle(1.8pt); \node[below left,font=\footnotesize] at (A){$A$};
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité $I_2$ dans la deuxième branche.
+  \item Quelle intensité l'ampèremètre principal (au nœud $A$) indiquerait-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un nœud, puis un fil coupé]
+Dans le circuit ci-dessous, la lampe $L_1$ est en parallèle avec l'association série
+$L_2$--$L_3$. Un ampèremètre principal mesure $I=\qty{2}{\ampere}$ ; celui de la branche du bas mesure
+$I_2=\qty{0.8}{\ampere}$.
+\begin{center}
+\begin{circuitikz}[scale=0.9,transform shape,>=Stealth]
+  \coordinate (A) at (0,0); \coordinate (B) at (5,0);
+  \draw (A) -- (0,1.2) to[lamp,l=$L_1$] (5,1.2) -- (B);
+  \draw (A) -- (0,-1.2) to[lamp,l=$L_2$] (2.5,-1.2) to[lamp,l=$L_3$] (5,-1.2) -- (B);
+  \draw (B) -- (6.3,0) -- (6.3,-2.6) to[battery1,l_=$G$] (-1.3,-2.6) -- (-1.3,0) -- (A);
+  \draw[->,primary,line width=1pt] (-1.3,-1) -- (-1.3,-0.35) node[midway,left,font=\footnotesize,primary]{$I$};
+  \draw[->,primary] (0.55,1.2) -- (1.2,1.2) node[above,font=\scriptsize,primary]{$I_1$};
+  \draw[->,primary] (0.55,-1.2) -- (1.2,-1.2) node[below,font=\scriptsize,primary]{$I_2$};
+  \fill (A) circle(1.8pt); \fill (B) circle(1.8pt);
+  \node[above left,font=\footnotesize] at (A){$A$}; \node[above right,font=\footnotesize] at (B){$B$};
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité $I_1$ traversant la lampe $L_1$.
+  \item On \emph{coupe} le fil entre $L_2$ et $L_3$. Que vaut alors $I_2$, et que devient $I_1$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[intensité moyenne d'un courant variable]
+Pendant une durée $\Delta t=\qty{0.2}{\second}$, une charge $\Delta q=\qty{0.05}{\coulomb}$ traverse
+une section d'un conducteur.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité \emph{moyenne} du courant sur cet intervalle.
+  \item Comment définit-on l'intensité \emph{instantanée} $i(t)$ lorsque le débit de charge n'est pas
+        constant ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[nœud avec courants entrants et sortants]
+Au nœud $N$ ci-dessous, deux courants \emph{arrivent} ($I_1=\qty{4}{\ampere}$ et $I_2=\qty{3}{\ampere}$)
+et deux courants \emph{partent} ($I_3=\qty{5}{\ampere}$ et $I_4$). Détermine $I_4$.
+\begin{center}
+\begin{circuitikz}[scale=0.9,transform shape,>=Stealth]
+  \coordinate (N) at (0,0);
+  \draw[thick] (-1.6,0.9) -- (N); \draw[->,primary] (-1.2,0.68) -- (-0.7,0.4) node[above,font=\scriptsize,primary]{$I_1$};
+  \draw[thick] (-1.6,-0.9) -- (N); \draw[->,primary] (-1.2,-0.68) -- (-0.7,-0.4) node[below,font=\scriptsize,primary]{$I_2$};
+  \draw[thick] (N) -- (1.6,0.9); \draw[->,primary] (0.7,0.4) -- (1.2,0.68) node[above,font=\scriptsize,primary]{$I_3$};
+  \draw[thick] (N) -- (1.6,-0.9); \draw[->,primary] (0.7,-0.4) -- (1.2,-0.68) node[below,font=\scriptsize,primary]{$I_4$};
+  \fill (N) circle(2pt); \node[above,font=\footnotesize] at (0,0.15){$N$};
+\end{circuitikz}
+\end{center}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[où le champ s'annule-t-il ?]
+\begin{enumerate}[label=\alph*)]
+  \item Charges de \emph{même signe} : les champs ne s'opposent qu'\textbf{entre} les deux charges,
+        plus près de la \emph{petite} ($q_A$).
+  \item On égalise les intensités ($x$ = distance à $q_A$) :
+        \[ \frac{|q_A|}{x^2} = \frac{|q_B|}{(L-x)^2}
+           \;\Longrightarrow\; \frac{L-x}{x} = \sqrt{\frac{9}{1}} = 3. \]
+        D'où $L-x = 3x$, soit $x = L/4 = 40/4 = \SI{10}{\centi\metre}$ de $q_A$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le champ au milieu d'un dipôle]
+\begin{enumerate}[label=\alph*)]
+  \item $\vv{E}_A$ \emph{fuit} la charge $+$ : il pointe de $A$ vers $M$, donc \textbf{vers la
+        droite}. $\vv{E}_B$ \emph{pointe vers} la charge $-$ : de $M$ vers $B$, donc aussi
+        \textbf{vers la droite}. Les deux champs ont le \emph{même sens}.
+  \item Chaque champ est créé à la distance $\SI{0.10}{\metre}$ :
+        \[ E_A = E_B = \num{9e9}\times\frac{\num{1e-6}}{(0{,}10)^2} = \SI{9e5}{\newton\per\coulomb}. \]
+        Mêmes sens $\Rightarrow$ on ajoute :
+        \[ E_{\text{tot}} = E_A + E_B = \SI{1.8e6}{\newton\per\coulomb}\ \text{(vers } B). \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[au centre d'un carré]
+\begin{enumerate}[label=\alph*)]
+  \item $\vv{E}_{\text{tot}}(O) = \vv{0}$. Les quatre charges sont à égale distance de $O$ ; deux
+        charges diamétralement opposées créent des champs de même norme et de sens contraires, qui
+        s'annulent deux à deux.
+  \item En retirant le coin haut-gauche, sa \guillemotleft~partenaire~\guillemotright{} bas-droite
+        n'est plus compensée : son champ (qui \emph{fuit} le $+$) pointe du coin bas-droite vers
+        $O$ et au-delà, c'est-à-dire \textbf{vers le coin haut-gauche} (le coin devenu vide).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[du champ à la force]
+\begin{enumerate}[label=\alph*)]
+  \item \[ E = K\,\frac{|Q|}{r^2} = \num{9e9}\times\frac{\num{5e-6}}{(0{,}30)^2}
+             = \frac{\num{4.5e4}}{0{,}09} = \SI{5e5}{\newton\per\coulomb}, \]
+        dirigé \emph{vers l'extérieur} (à l'opposé de $Q$, positive).
+  \item $F = |q|\,E = \num{2e-9}\times\num{5e5} = \SI{1e-3}{\newton}$. Comme $q<0$, $\vv{F}$ est de
+        sens \emph{opposé} à $\vv{E}$ : la force pointe \textbf{vers $Q$} (attraction).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le champ ignore la charge test]
+\begin{enumerate}[label=\alph*)]
+  \item \[ E = \frac{F}{q} = \frac{\num{6e-4}}{\num{2e-9}} = \SI{3e5}{\newton\per\coulomb}. \]
+  \item Avec $q' = 3q$, la force devient $F' = 3F = \SI{1.8e-3}{\newton}$, et
+        \[ E = \frac{F'}{q'} = \frac{\num{1.8e-3}}{\num{6e-9}} = \SI{3e5}{\newton\per\coulomb}. \]
+        Le champ est \textbf{identique} : il ne dépend pas de la charge test, seulement de la source
+        et du point.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

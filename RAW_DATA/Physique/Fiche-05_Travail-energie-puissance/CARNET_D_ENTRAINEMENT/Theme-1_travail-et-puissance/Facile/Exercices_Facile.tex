@@ -1,0 +1,115 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[travail d'une force horizontale]
+Un ouvrier pousse une caisse en exerçant une force horizontale $\vv F$ constante d'intensité
+$F=\qty{200}{\newton}$, dirigée \emph{dans le sens} du déplacement. La caisse avance de
+$d=\qty{5}{\metre}$ sur un sol horizontal.
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \draw[black!70,line width=0.8pt] (-0.5,0)--(6,0);
+  \foreach \x in {-0.3,0.1,...,5.8} \draw[black!45] (\x,0)--(\x-0.18,-0.2);
+  \draw[fill=primary!12,draw=black!70] (0,0) rectangle (0.9,0.9);
+  \node at (0.45,0.45){\small $m$};
+  \draw[->,line width=1.1pt,excol] (0.9,0.45)--(2.4,0.45) node[midway,above]{$\vv F$};
+  \draw[<->,black!55] (0,-0.55)--(4.5,-0.55) node[midway,below]{\small $d=\qty{5}{\metre}$};
+  \draw[->,black!55] (4.5,0.9)--(5.3,0.9) node[right]{\small sens};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Que vaut l'angle $\alpha$ entre $\vv F$ et le déplacement, et donc $\cos\alpha$ ?
+  \item Calcule le travail $W$ de la force $\vv F$. Ce travail est-il moteur ou résistant ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[travail d'une force inclinée]
+On tire la même caisse à l'aide d'une corde qui fait un angle $\alpha=\ang{60}$ avec l'horizontale.
+L'intensité de la force vaut $F=\qty{80}{\newton}$ et la caisse avance de $d=\qty{10}{\metre}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \draw[black!70,line width=0.8pt] (-0.5,0)--(6,0);
+  \foreach \x in {-0.3,0.1,...,5.8} \draw[black!45] (\x,0)--(\x-0.18,-0.2);
+  \draw[fill=primary!12,draw=black!70] (0,0) rectangle (0.9,0.9);
+  \coordinate (O) at (0.9,0.45);
+  \draw[->,line width=1.1pt,defcol] (O)--++(60:2) node[above right]{$\vv F$};
+  \draw[->,black!60] ($(O)+(0.7,0)$) arc (0:60:0.7); \node at ($(O)+(0.95,0.45)$){\small $\alpha$};
+  \draw[dashed,black!55] (O)--++(2,0);
+  \draw[<->,black!55] (0,-0.55)--(5,-0.55) node[midway,below]{\small $d=\qty{10}{\metre}$};
+\end{tikzpicture}
+\end{center}
+Calcule le travail $W$ de la force $\vv F$ sur le déplacement (on prend $\cos\ang{60}=0,5$).
+\end{exo}
+
+\begin{exo}[une force qui ne travaille pas]
+Une personne porte une valise de poids $G=\qty{120}{\newton}$ à bout de bras, à hauteur constante,
+et marche horizontalement sur $d=\qty{15}{\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quel est l'angle entre le poids $\vv G$ (vertical) et le déplacement (horizontal) ?
+  \item Déduis-en le travail du poids $W(\vv G)$ pendant ce trajet.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[travail résistant du frottement]
+Un palet lancé sur une patinoire glisse de $d=\qty{8}{\metre}$ avant de s'arrêter. La force de
+frottement, constante, vaut $F_f=\qty{30}{\newton}$ ; elle est \emph{opposée} au déplacement.
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \draw[black!70,line width=0.8pt] (-0.5,0)--(6,0);
+  \draw[fill=primary!12,draw=black!70] (2.6,0) circle (0.35);
+  \draw[->,line width=1.1pt,primary] (2.25,0)--(1.15,0) node[left]{$\vv F_f$};
+  \draw[->,black!55] (3.0,0.55)--(4.0,0.55) node[right]{\small déplacement};
+  \draw[<->,black!55] (0.2,-0.5)--(5.4,-0.5) node[midway,below]{\small $d=\qty{8}{\metre}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Que vaut l'angle $\alpha$ entre $\vv F_f$ et le déplacement, et donc $\cos\alpha$ ?
+  \item Calcule le travail $W(\vv F_f)$. Quel est son signe et que traduit-il physiquement ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[de la puissance au travail]
+Un moteur développe une puissance constante $P=\qty{750}{\watt}$ pendant $\Delta t=\qty{20}{\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Rappelle la relation entre puissance, travail et durée, puis calcule le travail $W$ fourni.
+  \item Exprime ce travail en kilojoules (\si{\kilo\joule}).
+\end{enumerate}
+\end{exo}
+\end{document}

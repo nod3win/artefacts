@@ -1,0 +1,107 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[l'expérience de Millikan]
+Une particule de masse $m = \SI{32e-12}{\gram}$ reste \textbf{immobile} entre deux plaques
+horizontales distantes de $d = \SI{20}{\milli\metre}$, soumises à $U_{AB} = \SI{200}{\volt}$, la
+plaque \emph{supérieure} $A$ étant positive. On prend $g = \SI{10}{\newton\per\kilogram}$ et
+$e = \num{1.6e-19}\ \si{\coulomb}$.
+\begin{center}
+\begin{tikzpicture}[scale=0.8,>=Stealth,font=\scriptsize]
+  \fill[attncol!35] (-2.2,1.3) rectangle (2.2,1.42); \node[attncol,font=\bfseries] at (2.7,1.36){$+A$};
+  \fill[defcol!35] (-2.2,-1.42) rectangle (2.2,-1.3); \node[defcol,font=\bfseries] at (2.7,-1.36){$-B$};
+  \foreach \x in {-1.4,-0.7,0,0.7,1.4}{\draw[->,excol,line width=0.8pt] (\x,1.18)--(\x,-1.18);}
+  \node[excol] at (-1.75,0.5){$\vv{E}$};
+  \node[circle,fill=defcol,minimum size=5.5mm,inner sep=0pt,text=white,font=\scriptsize] at (0,0) {$-$};
+  \draw[<->,black!55] (-2.35,1.3)--(-2.35,-1.3) node[midway,left]{$d$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le signe de la charge de la particule.
+  \item Calcule le champ $E$, puis $|q|$, puis le nombre $N$ d'électrons en excès.
+  \item La particule deviendrait-elle neutre si on lui ajoutait $200$ électrons ? Justifie.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[travail dans un champ uniforme]
+Un champ électrique uniforme $E = \SI{3}{\volt\per\metre}$ est dirigé \textbf{vers le haut} (selon
+$+y$). On déplace une charge $q = \SI{+1}{\coulomb}$ du point $A$ au point $B$, situé \textbf{2~m plus
+bas} et \textbf{1~m sur le côté}.
+\begin{center}
+\begin{tikzpicture}[scale=0.8,>=Stealth,font=\scriptsize]
+  \foreach \x in {-1.5,-0.5,0.5,1.5,2.5}{\draw[->,excol,line width=0.7pt] (\x,-1.6)--(\x,1.6);}
+  \node[excol] at (-2.0,1.2){$\vv{E}$};
+  \node[circle,fill=attncol,inner sep=1.6pt,label=left:{$A$}] at (0,1.2) {};
+  \node[circle,fill=defcol,inner sep=1.6pt,label=right:{$B$}] at (1.6,-1.2) {};
+  \draw[->,black,dashed] (0,1.2)--(1.6,-1.2);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est l'intensité et le sens de la force électrique $\vv{F}=q\vv{E}$ ?
+  \item Calcule le travail de cette force lors du déplacement $A \to B$. (Seul le déplacement
+        \emph{parallèle} à $\vv{F}$ compte.)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le condensateur branché sur une batterie]
+Un condensateur plan est relié à une batterie. Pour chaque proposition, réponds par \textbf{vrai} ou
+\textbf{faux}, puis donne le nombre de propositions correctes.
+\begin{enumerate}[label=\alph*)]
+  \item La borne positive de la batterie est reliée à l'armature chargée \emph{négativement}.
+  \item La tension augmente de l'armature négative vers l'armature positive.
+  \item La charge totale des deux armatures est toujours nulle (autant de $+$ que de $-$).
+  \item Le vecteur champ électrique est orienté vers l'armature de potentiel le plus \emph{haut}.
+  \item Le champ électrique entre les deux armatures est uniforme.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[capstone : relier $E$, $U$ et $W$]
+Dans un condensateur plan, $U_{AB} = \SI{200}{\volt}$ ($V_A > V_B$) et $d = \SI{5}{\centi\metre}$.
+On abandonne près de l'armature $A$ une charge $q = \SI{+5}{\micro\coulomb}$, qui se déplace jusqu'à
+l'armature $B$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le champ électrique $E$ entre les armatures.
+  \item Calcule le travail $W_{A\to B} = q\,U_{AB}$ fourni par la force électrique.
+  \item Vérifie que l'on retrouve le même travail avec $W = |q|\,E\,d$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,79 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[hiérarchie des couleurs dans le verre]
+\begin{enumerate}[label=\alph*)]
+  \item $v=c/n$ : plus $n$ est grand, plus $v$ est petite. Comme $n_{\text{bleu}}>n_{\text{vert}}>n_{\text{rouge}}$ :
+        \[ v_{\text{bleu}}<v_{\text{vert}}<v_{\text{rouge}}. \]
+  \item La couleur la plus déviée est celle de plus grand indice : le \textbf{bleu} (il se rapproche
+        le plus de la normale, $\hat r_{\text{bleu}}$ le plus petit).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une lumière rouge sur un prisme]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Oui}, elle est déviée : tout rayon qui change de milieu est réfracté (dévié).
+  \item \textbf{Non}, elle n'est pas décomposée : la dispersion sépare des \emph{couleurs différentes}.
+        Une lumière monochromatique ne contient qu'une seule longueur d'onde — il n'y a rien à séparer.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la profondeur apparente d'une pièce]
+\[ h'=\frac{n_2}{n_1}\,h=\frac{1}{1{,}33}\times\qty{1.60}{m}\approx\qty{1.20}{m}. \]
+La pièce paraît à $\qty{1.20}{m}$ alors qu'elle est réellement à $\qty{1.60}{m}$ : elle semble
+remontée d'environ $\qty{40}{cm}$.
+\end{corrige}
+
+\begin{corrige}[remonter à la profondeur réelle]
+On inverse la relation $h'=\dfrac{n_2}{n_1}h$ :
+\[ h=\frac{n_1}{n_2}\,h'=\frac{1{,}33}{1}\times\qty{0.60}{m}\approx\qty{0.80}{m}. \]
+Le poisson est en réalité \emph{plus profond} ($\qty{0.80}{m}$) qu'il ne paraît : c'est pourquoi il
+faut viser \emph{sous} le poisson que l'on voit.
+\end{corrige}
+
+\begin{corrige}[la latte brisée]
+\begin{enumerate}[label=\alph*)]
+  \item Elle paraît \textbf{plus proche} de la surface : les rayons issus de $A$ s'éloignent de la
+        normale en sortant de l'eau, et leurs prolongements se croisent en $A'$, plus haut que $A$.
+  \item Un objet immergé paraît globalement plus \textbf{gros} (et plus proche) qu'en réalité : ce
+        n'est qu'une illusion d'optique due à la réfraction.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

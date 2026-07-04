@@ -1,0 +1,100 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[le parachutiste : vrai ou faux ?]
+Un parachutiste saute d'un avion. Réponds par \textbf{Vrai} ou \textbf{Faux} et justifie.
+\begin{enumerate}[label=\Alph*.]
+  \item Sa vitesse augmente si l'intensité de la résistance de l'air est \emph{supérieure} à celle du poids.
+  \item Il descend à vitesse constante si la résistance de l'air est \emph{inférieure} au poids.
+  \item Il descend à vitesse constante si la résistance de l'air est \emph{égale} au poids.
+  \item Tant qu'il y a de l'air, son accélération reste inférieure à $g$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois ballons qui tombent]
+On lâche de haut, sans vitesse initiale, trois ballons sphériques A, B, C de \emph{même volume} mais de
+masses différentes $m_A<m_B<m_C$. La chute est non libre (résistance de l'air). Une seule des
+affirmations suivantes est \textbf{incorrecte} : laquelle, et pourquoi ?
+\begin{enumerate}[label=\Alph*.]
+  \item Au fur et à mesure que les ballons tombent plus vite, leur accélération diminue.
+  \item Le ballon A ne subit aucune accélération dès que la résistance de l'air égale son poids.
+  \item L'accélération du ballon C peut dépasser $g=\qty{10}{\metre\per\second\squared}$.
+  \item La résistance de l'air augmente avec la vitesse.
+  \item Le classement par ordre \emph{décroissant} d'accélération (au même instant) est C, B, A.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[les trois phases d'un saut]
+Un parachutiste de masse $m=\qty{80}{\kilogram}$ saute ($g=\qty{10}{\metre\per\second\squared}$).
+\begin{enumerate}[label=\alph*)]
+  \item Au tout début du saut, la vitesse est quasi nulle donc $F_f\approx 0$. Que vaut son accélération ?
+  \item À un instant où la résistance de l'air vaut $F_f=\qty{600}{\newton}$, calcule son accélération.
+  \item Après quelques secondes, sa vitesse devient constante. Quelle est alors l'intensité de la résistance de l'air ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[masse, poids et chute : le vrai du faux]
+Indique les affirmations \textbf{correctes} et corrige les autres.
+\begin{enumerate}[label=\arabic*.]
+  \item Selon l'endroit où on le place sur la Terre, la masse d'un objet peut varier.
+  \item Le poids d'un objet peut varier d'un lieu à l'autre, mais pas sa masse.
+  \item Dans le vide, une plume et une bille lâchées ensemble touchent le sol en même temps.
+  \item Un corps deux fois plus lourd tombe deux fois plus vite en chute libre.
+  \item En chute avec frottement de l'air, l'accélération peut dépasser $g$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la corde en chute libre]
+On relie un bloc A et une sphère B par une corde (de masse négligeable), A au-dessus de B. On lâche
+l'ensemble d'une certaine hauteur et on \emph{néglige l'air}.
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \fill[primarydark] (-0.5,1.0) rectangle (0.5,1.7); \node[white,font=\small] at (0,1.35){A};
+  \draw[line width=1pt,black!60] (0,1.0) -- (0,0.45);
+  \fill[defcol] (0,0.15) circle (0.3) node[white,font=\small]{B};
+  \draw[->,line width=1.1pt,primary] (-1.5,1.2) -- ++(0,-1.2) node[below]{$\vv a$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est l'accélération de chacun des deux corps pendant la chute ?
+  \item Qu'en déduis-tu pour l'intensité de la force exercée sur la corde ? Justifie.
+\end{enumerate}
+\end{exo}
+\end{document}

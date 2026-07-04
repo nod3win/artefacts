@@ -1,0 +1,107 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Précipitation (Q vs Kps) et effet d'ion commun
+\sisetup{per-mode=symbol}
+\section*{\color{primarydark}Thème 4 — Précipitation ($Q$ vs $K_{\mathrm{ps}}$) et effet d'ion commun}
+
+Le $K_{\mathrm{ps}}$ décrit l'\emph{équilibre}. Mais si l'on mélange des ions dans des proportions
+quelconques, va-t-il se former un précipité ? Ce thème donne l'outil de décision — le \textbf{quotient
+réactionnel} $Q$ — puis montre comment un \textbf{ion commun} fait chuter la solubilité.
+
+\begin{cle}[le quotient réactionnel $Q$]
+$Q$ a la \textbf{même expression} que $K_{\mathrm{ps}}$, mais avec les concentrations
+\textbf{effectives} du mélange (pas forcément à l'équilibre) :
+\[ Q = [\ce{M^{q+}}]_{\text{actuel}}^{\,p}\;[\ce{X^{p-}}]_{\text{actuel}}^{\,q}. \]
+$K_{\mathrm{ps}}$ est une \emph{constante} (valeur de table) ; $Q$ est une \emph{variable} qui dépend de
+ce qu'on a réellement en solution.
+\end{cle}
+
+\begin{cle}[critère de précipitation]
+On compare $Q$ à $K_{\mathrm{ps}}$ :
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[thick,->,>=Stealth] (-0.2,0) -- (12.2,0) node[right,font=\small]{$Q$};
+  \fill[excol!16] (0,0) rectangle (4.7,1.1);
+  \node[excol!45!black,font=\footnotesize\bfseries] at (2.35,0.72) {Non saturé};
+  \node[excol!45!black,font=\scriptsize] at (2.35,0.32) {$Q<K_{\mathrm{ps}}$ : pas de précipité};
+  \draw[thick,primary,line width=1.4pt] (4.7,-0.05) -- (4.7,1.1);
+  \node[primary,font=\small\bfseries] at (4.7,1.45) {$K_{\mathrm{ps}}$};
+  \node[primary!60!black,font=\scriptsize] at (4.7,-0.45) {saturé};
+  \fill[attncol!16] (4.75,0) rectangle (11.8,1.1);
+  \node[attncol!55!black,font=\footnotesize\bfseries] at (8.3,0.72) {Sursaturé};
+  \node[attncol!55!black,font=\scriptsize] at (8.3,0.32) {$Q>K_{\mathrm{ps}}$ : précipitation};
+\end{tikzpicture}
+\end{center}
+\end{cle}
+
+\begin{methode}[décider s'il y a précipitation]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item Repérer le sel susceptible de se former et écrire son $K_{\mathrm{ps}}$.
+  \item Calculer $Q$ avec les concentrations \emph{effectives} du mélange.
+  \item Comparer : $Q<K_{\mathrm{ps}}$ (rien), $Q=K_{\mathrm{ps}}$ (saturé), $Q>K_{\mathrm{ps}}$
+        (précipite).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[précipitation de \ce{Mg(OH)2} dans l'eau de mer]
+$K_{\mathrm{ps}}(\ce{Mg(OH)2})=\num{9.0e-12}$. Dans l'eau de mer $[\ce{Mg^{2+}}]=\qty{0.06}{\mole\per\litre}$ ;
+on ajuste $[\ce{OH-}]=\qty{2.0e-3}{\mole\per\litre}$ :
+\[ Q=[\ce{Mg^{2+}}][\ce{OH-}]^{2}=(0{,}06)(\num{2.0e-3})^{2}=\num{2.4e-7}. \]
+$Q\gg K_{\mathrm{ps}}$ : la précipitation a bien lieu (procédé d'extraction du magnésium).
+\end{exemplebox}
+
+\begin{cle}[effet d'ion commun]
+Si on dissout $\ce{MX_n}$ dans une solution contenant \emph{déjà} l'anion \ce{X-} à une concentration
+$C$ grande ($C\gg s$), la solubilité \textbf{diminue} :
+\[ K_{\mathrm{ps}}=[\ce{M^{n+}}][\ce{X-}]^{n}\approx s'\,C^{\,n}
+   \quad\Longrightarrow\quad \boxed{\,s' = \dfrac{K_{\mathrm{ps}}}{C^{\,n}}\,} \]
+C'est le principe de Le Chatelier : l'ion ajouté « repousse » l'équilibre vers le solide.
+\end{cle}
+
+\begin{exemplebox}[\ce{AgCl} et l'ion commun \ce{Cl-}]
+$K_{\mathrm{ps}}(\ce{AgCl})=\num{1.8e-10}$. Dans l'eau pure $s_0=\sqrt{K_{\mathrm{ps}}}=\qty{1.3e-5}{\mole\per\litre}$.
+Si $[\ce{Cl-}]=\qty{0.10}{\mole\per\litre}$ (imposée) :
+\[ s'=[\ce{Ag+}]=\dfrac{K_{\mathrm{ps}}}{[\ce{Cl-}]}=\dfrac{\num{1.8e-10}}{0{,}10}=\qty{1.8e-9}{\mole\per\litre}. \]
+La solubilité est divisée par $\sim 7000$ : l'argent est « chassé » de la solution.
+\end{exemplebox}
+
+\begin{piege}[l'ion commun ne change pas $K_{\mathrm{ps}}$ !]
+$K_{\mathrm{ps}}$ reste constant à température fixée. L'égalité $K_{\mathrm{ps}}=[\ce{Ag+}][\ce{Cl-}]$
+est toujours vraie ; comme on \emph{impose} $[\ce{Cl-}]$ grand, c'est $[\ce{Ag+}]$ (donc $s$) qui chute.
+\end{piege}
+\end{document}

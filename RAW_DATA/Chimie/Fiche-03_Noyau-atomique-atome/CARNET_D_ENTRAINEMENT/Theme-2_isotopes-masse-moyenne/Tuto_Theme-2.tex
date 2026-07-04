@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Isotopes et masse atomique relative moyenne
+
+Un élément peut exister sous plusieurs versions qui ne diffèrent que par le nombre de neutrons : ses
+\textbf{isotopes}. Ce thème apprend à les reconnaître et à manier la \textbf{masse atomique relative
+moyenne}, le nombre décimal lu dans le tableau périodique.
+
+\begin{cle}[isotopes]
+Les \textbf{isotopes} d'un élément ont le \textbf{même $Z$} (même nombre de protons, donc même élément)
+mais des \textbf{nombres de masse $A$ différents} (donc des nombres de \emph{neutrons} différents).
+Mémo : \emph{mêmes protons, neutrons en nombre différent}. Ayant le même $Z$, ils ont le même nombre
+d'électrons (à l'état neutre) et donc \textbf{les mêmes propriétés chimiques} ; ils ne diffèrent que par
+leur \textbf{masse}. Exemple : $\ce{^{35}_{17}Cl}$ ($18\,n^0$) et $\ce{^{37}_{17}Cl}$ ($20\,n^0$).
+\end{cle}
+
+\begin{cle}[unité de masse atomique (uma / dalton)]
+L'\textbf{uma} (= \textbf{dalton}) est $\tfrac{1}{12}$ de la masse d'un atome de \textbf{carbone 12}
+($\ce{^{12}_{6}C}$) :
+\[ \SI{1}{uma} \approx \SI{1,66054e-27}{\kilo\gram} = \frac{1}{N_{\!A}}\ \si{\gram}
+   \quad(N_{\!A}\approx\SI{6,022e23}{\per\mole}). \]
+Un nucléon pèse $\approx 1$ uma, donc la masse d'un atome de nombre de masse $A$ vaut $\approx A$ uma.
+\end{cle}
+
+\begin{cle}[masse atomique relative moyenne]
+C'est la \textbf{moyenne pondérée} des masses des isotopes par leurs \textbf{abondances} :
+\[ \boxed{\ \overline{A} = \sum_i p_i A_i = p_1 A_1 + p_2 A_2 + \dots\ } \]
+où $A_i$ est le nombre de masse de l'isotope $i$ et $p_i$ son abondance \emph{fractionnaire}
+($8\,\% \to 0{,}08$). Les abondances se complètent à $1$ : $\sum_i p_i = 1$ ($=100\,\%$).
+\end{cle}
+
+\begin{methode}[calculer $\overline{A}$, ou retrouver une abondance]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item convertir les pourcentages en fractions, puis $\overline{A} = p_1 A_1 + p_2 A_2 + \dots$ ;
+  \item abondance manquante : utiliser $\sum p_i = 100\,\%$ ;
+  \item retrouver une abondance à partir de $\overline{A}$ (deux isotopes) : poser $p$ et $1-p$, puis
+        résoudre $\overline{A} = pA_1 + (1-p)A_2$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[masse moyenne du bore]
+Isotopes $\ce{^{10}B}$ ($20\,\%$) et $\ce{^{11}B}$ ($80\,\%$) :
+$\overline{A} = 0{,}20\times 10 + 0{,}80\times 11 = 10{,}8$. La moyenne « penche » vers l'isotope
+majoritaire ($\ce{^{11}B}$).
+\end{exemplebox}
+
+\begin{piege}[pourcentage $\neq$ fraction ; moyenne non entière]
+$0{,}33\,\%$ vaut $p = 0{,}0033$, à ne pas confondre avec $0{,}33$ (qui vaudrait $33\,\%$). Et
+$\overline{A}$ est en général \textbf{décimal} (une moyenne), pas un entier.
+\end{piege}
+
+\end{document}

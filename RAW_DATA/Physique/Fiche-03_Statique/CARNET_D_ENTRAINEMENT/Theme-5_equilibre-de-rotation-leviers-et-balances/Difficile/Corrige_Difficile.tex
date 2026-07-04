@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[quelle force a la plus grande intensité ?]
+\begin{enumerate}[label=\alph*)]
+  \item $\vv F_1$ et $\vv F_3$ (toutes deux vers le bas, de part et d'autre de $O$) créent des moments
+        \emph{opposés} ; $\vv F_2$, appliquée en $O$, a un bras nul. Équilibre de rotation :
+        $F_1\times 0{,}4 = F_3\times 0{,}2$, donc
+        $F_3 = F_1\times\dfrac{0{,}4}{0{,}2} = 2F_1 = \qty{20}{N}$.
+  \item Équilibre de translation : la force montante équilibre les deux forces descendantes :
+        $F_2 = F_1 + F_3 = 10 + 20 = \qty{30}{N}$.
+  \item $F_1 = \qty{10}{N} < F_3 = \qty{20}{N} < F_2 = \qty{30}{N}$ : la plus intense est $\vv F_2$, la
+        force ascendante unique qui équilibre les deux autres.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[barre articulée tenue par un dynamomètre]
+Poids suspendu : $G = m g = 3\times 10 = \qty{30}{N}$.
+\begin{enumerate}[label=\alph*)]
+  \item Moments autour de $A$ (le moment de $R_A$ est nul, bras nul) : $T\times 0{,}8 = G\times 0{,}6$,
+        donc
+        \[ T = \frac{30\times 0{,}6}{0{,}8} = \qty{22.5}{N}. \]
+  \item Équilibre de translation (vertical) : $R_A + T = G$, donc
+        $R_A = 30 - 22{,}5 = \qty{7.5}{N}$ (dirigée vers le haut).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la table à deux pieds]
+Poids : table $\qty{40}{N}$ (au milieu), charge $\qty{20}{N}$ (à \qty{0.25}{m} de $A$).
+\begin{enumerate}[label=\alph*)]
+  \item Moments autour de $A$ : $R_C\times 1 = 40\times 0{,}5 + 20\times 0{,}25 = 20 + 5 = 25$, donc
+        $R_C = \qty{25}{N}$. Translation : $R_A + R_C = 40+20 = 60$, donc $R_A = \qty{35}{N}$.
+  \item \textbf{Non}, c'est l'\emph{inverse} : $R_A = \qty{35}{N}$ et $R_C = \qty{25}{N}$. Le pied $A$,
+        le plus proche de la charge, en supporte la plus grande part.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la passerelle : jusqu'où avancer sans basculer ?]
+Poids : passerelle $\qty{200}{N}$ (en $x=\qty{2}{m}$), personne $\qty{400}{N}$.
+\begin{enumerate}[label=\alph*)]
+  \item Personne en $x=\qty{2}{m}$. Moments autour de $A$ :
+        $R_B\times 3 = 200\times 2 + 400\times 2 = 1200 \Rightarrow R_B = \qty{400}{N}$.
+        Translation : $R_A = 600 - 400 = \qty{200}{N}$.
+  \item Personne en $x=\qty{4}{m}$ : $R_B\times 3 = 200\times 2 + 400\times 4 = 2000 \Rightarrow
+        R_B \approx \qty{666.7}{N}$, d'où $R_A = 600 - 666{,}7 = \qty{-66.7}{N}$. Une valeur
+        \textbf{négative} est impossible pour un appui simple (qui ne peut que \emph{pousser} vers le
+        haut) : la passerelle \textbf{se soulève en $A$ et bascule} autour de $B$.
+  \item Le décollement en $A$ correspond à $R_A = 0$. Moments autour de $B$ (avec $R_A=0$), la personne
+        en $x=p$ : $400\times(p-3) = 200\times(3-2) = 200 \Rightarrow p-3 = 0{,}5 \Rightarrow
+        p = \qty{3.5}{m}$. Au-delà de \qty{3.5}{m}, la passerelle bascule.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

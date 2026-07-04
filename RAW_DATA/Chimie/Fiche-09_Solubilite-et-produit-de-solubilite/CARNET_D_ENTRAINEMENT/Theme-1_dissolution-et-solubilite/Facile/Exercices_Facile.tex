@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[écrire l'équation de dissolution]
+Écris l'équation de dissolution dans l'eau de chacun de ces sels (avec les états $(s)$ et $(aq)$ et les
+bons coefficients).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{AgCl}
+  \item \ce{CaCO3}
+  \item \ce{CaF2}
+  \item \ce{Fe(OH)3}
+  \item \ce{Ag3PO4}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[reconnaître le type $p{:}q$]
+Pour chaque sel, donne le nombre de cations et d'anions libérés par une unité dissoute, puis son
+type $p{:}q$ (cation$\,$:$\,$anion).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{KCl}
+  \item \ce{PbBr2}
+  \item \ce{Ag2CrO4}
+  \item \ce{Al(OH)3}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[concentration des ions à saturation]
+On note $s$ la solubilité molaire. Exprime $[\ce{cation}]$ et $[\ce{anion}]$ en fonction de $s$ à
+saturation.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{AgCl}
+  \item \ce{CaF2}
+  \item \ce{Ag3PO4}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[du molaire au massique : $s_m = s\times M$]
+Calcule la solubilité massique $s_m$ à partir de la solubilité molaire $s$ et de la masse molaire $M$.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{AgCl} : $s=\qty{1.3e-5}{\mole\per\litre}$, $M=\qty{143.3}{\gram\per\mole}$.
+  \item \ce{CaF2} : $s=\qty{2.1e-4}{\mole\per\litre}$, $M=\qty{78.1}{\gram\per\mole}$.
+  \item \ce{BaSO4} : $s=\qty{1.0e-5}{\mole\per\litre}$, $M=\qty{233.4}{\gram\per\mole}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[du massique au molaire : $s = s_m/M$]
+Calcule la solubilité molaire $s$ à partir de la solubilité massique $s_m$ et de la masse molaire $M$.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CaCO3} : $s_m=\qty{6.9e-3}{\gram\per\litre}$, $M=\qty{100.1}{\gram\per\mole}$.
+  \item \ce{PbBr2} : $s_m=\qty{4.84}{\gram\per\litre}$, $M=\qty{367.0}{\gram\per\mole}$.
+\end{enumerate}
+\end{exo}
+\end{document}

@@ -1,0 +1,95 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[où la réflexion totale est-elle possible ?]
+\begin{enumerate}[label=\alph*)]
+  \item La réflexion totale exige un passage du milieu \emph{le plus} réfringent vers le \emph{moins}
+        réfringent. Ce sont donc : \textbf{verre $\to$ eau}, \textbf{verre $\to$ air} et
+        \textbf{eau $\to$ air}. (Tout passage vers le verre, ou air $\to$ eau, est exclu.)
+  \item Angles limites $\hat{\imath}_{\text{lim}}=\arcsin(n_2/n_1)$ :
+        \begin{itemize}[leftmargin=1.5em,topsep=1pt]
+          \item verre $\to$ air : $\arcsin(1/1{,}5)\approx\ang{41.8}$ ;
+          \item eau $\to$ air : $\arcsin(1/1{,}33)\approx\ang{48.8}$ ;
+          \item verre $\to$ eau : $\arcsin(1{,}33/1{,}5)\approx\ang{62.5}$.
+        \end{itemize}
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le prisme à réflexion totale]
+\begin{enumerate}[label=\alph*)]
+  \item Le rayon entre sans être dévié (incidence $\ang{0}$) et frappe l'hypoténuse. Le triangle étant
+        rectangle isocèle, l'angle d'incidence sur l'hypoténuse vaut $\ang{45}$ par rapport à sa normale.
+  \item $\ang{45}>\ang{41.8}=\hat{\imath}_{\text{lim}}$ : la réflexion est \textbf{totale}, l'hypoténuse
+        agit comme un miroir parfait.
+  \item Le rayon repart perpendiculairement à la face de sortie (sans déviation à la sortie) : au
+        total, le prisme a fait tourner le rayon de $\boxed{\ang{90}}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un rayon dans une fibre optique]
+\begin{enumerate}[label=\alph*)]
+  \item En $M$, la normale à la face d'entrée est horizontale ; le rayon fait $\ang{40}$ avec cette
+        face, donc $\ang{50}$ avec la normale horizontale. En $P$, la paroi est horizontale, donc sa
+        normale est verticale : l'angle d'incidence y est le complémentaire,
+        $\hat{\imath}_P=\ang{90}-\ang{40}=\ang{50}$.
+  \item On part du verre vers l'air : $\hat{\imath}_{\text{lim}}\approx\ang{41.8}$. Comme
+        $\hat{\imath}_P=\ang{50}>\ang{41.8}$, la réflexion en $P$ est \textbf{totale} : le rayon ne
+        sort pas, il rebondit et reste \textbf{guidé} dans la fibre.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[indice minimal pour réfléchir à $\ang{45}$]
+La réflexion est totale si $\hat{\imath}_1\ge\hat{\imath}_{\text{lim}}=\arcsin(1/n)$, soit
+$\sin\ang{45}\ge\dfrac{1}{n}$ :
+\[ n\ge\frac{1}{\sin\ang{45}}=\frac{1}{0{,}707}=\sqrt{2}\approx1{,}41. \]
+Il faut donc un verre d'indice \textbf{au moins} $n_{\min}=\sqrt{2}\approx1{,}41$. (Le verre usuel
+$n=1{,}5>\sqrt2$ convient largement, d'où l'emploi des prismes à $\ang{45}$.)
+\end{corrige}
+
+\begin{corrige}[le prisme immergé]
+\begin{enumerate}[label=\alph*)]
+  \item Réflexion totale si $\ang{60}>\hat{\imath}_{\text{lim}}=\arcsin(n'/n)$, soit
+        $\sin\ang{60}>\dfrac{n'}{1{,}5}$, c'est-à-dire $\boxed{n'<1{,}5\,\sin\ang{60}}$.
+  \item $n'_{\max}=1{,}5\times\sin\ang{60}=1{,}5\times0{,}866\approx1{,}30$. Dans l'air, $n'=1<1{,}30$ :
+        la réflexion \textbf{reste totale}. (En revanche, plongé dans l'eau $n'=1{,}33>1{,}30$, ce
+        prisme cesserait de réfléchir totalement à cette face.)
+\end{enumerate}
+\end{corrige}
+
+\end{document}

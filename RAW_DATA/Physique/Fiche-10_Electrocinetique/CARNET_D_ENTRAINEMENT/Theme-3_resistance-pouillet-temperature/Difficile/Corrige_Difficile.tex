@@ -1,0 +1,79 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\usetikzlibrary{babel}
+\begin{corrige}[à quelle température la résistance double-t-elle ?]
+On part de $\dfrac{R(T)}{R_0}=1+\alpha T$.
+\begin{enumerate}[label=\alph*)]
+  \item Doublée : $2=1+\alpha T\Rightarrow \alpha T=1\Rightarrow T=\dfrac{1}{\alpha}=\dfrac{1}{4\times10^{-3}}=\qty{250}{\degreeCelsius}$.
+  \item Triplée : $3=1+\alpha T\Rightarrow \alpha T=2\Rightarrow T=\dfrac{2}{\alpha}=\qty{500}{\degreeCelsius}$.
+  \item \textbf{Prudence} : le modèle $\rho=\rho_0(1+\alpha T)$ n'est valable que si $T$ n'est
+        \emph{pas trop élevée}. À $\qty{500}{\degreeCelsius}$, la loi linéaire devient approximative.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[trois composés : trouver l'affirmation fausse]
+Le meilleur conducteur a la plus petite $\rho$ ; la conductivité est $\sigma=1/\rho$.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai} : $\rho_3=\qty{3e6}{\ohm\metre}$ est énorme $\Rightarrow$ isolant.
+  \item \textbf{Vrai} : $\rho_1=\qty{1.6e-8}{\ohm\metre}$ est la plus petite.
+  \item \textbf{Vrai} : $\rho_1<\rho_2 \Rightarrow \sigma_1>\sigma_2$.
+  \item \textbf{Faux} : $\rho_3\gg\rho_1$, donc $\sigma_3\ll\sigma_1$. C'est l'affirmation fausse.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[dimensionner une section]
+\begin{enumerate}[label=\alph*)]
+  \item On isole $S$ dans $R=\rho L/S$ : $S=\dfrac{\rho L}{R}=\dfrac{22\times10^{-8}\times10}{2}
+        =\qty{1.1e-6}{\metre\squared}=\qty{1.1}{\milli\metre\squared}$.
+  \item \textbf{Faux} : la section requise est $\qty{1.1}{\milli\metre\squared}$, et non
+        $\qty{2.2}{\milli\metre\squared}$ (le double donnerait $R=\qty{1}{\ohm}$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[câble de cuivre : synthèse]
+\begin{enumerate}[label=\alph*)]
+  \item $R=\rho\dfrac{L}{S}=1{,}7\times10^{-8}\times\dfrac{100}{2\times10^{-6}}=\qty{0.85}{\ohm}$.
+  \item $R\propto1/S$ : pour diviser $R$ par 2, il faut \emph{doubler} la section, soit
+        $S'=\qty{4}{\milli\metre\squared}$.
+  \item $R(50)=R_0(1+\alpha T)=0{,}85\times\bigl(1+3{,}9\times10^{-3}\times50\bigr)
+        =0{,}85\times1{,}195\approx\qty{1.02}{\ohm}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

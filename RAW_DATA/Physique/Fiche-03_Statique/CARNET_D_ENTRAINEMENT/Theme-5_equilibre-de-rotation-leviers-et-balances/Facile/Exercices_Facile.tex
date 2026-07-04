@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[levier équilibré]
+Un levier repose sur un pivot central. À gauche, un poids $G_A=\qty{20}{N}$ est placé à
+$d_A=\qty{0.3}{m}$ du pivot. À droite, un poids $G_B$ est à $d_B=\qty{0.2}{m}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \fill[primary!75] (0,0)--(-0.4,-0.7)--(0.4,-0.7)--cycle;
+  \draw[primarydark,line width=2pt] (-2.6,0.12)--(2.6,0.12);
+  \draw[->,line width=1.1pt,orange] (-2,0.12)--(-2,-0.9) node[below]{\scriptsize $G_A$};
+  \draw[->,line width=1.1pt,orange] (1.4,0.12)--(1.4,-0.9) node[below]{\scriptsize $G_B$};
+  \draw[<->,black!55] (-2,0.6)--(0,0.6) node[midway,fill=white,inner sep=1pt]{\scriptsize $d_A$};
+  \draw[<->,black!55] (0,0.9)--(1.4,0.9) node[midway,fill=white,inner sep=1pt]{\scriptsize $d_B$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Écris la condition d'équilibre de rotation.
+  \item Calcule l'intensité $G_B$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[à quelle distance ?]
+Sur un levier à pivot, un poids $G_A=\qty{12}{N}$ est à $d_A=\qty{0.5}{m}$ du pivot. On veut
+l'équilibrer avec un poids $G_B=\qty{30}{N}$.
+\begin{enumerate}[label=\alph*)]
+  \item À quelle distance $d_B$ du pivot faut-il placer $G_B$ ?
+  \item Ce point est-il plus proche ou plus loin du pivot que $G_A$ ? Est-ce logique ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux moments opposés]
+Une barre peut tourner autour d'un axe. Une force $\vv F_1$ ($F_1=\qty{6}{N}$, bras
+$b_1=\qty{0.4}{m}$) crée un moment dans le sens horaire.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule ce moment.
+  \item Quelle intensité $F_2$, appliquée avec un bras $b_2=\qty{0.3}{m}$ dans le sens anti-horaire,
+        maintient la barre en équilibre ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la balançoire]
+Sur une balançoire (pivot au centre), un enfant de poids \qty{300}{N} est assis à \qty{1.5}{m} du
+pivot.
+\begin{enumerate}[label=\alph*)]
+  \item Quel moment son poids crée-t-il par rapport au pivot ?
+  \item Un adulte de poids \qty{750}{N} veut l'équilibrer. À quelle distance du pivot doit-il s'asseoir ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[réaction et bras nul]
+Une poutre légère horizontale repose sur deux appuis $A$ et $B$. Pour calculer les réactions, on
+choisit d'écrire l'équilibre de rotation \emph{autour de l'appui $A$}.
+\begin{enumerate}[label=\alph*)]
+  \item Que vaut le bras de levier de la réaction $R_A$ par rapport à l'axe passant par $A$ ?
+  \item Quel est alors le moment de $R_A$ autour de $A$ ? Quel est l'intérêt de choisir cet axe ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{exo}[composition d'un cation]
+Pour chaque cation, donne le nombre de protons $n(p^+)$, de neutrons $n(n^0)$ et d'électrons $n(e^-)$.
+On rappelle $n(e^-) = Z - q$ (ici $q>0$ : le cation a \emph{perdu} des électrons).
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{^{24}_{12}Mg^{2+}}$
+  \item $\ce{^{23}_{11}Na^{+}}$
+  \item $\ce{^{27}_{13}Al^{3+}}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[composition d'un anion]
+Pour chaque anion, donne $n(p^+)$, $n(n^0)$ et $n(e^-)$. Un anion a \emph{gagné} des électrons :
+$n(e^-) = Z - q$ avec $q<0$ revient à \emph{ajouter} $|q|$ électrons.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{^{35}_{17}Cl^{-}}$
+  \item $\ce{^{16}_{8}O^{2-}}$
+  \item $\ce{^{32}_{16}S^{2-}}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le noyau ne bouge pas]
+Réponds brièvement, en justifiant.
+\begin{enumerate}[label=\alph*)]
+  \item Combien y a-t-il d'électrons \emph{dans le noyau} de l'ion $\ce{^{45}_{21}Sc^{3+}}$ ?
+  \item Entre l'atome $\ce{^{40}_{20}Ca}$ et l'ion $\ce{^{40}_{20}Ca^{2+}}$, laquelle des trois grandeurs
+        $n(p^+)$, $n(n^0)$, $n(e^-)$ change ? Lesquelles restent identiques ?
+  \item L'atome $\ce{^{40}_{20}Ca}$ et l'ion $\ce{^{40}_{20}Ca^{2+}}$ ont-ils le même nombre de nucléons ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver la charge d'un ion]
+On te donne le nombre de protons, d'électrons et le nombre de masse $A$ d'un ion. Détermine sa charge
+$q = Z - n(e^-)$, puis écris sa notation complète $^{A}_{Z}\mathrm{X}^{q}$ (symbole fourni).
+\begin{enumerate}[label=\alph*)]
+  \item magnésium ($\mathrm{Mg}$) : $12$ protons, $10$ électrons, $A = 24$ ;
+  \item oxygène ($\mathrm{O}$) : $8$ protons, $10$ électrons, $A = 16$ ;
+  \item fer ($\mathrm{Fe}$) : $26$ protons, $24$ électrons, $A = 56$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[atome contre ion : compter et comparer]
+Pour chaque couple atome/ion, donne $\big(n(p^+),\,n(n^0),\,n(e^-)\big)$ des \emph{deux} espèces, puis
+indique en une phrase ce qui les distingue.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{^{23}_{11}Na}$ et $\ce{^{23}_{11}Na^{+}}$ ;
+  \item $\ce{^{32}_{16}S}$ et $\ce{^{32}_{16}S^{2-}}$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

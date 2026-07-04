@@ -1,0 +1,79 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{center}\color{primarydark}\large\bfseries Thème 4 — La formule de Nernst \quad$\bullet$\quad Niveau Moyen\end{center}
+
+\begin{exo}[l'effet de la dilution]
+Électrode de cuivre \ce{Cu^{2+} + 2 e^- <=> Cu} ($E_{\mathrm{r}}^{\circ}=+0{,}34$~V, $n=2$). Calcule
+son potentiel pour trois concentrations, puis conclus sur l'effet de la dilution.
+\begin{enumerate}[label=\alph*)]
+  \item $[\ce{Cu^{2+}}]=1$~mol/L
+  \item $[\ce{Cu^{2+}}]=0{,}1$~mol/L
+  \item $[\ce{Cu^{2+}}]=0{,}01$~mol/L
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une demi-pile d'argent]
+Électrode d'argent \ce{Ag+ + e^- <=> Ag} ($E_{\mathrm{r}}^{\circ}=+0{,}80$~V, $n=1$) avec
+$[\ce{Ag+}]=0{,}10$~mol/L. Calcule son potentiel.
+\end{exo}
+
+\begin{exo}[f.é.m.\ hors des conditions standard]
+Pile $\ce{Cu | Cu^{2+}(1\,mol/L) || Ag+(0{,}10\,mol/L) | Ag}$ à $25\,^{\circ}$C. Données :
+$E_{\mathrm{r}}^{\circ}(\ce{Ag+}/\ce{Ag})=+0{,}80$~V, $E_{\mathrm{r}}^{\circ}(\ce{Cu^{2+}}/\ce{Cu})
+=+0{,}34$~V.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le potentiel de la cathode (argent).
+  \item Calcule le potentiel de l'anode (cuivre).
+  \item En déduis la f.é.m.\ $\Delta E$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le potentiel du permanganate]
+Demi-équation \ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O} ($E_{\mathrm{r}}^{\circ}=+1{,}51$~V,
+$n=5$). On donne $[\ce{MnO4^-}]=[\ce{Mn^{2+}}]=0{,}01$~mol/L et $\mathrm{pH}=0$ (donc $[\ce{H+}]=1$~mol/L).
+Le potentiel s'écrit $E=E_{\mathrm{r}}^{\circ}+\dfrac{0{,}06}{5}\log\dfrac{[\ce{MnO4^-}]\,[\ce{H+}]^{8}}
+{[\ce{Mn^{2+}}]}$. Calcule $E$.
+\end{exo}
+
+\begin{exo}[retrouver un rapport de concentrations]
+Pour le couple \ce{Fe^{3+}}/\ce{Fe^{2+}} ($E_{\mathrm{r}}^{\circ}=+0{,}77$~V, $n=1$), on mesure
+$E=+0{,}83$~V. Quel est le rapport $\dfrac{[\ce{Fe^{3+}}]}{[\ce{Fe^{2+}}]}$ ?
+\end{exo}
+
+\end{document}

@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[récipient scellé : pressions et volumes]
+$n_{\text{tot}}=0{,}40+0{,}10=\qty{0.50}{\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\chi(\ce{N2})=\dfrac{0{,}40}{0{,}50}=0{,}80$ ; $\chi(\ce{O2})=\dfrac{0{,}10}{0{,}50}=0{,}20$.
+  \item $p_{\text{tot}}=\dfrac{n_{\text{tot}}RT}{V}=\dfrac{0{,}50\times0{,}082\times298}{12{,}2}
+        =\dfrac{12{,}218}{12{,}2}\approx\qty{1.0}{atm}$.
+  \item $p(\ce{N2})=0{,}80\times1{,}0=\qty{0.80}{atm}$ ; $p(\ce{O2})=0{,}20\times1{,}0=\qty{0.20}{atm}$.
+  \item \textbf{Même volume} : chaque gaz occupe la \emph{totalité} du récipient
+        ($\qty{12.2}{\litre}$), un gaz remplit tout l'espace disponible. En revanche leurs
+        \textbf{pressions partielles diffèrent} ($p(\ce{N2})=4\times p(\ce{O2})$), car il y a quatre
+        fois plus de moles de \ce{N2}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[mélange de trois gaz préparé par pesée]
+On convertit les masses en moles ($n=m/M$).
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{N2})=\dfrac{1{,}4}{28}=0{,}05$ ; $n(\ce{O2})=\dfrac{1{,}6}{32}=0{,}05$ ;
+        $n(\ce{CO2})=\dfrac{4{,}4}{44}=0{,}10$ ; $n_{\text{tot}}=\qty{0.20}{\mole}$.
+  \item $p_{\text{tot}}=\dfrac{0{,}20\times0{,}082\times300}{10{,}0}=\dfrac{4{,}92}{10{,}0}
+        =\qty{0.492}{atm}$.
+  \item $\chi(\ce{N2})=\chi(\ce{O2})=\dfrac{0{,}05}{0{,}20}=0{,}25$ ;
+        $\chi(\ce{CO2})=\dfrac{0{,}10}{0{,}20}=0{,}50$.
+  \item $p(\ce{N2})=p(\ce{O2})=0{,}25\times0{,}492=\qty{0.123}{atm}$ ;
+        $p(\ce{CO2})=0{,}50\times0{,}492=\qty{0.246}{atm}$. \\
+        Somme $=0{,}123+0{,}123+0{,}246=\qty{0.492}{atm}=p_{\text{tot}}$ \checkmark.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[dihydrogène recueilli sur l'eau]
+La pression mesurée est la somme (Dalton) : $p_{\text{tot}}=p(\ce{H2})+p(\ce{H2O})$.
+\begin{enumerate}[label=\alph*)]
+  \item $p(\ce{H2})=p_{\text{tot}}-p(\ce{H2O})=760-24=\qty{736}{mmHg}$.
+  \item $p(\ce{H2})=\dfrac{736}{760}=\qty{0.968}{atm}$.
+  \item $n(\ce{H2})=\dfrac{p(\ce{H2})\,V}{RT}=\dfrac{0{,}968\times0{,}50}{0{,}082\times298}
+        =\dfrac{0{,}484}{24{,}44}\approx\qty{0.020}{\mole}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[composition de l'air et pressions partielles]
+\begin{enumerate}[label=\alph*)]
+  \item À $p$ et $T$ fixés, la loi d'Avogadro donne $V\propto n$ : le volume qu'occuperait chaque gaz
+        seul est proportionnel à sa quantité de matière. La proportion \emph{en volume} est donc égale
+        à la proportion \emph{en moles}, c'est-à-dire la fraction molaire.
+  \item $\chi(\ce{N2})=0{,}78$ ; $\chi(\ce{O2})=0{,}21$ ; $\chi(\ce{Ar})=0{,}01$.
+  \item $p(\ce{N2})=0{,}78\times1{,}0=\qty{0.78}{atm}$ ; $p(\ce{O2})=\qty{0.21}{atm}$ ;
+        $p(\ce{Ar})=\qty{0.01}{atm}$. Somme $=0{,}78+0{,}21+0{,}01=\qty{1.0}{atm}$ \checkmark.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

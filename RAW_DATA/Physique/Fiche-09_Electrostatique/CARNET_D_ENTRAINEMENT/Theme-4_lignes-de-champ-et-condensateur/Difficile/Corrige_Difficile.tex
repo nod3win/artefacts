@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[quel spectre est correct ?]
+\begin{enumerate}[label=\alph*)]
+  \item Le schéma \textbf{(C)} : les lignes sont parallèles (champ uniforme) et $\vv{E}$ est bien
+        \emph{tangent} à la ligne, dans son sens.
+  \item \textbf{(A)} : le vecteur $\vv{E}$ est dessiné \emph{perpendiculaire} à la ligne ; or $\vv{E}$
+        doit toujours être \textbf{tangent} à la ligne de champ. \textbf{(B)} : les flèches vont du
+        $-$ vers le $+$ ; or les lignes partent \textbf{toujours} du $+$ et vont vers le $-$ : le
+        sens est inversé.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[condensateur : attention au piège]
+\begin{enumerate}[label=\alph*)]
+  \item Le champ ne dépend que de $U$ et $d$, \emph{pas} du rayon (piège) :
+        \[ d = 2R = \SI{20}{\centi\metre} = \SI{0.20}{\metre},\qquad
+           E = \frac{|U_{AB}|}{d} = \frac{100}{0{,}20} = \SI{500}{\volt\per\metre}. \]
+        Le rayon $R$ est inutile.
+  \item Le potentiel décroît linéairement : au milieu, $V_P = (V_A+V_B)/2$, donc
+        \[ U_{AP} = V_A - V_P = \frac{V_A - V_B}{2} = \frac{U_{AB}}{2} = \frac{100}{2} = \SI{50}{\volt}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[analyse complète d'un spectre]
+\begin{enumerate}[label=\alph*)]
+  \item Les lignes \emph{partent} de $A$ (donc $A$ est \textbf{positive}) et \emph{aboutissent} à
+        $B$ (donc $B$ est \textbf{négative}).
+  \item Le nombre de lignes est proportionnel à la charge : $A$ émet $12$ lignes, $B$ n'en reçoit
+        que $6$, donc
+        \[ \frac{|q_A|}{|q_B|} = \frac{12}{6} = 2. \]
+        $A$ est \textbf{deux fois} plus grande (en valeur absolue) que $B$.
+  \item Les $6$ lignes restantes de $A$ ne trouvent pas de charge $-$ à rejoindre : elles
+        \textbf{s'échappent vers l'infini} (la charge $-$ est trop petite pour toutes les capter).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux : lignes de champ et condensateur]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai}. Par définition, la ligne est orientée dans le sens de $\vv{E}$.
+  \item \textbf{Faux}. Les lignes ne se croisent \emph{jamais} (direction unique du champ) ; là où
+        $\vv{E}=\vv{0}$, aucune ligne ne passe.
+  \item \textbf{Faux}. $\vv{E}$ pointe vers l'armature de potentiel le plus \emph{bas} (du $+$ vers
+        le $-$).
+  \item \textbf{Vrai}. Densité des lignes $=$ intensité du champ.
+  \item \textbf{Vrai}. C'est le point neutre, au milieu du segment (champs opposés égaux).
+\end{enumerate}
+\textbf{Bilan : 3 propositions correctes} (a, d, e).
+\end{corrige}
+
+\end{document}

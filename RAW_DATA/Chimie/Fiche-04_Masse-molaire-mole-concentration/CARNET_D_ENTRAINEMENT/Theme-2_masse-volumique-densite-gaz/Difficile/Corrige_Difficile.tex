@@ -1,99 +1,87 @@
-% =====================================================================
-%  FICHE 4 — THEME 2 — Corrige niveau DIFFICILE
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit\Molar{M}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{excol}{RGB}{0,135,90}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
-   toptitle=0.5mm,bottomtitle=0.5mm}}
-\newcounter{exo}
-\newenvironment{corr}[1][]{%
-  \par\medskip\refstepcounter{exo}%
-  \noindent\begin{tcolorbox}[boxbase,colback=excol!5,colframe=excol,
-     title={\textsc{Correction \theexo}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}]}%
-  {\end{tcolorbox}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- \textbf{Corrigé Difficile}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\newcommand{\NA}{N_{\!\text{A}}}
-\setlength{\parindent}{0pt}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
 
-\begin{center}
-{\LARGE\bfseries\color{primarydark} Thème 2 --- Corrigé Difficile}
-\end{center}
+\begin{center}{\large\bfseries\color{primarydark} Thème 2 — Corrigé Difficile}\end{center}
 
-\begin{corr}[attribuer trois solides à leur cylindre]
-\textbf{a)} Le volume de chaque solide se déduit de $V=m/\rho$ (avec $m=\SI{20.0}{\gram}$) :
-\[ V(\ce{X})=\frac{20}{4{,}0}=\SI{5.0}{\milli\litre};\quad
-   V(\ce{Y})=\frac{20}{10{,}0}=\SI{2.0}{\milli\litre};\quad
-   V(\ce{Z})=\frac{20}{2{,}0}=\SI{10.0}{\milli\litre}. \]
-\textbf{b)} Le niveau final vaut $\SI{10.0}{\milli\litre}$ (eau) $+$ volume du solide :
-\[ \ce{X}:10+5=\SI{15}{\milli\litre};\quad \ce{Y}:10+2=\SI{12}{\milli\litre};\quad
-   \ce{Z}:10+10=\SI{20}{\milli\litre}. \]
-\textbf{c)} On rapproche des lectures : (a)$=\SI{15}{\milli\litre}$, (b)$=\SI{12}{\milli\litre}$,
-(c)$=\SI{20}{\milli\litre}$ :
-\[ \boxed{\ce{X}\leftrightarrow(a),\quad \ce{Y}\leftrightarrow(b),\quad \ce{Z}\leftrightarrow(c)} \]
-\textit{Idée-clé :} plus un solide est \emph{dense}, plus son volume est petit à masse égale, donc
-moins il fait monter l'eau (\ce{Y}, le plus dense, monte le moins).
-\end{corr}
+\begin{corrige}[identifier un gaz par sa masse molaire]
+\begin{enumerate}[label=\alph*)]
+  \item $n = \dfrac{V}{V_m} = \dfrac{5{,}6}{22{,}4} = \SI{0.250}{\mole}$.
+  \item $M = \dfrac{m}{n} = \dfrac{8{,}5}{0{,}250} = \SI{34}{\gram\per\mole}$.
+  \item $M(\ce{H2X}) = 2\times 1 + M(\ce{X}) = 34 \Rightarrow M(\ce{X}) = 32$ : c'est le \textbf{soufre}.
+        Le gaz est le sulfure d'hydrogène \ce{H2S}.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[combien de moles de dioxygène dans une pièce ?]
-\textbf{a)} $V_{\text{pièce}}=2\times2\times5{,}6=\SI{22.4}{\cubic\metre}$. Comme
-$\SI{1}{\cubic\metre}=\SI{1000}{\litre}$ : $V_{\text{pièce}}=\SI{22400}{\litre}$.\\[2pt]
-\textbf{b)} Le dioxygène occupe $\SI{20}{\percent}$ du volume :
-$V(\ce{O2})=0{,}20\times22400=\SI{4480}{\litre}$.\\[2pt]
-\textbf{c)} $n(\ce{O2})=\dfrac{V}{V_m}=\dfrac{4480}{22{,}4}=\SI{200}{\mole}$.
-\[ \boxed{n(\ce{O2})=\SI{200}{\mole}} \]
-\end{corr}
+\begin{corrige}[le piège des unités]
+\begin{enumerate}[label=\alph*)]
+  \item L'eau ajoutée pèse $21{,}45 - 13{,}45 = \SI{8.00}{\gram}$ ; comme $\rho_{\text{eau}} = \SI{1}{\gram\per\milli\litre}$,
+        le volume intérieur est $V = \SI{8.00}{\milli\litre}$.
+  \item Masse du liquide : $57{,}89 - 13{,}45 = \SI{44.44}{\gram}$, donc
+        $\rho = \dfrac{44{,}44}{8{,}00} = \SI{5.56}{\gram\per\milli\litre}$.
+  \item $\SI{1}{\milli\litre} = \SI{1}{\cubic\centi\metre}$, donc $\rho = \SI{5.56}{\gram\per\cubic\centi\metre}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[de la masse volumique d'un gaz à son identité]
-\textbf{a)} Une mole occupe $V_m$ et a une masse $M$ ; sa masse volumique est donc
-\[ \rho=\frac{m}{V}=\frac{M}{V_m}. \]
-\textbf{b)} On isole $M$ : $M=\rho\times V_m=1{,}25\times22{,}4=\SI{28}{\gram\per\mole}$. Une masse
-molaire de $\SI{28}{\gram\per\mole}$ correspond par exemple au \textbf{diazote \ce{N2}}
-($2\times14=28$) ou au monoxyde de carbone \ce{CO} ($12+16=28$).\\[2pt]
-\textbf{c)} $m=\rho\,V=1{,}25\times10{,}0=\SI{12.5}{\gram}$ (ou :
-$n=\tfrac{10}{22{,}4}=\SI{0.446}{\mole}$, $m=nM=\SI{12.5}{\gram}$).
-\[ \boxed{M=\SI{28}{\gram\per\mole}\ (\ce{N2}\ \text{ou}\ \ce{CO});\quad m(\SI{10}{\litre})=\SI{12.5}{\gram}} \]
-\end{corr}
+\begin{corrige}[jongler avec les unités de masse]
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{7.72}{\hecto\gram} = \SI{772}{\gram}$, donc $V = \dfrac{m}{\rho} = \dfrac{772}{19{,}3} = \SI{40.0}{\cubic\centi\metre}$.
+  \item $\SI{1}{\cubic\centi\metre} = \SI{1}{\milli\litre}$, donc $V = \SI{40.0}{\milli\litre}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{corr}[même masse, volumes différents]
-\textbf{a)} $\ce{CH4}$ : $M=12+4=\SI{16}{\gram\per\mole}$, $n=\tfrac{32}{16}=\SI{2.0}{\mole}$,
-$V=2{,}0\times22{,}4=\SI{44.8}{\litre}$.\\
-$\ce{O2}$ : $M=\SI{32}{\gram\per\mole}$, $n=\tfrac{32}{32}=\SI{1.0}{\mole}$,
-$V=1{,}0\times22{,}4=\SI{22.4}{\litre}$.\\[2pt]
-\textbf{b)} Le méthane occupe le plus grand volume ($\SI{44.8}{\litre}$).
-\[ \boxed{V(\ce{CH4})=\SI{44.8}{\litre}>V(\ce{O2})=\SI{22.4}{\litre}} \]
-\textit{Justification :} à masse égale, la molécule la plus \emph{légère} (\ce{CH4}) fournit \emph{plus
-de moles}, donc plus de volume gazeux --- le volume d'un gaz ne dépend que de la quantité de matière.
-\end{corr}
+\begin{corrige}[du solide aux entités]
+\begin{enumerate}[label=\alph*)]
+  \item Volume du cube : $V = 2^3 = \SI{8}{\cubic\centi\metre}$, donc $m = \rho\,V = 2{,}0\times 8 = \SI{16}{\gram}$.
+  \item $n = \dfrac{m}{M} = \dfrac{16}{40} = \SI{0.40}{\mole}$.
+  \item $N = n\,N_{\mathrm{A}} = 0{,}40\times 6{,}02\times10^{23} = 2{,}41\times10^{23}$ motifs \ce{NaOH}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[comparer deux liquides]
+\begin{enumerate}[label=\alph*)]
+  \item Masses : éthanol $m = 0{,}79\times 50 = \SI{39.5}{\gram}$ ; eau $m = 1{,}00\times 50 = \SI{50}{\gram}$.
+        L'\textbf{eau} est plus lourde à volume égal.
+  \item $n(\text{éthanol}) = \dfrac{39{,}5}{46} = \SI{0.859}{\mole}$ ; $n(\ce{H2O}) = \dfrac{50}{18} = \SI{2.78}{\mole}$.
+  \item L'\textbf{eau} contient le plus de molécules. Bien que l'éthanol et l'eau soient comparés à
+        volume égal, la molécule d'eau est bien plus légère ($M$ plus petit) : à masse voisine, l'eau
+        fournit donc beaucoup plus de moles — et de molécules.
+\end{enumerate}
+\end{corrige}
 
 \end{document}

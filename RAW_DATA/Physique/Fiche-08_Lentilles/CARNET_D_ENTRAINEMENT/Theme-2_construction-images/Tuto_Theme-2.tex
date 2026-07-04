@@ -1,0 +1,141 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+% THEME_TITLE: Construire l'image : les trois rayons particuliers
+\sisetup{per-mode=symbol}
+
+Pour trouver l'image $A'B'$ d'un objet $AB$ (petite flèche verticale, $A$ sur l'axe) sans aucun
+calcul, on trace des \textbf{rayons particuliers}. Deux suffisent ; le troisième sert de vérification.
+
+\begin{cle}[les trois rayons particuliers d'une lentille mince]
+\begin{enumerate}[label=\textbf{(\roman*)},leftmargin=2.2em,topsep=2pt,itemsep=1pt]
+  \item un rayon passant par le \textbf{centre optique $O$} n'est \textbf{pas dévié} ;
+  \item un rayon \textbf{parallèle à l'axe} émerge en passant par le \textbf{foyer image $F'$} ;
+  \item un rayon passant par le \textbf{foyer objet $F$} émerge \textbf{parallèle à l'axe}.
+\end{enumerate}
+Le point où se croisent les rayons émergents est l'image $B'$ du sommet ; $A'$ est sa projection sur
+l'axe.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82,>=Stealth,font=\footnotesize]
+  \draw[black!35,dash pattern=on 3pt off 2pt] (-7.0,0)--(4.6,0);
+  \draw[line width=1.5pt,<->,black!65] (0,-2.1)--(0,2.1);
+  \fill[black] (0,0) circle (1.3pt); \node[above right=0pt] at (0,0) {$O$};
+  \fill[primary] (2,0) circle (1.5pt); \node[below] at (2,0) {$F'$};
+  \fill[primary] (-2,0) circle (1.5pt); \node[below] at (-2,0) {$F$};
+  \fill[primary] (4,0) circle (1.5pt); \node[below] at (4,0) {$2F'$};
+  \fill[primary] (-4,0) circle (1.5pt); \node[below] at (-4,0) {$2F$};
+  % objet
+  \draw[attncol,line width=1.8pt,->] (-6,0)--(-6,1.4); \node[attncol,left] at (-6,0.7) {$B$};
+  \node[attncol,below] at (-6,0) {$A$};
+  % image
+  \draw[excol,line width=1.8pt,->] (3,0)--(3,-0.7); \node[excol,right] at (3,-0.35) {$B'$};
+  \node[excol,above right] at (3,0) {$A'$};
+  % rayon (i) par O
+  \draw[black!75,line width=0.8pt] (-6,1.4)--(0,0);
+  \draw[defcol,line width=0.8pt,->] (0,0)--(3.9,-0.91);
+  \node[black!70,above] at (-3.1,0.85) {(i) par $O$};
+  % rayon (ii) parallele -> F'
+  \draw[black!75,line width=0.8pt] (-6,1.4)--(0,1.4);
+  \draw[defcol,line width=0.8pt,->] (0,1.4)--(3.9,-1.33);
+  \node[black!70,above] at (-3.1,1.5) {(ii) parallèle};
+  % rayon (iii) par F -> parallele
+  \draw[black!75,line width=0.8pt] (-6,1.4)--(0,-0.7);
+  \draw[defcol,line width=0.8pt,->] (0,-0.7)--(3.9,-0.7);
+  \node[black!70,below left] at (-1.5,-0.5) {(iii) par $F$};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[construire et caractériser une image en 4 gestes]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item Tracer l'axe, la lentille, placer $O$, $F$, $F'$ (et $2F$, $2F'$) et l'objet $AB$.
+  \item Choisir \textbf{deux} rayons particuliers issus du sommet $B$.
+  \item Leur intersection donne $B'$ ; projeter sur l'axe pour $A'$.
+  \item \textbf{Caractériser} : réelle/virtuelle, droite/renversée, agrandie/réduite.
+\end{enumerate}
+\end{methode}
+
+\begin{cle}[lire la nature de l'image sur le dessin]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Réelle} : les rayons émergents se croisent \emph{vraiment}, de l'\emph{autre côté} de la
+        lentille (recueillable sur un écran). \textbf{Virtuelle} : seuls leurs \emph{prolongements}
+        (pointillés) se croisent, du \emph{même côté} que l'objet.
+  \item \textbf{Renversée} (pointe en bas) ou \textbf{droite} (même sens que l'objet).
+  \item \textbf{Agrandie}, \textbf{réduite} ou de \textbf{même taille} selon la hauteur de $A'B'$.
+\end{itemize}
+Règle utile : une image \emph{réelle} est toujours renversée ; une image \emph{virtuelle} est
+toujours droite.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8,>=Stealth,font=\footnotesize]
+  % cas loupe : convergente, objet entre O et F -> image virtuelle droite agrandie
+  \draw[black!35,dash pattern=on 3pt off 2pt] (-5.0,0)--(3.2,0);
+  \draw[line width=1.5pt,<->,black!65] (0,-1.9)--(0,1.9);
+  \fill[black] (0,0) circle (1.2pt); \node[below right] at (0,0) {$O$};
+  \fill[primary] (2,0) circle (1.4pt); \node[below] at (2,0) {$F'$};
+  \fill[primary] (-2,0) circle (1.4pt); \node[below] at (-2,0) {$F$};
+  \draw[attncol,line width=1.8pt,->] (-1.2,0)--(-1.2,0.7); \node[attncol,below] at (-1.2,0) {$A$};
+  \node[attncol,left] at (-1.2,0.35) {$B$};
+  % image virtuelle en -3, hauteur 1.75
+  \draw[violet,line width=1.8pt,->] (-3,0)--(-3,1.75); \node[violet,right] at (-3,1.6) {$B'$};
+  \node[violet,below] at (-3,0) {$A'$};
+  % rayon par O
+  \draw[black!75,line width=0.8pt] (-1.2,0.7)--(0,0);
+  \draw[defcol,line width=0.8pt,->] (0,0)--(2.6,-1.52);
+  \draw[violet,line width=0.7pt,dash pattern=on 2.5pt off 2pt] (0,0)--(-3,1.75);
+  % rayon parallele -> F'
+  \draw[black!75,line width=0.8pt] (-1.2,0.7)--(0,0.7);
+  \draw[defcol,line width=0.8pt,->] (0,0.7)--(2.6,-0.21);
+  \draw[violet,line width=0.7pt,dash pattern=on 2.5pt off 2pt] (0,0.7)--(-3,1.75);
+  \node[violet,align=center] at (-4.1,0.9) {image\\ virtuelle};
+  \node[black!60,align=center] at (1.7,1.5) {\textbf{loupe} : objet\\ entre $O$ et $F$};
+\end{tikzpicture}
+\end{center}
+
+\begin{piege}[les réflexes qui trompent]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item Le rayon (iii) part \emph{de $F$} vers la lentille puis ressort parallèle : ne l'inverse pas.
+  \item Une image \textbf{virtuelle} ne se pose \emph{jamais} sur un écran : on la voit à l'\oe il, à
+        travers la lentille.
+  \item Une lentille \textbf{divergente} (objet réel) donne \emph{toujours} une image virtuelle,
+        droite et plus petite : inutile de chercher une image réelle.
+\end{itemize}
+\end{piege}
+
+\end{document}

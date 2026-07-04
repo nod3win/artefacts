@@ -1,0 +1,81 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[calculer d'abord la masse molaire]
+\begin{enumerate}[label=\alph*)]
+  \item $M(\ce{NaCl})=23+35,5=\qty{58.5}{\gram\per\mole}$ ; $n=\dfrac{5,85}{58,5}=\qty{0.10}{\mole}.$
+  \item $M(\ce{H2SO4})=2+32+4\times16=\qty{98}{\gram\per\mole}$ ; $n=\dfrac{9,8}{98}=\qty{0.10}{\mole}.$
+  \item $M(\ce{CaCO3})=40+12+3\times16=\qty{100}{\gram\per\mole}$ ; $n=\dfrac{10}{100}=\qty{0.10}{\mole}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[enchaîner masse et volume gazeux (TPN)]
+\begin{enumerate}[label=\alph*)]
+  \item $n=\dfrac{8}{32}=\qty{0.25}{\mole}$, puis $V=0,25\times22,4=\qty{5.6}{\litre}.$
+  \item $n=\dfrac{11,2}{22,4}=\qty{0.5}{\mole}$, puis $m=0,5\times28=\qty{14}{\gram}$ \;($M(\ce{N2})=28$).
+  \item $n=\dfrac{3,4}{17}=\qty{0.2}{\mole}$, puis $V=0,2\times22,4=\qty{4.48}{\litre}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[solutions dans les deux sens]
+\begin{enumerate}[label=\alph*)]
+  \item $n=C\,V=0,10\times0,500=\qty{0.050}{\mole}$, puis $m=0,050\times180=\qty{9}{\gram}.$
+  \item $V=\dfrac{n}{C}=\dfrac{0,05}{0,25}=\qty{0.2}{\litre}=\qty{200}{\milli\litre}.$
+  \item $n=\dfrac{4}{40}=\qty{0.10}{\mole}$, puis $C=\dfrac{0,10}{0,200}=\qty{0.5}{\mole\per\litre}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[passer par la masse volumique]
+\begin{enumerate}[label=\alph*)]
+  \item $m=\rho\,V=1,03\times500=\qty{515}{\gram}.$
+  \item $m=1,00\times1000=\qty{1000}{\gram}$, puis $n=\dfrac{1000}{18}\approx\qty{55.6}{\mole}.$
+  \item $m=0,79\times50=\qty{39.5}{\gram}$, puis $n=\dfrac{39,5}{46}\approx\qty{0.86}{\mole}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[compter les entités avec $N_A$]
+\begin{enumerate}[label=\alph*)]
+  \item $n=\dfrac{9}{18}=\qty{0.5}{\mole}$, puis $N=n\,N_A=0,5\times\num{6.02e23}=\num{3.01e23}$ molécules.
+  \item Chaque motif \ce{Na2SO4} libère \textbf{2} ions \ce{Na+} : $n(\ce{Na+})=2\times0,20=\qty{0.40}{\mole}$,
+        soit $N=0,40\times\num{6.02e23}=\num{2.41e23}$ ions.
+  \item $m_1=\dfrac{M}{N_A}=\dfrac{18}{\num{6.02e23}}\approx\num{2.99e-23}$ \si{\gram}.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

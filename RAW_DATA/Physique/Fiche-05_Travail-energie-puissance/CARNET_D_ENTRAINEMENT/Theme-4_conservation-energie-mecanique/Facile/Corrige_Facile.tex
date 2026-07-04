@@ -1,0 +1,73 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[vitesse en bas d'une chute libre]
+$\tfrac12 m v^2=mgh$ : la masse se simplifie, $v^2=2gh=2\times10\times5=100$, donc
+$v=\sqrt{100}=\qty{10}{\metre\per\second}$.
+\end{corrige}
+
+\begin{corrige}[hauteur maximale d'un lancer vertical]
+\[
+h_{\max}=\frac{v_0^2}{2g}=\frac{20^2}{2\times10}=\frac{400}{20}=\qty{20}{\metre}.
+\]
+\end{corrige}
+
+\begin{corrige}[conversion de l'énergie potentielle en énergie cinétique]
+\begin{enumerate}[label=\alph*)]
+  \item $E_p=mgh=2\times10\times3=\qty{60}{\joule}$.
+  \item Sans frottement, $E_m$ se conserve : en bas $E_p=0$, donc $E_c=E_m=E_p(\text{haut})=\qty{60}{\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vitesse en bas d'une pente sans frottement]
+$v=\sqrt{2gh}=\sqrt{2\times10\times1,8}=\sqrt{36}=\qty{6}{\metre\per\second}$.
+\emph{Non}, ce résultat ne dépend \textbf{pas} de l'inclinaison : seule la hauteur de descente $h$
+compte (une pente plus douce donne la même vitesse finale, sur une distance plus longue).
+\end{corrige}
+
+\begin{corrige}[l'énergie mécanique se conserve]
+\begin{enumerate}[label=\alph*)]
+  \item Au sommet : $E_m=E_c+E_p=0+80=\qty{80}{\joule}$.
+  \item Sans frottement $E_m$ reste égale à \qty{80}{\joule}. En bas $E_p=0$, donc
+        $E_c=E_m-E_p=80-0=\qty{80}{\joule}$.
+\end{enumerate}
+\end{corrige}
+\end{document}

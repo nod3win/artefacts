@@ -1,0 +1,120 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 4 — Niveau Moyen}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[fentes de Young : interfrange et frange]
+Le schéma représente un dispositif de fentes de Young. Données :
+$\lambda=\SI{500}{\nano\metre}$, $a=\SI{1}{\milli\metre}$, $D=\SI{3}{\metre}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \draw[black,line width=1pt](0,-1.8)--(0,1.8);
+  \draw[black,line width=1.4pt](6.4,-2)--(6.4,2.1)node[above,font=\footnotesize]{écran};
+  \fill[black](0,0.5)circle(2pt)node[left,font=\footnotesize]{$S_2$};
+  \fill[black](0,-0.5)circle(2pt)node[left,font=\footnotesize]{$S_1$};
+  \draw[<->,black](-0.5,-0.5)--(-0.5,0.5)node[midway,left,font=\footnotesize]{$a$};
+  \draw[dashed,black!55](0,0)--(6.4,0);
+  \draw[<->,black](0,-1.75)--(6.4,-1.75)node[midway,below,font=\footnotesize]{$D$};
+  \fill[primary](6.4,1.1)circle(2pt)node[right,font=\footnotesize]{$M$};
+  \draw[defcol,line width=0.8pt](0,-0.5)--(6.4,1.1);
+  \draw[defcol,line width=0.8pt](0,0.5)--(6.4,1.1);
+  \draw[<->,black](6.7,0)--(6.7,1.1)node[midway,right,font=\footnotesize]{$x$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'interfrange $i$.
+  \item Donne la position $x_2$ de la 2\textsuperscript{e} frange brillante.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[nature de l'interférence en un point]
+Deux sources cohérentes $S_1$ et $S_2$ émettent des ondes de longueur d'onde
+$\lambda=\SI{3}{\centi\metre}$. On étudie un point $M$ défini par ses distances aux sources
+$d_1=S_1M$ et $d_2=S_2M$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \fill[black](0,0.8)circle(2.2pt)node[left,font=\footnotesize]{$S_1$};
+  \fill[black](0,-0.8)circle(2.2pt)node[left,font=\footnotesize]{$S_2$};
+  \fill[primary](5.5,0.3)circle(2.4pt)node[right,font=\footnotesize]{$M$};
+  \draw[defcol,line width=0.9pt](0,0.8)--(5.5,0.3)node[midway,above,font=\footnotesize,black]{$d_1$};
+  \draw[excol,line width=0.9pt](0,-0.8)--(5.5,0.3)node[midway,below,font=\footnotesize,black]{$d_2$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Cas 1 : $d_1=\SI{15}{\centi\metre}$, $d_2=\SI{12}{\centi\metre}$. Calcule $\delta$ et
+        donne la nature de l'interférence.
+  \item Cas 2 : $d_1=\SI{13.5}{\centi\metre}$, $d_2=\SI{12}{\centi\metre}$. Même question.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remonter à la longueur d'onde]
+Dans une expérience de Young, on mesure un interfrange $i=\SI{3}{\milli\metre}$ avec des fentes
+distantes de $a=\SI{0.5}{\milli\metre}$ et un écran à $D=\SI{2.5}{\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item À partir de $i=\lambda D/a$, exprime $\lambda$ en fonction de $i$, $a$ et $D$.
+  \item Calcule $\lambda$ (en \si{\metre} puis en \si{\nano\metre}).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[du déphasage à la différence de marche]
+On donne le déphasage $\Delta\varphi$ entre deux ondes cohérentes de longueur d'onde $\lambda$.
+On rappelle $\Delta\varphi=2\pi\,\delta/\lambda$.
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta\varphi=\pi$ : quelle est la nature de l'interférence, et que vaut $\delta$
+        (en fonction de $\lambda$) ?
+  \item $\Delta\varphi=2\pi$ : mêmes questions.
+  \item $\Delta\varphi=\pi/2$ : mêmes questions.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[éloigner l'écran]
+Un dispositif de Young utilise $\lambda=\SI{600}{\nano\metre}$ et des fentes distantes de
+$a=\SI{0.4}{\milli\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'interfrange $i$ pour un écran à $D=\SI{1}{\metre}$.
+  \item Calcule $i$ pour $D=\SI{2}{\metre}$.
+  \item Comment varie l'interfrange lorsqu'on \emph{double} la distance $D$ ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,71 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Nommer entièrement une molécule à deux fonctions]
+\begin{enumerate}[label=\alph*)]
+  \item Un $-\ce{COOH}$ (\textbf{acide carboxylique}) et un $-\ce{OH}$ (\textbf{alcool secondaire}). Priorité : $-\ce{COOH} > -\ce{OH}$.
+  \item L'acide donne le suffixe (\textit{acide \dots-oïque}). L'alcool devient le préfixe \textbf{hydroxy-}.
+  \item Chaîne de $4$~carbones (butanoïque), le carbone du $-\ce{COOH}$ est le n$^\circ$1 : \ce{C1OOH-C2H2-C3H(OH)-C4H3}. Le $-\ce{OH}$ est en position 3. Nom : \textbf{acide 3-hydroxybutanoïque}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Trois fonctions, une seule principale]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{alcène} ($\ce{C=C}$), \textbf{alcool} ($-\ce{OH}$) et \textbf{cétone} ($-\ce{CO}-$).
+  \item Priorité décroissante : cétone $-\ce{CO}- \;>\; -\ce{OH} \;>\; \ce{C=C}$.
+  \item La \textbf{cétone} fixe le suffixe \textit{-one}. L'alcool devient le préfixe \textbf{hydroxy-} ; la double liaison est signalée par l'infixe \textbf{-én-} dans le nom de la chaîne.
+  \item En numérotant depuis le $\ce{CH3}$ pour donner à la cétone le plus petit indice : cétone en 2, $-\ce{OH}$ en 3, double liaison en 4. Nom : \textbf{3-hydroxypent-4-én-2-one}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Du nom à la structure : le préfixe « oxo- »]
+\begin{enumerate}[label=\alph*)]
+  \item «\,butano\,» $\Rightarrow$ chaîne de $4$~carbones ; «\,acide \dots-oïque\,» $\Rightarrow$ fonction principale \textbf{acide carboxylique} (carbone n$^\circ$1).
+  \item «\,3-oxo\,» signale un carbonyle $\ce{C=O}$ (ici une \textbf{cétone}) sur le carbone n$^\circ$3, en fonction secondaire.
+  \item Formule semi-développée : \ce{CH3-CO-CH2-COOH}. Formule brute : \ce{C4H6O3}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Acide et aldéhyde en compétition]
+\begin{enumerate}[label=\alph*)]
+  \item un $-\ce{CHO}$ (\textbf{aldéhyde}) et un $-\ce{COOH}$ (\textbf{acide carboxylique}).
+  \item L'\textbf{acide carboxylique} est principal : dans l'échelle, $-\ce{COOH} > -\ce{CHO}$.
+  \item L'aldéhyde secondaire apparaît sous le préfixe \textbf{oxo-}. La chaîne compte $3$~carbones, le $-\ce{COOH}$ est en n$^\circ$1, le $-\ce{CHO}$ en n$^\circ$3 : nom \textbf{acide 3-oxopropanoïque}.
+  \item Formule brute : \ce{C3H4O3}.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

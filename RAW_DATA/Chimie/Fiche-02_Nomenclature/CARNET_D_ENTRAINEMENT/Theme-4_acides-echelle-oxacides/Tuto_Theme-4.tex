@@ -1,0 +1,106 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Les acides et l'échelle des oxacides
+
+\begin{cle}[qu'est-ce qu'un acide, ici]
+Un \textbf{acide} (au sens de la nomenclature) est un composé dont la formule \emph{commence par \ce{H}}.
+On distingue :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item les \textbf{hydracides}, binaires et sans oxygène : \ce{H_nX} (ex.\ \ce{HCl}, \ce{H2S}) ;
+  \item les \textbf{oxacides}, contenant de l'oxygène : \ce{H_nXO_m} (ex.\ \ce{H2SO4}, \ce{HNO3}).
+\end{itemize}
+Un acide qui perd ses \ce{H+} donne l'\textbf{anion} correspondant.
+\end{cle}
+
+\begin{methode}[{hydracide : « [racine]-ure d'hydrogène »}]
+On nomme \ce{H_nX} « \textbf{[racine du non-métal]-ure d'hydrogène} » ; le nombre de \ce{H} égale la valence
+de l'anion \ce{X}. L'anion associé porte le suffixe \textbf{-ure} : \ce{HCl}$\to$chlorure \ce{Cl-},
+\ce{H2S}$\to$sulfure \ce{S^2-}.
+\end{methode}
+
+\begin{methode}[oxacide : l'échelle hypo-/-eux/-ique/per- et la règle des suffixes]
+Pour un même non-métal, on classe les oxacides par n.o.\ croissant de celui-ci. À chaque acide correspond un
+anion selon la \textbf{règle des suffixes} :
+\[ \boxed{\ \text{acide en }\textbf{-eux}\ \Rightarrow\ \text{anion en }\textbf{-ite}\ ;\qquad
+          \text{acide en }\textbf{-ique}\ \Rightarrow\ \text{anion en }\textbf{-ate}\ } \]
+les préfixes \textbf{hypo-} et \textbf{per-} se conservent (hypochlor\emph{eux}$\to$hypochlor\emph{ite} ;
+perchlor\emph{ique}$\to$perchlor\emph{ate}).
+\end{methode}
+
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize,>=Stealth]
+  \draw[->,primarydark,line width=1pt] (-0.4,0) -- (12.4,0);
+  \node[primarydark,font=\scriptsize] at (11.7,-0.5) {n.o.\ Cl $\nearrow$};
+  \foreach \x/\no/\acid/\af/\anion/\anf in {%
+     1/{+I}/{hypochloreux}/{\ce{HClO}}/{hypochlorite}/{\ce{ClO-}},
+     4/{+III}/{chloreux}/{\ce{HClO2}}/{chlorite}/{\ce{ClO2-}},
+     7/{+V}/{chlorique}/{\ce{HClO3}}/{chlorate}/{\ce{ClO3-}},
+     10/{+VII}/{perchlorique}/{\ce{HClO4}}/{perchlorate}/{\ce{ClO4-}}}{%
+     \draw[primary,line width=0.8pt] (\x,0.12) -- (\x,-0.12);
+     \node[primarydark,font=\scriptsize] at (\x,0.36) {$\no$};
+     \node[attncol,font=\scriptsize,align=center] at (\x,1.15) {acide \acid\\[1pt] $\af$};
+     \node[defcol,font=\scriptsize,align=center] at (\x,-1.05) {\anion\\[1pt] $\anf$};
+  }
+  \node[attncol,left,font=\scriptsize] at (-0.4,1.15) {acide};
+  \node[defcol,left,font=\scriptsize] at (-0.4,-1.05) {anion};
+\end{tikzpicture}
+\end{center}
+
+\begin{exemplebox}[les couples acide $\leftrightarrow$ anion à connaître]
+\ce{HNO2} nitreux $\to$ nitrite \ce{NO2-} ; \ce{HNO3} nitrique $\to$ nitrate \ce{NO3-} ;
+\ce{H2SO3} sulfureux $\to$ sulfite \ce{SO3^2-} ; \ce{H2SO4} sulfurique $\to$ sulfate \ce{SO4^2-} ;
+\ce{H2CO3} carbonique $\to$ carbonate \ce{CO3^2-}.
+\end{exemplebox}
+
+\begin{piege}[là où l'on perd des points]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1pt]
+  \item \textbf{-eux donne -ite}, pas « -ate » : sulfur\emph{eux} $\to$ sulf\emph{ite} (et non sulfate).
+  \item ne pas confondre \ce{NO2-} (nitr\emph{ite}) et \ce{NO3-} (nitr\emph{ate}) ; \ce{SO3^2-} (sulf\emph{ite})
+        et \ce{SO4^2-} (sulf\emph{ate}).
+  \item les préfixes se gardent : hypochloreux $\to$ hypochlor\emph{ite}, perchlorique $\to$ perchlor\emph{ate}.
+\end{itemize}
+\end{piege}
+
+\begin{remarque}[le moyen mnémotechnique]
+« \textbf{-IQUE} donne \textbf{-ATE} ; \textbf{-EUX} donne \textbf{-ITE}. » L'acide sulfur\emph{ique}
+\ce{H2SO4} donne le sulf\emph{ate} \ce{SO4^2-} ; l'acide sulfur\emph{eux} \ce{H2SO3} donne le sulf\emph{ite}
+\ce{SO3^2-}.
+\end{remarque}
+
+\end{document}

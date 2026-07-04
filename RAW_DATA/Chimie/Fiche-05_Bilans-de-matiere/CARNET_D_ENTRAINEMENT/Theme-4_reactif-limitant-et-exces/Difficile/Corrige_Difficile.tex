@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[données mêlées : masse et solution]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{KMnO4})=\dfrac{15,8}{158}=\qty{0.1}{\mole}$ ; $n(\ce{HCl})=6\times0,200=\qty{1.2}{\mole}.$
+  \item \ce{KMnO4} : $\frac{0,1}{2}=0,05$ ; \ce{HCl} : $\frac{1,2}{16}=0,075$.
+        \textbf{\ce{KMnO4} est limitant}.
+  \item $n(\ce{Cl2})=n(\ce{KMnO4})\times\dfrac{5}{2}=0,1\times2,5=\qty{0.25}{\mole}$, d'où
+        $V=0,25\times22,4=\qty{5.6}{\litre}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[trois réactifs, trois formes de données]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{K2Cr2O7})=\dfrac{58,8}{294}=\qty{0.2}{\mole}$ ; $n(\ce{C})=\dfrac{3,6}{12}=\qty{0.3}{\mole}$ ;
+        $n(\ce{H2SO4})=3\times0,200=\qty{0.6}{\mole}.$
+  \item \ce{K2Cr2O7} : $\frac{0,2}{2}=0,10$ ; \ce{C} : $\frac{0,3}{3}=0,10$ ;
+        \ce{H2SO4} : $\frac{0,6}{8}=0,075$. Le plus petit est celui de l'acide :
+        \textbf{\ce{H2SO4} est limitant}.
+  \item $n(\ce{CO2})=n(\ce{H2SO4})\times\dfrac{3}{8}=0,6\times0,375=\qty{0.225}{\mole}$, d'où
+        $V=0,225\times22,4=\qty{5.04}{\litre}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[combustion à oxygène limité]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{C3H8})=\dfrac{88}{44}=\qty{2}{\mole}$ ; $n(\ce{O2})=\dfrac{16}{32}=\qty{0.5}{\mole}.$
+  \item \ce{C3H8} : $\frac{2}{1}=2$ ; \ce{O2} : $\frac{0,5}{5}=0,1$. \textbf{\ce{O2} est limitant}.
+  \item $n(\ce{CO2})=n(\ce{O2})\times\dfrac{3}{5}=0,5\times0,6=\qty{0.3}{\mole}$, d'où
+        $V=0,3\times22,4=\qty{6.72}{\litre}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[bilan complet et conservation de la masse]
+\begin{enumerate}[label=\alph*)]
+  \item $n(\ce{N2})=\dfrac{28}{28}=\qty{1}{\mole}$ ; $n(\ce{H2})=\dfrac{9}{2}=\qty{4.5}{\mole}$.
+        Rapports : \ce{N2} $\frac{1}{1}=1$ ; \ce{H2} $\frac{4,5}{3}=1,5$. \textbf{\ce{N2} est limitant}.
+  \item $n(\ce{NH3})=n(\ce{N2})\times\dfrac{2}{1}=\qty{2}{\mole}$, d'où $m=2\times17=\qty{34}{\gram}.$
+  \item \ce{H2} consommé $=1\times3=\qty{3}{\mole}$, restant $=4,5-3=\qty{1.5}{\mole}$, soit
+        $m=1,5\times2=\qty{3}{\gram}.$ Conservation : $28+9=\qty{37}{\gram}$ engagés
+        $=\underbrace{34}_{\ce{NH3}}+\underbrace{3}_{\ce{H2}\text{ restant}}=\qty{37}{\gram}.$ \checkmark
+\end{enumerate}
+\end{corrige}
+
+\end{document}

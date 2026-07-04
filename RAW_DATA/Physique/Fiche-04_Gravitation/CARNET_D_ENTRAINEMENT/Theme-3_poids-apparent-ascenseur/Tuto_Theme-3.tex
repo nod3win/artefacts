@@ -1,0 +1,110 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Le poids apparent --- l'expérience de l'ascenseur
+\sisetup{per-mode=symbol}
+
+Une balance n'affiche pas votre poids réel $mg$, mais la \textbf{force de réaction}
+$N$ du support sur vous : c'est le \textbf{poids apparent}. Il change avec le
+mouvement, alors que le poids réel $mg$, lui, ne change pas (si $g$ est constante).
+
+\begin{cle}[poids apparent dans un ascenseur]
+Sur l'individu (masse $m$) s'exercent le poids $mg$ (vers le bas) et la force normale
+$N$ du plancher (vers le haut). Avec l'axe vertical orienté \emph{vers le haut}, la
+2\up{e} loi de Newton donne $N-mg=ma$, d'où
+\[
+\boxed{\,N=mg+ma=m\,(g+a)\,}
+\]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item $N$ : poids apparent (valeur lue sur la balance), en \si{\newton} ;
+  \item $m$ : masse, en \si{\kilogram} ; \quad $g$ : pesanteur, en \si{\metre\per\second\squared} ;
+  \item $a$ : accélération de l'ascenseur, comptée $>0$ \emph{vers le haut}, $<0$ vers le bas.
+\end{itemize}
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[black!55,line width=0.9pt,rounded corners=1pt] (0,0) rectangle (3.0,3.4);
+  \fill[black!12] (0.9,0.06) rectangle (2.1,0.4); \draw[black!45] (0.9,0.06) rectangle (2.1,0.4);
+  \fill[black!75] (1.5,2.2) circle (0.2);
+  \draw[black!75,line width=1pt] (1.5,2.0)--(1.5,1.1);
+  \draw[black!75,line width=1pt] (1.5,1.75)--(1.15,1.35);
+  \draw[black!75,line width=1pt] (1.5,1.75)--(1.85,1.35);
+  \draw[black!75,line width=1pt] (1.5,1.1)--(1.2,0.42);
+  \draw[black!75,line width=1pt] (1.5,1.1)--(1.8,0.42);
+  \draw[->,defcol,line width=1.4pt] (2.25,0.42)--(2.25,1.5) node[right,font=\small]{$N$};
+  \draw[->,attncol,line width=1.4pt] (1.5,1.5)--(1.5,0.55) node[midway,left=1pt,font=\small]{$m\vv g$};
+  \draw[->,excol,line width=1.1pt] (3.35,1.0)--(3.35,2.1) node[right,font=\small]{$\vv a$};
+  % table des 4 cas
+  \node[anchor=north west,align=left,font=\footnotesize] at (4.4,3.5){%
+    \renewcommand{\arraystretch}{1.3}%
+    \begin{tabular}{@{}l l l@{}}
+      \textbf{État} & \textbf{$a$} & \textbf{Balance}\\\hline
+      Repos / MRU        & $a=0$    & $N=mg$\\
+      Accélère vers haut & $a>0$    & $N>mg$ (plus lourd)\\
+      Accélère vers bas  & $a<0$    & $N<mg$ (plus léger)\\
+      Chute libre        & $a=-g$   & $N=0$ (impesanteur)\\
+    \end{tabular}};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Le poids réel $m\vv g$ (rouge) est toujours le même ; seul le poids
+apparent $N$ (bleu) varie avec l'accélération $\vv a$.}
+\end{center}
+
+\begin{methode}[résoudre un problème d'ascenseur]
+1) Orienter l'axe vers le haut. \quad 2) Repérer le signe de $a$ (vers le haut $>0$,
+vers le bas $<0$, chute libre $a=-g$). \quad 3) Appliquer $N=m(g+a)$.
+\end{methode}
+
+\begin{exemplebox}[l'ascenseur démarre vers le haut]
+$m=\qty{70}{\kilogram}$, $g=\qty{9.8}{\metre\per\second\squared}$,
+$a=+\qty{2}{\metre\per\second\squared}$ :
+\[
+N=m(g+a)=70\times(9{,}8+2)=70\times 11{,}8=\qty{826}{\newton}.
+\]
+La balance « voit » $826/9{,}8\approx\qty{84}{\kilogram}$ : on se sent plus lourd au
+démarrage vers le haut.
+\end{exemplebox}
+
+\begin{piege}[« impesanteur » ne veut pas dire « plus de gravité »]
+En chute libre ($a=-g$), $N=m(g-g)=0$ : la balance affiche $0$ et l'on flotte. Mais
+le poids \emph{réel} $mg$ est intact ! C'est seulement le poids \emph{apparent} qui
+s'annule, car support et personne tombent \emph{ensemble}. De même, un objet suspendu
+dans une cabine en chute libre ne tend plus son fil : la \textbf{tension devient nulle}.
+\end{piege}
+
+\end{document}

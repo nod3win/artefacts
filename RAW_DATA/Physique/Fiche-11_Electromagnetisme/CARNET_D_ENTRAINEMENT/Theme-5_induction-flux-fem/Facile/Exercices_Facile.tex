@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[flux maximal, flux nul]
+Une spire plane d'aire $S=\qty{0.02}{\metre\squared}$ est placée dans un champ uniforme
+$B=\qty{0.5}{\tesla}$.
+\begin{enumerate}[label=\alph*)]
+  \item Les lignes de champ sont \textbf{perpendiculaires} au plan de la spire ($\alpha=\ang{0}$).
+        Calcule le flux.
+  \item Les lignes de champ sont \textbf{parallèles} au plan de la spire ($\alpha=\ang{90}$). Que vaut
+        le flux ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[flux avec un angle]
+Une spire d'aire $S=\qty{0.01}{\metre\squared}$ est plongée dans un champ $B=\qty{0.4}{\tesla}$.
+Le vecteur surface $\vv{S}$ fait un angle $\alpha=\ang{60}$ avec $\vv{B}$. Calcule le flux magnétique.
+(On donne $\cos\ang{60}=0{,}5$.)
+\end{exo}
+
+\begin{exo}[valeurs maximale et efficace]
+\begin{enumerate}[label=\alph*)]
+  \item Un courant alternatif a pour valeur maximale $I_{\max}=\qty{10}{\ampere}$. Quelle est sa
+        valeur efficace ? (On prend $\sqrt2\approx1{,}41$.)
+  \item La tension du secteur a pour valeur efficace $U_{\text{eff}}=\qty{230}{\volt}$. Quelle est sa
+        valeur maximale $U_{\max}$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[période et pulsation du secteur]
+La tension du secteur est sinusoïdale, de fréquence $f=\qty{50}{\hertz}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la période $T$.
+  \item Calcule la pulsation (vitesse angulaire) $\omega=2\pi f$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[faut-il du mouvement ?]
+Un aimant est placé près d'une bobine reliée à un ampèremètre.
+\begin{enumerate}[label=\alph*)]
+  \item L'aimant est \textbf{immobile}. Un courant circule-t-il dans la bobine ? Justifie.
+  \item On \textbf{approche} l'aimant de la bobine. Un courant apparaît-il ? Pourquoi ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

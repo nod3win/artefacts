@@ -1,0 +1,120 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 1 — Niveau Moyen}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[une sonde à ultrasons]
+Une sonde médicale émet des ultrasons de fréquence $f=\SI{2}{\kilo\hertz}$. Ils se propagent
+dans les tissus mous, assimilés à de l'eau, où la célérité vaut $v=\SI{1500}{\metre\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item Convertis la fréquence en \si{\hertz}, puis calcule la période $T$ des ultrasons.
+  \item Calcule leur longueur d'onde $\lambda$ dans les tissus.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[du graphe spatial à la période]
+Voici l'onde photographiée à un instant donné le long d'une corde. On sait par ailleurs
+qu'elle se propage à la célérité $v=\SI{6}{\metre\per\second}$.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11cm,height=5.2cm,
+  xmin=0,xmax=9,ymin=-5,ymax=5,
+  xtick={0,1,2,3,4,5,6,7,8,9},
+  ytick={-4,0,4},
+  grid=both,grid style={black!12},axis lines=left,
+  xlabel={$x$ (m)},ylabel={$y$ (cm)},
+  xlabel style={at={(axis description cs:0.5,-0.12)}},
+  tick label style={font=\footnotesize},samples=240,clip=false]
+  \addplot[defcol,line width=1.3pt,domain=0:9]{4*sin(deg(2*pi*x/3))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Lis la longueur d'onde $\lambda$ sur le graphe.
+  \item Calcule la période $T$ de l'onde.
+  \item Calcule sa fréquence $f$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le retard d'un point éloigné]
+Une source placée en $O$ ($x=0$) crée sur une corde une onde qui se propage vers la droite à
+$v=\SI{3}{\metre\per\second}$. Un point P est situé à $x=\SI{12}{\metre}$ de la source.
+La source se met en mouvement à l'instant $t=0$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \draw[black!70,line width=1pt](0,0)--(10.2,0)node[right]{$x$};
+  \foreach \i/\lab in {0/0,2.5/3,5/6,7.5/9,10/12}{
+     \draw[black!60](\i,0.12)--(\i,-0.12)node[below,font=\footnotesize]{\lab};}
+  \fill[primary](0,0)circle(2.6pt)node[above=3pt,black]{$O$ (source)};
+  \fill[defcol](10,0)circle(2.6pt)node[above=3pt,black]{P};
+  \draw[->,primary,line width=1pt](1.2,0.55)--(2.4,0.55)node[midway,above,black]{$\vv v$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le retard $\tau$ de P sur la source.
+  \item À quel instant le point P commence-t-il à bouger ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le son change de milieu]
+Un diapason émet un son de fréquence $f=\SI{680}{\hertz}$. Célérité du son :
+\SI{340}{\metre\per\second} dans l'air, \SI{1360}{\metre\per\second} dans l'eau.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la longueur d'onde $\lambda_{\text{air}}$ dans l'air.
+  \item Le son passe maintenant dans l'eau. La fréquence change-t-elle ? Justifie.
+  \item Calcule la longueur d'onde $\lambda_{\text{eau}}$ dans l'eau.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la bouée qui oscille]
+À la surface d'un lac, une bouée effectue \textbf{20 oscillations complètes en \SI{10}{\second}}.
+On mesure par ailleurs une distance de \SI{3}{\metre} entre deux crêtes de vagues voisines.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la période $T$ puis la fréquence $f$ du mouvement.
+  \item Que vaut la longueur d'onde $\lambda$ des vagues ?
+  \item Déduis-en la célérité $v$ des vagues.
+\end{enumerate}
+\end{exo}
+
+\end{document}

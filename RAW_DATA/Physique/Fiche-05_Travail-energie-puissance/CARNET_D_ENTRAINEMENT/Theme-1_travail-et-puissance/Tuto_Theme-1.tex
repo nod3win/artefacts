@@ -1,0 +1,127 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Travail d'une force et puissance
+\sisetup{per-mode=symbol}
+
+Ce thème installe les deux grandeurs de base de la fiche : le \textbf{travail} d'une force (l'énergie
+qu'elle transfère en déplaçant un corps) et la \textbf{puissance} (la rapidité de ce transfert).
+
+\begin{cle}[le travail d'une force constante]
+Pour une force $\vv F$ \emph{constante} le long d'un déplacement rectiligne $\vv{AB}$ :
+\[
+\boxed{\;W_{AB}(\vv F)=\vv F\cdot\vv{AB}=F\times AB\times\cos\alpha\;}\qquad(\text{en }\si{\joule})
+\]
+où $F$ est l'intensité de la force (\si{\newton}), $AB$ la distance parcourue (\si{\metre}) et
+$\alpha$ l'angle entre $\vv F$ et $\vv{AB}$. Seule la composante de la force \emph{parallèle} au
+déplacement, $F_x=F\cos\alpha$, travaille : $W=F_x\times AB$.
+\end{cle}
+
+\begin{methode}[lire le signe du travail dans $\cos\alpha$]
+Le facteur $\cos\alpha$ fixe à lui seul le \emph{sens physique} du travail :
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.9]
+ % moteur
+ \begin{scope}
+   \draw[dashed,black!55] (0,0) -- (2.4,0);
+   \draw[->,black!45] (0.8,-0.4) -- (1.8,-0.4) node[midway,below]{\scriptsize $\vv{AB}$};
+   \draw[->,line width=1pt,excol] (0,0) -- (38:1.7) node[above]{$\vv F$};
+   \draw[->,black!60] (0.65,0) arc (0:38:0.65); \node at (0.95,0.28){\scriptsize $\alpha$};
+   \node[excol,align=center,font=\bfseries\small] at (1.2,-1.35)
+     {$\alpha<\ang{90}\Rightarrow\cos\alpha>0$\\ $W>0$ : moteur};
+ \end{scope}
+ % nul
+ \begin{scope}[shift={(5,0)}]
+   \draw[dashed,black!55] (0,0) -- (2.4,0);
+   \draw[->,black!45] (0.8,-0.4) -- (1.8,-0.4) node[midway,below]{\scriptsize $\vv{AB}$};
+   \draw[->,line width=1pt,defcol] (1.2,0) -- (1.2,1.6) node[above]{$\vv F$};
+   \draw[black!60] (0.98,0)|-(1.2,0.22);
+   \node[attncol,align=center,font=\bfseries\small] at (1.2,-1.35)
+     {$\alpha=\ang{90}\Rightarrow\cos\alpha=0$\\ $W=0$ : nul};
+ \end{scope}
+ % resistant
+ \begin{scope}[shift={(10,0)}]
+   \draw[dashed,black!55] (0,0) -- (2.4,0);
+   \draw[->,black!45] (0.8,-0.4) -- (1.8,-0.4) node[midway,below]{\scriptsize $\vv{AB}$};
+   \draw[->,line width=1pt,primary] (1.2,0) -- ($(1.2,0)+(142:1.7)$) node[above left]{$\vv F$};
+   \draw[->,black!60] (1.95,0) arc (0:142:0.72); \node at (1.5,0.55){\scriptsize $\alpha$};
+   \node[primary,align=center,font=\bfseries\small] at (1.2,-1.35)
+     {$\alpha>\ang{90}\Rightarrow\cos\alpha<0$\\ $W<0$ : résistant};
+ \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{methode}
+
+\begin{cle}[trois travaux à connaître par cœur]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Force perpendiculaire au déplacement} $\Rightarrow W=0$. C'est le cas de la réaction
+        \textbf{normale} $\vv N$, de la \textbf{force centripète} d'un mouvement circulaire, et du
+        \textbf{poids} lors d'un déplacement \emph{horizontal}.
+  \item \textbf{Frottement} : $\vv F_f$ est opposée au déplacement ($\alpha=\ang{180}$), donc
+        $W(\vv F_f)=-F_f\times AB<0$ : il \emph{dissipe} l'énergie (travail résistant).
+  \item \textbf{Poids} sur une dénivellation $h$ : $W(\vv G)=+mgh$ à la \emph{descente},
+        $-mgh$ à la \emph{montée}.
+\end{itemize}
+\end{cle}
+
+\begin{cle}[la puissance : travail par unité de temps]
+\[
+\boxed{\;P=\dfrac{W_{AB}(\vv F)}{\Delta t}\;}\qquad\text{et, si la vitesse est connue :}\qquad
+\boxed{\;P=\vv F\cdot\vv v=F\times v\times\cos\alpha\;}
+\]
+$P$ est en \textbf{watts} (\si{\watt}), avec $\SI{1}{\watt}=\SI{1}{\joule\per\second}$. \emph{À travail
+égal, le système le plus puissant est le plus rapide} : pour un même $W$, diviser $\Delta t$ par $6$
+multiplie $P$ par $6$.
+\end{cle}
+
+\begin{exemplebox}[une force oblique qui tire une caisse]
+Une force $F=\qty{50}{\newton}$ inclinée de $\alpha=\ang{60}$ tire une caisse sur $AB=\qty{4}{\metre}$
+en $\Delta t=\qty{2}{\second}$. Alors $W=50\times 4\times\cos\ang{60}=50\times4\times0,5=\qty{100}{\joule}$
+et $P=\dfrac{100}{2}=\qty{50}{\watt}$.
+\end{exemplebox}
+
+\begin{piege}[les trois erreurs classiques]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Oublier $\cos\alpha$} et écrire $W=F\times AB$ alors que la force est inclinée.
+  \item Croire que le poids « travaille toujours » : sur un trajet \emph{horizontal}, $W(\vv G)=0$.
+  \item \textbf{Vitesse en \si{\kilo\metre\per\hour}} dans $P=Fv$ : il faut d'abord convertir en
+        \si{\metre\per\second} en \emph{divisant par $3,6$}.
+\end{itemize}
+\end{piege}
+\end{document}

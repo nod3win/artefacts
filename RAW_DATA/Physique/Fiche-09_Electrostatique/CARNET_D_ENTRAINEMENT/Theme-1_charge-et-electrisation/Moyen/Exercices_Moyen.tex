@@ -1,0 +1,103 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[frottement : qui gagne, qui perd ?]
+On frotte une tige d'ébonite avec un morceau de laine. Après frottement, la tige porte la charge
+$q_{\text{tige}} = \SI{-3.2e-9}{\coulomb}$.
+\begin{enumerate}[label=\alph*)]
+  \item Combien d'électrons ont été transférés lors du frottement, et dans quel sens (laine
+        $\to$ tige ou tige $\to$ laine) ?
+  \item En déduire la charge portée par la laine, en justifiant par la conservation de la charge.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[partages successifs par contact]
+Trois sphères métalliques \emph{identiques} sont montées sur des manches isolants. La sphère $A$
+porte $q_A = \SI{+12}{\nano\coulomb}$ ; les sphères $B$ et $C$ sont neutres.
+\begin{center}
+\begin{tikzpicture}[scale=0.85,>=Stealth,
+    bille/.style={circle,draw=black!55,line width=0.8pt,minimum size=11mm,inner sep=0pt,font=\scriptsize}]
+  \node[bille,fill=attncol!18] at (0,0) {$A$};
+  \node[font=\scriptsize] at (0,-0.95) {$+12$};
+  \node[bille,fill=black!5] at (1.7,0) {$B$};
+  \node[font=\scriptsize] at (1.7,-0.95) {$0$};
+  \node[bille,fill=black!5] at (3.4,0) {$C$};
+  \node[font=\scriptsize] at (3.4,-0.95) {$0$};
+  \node[font=\scriptsize,align=left,right] at (4.4,0)
+    {(1) $A$ touche $B$\\ (2) puis $B$ touche $C$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item On met $A$ en contact avec $B$, puis on les sépare. Quelle charge porte chacune ?
+  \item On met ensuite $B$ (avec sa nouvelle charge) en contact avec $C$. Quelle charge porte
+        finalement $C$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[influence puis mise à la terre]
+On approche un bâton \textbf{chargé négativement} d'une sphère conductrice neutre, \emph{sans la
+toucher}. On relie alors un instant la sphère à la terre par un fil, on retire d'abord le fil,
+\emph{puis} on éloigne le bâton.
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le signe final de la charge de la sphère ? Explique le mécanisme.
+  \item Quel serait le signe final si le bâton avait été chargé \emph{positivement} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[charge et masse : combien d'électrons partis ?]
+Une bille métallique perd des électrons jusqu'à porter la charge $q = \SI{+1}{\micro\coulomb}$.
+On donne $e = \num{1.6e-19}\ \si{\coulomb}$ et $m_e = \num{9.1e-31}\ \si{\kilogram}$.
+\begin{enumerate}[label=\alph*)]
+  \item Combien d'électrons la bille a-t-elle perdus ?
+  \item De combien sa masse a-t-elle varié (en valeur et en signe) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[bilan protons--électrons]
+Un grain de poussière, initialement \textbf{neutre}, contient $\num{4.0e14}$ protons. Il capte
+ensuite $\num{5.0e10}$ électrons.
+\begin{enumerate}[label=\alph*)]
+  \item Combien d'électrons contenait-il \emph{avant} de capter les électrons ?
+  \item Quelle est sa charge finale (valeur et signe) ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

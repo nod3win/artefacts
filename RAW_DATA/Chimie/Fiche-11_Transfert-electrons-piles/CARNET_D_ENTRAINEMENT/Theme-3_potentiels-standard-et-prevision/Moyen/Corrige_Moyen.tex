@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{center}\color{primarydark}\large\bfseries Thème 3 — Corrigé \quad$\bullet$\quad Niveau Moyen\end{center}
+
+\begin{corrige}[prévoir le sens et écrire l'équation]
+\begin{enumerate}[label=\alph*)]
+  \item Le couple \ce{Fe^{3+}}/\ce{Fe^{2+}} ($+0{,}77$) est plus haut que \ce{I2}/\ce{I^-}
+        ($+0{,}54$) : \ce{Fe^{3+}} (oxydant) oxyde bien \ce{I^-}. $\Delta E^{\circ}=0{,}77-0{,}54
+        =+0{,}23>0$.
+  \item \[\ce{2 Fe^{3+} + 2 I^- -> 2 Fe^{2+} + I2}\]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un oxydant face à deux métaux]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Ag+} ($+0{,}80$) est au-dessus des deux : il oxyde \ce{Cu} ($0{,}80>0{,}34$) \textbf{et}
+        \ce{Zn} ($0{,}80>-0{,}76$).
+  \item \ce{2 Ag+ + Cu -> 2 Ag + Cu^{2+}} \quad et \quad \ce{2 Ag+ + Zn -> 2 Ag + Zn^{2+}}.
+        Un dépôt d'argent se forme sur les deux lames.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un métal en déplace-t-il un autre ?]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Fe} ($-0{,}44$) est un réducteur plus fort que \ce{Cu} ($+0{,}34$) : il déplace le cuivre.
+        \[\ce{Fe + Cu^{2+} -> Fe^{2+} + Cu}\]
+  \item \ce{Ag} ($+0{,}80$) est un réducteur \emph{plus faible} que \ce{Cu} : il ne déplace
+        \textbf{pas} le cuivre ($\Delta E^{\circ}<0$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une cascade d'oxydations]
+Une réaction a lieu si l'oxydant appartient au couple le plus haut.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Oui} : \ce{MnO4^-} ($+1{,}51$) $>$ \ce{Fe^{3+}}/\ce{Fe^{2+}} ($+0{,}77$).
+  \item \textbf{Oui} : \ce{MnO4^-} ($+1{,}51$) $>$ \ce{I2}/\ce{I^-} ($+0{,}54$).
+  \item \textbf{Oui} : \ce{Fe^{3+}} ($+0{,}77$) $>$ \ce{I2}/\ce{I^-} ($+0{,}54$).
+\end{enumerate}
+Le permanganate, oxydant le plus fort, oxyde les deux autres réducteurs.
+\end{corrige}
+
+\begin{corrige}[qui peut réduire l'ion argent ?]
+Pour réduire \ce{Ag+}, il faut une espèce sous sa forme \textbf{réduite} et de
+$E_{\mathrm{r}}^{\circ}$ \textbf{inférieur} à $+0{,}80$~V.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \ce{Ca} : forme réduite, $-2{,}84<0{,}80$ $\Rightarrow$ \textbf{oui}
+        ($\ce{2 Ag+ + Ca -> 2 Ag + Ca^{2+}}$).
+  \item \ce{Cu^{2+}} : c'est une forme \emph{oxydée}, elle ne peut pas réduire. \textbf{Non}.
+  \item \ce{Br2} : forme oxydée, et $+1{,}06>0{,}80$. \textbf{Non}.
+  \item \ce{Au} : forme réduite mais $+1{,}52>0{,}80$ : réducteur trop faible. \textbf{Non}.
+\end{itemize}
+Seul le calcium \ce{Ca} réduit \ce{Ag+}.
+\end{corrige}
+
+\end{document}

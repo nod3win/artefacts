@@ -1,0 +1,103 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[le sélecteur de vitesse]
+Entre deux plaques horizontales distantes de $d=\qty{1}{\centi\metre}$, on applique une tension
+$U=\qty{200}{\volt}$ (champ électrique $E=U/d$) et, perpendiculairement, un champ magnétique
+$B=\qty{0.1}{\tesla}$. Un faisceau de particules chargées traverse ce dispositif.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[black,line width=1.4pt] (-2.4,0.9)--(2.4,0.9); \node[right,font=\footnotesize] at (2.4,0.9){$+$};
+  \draw[black,line width=1.4pt] (-2.4,-0.9)--(2.4,-0.9); \node[right,font=\footnotesize] at (2.4,-0.9){$-$};
+  \foreach \x in {-1.4,0,1.4}{
+    \draw[blue!55!black,line width=0.8pt] (\x,0.35) circle (0.11);
+    \draw[blue!55!black,line width=0.8pt] (\x-0.07,0.28)--(\x+0.07,0.42);
+    \draw[blue!55!black,line width=0.8pt] (\x-0.07,0.42)--(\x+0.07,0.28);}
+  \node[blue!60!black,font=\footnotesize] at (0,0.72){$\vv{B}$ (entrant)};
+  \draw[orange!85!black,->,line width=1.6pt] (-2.4,-0.35)--(0.2,-0.35) node[below,font=\footnotesize]{$\vv{v}$};
+\end{tikzpicture}
+\end{center}
+Quelle est la vitesse $v$ des particules qui traversent \textbf{sans être déviées} ?
+\end{exo}
+
+\begin{exo}[séparer deux isotopes]
+Dans un spectromètre de masse, deux ions de \textbf{même charge} $q=\qty{1.6e-19}{\coulomb}$ et de
+\textbf{même vitesse} $v=\qty{1e5}{\metre\per\second}$ entrent perpendiculairement dans un champ
+$B=\qty{0.2}{\tesla}$. Leurs masses valent $m_1=\qty{3.32e-26}{\kilogram}$ (isotope léger) et
+$m_2=\qty{3.65e-26}{\kilogram}$ (isotope lourd).
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le rayon de la trajectoire de chaque ion.
+  \item Lequel est le plus dévié vers l'extérieur (plus grand rayon) ? Comment le dispositif
+        \textbf{sépare}-t-il les deux isotopes ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le proton, étude complète]
+Un proton ($q=+e=\qty{1.6e-19}{\coulomb}$, $m=\qty{1.67e-27}{\kilogram}$) est lancé à
+$v=\qty{1e7}{\metre\per\second}$ perpendiculairement à un champ $B=\qty{2}{\tesla}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité de la force de Lorentz.
+  \item Calcule le rayon de sa trajectoire circulaire.
+  \item Si l'on \textbf{double la vitesse}, par quel facteur sont multipliés $F$ et $R$ ?
+  \item Si l'on \textbf{double le champ} $B$, que deviennent $R$ et l'énergie cinétique du proton ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'électron qui s'incurve]
+Un électron ($q<0$) entre par la gauche, à la vitesse $\vv{v}$ vers la \textbf{droite}, dans une
+région de champ $\vv{B}$ \textbf{perpendiculaire à la feuille et entrant} ($\otimes$).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[gray!30,fill=blue!5] (-0.5,-1.2) rectangle (2.6,1.2);
+  \foreach \x/\y in {0.2/0.7,1.1/0.7,2/0.7,0.2/-0.7,1.1/-0.7,2/-0.7,0.2/0,1.1/0,2/0}{
+    \draw[blue!50!black,line width=0.7pt] (\x,\y) circle (0.1);
+    \draw[blue!50!black,line width=0.7pt] (\x-0.07,\y-0.07)--(\x+0.07,\y+0.07);
+    \draw[blue!50!black,line width=0.7pt] (\x-0.07,\y+0.07)--(\x+0.07,\y-0.07);}
+  \node[blue!60!black,font=\footnotesize] at (1.5,1.45){$\vv{B}$ (entrant)};
+  \fill[red!80!black] (-1.8,0) circle (2pt); \node[above,font=\footnotesize] at (-1.8,0.1){$e^-$};
+  \draw[orange!85!black,->,line width=1.8pt] (-1.6,0)--(-0.4,0) node[above,font=\footnotesize]{$\vv{v}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le sens de la force $\vv{F}$ au moment où l'électron entre dans le champ.
+  \item L'électron s'incurve-t-il vers le haut ou vers le bas ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,106 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[deux champs perpendiculaires de même norme]
+En un point $M$, deux sources créent deux champs \textbf{perpendiculaires}, l'un horizontal
+$\vv{B}_1$, l'autre vertical $\vv{B}_2$, de \textbf{même intensité} $B_1=B_2=\qty{1.0e-4}{\tesla}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \fill[black] (0,0) circle (1.3pt) node[below left,font=\footnotesize]{$M$};
+  \draw[blue!70!black,line width=1.4pt,->] (0,0) -- (2,0) node[right]{$\vv{B}_1$};
+  \draw[blue!70!black,line width=1.4pt,->] (0,0) -- (0,2) node[above]{$\vv{B}_2$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité du champ résultant $\vv{B}_{\text{tot}}$.
+  \item Quel angle $\theta$ fait-il avec $\vv{B}_1$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[superposition orthogonale : Pythagore]
+Deux champs perpendiculaires se superposent en $M$ : $B_1=\qty{3e-4}{\tesla}$ (horizontal) et
+$B_2=\qty{4e-4}{\tesla}$ (vertical).
+\begin{enumerate}[label=\alph*)]
+  \item Détermine l'intensité du champ résultant.
+  \item Détermine l'angle $\theta$ que fait le champ résultant avec le champ horizontal $\vv{B}_1$
+        (on donne $\tan^{-1}(4/3)\approx\ang{53}$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[fil horizontal : champ au-dessus et au-dessous]
+Un fil rectiligne \textbf{horizontal}, dans le plan de la feuille, est parcouru par un courant $I$
+orienté \textbf{vers la droite}. On considère un point $P$ situé \emph{au-dessus} du fil et un point
+$Q$ situé \emph{au-dessous}.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[red!80!black,line width=2pt] (-2.4,0) -- (2.4,0);
+  \draw[red!80!black,->,line width=2pt] (0.6,0) -- (1.4,0);
+  \node[red!80!black,above] at (1.9,0){$I$};
+  \fill[black] (-0.6,0.9) circle (1.4pt) node[above,font=\footnotesize]{$P$};
+  \fill[black] (-0.6,-0.9) circle (1.4pt) node[below,font=\footnotesize]{$Q$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Au point $P$ (au-dessus), $\vv{B}$ sort-il ($\odot$) ou entre-t-il ($\otimes$) dans la feuille ?
+  \item Même question au point $Q$ (au-dessous).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux fils identiques : champ au milieu]
+Deux fils parallèles, perpendiculaires à la feuille, portent le \textbf{même courant} de \textbf{même
+sens} (tous deux \textbf{sortants}, $\odot$). Le point $M$ est situé exactement au \textbf{milieu} des
+deux fils ; chacun y crée un champ d'intensité $\qty{4e-5}{\tesla}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \foreach \x/\n in {-2/1,2/2}{
+     \draw[red!80!black,line width=1.4pt] (\x,0) circle (0.16);
+     \fill[red!80!black] (\x,0) circle (0.05);
+     \node[red!80!black,below,font=\footnotesize] at (\x,-0.3){fil \n};
+  }
+  \fill[black] (0,0) circle (1.5pt) node[below,font=\footnotesize]{$M$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item En appliquant la règle de la main droite à chaque fil, indique la direction et le sens des
+        champs $\vv{B}_1$ et $\vv{B}_2$ créés en $M$.
+  \item En déduis l'intensité du champ résultant en $M$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

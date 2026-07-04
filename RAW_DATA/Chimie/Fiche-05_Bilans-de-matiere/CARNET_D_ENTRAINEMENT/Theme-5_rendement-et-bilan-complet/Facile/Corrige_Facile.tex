@@ -1,88 +1,79 @@
-% =====================================================================
-%  THÈME 5 — Rendement et bilan complet
-%  Niveau FACILE — Corrigé
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{142,93,168}
-\definecolor{primarydark}{RGB}{82,45,108}
-\definecolor{corrcol}{RGB}{176,110,20}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 5 : Rendement}}
-\fancyhead[R]{\small\textcolor{corrcol}{\textsc{Corrigé — Facile}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
-  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=corrcol!6,colframe=corrcol,
-  fonttitle=\bfseries,coltitle=white,
-  title={Corrigé~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-
-\newcommand{\rep}[1]{\par\smallskip\noindent\textbf{\color{corrcol}$\Rightarrow$ #1}}
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement}\\[1pt]
-{\large\color{corrcol}\textbf{Corrigé — Niveau Facile}}\\
-{\color{primary}\rule{0.6\linewidth}{1pt}}
-\end{center}
-
-\begin{cor}[rendement à partir de moles]
-\[
-R=\frac{n_{\text{réel}}}{n_{\text{théorique}}}\times100=\frac{0{,}080}{0{,}100}\times100=\boxed{\SI{80}{\percent}}.
-\]
-\end{cor}
-
-\begin{cor}[rendement à partir de masses]
-Comme $R=\dfrac{m_{\text{réel}}}{m_{\text{théorique}}}\times100$ (la masse molaire se simplifie) :
-\[
-R=\frac{36}{45}\times100=\boxed{\SI{80}{\percent}}.
-\]
-\end{cor}
-
-\begin{cor}[quantité réelle à partir du rendement]
-\[
-n_{\text{réel}}=\frac{R}{100}\times n_{\text{théorique}}=\frac{75}{100}\times2{,}0=\boxed{\SI{1,5}{\mole}}.
-\]
-\end{cor}
-
-\begin{cor}[masse réelle à partir du rendement]
-\[
-m_{\text{réel}}=\frac{R}{100}\times m_{\text{théorique}}=\frac{60}{100}\times50=\boxed{\SI{30}{\gram}}.
-\]
-\end{cor}
-
-\begin{cor}[vrai ou faux ? notion de rendement]
-\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,topsep=1pt,itemsep=1pt]
-  \item \textbf{Faux.} Par définition $n_{\text{réel}}\le n_{\text{théorique}}$, donc $R\le\SI{100}{\percent}$.
-        On ne peut pas obtenir plus que le maximum stœchiométrique.
-  \item \textbf{Faux.} L'excès permet seulement de consommer tout le limitant ; il n'agit pas sur les
-        pertes ni les réactions secondaires. Le rendement peut rester faible.
-  \item \textbf{Vrai.} $n_{\text{réel}}$ est une mesure expérimentale ; l'écart au théorique traduit
-        les imperfections réelles de la réaction.
+\sisetup{per-mode=symbol}
+\begin{corrige}[calculer un rendement]
+\begin{enumerate}[label=\alph*)]
+  \item $R=\dfrac{1,5}{2}\times100=\qty{75}{\percent}.$
+  \item $R=\dfrac{0,3}{0,4}\times100=\qty{75}{\percent}.$
+  \item $R=\dfrac{4}{5}\times100=\qty{80}{\percent}.$
 \end{enumerate}
-\end{cor}
+\end{corrige}
+
+\begin{corrige}[prévoir la quantité réelle]
+\begin{enumerate}[label=\alph*)]
+  \item $n_{\text{réel}}=0,90\times2=\qty{1.8}{\mole}.$
+  \item $n_{\text{réel}}=0,60\times0,5=\qty{0.3}{\mole}.$
+  \item $n_{\text{réel}}=0,50\times10=\qty{5}{\mole}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[rendement en masse]
+\begin{enumerate}[label=\alph*)]
+  \item $R=\dfrac{30}{40}\times100=\qty{75}{\percent}.$
+  \item $R=\dfrac{85}{100}\times100=\qty{85}{\percent}.$
+  \item $m_{\text{réel}}=0,80\times50=\qty{40}{\gram}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[du théorique au rendement]
+\begin{enumerate}[label=\alph*)]
+  \item $n_{\text{théo}}(\ce{H2O})=n(\ce{H2})\times\dfrac{2}{2}=\qty{2}{\mole}.$
+  \item $R=\dfrac{1,6}{2}\times100=\qty{80}{\percent}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[rendement et reconversion]
+\begin{enumerate}[label=\alph*)]
+  \item $n_{\text{théo}}(\ce{NH3})=1\times\dfrac{2}{1}=\qty{2}{\mole}$, d'où
+        $m_{\text{théo}}=2\times17=\qty{34}{\gram}.$
+  \item $m_{\text{réel}}=0,90\times34=\qty{30.6}{\gram}.$
+\end{enumerate}
+\end{corrige}
 
 \end{document}

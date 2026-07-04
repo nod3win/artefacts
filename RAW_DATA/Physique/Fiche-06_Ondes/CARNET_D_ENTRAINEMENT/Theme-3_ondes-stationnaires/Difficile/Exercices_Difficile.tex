@@ -1,0 +1,108 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 3 — Niveau Difficile}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[géométrie d'un mode]
+Une corde de longueur $L=\SI{2}{\metre}$, fixée à ses deux extrémités, vibre en formant
+\textbf{4 fuseaux}.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine la longueur d'onde $\lambda_4$ de ce mode.
+  \item Calcule la distance entre deux nœuds consécutifs, puis entre un nœud et le ventre voisin.
+  \item Combien la corde compte-t-elle de nœuds en tout (extrémités comprises) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[identifier un harmonique sur un schéma]
+Une corde fixée à ses deux extrémités (longueur $L$) vibre selon le mode ci-dessous. Son mode
+fondamental a pour fréquence $f_1=\SI{50}{\hertz}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \def\Ls{9.0}\def\A{0.75}\def\n{4}
+  \draw[excol,line width=3pt] (0,-0.65)--(0,0.65);
+  \draw[excol,line width=3pt] (\Ls,-0.65)--(\Ls,0.65);
+  \draw[defcol,line width=1.1pt,smooth,samples=240,domain=0:\Ls] plot(\x,{\A*sin(\x*(\n*180/\Ls))});
+  \draw[black,line width=1.1pt,smooth,samples=240,domain=0:\Ls] plot(\x,{-\A*sin(\x*(\n*180/\Ls))});
+  \foreach \k in {0,...,4}{\fill[primarydark] (\k*\Ls/\n,0) circle (2.5pt);}
+  \draw[<->,black!70,dashed](0,-1.15)--(\Ls,-1.15)node[midway,fill=white,inner sep=1pt,font=\footnotesize]{$L$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le numéro $n$ de cet harmonique ? Exprime $\lambda_n$ en fonction de $L$.
+  \item Quelle est la fréquence $f_n$ de ce mode ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remonter à la célérité]
+Une corde de longueur $L=\SI{1}{\metre}$, fixée à ses deux extrémités, présente une onde
+stationnaire à \textbf{5 fuseaux} lorsqu'on la fait vibrer à $f=\SI{250}{\hertz}$.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine la longueur d'onde $\lambda_5$ de ce mode.
+  \item Calcule la célérité $c$ des ondes sur la corde ($c=\lambda_5 f$).
+  \item Déduis-en la fréquence fondamentale $f_1$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[accorder une corde]
+Une corde de guitare de longueur vibrante $L=\SI{0.65}{\metre}$ porte des ondes de célérité
+$c=\SI{143}{\metre\per\second}$. Sa fréquence fondamentale est donc $f_1=c/(2L)$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $f_1$.
+  \item Le guitariste pose un doigt de façon à \textbf{diviser par deux} la longueur vibrante
+        ($L'=L/2$), sans changer $c$. Quelle est la nouvelle fondamentale $f_1'$ ?
+  \item En repartant de la corde initiale, il tend la corde jusqu'à \textbf{doubler} la
+        célérité ($c'=2c$, à $L$ inchangé). Que devient alors $f_1$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[tuyau / corde à extrémité libre]
+Une corde de longueur $L=\SI{0.75}{\metre}$ a une extrémité fixe et une extrémité libre. La
+célérité vaut $c=\SI{300}{\metre\per\second}$. On rappelle $f_n=\dfrac{(2n-1)c}{4L}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la fréquence fondamentale $f_1$.
+  \item Donne les trois premières fréquences propres autorisées.
+  \item Pourquoi la fréquence $2f_1$ est-elle \emph{interdite} pour cette corde ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

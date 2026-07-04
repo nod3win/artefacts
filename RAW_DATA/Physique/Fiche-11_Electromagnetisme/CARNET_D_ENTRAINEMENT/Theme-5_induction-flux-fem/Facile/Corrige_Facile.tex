@@ -1,0 +1,78 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[flux maximal, flux nul]
+$\phi=B\,S\,\cos\alpha$.
+\begin{enumerate}[label=\alph*)]
+  \item $\alpha=\ang{0}$, $\cos\ang{0}=1$ : $\phi=B\,S=0{,}5\times0{,}02=\qty{1e-2}{\weber}=\qty{10}{\milli\weber}$
+        (flux \textbf{maximal}).
+  \item $\alpha=\ang{90}$, $\cos\ang{90}=0$ : $\phi=0$. Aucune ligne ne traverse la surface (la spire
+        est « de chant »).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[flux avec un angle]
+\[ \phi=B\,S\,\cos\alpha=0{,}4\times0{,}01\times\cos\ang{60}=0{,}4\times0{,}01\times0{,}5=\qty{2e-3}{\weber}=\qty{2}{\milli\weber}. \]
+\end{corrige}
+
+\begin{corrige}[valeurs maximale et efficace]
+\begin{enumerate}[label=\alph*)]
+  \item $I_{\text{eff}}=\dfrac{I_{\max}}{\sqrt2}=\dfrac{10}{1{,}41}\approx\qty{7.1}{\ampere}$.
+  \item $U_{\max}=U_{\text{eff}}\,\sqrt2=230\times1{,}41\approx\qty{325}{\volt}$. Le « \qty{230}{\volt} »
+        est une valeur \emph{efficace} : la tension crête atteint bien \qty{325}{\volt}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[période et pulsation du secteur]
+\begin{enumerate}[label=\alph*)]
+  \item $T=\dfrac1f=\dfrac{1}{50}=\qty{0.02}{\second}=\qty{20}{\milli\second}$.
+  \item $\omega=2\pi f=2\pi\times50=100\pi\approx\qty{314}{\radian\per\second}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[faut-il du mouvement ?]
+\begin{enumerate}[label=\alph*)]
+  \item Aimant immobile : le flux est \textbf{constant}, $\mathrm{d}\phi/\mathrm{d} t=0$, donc $e=0$ : \textbf{aucun}
+        courant. L'induction exige une \emph{variation} du flux.
+  \item En approchant l'aimant, le flux \textbf{varie} ($\mathrm{d}\phi/\mathrm{d} t\neq0$) : une f.é.m. apparaît et
+        un \textbf{courant induit} circule (il s'oppose à l'approche, loi de Lenz).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

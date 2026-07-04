@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[masse moyenne à trois isotopes]
+Calcule la masse atomique relative moyenne $\overline{A}$ (abondances en fractions).
+\begin{enumerate}[label=\alph*)]
+  \item magnésium : $\ce{^{24}Mg}$ ($79\,\%$), $\ce{^{25}Mg}$ ($10\,\%$), $\ce{^{26}Mg}$ ($11\,\%$) ;
+  \item silicium : $\ce{^{28}Si}$ ($92\,\%$), $\ce{^{29}Si}$ ($5\,\%$), $\ce{^{30}Si}$ ($3\,\%$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver une abondance à partir de $\overline{A}$]
+Chaque élément a deux isotopes. À partir de la masse moyenne $\overline{A}$, retrouve les abondances.
+On pose $p$ l'abondance du premier isotope et $1-p$ celle du second.
+\begin{enumerate}[label=\alph*)]
+  \item lithium : $\ce{^{6}Li}$ et $\ce{^{7}Li}$, $\overline{A} = 6{,}94$ ;
+  \item cuivre : $\ce{^{63}Cu}$ et $\ce{^{65}Cu}$, $\overline{A} = 63{,}5$ ;
+  \item bore : $\ce{^{10}B}$ et $\ce{^{11}B}$, $\overline{A} = 10{,}8$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux : isotopes et uma]
+Indique si chaque proposition est \textbf{vraie} ou \textbf{fausse}, en justifiant brièvement.
+\begin{enumerate}[label=\alph*)]
+  \item Deux isotopes d'un même élément diffèrent par leur nombre de neutrons.
+  \item Le dalton est défini comme le douzième de la masse d'un atome de carbone 12.
+  \item Un atome de $\ce{^{16}O}$ a une masse d'environ $16$ uma.
+  \item L'uma est, par définition, exactement égale à la masse d'un proton.
+  \item La valeur de l'uma exprimée en grammes est l'inverse du nombre d'Avogadro.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[avec les masses isotopiques réelles]
+La masse moyenne se calcule avec la masse \emph{réelle} de chaque isotope (en uma), pas seulement son
+nombre de masse. Calcule $\overline{A}$.
+\begin{enumerate}[label=\alph*)]
+  \item chlore : $\ce{^{35}Cl}$ (masse $34{,}97$ uma, $75{,}8\,\%$) et $\ce{^{37}Cl}$
+        (masse $36{,}97$ uma, $24{,}2\,\%$) ;
+  \item cuivre : $\ce{^{63}Cu}$ (masse $62{,}93$ uma, $69{,}2\,\%$) et $\ce{^{65}Cu}$
+        (masse $64{,}93$ uma, $30{,}8\,\%$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deviner l'isotope majoritaire]
+Sans calcul détaillé, dis quel isotope est le \emph{plus abondant} : la masse moyenne « penche »
+toujours du côté de l'isotope majoritaire. Justifie.
+\begin{enumerate}[label=\alph*)]
+  \item chlore, $\overline{A} \approx 35{,}5$, isotopes $\ce{^{35}Cl}$ et $\ce{^{37}Cl}$ ;
+  \item cuivre, $\overline{A} \approx 63{,}5$, isotopes $\ce{^{63}Cu}$ et $\ce{^{65}Cu}$ ;
+  \item brome, $\overline{A} \approx 79{,}9$, isotopes $\ce{^{79}Br}$ et $\ce{^{81}Br}$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

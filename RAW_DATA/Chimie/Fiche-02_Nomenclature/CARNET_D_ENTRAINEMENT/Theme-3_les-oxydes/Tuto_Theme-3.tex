@@ -1,0 +1,100 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Les oxydes (métalliques et non métalliques)
+
+\begin{cle}[un oxyde, deux règles selon l'autre élément]
+Un \textbf{oxyde} est un composé binaire contenant de l'\textbf{oxygène} (au n.o.\ $-\mathrm{II}$). La règle
+de nomenclature dépend de la nature de l'\emph{autre} élément :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{métal} $\to$ \emph{oxyde métallique} : on nomme avec la \textbf{valence} du métal ;
+  \item \textbf{non-métal} $\to$ \emph{oxyde non métallique} : on nomme avec un \textbf{préfixe multiplicateur}.
+\end{itemize}
+\end{cle}
+
+\begin{methode}[{oxyde métallique : « oxyde de [métal] (valence) »}]
+On écrit \textbf{« oxyde de [nom du métal] »}, en précisant la valence en chiffres romains
+\emph{uniquement} si le métal peut en prendre plusieurs (\ce{Fe}, \ce{Cu}, \ce{Sn}, \ce{Pb}, \ce{Hg}).
+Pour un métal à valence \emph{unique} (\ce{Na}, \ce{Ca}, \ce{Mg}, \ce{Al}, \ce{Zn}, \ce{Ag}, \ce{K}), on
+ne l'indique pas. Pour écrire la formule, on croise la valence du métal avec $2$ (celle de \ce{O^2-}).
+\end{methode}
+
+\begin{methode}[oxyde non métallique : préfixe $=$ rapport O/X]
+On place devant « oxyde » un préfixe traduisant le rapport $\dfrac{\text{nombre d'oxygènes}}{\text{nombre d'atomes }X}$,
+puis « de [nom de $X$] ».
+\begin{center}\footnotesize
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{cl@{\qquad}cl@{\qquad}cl}
+\toprule
+O/X & préfixe & O/X & préfixe & O/X & préfixe \\
+\midrule
+1/2 & hémi   & 3/1 & tri   & 3/2 & sesqui \\
+1/1 & mono   & 4/1 & tétra & 5/2 & hémipent \\
+2/1 & di     & 5/1 & pent  & 7/2 & hémihept \\
+\bottomrule
+\end{tabular}
+\end{center}
+Quand $X$ est présent \emph{une} fois (\ce{XO_n}), le préfixe est simplement le nombre d'oxygènes
+(\ce{CO}=mono, \ce{NO2}=di, \ce{SO3}=tri). Quand $X$ est présent \emph{deux} fois (\ce{X2O_n}), le rapport
+vaut $n/2$ et l'on emploie les préfixes fractionnaires (\ce{N2O3}=sesqui, \ce{N2O5}=hémipent).
+\end{methode}
+
+\begin{exemplebox}[lire sept oxydes]
+\ce{CaO} : oxyde de calcium ; \ce{FeO} : oxyde de fer(II) ; \ce{Fe2O3} : oxyde de fer(III) ;
+\ce{Ag2O} : oxyde d'argent ; \ce{CO} : monoxyde de carbone ; \ce{NO2} : dioxyde d'azote ;
+\ce{Cl2O5} : hémipentoxyde de chlore.
+\end{exemplebox}
+
+\begin{piege}[les erreurs qui se répètent au concours]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1pt]
+  \item \ce{CuO} $=$ oxyde de cuivre\textbf{(II)} et \ce{Cu2O} $=$ oxyde de cuivre\textbf{(I)} :
+        ne pas intervertir les valences.
+  \item pour un métal à valence unique, \emph{ne pas} écrire la valence (\ce{ZnO} $=$ oxyde de zinc, pas « (II) »).
+  \item pour un oxyde non métallique, c'est le \textbf{rapport} O/X qui compte, pas le seul nombre d'oxygènes :
+        \ce{N2O5} est un \emph{hémipent}oxyde ($5/2$), pas un « pentoxyde ».
+\end{itemize}
+\end{piege}
+
+\begin{remarque}[une autre nomenclature des oxydes non métalliques]
+On rencontre aussi la nomenclature \emph{de stœchiométrie} qui compte les \emph{deux} éléments :
+\ce{N2O} y devient « mon\emph{oxyde} de di\emph{azote} » et \ce{NO2} « dioxyde d'azote ». Dans cette fiche,
+on suit la convention du \textbf{rapport O/X} : \ce{N2O} $=$ hémioxyde d'azote ($1/2$). Sache reconnaître les
+deux écritures.
+\end{remarque}
+
+\end{document}

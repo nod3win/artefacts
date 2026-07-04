@@ -1,0 +1,110 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Prédominance, sens des réactions ($\Delta \mathrm{p}K_a$) et Henderson-Hasselbalch
+\sisetup{per-mode=symbol}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 4 — Le $\mathrm{p}K_a$ comme boussole}\\[2pt]
+{\color{primary}\itshape Prédominance, sens d'une réaction ($\Delta \mathrm{p}K_a$, $K_{\text{équi}}$), et Henderson}
+\end{center}
+
+\medskip
+Le $\mathrm{p}K_a$ d'un couple sert de \textbf{boussole} : il dit quelle espèce domine à un pH donné (diagramme
+de prédominance), et il permet de \textbf{prévoir le sens} d'une réaction acide-base. C'est le thème le plus
+présent aux concours.
+
+\begin{cle}[diagramme de prédominance d'un couple \ce{HA/A-}]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1.5pt]
+  \item $\mathrm{pH} < \mathrm{p}K_a$ : l'\textbf{acide \ce{HA} prédomine} ;
+  \item $\mathrm{pH} > \mathrm{p}K_a$ : la \textbf{base \ce{A-} prédomine} ;
+  \item $\mathrm{pH} = \mathrm{p}K_a$ : les deux formes sont à \textbf{50\,\%/50\,\%}.
+\end{itemize}
+\end{cle}
+
+% --- diagramme de prédominance (auto-contenu, sans dégradé) ---
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize]
+  \fill[attncol!16] (0,0) rectangle (5,0.85);
+  \fill[defcol!16]  (5,0) rectangle (10,0.85);
+  \draw[black!55,line width=0.5pt] (0,0) rectangle (10,0.85);
+  \draw[primary,dashed,line width=1pt] (5,-0.15) -- (5,1.15);
+  \node[attncol,font=\bfseries] at (2.5,0.45) {\ce{HA} prédomine};
+  \node[defcol,font=\bfseries]  at (7.5,0.45) {\ce{A-} prédomine};
+  \node[primary,above,font=\bfseries] at (5,1.15) {$\mathrm{pH}=\mathrm{p}K_a$};
+  \draw[-{Stealth[length=2mm]}] (0,-0.15) -- (10.3,-0.15) node[right]{pH};
+  \node[primary,below,font=\scriptsize] at (5,-0.2) {$[\ce{HA}]=[\ce{A-}]$};
+\end{tikzpicture}
+\end{center}
+
+\begin{cle}[équation de Henderson-Hasselbalch]
+\[ \boxed{\mathrm{pH} = \mathrm{p}K_a + \log\frac{[\ce{A-}]}{[\ce{HA}]}}. \]
+Si $[\ce{A-}]=[\ce{HA}]$, $\mathrm{pH}=\mathrm{p}K_a$ ; si la base domine, $\mathrm{pH}>\mathrm{p}K_a$. Le rapport
+se déduit du pH : $\dfrac{[\ce{A-}]}{[\ce{HA}]} = 10^{\,\mathrm{pH}-\mathrm{p}K_a}$.
+\end{cle}
+
+\begin{methode}[prévoir le sens d'une réaction acide-base]
+On mélange un acide (couple 1) et une base (couple 2). La réaction $\ce{HA + B- <=> A- + HB}$ a pour constante :
+\[ \boxed{K_{\text{équi}} = 10^{\,\Delta\mathrm{p}K_a}},\qquad
+   \Delta\mathrm{p}K_a = \mathrm{p}K_a(\text{acide \textbf{formé}}) - \mathrm{p}K_a(\text{acide \textbf{réactif}}). \]
+\begin{center}\small
+\begin{tabular}{ccl}
+\toprule
+$\Delta\mathrm{p}K_a$ & $K_{\text{équi}}$ & Nature \\
+\midrule
+$> 2$ & $\geq 10^{2}$ & \textbf{complète} ($\rightarrow$) \\
+$0 \leq \Delta\mathrm{p}K_a \leq 2$ & $1 \leq K \leq 10^{2}$ & \textbf{équilibrée} ($\rightleftharpoons$) \\
+$< -2$ & $< 10^{-2}$ & \textbf{impossible} (sens inverse) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{methode}
+
+\begin{piege}[deux erreurs à éviter]
+\textbf{(1)} Ne pas inverser « acide formé » et « acide réactif » dans $\Delta\mathrm{p}K_a$ : un $\Delta\mathrm{p}K_a
+> 0$ doit donner $K_{\text{équi}} > 1$ (réaction dans le sens direct). \quad
+\textbf{(2)} Un acide \textbf{ne réagit pas avec sa propre base conjuguée} : $\Delta\mathrm{p}K_a = 0$,
+$K_{\text{équi}} = 1$, composition inchangée.
+\end{piege}
+
+\begin{remarque}[la règle d'or]
+Une réaction acide-base va \textbf{du plus fort vers le plus faible} : l'acide le plus fort cède son proton, et
+l'acide formé est plus faible (donc plus stable) que l'acide de départ.
+\end{remarque}
+
+\end{document}

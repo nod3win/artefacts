@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[quel phosphate libère le plus d'ions phosphate ?]
+On place \textbf{1 mole} de chacun de ces phosphates dans \textbf{1 litre} d'eau pure à
+\qty{25}{\degreeCelsius} : \ce{Ba3(PO4)2} ($K_{\mathrm{ps}}=\num{6.0e-39}$),
+\ce{Ca3(PO4)2} ($K_{\mathrm{ps}}=\num{1.3e-32}$), \ce{Sr3(PO4)2} ($K_{\mathrm{ps}}=\num{1.0e-31}$),
+\ce{Pb3(PO4)2} ($K_{\mathrm{ps}}=\num{1.0e-54}$).
+\begin{enumerate}[label=\alph*)]
+  \item Ces quatre sels sont-ils de même type ? Peut-on ici comparer directement leurs
+        $K_{\mathrm{ps}}$ ?
+  \item Exprime $[\ce{PO4^{3-}}]$ en fonction de $s$, puis relie $s$ à $K_{\mathrm{ps}}$.
+  \item Lequel donne la solution la plus concentrée en ions \ce{PO4^{3-}} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le piège de la comparaison inter-types]
+On considère \ce{AgCl} ($K_{\mathrm{ps}}=\num{1.8e-10}$, type $1{:}1$),
+\ce{CaF2} ($K_{\mathrm{ps}}=\num{3.9e-11}$, type $1{:}2$) et
+\ce{Ag2CrO4} ($K_{\mathrm{ps}}=\num{1.1e-12}$, type $2{:}1$).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Ag2CrO4} a le plus petit $K_{\mathrm{ps}}$. Peut-on en conclure qu'il est le moins soluble ?
+  \item Calcule la solubilité $s$ de chacun des trois sels.
+  \item Classe-les par solubilité \textbf{croissante} et commente le piège.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[$K_{\mathrm{ps}}$ à partir de la solubilité massique (forme littérale)]
+Le bromure de plomb \ce{PbBr2} a une solubilité massique $s_m=\qty{4.84}{\gram\per\litre}$. On note
+$M$ sa masse molaire.
+\begin{enumerate}[label=\alph*)]
+  \item Exprime $K_{\mathrm{ps}}$ \textbf{uniquement} en fonction de $s_m$ et $M$ (sans valeur
+        numérique).
+  \item Calcule sa valeur si $M=\qty{367.0}{\gram\per\mole}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[de bout en bout : le fluorure de calcium]
+Le fluorure de calcium \ce{CaF2} (fluorine) a $K_{\mathrm{ps}}=\num{3.9e-11}$ à \qty{25}{\degreeCelsius}.
+On donne $M(\ce{CaF2})=\qty{78.1}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la solubilité molaire $s$.
+  \item Déduis-en $[\ce{Ca^{2+}}]$ et $[\ce{F-}]$ à saturation.
+  \item Calcule la solubilité massique $s_m$.
+\end{enumerate}
+\end{exo}
+\end{document}

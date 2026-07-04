@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{exo}[n.o.\ dans un ion polyatomique]
+Ici la somme des n.o.\ n'est plus nulle : elle égale la \emph{charge de l'ion}. Avec $\ce{O}=-\mathrm{II}$,
+détermine le n.o.\ de l'atome central.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{SO4^2-} (le soufre)
+  \item \ce{NO3-} (l'azote)
+  \item \ce{ClO4-} (le chlore)
+  \item \ce{PO4^3-} (le phosphore)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[quand l'élément central est présent deux fois]
+Attention à l'indice de l'atome central : il apparaît deux fois. Avec $\ce{O}=-\mathrm{II}$, détermine son n.o.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Cr2O7^2-} (le chrome)
+  \item \ce{CrO4^2-} (le chrome)
+  \item \ce{S2O3^2-} (le soufre, valeur moyenne)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un même élément, plusieurs n.o.]
+Le manganèse prend plusieurs états d'oxydation. Avec $\ce{O}=-\mathrm{II}$, détermine son n.o.\ dans chaque
+espèce.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{MnO2}
+  \item \ce{MnO4-}
+  \item \ce{MnO4^2-}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[n.o.\ du métal à valence variable dans un oxyde]
+Ces métaux existent à plusieurs degrés d'oxydation. Détermine celui du métal dans l'oxyde donné
+($\ce{O}=-\mathrm{II}$).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Cu2O} (le cuivre)
+  \item \ce{Fe2O3} (le fer)
+  \item \ce{SnO2} (l'étain)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[n.o.\ dans un oxacide neutre]
+Il faut combiner \emph{deux} règles : $\ce{H}=+\mathrm{I}$ et $\ce{O}=-\mathrm{II}$, la molécule étant neutre.
+Détermine le n.o.\ de l'atome central.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{H2SO4} (le soufre)
+  \item \ce{HNO2} (l'azote)
+  \item \ce{H3PO4} (le phosphore)
+\end{enumerate}
+\end{exo}
+
+\end{document}

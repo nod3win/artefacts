@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[tout relier : le diamant]
+\begin{enumerate}[label=\alph*)]
+  \item $c_{\text{diamant}}=\dfrac{c}{n}=\dfrac{\qty{3.0e8}{m/s}}{2{,}42}=\qty{1.24e8}{m/s}$.
+  \item $\lambda_{\text{diamant}}=\dfrac{\lambda_0}{n}=\dfrac{\qty{500}{nm}}{2{,}42}\approx\qty{207}{nm}$.
+        (La fréquence est inchangée ; seule $\lambda$ raccourcit.)
+  \item $\sin\hat{\imath}_2=\dfrac{n_{\text{air}}\sin\hat{\imath}_1}{n}=\dfrac{\sin\ang{40}}{2{,}42}
+        =\dfrac{0{,}643}{2{,}42}=0{,}266\Rightarrow\hat{\imath}_2=\arcsin(0{,}266)\approx\ang{15.4}$.
+  \item On calcule les quatre rapports :
+        \[ \frac{\sin\ang{40}}{\sin\ang{15.4}}=\frac{0{,}643}{0{,}266}\approx2{,}42,\quad
+           \frac{n}{n_{\text{air}}}=2{,}42,\quad
+           \frac{c_{\text{air}}}{c_{\text{diamant}}}=\frac{3{,}0}{1{,}24}\approx2{,}42,\quad
+           \frac{\lambda_{\text{air}}}{\lambda_{\text{diamant}}}=\frac{500}{207}\approx2{,}42. \]
+        Les quatre valent bien $2{,}42$ : c'est la chaîne des rapports.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[identifier un milieu par sa longueur d'onde]
+La fréquence est identique dans les deux milieux, donc $\lambda\propto c$.
+\begin{enumerate}[label=\alph*)]
+  \item $\dfrac{c_1}{c_2}=\dfrac{\lambda_1}{\lambda_2}=\dfrac{650}{500}=1{,}30$.
+  \item Les indices sont dans le sens inverse des célérités : $\dfrac{n_2}{n_1}=\dfrac{c_1}{c_2}=1{,}30$.
+        Avec $n_1=1$ : $\boxed{n_2=1{,}30}$. Le \textbf{milieu 2} (où $\lambda$ est plus courte et la
+        lumière plus lente) est le plus réfringent.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter la chaîne depuis les angles]
+\begin{enumerate}[label=\alph*)]
+  \item $\dfrac{n_2}{n_1}=\dfrac{\sin\hat{\imath}_1}{\sin\hat{\imath}_2}
+        =\dfrac{\sin\ang{45}}{\sin\ang{28}}=\dfrac{0{,}707}{0{,}469}\approx1{,}51$.
+        Par la chaîne : $\dfrac{c_1}{c_2}=\dfrac{\lambda_1}{\lambda_2}=1{,}51$ également.
+  \item $c_1/c_2=1{,}51>1$ donc $c_1>c_2$ : la lumière va \textbf{plus vite dans le milieu 1}. Le
+        \textbf{milieu 2} est le plus réfringent ($n_2>n_1$).
+  \item $\lambda_2=\dfrac{\lambda_1}{1{,}51}=\dfrac{\qty{600}{nm}}{1{,}51}\approx\qty{398}{nm}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

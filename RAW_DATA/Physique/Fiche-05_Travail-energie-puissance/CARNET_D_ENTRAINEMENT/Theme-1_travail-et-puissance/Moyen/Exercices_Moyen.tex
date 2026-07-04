@@ -1,0 +1,120 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[travail du poids sur un plan incliné]
+Un objet de masse $m=\qty{20}{\kilogram}$ glisse le long d'un plan incliné d'un angle $\beta=\ang{30}$
+sur l'horizontale. Il descend de $A$ à $B$, la longueur de la pente valant $AB=\qty{6}{\metre}$.
+On prend $g=\qty{10}{\metre\per\second\squared}$ et $\sin\ang{30}=0,5$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.95]
+  \coordinate (A) at (0,3); \coordinate (B) at (5.2,0); \coordinate (C) at (0,0);
+  \draw[fill=primary!8,draw=black!70] (A)--(B)--(C)--cycle;
+  \foreach \x in {0,0.4,...,5.0} \draw[black!45] (\x,0)--(\x-0.2,-0.22);
+  \draw[->,black!60] (1.1,0) arc (180:150:1.1); \node at (1.5,0.3){\small $\beta$};
+  \coordinate (M) at (2.6,1.5);
+  \draw[fill=defcol!25,draw=black!70,rotate around={-30:(M)}] ($(M)+(-0.28,0)$) rectangle ($(M)+(0.28,0.42)$);
+  \draw[->,line width=1.1pt,attncol] (M)--++(0,-1.3) node[right,black]{\small $\vv G$};
+  \draw[<->,black!55,dashed] (-0.45,0)--(-0.45,3) node[midway,left]{\small $h$};
+  \node[above] at (A){\small $A$}; \node[below right] at (B){\small $B$};
+  \node at (3.5,2.1){\small $AB=\qty{6}{\metre}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la hauteur de descente $h$ à partir de $AB$ et de $\sin\ang{30}$.
+  \item Calcule le travail du poids $W(\vv G)$ de deux façons : par $W=mgh$, puis par la composante
+        $W=(G\sin\beta)\times AB$. Les deux résultats coïncident-ils ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[puissance d'un moteur à vitesse constante]
+Une voiture roule en mouvement rectiligne \emph{uniforme} (vitesse constante) à
+$v=\qty{72}{\kilo\metre\per\hour}$. La résultante des forces de frottement, constante, vaut
+$F_f=\qty{400}{\newton}$.
+\begin{enumerate}[label=\alph*)]
+  \item Convertis la vitesse en \si{\metre\per\second}.
+  \item À vitesse constante, la force motrice compense exactement les frottements. Calcule la
+        puissance $P$ que le moteur doit développer, avec $P=F\times v$. Exprime-la en \si{\kilo\watt}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[travail comme aire sous la courbe $F(x)$]
+Une force parallèle au déplacement varie avec la position $x$ selon le graphe ci-dessous. Le travail
+fourni entre $x_A=\qty{0}{\metre}$ et $x_B=\qty{4}{\metre}$ est égal à l'\emph{aire} comprise entre la
+courbe $F(x)$ et l'axe des $x$.
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=9cm,height=5cm,axis lines=left,
+     xlabel={\small $x$ (\si{\metre})},ylabel={\small $F$ (\si{\newton})},
+     xmin=0,xmax=5,ymin=0,ymax=35,xtick={0,1,2,3,4},ytick={0,10,20,30},
+     tick label style={font=\footnotesize},label style={font=\footnotesize}]
+    \addplot[defcol,line width=1.3pt,domain=0:4,samples=2]{10+5*x};
+    \addplot[draw=defcol!60,pattern=north east lines,pattern color=defcol!35]
+       coordinates {(0,0) (0,10) (4,30) (4,0)} -- cycle;
+    \node[defcol] at (axis cs:1.6,26){\small $F(x)$};
+    \node[black] at (axis cs:2.3,7){\small aire $=W$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+Sachant que la région hachurée est un \emph{trapèze} (bases $F_A=\qty{10}{\newton}$ et
+$F_B=\qty{30}{\newton}$, largeur $\qty{4}{\metre}$), calcule le travail $W$.
+\end{exo}
+
+\begin{exo}[bilan des travaux sur un trajet horizontal]
+Une luge est tirée sur un sol horizontal par une corde exerçant $F=\qty{100}{\newton}$ inclinée de
+$\alpha=\ang{60}$. Elle avance de $d=\qty{20}{\metre}$. Une force de frottement $F_f=\qty{25}{\newton}$
+s'oppose au mouvement. On prend $\cos\ang{60}=0,5$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le travail $W(\vv F)$ de la force de traction.
+  \item Calcule le travail $W(\vv F_f)$ du frottement.
+  \item Que valent les travaux du poids et de la réaction normale sur ce trajet ?
+  \item Déduis-en le travail total $\sum W$ reçu par la luge.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[puissance moyenne d'une grue]
+Une grue soulève verticalement une charge de masse $m=\qty{500}{\kilogram}$ jusqu'à une hauteur
+$h=\qty{12}{\metre}$, en une durée $\Delta t=\qty{8}{\second}$. On prend $g=\qty{10}{\metre\per\second\squared}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le travail $W$ fourni par la grue pour élever la charge ($W=mgh$).
+  \item Déduis-en la puissance moyenne $P$ développée, en \si{\kilo\watt}.
+\end{enumerate}
+\end{exo}
+\end{document}

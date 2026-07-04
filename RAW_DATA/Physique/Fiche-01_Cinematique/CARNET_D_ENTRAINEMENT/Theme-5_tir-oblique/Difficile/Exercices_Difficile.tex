@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+On prend $g=\qty{10}{\metre\per\second\squared}$ ; frottements négligés.
+
+\begin{exo}[la bille lancée à 60°]
+Une bille est lancée du sol à $v_0=\qty{30}{\metre\per\second}$ sous un angle $\theta=\ang{60}$.
+\begin{enumerate}[label=\alph*)]
+  \item Décompose $\vv{v}_0$ et calcule le temps de montée $t_s$ puis la durée totale $T$.
+  \item Quelle est la hauteur maximale $y_{\max}$ ?
+  \item Quelle est la portée $x_p$ ?
+  \item Avec quelle vitesse (norme) la bille retombe-t-elle au sol ? Compare à $v_0$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'archer : 45° ou 60° ?]
+Un archer décoche deux flèches identiques à la même vitesse initiale, l'une à \ang{45}, l'autre à \ang{60}.
+\begin{enumerate}[label=\alph*)]
+  \item Laquelle reste le plus longtemps en l'air ? (compare $T=2v_0\sin\theta/g$)
+  \item Laquelle retombe le plus loin ? (compare les portées)
+  \item Formule la conclusion en une phrase.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux sur la trajectoire parabolique]
+Un projectile décrit une parabole (montée puis descente). Indique si chaque affirmation est vraie ou fausse, puis compte les vraies.
+\begin{enumerate}[label=\alph*)]
+  \item L'accélération est la même en tout point de la trajectoire.
+  \item L'accélération est nulle au sommet.
+  \item Au sommet, la vitesse est horizontale et vaut $v_0\cos\theta$.
+  \item Le temps de montée est égal au temps de descente.
+  \item Le projectile repasse au niveau du sol avec une vitesse de même norme que $v_0$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remonter à la vitesse et à l'angle]
+Un projectile lancé du sol atteint une hauteur maximale de \qty{20}{\metre} et une portée de \qty{80}{\metre}.
+\begin{enumerate}[label=\alph*)]
+  \item En utilisant $\dfrac{y_{\max}}{x_p}=\dfrac{\tan\theta}{4}$, détermine l'angle de tir $\theta$.
+  \item En déduis la vitesse initiale $v_0$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'allure des deux composantes]
+Un projectile est lancé à $v_0=\qty{25}{\metre\per\second}$ avec $\cos\theta=0{,}6$ et $\sin\theta=0{,}8$.
+\begin{enumerate}[label=\alph*)]
+  \item Donne les équations horaires $x(t)$ et $y(t)$.
+  \item Quelle est l'allure du graphe du \emph{déplacement horizontal} $x(t)$ : droite ou courbe ? Et celle de $y(t)$ ?
+  \item Justifie physiquement la différence entre ces deux allures.
+\end{enumerate}
+\end{exo}
+
+\end{document}

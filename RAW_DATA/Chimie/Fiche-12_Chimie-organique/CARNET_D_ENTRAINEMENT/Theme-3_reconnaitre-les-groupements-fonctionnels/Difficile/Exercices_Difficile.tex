@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{exo}[Les fonctions de l'aspirine]
+La structure de l'aspirine (acide acétylsalicylique) est :
+\begin{center}
+\chemfig{*6(-=-(-(-[:30]OH)=[:90]O)=-(-O-[:150](-[:-150]CH_3)=[:90]O)=-=)}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Liste \emph{toutes} les fonctions oxygénées présentes.
+  \item Y a-t-il une fonction \textbf{éther} dans l'aspirine ? Justifie soigneusement.
+  \item Combien de doubles liaisons $\ce{C=C}$ (hors carbonyles) la molécule comporte-t-elle ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Compter et classer les alcools ; effet d'une réduction]
+On considère la molécule \ce{(CH3)2C(OH)-CH2-CH(OH)-CO-CH3}.
+\begin{enumerate}[label=\alph*)]
+  \item Combien de fonctions alcool porte-t-elle ? Donne la classe de chacune.
+  \item Quelle autre fonction contient-elle ?
+  \item On réduit le carbonyle ($\ce{C=O}\rightarrow\ce{CH-OH}$). Combien de fonctions alcool la molécule compte-t-elle alors au total, et de quelles classes ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Azote : amine ou amide ?]
+On donne la molécule \ce{H2N-CH2-CO-NH-CH2-COOH} (un dipeptide, la glycylglycine).
+\begin{enumerate}[label=\alph*)]
+  \item Identifie les \textbf{trois} fonctions présentes.
+  \item La molécule contient deux atomes d'azote : portent-ils la même fonction ? Justifie.
+  \item L'enchaînement central $-\ce{CO-NH}-$ est-il une amine secondaire ? Explique l'erreur classique.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Une molécule aromatique polyfonctionnelle]
+Un composé aromatique a la structure suivante :
+\begin{center}
+\chemfig{*6(-(-CHO)=-(-OCH_3)=(-CH_2OH)-=)}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Liste les fonctions présentes (celles du cycle et de ses substituants).
+  \item Le substituant $-\ce{OCH3}$ porté par le cycle est-il une fonction \textbf{éther} ou \textbf{ester} ? Justifie.
+  \item Combien de doubles liaisons $\ce{C=C}$ le cycle contient-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Vrai / faux sur une molécule polyfonctionnelle]
+Soit la molécule \ce{CH2=CH-CH2-CO-CH2-CHO}. Réponds par \textbf{vrai} ou \textbf{faux} en justifiant.
+\begin{enumerate}[label=\alph*)]
+  \item Elle contient deux fonctions carbonyle.
+  \item Elle contient une fonction acide carboxylique.
+  \item Elle contient trois fonctions chimiques.
+  \item Elle contient une fonction alcool.
+  \item L'un de ses carbonyles est un aldéhyde situé en bout de chaîne.
+\end{enumerate}
+\end{exo}
+
+\end{document}

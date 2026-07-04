@@ -1,108 +1,86 @@
-% =====================================================================
-%  THÈME 1 — Compter les chiffres significatifs — CORRIGÉ — Niveau DIFFICILE
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage[version=4]{mhchem}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{150,98,162}
-\definecolor{primarydark}{RGB}{92,52,110}
-\newcommand{\cs}{chiffre significatif}
-\newcommand{\CS}{chiffres significatifs}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Difficile · Thème 1}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
-  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
-  fonttitle=\bfseries,coltitle=white,
-  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
-
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-
-\begin{center}
-{\Large\bfseries\color{primarydark} Corrigé — Niveau Difficile}\\[1pt]
-{\color{primary} Thème 1 : compter les chiffres significatifs}
-\end{center}
-\vspace{2mm}
-
-\begin{cor}[Décomposition complète d'une mesure]
-$m = \qty{0,0068040}{\kilo\gram}$, lu de gauche à droite : $0,\;0\;0\;\mathbf{6}\;\mathbf{8}\;\mathbf{0}\;\mathbf{4}\;\mathbf{0}$.
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item Zéros de tête : le $0$ des unités et les deux zéros $0{,}00$ avant le $6$. Ils ne font que
-        placer la virgule (ordre de grandeur) $\rightarrow$ \emph{non} significatifs.
-  \item Le zéro entre le $8$ et le $4$ est \textbf{captif} $\rightarrow$ significatif. Le zéro final,
-        situé après la virgule et après le dernier chiffre non nul, est un zéro \textbf{de queue}
-        $\rightarrow$ significatif.
-  \item Chiffres significatifs : $6,\,8,\,0,\,4,\,0 \Rightarrow \boxed{\mathbf{5}\ \text{CS}}$.
-  \item Notation scientifique : on place la virgule après le $6$ (virgule avancée de $3$ rangs) :
-        \[ m = \num{6,8040e-3}\ \si{\kilo\gram}\qquad (5\ \text{CS, inchangé}). \]
-        Les zéros de tête ont disparu ; le captif et celui de queue sont conservés.
+\sisetup{per-mode=symbol}
+\begin{corrige}[le compte-rendu du laboratoire]
+Une mesure a un nombre \emph{fini} de CS et son dernier chiffre écrit est l'incertain ; un nombre
+compté est exact (infinité de CS, aucun chiffre incertain).
+\begin{enumerate}[label=\alph*)]
+  \item $\qty{18,60}{\milli\litre}$ : $\mathbf{4}$ CS ; chiffre incertain $=$ le $0$ final.
+  \item $\qty{0,04060}{\gram}$ : zéros de tête non sig.\ ; le $0$ captif et le $0$ de queue comptent
+        $\Rightarrow \mathbf{4}$ CS ; chiffre incertain $=$ le $0$ final.
+  \item $3$ pastilles \emph{comptées} : nombre \textbf{exact}, infinité de CS, \emph{pas} de chiffre
+        incertain.
+  \item $\num{5,0e-3}\ \si{\mol\per\litre}$ : $\mathbf{2}$ CS ; chiffre incertain $=$ le $0$ de $5,0$.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[Le grand tableau à compléter]
-\begin{center}\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{c c c c}
-\toprule
-\textbf{Nombre} & \textbf{Décimales} & \textbf{CS} & \textbf{Notation scientifique}\\
-\midrule
-$\num{0,003080}$ & $6$ & $4$          & $\num{3,080e-3}$\\
-$\num{60,0}$     & $1$ & $3$          & $\num{6,00e1}$\\
-$\num{0,0500}$   & $4$ & $3$          & $\num{5,00e-2}$\\
-$\num{40080}$    & $0$ & $4$ (ambigu) & $\num{4,008e4}$\\
-\bottomrule
-\end{tabular}
-\end{center}
-Remarques : pour $\num{0,003080}$, les zéros de tête ne comptent pas mais le zéro de queue si
-$\Rightarrow 4$~CS. Pour $\num{40080}$, le zéro captif est sûr, mais le zéro de queue de cet entier
-est ambigu ; l'interprétation \og la plus riche \fg{} le prend comme significatif $\rightarrow 5$~CS
-serait alors écrit $\num{4,0080e4}$. En le comptant comme cadrage, on a $4$~CS et $\num{4,008e4}$ :
-c'est bien l'ambiguïté que la notation scientifique doit lever.
-\end{cor}
-
-\begin{cor}[Un désaccord entre deux étudiants]
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item \textbf{Les deux peuvent avoir raison} : $\num{12000}$ est un entier dont les trois zéros de
-        queue sont ambigus. On sait seulement que le $1$ et le $2$ sont sûrs (au moins $2$~CS) ; les
-        zéros peuvent être mesurés ou de cadrage. La question est mal posée : il manque la précision.
-  \item Interprétation de Léa ($2$~CS) : $\num{1,2e4}$~mm. \quad
-        Interprétation de Tom ($5$~CS) : $\num{1,2000e4}$~mm.
-  \item \og À la centaine près \fg{} : les chiffres fiables sont $1$ (dizaine de milliers), $2$
-        (millier) et $0$ (centaine) $\Rightarrow \mathbf{3}$~CS, soit $\boxed{\num{1,20e4}\ \text{mm}}$.
+\begin{corrige}[lever une ambiguïté en contexte]
+\begin{enumerate}[label=\alph*)]
+  \item «~$\qty{25}{\kilo\gram}$~» est une indication ambiguë (au mieux $2$ CS) : le zéro final d'un
+        entier n'est pas fiable. «~$\qty{25,00}{\kilo\gram}$~» affiche $\mathbf{4}$ CS. La balance nous
+        apprend que la masse est en réalité connue \emph{au centième de kilogramme} ($\pm\qty{0,01}{\kilo\gram}$),
+        soit une précision bien supérieure.
+  \item «~au dixième de kilogramme près~» signifie que le dernier chiffre fiable est celui des dixièmes :
+        on écrit $\qty{25,0}{\kilo\gram}$ ($3$ CS), soit en notation scientifique
+        $\boxed{2,50\times10^{1}\ \si{\kilo\gram}}$.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[Construire un nombre à volonté]
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item Toutes ces écritures valent $300$ mais affichent un nombre de CS différent :
-        \[ 1\ \text{CS} : \num{3e2}\ ;\qquad 2\ \text{CS} : \num{3,0e2}\ ;\qquad 3\ \text{CS} : \num{3,00e2}. \]
-        Chaque zéro de queue ajouté à la mantisse est un zéro \emph{mesuré} de plus.
-  \item \og $300$ \fg{} laisse indéterminé le statut des deux zéros (mesurés ou cadrage) : l'écriture
-        décimale d'un entier ne permet pas de dire jusqu'où la mesure est fiable. La notation
-        scientifique, elle, rend chaque CS explicite.
+\begin{corrige}[vrai ou faux, justifié]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux.} $0,0025$ a $2$ CS : les zéros de tête ne comptent pas.
+  \item \textbf{Faux.} $\qty{4,50}{\gram}$ et $\qty{0,00450}{\kilo\gram}$ ont \emph{tous deux} $3$ CS :
+        changer d'unité ne change jamais le nombre de CS.
+  \item \textbf{Vrai.} Un nombre exact (comptage ou définition) possède une infinité de CS.
+  \item \textbf{Faux.} $\num{3,0e2}$ a $2$ CS, tandis que $300$ est \emph{ambigu} ($1$, $2$ ou $3$ CS) :
+        ils n'ont pas forcément le même nombre de CS. C'est justement pourquoi on préfère la notation
+        scientifique.
 \end{enumerate}
-\end{cor}
+\end{corrige}
+
+\begin{corrige}[le zéro qui trahit]
+\begin{enumerate}[label=\alph*)]
+  \item $\qty{7,0}{\gram}$ : $\mathbf{2}$ CS ; $\qty{7}{\gram}$ : $\mathbf{1}$ CS.
+  \item L'étudiant a perdu l'information «~mesure fiable au dixième de gramme~» : le zéro de queue était
+        \emph{porteur d'information}. «~$\qty{7}{\gram}$~» ne promet plus qu'une précision à $\pm\qty{1}{\gram}$.
+  \item Mesure correcte : $\boxed{7,0\times10^{0}\ \si{\gram}}$ (soit $\qty{7,0}{\gram}$, $2$ CS).
+\end{enumerate}
+\end{corrige}
 
 \end{document}

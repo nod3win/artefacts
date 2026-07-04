@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+% THEME_TITLE: Les concentrations : molaire et massique
+\noindent
+Une \textbf{solution} contient un \textbf{soluté} dissous dans un \textbf{solvant}. La
+\emph{concentration} dit « combien de soluté » par litre de solution. Il en existe \emph{deux}, qu'il
+ne faut jamais confondre car elles n'ont pas la même unité.
+
+\begin{cle}[concentration molaire (molarité) $C$]
+Quantité de matière de soluté par litre de \emph{solution} :
+\[ \boxed{\,C = \dfrac{n}{V}\,}\qquad\Longleftrightarrow\qquad n = C\,V. \]
+Unité : \si{\mole\per\litre}, aussi notée \textbf{M} (« molaire »). On note $[\ce{X}]$ la molarité
+de l'espèce \ce{X}. \emph{$V$ est le volume de solution, pas du solvant seul.}
+\end{cle}
+
+\begin{cle}[concentration massique $C_m$]
+Masse de soluté par litre de solution :
+\[ \boxed{\,C_m = \dfrac{m}{V}\,}\qquad\Longleftrightarrow\qquad m = C_m\,V,\qquad \text{unité : }\si{\gram\per\litre}. \]
+\end{cle}
+
+\begin{cle}[le pont entre les deux : la masse molaire]
+\[ \boxed{\,C_m = C\times M\,}\qquad\Longleftrightarrow\qquad C = \dfrac{C_m}{M}. \]
+Vérification : $\si{\mole\per\litre}\times\si{\gram\per\mole} = \si{\gram\per\litre}$.
+\end{cle}
+
+\begin{methode}[molarité d'une solution concentrée à partir de $\rho$ et du \% massique]
+\begin{enumerate}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item On part de \textbf{$\SI{1}{\litre}$ de solution}, de masse $m_{\text{sol}} = 1000\,\rho$ (avec $\rho$ en \si{\gram\per\milli\litre}).
+  \item Masse de soluté \emph{pur} : $m = m_{\text{sol}}\times \dfrac{\%}{100}$.
+  \item Quantité de matière : $n = \dfrac{m}{M}$, contenue dans $\SI{1}{\litre}$, donc $C = n$ (en \si{\mole\per\litre}).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[lecture directe d'une concentration massique]
+Une solution contient $\SI{23.4}{\gram}$ de \ce{NaCl} par litre : $C_m = \SI{23.4}{\gram\per\litre}$.
+Avec $M(\ce{NaCl}) = \SI{58.5}{\gram\per\mole}$, sa molarité vaut $C = \dfrac{23{,}4}{58{,}5} = \SI{0.400}{\mole\per\litre}$.
+\end{exemplebox}
+
+\begin{piege}[ne pas confondre les unités]
+La concentration \textbf{massique} est en \si{\gram\per\litre}, la \textbf{molaire} en \si{\mole\per\litre}
+(M). Dire qu'une concentration massique « s'exprime en \si{\mole\per\litre} » est \textbf{faux}. Ne pas
+confondre non plus $C_m$ (masse du \emph{soluté}/volume) et $\rho$ (masse \emph{totale}/volume).
+\end{piege}
+
+\end{document}

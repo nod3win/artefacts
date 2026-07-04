@@ -1,0 +1,98 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[déduire l'ordre des $\mathrm{p}K_a$ à partir de réactions]
+Une réaction déplacée vers la droite va de l'acide le \textbf{plus fort} vers le plus faible : l'acide réactif
+a un $\mathrm{p}K_a$ \emph{plus petit} que l'acide formé.
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item (1) \ce{HNO2} (réactif) $\to$ \ce{CH3COOH} (formé) : $\mathrm{p}K_a(\ce{HNO2}) < \mathrm{p}K_a(\ce{CH3COOH})$.
+  \item (2) \ce{CH3COOH} $\to$ \ce{H2CO3} : $\mathrm{p}K_a(\ce{CH3COOH}) < \mathrm{p}K_a(\ce{H2CO3})$.
+  \item (3) \ce{H2CO3} $\to$ \ce{NH4+} : $\mathrm{p}K_a(\ce{H2CO3}) < \mathrm{p}K_a(\ce{NH4+})$.
+\end{itemize}
+En enchaînant : $\boxed{\mathrm{p}K_a(\ce{HNO2}) < \mathrm{p}K_a(\ce{CH3COOH}) < \mathrm{p}K_a(\ce{H2CO3}) < \mathrm{p}K_a(\ce{NH4+})}$.
+\end{corrige}
+
+\begin{corrige}[quelles réactions sont déplacées vers la droite ?]
+$\Delta\mathrm{p}K_a = \mathrm{p}K_a(\text{formé}) - \mathrm{p}K_a(\text{réactif})$ ; déplacée à droite si
+$\Delta\mathrm{p}K_a > 0$.
+\begin{enumerate}[label=\arabic*)]
+  \item réactif \ce{CH3COOH} ($4{,}8$) $\to$ \ce{HClO2} ($2{,}0$) : $\Delta = 2{,}0 - 4{,}8 = -2{,}8 < 0$ $\Rightarrow$ vers la \emph{gauche}.
+  \item réactif \ce{HClO2} ($2{,}0$) $\to$ \ce{CH3COOH} ($4{,}8$) : $\Delta = +2{,}8 > 0$ $\Rightarrow$ \textbf{vers la droite}.
+  \item réactif \ce{HCN} ($9{,}2$) $\to$ \ce{H2CO3} ($6{,}4$) : $\Delta = -2{,}8 < 0$ $\Rightarrow$ vers la \emph{gauche}.
+  \item réactif \ce{H2CO3} ($6{,}4$) $\to$ \ce{HCN} ($9{,}2$) : $\Delta = +2{,}8 > 0$ $\Rightarrow$ \textbf{vers la droite}.
+\end{enumerate}
+Réponse : les réactions \textbf{2 et 4}.
+\end{corrige}
+
+\begin{corrige}[retrouver la réaction d'une constante donnée]
+On cherche $\Delta\mathrm{p}K_a = -2{,}8$ (car $K_{\text{équi}} = 10^{\Delta\mathrm{p}K_a} = 10^{-2{,}8}$).
+\begin{enumerate}[label=\alph*)]
+  \item réactif \ce{CH3COOH} ($4{,}8$), formé \ce{H2CO3} ($6{,}4$) : $\Delta = +1{,}6$ $\Rightarrow$ $K = 10^{1{,}6}$.
+  \item réactif \ce{NH4+} ($9{,}2$), formé \ce{H2CO3} ($6{,}4$) : $\Delta = 6{,}4 - 9{,}2 = -2{,}8$ $\Rightarrow$
+        $\boxed{K = 10^{-2{,}8}}$. \textbf{C'est la bonne réaction.}
+  \item réactif \ce{H2CO3} ($6{,}4$), formé \ce{NH4+} ($9{,}2$) : $\Delta = +2{,}8$ $\Rightarrow$ $K = 10^{2{,}8}$ (c'est l'inverse de b).
+  \item réactif \ce{CH3COOH} ($4{,}8$), formé \ce{NH4+} ($9{,}2$) : $\Delta = +4{,}4$ $\Rightarrow$ $K = 10^{4{,}4}$.
+\end{enumerate}
+Réponse : \textbf{b)}.
+\end{corrige}
+
+\begin{corrige}[quelles bases réagissent complètement avec \ce{HF} ?]
+L'acide formé est l'acide conjugué de la base ; l'acide réactif est \ce{HF} ($\mathrm{p}K_a = 3{,}2$). Donc
+$\Delta\mathrm{p}K_a = \mathrm{p}K_a(\text{conjugué}) - 3{,}2$.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{NO2-} : $3{,}3 - 3{,}2 = 0{,}1$ (équilibrée) ;\quad \ce{CH3COO-} : $4{,}8 - 3{,}2 = 1{,}6$ (équilibrée) ;\quad
+        \ce{CN-} : $9{,}2 - 3{,}2 = 6{,}0$ ;\quad \ce{CO3^{2-}} : $10{,}4 - 3{,}2 = 7{,}2$ ;\quad
+        \ce{ClO2-} : $2{,}0 - 3{,}2 = -1{,}2$ (impossible).
+  \item Seules celles de $\Delta\mathrm{p}K_a > 2$ réagissent complètement : \textbf{\ce{CN-} et \ce{CO3^{2-}}}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[capstone : prédominance d'un diacide et piège du pH]
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH} = 3{,}0$ : $3{,}0 > 1{,}2$ (donc \ce{HC2O4-} domine \ce{H2C2O4}) et $3{,}0 < 4{,}3$ (donc
+        \ce{HC2O4-} domine \ce{C2O4^{2-}}). L'espèce majoritaire est \textbf{\ce{HC2O4-}}.
+  \item $\mathrm{pH} = 6{,}4 > 4{,}3 = \mathrm{p}K_{a2}$ : le deuxième \ce{H+} est cédé, c'est
+        \textbf{\ce{C2O4^{2-}}} qui prédomine (et \emph{non} \ce{HC2O4-} : c'est le piège).
+  \item À $\mathrm{pH} = 4{,}3 = \mathrm{p}K_{a2}$ : $\dfrac{[\ce{C2O4^{2-}}]}{[\ce{HC2O4-}]}
+        = 10^{\,\mathrm{pH}-\mathrm{p}K_{a2}} = 10^{0} = \mathbf{1}$ (les deux formes sont à égalité).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

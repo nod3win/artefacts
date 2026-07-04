@@ -1,0 +1,111 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[compression maximale d'un ressort]
+Un bloc de masse $m=\qty{10}{\kilogram}$ glisse \emph{sans frottement} à
+$v=\qty{36}{\kilo\metre\per\hour}$ et vient heurter un ressort horizontal de raideur
+$k=\qty{1000}{\newton\per\metre}$. Le bloc comprime le ressort jusqu'à s'arrêter.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.9]
+  \draw[black!70,line width=0.8pt] (-0.3,0)--(7,0);
+  \draw[black!70,line width=1.2pt] (7,0)--(7,1.6);
+  \draw[primary,line width=1pt] (5.0,0.8)
+     decorate[decoration={coil,aspect=0.6,segment length=5pt,amplitude=4pt}]{-- (6.9,0.8)};
+  \draw[fill=defcol!22,draw=black!70] (4.0,0.35) rectangle (4.9,1.25);
+  \node at (4.45,0.8){\small $m$};
+  \draw[->,line width=1.1pt,defcol] (3.7,1.55)--(4.7,1.55) node[right]{\small $\vv v$};
+  \draw[<->,black!45] (0,-0.35)--(4.0,-0.35) node[midway,below]{\small approche sans frottement};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Convertis $v$ en \si{\metre\per\second} et calcule l'énergie cinétique du bloc juste avant le
+        contact.
+  \item À la compression maximale, toute cette énergie est stockée dans le ressort
+        ($\tfrac12 m v^2=\tfrac12 k x^2$). Calcule la compression maximale $x$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[lecture d'un graphe force--élongation]
+On étire un ressort et on relève la force de rappel $F$ en fonction de l'élongation $\Delta x$
+(graphe ci-dessous). La position détendue correspond à $x_0=0$.
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=9cm,height=4.6cm,axis lines=left,
+     xlabel={\small $\Delta x$ (\si{\centi\metre})},ylabel={\small $F$ (\si{\newton})},
+     xmin=0,xmax=11,ymin=0,ymax=3,xtick={0,2,4,6,8,10},ytick={0,1,2},
+     tick label style={font=\footnotesize},label style={font=\footnotesize}]
+    \addplot[defcol,line width=1.3pt,domain=0:10,samples=2]{0.25*x};
+    \addplot[only marks,mark=*,mark size=1.3pt,black] coordinates {(2,0.5)(4,1)(6,1.5)(8,2)(10,2.5)};
+    \draw[dashed,black!45] (axis cs:10,0)--(axis cs:10,2.5)--(axis cs:0,2.5) node[left,black]{\scriptsize $2,5$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Détermine la raideur $k$ du ressort à partir de la pente (utilise le point
+        $F=\qty{2,5}{\newton}$ à $\Delta x=\qty{10}{\centi\metre}$).
+  \item Calcule l'énergie potentielle élastique stockée à $\Delta x=\qty{10}{\centi\metre}$.
+  \item La force de rappel à $\Delta x=\qty{4}{\centi\metre}$ est-elle supérieure ou inférieure à
+        celle à $\Delta x=\qty{10}{\centi\metre}$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un ressort qui propulse un bloc]
+Sur un rail horizontal \emph{sans frottement}, un ressort de raideur $k=\qty{400}{\newton\per\metre}$ est
+comprimé de $x=\qty{0,10}{\metre}$ contre un bloc de masse $m=\qty{1}{\kilogram}$. On relâche le ressort.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'énergie potentielle élastique stockée par le ressort comprimé.
+  \item Cette énergie est intégralement transférée au bloc sous forme d'énergie cinétique. Déduis-en la
+        vitesse de lancement $v$ du bloc.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux : énergies potentielles]
+On considère un ressort de raideur $k=\qty{25}{\newton\per\metre}$. Indique si chaque affirmation est
+\textbf{vraie} ou \textbf{fausse}, en justifiant.
+\begin{enumerate}[label=\alph*)]
+  \item L'énergie potentielle élastique à une élongation $x=\qty{10}{\centi\metre}$ vaut
+        $\qty{0,125}{\joule}$.
+  \item La force de rappel à $x=\qty{4}{\centi\metre}$ est supérieure à celle à $x=\qty{10}{\centi\metre}$.
+  \item Doubler l'élongation double l'énergie potentielle élastique stockée.
+  \item L'énergie potentielle de pesanteur d'un objet peut être négative selon la référence choisie.
+\end{enumerate}
+\end{exo}
+\end{document}

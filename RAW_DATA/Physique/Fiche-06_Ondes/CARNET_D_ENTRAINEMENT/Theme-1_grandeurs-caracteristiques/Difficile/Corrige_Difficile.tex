@@ -1,0 +1,107 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{excol} Thème 1 — Corrigé Difficile}\\[-2pt]
+{\color{excol}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{corrige}[la longueur d'onde à partir d'un enregistrement]
+Le graphe est en fonction du \emph{temps} : on y lit $T$. La longueur d'onde vient ensuite de
+$\lambda=vT$.
+\begin{enumerate}[label=\alph*)]
+  \item Le motif se répète tous les \SI{2}{\second} : $T=\SI{2}{\second}$, donc
+        $f=\dfrac{1}{T}=\SI{0.5}{\hertz}.$
+  \item $\lambda=vT=\SI{0.5}{\metre\per\second}\times\SI{2}{\second}=\SI{1}{\metre}=\SI{100}{\centi\metre}.$
+  \item \textbf{Non.} Un graphe $y(t)$ ne montre que le mouvement dans le temps d'\emph{un
+        seul} point : on y lit $T$, pas $\lambda$. Pour lire $\lambda$ directement, il faudrait
+        une \emph{photo} de la corde, c.-à-d. un graphe $y(x)$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux graphes, une vitesse]
+Chaque graphe donne une seule information ; on les combine avec $v=\lambda/T$.
+\begin{enumerate}[label=\alph*)]
+  \item La longueur d'onde se lit sur la \emph{photo} $y(x)$ (axe en mètres) : le motif se
+        répète tous les \SI{4}{\metre}, donc $\lambda=\SI{4}{\metre}.$
+  \item La période se lit sur le graphe du \emph{point fixe} $y(t)$ (axe en secondes) : le
+        motif se répète tous les \SI{0.5}{\second}, donc $T=\SI{0.5}{\second}.$
+  \item $v=\dfrac{\lambda}{T}=\dfrac{\SI{4}{\metre}}{\SI{0.5}{\second}}=\SI{8}{\metre\per\second}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[échographie : la profondeur d'un obstacle]
+On lit la durée sur l'oscilloscope, puis on n'oublie pas que l'onde fait l'\emph{aller-retour}.
+\begin{enumerate}[label=\alph*)]
+  \item 8 divisions à \SI{10}{\micro\second} chacune :
+        $\Delta t = 8\times\SI{10}{\micro\second}=\SI{80}{\micro\second}=\SI{80e-6}{\second}.$
+  \item Pendant $\Delta t$, l'onde parcourt l'aller \emph{et} le retour, soit $2d$ :
+        \[ 2d = v\,\Delta t \ \Rightarrow\ d=\frac{v\,\Delta t}{2}
+           =\frac{\SI{1500}{\metre\per\second}\times\SI{80e-6}{\second}}{2}
+           =\frac{\SI{0.12}{\metre}}{2}=\SI{0.06}{\metre}=\SI{6}{\centi\metre}. \]
+        \textbf{Piège :} oublier le facteur $2$ donnerait \SI{12}{\centi\metre}, soit le double.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[rides à la surface de l'eau]
+Deux crêtes successives sont distantes d'une longueur d'onde $\lambda$ : on compte les crêtes
+en partant de $S$.
+\begin{enumerate}[label=\alph*)]
+  \item La 1\textsuperscript{re} crête est à $\lambda$ de $S$, la 2\textsuperscript{e} à $2\lambda$,
+        la 3\textsuperscript{e} à $3\lambda$. Donc $d = SA = 3\lambda.$
+  \item $d = 3\lambda = 3\times\SI{4}{\centi\metre}=\SI{12}{\centi\metre}.$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un son qui change de milieu]
+La fréquence est fixée par la source et reste invariante ; $v$ et $\lambda$ changent avec le milieu.
+\begin{enumerate}[label=\alph*)]
+  \item $\lambda_{\text{eau}}=\dfrac{v_{\text{eau}}}{f}
+        =\dfrac{\SI{1500}{\metre\per\second}}{\SI{250}{\hertz}}=\SI{6}{\metre}.$
+  \item La fréquence \textbf{ne change pas} : elle est imposée par la source. On garde
+        $f=\SI{250}{\hertz}$ dans l'air.
+  \item $\lambda_{\text{air}}=\dfrac{v_{\text{air}}}{f}
+        =\dfrac{\SI{340}{\metre\per\second}}{\SI{250}{\hertz}}=\SI{1.36}{\metre}.$
+        Rapport : $\dfrac{\lambda_{\text{eau}}}{\lambda_{\text{air}}}=\dfrac{6}{1{,}36}\approx 4{,}4$,
+        exactement le rapport des célérités $\dfrac{1500}{340}\approx 4{,}4$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

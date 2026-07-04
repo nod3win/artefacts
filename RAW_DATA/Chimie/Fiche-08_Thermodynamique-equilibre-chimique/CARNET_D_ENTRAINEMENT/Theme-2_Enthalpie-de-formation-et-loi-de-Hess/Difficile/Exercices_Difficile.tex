@@ -1,0 +1,94 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{exo}[cycle de Hess à partir d'un diagramme]
+On étudie l'oxydation $2\,\ce{NO}(g) + \ce{O2}(g) \rightarrow 2\,\ce{NO2}(g)$, d'enthalpie inconnue. On donne $\Delta H^\circ_{\text{f}}(\ce{NO})=\qty{+90}{\kilo\joule\per\mol}$ et $\Delta H^\circ_{\text{f}}(\ce{NO2})=\qty{+33}{\kilo\joule\per\mol}$. Le diagramme place les trois niveaux et les chemins depuis les éléments.
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[->,thick] (0,-0.3)--(0,4.7) node[above,font=\small]{$H$ (kJ)};
+  \draw[primarydark,very thick] (0.4,0.6)--(8.5,0.6);
+  \node[anchor=west,font=\small] at (0.5,0.92) {$\ce{N2}(g) + 2\,\ce{O2}(g)$};
+  \node[anchor=east,font=\scriptsize] at (0.3,0.6) {$0$};
+  \draw[defcol,very thick] (2.6,2.0)--(8.5,2.0);
+  \node[anchor=west,font=\small] at (6.3,2.32) {$2\,\ce{NO2}(g)$};
+  \draw[attncol,very thick] (0.4,3.8)--(5.2,3.8);
+  \node[anchor=west,font=\small] at (1.3,4.12) {$2\,\ce{NO}(g) + \ce{O2}(g)$};
+  \draw[->,line width=1.1pt,attncol] (1.0,0.6)--(1.0,3.8)
+        node[midway,fill=white,font=\scriptsize]{$2\times(+90)$};
+  \draw[->,line width=1.1pt,defcol] (7.9,0.6)--(7.9,2.0)
+        node[midway,fill=white,font=\scriptsize]{$2\times(+33)$};
+  \draw[->,line width=1.1pt,excol] (3.9,3.8)--(3.9,2.0)
+        node[midway,right,font=\scriptsize,excol]{$\Delta H^\circ_{\text{r}}=\;?$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Écris l'égalité entre les deux chemins reliant les éléments à $2\,\ce{NO2}$.
+  \item Calcule $\Delta H^\circ_{\text{r}}$ de la réaction (telle qu'écrite).
+  \item Donne l'enthalpie par mole de $\ce{NO2}$ formée et conclus (exo/endo).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[déterminer une enthalpie de formation par combustion]
+La combustion de l'éthanol $\ce{C2H5OH}(l) + 3\,\ce{O2}(g) \rightarrow 2\,\ce{CO2}(g) + 3\,\ce{H2O}(l)$ dégage $\qty{1367}{\kilo\joule}$ par mole d'éthanol. Données ($\si{\kilo\joule\per\mol}$) : $\Delta H^\circ_{\text{f}}(\ce{CO2})=-393$, \; $\Delta H^\circ_{\text{f}}(\ce{H2O}(l))=-286$.
+\begin{enumerate}[label=\alph*)]
+  \item Écris la loi de Hess reliant $\Delta H^\circ_{\text{r}}$ à $\Delta H^\circ_{\text{f}}(\ce{C2H5OH})$.
+  \item Détermine $\Delta H^\circ_{\text{f}}(\ce{C2H5OH}(l))$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[loi de Hess par combinaison de trois équations]
+On donne trois réactions :\\
+\hspace*{1em}(1) $\ce{C}(s) + \ce{O2}(g) \rightarrow \ce{CO2}(g)$, \; $\Delta H_1 = \qty{-393}{\kilo\joule}$ ;\\
+\hspace*{1em}(2) $\ce{H2}(g) + \tfrac12\,\ce{O2}(g) \rightarrow \ce{H2O}(l)$, \; $\Delta H_2 = \qty{-286}{\kilo\joule}$ ;\\
+\hspace*{1em}(3) $\ce{CH4}(g) + 2\,\ce{O2}(g) \rightarrow \ce{CO2}(g) + 2\,\ce{H2O}(l)$, \; $\Delta H_3 = \qty{-890}{\kilo\joule}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle combinaison de (1), (2), (3) reconstitue la formation du méthane $\ce{C}(s) + 2\,\ce{H2}(g) \rightarrow \ce{CH4}(g)$ ?
+  \item Calcule $\Delta H^\circ_{\text{f}}(\ce{CH4})$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux — loi de Hess]
+Indique si chaque affirmation est \textbf{vraie} ou \textbf{fausse}, et justifie brièvement.
+\begin{enumerate}[label=\alph*)]
+  \item « L'enthalpie standard de formation du dioxygène $\ce{O2}(g)$ vaut zéro. »
+  \item « La loi de Hess est une conséquence du fait que $H$ est une fonction d'état. »
+  \item « Inverser le sens d'écriture d'une réaction ne change pas le signe de son $\Delta H$. »
+  \item « En parcourant un cycle thermochimique fermé, la somme des variations d'enthalpie est nulle. »
+\end{enumerate}
+\end{exo}
+
+\end{document}

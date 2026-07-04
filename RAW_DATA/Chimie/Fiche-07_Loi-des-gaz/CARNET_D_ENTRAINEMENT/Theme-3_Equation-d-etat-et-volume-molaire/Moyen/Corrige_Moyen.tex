@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[masse, moles et volume aux CNTP]
+On passe par les moles : $n=V/22{,}4$ ou $n=m/M$, puis on convertit.
+\begin{enumerate}[label=\alph*)]
+  \item $n=\dfrac{11{,}2}{22{,}4}=\qty{0.5}{\mole}$, donc $m=n M=0{,}5\times32=\qty{16}{\gram}$.
+  \item $n=\dfrac{8{,}0}{4}=\qty{2.0}{\mole}$, donc $V=n\times22{,}4=\qty{44.8}{\litre}$.
+  \item $n=\dfrac{22}{44}=\qty{0.5}{\mole}$, donc $V=0{,}5\times22{,}4=\qty{11.2}{\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[équation d'état hors CNTP]
+$T=\theta+273=\qty{300}{\kelvin}$ pour a) et b).
+\begin{enumerate}[label=\alph*)]
+  \item $p=\dfrac{nRT}{V}=\dfrac{0{,}50\times0{,}082\times300}{5{,}0}=\dfrac{12{,}3}{5{,}0}=\qty{2.46}{atm}$.
+  \item $V=\dfrac{nRT}{p}=\dfrac{2{,}0\times0{,}082\times300}{1{,}5}=\dfrac{49{,}2}{1{,}5}=\qty{32.8}{\litre}$.
+  \item $T=\dfrac{pV}{nR}=\dfrac{2{,}0\times3{,}0}{0{,}20\times0{,}082}=\dfrac{6{,}0}{0{,}0164}\approx\qty{366}{\kelvin}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[du volume au nombre de molécules]
+On compte les moles puis on multiplie par $N_A$.
+\begin{enumerate}[label=\alph*)]
+  \item $n=\dfrac{2{,}24}{22{,}4}=\qty{0.10}{\mole}$, donc
+        $N=0{,}10\times\num{6.022e23}=\qty{6.0e22}{}$ molécules.
+  \item $N=1{,}0\times\num{6.022e23}=\qty{6.022e23}{}$ molécules.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[travailler en unités SI ($R=\num{8,314}$)]
+Tout est déjà en \si{\pascal}, \si{\meter\cubed}, \si{\kelvin}.
+\begin{enumerate}[label=\alph*)]
+  \item $p=\dfrac{nRT}{V}=\dfrac{1{,}0\times8{,}314\times273}{\num{22.4e-3}}
+        =\dfrac{2269{,}7}{0{,}0224}\approx\qty{1.013e5}{\pascal}$.
+  \item $\dfrac{\num{1.013e5}}{101325}\approx1$ : cela correspond bien à $\qty{1}{atm}$. On retrouve
+        les CNTP ($\qty{1}{atm}$, \qty{273}{\kelvin}, $\qty{22.4}{\litre}$ pour une mole).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

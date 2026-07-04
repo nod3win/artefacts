@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[deuxième loi : $a=F/m$]
+Un palet de masse $m=\qty{3}{\kilogram}$ glisse sans frottement sur une patinoire. On lui applique
+une force résultante horizontale $\vv F$ d'intensité \qty{12}{\newton}.
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \draw[thick,black!55] (-2.6,0) -- (2.8,0);
+  \fill[primarydark] (-1.2,0) rectangle (-0.4,0.7);
+  \node[white,font=\small] at (-0.8,0.35){$m$};
+  \draw[->,line width=1.1pt,defcol] (-0.4,0.35) -- ++(1.7,0) node[right]{$\vv F=\qty{12}{\newton}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'accélération $a$ du palet.
+  \item Si l'on double la force ($\qty{24}{\newton}$), que devient $a$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deuxième loi : $F=ma$]
+Un mobile de masse $m=\qty{2}{\kilogram}$ prend une accélération $a=\qty{5}{\metre\per\second\squared}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est l'intensité de la force résultante appliquée ?
+  \item Vérifie l'unité obtenue à partir de $\si{\newton}=\si{\kilogram\metre\per\second\squared}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver la masse]
+Une force résultante de \qty{50}{\newton} communique à un objet une accélération de
+$\qty{2,5}{\metre\per\second\squared}$. Quelle est la masse de l'objet ?
+\end{exo}
+
+\begin{exo}[première loi : la résultante]
+Un livre est posé, immobile, sur une table. Il subit son poids $\vv G$ (vers le bas) et la réaction
+normale $\vv N$ de la table (vers le haut).
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \fill[black!10] (-1.8,-0.15) rectangle (1.8,0);
+  \draw[thick,black!55] (-1.8,0) -- (1.8,0);
+  \fill[primarydark] (-0.45,0) rectangle (0.45,0.6);
+  \draw[->,line width=1.1pt,attncol] (0,0) -- ++(0,-1.2) node[below]{$\vv G$};
+  \draw[->,line width=1.1pt,excol] (0,0.6) -- ++(0,1.2) node[above]{$\vv N$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Que vaut la résultante des forces sur le livre ?
+  \item Qu'en déduit-on pour son accélération, et pour son état de mouvement ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[direction de l'accélération]
+Un chariot est tiré par une unique force résultante horizontale $\vv F$ dirigée vers la droite.
+\begin{enumerate}[label=\alph*)]
+  \item Dans quelle direction et quel sens pointe le vecteur accélération $\vv a$ ?
+  \item Cette accélération pourrait-elle pointer vers le haut ? Justifie par la $2^{\text{e}}$ loi.
+\end{enumerate}
+\end{exo}
+\end{document}

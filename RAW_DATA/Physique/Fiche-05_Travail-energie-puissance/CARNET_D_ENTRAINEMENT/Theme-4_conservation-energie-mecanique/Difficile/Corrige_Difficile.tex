@@ -1,0 +1,94 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[énergie dissipée par les frottements de l'air]
+\begin{enumerate}[label=\alph*)]
+  \item $mgh=5\times10\times10=\qty{500}{\joule}$ (énergie potentielle perdue) ;
+        $\tfrac12 m v^2=\tfrac12\times5\times12^2=\tfrac12\times5\times144=\qty{360}{\joule}$
+        (énergie cinétique acquise).
+  \item L'écart a été dissipé par l'air :
+        $E_{\text{dissipée}}=mgh-\tfrac12 m v^2=500-360=\qty{140}{\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une descente avec frottement]
+\begin{enumerate}[label=\alph*)]
+  \item Sans frottement : $v=\sqrt{2g\,\Delta h}=\sqrt{2\times10\times20}=\sqrt{400}=\qty{20}{\metre\per\second}$
+        (au lieu de \qty{15}{\metre\per\second}).
+  \item $E_{\text{dissipée}}=mg\,\Delta h-\tfrac12 m v^2=60\times10\times20-\tfrac12\times60\times15^2
+        =12000-6750=\qty{5250}{\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux : conversions d'énergie d'une balle lancée]
+Énergie mécanique : $E_m=\tfrac12 m v_0^2=\tfrac12\times0,2\times10^2=\qty{10}{\joule}$.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai}. Sans frottement $E_m=\qty{10}{\joule}$ est constante tout au long du mouvement.
+  \item \textbf{Faux}. $h_{\max}=\dfrac{v_0^2}{2g}=\dfrac{100}{20}=\qty{5}{\metre}$ (et non \qty{10}{\metre}).
+  \item \textbf{Vrai}. $E_p=mgh=0,2\times10\times2,5=\qty{5}{\joule}$, donc
+        $E_c=E_m-E_p=10-5=\qty{5}{\joule}$.
+  \item \textbf{Vrai}. Au sommet $v=0$ : toute l'énergie est potentielle, $E_p=E_m=\qty{10}{\joule}$,
+        soit une augmentation de \qty{10}{\joule} depuis le sol.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux : l'indépendance de la masse]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai}. $v=\sqrt{2gh}$ ne dépend pas de $m$ : même hauteur $\Rightarrow$ même vitesse.
+  \item \textbf{Vrai}. $h_{\max}=\dfrac{v_0^2}{2g}$ ne dépend pas de $m$ : même $v_0$ $\Rightarrow$ même hauteur.
+  \item \textbf{Faux}. La vitesse en bas $v=\sqrt{2gh}$ est la \emph{même} pour les deux skieurs
+        (la masse se simplifie).
+  \item \textbf{Faux}. $h_{\max}=\dfrac{v_0^2}{2g}$ est indépendante de la masse.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[capstone : de la pente au ressort]
+\begin{enumerate}[label=\alph*)]
+  \item $E_p=mgh=2\times10\times1,6=\qty{32}{\joule}$. Sans frottement, en bas de la piste cette
+        énergie est intégralement devenue \emph{cinétique} : $E_c=\qty{32}{\joule}$.
+  \item À la compression maximale, le bloc est arrêté et toute l'énergie est élastique :
+        $mgh=\tfrac12 k x^2$, donc
+        \[
+        x=\sqrt{\frac{2mgh}{k}}=\sqrt{\frac{2\times32}{1600}}=\sqrt{\frac{64}{1600}}=\sqrt{0,04}=\qty{0,2}{\metre}.
+        \]
+\end{enumerate}
+\end{corrige}
+\end{document}

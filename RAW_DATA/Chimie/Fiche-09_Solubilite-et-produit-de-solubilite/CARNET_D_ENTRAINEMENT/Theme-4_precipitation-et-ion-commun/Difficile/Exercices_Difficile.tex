@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[précipitation sélective]
+Une solution contient à la fois $[\ce{Cl-}]=\qty{0.010}{\mole\per\litre}$ et
+$[\ce{CrO4^{2-}}]=\qty{0.010}{\mole\per\litre}$. On y ajoute \emph{lentement} des ions \ce{Ag+}.
+On donne $K_{\mathrm{ps}}(\ce{AgCl})=\num{1.8e-10}$ et $K_{\mathrm{ps}}(\ce{Ag2CrO4})=\num{1.1e-12}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la concentration $[\ce{Ag+}]$ nécessaire pour amorcer la précipitation de \ce{AgCl}.
+  \item Calcule la concentration $[\ce{Ag+}]$ nécessaire pour amorcer celle de \ce{Ag2CrO4}.
+  \item Lequel des deux sels précipite en premier ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'effet d'ion commun sous forme littérale]
+On a une solution saturée de \ce{AgCl} ($K_{\mathrm{ps}}=\num{1.8e-10}$) à laquelle on ajoute des ions
+chlorure jusqu'à $[\ce{Cl-}]=\qty{0.10}{\mole\per\litre}$ (à l'équilibre).
+\begin{enumerate}[label=\alph*)]
+  \item Écris la nouvelle solubilité $s'$ en fonction de $K_{\mathrm{ps}}$ et de $[\ce{Cl-}]$.
+  \item Montre que, pour cette valeur de $[\ce{Cl-}]$, on peut écrire $s'=10\times K_{\mathrm{ps}}$.
+  \item Donne la valeur numérique de $s'$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[ion commun apporté par le cation]
+On dissout du \ce{CaF2} ($K_{\mathrm{ps}}=\num{3.9e-11}$) dans une solution de \ce{CaCl2} à
+\qty{0.10}{\mole\per\litre} (l'ion commun est ici le \emph{cation} \ce{Ca^{2+}}).
+\begin{enumerate}[label=\alph*)]
+  \item En notant $s'$ la solubilité et $C=[\ce{Ca^{2+}}]\approx\qty{0.10}{\mole\per\litre}$, exprime
+        $K_{\mathrm{ps}}$ en fonction de $s'$ et $C$ (attention : $[\ce{F-}]=2s'$).
+  \item Calcule $s'$.
+  \item Compare à la solubilité $s_0=\qty{2.14e-4}{\mole\per\litre}$ dans l'eau pure.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[mélange et précipitation d'un sel $2{:}1$]
+On mélange \qty{100}{\milli\litre} de nitrate d'argent \ce{AgNO3} à \qty{2.0e-3}{\mole\per\litre} avec
+\qty{100}{\milli\litre} de chromate de sodium \ce{Na2CrO4} à \qty{2.0e-3}{\mole\per\litre}. On donne
+$K_{\mathrm{ps}}(\ce{Ag2CrO4})=\num{1.1e-12}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $[\ce{Ag+}]$ et $[\ce{CrO4^{2-}}]$ juste après mélange.
+  \item Calcule $Q$ et conclus sur la formation d'un précipité.
+\end{enumerate}
+\end{exo}
+\end{document}

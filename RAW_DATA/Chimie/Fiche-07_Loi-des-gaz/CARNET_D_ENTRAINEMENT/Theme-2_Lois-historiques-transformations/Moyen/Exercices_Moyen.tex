@@ -1,0 +1,83 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{exo}[reconnaître la loi]
+Pour chaque situation, indique la grandeur maintenue constante et écris la relation à utiliser (sans
+calcul).
+\begin{enumerate}[label=\alph*)]
+  \item On comprime un gaz à température constante.
+  \item On chauffe un gaz dans un cylindre à piston libre (pression atmosphérique).
+  \item On chauffe un gaz enfermé dans une bouteille rigide.
+  \item On ajoute du gaz dans un ballon souple, à température et pression ambiantes constantes.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[raisonnement proportionnel sans calcul détaillé]
+Déduis l'effet demandé par proportionnalité (directe ou inverse).
+\begin{enumerate}[label=\alph*)]
+  \item À $V$ constant, la température absolue passe de \qty{1100}{\kelvin} à \qty{550}{\kelvin} : que
+        devient la pression ?
+  \item À $p$ constante, on double la température absolue : que devient le volume ?
+  \item À $T$ constante, on divise la pression par deux : que devient le volume ?
+  \item À $p$ constante, on double le volume : que devient la température absolue ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[loi de Charles avec conversions]
+Un gaz est maintenu à pression constante. Convertis en kelvins puis calcule.
+\begin{enumerate}[label=\alph*)]
+  \item $V_1=\qty{2.0}{\litre}$ à \qty{27}{\degreeCelsius}, chauffé à \qty{87}{\degreeCelsius} : $V_2$ ?
+  \item $V_1=\qty{4.0}{\litre}$ à \qty{127}{\degreeCelsius}, refroidi à \qty{27}{\degreeCelsius} : $V_2$ ?
+  \item Le volume passe de \qty{5.0}{\litre} à \qty{6.0}{\litre} en partant de \qty{250}{\kelvin} :
+        quelle est la température finale $T_2$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[isochore et Avogadro]
+Applique la relation adaptée (attention aux kelvins pour les températures).
+\begin{enumerate}[label=\alph*)]
+  \item ($V$ constant) $p_1=\qty{1.0}{atm}$ à \qty{250}{\kelvin}, chauffé à \qty{500}{\kelvin} : $p_2$ ?
+  \item ($V$ constant) La pression passe de \qty{2.0}{atm} à \qty{3.0}{atm} en partant de
+        \qty{300}{\kelvin} : quelle est $T_2$ ?
+  \item ($p,T$ constants) $V_1=\qty{6.0}{\litre}$ pour $n_1=\qty{0.25}{\mole}$ ; on porte la quantité à
+        $n_2=\qty{0.40}{\mole}$ : $V_2$ ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

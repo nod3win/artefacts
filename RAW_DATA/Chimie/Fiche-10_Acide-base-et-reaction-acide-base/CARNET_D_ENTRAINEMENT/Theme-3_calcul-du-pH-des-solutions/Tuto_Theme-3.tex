@@ -1,0 +1,97 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Calcul du pH des solutions aqueuses
+\sisetup{per-mode=symbol}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 3 — Calculer le pH d'une solution}\\[2pt]
+{\color{primary}\itshape Quatre formules selon la force, plus les mélanges et la dilution}
+\end{center}
+
+\medskip
+Tout le thème tient dans une question : \textbf{fort ou faible ?} Un électrolyte fort est totalement dissocié
+(on lit $[\ce{H3O+}]$ ou $[\ce{OH-}]$ directement) ; un électrolyte faible ne l'est que partiellement (on passe
+par le $\mathrm{p}K_a$).
+
+\begin{cle}[les quatre formules de pH (à \qty{25}{\celsius})]
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Type de solution} & \textbf{Hypothèse} & \textbf{Formule} \\
+\midrule
+Acide fort ($C_a$)   & $[\ce{H3O+}] = C_a$              & $\mathrm{pH} = -\log C_a$ \\
+Base forte ($C_b$)   & $[\ce{OH-}] = C_b$              & $\mathrm{pH} = 14 + \log C_b$ \\
+Acide faible ($C_a$) & $\alpha \ll 1$, $C_a \gg K_a$    & $\mathrm{pH} = \tfrac12(\mathrm{p}K_a - \log C_a)$ \\
+Base faible ($C_b$)  & $\alpha \ll 1$                   & $\mathrm{pH} = 7 + \tfrac12(\mathrm{p}K_a + \log C_b)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Pour la base faible, $\mathrm{p}K_a$ est celui du couple acide conjugué / base (\ce{BH+/B}).
+\end{cle}
+
+\begin{methode}[acide (ou base) fort : lire la concentration en ions]
+\begin{enumerate}[leftmargin=1.5em,topsep=2pt,itemsep=1.5pt]
+  \item Écris la dissociation totale (\ce{->}). \ce{HCl -> H3O+ + Cl-} donne $[\ce{H3O+}] = C_a$.
+  \item \textbf{Mélange} de plusieurs acides forts : additionne les \textbf{moles} de \ce{H3O+} de chaque
+        source, puis divise par le \textbf{volume total} : $[\ce{H3O+}] = \dfrac{\sum n(\ce{H3O+})}{V_{\text{tot}}}$.
+  \item \textbf{Dilution} : $[\ce{H3O+}]$ est divisée par le facteur de dilution. Diluer un acide fort par
+        \num{10} \emph{augmente} le pH d'une unité.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[deux calculs types]
+\ce{HCl} à $\qty{e-2}{mol\per L}$ (fort) : $\mathrm{pH} = -\log(10^{-2}) = 2$.\quad\quad
+\ce{CH3COOH} à $\qty{0,1}{mol\per L}$ ($\mathrm{p}K_a = 4{,}75$, faible) :
+$\mathrm{pH} = \tfrac12(4{,}75 + 1) \approx 2{,}9$.
+\end{exemplebox}
+
+\begin{piege}[le facteur des di-acides / di-bases]
+\ce{Ba(OH)2} et \ce{H2SO4} libèrent \textbf{deux} ions par formule :
+$\ce{Ba(OH)2 -> Ba^{2+} + 2 OH-}$ donne $[\ce{OH-}] = 2\,C_b$. Oublier ce facteur \num{2} est l'erreur la plus
+fréquente. De même, ne jamais appliquer la formule de l'acide \emph{faible} à un acide \emph{fort} (et vice
+versa) : le choix de la formule dépend de la force.
+\end{piege}
+
+\begin{remarque}[loi de dilution d'Ostwald]
+Pour un acide faible, le degré d'ionisation vaut $\alpha \approx \sqrt{K_a/C_a}$. Comme $\alpha \propto
+1/\sqrt{C_a}$, \textbf{diluer un acide faible augmente son taux de dissociation} : pour multiplier $\alpha$ par
+$k$, il faut diviser $C_a$ par $k^2$.
+\end{remarque}
+
+\end{document}

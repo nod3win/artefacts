@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{corrige}[escalier partiel : glace $\rightarrow$ eau tiède]
+\begin{enumerate}[label=\alph*)]
+  \item (1) échauffement de la glace de $\qty{-20}{\celsius}$ à $\qty{0}{\celsius}$ ; (2) fusion à $\qty{0}{\celsius}$ ; (3) échauffement de l'eau liquide de $\qty{0}{\celsius}$ à $\qty{20}{\celsius}$.
+  \item on additionne les trois contributions :
+  \begin{align*}
+    Q &= \underbrace{0{,}10\times 2{,}060\times 20}_{\text{glace}} + \underbrace{0{,}10\times 334}_{\text{fusion}} + \underbrace{0{,}10\times 4{,}185\times 20}_{\text{eau}}\\
+      &= 4{,}12 + 33{,}4 + 8{,}37 = \qty{45.89}{\kilo\joule}.
+  \end{align*}
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[température finale d'un mélange]
+\begin{enumerate}[label=\alph*)]
+  \item l'eau chaude cède, l'eau froide reçoit ; $c$ se simplifie :
+  \[ 2{,}0\,(T_{\text{f}}-80) + 1{,}0\,(T_{\text{f}}-20) = 0. \]
+  \item $3{,}0\,T_{\text{f}} = 2{,}0\times 80 + 1{,}0\times 20 = 180 \;\Rightarrow\; T_{\text{f}} = \dfrac{180}{3{,}0} = \qty{60}{\celsius}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[capacité thermique d'un métal]
+\begin{enumerate}[label=\alph*)]
+  \item $Q_{\text{eau}} = m_{\text{eau}}\,c_{\text{eau}}\,\Delta T = 1{,}0\times 4{,}185\times(25-20) = \qty{20.925}{\kilo\joule}$ (reçue).
+  \item bilan $Q_{\text{eau}} + Q_{\text{métal}} = 0$, avec $Q_{\text{métal}} = 0{,}50\,c\,(25-100) = -37{,}5\,c$ :
+  \[ -37{,}5\,c = -20{,}925 \;\Rightarrow\; c = \dfrac{20{,}925}{37{,}5} = \qty{0.558}{\kilo\joule\per\kelvin\per\kilogram}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[mesurer une chaleur de neutralisation]
+\begin{enumerate}[label=\alph*)]
+  \item volume total $100+100=\qty{200}{\milli\litre}$, soit $m=\qty{0.200}{\kilogram}$ ; $\Delta T = 27{,}0-21{,}0 = \qty{6.0}{\celsius}$.
+  \item $Q = m\,c_{\text{eau}}\,\Delta T = 0{,}200\times 4{,}185\times 6{,}0 = \qty{5.022}{\kilo\joule} = \qty{5022}{\joule}$ (chaleur dégagée par la réaction, captée par l'eau).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[enthalpie molaire de dissolution]
+\begin{enumerate}[label=\alph*)]
+  \item $Q_{\text{eau}} = m\,c_{\text{eau}}\,\Delta T = 0{,}20\times 4{,}185\times(22{,}0-20{,}0) = \qty{1.674}{\kilo\joule}$ (reçue par l'eau).
+  \item la solution se \emph{réchauffe} : la dissolution \emph{cède} de la chaleur, elle est \textbf{exothermique} ($\Delta H<0$).
+  \item $\Delta H = \dfrac{-\,Q_{\text{eau}}}{n} = \dfrac{-1{,}674}{0{,}25} = \qty{-6.70}{\kilo\joule\per\mol}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

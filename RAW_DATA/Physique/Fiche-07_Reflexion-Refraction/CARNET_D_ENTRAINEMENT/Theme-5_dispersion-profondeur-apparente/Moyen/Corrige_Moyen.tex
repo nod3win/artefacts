@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[dispersion : rouge et bleu dans le verre]
+\begin{enumerate}[label=\alph*)]
+  \item Loi de Snell–Descartes $\sin\hat r=\dfrac{\sin\ang{60}}{n}$ :
+        \[ \hat r_{\text{rouge}}=\arcsin\!\frac{0{,}866}{1{,}51}=\arcsin(0{,}574)\approx\ang{35.0},\quad
+           \hat r_{\text{bleu}}=\arcsin\!\frac{0{,}866}{1{,}53}=\arcsin(0{,}566)\approx\ang{34.5}. \]
+  \item Écart $\Delta\hat r=\hat r_{\text{rouge}}-\hat r_{\text{bleu}}\approx\ang{35.0}-\ang{34.5}=\ang{0.5}$.
+        Le \textbf{bleu} (plus grand indice) est le \emph{plus} dévié : il fait le plus petit angle avec
+        la normale.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[profondeur apparente d'une piscine]
+\begin{enumerate}[label=\alph*)]
+  \item $h'=\dfrac{n_2}{n_1}\,h=\dfrac{1}{1{,}33}\times\qty{2.0}{m}\approx\qty{1.5}{m}$.
+  \item Le fond paraît remonté de $h-h'=\qty{2.0}{m}-\qty{1.5}{m}=\qty{0.5}{m}$. On sous-estime donc
+        toujours la profondeur d'une piscine.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le mécanisme de l'arc-en-ciel]
+\begin{enumerate}[label=\alph*)]
+  \item Dans l'ordre : (1) \textbf{réfraction} à l'entrée de la goutte, (2) \textbf{réflexion} sur la
+        face arrière, (3) \textbf{réfraction} à la sortie.
+  \item Les couleurs se séparent parce que l'eau est \textbf{dispersive} : son indice dépend de la
+        longueur d'onde, donc chaque couleur est réfractée sous un angle légèrement différent (rouge
+        $\sim\ang{42}$, violet $\sim\ang{40}$).
+  \item \textbf{Non} : sans dispersion, toutes les couleurs sortiraient sous le même angle et l'on ne
+        verrait qu'un arc blanc. La dispersion est indispensable.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une marque sous une plaque de verre]
+\begin{enumerate}[label=\alph*)]
+  \item L'objet est dans le verre ($n_1=1{,}5$), l'observateur dans l'air ($n_2=1$) :
+        \[ h'=\frac{n_2}{n_1}\,e=\frac{1}{1{,}5}\times\qty{6.0}{cm}=\qty{4.0}{cm}. \]
+  \item Elle paraît remontée de $\qty{6.0}{cm}-\qty{4.0}{cm}=\qty{2.0}{cm}$. (Le verre, plus
+        réfringent que l'eau, « remonte » encore plus les objets.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vitesses des couleurs dans le verre]
+\begin{enumerate}[label=\alph*)]
+  \item $v_{\text{rouge}}=\dfrac{c}{n_{\text{rouge}}}=\dfrac{\qty{3.0e8}{m/s}}{1{,}51}\approx\qty{1.99e8}{m/s}$ ;
+        $v_{\text{bleu}}=\dfrac{c}{n_{\text{bleu}}}=\dfrac{\qty{3.0e8}{m/s}}{1{,}53}\approx\qty{1.96e8}{m/s}$.
+        Le rouge va (un peu) plus vite que le bleu.
+  \item Dans le verre $\lambda=v/f$ suit la vitesse : le \textbf{bleu}, le plus lent, a la plus
+        \emph{courte} longueur d'onde.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

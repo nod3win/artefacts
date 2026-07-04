@@ -1,0 +1,103 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= DIFFICILE =================
+
+\begin{exo}[la traction du câble]
+Un ascenseur de masse $M=\qty{800}{\kilogram}$ monte. On prend
+$g=\qty{10}{\metre\per\second\squared}$ et l'on néglige les frottements.
+\begin{enumerate}[label=\alph*)]
+  \item Fais le bilan des forces sur la cabine et écris la 2\up{e} loi de Newton
+        (axe vers le haut).
+  \item L'ascenseur accélère vers le haut à $a=\qty{1.5}{\metre\per\second\squared}$ :
+        calcule la force de traction $T$ du câble.
+  \item S'il montait à \emph{vitesse constante} (MRU), que vaudrait $T$ ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la corde en chute libre]
+Un bloc de bois $A$ ($m_A=\qty{4}{\kilogram}$) est relié par une corde à une sphère
+métallique $B$ ($m_B=\qty{1}{\kilogram}$) suspendue en dessous. On lâche l'ensemble
+d'une hauteur, sans résistance de l'air ($g=\qty{10}{\metre\per\second\squared}$).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \foreach \y in {3.5,3.8,4.1}{\draw[black!45,line width=0.6pt]
+     (0.15,\y) -- ++(0.5,0.35);}
+  \draw[black!60,fill=orange!25,line width=0.9pt] (0.0,2.6) rectangle (1.4,3.5);
+  \node at (0.7,3.05){$A$};
+  \draw[black!70,line width=1pt] (0.7,2.6)--(0.7,1.7);
+  \node[right,font=\scriptsize] at (0.78,2.15){corde};
+  \shade[ball color=gray!60] (0.7,1.35) circle (0.35);
+  \node[white,font=\small] at (0.7,1.35){$B$};
+  \draw[->,attncol,line width=1.2pt] (2.2,3.0)--(2.2,1.6) node[right,font=\small]{$\vv g$};
+  \node[font=\scriptsize,align=center] at (2.2,3.35){chute\\libre};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est l'accélération de l'ensemble pendant la chute libre ?
+  \item Isole la sphère $B$ (poids $m_B g$ vers le bas, tension $T$ de la corde vers le
+        haut) et applique la 2\up{e} loi pour trouver $T$.
+  \item La corde tire-t-elle encore ? Compare avec la tension au repos ($T=m_B g$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[poids apparent --- vrai ou faux]
+Indique si chaque affirmation sur le poids apparent $N$ est \textbf{vraie} ou
+\textbf{fausse}.
+\begin{enumerate}[label=\alph*)]
+  \item $N$ est égal à $mg$ si l'ascenseur est en MRU.
+  \item $N$ est supérieur à $mg$ si l'ascenseur accélère vers le haut.
+  \item $N$ est nul si l'ascenseur est en chute libre.
+  \item Le poids \emph{réel} $mg$ diminue lorsque l'ascenseur accélère vers le bas.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un trajet complet vers le haut]
+Une personne de masse $m=\qty{60}{\kilogram}$ ($g=\qty{10}{\metre\per\second\squared}$)
+monte en ascenseur. Le trajet comporte trois phases :
+\begin{enumerate}[label=\alph*)]
+  \item démarrage : accélération vers le haut $a=\qty{2}{\metre\per\second\squared}$ ;
+  \item pleine course : vitesse constante (MRU) ;
+  \item arrivée : décélération $a=-\qty{2}{\metre\per\second\squared}$.
+\end{enumerate}
+Donne le poids apparent $N$ dans chaque phase et dis quand la personne se sent plus
+lourde ou plus légère.
+\end{exo}
+
+\end{document}

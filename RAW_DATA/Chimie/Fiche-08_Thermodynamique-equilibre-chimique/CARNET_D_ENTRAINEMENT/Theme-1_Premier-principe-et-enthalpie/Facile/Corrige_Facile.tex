@@ -1,0 +1,84 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{corrige}[exothermique ou endothermique ?]
+Règle : $\Delta H<0 \Rightarrow$ exothermique (dégage) ; $\Delta H>0 \Rightarrow$ endothermique (absorbe).
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta H<0$ : \textbf{exothermique}, dégage $\qty{92}{\kilo\joule}$.
+  \item $\Delta H>0$ : \textbf{endothermique}, absorbe $\qty{178}{\kilo\joule}$.
+  \item $\Delta H<0$ : \textbf{exothermique}, dégage $\qty{46}{\kilo\joule}$.
+  \item $\Delta H>0$ : \textbf{endothermique}, absorbe $\qty{52}{\kilo\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[conventions de signe]
+Ce que le système \emph{reçoit} est positif, ce qu'il \emph{cède} est négatif.
+\begin{enumerate}[label=\alph*)]
+  \item chaleur reçue : $Q>0$ (ici $Q=\qty{+50}{\joule}$).
+  \item chaleur cédée : $Q<0$ (ici $Q=\qty{-30}{\joule}$).
+  \item travail reçu : $W>0$.
+  \item travail cédé : $W<0$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[chaleur à pression constante]
+On applique $Q_p=\Delta H$ avec la convention de signe.
+\begin{enumerate}[label=\alph*)]
+  \item la réaction \emph{dégage} de la chaleur $\Rightarrow Q_p<0$, donc $\Delta H = \qty{-150}{\kilo\joule}$.
+  \item la réaction \emph{absorbe} de la chaleur $\Rightarrow Q_p>0$, donc $\Delta H = \qty{+80}{\kilo\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[lire un diagramme enthalpique]
+Les réactifs sont \emph{au-dessus} des produits.
+\begin{enumerate}[label=\alph*)]
+  \item les produits sont plus bas que les réactifs : $\Delta H = H_{\text{prod.}}-H_{\text{réac.}}<0$, donc $\Delta H<0$.
+  \item $\Delta H<0$ : la réaction est \textbf{exothermique}.
+  \item ce sont les \textbf{réactifs} qui possèdent la plus grande enthalpie (ils sont plus haut sur l'axe $H$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[signe du travail des forces de pression]
+On lit le signe de $W=-p\,\Delta V$ (avec $p>0$).
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta V>0 \Rightarrow W=-p\,\Delta V<0$ : le système \emph{cède} du travail.
+  \item $\Delta V<0 \Rightarrow W=-p\,\Delta V>0$ : le système \emph{reçoit} du travail.
+  \item $\Delta V=0 \Rightarrow W=0$ : aucun travail de pression échangé.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

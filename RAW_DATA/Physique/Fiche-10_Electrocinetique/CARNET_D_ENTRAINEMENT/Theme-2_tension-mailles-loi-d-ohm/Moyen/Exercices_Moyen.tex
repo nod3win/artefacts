@@ -1,0 +1,99 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\usetikzlibrary{babel}
+\begin{exo}[loi des mailles : tension manquante]
+Dans le circuit fermé ci-dessous, le générateur impose $U=\qty{12}{\volt}$. On mesure
+$U_1=\qty{5}{\volt}$ aux bornes de $R_1$. Détermine la tension $U_2$ aux bornes de $R_2$.
+\begin{center}
+\begin{circuitikz}[scale=0.9,transform shape,>=Stealth]
+  \draw (0,0) to[battery1,l_=$U$] (0,2.4) -- (4.4,2.4) -- (4.4,1.6);
+  \draw (4.4,1.6) to[R,l_=$R_1$] (4.4,0.8) -- (4.4,0.4);
+  \draw (0,0) -- (2,0) to[R,l=$R_2$] (4.4,0) -- (4.4,0.4);
+  \draw[defcol,->,line width=1pt] (0.28,0.4)--(0.28,2.0) node[midway,left,font=\scriptsize,defcol]{$U$};
+  \node[right,font=\scriptsize,attncol] at (4.55,1.2){$U_1$};
+  \node[below,font=\scriptsize,attncol] at (3.2,0){$U_2$};
+\end{circuitikz}
+\end{center}
+\end{exo}
+
+\begin{exo}[lire une caractéristique]
+La caractéristique $U=f(I)$ d'un dipôle est tracée ci-dessous ; c'est une droite qui passe par
+l'origine et par le point $(\qty{0.2}{\ampere},\ \qty{4}{\volt})$.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=7cm,height=4.6cm,axis lines=middle,xlabel={$I$ (A)},ylabel={$U$ (V)},
+  xmin=0,xmax=0.55,ymin=0,ymax=12,xtick={0,0.1,0.2,0.3,0.4,0.5},ytick={0,4,8},
+  tick label style={font=\scriptsize},label style={font=\footnotesize}]
+  \addplot[excol,thick,domain=0:0.5,samples=2]{20*x};
+  \addplot[only marks,mark=*,attncol] coordinates {(0.2,4)};
+  \node[attncol,font=\scriptsize,anchor=west] at (axis cs:0.21,4.6){$(0{,}2\,;\,4)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Ce dipôle est-il ohmique ? Justifie.
+  \item Détermine sa résistance $R$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[tensions dans un circuit série]
+Un courant $I=\qty{0.4}{\ampere}$ traverse l'association série de $R_1=\qty{10}{\ohm}$ et
+$R_2=\qty{15}{\ohm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule les tensions $U_1$ et $U_2$ aux bornes de chaque résistance.
+  \item En déduire la tension totale $U_{AB}$, et vérifie qu'elle vaut $R_{\text{eq}}I$ avec
+        $R_{\text{eq}}=R_1+R_2$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[du voltmètre à l'intensité]
+Un voltmètre branché aux bornes d'une résistance $R=\qty{30}{\ohm}$ indique $\qty{6}{\volt}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle intensité traverse la résistance ?
+  \item Que devrait indiquer un ampèremètre placé en série avec cette résistance ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[qui prend la plus grande tension ?]
+Dans une maille unique, un générateur alimente deux résistances $R_1$ et $R_2$ montées \textbf{en
+série}, avec $R_1<R_2$. Le même courant $I$ les traverse. Compare les tensions $U_1$ et $U_2$ à leurs
+bornes, et justifie par la loi d'Ohm.
+\end{exo}
+
+\end{document}

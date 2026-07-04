@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Demi-équations et équilibrage redox
+\begin{center}\color{primarydark}\Large\bfseries Thème 2 — Demi-équations et équilibrage redox\end{center}
+
+Une réaction redox se construit \textbf{demi-équation par demi-équation} : on écrit séparément
+l'oxydation et la réduction, puis on les combine pour que les électrons s'éliminent.
+
+\begin{cle}[la demi-équation d'un couple]
+Un couple $\mathrm{Ox}/\mathrm{Red}$ est relié par :
+\[
+\mathrm{Ox}+n\,\ce{e^-}\;\rightleftharpoons\;\mathrm{Red}.
+\]
+Les électrons figurent \textbf{toujours du côté de l'oxydant} (l'espèce qui les capte). Leur nombre
+est $n=\mathrm{n.o.}(\text{oxydant})-\mathrm{n.o.}(\text{réducteur})$, compté sur \textbf{tous} les
+atomes qui changent de n.o.
+\end{cle}
+
+\begin{methode}[équilibrer une demi-équation en milieu acide]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.0em,topsep=1pt,itemsep=1pt]
+  \item Équilibrer l'\textbf{élément qui change} de n.o. (rapport « 1 pour 1 »).
+  \item Ajouter les \textbf{électrons} : $n=\Delta\mathrm{n.o.}$, du côté de l'oxydant.
+  \item Équilibrer l'\textbf{oxygène} en ajoutant des \ce{H2O} du côté qui en manque.
+  \item Équilibrer l'\textbf{hydrogène} en ajoutant des \ce{H+} de l'autre côté.
+  \item \textbf{Contrôler} : même nombre de chaque atome \emph{et} même charge des deux côtés.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[demi-équation du permanganate en milieu acide]
+Couple \ce{MnO4^-}/\ce{Mn^{2+}} : Mn passe de $+\mathrm{VII}$ à $+\mathrm{II}$, soit $n=5$.
+\[
+\ce{MnO4^- + 8 H+ + 5 e^- <=> Mn^{2+} + 4 H2O}
+\]
+Contrôle des charges : à gauche $-1+8-5=+2$, à droite $+2$. \checkmark
+\end{exemplebox}
+
+\begin{cle}[passer en milieu basique]
+On équilibre \textbf{d'abord comme en milieu acide}, puis on ajoute autant d'ions \ce{OH^-} des
+\textbf{deux} côtés qu'il y a de \ce{H+}. Chaque $\ce{H+ + OH^-}$ devient une \ce{H2O}, et l'on
+simplifie les \ce{H2O} en excès. (En milieu basique, les \ce{H+} libres n'existent pas.)
+\end{cle}
+
+\begin{methode}[assembler l'équation globale]
+Multiplier chaque demi-équation pour que les \textbf{deux échangent le même nombre d'électrons}
+(leur PPCM), les additionner membre à membre, puis \textbf{simplifier} les électrons, \ce{H2O},
+\ce{H+} (ou \ce{OH^-}) communs et les \textbf{ions spectateurs}.
+\end{methode}
+
+\begin{piege}[les erreurs qui coûtent des points]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Rapport « 1 pour 1 » : pour \ce{Cr2O7^{2-} <=> 2 Cr^{3+}}, il y a \textbf{2} Cr, donc
+        $n=2\times 3=6$ électrons (et non 3). \emph{Multiplier aussi les électrons !}
+  \item Les \textbf{ions spectateurs} (\ce{Na+}, \ce{K+}, \ce{Cl^-}, \ce{SO4^{2-}}\ldots) ne changent
+        pas de n.o.\ : ils disparaissent de l'équation redox simplifiée.
+  \item \ce{H+} et \ce{H3O+} sont équivalents ($\ce{H3O+}=\ce{H+}+\ce{H2O}$) : on peut équilibrer
+        avec l'un ou l'autre.
+\end{itemize}
+\end{piege}
+
+\end{document}

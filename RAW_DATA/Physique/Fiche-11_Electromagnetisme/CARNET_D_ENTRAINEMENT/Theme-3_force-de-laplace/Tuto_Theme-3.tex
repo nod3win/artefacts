@@ -1,0 +1,103 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Force de Laplace (force sur un conducteur)
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 3 — Force de Laplace}
+\end{center}
+
+\noindent Un conducteur parcouru par un courant et plongé dans un champ magnétique subit une force :
+la \textbf{force de Laplace} (c'est elle qui fait tourner les moteurs). Deux réflexes à automatiser :
+en calculer l'\textbf{intensité} et surtout en trouver la \textbf{direction / le sens} — c'est le point
+le plus testé au concours.
+
+\begin{cle}[intensité de la force de Laplace]
+Pour un conducteur rectiligne de longueur $L$ parcouru par un courant $I$, dans un champ uniforme
+$\vv{B}$ :
+\[ \boxed{\,F = B\,I\,L\,\sin\theta\,}\qquad(\text{en newtons}), \]
+où $\theta$ est l'angle entre le \textbf{conducteur} (sens de $I$) et $\vv{B}$. $L$ est la longueur
+\emph{effectivement plongée dans le champ}.
+\end{cle}
+
+\begin{methode}[le sens de $\vv{F}$ : règle de la main droite « trois doigts »]
+On écarte à angle droit les trois premiers doigts de la \textbf{main droite} :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item \textbf{pouce} $\rightarrow$ sens du courant $I$ ;
+  \item \textbf{index} $\rightarrow$ sens du champ $\vv{B}$ ;
+  \item \textbf{majeur} $\rightarrow$ sens de la force $\vv{F}$.
+\end{itemize}
+$\vv{F}$ est donc toujours \textbf{perpendiculaire} au plan formé par le conducteur et $\vv{B}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[red!80!black,->,line width=2pt] (-2.4,0)--(2.4,0) node[right]{$I$};
+  \draw[blue!70!black,->,line width=1.6pt] (0.6,-1.3)--(0.6,1.3) node[above]{$\vv{B}$};
+  \draw[excol,line width=1.6pt] (-0.8,0) circle (0.22); \fill[excol] (-0.8,0) circle (0.06);
+  \node[excol,left,font=\footnotesize] at (-1.05,0.4){$\vv{F}$ (sort du plan)};
+  \draw[black!70,line width=0.6pt] (1.05,0) arc (0:90:0.45);
+  \node[font=\footnotesize] at (0.95,0.62){$\theta$};
+\end{tikzpicture}
+\end{center}
+\end{methode}
+
+\begin{piege}[le piège vedette : la force NULLE]
+$F=BIL\sin\theta$ dépend de l'angle :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item $\theta=\ang{90}$ (conducteur $\perp$ $\vv{B}$) : $\sin\ang{90}=1$, force \textbf{maximale} $F=BIL$ ;
+  \item $\theta=\ang{0}$ ou \ang{180} (conducteur \textbf{parallèle} à $\vv{B}$) : $\sin\ang{0}=0$,
+        force \textbf{NULLE}.
+\end{itemize}
+Un conducteur parallèle au champ ne subit \emph{aucune} force, quel que soit le courant. Les
+distracteurs de concours poussent toujours à croire qu'« il y a forcément une force » : méfiance !
+\end{piege}
+
+\begin{exemplebox}[calcul direct]
+Conducteur de $L=\qty{10}{\centi\metre}$, $I=\qty{4}{\ampere}$, dans $B=\qty{0.5}{\tesla}$
+perpendiculaire ($\theta=\ang{90}$) :
+\[ F=B\,I\,L=0{,}5\times4\times0{,}10=\qty{0.2}{\newton}. \]
+\end{exemplebox}
+
+\begin{remarque}[deux fils parallèles]
+Deux fils parcourus par $I_1$ et $I_2$, distants de $d$, exercent l'un sur l'autre une force par unité
+de longueur $\dfrac{F}{L}=\dfrac{\mu_0 I_1 I_2}{2\pi d}$ : ils \textbf{s'attirent} si les courants sont
+de \textbf{même sens}, se \textbf{repoussent} s'ils sont de sens contraires. Un \textbf{cadre} parcouru
+par un courant dans un champ subit, lui, des forces opposées sur ses côtés : elles forment un
+\textbf{couple} qui le fait \textbf{pivoter} (principe du moteur).
+\end{remarque}
+
+\end{document}

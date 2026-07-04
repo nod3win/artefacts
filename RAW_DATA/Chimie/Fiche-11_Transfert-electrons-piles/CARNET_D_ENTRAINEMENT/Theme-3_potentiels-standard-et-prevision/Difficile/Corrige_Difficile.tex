@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{center}\color{primarydark}\large\bfseries Thème 3 — Corrigé \quad$\bullet$\quad Niveau Difficile\end{center}
+
+\begin{corrige}[vrai ou faux : qui oxyde qui ?]
+Un oxydant n'oxyde un réducteur que si son couple est \emph{plus haut}.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai} : \ce{Cl2}/\ce{Cl^-} ($1{,}36$) $>$ \ce{Fe^{3+}}/\ce{Fe^{2+}} ($0{,}77$).
+  \item \textbf{Faux} : \ce{I2}/\ce{I^-} ($0{,}54$) $<$ \ce{Fe^{3+}}/\ce{Fe^{2+}} ($0{,}77$) ; c'est au
+        contraire \ce{Fe^{3+}} qui oxyde \ce{I^-}.
+  \item \textbf{Faux} : \ce{Cu} ($0{,}34$) est un réducteur plus faible que \ce{Zn} ($-0{,}76$) ; il ne
+        peut pas réduire \ce{Zn^{2+}}.
+  \item \textbf{Vrai} : \ce{Fe^{3+}}/\ce{Fe^{2+}} ($0{,}77$) $>$ \ce{Cu^{2+}}/\ce{Cu} ($0{,}34$), donc
+        \ce{2 Fe^{3+} + Cu -> 2 Fe^{2+} + Cu^{2+}}.
+\end{enumerate}
+\textbf{Bilan : 2 propositions vraies} (a et d).
+\end{corrige}
+
+\begin{corrige}[ces réactions ont-elles lieu ?]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Possible} : \ce{Br2}/\ce{Br^-} ($1{,}06$) $>$ \ce{I2}/\ce{I^-} ($0{,}54$), donc \ce{Br2}
+        oxyde \ce{I^-}.
+  \item \textbf{Impossible} : il faudrait que \ce{I2} oxyde \ce{Cl^-}, or \ce{I2}/\ce{I^-} ($0{,}54$)
+        $<$ \ce{Cl2}/\ce{Cl^-} ($1{,}36$). C'est la réaction inverse qui est spontanée.
+  \item \textbf{Possible} : \ce{Ag+}/\ce{Ag} ($0{,}80$) $>$ \ce{Cu^{2+}}/\ce{Cu} ($0{,}34$), donc
+        \ce{Ag+} oxyde \ce{Cu}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le difluor dissout-il l'or ?]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Oui} : \ce{F2}/\ce{F^-} ($2{,}87$) $>$ \ce{Au^{3+}}/\ce{Au} ($1{,}52$), donc \ce{F2}
+        oxyde l'or : \ce{3 F2 + 2 Au -> 2 AuF3}. L'or se dissout.
+  \item \ce{Cl2} ($1{,}36$) et \ce{O2} ($1{,}23$) ont un $E_{\mathrm{r}}^{\circ}$ \emph{inférieur} à
+        celui du couple \ce{Au^{3+}}/\ce{Au} ($1{,}52$) : $\Delta E^{\circ}<0$, ils ne peuvent pas
+        oxyder l'or. Seul \ce{F2}, situé au-dessus, y parvient — d'où la grande inertie de l'or.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[médiamutation du manganèse]
+Dans \ce{MnO4^- + Mn^{2+} -> MnO2}, le manganèse se rassemble à $+\mathrm{IV}$ :
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \ce{MnO4^-} ($+\mathrm{VII}$) est \textbf{réduit} en \ce{MnO2} : couple \ce{MnO4^-}/\ce{MnO2}
+        ($E_{\mathrm{r}}^{\circ}=+1{,}69$~V), c'est l'\textbf{oxydant} ;
+  \item \ce{Mn^{2+}} ($+\mathrm{II}$) est \textbf{oxydé} en \ce{MnO2} : couple \ce{MnO2}/\ce{Mn^{2+}}
+        ($E_{\mathrm{r}}^{\circ}=+1{,}22$~V), \ce{Mn^{2+}} est le \textbf{réducteur}.
+\end{itemize}
+Le couple oxydant ($1{,}69$) est au-dessus du couple réducteur ($1{,}22$) :
+$\Delta E^{\circ}=1{,}69-1{,}22=+0{,}47>0$. La \textbf{médiamutation a bien lieu}
+(l'équilibrage donne $\ce{2 MnO4^- + 3 Mn^{2+} + 2 H2O -> 5 MnO2 + 4 H+}$).
+\end{corrige}
+
+\end{document}

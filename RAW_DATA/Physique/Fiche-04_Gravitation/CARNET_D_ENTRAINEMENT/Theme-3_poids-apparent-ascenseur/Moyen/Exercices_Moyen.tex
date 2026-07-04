@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= MOYEN =================
+
+\begin{exo}[la force du câble]
+Un ascenseur de masse $M=\qty{600}{\kilogram}$ est tiré \emph{vers le haut} par son
+câble avec une accélération $a=\qty{2}{\metre\per\second\squared}$. On prend
+$g=\qty{10}{\metre\per\second\squared}$ et l'on néglige les frottements. En appliquant
+la 2\up{e} loi de Newton à la cabine ($T-Mg=Ma$), calcule la force de traction $T$
+exercée par le câble.
+\end{exo}
+
+\begin{exo}[la masse apparente]
+Une personne de masse $m=\qty{70}{\kilogram}$ est dans un ascenseur qui accélère vers
+le haut à $a=\qty{2.5}{\metre\per\second\squared}$ ($g=\qty{9.8}{\metre\per\second\squared}$).
+\begin{enumerate}[label=\alph*)]
+  \item Calcule son poids apparent $N$.
+  \item Quelle « masse apparente » $N/g$ la balance indique-t-elle ?
+  \item De combien de kilogrammes se sent-elle plus lourde ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver l'accélération]
+Sur une balance dans un ascenseur, une personne de masse $m=\qty{70}{\kilogram}$
+($g=\qty{10}{\metre\per\second\squared}$) lit $N=\qty{525}{\newton}$.
+\begin{enumerate}[label=\alph*)]
+  \item À partir de $N=m(g+a)$, isole $a$.
+  \item Calcule $a$. Dans quel sens l'ascenseur accélère-t-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un objet suspendu à un dynamomètre]
+Dans une cabine, un objet de masse $m=\qty{2}{\kilogram}$ pend à un dynamomètre
+(balance à ressort) qui mesure la tension $T=m(g+a)$. On prend
+$g=\qty{10}{\metre\per\second\squared}$.
+\begin{enumerate}[label=\alph*)]
+  \item Que lit-on quand la cabine est immobile ?
+  \item Que lit-on quand elle accélère vers le haut à $a=\qty{5}{\metre\per\second\squared}$ ?
+  \item Que lit-on quand elle est en chute libre ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[les trois lectures d'un même trajet]
+Une personne de masse $m=\qty{75}{\kilogram}$ ($g=\qty{10}{\metre\per\second\squared}$)
+lit sa balance à trois moments.
+\begin{enumerate}[label=\alph*)]
+  \item L'ascenseur accélère vers le haut à $a=\qty{3}{\metre\per\second\squared}$.
+  \item L'ascenseur monte à vitesse constante (MRU).
+  \item Le câble casse : chute libre.
+\end{enumerate}
+Donne la valeur affichée dans chaque cas.
+\end{exo}
+
+\end{document}

@@ -1,87 +1,93 @@
-% =====================================================================
-%  FICHE 11 — THEME 1 — Exercices MOYEN — Le nombre d'oxydation
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{enumitem}
-\usepackage[most]{tcolorbox}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
-
-\newcounter{exo}
-\newtcolorbox{exo}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=primary!4,
-  colframe=primary,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-  title={Exercice~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Le nombre d'oxydation}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 1 — Niveau Moyen}\\[2pt]
-{\small\itshape Calcul du \NO\ dans des ions polyatomiques et des oxoanions. Pose toujours l'équation $\sum\NO=$ charge.}\\[-4pt]
-{\color{primary}\rule{\textwidth}{1pt}}
-\end{center}
+\begin{center}\color{primarydark}\large\bfseries Thème 1 — Nombre d'oxydation \quad$\bullet$\quad Niveau Moyen\end{center}
 
-\begin{exo}[le chrome dans deux espèces]
-Calcule le nombre d'oxydation du chrome :
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
-  \item dans le dichromate de potassium \ce{K2Cr2O7} (molécule neutre) ;
-  \item dans l'ion chromate \ce{CrO4^{2-}}.
-\end{enumerate}
-Le chrome a-t-il le même nombre d'oxydation dans ces deux espèces ?
-\end{exo}
-
-\begin{exo}[le manganèse dans toute sa gamme]
-Le manganèse est un élément « caméléon » du redox. Détermine son nombre d'oxydation dans :
-\[
-\ce{MnO4^-},\qquad \ce{Mn^{2+}},\qquad \ce{MnO2},\qquad \ce{Mn(s)},\qquad \ce{KMnO4}.
-\]
-Range ensuite ces cinq espèces par \NO(\ce{Mn}) croissant.
-\end{exo}
-
-\begin{exo}[l'azote sous plusieurs formes]
-Détermine le nombre d'oxydation de l'azote dans :
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
-  \item l'hydrazine \ce{N2H4} (molécule neutre) ;
-  \item l'ion nitrate \ce{NO3^-} ;
-  \item l'ion ammonium \ce{NH4+}.
+\begin{exo}[un même élément à plusieurs degrés : le manganèse]
+Détermine le nombre d'oxydation du manganèse dans chacune de ces espèces, puis range-les de la plus
+\emph{oxydée} à la plus \emph{réduite}.
+\begin{enumerate}[label=\alph*)]
+  \item le permanganate \ce{MnO4^-}
+  \item le dioxyde de manganèse \ce{MnO2}
+  \item l'ion \ce{Mn^{2+}}
+  \item le manganèse métallique \ce{Mn}
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[le soufre dans les oxoanions]
-Détermine le nombre d'oxydation (moyen) du soufre dans les trois anions suivants :
-\[
-\ce{SO4^{2-}},\qquad \ce{SO3^{2-}},\qquad \ce{S2O3^{2-}}\ (\text{thiosulfate}).
-\]
+\begin{exo}[variation du n.o. entre deux formes]
+Pour chaque élément, calcule son n.o.\ dans les deux espèces, la variation $\Delta$, et conclus
+\textbf{oxydation} ou \textbf{réduction}.
+\begin{enumerate}[label=\alph*)]
+  \item le carbone : \ce{CH4} $\longrightarrow$ \ce{CO2}
+  \item le soufre : \ce{SO2} $\longrightarrow$ \ce{SO4^{2-}}
+  \item l'azote : \ce{NO} $\longrightarrow$ \ce{NO3^-}
+  \item le chrome : \ce{Cr2O7^{2-}} $\longrightarrow$ \ce{Cr^{3+}}
+\end{enumerate}
 \end{exo}
 
-\begin{exo}[une somme de deux nombres d'oxydation]
-On considère le carbone dans deux composés bien connus : le méthane \ce{CH4} et le dioxyde de carbone
-\ce{CO2}.
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
-  \item Calcule $\NO(\ce{C})$ dans \ce{CH4}, puis dans \ce{CO2}.
-  \item Quelle est la valeur de la \textbf{somme} de ces deux nombres d'oxydation ?
-  \item En passant de \ce{CH4} à \ce{CO2}, le carbone est-il oxydé ou réduit ? (Justifie par la variation du \NO.)
+\begin{exo}[lire une équation redox globale]
+Dans chaque équation, repère l'élément \textbf{oxydé} et l'élément \textbf{réduit}, puis nomme
+l'\textbf{oxydant} et le \textbf{réducteur}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Zn + Cu^{2+} -> Zn^{2+} + Cu}
+  \item \ce{Fe + 2 H+ -> Fe^{2+} + H2}
+  \item \ce{2 Al + 3 Cl2 -> 2 AlCl3}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[cas piégeux : exceptions et n.o.\ moyens]
+Détermine le nombre d'oxydation de l'atome indiqué (attention aux exceptions !).
+\begin{enumerate}[label=\alph*)]
+  \item l'oxygène dans le difluorure d'oxygène \ce{OF2}
+  \item le fer dans la magnétite \ce{Fe3O4}
+  \item le soufre dans le thiosulfate \ce{S2O3^{2-}}
+  \item l'azote dans l'ion ammonium \ce{NH4+}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[combien d'électrons échange un couple ?]
+Le nombre d'électrons d'une demi-équation vaut $n=\mathrm{n.o.}(\text{oxydant})-\mathrm{n.o.}
+(\text{réducteur})$ (compté sur \textbf{tous} les atomes concernés). Donne $n$ pour chaque couple.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{MnO4^-}/\ce{Mn^{2+}}
+  \item \ce{Cr2O7^{2-}}/\ce{Cr^{3+}}
+  \item \ce{NO3^-}/\ce{NO}
+  \item \ce{S4O6^{2-}}/\ce{S2O3^{2-}}
 \end{enumerate}
 \end{exo}
 

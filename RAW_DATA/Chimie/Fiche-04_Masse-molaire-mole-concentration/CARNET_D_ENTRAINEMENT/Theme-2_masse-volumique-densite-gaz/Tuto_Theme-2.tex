@@ -1,137 +1,97 @@
-% =====================================================================
-%  CARNET D'ENTRAINEMENT — FICHE 4 — THEME 2
-%  Tuto : Masse volumique, densite et volume molaire des gaz
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit\Molar{M}
-\DeclareSIUnit\atm{atm}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=10pt]{geometry}
-\usetikzlibrary{arrows.meta,positioning,calc}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{defcol}{RGB}{0,114,178}
-\definecolor{formulacol}{RGB}{198,93,9}
-\definecolor{excol}{RGB}{0,135,90}
-\definecolor{attncol}{RGB}{200,40,55}
-\definecolor{methcol}{RGB}{90,90,100}
-\definecolor{gazcol}{RGB}{120,205,180}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2mm,bottom=2mm,fonttitle=\bfseries,coltitle=white,
-   toptitle=0.5mm,bottomtitle=0.5mm}}
-\newtcolorbox{definition}[1][]{boxbase,colback=defcol!5,colframe=defcol,
-   title={\textsc{Definition}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
-\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
-   title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
-\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
-   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
-   title={\textsc{Methode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
-   title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} --- Th.\,2 : Masse volumique, densit\'e, gaz}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Chimie} --- Tuto}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\newcommand{\NA}{N_{\!\text{A}}}
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
 
-\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
-   title={\Large THÈME 2 --- Masse volumique, densité et volume molaire des gaz}]
-\textit{À lire avant les exercices.} On ne pèse pas toujours : souvent on \textbf{mesure un volume}.
-Ce thème relie le \textbf{volume} aux autres grandeurs par \emph{deux ponts} : la \textbf{masse
-volumique} $\rho$ (pour les liquides et solides) et le \textbf{volume molaire} $V_m$ (pour les gaz).
-\end{tcolorbox}
+% THEME_TITLE: Masse volumique, densité et volume molaire des gaz
+\noindent
+On ne pèse pas toujours : souvent on \emph{mesure un volume}. Ce thème installe les ponts entre
+\textbf{masse} et \textbf{volume}, pour les liquides (masse volumique, densité) comme pour les gaz
+(volume molaire).
 
-\section*{1. Masse volumique : relier un volume à une masse}
-\begin{formule}[masse volumique]
-\[ \boxed{\,\rho=\dfrac{m}{V}\,}\qquad\Longleftrightarrow\qquad m=\rho\,V. \]
-Unités usuelles : \si{\gram\per\milli\litre}, \si{\gram\per\cubic\centi\metre} (identiques, car
-$\SI{1}{\milli\litre}=\SI{1}{\cubic\centi\metre}$), ou \si{\kilo\gram\per\cubic\metre}.
-\end{formule}
-\textbf{Traduction en phrase} (l'astuce n$^\circ$1) : «~$\rho=x\ \si{\gram\per\milli\litre}$~» veut
-dire «~$\SI{1}{\milli\litre}$ pèse $x$~g~», donc «~$\SI{1}{\litre}$ pèse $1000x$~g~». On part
-toujours d'un volume connu dont on déduit la masse.
+\begin{cle}[masse volumique $\rho$]
+La \textbf{masse volumique} $\rho$ est la masse d'une unité de volume :
+\[ \boxed{\,\rho = \dfrac{m}{V}\,}\qquad\Longleftrightarrow\qquad m = \rho\,V. \]
+Unités usuelles : \si{\gram\per\milli\litre} $=$ \si{\gram\per\cubic\centi\metre}. \textbf{Astuce} :
+« $\rho = x\ \si{\gram\per\milli\litre}$ » signifie que $\SI{1}{\milli\litre}$ pèse $x\ \si{\gram}$,
+donc que $\SI{1}{\litre}$ pèse $1000\,x\ \si{\gram}$. On part presque toujours « d'un litre ».
+\end{cle}
 
-\begin{attention}[conversions d'unités]
-$\SI{1}{\gram\per\milli\litre}=\SI{1}{\gram\per\cubic\centi\metre}=\SI{1}{\kilo\gram\per\litre}
-=\SI{1000}{\gram\per\litre}=\SI{1}{\kilo\gram\per\cubic\deci\metre}$.
-Beaucoup d'énoncés « piègent » sur les unités (hg, \si{\cubic\deci\metre}, kg\ldots) : convertir
-\emph{d'abord} tout en g et mL (ou en g et L).
-\end{attention}
+\begin{cle}[densité $d$]
+La \textbf{densité} $d$ est le rapport de la masse volumique du corps à celle de l'eau
+($\rho_{\text{eau}} = \SI{1}{\gram\per\milli\litre}$) :
+\[ d = \dfrac{\rho_{\text{corps}}}{\rho_{\text{eau}}}\quad(\text{sans unité}). \]
+Comme $\rho_{\text{eau}} = \SI{1}{\gram\per\milli\litre}$, la densité a la \emph{même valeur} que $\rho$
+exprimée en \si{\gram\per\milli\litre} : $d = 0{,}8 \Leftrightarrow \rho = \SI{0.8}{\gram\per\milli\litre}$.
+\end{cle}
 
-\begin{definition}[densité]
-La \textbf{densité} $d$ (sans unité) est le rapport de la masse volumique du corps à celle de l'eau
-($\rho_{\text{eau}}=\SI{1}{\gram\per\milli\litre}$) :
-$\;d=\rho_{\text{corps}}/\rho_{\text{eau}}$. Numériquement, $d$ vaut la même valeur que $\rho$
-exprimée en \si{\gram\per\milli\litre} (ex. $d=0{,}8\Leftrightarrow\rho=\SI{0.8}{\gram\per\milli\litre}$).
-\end{definition}
+\begin{methode}[le cas des gaz : le volume molaire $V_m$]
+À température et pression fixées, \emph{une mole de n'importe quel gaz parfait occupe le même volume}
+$V_m$ :
+\[ \boxed{\,V = n\times V_m\,}\qquad\Longleftrightarrow\qquad n = \dfrac{V}{V_m}. \]
+Aux \textbf{CNTP} ($\SI{0}{\celsius}$, $1$~atm) : $V_m = \SI{22.4}{\litre\per\mole}$ ; dans les
+conditions standard ($\SI{25}{\celsius}$) : $V_m \approx \SI{24.4}{\litre\per\mole}$.
+\end{methode}
 
-\textbf{Mesure par déplacement d'eau :} un solide non soluble plongé dans un cylindre gradué fait
-monter le niveau ; l'\emph{augmentation} de volume est égale au \textbf{volume du solide}.
-
-\section*{2. Le cas des gaz : le volume molaire}
-Pour un gaz parfait, à température et pression fixées, \textbf{une mole de n'importe quel gaz occupe
-le même volume} $V_m$, indépendamment de sa nature.
-\begin{formule}[volume molaire]
-\[ \boxed{\,V=n\times V_m\,}\qquad\Longleftrightarrow\qquad n=\dfrac{V}{V_m}. \]
-Aux \textbf{CNTP} ($\SI{0}{\celsius}$, $\SI{1}{\atm}$) : $V_m=\SI{22.4}{\litre\per\mole}$.
-En conditions \textbf{standard} ($\SI{25}{\celsius}$, $\SI{1}{\bar}$) : $V_m\approx\SI{24.4}{\litre\per\mole}$.
-\end{formule}
-\begin{attention}[CNTP $\neq$ conditions standard]
-La valeur $\SI{22.4}{\litre\per\mole}$ n'est valable qu'aux CNTP ($\SI{0}{\celsius}$). Toujours
-vérifier les conditions de l'énoncé. La masse volumique d'un gaz se déduit de
-$\rho_{\text{gaz}}=M/V_m$ (masse d'une mole divisée par le volume d'une mole).
-\end{attention}
-
-\section*{3. La carte du « volume »}
 \begin{center}
-\begin{tikzpicture}[
-   box/.style={draw,rounded corners=3pt,align=center,font=\scriptsize,
-       minimum height=0.95cm,minimum width=2.5cm,line width=0.9pt},
-   fl/.style={-{Stealth[length=2mm]},line width=0.9pt}, op/.style={font=\scriptsize,inner sep=1.3pt}]
-  \node[box,draw=defcol,fill=defcol!8] (V) at (0,0) {Volume\\ $V$ (mL, L)};
-  \node[box,draw=formulacol,fill=formulacol!9] (m) at (4.3,0) {Masse\\ $m$ (g)};
-  \node[box,draw=excol,fill=excol!10] (n) at (8.6,0) {Quantité\\ $n$ (mol)};
-  \node[box,draw=gazcol!60!black,fill=gazcol!20] (Vg) at (4.3,-2.2) {Volume\\ \emph{gaz} (L)};
-  \draw[fl] ([yshift=4pt]V.east) -- node[op,above]{$\times\rho$} ([yshift=4pt]m.west);
-  \draw[fl] ([yshift=-6pt]m.west) -- node[op,below]{$\div\rho$} ([yshift=-6pt]V.east);
-  \draw[fl] ([yshift=4pt]m.east) -- node[op,above]{$\div M$} ([yshift=4pt]n.west);
-  \draw[fl] ([yshift=-6pt]n.west) -- node[op,below]{$\times M$} ([yshift=-6pt]m.east);
-  \draw[fl] (n.south) .. controls (8.6,-2.2) .. node[op,below]{$\times V_m$ (gaz)} (Vg.east);
-  \draw[fl] (Vg.north) -- node[op,left]{\;$\div\rho_{\text{gaz}}$} (m.south);
+\begin{tikzpicture}[scale=1,
+   box/.style={draw,rounded corners=3pt,align=center,font=\footnotesize,minimum height=1cm,minimum width=2.7cm,line width=0.9pt}]
+  \node[box,draw=defcol,fill=defcol!8] (V) at (0,0) {Volume gaz\\ $V$ (\si{\litre})};
+  \node[box,draw=excol,fill=excol!8] (n) at (4.7,0) {Quantité\\ $n$ (\si{\mole})};
+  \node[box,draw=primary,fill=primary!8] (m) at (9.4,0) {Masse\\ $m$ (\si{\gram})};
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=4pt]V.east) -- node[above,font=\scriptsize]{$\div V_m$} ([yshift=4pt]n.west);
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=-6pt]n.west) -- node[below,font=\scriptsize]{$\times V_m$} ([yshift=-6pt]V.east);
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=4pt]n.east) -- node[above,font=\scriptsize]{$\times M$} ([yshift=4pt]m.west);
+  \draw[-{Stealth[length=2mm]},line width=0.9pt] ([yshift=-6pt]m.west) -- node[below,font=\scriptsize]{$\div M$} ([yshift=-6pt]n.east);
 \end{tikzpicture}
 \end{center}
 
-\begin{methode}[réflexes du thème]
-\begin{enumerate}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
-  \item \textbf{Liquide/solide} : le volume passe par la \emph{masse} via $\rho$ ($m=\rho V$).
-  \item \textbf{Gaz} : le volume passe directement par la \emph{quantité} via $V_m$ ($n=V/V_m$).
-  \item Tout convertir en unités cohérentes \textbf{avant} de calculer (g, mL, L).
-  \item Pour un solide immergé, le volume est l'\textbf{augmentation} du niveau, pas le niveau final.
-\end{enumerate}
-\end{methode}
+\begin{exemplebox}[du volume à la masse d'un gaz]
+Masse de $\SI{5.6}{\litre}$ de \ce{CO2} aux CNTP ($M=\SI{44}{\gram\per\mole}$) :
+$n = \dfrac{5{,}6}{22{,}4} = \SI{0.25}{\mole}$, puis $m = 0{,}25\times 44 = \SI{11}{\gram}$.
+\end{exemplebox}
+
+\begin{piege}[deux confusions à éviter]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item $\SI{22.4}{\litre\per\mole}$ n'est valable qu'\textbf{aux CNTP} ($\SI{0}{\celsius}$) :
+        à $\SI{25}{\celsius}$ une mole occupe $\approx\SI{24.4}{\litre}$.
+  \item $\rho$ (masse \emph{totale} de solution par volume) $\neq$ concentration massique $C_m$
+        (masse du seul \emph{soluté} par volume).
+\end{itemize}
+\end{piege}
 
 \end{document}

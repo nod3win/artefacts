@@ -1,109 +1,92 @@
-% =====================================================================
-%  CARNET D'ENTRAÎNEMENT — FICHE 5 (Bilans de matière)
-%  THÈME 5 — Rendement et bilan de matière complet
-%  Fiche TUTO
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit\Molar{\mole\per\litre}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{fancyhdr}
-\usepackage[a4paper,top=1.5cm,bottom=1.4cm,left=1.8cm,right=1.8cm,headheight=24pt,headsep=6pt]{geometry}
-\usetikzlibrary{arrows.meta,positioning,calc}
-
-\definecolor{primary}{RGB}{142,93,168}
-\definecolor{primarydark}{RGB}{82,45,108}
-\definecolor{defcol}{RGB}{0,114,178}
-\definecolor{thmcol}{RGB}{0,140,120}
-\definecolor{formulacol}{RGB}{198,93,9}
-\definecolor{attncol}{RGB}{200,40,55}
-\definecolor{excol}{RGB}{0,135,90}
-\newcommand{\Vm}{V_{\mathrm m}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Bilans de matière}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tuto — Thème 5}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox{tutobox}[2][]{enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-  left=3mm,right=3mm,top=2mm,bottom=2mm,colback=#2!6,colframe=#2,
-  fonttitle=\bfseries,coltitle=white,title={#1}}
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{2.3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
+% THEME_TITLE: Le rendement et le bilan de matière complet
+\sisetup{per-mode=symbol}
 
 \begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement \& bilan complet}\\[1pt]
-{\color{primary}\rule{0.5\linewidth}{1.2pt}}\\[2pt]
-{\itshape La synthèse de toute la fiche : de la réalité expérimentale (rendement) au dosage.}
+{\Large\bfseries\color{primarydark} Thème 5 — Rendement et bilan de matière complet}
 \end{center}
-\vspace{-3pt}
 
-\begin{tutobox}[Rendement théorique et rendement réel]{defcol}
-Jusqu'ici on supposait que \emph{tout} le réactif limitant se transformait (rendement \SI{100}{\percent}).
-En réalité, des réactions secondaires, un équilibre non total ou des pertes font qu'on obtient
-\textbf{moins} de produit que prévu. Le \textbf{rendement} $R$ compare la quantité \emph{réellement}
-obtenue à la quantité \emph{théorique} (maximale, fixée par le limitant).
-\end{tutobox}
+\medskip
+Jusqu'ici la réaction était supposée \emph{totale}. En réalité, pertes, réactions secondaires ou
+équilibre incomplet font qu'on obtient \emph{moins} de produit que prévu : c'est ce que mesure le
+\textbf{rendement}. Ce dernier thème réunit toutes les mécaniques de la fiche en un bilan complet.
 
-\begin{tutobox}[La formule du rendement]{formulacol}
+\begin{cle}[rendement d'une réaction]
 \[
 \boxed{\;R=\dfrac{n_{\text{réel}}}{n_{\text{théorique}}}\times 100\;}\quad(\si{\percent})
 \qquad\Longleftrightarrow\qquad
-n_{\text{réel}}=\dfrac{R}{100}\times n_{\text{théorique}}
+n_{\text{réel}}=\dfrac{R}{100}\times n_{\text{théorique}}.
 \]
-\textbf{où} $n_{\text{théorique}}$ est calculé par la stœchiométrie \emph{à partir du réactif limitant},
-et $n_{\text{réel}}$ est \emph{mesuré}. On peut aussi l'écrire avec des masses
-($R=m_{\text{réel}}/m_{\text{théorique}}$), car $m=nM$ et $M$ se simplifie. $R$ est compris entre 0 et \SI{100}{\percent}.
-\end{tutobox}
+$n_{\text{théorique}}$ : quantité \emph{maximale} de produit prévue par la stœchiométrie (à partir du
+\textbf{limitant}) ; $n_{\text{réel}}$ : quantité \emph{effectivement} obtenue (mesurée). Comme
+$m=nM$, on a aussi $R=m_{\text{réel}}/m_{\text{théorique}}$.
+\end{cle}
 
-\begin{tutobox}[L'organigramme universel d'un bilan de matière]{primary}
-\begin{enumerate}[leftmargin=1.6em,topsep=0pt,itemsep=0.5pt]
-  \item \textbf{Pondérer} l'équation (Thème 1) — aucun calcul valable sinon.
-  \item \textbf{Convertir} toutes les données en moles (Thème 2 : $n=m/M$, $n=V/\Vm$, $n=CV$).
-  \item \textbf{Identifier le limitant} : plus petit $n_i/\nu_i$ (Thème 4) ; il fixe $\xi_{\max}$.
-  \item \textbf{Calculer les quantités finales} (produits, excès) par les coefficients (Thème 3).
-  \item \textbf{Appliquer le rendement} si $R\neq\SI{100}{\percent}$ : $n_{\text{réel}}=\frac{R}{100}n_{\text{théo}}$.
-  \item \textbf{Reconvertir} dans l'unité demandée ($m=nM$, $V=n\Vm$, $C=n/V$) et conclure.
+\begin{methode}[l'organigramme universel d'un bilan de matière]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Pondérer} l'équation (Thème 1).
+  \item \textbf{Convertir} toutes les données en moles : $n=m/M$, $n=V/V_{\mathrm{m}}$, $n=CV$ (Thème 2).
+  \item \textbf{Identifier le réactif limitant} : plus petit $n_i/\nu_i$ (Thème 4).
+  \item \textbf{Calculer les quantités théoriques} de produits à partir du limitant (Thème 3).
+  \item \textbf{Appliquer le rendement} : $n_{\text{réel}}=\frac{R}{100}\,n_{\text{théorique}}$.
+  \item \textbf{Reconvertir} dans l'unité demandée ($m=nM$, $V=nV_{\mathrm{m}}$, $C=n/V$) et conclure.
 \end{enumerate}
-\end{tutobox}
+\end{methode}
 
-\begin{tutobox}[Le titrage (dosage à l'équivalence)]{thmcol}
-Doser, c'est déterminer une quantité \emph{inconnue} en la faisant réagir avec une quantité
-\emph{connue} de réactif titrant. \textbf{À l'équivalence}, les réactifs ont été introduits dans les
-\emph{proportions stœchiométriques exactes} : ni excès, ni défaut. Si le \emph{titré} a le coefficient
-$a$ et le \emph{titrant} le coefficient $b$ :
+\begin{exemplebox}[rendement d'une fermentation]
+$\ce{C6H12O6 -> 2 C2H5OH + 2 CO2}$ : à partir de \qty{0.5}{\mole} de glucose, la théorie prévoit
+$n_{\text{théo}}(\ce{C2H5OH})=1\,\si{\mole}$. Si l'on n'obtient que \qty{0.25}{\mole} d'éthanol :
 \[
-\boxed{\;\dfrac{n_{\text{titré}}}{a}=\dfrac{n_{\text{titrant}}}{b}\;}\qquad\text{avec } n=C\times V .
+R=\dfrac{0,25}{1}\times100=\qty{25}{\percent}.
 \]
-On en tire la concentration inconnue : $C_{\text{titré}}=\dfrac{n_{\text{titré}}}{V_{\text{titré}}}$.
-\end{tutobox}
+\end{exemplebox}
 
-\begin{tutobox}[Les pièges à éviter (rappel)]{attncol}
-\begin{itemize}[leftmargin=1.3em,topsep=0pt,itemsep=0pt]
-  \item Un \textbf{excès} de réactif \emph{ne garantit pas} \SI{100}{\percent} de rendement : il permet
-        seulement de consommer tout le limitant, pas d'annuler les pertes.
-  \item Un résultat \textbf{en moles} n'est ni une masse ($\times M$) ni un volume ($\times\Vm$).
-  \item \textbf{mL $\to$ L}, \textbf{mg $\to$ g} : convertir avant tout calcul.
-\end{itemize}
-\end{tutobox}
+\begin{piege}[un excès de réactif ne garantit pas \qty{100}{\percent}]
+Mettre un réactif en \emph{grand excès} permet au mieux de consommer tout le limitant, mais n'agit
+\textbf{pas} sur les pertes : le rendement réel peut rester faible. Et attention : le rendement se
+calcule toujours \emph{par rapport au réactif limitant}, jamais à un réactif en excès.
+\end{piege}
+
+\begin{remarque}[moles ou grammes ?]
+Le rendement est un \emph{rapport sans unité} : on peut le calculer avec des moles \emph{ou} avec des
+masses (le $M$ se simplifie), à condition de comparer la même espèce, réel \emph{vs} théorique.
+\end{remarque}
 
 \end{document}

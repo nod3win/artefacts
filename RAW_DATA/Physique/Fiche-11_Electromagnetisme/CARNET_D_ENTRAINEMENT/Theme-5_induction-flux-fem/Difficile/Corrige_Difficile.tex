@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[lire la f.é.m. sur un graphe de flux]
+La f.é.m. est $|e|=N\,\left|\dfrac{\Delta\phi}{\Delta t}\right|$ : elle mesure la \textbf{pente} du
+graphe (en flux total $N\phi$).
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Phase I} : $\dfrac{\Delta\phi}{\Delta t}=\dfrac{4\cdot10^{-3}}{0{,}2}=\qty{0.02}{\weber\per\second}$,
+        d'où $|e|=50\times0{,}02=\qty{1}{\volt}$.\\
+        \textbf{Phase II} : flux constant, $\dfrac{\Delta\phi}{\Delta t}=0$, donc $|e|=\qty{0}{\volt}$.\\
+        \textbf{Phase III} : $\dfrac{\Delta\phi}{\Delta t}=\dfrac{-4\cdot10^{-3}}{0{,}2}=\qty{-0.02}{\weber\per\second}$,
+        d'où $|e|=\qty{1}{\volt}$.
+  \item Le courant est le plus intense en \textbf{I et III} (même valeur \qty{1}{\volt}), \textbf{nul} en
+        II. Comme le flux \emph{augmente} en I et \emph{diminue} en III, la f.é.m. change de signe : les
+        courants induits sont de \textbf{sens opposés} dans ces deux phases.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la spire qu'on sort du champ]
+\begin{enumerate}[label=\alph*)]
+  \item $|e|=B\,a\,v=0{,}5\times0{,}10\times2=\qty{0.1}{\volt}$.
+  \item Le flux entrant \textbf{diminue} : par la loi de Lenz, le courant induit s'oppose à cette
+        diminution en recréant un champ \textbf{entrant} à l'intérieur de la spire. Vu de face, le
+        courant circule donc dans le sens \textbf{horaire}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'aimant qui tombe dans un tube de cuivre]
+\begin{enumerate}[label=\alph*)]
+  \item En tombant, l'aimant fait varier le flux dans le cuivre : des \textbf{courants de Foucault}
+        naissent et exercent (loi de Lenz) une force de freinage \textbf{dirigée vers le haut}, qui
+        \emph{croît avec la vitesse}. Elle finit par égaler le poids : la force résultante s'annule,
+        l'accélération est nulle, donc la vitesse devient \textbf{constante} (vitesse limite).
+  \item À vitesse constante, le tube exerce sur l'aimant une force de freinage vers le haut égale à son
+        poids $mg=0{,}02\times10=\qty{0.2}{\newton}$. Par la \textbf{troisième loi de Newton}, l'aimant
+        exerce \qty{0.2}{\newton} \emph{vers le bas} sur le tube. La balance supporte donc le poids du
+        tube \emph{plus} cette force :
+        \[ F_{\text{balance}}=Mg+mg=(M+m)g=(0{,}1+0{,}02)\times10=\qty{1.2}{\newton}. \]
+        (Tout se passe comme si la balance « pesait » le tube \textbf{et} l'aimant.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un radiateur sur le secteur]
+\begin{enumerate}[label=\alph*)]
+  \item $I_{\text{eff}}=\dfrac{U_{\text{eff}}}{R}=\dfrac{230}{100}=\qty{2.3}{\ampere}$.
+  \item $I_{\max}=I_{\text{eff}}\sqrt2=2{,}3\times1{,}41\approx\qty{3.25}{\ampere}$ ; \quad
+        $U_{\max}=U_{\text{eff}}\sqrt2=230\times1{,}41\approx\qty{325}{\volt}$.
+  \item $P=U_{\text{eff}}\,I_{\text{eff}}=230\times2{,}3\approx\qty{529}{\watt}$
+        (soit aussi $U_{\text{eff}}^2/R=230^2/100$).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

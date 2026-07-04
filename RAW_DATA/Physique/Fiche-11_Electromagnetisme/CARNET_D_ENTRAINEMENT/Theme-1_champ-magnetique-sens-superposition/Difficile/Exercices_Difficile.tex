@@ -1,0 +1,122 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[la boussole déviée par un fil]
+Une petite boussole est posée sur une table ; son aiguille s'aligne d'abord sur la composante
+horizontale du champ terrestre $\vv{B}_H$, dirigée vers le \textbf{Nord}, d'intensité
+$B_H=\qty{2.0e-5}{\tesla}$. On approche un fil qui crée, à l'endroit de la boussole, un champ
+horizontal $\vv{B}_f$ dirigé vers l'\textbf{Est}, perpendiculaire à $\vv{B}_H$, d'intensité
+$B_f=\qty{3.46e-5}{\tesla}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \fill[black] (0,0) circle (1.3pt);
+  \draw[blue!70!black,line width=1.4pt,->] (0,0) -- (0,1.8) node[above]{$\vv{B}_H$ (Nord)};
+  \draw[blue!70!black,line width=1.4pt,->] (0,0) -- (1.8,0) node[right]{$\vv{B}_f$ (Est)};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est l'intensité du champ résultant qui oriente désormais l'aiguille ?
+  \item De quel angle $\alpha$ l'aiguille tourne-t-elle par rapport au Nord ? (On donne
+        $\tan^{-1}(\sqrt{3})=\ang{60}$.)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux fils de courants opposés : champ au milieu]
+Reprenons deux fils perpendiculaires à la feuille, mais cette fois de courants de \textbf{sens
+contraires} : le fil 1 (à gauche) est \textbf{sortant} ($\odot$), le fil 2 (à droite) est
+\textbf{entrant} ($\otimes$). Chacun crée au point milieu $M$ un champ d'intensité
+$\qty{4e-5}{\tesla}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[red!80!black,line width=1.4pt] (-2,0) circle (0.16);
+  \fill[red!80!black] (-2,0) circle (0.05);
+  \node[red!80!black,below,font=\footnotesize] at (-2,-0.3){fil 1 ($\odot$)};
+  \draw[red!80!black,line width=1.4pt] (2,0) circle (0.16);
+  \draw[red!80!black,line width=1.2pt] (2-0.11,-0.11) -- (2+0.11,0.11);
+  \draw[red!80!black,line width=1.2pt] (2-0.11,0.11) -- (2+0.11,-0.11);
+  \node[red!80!black,below,font=\footnotesize] at (2,-0.3){fil 2 ($\otimes$)};
+  \fill[black] (0,0) circle (1.5pt) node[below,font=\footnotesize]{$M$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Donne la direction et le sens de $\vv{B}_1$ et $\vv{B}_2$ au point $M$.
+  \item En déduis l'intensité du champ résultant en $M$, et compare au cas des courants de même sens.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[superposition à \ang{60} : passer par les composantes]
+En un point $M$, deux champs de même intensité $B=\qty{4e-4}{\tesla}$ font entre eux un angle de
+\ang{60} : $\vv{B}_1$ est horizontal, $\vv{B}_2$ est incliné de \ang{60} au-dessus de l'horizontale.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \fill[black] (0,0) circle (1.3pt) node[below left,font=\footnotesize]{$M$};
+  \draw[blue!70!black,line width=1.4pt,->] (0,0) -- (2.2,0) node[right]{$\vv{B}_1$};
+  \draw[blue!70!black,line width=1.4pt,->] (0,0) -- ({2.2*cos(60)},{2.2*sin(60)}) node[above right]{$\vv{B}_2$};
+  \draw (0.7,0) arc (0:60:0.7);
+  \node at (1.05,0.32){\footnotesize \ang{60}};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Décompose $\vv{B}_1$ et $\vv{B}_2$ sur les axes horizontal et vertical, puis calcule les
+        composantes du champ résultant. (On donne $\cos\ang{60}=0{,}5$ et $\sin\ang{60}\approx0{,}866$.)
+  \item En déduis l'intensité du champ résultant et l'angle qu'il fait avec l'horizontale.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[annuler un champ avec un fil]
+En un point $M$, un aimant crée un champ uniforme $\vv{B}_A$ dirigé \textbf{vers la droite}, de
+norme $\qty{6e-5}{\tesla}$. On veut annuler le champ en $M$ à l'aide d'un long fil perpendiculaire
+à la feuille, passant par un point $O$ situé \textbf{juste au-dessus} de $M$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[red!80!black,line width=1.2pt] (0,1.4) circle (0.16);
+  \node[red!80!black,right,font=\footnotesize] at (0.25,1.4){$O$ (fil $\perp$ feuille)};
+  \fill[black] (0,0) circle (1.4pt) node[below left,font=\footnotesize]{$M$};
+  \draw[blue!70!black,line width=1.4pt,->] (0,0) -- (1.7,0) node[right]{$\vv{B}_A$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelles doivent être la direction, le sens et l'intensité du champ $\vv{B}_f$ créé par le fil
+        en $M$ pour que le champ total y soit nul ?
+  \item En déduis, par la règle de la main droite, dans quel sens le courant doit circuler dans le fil
+        (\textbf{sortant} $\odot$ ou \textbf{entrant} $\otimes$).
+\end{enumerate}
+\end{exo}
+
+\end{document}

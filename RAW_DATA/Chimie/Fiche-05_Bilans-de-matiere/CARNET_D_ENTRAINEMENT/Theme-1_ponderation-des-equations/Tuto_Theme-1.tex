@@ -1,0 +1,100 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Pondérer une équation chimique
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 1 — Pondérer une équation chimique}
+\end{center}
+
+\medskip
+Pondérer (\emph{ajuster}, \emph{équilibrer}) une équation, c'est placer devant chaque formule les
+bons \textbf{coefficients stœchiométriques} pour que chaque élément soit présent en \emph{même
+nombre d'atomes} à gauche et à droite. C'est le premier réflexe de tout bilan : un calcul mené sur
+une équation non pondérée est faux dès le départ.
+
+\begin{cle}[la matière se conserve : les atomes se comptent]
+Une réaction ne fait que \textbf{réorganiser} des atomes : elle n'en crée ni n'en détruit aucun.
+Pour chaque élément, il y a donc \textbf{autant d'atomes dans les réactifs que dans les produits}
+(loi de Lavoisier). Les coefficients traduisent cette conservation ; on choisit toujours les
+\textbf{plus petits entiers} possibles.
+\end{cle}
+
+\begin{piege}[on touche aux coefficients, jamais aux indices]
+Pour équilibrer, on ajuste \emph{uniquement} les nombres placés \textbf{devant} les formules. On ne
+modifie \textbf{jamais} les indices \emph{à l'intérieur} d'une formule : écrire \ce{O3} au lieu de
+\ce{O2} change la \emph{nature} de l'espèce. On a seulement le droit d'écrire « $3\,\ce{O2}$ ».
+\end{piege}
+
+\begin{methode}[pondérer pas à pas]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Inventaire} : lister les éléments et compter leurs atomes de chaque côté.
+  \item Commencer par l'élément présent dans \emph{une seule} espèce de chaque côté (souvent un
+        métal, ou le carbone), puis l'\textbf{hydrogène}, et terminer par l'\textbf{oxygène}.
+  \item Ajuster un coefficient, répercuter sur les autres espèces, puis \emph{recompter}.
+  \item Si un coefficient devient \textbf{fractionnaire}, multiplier \emph{toute} l'équation par le
+        dénominateur commun pour revenir à des entiers.
+  \item \textbf{Vérifier} : chaque élément équilibré — et, pour une équation ionique, la
+        \textbf{charge} totale identique des deux côtés.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[l'oxydation du fer]
+On équilibre $\ce{Fe + O2 -> Fe2O3}$. \textbf{Fer} : la formule \ce{Fe2O3} impose $2$ atomes de fer ;
+\textbf{oxygène} : $3$ atomes à droite, par paquets de $2$ à gauche $\Rightarrow$ ppcm $(2,3)=6$, donc
+$3\,\ce{O2}$ à gauche et $2\,\ce{Fe2O3}$ à droite ; on réajuste alors le fer à $4$ :
+\[
+\boxed{\ce{4 Fe + 3 O2 -> 2 Fe2O3}}\qquad
+\text{somme des coefficients } 4+3+2=9.
+\]
+Vérification — Fe : $4=2\times2$ \checkmark ; O : $3\times2=6=2\times3$ \checkmark.
+\end{exemplebox}
+
+\begin{remarque}[hydrocarbures : l'ordre C, H, O]
+Pour une combustion $\ce{C_xH_y + O2 -> CO2 + H2O}$, on règle le \textbf{carbone}, puis
+l'\textbf{hydrogène}, et \emph{seulement en dernier} l'\textbf{oxygène} — souvent fractionnaire :
+on double alors toute l'équation, par ex.\ $\ce{2 C2H6 + 7 O2 -> 4 CO2 + 6 H2O}$.
+\end{remarque}
+
+\begin{cle}[équations ioniques : équilibrer aussi la charge]
+Dans une équation ionique, on équilibre \emph{à la fois} les \textbf{atomes} et la \textbf{charge}
+totale (somme algébrique identique des deux côtés) ; en milieu acide, on complète avec \ce{H+} et
+\ce{H2O}.
+\end{cle}
+
+\end{document}

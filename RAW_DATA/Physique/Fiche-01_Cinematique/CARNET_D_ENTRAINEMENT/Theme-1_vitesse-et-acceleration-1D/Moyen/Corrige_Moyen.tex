@@ -1,0 +1,87 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[la vraie vitesse moyenne]
+\begin{enumerate}[label=\alph*)]
+  \item $t_1=\dfrac{120}{40}=\qty{3}{\hour}$ ; \quad $t_2=\dfrac{120}{60}=\qty{2}{\hour}$.
+  \item Distance totale \qty{240}{\kilo\metre}, durée totale \qty{5}{\hour} :
+        $\ds v_{\text{moy}}=\frac{240}{5}=\qty{48}{\kilo\metre\per\hour}$.
+  \item Parce que l'automobiliste passe \emph{plus de temps} à la vitesse lente : la vitesse
+        moyenne penche vers celle-ci. On divise toujours la distance totale par la durée totale,
+        jamais la moyenne arithmétique des vitesses.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[dérivée d'un mouvement cubique]
+\begin{enumerate}[label=\alph*)]
+  \item $v(t)=\dfrac{\mathrm{d}x}{\mathrm{d}t}=3t^2-12t+9$ (\si{\metre\per\second}).
+  \item $v=0 \Leftrightarrow t^2-4t+3=0 \Leftrightarrow (t-1)(t-3)=0$, donc $t=\qty{1}{\second}$ et $t=\qty{3}{\second}$.
+  \item $a(t)=6t-12$ : $a(1)=\qty{-6}{\metre\per\second\squared}$ et $a(3)=\qty{+6}{\metre\per\second\squared}$
+        (le mobile ralentit puis repart en sens inverse, avant d'être ré-accéléré).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter par intégration]
+\begin{enumerate}[label=\alph*)]
+  \item $\ds x(t)=x_0+\int_0^t(6t'+2)\,\mathrm{d}t'=5+\big[3t'^2+2t'\big]_0^t=3t^2+2t+5$ (\si{\metre}).
+  \item $x(4)=3\times16+2\times4+5=48+8+5=\qty{61}{\metre}$.
+  \item $a=\dfrac{\mathrm{d}v}{\mathrm{d}t}=\qty{6}{\metre\per\second\squared}$ (constante).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[lecture d'un graphe de vitesse]
+\begin{enumerate}[label=\alph*)]
+  \item Phase $[0;2]$ : $a=\dfrac{8-0}{2-0}=\qty{4}{\metre\per\second\squared}$ ;
+        phase $[2;5]$ : $v$ constante $\Rightarrow a=\qty{0}{\metre\per\second\squared}$ (MRU) ;
+        phase $[5;7]$ : $a=\dfrac{0-8}{7-5}=\qty{-4}{\metre\per\second\squared}$ (freinage).
+  \item L'aire sous la courbe est un trapèze :
+        $\ds \underbrace{\tfrac12\times2\times8}_{8}+\underbrace{3\times8}_{24}+\underbrace{\tfrac12\times2\times8}_{8}=\qty{40}{\metre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[intégrer une vitesse non affine]
+\begin{enumerate}[label=\alph*)]
+  \item $\ds \Delta x=\int_0^2 3t^2\,\mathrm{d}t=\big[t^3\big]_0^2=\qty{8}{\metre}$.
+  \item $a(t)=\dfrac{\mathrm{d}(3t^2)}{\mathrm{d}t}=6t$ : elle \emph{croît} avec le temps, donc l'accélération n'est \textbf{pas} constante.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

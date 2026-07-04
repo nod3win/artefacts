@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[traversée d'une rivière]
+\begin{enumerate}[label=\alph*)]
+  \item Perpendiculaires : $v=\sqrt{4^2+3^2}=\qty{5}{\metre\per\second}$.
+  \item $\theta=\arctan\dfrac{3}{4}\approx\ang{36,9}$ vers l'aval.
+  \item Le temps ne dépend que de la composante \emph{vers l'autre rive} ($\qty{4}{\metre\per\second}$) : $t=\dfrac{60}{4}=\qty{15}{\second}$.
+  \item Dérive $=v_{\text{courant}}\times t=3\times15=\qty{45}{\metre}$ vers l'aval.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[décomposition inverse]
+\begin{enumerate}[label=\alph*)]
+  \item $v_y=v\sin\theta \Rightarrow \sin\theta=\dfrac{10}{20}=0{,}5 \Rightarrow \theta=\ang{30}$.
+  \item $v_x=v\cos\ang{30}=20\cdot\dfrac{\sqrt3}{2}=10\sqrt3\approx\qty{17,3}{\metre\per\second}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[addition par composantes]
+\begin{enumerate}[label=\alph*)]
+  \item $v=\sqrt{5^2+12^2}=\sqrt{169}=\qty{13}{\metre\per\second}$.
+  \item $\theta=\arctan\dfrac{12}{5}\approx\ang{67,4}$ par rapport à l'Est (soit \ang{22,6} par rapport au Nord).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[accélérer à norme constante]
+\begin{enumerate}[label=\alph*)]
+  \item $\vv{v}_1$ et $\vv{v}_2$ ont même norme \qty{2}{\metre\per\second} mais sont perpendiculaires. Le triangle de la soustraction est rectangle isocèle :
+        \[ \lVert\Delta\vv{v}\rVert=\sqrt{v_1^2+v_2^2}=\sqrt{2^2+2^2}=2\sqrt2\approx\qty{2,83}{\metre\per\second}. \]
+  \item La vitesse a changé (en direction) : $\Delta\vv{v}\neq\vv{0}$, donc il y a une \textbf{accélération}, bien que la norme soit restée constante. C'est l'accélération centripète du MCU.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[avion dans le vent]
+\begin{enumerate}[label=\alph*)]
+  \item Perpendiculaires : $v=\sqrt{160^2+120^2}=\sqrt{25600+14400}=\sqrt{40000}=\qty{200}{\kilo\metre\per\hour}$.
+  \item $\theta=\arctan\dfrac{120}{160}=\arctan0{,}75\approx\ang{36,9}$ vers l'Est par rapport au Nord.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

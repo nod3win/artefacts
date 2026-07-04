@@ -1,0 +1,78 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{corrige}[calculer $K$ à partir des concentrations]
+\begin{enumerate}[label=\alph*)]
+  \item $K = \dfrac{[\ce{HI}]^{2}}{[\ce{H2}]\,[\ce{I2}]}$.
+  \item $K = \dfrac{(1{,}6)^{2}}{0{,}20\times 0{,}20} = \dfrac{2{,}56}{0{,}040} = 64$.
+  \item $K=64\gg 1$ : l'équilibre est très déplacé vers les \textbf{produits} ($\ce{HI}$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'effet de l'écriture sur $K$]
+\begin{enumerate}[label=\alph*)]
+  \item coefficients $\times 3$ : tous les exposants sont triplés, donc $K' = K^{3} = 2^{3} = 8$.
+  \item réaction inverse : $K'' = \dfrac{1}{K} = \dfrac{1}{2} = 0{,}5$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[premiers pas avec Le Chatelier]
+Le système s'oppose à la perturbation (réaction exothermique dans le sens direct).
+\begin{enumerate}[label=\alph*)]
+  \item vers la \textbf{droite} : l'équilibre consomme l'excès de $\ce{N2}$.
+  \item vers la \textbf{gauche} : $T\nearrow$ pousse dans le sens \emph{endothermique}, ici le sens inverse.
+  \item vers la \textbf{droite} : $4$ mol de gaz à gauche, $2$ à droite ; $p\nearrow$ favorise le côté à moins de gaz.
+  \item \textbf{aucun déplacement} : un catalyseur n'agit que sur la vitesse.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[équilibre hétérogène : une pression à trouver]
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{FeO}$ et $\ce{Fe}$ sont solides : $K = \dfrac{p_{\ce{CO2}}}{p_{\ce{CO}}}$.
+  \item avec $p_{\ce{CO2}}=x$ et $p_{\ce{CO}}=1-x$ : $\dfrac{x}{1-x}=0{,}5 \Rightarrow x = 0{,}5(1-x) \Rightarrow 1{,}5\,x = 0{,}5 \Rightarrow x = \dfrac{0{,}5}{1{,}5} = \dfrac{1}{3}\approx\qty{0.33}{atm}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[degré d'avancement à l'équilibre]
+\begin{enumerate}[label=\alph*)]
+  \item dans $\qty{1.0}{\litre}$ : $[\ce{X}]=1{,}0-x$ et $[\ce{Y}]=x$ (en $\si{\mol\per\litre}$).
+  \item $K = \dfrac{[\ce{Y}]}{[\ce{X}]} = \dfrac{x}{1{,}0-x} = 1{,}5 \Rightarrow x = 1{,}5(1-x) \Rightarrow 2{,}5\,x = 1{,}5 \Rightarrow x = 0{,}60$.
+  \item $x = \qty{0.60}{\mol}$ sur $\qty{1.0}{\mol}$ : \; $\qty{60}{\percent}$ de $\ce{X}$ a été transformé.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

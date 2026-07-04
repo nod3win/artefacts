@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[deux rayons dans un prisme $\ang{30}$–$\ang{60}$–$\ang{90}$]
+\begin{enumerate}[label=\alph*)]
+  \item $\hat{\imath}_{\text{lim}}=\arcsin\!\left(\dfrac{1}{\sqrt2}\right)=\arcsin(0{,}707)=\ang{45}$.
+  \item \emph{Rayon 1} : perpendiculaire à $AB$, il est donc \emph{parallèle} à $AC$. L'angle entre
+        $AC$ et l'hypoténuse $BC$ est l'angle en $C$, soit $\ang{30}$ : le rayon 1 fait $\ang{30}$ avec
+        la surface $BC$, donc $\ang{90}-\ang{30}=\ang{60}$ avec sa normale $\Rightarrow \hat{\imath}_1=\ang{60}$.
+
+        \emph{Rayon 2} : perpendiculaire à $AC$, donc parallèle à $AB$. L'angle entre $AB$ et $BC$ est
+        l'angle en $B$, soit $\ang{60}$ : le rayon 2 fait $\ang{60}$ avec $BC$, donc
+        $\ang{90}-\ang{60}=\ang{30}$ avec sa normale $\Rightarrow \hat{\imath}_2=\ang{30}$.
+  \item Rayon 1 : $\hat{\imath}_1=\ang{60}>\ang{45}$ $\Rightarrow$ \textbf{réflexion totale}, il ne
+        traverse pas $BC$. Rayon 2 : $\hat{\imath}_2=\ang{30}<\ang{45}$ $\Rightarrow$ il est
+        \textbf{réfracté} et \textbf{traverse} $BC$. Seul le rayon 2 sort par l'hypoténuse.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le périscope à deux prismes]
+\begin{enumerate}[label=\alph*)]
+  \item $\hat{\imath}_{\text{lim}}=\arcsin(1/1{,}5)\approx\ang{41.8}$. Sur chaque hypoténuse
+        $\ang{45}>\ang{41.8}$ (ou : $1{,}5\sin\ang{45}=1{,}06>1$), donc la réflexion est bien
+        \textbf{totale} aux deux prismes.
+  \item Chaque prisme dévie le rayon de $\ang{90}$ ; après deux déviations de $\ang{90}$ dans le même
+        « sens de descente », le rayon de sortie est \textbf{parallèle} au rayon d'entrée (même sens,
+        horizontal), simplement décalé plus bas : on voit ainsi par-dessus un obstacle.
+  \item La réflexion totale renvoie \textbf{100\,\%} de la lumière (aucune perte), tandis qu'un miroir
+        métallique en absorbe quelques pour-cent à chaque réflexion et se ternit avec le temps. Les
+        prismes ne nécessitent en outre aucun traitement réfléchissant.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'angle d'acceptance d'une fibre optique]
+\begin{enumerate}[label=\alph*)]
+  \item À la paroi c\oe ur/gaine : $\hat{\imath}_{\text{lim}}=\arcsin\!\left(\dfrac{n_2}{n_1}\right)
+        =\arcsin\!\left(\dfrac{1{,}4}{1{,}5}\right)=\arcsin(0{,}933)\approx\ang{69.0}$.
+  \item Le rayon doit frapper la paroi sous $\hat{\imath}_P\ge\ang{69.0}$. Or la normale à la paroi
+        est perpendiculaire à la normale de la face d'entrée, donc l'angle de réfraction à l'entrée
+        est le complémentaire : $\theta_r=\ang{90}-\hat{\imath}_P$. La condition
+        $\hat{\imath}_P\ge\ang{69.0}$ donne $\theta_r\le\ang{90}-\ang{69.0}=\ang{21.0}$.
+  \item À la face d'entrée (air $\to$ c\oe ur) : $n_0\sin\theta=n_1\sin\theta_r$. L'angle d'entrée
+        maximal correspond à $\theta_r=\ang{21.0}$ :
+        \[ \sin\theta_{\max}=n_1\sin\ang{21.0}=1{,}5\times0{,}358=0{,}538
+           \;\Longrightarrow\;\boxed{\theta_{\max}\approx\ang{32.5}}. \]
+        Tout rayon entrant à moins de $\ang{32.5}$ de l'axe est guidé. \emph{Vérification} :
+        l'ouverture numérique vaut $\sin\theta_{\max}=\sqrt{n_1^2-n_2^2}=\sqrt{2{,}25-1{,}96}=\sqrt{0{,}29}
+        =0{,}539$, cohérent.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

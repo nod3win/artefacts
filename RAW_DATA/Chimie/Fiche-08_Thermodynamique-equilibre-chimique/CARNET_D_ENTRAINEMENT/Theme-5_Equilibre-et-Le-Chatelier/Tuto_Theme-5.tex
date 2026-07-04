@@ -1,0 +1,84 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Équilibre chimique et loi de Le Chatelier
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 5 — Équilibre chimique et Le Chatelier}\\[2pt]
+{\color{primary}\small Constante $K$, loi d'action de masse, déplacement d'équilibre}
+\end{center}
+
+\begin{cle}[l'état d'équilibre et la constante $K$]
+Une réaction \textbf{réversible} ($\rightleftharpoons$) atteint un \textbf{équilibre} quand la vitesse du sens direct égale celle du sens inverse : les concentrations \emph{ne varient plus} (état stationnaire), mais les deux réactions continuent (\textbf{équilibre dynamique}). Pour $a\,\ce{A} + b\,\ce{B} \rightleftharpoons c\,\ce{C} + d\,\ce{D}$ :
+\[ \boxed{\;K = \dfrac{[\ce{C}]^{c}\,[\ce{D}]^{d}}{[\ce{A}]^{a}\,[\ce{B}]^{b}}\;} \qquad\text{(produits sur réactifs, coefficients en exposants).} \]
+$K$ est \textbf{sans unité} et ne dépend que de la \textbf{température}. Interprétation : $K\gg 1 \Rightarrow$ équilibre vers les \textbf{produits} ; $K\ll 1 \Rightarrow$ vers les \textbf{réactifs} ; $K\approx 1 \Rightarrow$ coexistence.
+\end{cle}
+
+\begin{methode}[écrire $K$ et exploiter la loi de Le Chatelier]
+\textbf{Écrire $K$} : produits au numérateur, réactifs au dénominateur, chaque exposant $=$ coefficient. \textbf{Les solides purs et liquides purs n'apparaissent pas} (seuls les gaz et les espèces $(aq)$ figurent).\\[3pt]
+\textbf{Le Chatelier} : perturbé, le système évolue dans le sens qui \emph{s'oppose} à la perturbation.
+\renewcommand{\arraystretch}{1.25}
+\begin{center}\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{9.3cm}@{}}
+\toprule
+\textbf{Perturbation} & \textbf{Sens du déplacement}\\
+\midrule
+$T \nearrow$ & vers le sens \textbf{endothermique} (qui absorbe la chaleur)\\
+$p \nearrow$ (gaz) & vers le côté qui compte \textbf{moins} de moles de gaz\\
+ajout d'un réactif & sens qui \textbf{consomme} ce réactif (vers les produits)\\
+catalyseur ; solide/liquide pur & \textbf{aucun déplacement}\\
+\bottomrule
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1.0}
+Seule la \textbf{température} modifie la \emph{valeur} de $K$.
+\end{methode}
+
+\begin{exemplebox}[calculer $K$ à partir des concentrations]
+Pour $\ce{PCl5}(g) \rightleftharpoons \ce{PCl3}(g) + \ce{Cl2}(g)$ à l'équilibre, avec $[\ce{PCl5}]=\qty{0.40}{\mol\per\litre}$, $[\ce{PCl3}]=\qty{1.40}{\mol\per\litre}$, $[\ce{Cl2}]=\qty{0.50}{\mol\per\litre}$ :
+\[ K = \frac{[\ce{PCl3}]\,[\ce{Cl2}]}{[\ce{PCl5}]} = \frac{1{,}40\times 0{,}50}{0{,}40} = 1{,}75\;(>1). \]
+\end{exemplebox}
+
+\begin{piege}[les fautes classiques]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item ne \emph{jamais} mettre un solide pur ou un liquide pur dans $K$.
+  \item «\,équilibre\,» $\ne$ «\,quantités égales\,» : les concentrations sont \emph{constantes}, pas forcément égales.
+  \item un \textbf{catalyseur} ne déplace pas l'équilibre (il n'agit que sur la vitesse).
+  \item l'effet de la \textbf{pression} n'existe que si le nombre de moles de gaz \emph{change} entre les deux côtés ; multiplier les coefficients par $n$ élève $K$ à la puissance $n$.
+\end{itemize}
+\end{piege}
+
+\end{document}

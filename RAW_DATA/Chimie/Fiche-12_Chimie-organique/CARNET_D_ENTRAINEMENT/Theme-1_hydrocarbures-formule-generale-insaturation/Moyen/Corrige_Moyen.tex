@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Calculer le degré d'insaturation]
+Ici $n=8$, donc $2n+2=18$ et $I=\frac{18-m}{2}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{C8H18}$ : $I=\frac{18-18}{2}=0$ (alcane saturé).
+  \item $\ce{C8H16}$ : $I=\frac{18-16}{2}=1$ (une insaturation).
+  \item $\ce{C8H14}$ : $I=\frac{18-14}{2}=2$ (deux insaturations).
+  \item $\ce{C8H10}$ : $I=\frac{18-10}{2}=4$ (quatre insaturations, typiquement un noyau aromatique).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Une formule, deux structures]
+\begin{enumerate}[label=\alph*)]
+  \item Un alcène acyclique, par exemple le \textbf{pent-1-ène} \ce{CH2=CH-CH2-CH2-CH3}.
+  \item Le \textbf{cyclopentane} (cycle à $5$ carbones, uniquement des liaisons simples).
+  \item $I$ compte les liaisons $\pi$ \emph{et} les cycles \emph{sans les distinguer}. Le pent-1-ène a $1$~liaison $\pi$ et $0$ cycle ($I=1$) ; le cyclopentane a $0$ liaison $\pi$ et $1$ cycle ($I=1$). Même valeur, origines différentes.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Insaturation avec des hétéroatomes]
+On applique $I=\frac{2n+2+p-m-q}{2}$ ($p$ = azote, $q$ = halogène, oxygène ignoré).
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{C3H6O}$ : $I=\frac{2\cdot3+2-6}{2}=\frac{2}{2}=1$ (ex.\ propanal ou propanone).
+  \item $\ce{C2H3Cl}$ : $I=\frac{2\cdot2+2-3-1}{2}=\frac{2}{2}=1$ (chlorure de vinyle, une $\ce{C=C}$).
+  \item $\ce{C2H7N}$ : $I=\frac{2\cdot2+2+1-7}{2}=\frac{0}{2}=0$ (éthylamine, saturée).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Le cas du benzène]
+\begin{enumerate}[label=\alph*)]
+  \item $I=\frac{2\cdot6+2-6}{2}=\frac{8}{2}=4$.
+  \item $I=(\text{liaisons }\pi)+(\text{cycles})$, donc $\pi = I-\text{cycles}=4-1=\textbf{3 liaisons }\pi$ (les trois doubles liaisons de Kekulé).
+  \item Non : avec $I=4$, il est très fortement \textbf{insaturé} (un alcane à $6$~C serait $\ce{C6H14}$, soit $8$~H de plus).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Hydrogénation et comptage des insaturations]
+\begin{enumerate}[label=\alph*)]
+  \item $I=\frac{2\cdot7+2-10}{2}=\frac{6}{2}=3$.
+  \item Le produit saturé à $7$~C avec un cycle est $\ce{C7H14}$ (formule $\ce{C_nH_{2n}}$). On passe de $\ce{C7H10}$ à $\ce{C7H14}$ : $14-10=\textbf{4 hydrogènes additionnés}$.
+  \item Chaque $\ce{C=C}$ additionne $2$~H, donc $\frac{4}{2}=\textbf{2 liaisons }\ce{C=C}$. Vérification : $I=3=\underbrace{2}_{\pi}+\underbrace{1}_{\text{cycle}}$, cohérent avec le cycle qui subsiste après hydrogénation.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

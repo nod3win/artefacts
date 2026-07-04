@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[résultante complète — même sens]
+\begin{enumerate}[label=\alph*)]
+  \item $R = F_1+F_2 = 2+3 = \qty{5}{N}$ (parallèle, même sens).
+  \item $\dfrac{\overline{AO}}{\overline{BO}}=\dfrac{F_2}{F_1}=\dfrac{3}{2}$, soit
+        $\overline{AO}=\tfrac{3}{2}\,\overline{BO}$. Avec $\overline{AO}+\overline{BO}=50$ :
+        \[ \tfrac{3}{2}\overline{BO}+\overline{BO}=50 \Rightarrow \tfrac{5}{2}\overline{BO}=50
+        \Rightarrow \overline{BO}=\qty{20}{cm},\ \overline{AO}=\qty{30}{cm}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[résultante complète — sens opposé]
+\begin{enumerate}[label=\alph*)]
+  \item $F_r = F_2 - F_1 = 5 - 2 = \qty{3}{N}$, de même sens que $\vv F_2$ (la plus grande).
+  \item $O$ est \textbf{hors} de $[AB]$, du côté de $B$. En posant $\overline{BO}=x$, on a
+        $\overline{AO}=\overline{AB}+x=60+x$, et $F_1\times\overline{AO}=F_2\times\overline{BO}$ :
+        \[ 2(60+x)=5x \Rightarrow 120=3x \Rightarrow x=\overline{BO}=\qty{40}{cm}. \]
+        $O$ est donc à \qty{40}{cm} au-delà de $B$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[retrouver une force inconnue]
+\begin{enumerate}[label=\alph*)]
+  \item Même sens : $R=F_1+F_2 \Rightarrow F_2 = R-F_1 = 12-4 = \qty{8}{N}$.
+  \item $\dfrac{\overline{AO}}{\overline{BO}}=\dfrac{F_2}{F_1}=\dfrac{8}{4}=2$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[panneau tenu par deux cordes]
+\begin{enumerate}[label=\alph*)]
+  \item Les deux cordes tirent dans le même sens : leur résultante vaut $F_1+F_2=8+12=\qty{20}{N}$.
+        À l'équilibre, le poids l'équilibre exactement : $G=\qty{20}{N}$.
+  \item Le poids s'applique au point $O$ de la résultante des deux forces :
+        $\dfrac{\overline{AO}}{\overline{BO}}=\dfrac{F_2}{F_1}=\dfrac{12}{8}=1{,}5$, et
+        $\overline{AO}+\overline{BO}=50$. Donc $2{,}5\,\overline{BO}=50$, soit
+        $\overline{BO}=\qty{20}{cm}$ et $\overline{AO}=\qty{30}{cm}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[même sens ou sens opposé : comparaison]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Même sens :} $R=F_1+F_2=1+3=\qty{4}{N}$. Position : $\overline{AO}/\overline{BO}=3$ et
+        $\overline{AO}+\overline{BO}=40$, d'où $4\,\overline{BO}=40$, $\overline{BO}=\qty{10}{cm}$
+        (entre $A$ et $B$).
+  \item \textbf{Sens opposé :} $F_r=F_2-F_1=3-1=\qty{2}{N}$. Position : $\overline{AO}=40+\overline{BO}$
+        et $1\times(40+\overline{BO})=3\times\overline{BO}$, d'où $40=2\,\overline{BO}$,
+        $\overline{BO}=\qty{20}{cm}$ (au-delà de $B$).
+  \item La résultante est plus intense dans le cas \textbf{de même sens} ($\qty{4}{N}>\qty{2}{N}$) :
+        les forces coopèrent au lieu de se contrarier.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

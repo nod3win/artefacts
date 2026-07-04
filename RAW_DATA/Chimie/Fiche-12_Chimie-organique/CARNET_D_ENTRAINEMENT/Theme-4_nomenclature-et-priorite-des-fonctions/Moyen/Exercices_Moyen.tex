@@ -1,0 +1,75 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{exo}[Fonction principale et fonction secondaire]
+On considère la molécule \ce{HO-CH2-CH2-COOH}.
+\begin{enumerate}[label=\alph*)]
+  \item Quelles sont ses deux fonctions ?
+  \item Laquelle est la fonction principale ? Que devient l'autre dans le nom ?
+  \item Donne le nom complet de la molécule.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Numéroter pour le plus petit indice]
+On considère l'alcool \ce{CH3-CH2-CH2-CH(OH)-CH3}.
+\begin{enumerate}[label=\alph*)]
+  \item Numérote la chaîne à partir de chaque extrémité et donne, dans les deux sens, l'indice du carbone portant le $-\ce{OH}$.
+  \item Quel sens retient-on, et quel est alors le nom de la molécule ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Nommer une molécule ramifiée]
+Donne le nom systématique de \ce{CH3-CH(CH3)-CH2-OH} (une ramification méthyle et une fonction alcool).
+\end{exo}
+
+\begin{exo}[Préfixes de substituants]
+Nomme chaque molécule (pense aux préfixes chloro-, nitro- pour les substituants, et à la fonction principale pour le suffixe).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3-CO-CHCl-CH3}
+  \item \ce{OHC-CH2-CH(NO2)-CH3}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[Du nom à la structure]
+On donne le nom «\,acide 2-méthylpropanoïque\,».
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la fonction principale, et sur quel carbone se trouve-t-elle ?
+  \item Écris la formule semi-développée de la molécule.
+  \item Donne sa formule brute.
+\end{enumerate}
+\end{exo}
+
+\end{document}

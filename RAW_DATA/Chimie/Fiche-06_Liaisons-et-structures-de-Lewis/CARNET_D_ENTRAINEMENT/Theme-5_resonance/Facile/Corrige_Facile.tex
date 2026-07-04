@@ -1,118 +1,86 @@
-% =====================================================================
-%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 5
-%  Niveau FACILE — Corrigé
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,}}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{corcol}{RGB}{0,114,178}
-\definecolor{astucecol}{RGB}{198,93,9}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
-\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
-   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
-\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
-   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 5 — La résonance}}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile · Corrigé}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
-\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\Large\bfseries\color{primarydark}Thème 5 — Corrigé du niveau Facile}
-\end{center}
-\medskip
-
-\begin{cor}[le vocabulaire de la résonance]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
-  \item \rep une \textbf{structure limite} est l'une des formules de Lewis que l'on peut écrire pour
-        un même édifice, obtenue en déplaçant \emph{uniquement} des électrons (jamais des atomes).
-  \item \rep l'\textbf{hybride de résonance} est la molécule \emph{réelle}, unique, qui n'est aucune
-        des structures limites mais une « moyenne » de toutes.
-  \item \rep le symbole $\longleftrightarrow$ relie les structures limites d'\emph{une même} espèce ;
-        il indique qu'aucune formule seule ne décrit correctement l'édifice.
+\begin{corrige}[y a-t-il résonance ?]
+Il faut une double liaison conjuguée à un doublet libre (ou à une autre double).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CO3^2-} : \textbf{oui} (double \ce{C=O} $+$ doublets des \ce{O}).
+  \item \ce{CH4} : \textbf{non} (que des liaisons simples, aucun doublet libre à délocaliser).
+  \item \ce{O3} : \textbf{oui}.
+  \item \ce{H2O} : \textbf{non} (aucune liaison multiple).
+  \item \ce{NO3-} : \textbf{oui}.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[vrai ou faux ?]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
-  \item \rep \textbf{FAUX}. D'une forme à l'autre, \emph{seuls les électrons} changent de place ; les
-        noyaux (donc les atomes) restent immobiles.
-  \item \rep \textbf{FAUX}. La géométrie ne change \emph{pas} : c'est une propriété de la molécule
-        réelle (l'hybride), identique dans toutes les formes limites.
-  \item \rep \textbf{FAUX}. $\longleftrightarrow$ est la flèche de \emph{résonance}. L'équilibre
-        chimique se note $\rightleftharpoons$ (deux espèces distinctes qui s'interconvertissent).
+\begin{corrige}[combien de formes limites équivalentes ?]
+Le nombre de formes $=$ nombre de positions équivalentes où placer la double liaison.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{O3} : \textbf{2}.
+  \item \ce{CO3^2-} : \textbf{3} (une par oxygène).
+  \item \ce{NO3-} : \textbf{3}.
+  \item \ce{NO2-} : \textbf{2}.
+  \item \ce{SO2} : \textbf{2}.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[compter les formes limites]
-Le nombre de formes limites équivalentes égale le nombre de positions équivalentes que peut occuper
-la double liaison (ou la charge) :
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{c|cccc}
-\toprule
-Édifice & \ce{O3} & \ce{CO3^2-} & \ce{NO3-} & \ce{ClO4-}\\
-Nombre de formes & 2 & 3 & 3 & 4\\
-\bottomrule
-\end{tabular}
-\end{center}
-\rep \ce{O3} : \textbf{2} ; \ce{CO3^2-} : \textbf{3} ; \ce{NO3-} : \textbf{3} ; \ce{ClO4-} : \textbf{4}.
-\end{cor}
+\begin{corrige}[qu'est-ce qui bouge ?]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux} : les noyaux ne bougent jamais.
+  \item \textbf{Vrai} : ce sont précisément ces électrons qui se délocalisent.
+  \item \textbf{Faux} : la géométrie est identique pour toutes les formes.
+  \item \textbf{Vrai} : $\leftrightarrow$ est la flèche de résonance.
+\end{enumerate}
+\end{corrige}
 
-\begin{cor}[$\longleftrightarrow$ ou $\rightleftharpoons$ ?]
-\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
-  \item \rep description 1 (formes de résonance d'une seule espèce) $\to$ \textbf{$\longleftrightarrow$} ;
-  \item \rep description 2 (équilibre entre deux espèces) $\to$ \textbf{$\rightleftharpoons$}.
-\end{itemize}
-En résonance il n'existe qu'\emph{une} espèce ; dans un équilibre, il en existe \emph{deux} bien
-réelles qui se transforment l'une en l'autre.
-\end{cor}
+\begin{corrige}[$\leftrightarrow$ ou $\rightleftharpoons$ ?]
+\begin{enumerate}[label=\alph*)]
+  \item Formes limites de l'ozone : $\boldsymbol{\leftrightarrow}$ (résonance).
+  \item Équilibre chimique : $\boldsymbol{\rightleftharpoons}$.
+  \item Structures de résonance du carbonate : $\boldsymbol{\leftrightarrow}$.
+\end{enumerate}
+\end{corrige}
 
-\begin{cor}[qui présente de la résonance ?]
-Une espèce présente de la résonance dès qu'une double liaison peut occuper \emph{plusieurs} positions
-équivalentes.
-\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
-  \item \rep \textbf{Résonance} : \ce{CO3^2-}, \ce{NO3-}, \ce{O3}.
-  \item \rep \textbf{Pas de résonance} : \ce{CH4} (que des liaisons simples \ce{C-H}) et \ce{H2O}
-        (que des liaisons simples \ce{O-H}, aucune liaison multiple à délocaliser).
-\end{itemize}
-\end{cor}
-
-\begin{astucebox}[le réflexe résonance]
-Deux idées suffisent au niveau facile : \textbf{(1)}~seuls les \emph{électrons} bougent (jamais les
-atomes ni la géométrie) ; \textbf{(2)}~$\longleftrightarrow$ (résonance, \emph{une} espèce) ne se
-confond jamais avec $\rightleftharpoons$ (équilibre, \emph{deux} espèces).
-\end{astucebox}
+\begin{corrige}[conséquence sur les liaisons]
+\begin{enumerate}[label=\alph*)]
+  \item Elles sont \textbf{identiques} (toutes équivalentes).
+  \item Leur longueur est \textbf{intermédiaire} entre celle d'une simple et d'une double liaison.
+  \item La charge $-2$ est répartie \textbf{sur les trois oxygènes} ($-\tfrac{2}{3}$ chacun).
+\end{enumerate}
+\end{corrige}
 
 \end{document}

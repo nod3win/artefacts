@@ -1,0 +1,83 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[deux miroirs formant un angle quelconque]
+\begin{enumerate}[label=\alph*)]
+  \item Dans le triangle $OAB$ : l'angle en $O$ vaut $\theta$. En $A$, le rayon $AB$ fait avec le
+        miroir $M_1$ l'angle $\ang{90}-\alpha$ (car il fait $\alpha$ avec la normale) ; de même en $B$,
+        $AB$ fait $\ang{90}-\beta$ avec $M_2$. La somme des angles du triangle vaut $\ang{180}$ :
+        \[ \theta+(\ang{90}-\alpha)+(\ang{90}-\beta)=\ang{180}\;\Longrightarrow\;\boxed{\alpha+\beta=\theta}. \]
+  \item La déviation à chaque miroir est $180^\circ-2\alpha$ puis $180^\circ-2\beta$. Au total :
+        \[ D=(\ang{180}-2\alpha)+(\ang{180}-2\beta)=\ang{360}-2(\alpha+\beta)=\boxed{\ang{360}-2\theta}. \]
+        Remarquable : $D$ ne dépend que de $\theta$, pas de l'angle d'incidence.
+  \item Pour $\theta=\ang{120}$ : $D=\ang{360}-\ang{240}=\ang{120}$. Le rayon ressort antiparallèle
+        lorsque $D=\ang{180}$, soit $\ang{360}-2\theta=\ang{180}\Rightarrow\theta=\ang{90}$ : on
+        retrouve le réflecteur en coin.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le scanner à miroir tournant]
+\begin{enumerate}[label=\alph*)]
+  \item Un miroir qui tourne de $\alpha$ fait tourner le faisceau réfléchi de $2\alpha=\ang{12}$.
+  \item Le faisceau, parti du miroir, arrive sur le mur perpendiculaire à distance $D$. Après rotation
+        de $2\alpha$, le point d'impact se déplace de
+        \[ s=D\tan(2\alpha)=\qty{2.5}{m}\times\tan\ang{12}=2{,}5\times0{,}2126=\qty{0.53}{m}. \]
+        Un tout petit basculement du miroir ($\ang{6}$) déplace le spot d'un demi-mètre : c'est le
+        principe des galvanomètres optiques et des scanners laser.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux miroirs parallèles face à face]
+\begin{enumerate}[label=\alph*)]
+  \item L'image est le symétrique de l'objet par rapport au plan du miroir :
+        \begin{itemize}[leftmargin=1.5em,topsep=1pt]
+          \item image par $M_1$ : $P$ est à $\qty{20}{cm}$ \emph{devant} $M_1$, son image est donc à
+                $\qty{20}{cm}$ \emph{derrière} $M_1$ ;
+          \item image par $M_2$ : $P$ est à $\qty{40}{cm}$ devant $M_2$, son image est à
+                $\qty{40}{cm}$ \emph{derrière} $M_2$.
+        \end{itemize}
+  \item Chaque image se comporte à son tour comme un \textbf{objet} pour le miroir d'en face, qui en
+        donne une nouvelle image, elle-même réfléchie par le premier miroir, et ainsi de suite sans
+        fin. Les miroirs étant parallèles, aucune de ces images ne coïncide : leurs distances
+        augmentent indéfiniment, d'où une \textbf{infinité d'images} de plus en plus lointaines (l'effet
+        « couloir de miroirs »).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,110 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[barycentre de deux masses]
+Deux masses sont fixées aux extrémités $A$ et $B$ d'une tige légère de longueur
+$\overline{AB}=\qty{80}{cm}$ : $m_1=\qty{2}{kg}$ en $A$ et $m_2=\qty{6}{kg}$ en $B$.
+\begin{enumerate}[label=\alph*)]
+  \item En utilisant la relation $m_1\times\overline{AG}=m_2\times\overline{BG}$, détermine la position
+        de $G$.
+  \item Vérifie que $G$ est plus proche de la masse la plus lourde.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois masses alignées]
+Sur une règle légère, trois masses sont placées : $m_1=\qty{1}{kg}$ en $x_1=0$, $m_2=\qty{2}{kg}$ en
+$x_2=\qty{30}{cm}$, $m_3=\qty{3}{kg}$ en $x_3=\qty{60}{cm}$. On procède \emph{de proche en proche}.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le centre de gravité $G_{12}$ des deux premières masses.
+  \item Compose $G_{12}$ (portant $m_1+m_2$) avec $m_3$ pour trouver le centre de gravité global.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une tige lestée]
+Une tige homogène de masse $M=\qty{2}{kg}$ et de longueur \qty{100}{cm} a son centre de gravité en
+son milieu ($x=\qty{50}{cm}$). On fixe une masse ponctuelle $m=\qty{3}{kg}$ à son extrémité
+($x=\qty{100}{cm}$).
+\begin{enumerate}[label=\alph*)]
+  \item Où se situe le centre de gravité de l'ensemble {tige + masse} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[méthode des deux suspensions]
+On veut localiser le centre de gravité d'une plaque mince de forme quelconque, uniquement à l'aide
+d'un fil et d'un poids.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[black!55,line width=1pt] (-1.4,2.3)--(1.4,2.3);
+  \foreach \x in {-1.2,-0.8,...,1.3}\draw[black!45](\x,2.3)--(\x-0.18,2.5);
+  \fill (0,2.3) circle (1.4pt) node[above right=-1pt]{$P_1$};
+  \draw[primary!70,line width=0.9pt,fill=primary!14]
+    (0,2.1)--(1.1,1.4)--(1.3,0.1)--(0.3,-0.7)--(-0.9,-0.4)--(-1.1,0.9)--cycle;
+  \draw[attncol,line width=0.9pt,densely dashed] (0,2.1)--(0,-0.7);
+  \node[attncol,right] at (0.05,-0.95){\scriptsize verticale 1};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Une fois la plaque suspendue en $P_1$ et immobile, que peut-on dire de la position de $G$ par
+        rapport à la verticale tracée depuis $P_1$ ?
+  \item Comment obtient-on précisément $G$ ? Combien de suspensions au minimum faut-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[stabilité : large ou haut ?]
+On dispose de deux objets homogènes posés sur une table : un objet \textbf{large et bas} (A) et un
+objet \textbf{étroit et haut} (B), de même masse.
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[fill=defcol!25,draw=defcol] (-3.4,0) rectangle (-1.4,0.9);
+  \fill (-2.4,0.45) circle (1.4pt) node[above=1pt]{\scriptsize $G$};
+  \node at (-2.4,-0.4){A};
+  \draw[fill=attncol!22,draw=attncol] (1.4,0) rectangle (2.2,2.6);
+  \fill (1.8,1.3) circle (1.4pt) node[right=1pt]{\scriptsize $G$};
+  \node at (1.8,-0.4){B};
+  \draw[black!55,line width=1pt] (-4,0)--(3,0);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Rappelle la condition pour qu'un objet posé ne bascule pas.
+  \item Lequel des deux est le plus \emph{stable} si on l'incline légèrement ? Justifie avec la position
+        de $G$ et la largeur de la base.
+\end{enumerate}
+\end{exo}
+
+\end{document}

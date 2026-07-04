@@ -1,0 +1,98 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Équilibre de rotation — leviers et balances
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 5 — Équilibre de rotation : leviers et balances}\\[2pt]
+{\color{primary}\itshape Statique — Fiche 3}
+\end{center}
+\vspace{1mm}
+
+Un solide ne tourne pas lorsque les moments qui tendent à le faire pivoter dans un sens sont
+exactement compensés par ceux qui le font pivoter dans l'autre. C'est la \textbf{deuxième} condition
+d'équilibre, indépendante de $\sum\vv F=\vv 0$.
+
+\begin{cle}[condition d'équilibre de rotation]
+\[
+\boxed{\;\sum_i \mathcal{M}_\Delta(\vv F_i) = 0\;}
+\qquad\Longleftrightarrow\qquad
+\sum \mathcal{M}_{\text{horaire}} = \sum \mathcal{M}_{\text{anti-horaire}}
+\]
+La somme est \textbf{algébrique} (chaque moment avec son signe). Le moment « moteur » est équilibré
+par la somme des moments « résistants ».
+\end{cle}
+
+\begin{cle}[le levier]
+Pour un levier à pivot, deux poids s'équilibrent quand leurs moments sont égaux :
+\[
+\boxed{\;G_A\times d_A = G_B\times d_B\;}
+\]
+($d_A$, $d_B$ = distances au pivot). Conséquence : un \emph{petit} poids placé \emph{loin} du pivot
+équilibre un \emph{grand} poids placé \emph{près} — c'est tout le principe du levier.
+\end{cle}
+
+\begin{methode}[résoudre un problème de statique complet]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item Faire le \textbf{bilan des forces} (poids, réactions d'appui, tensions\dots).
+  \item Choisir un \textbf{axe} : le placer sur un appui \emph{annule le moment de sa réaction}
+        (bras nul) et élimine une inconnue.
+  \item Écrire l'\textbf{équilibre de rotation} $\sum\mathcal{M}=0$ autour de cet axe.
+  \item Écrire l'\textbf{équilibre de translation} $\sum\vv F=\vv 0$.
+  \item Résoudre le système.
+\end{enumerate}
+\end{methode}
+
+\begin{cle}[poutre / table sur deux appuis]
+Deux appuis $A$ et $B$ exercent des réactions $R_A$ et $R_B$. On dispose de deux équations :
+$\;R_A+R_B = \text{poids total}\;$ (translation) et $\;\sum\mathcal{M}=0\;$ (rotation autour d'un
+appui). Le résultat clé : \textbf{l'appui le plus proche de la charge en supporte la plus grande part}.
+\end{cle}
+
+\begin{exemplebox}[levier à deux bras]
+$G_A=\qty{20}{N}$ à $d_A=\qty{0.3}{m}$ du pivot ; à quelle distance $d_B$ placer $G_B=\qty{30}{N}$
+pour l'équilibre ? $G_A d_A = G_B d_B \Rightarrow d_B = \dfrac{20\times 0{,}3}{30}=\qty{0.2}{m}$. Le
+poids le plus grand se place plus \emph{près} du pivot.
+\end{exemplebox}
+
+\begin{piege}[il faut les deux conditions]
+$\sum\vv F=\vv 0$ \emph{seul} ne suffit pas (un couple le vérifie et fait pourtant tourner) ;
+$\sum\mathcal{M}=0$ \emph{seul} non plus. L'\textbf{équilibre complet} exige les \emph{deux} en même temps.
+\end{piege}
+
+\end{document}

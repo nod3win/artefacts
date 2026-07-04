@@ -1,0 +1,115 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[lire la f.é.m. sur un graphe de flux]
+Le flux à travers une bobine de $N=50$ spires varie au cours du temps selon le graphe ci-dessous
+(trois phases I, II, III).
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=11cm,height=4.6cm,xlabel={$t$ (\si{\second})},ylabel={$\phi$ (\si{\milli\weber})},
+   xmin=0,xmax=0.75,ymin=-0.4,ymax=5,axis lines=middle,axis line style={primarydark},
+   xtick={0,0.2,0.5,0.7},ytick={0,4},every axis label/.append style={primarydark,font=\small},
+   tick style={primarydark}]
+  \addplot[primary,line width=1.4pt] coordinates {(0,0)(0.2,4)(0.5,4)(0.7,0)};
+  \node[font=\footnotesize] at (axis cs:0.1,4.4){I};
+  \node[font=\footnotesize] at (axis cs:0.35,4.4){II};
+  \node[font=\footnotesize] at (axis cs:0.6,4.4){III};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la valeur de la f.é.m. induite $|e|$ pendant chacune des phases I, II et III.
+  \item Dans quelle(s) phase(s) le courant induit est-il le plus intense ? nul ? Les phases I et III
+        donnent-elles le même sens de courant ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la spire qu'on sort du champ]
+Une spire carrée de côté $a=\qty{10}{\centi\metre}$ est tirée hors d'une zone de champ uniforme
+$B=\qty{0.5}{\tesla}$ (entrant, $\otimes$) à la vitesse constante $v=\qty{2}{\metre\per\second}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[gray!30,fill=blue!5] (-2.6,-1) rectangle (0,1);
+  \foreach \x/\y in {-2.1/0.6,-1.3/0.6,-0.5/0.6,-2.1/-0.6,-1.3/-0.6,-0.5/-0.6,-2.1/0,-1.3/0,-0.5/0}{
+    \draw[blue!50!black,line width=0.7pt] (\x,\y) circle (0.1);
+    \draw[blue!50!black,line width=0.7pt] (\x-0.07,\y-0.07)--(\x+0.07,\y+0.07);
+    \draw[blue!50!black,line width=0.7pt] (\x-0.07,\y+0.07)--(\x+0.07,\y-0.07);}
+  \node[blue!60!black,font=\footnotesize] at (-1.3,1.25){$\vv{B}$ (entrant)};
+  \draw[red!80!black,line width=1.4pt] (-0.7,-0.7) rectangle (0.7,0.7);
+  \draw[->,line width=1.2pt] (0.9,0)--(1.9,0) node[right,font=\footnotesize]{$\vv{v}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item La f.é.m. induite vaut $|e|=B\,a\,v$ (le flux perdu par unité de temps). Calcule-la.
+  \item Le flux (entrant) \textbf{diminue}. Par la loi de Lenz, le courant induit crée-t-il un champ
+        entrant ou sortant à l'intérieur de la spire ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'aimant qui tombe dans un tube de cuivre]
+On lâche un petit aimant de masse $m=\qty{20}{\gram}$ dans un tube vertical en \textbf{cuivre} de
+masse $M=\qty{100}{\gram}$. On observe que l'aimant tombe à \textbf{vitesse constante}. Le tube repose
+sur une balance. On prend $g=\qty{10}{\metre\per\second\squared}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.9]
+  \draw[gray!60,line width=1pt] (-0.45,-1.4) rectangle (-0.25,1.6);
+  \draw[gray!60,line width=1pt] (0.25,-1.4) rectangle (0.45,1.6);
+  \fill[red!70] (-0.24,0.2) rectangle (0.24,0.5); \fill[blue!60] (-0.24,-0.1) rectangle (0.24,0.2);
+  \draw[->,line width=1pt] (0.8,0.4)--(0.8,-0.4) node[right,font=\footnotesize]{chute};
+  \draw[black,line width=1pt] (-1.1,-1.6) rectangle (1.1,-1.4); \node[font=\footnotesize] at (0,-1.85){balance};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Pourquoi l'aimant tombe-t-il à vitesse \textbf{constante} (et non en accélérant) ?
+  \item Quelle valeur (en newtons) la balance indique-t-elle pendant la chute ? (Pense à la
+        troisième loi de Newton.)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un radiateur sur le secteur]
+Un radiateur se comporte comme une résistance $R=\qty{100}{\ohm}$ branchée sur le secteur, de tension
+efficace $U_{\text{eff}}=\qty{230}{\volt}$. (On prend $\sqrt2\approx1{,}41$.)
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité efficace $I_{\text{eff}}$ du courant.
+  \item Calcule l'intensité maximale $I_{\max}$ et la tension maximale $U_{\max}$.
+  \item Calcule la puissance moyenne dissipée $P=U_{\text{eff}}\,I_{\text{eff}}$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

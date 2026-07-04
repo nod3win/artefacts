@@ -1,0 +1,110 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Théories acide-base, couples conjugués \& électrolytes
+\sisetup{per-mode=symbol}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 — Théories, couples conjugués \& électrolytes}\\[2pt]
+{\color{primary}\itshape Reconnaître un acide et une base, écrire les couples, repérer les ampholytes}
+\end{center}
+
+\medskip
+Avant tout calcul de pH, il faut savoir \textbf{reconnaître} un acide et une base, écrire la
+\textbf{demi-équation} qui les relie à leur conjugué, et distinguer un électrolyte \textbf{fort} d'un
+électrolyte \textbf{faible}. C'est l'objet de ce premier thème : que du vocabulaire actif et des automatismes.
+
+\begin{cle}[les trois théories, de la plus restrictive à la plus générale]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Arrhenius} — un \textbf{acide} libère des ions \ce{H3O+} dans l'eau ; une \textbf{base} libère
+        des ions \ce{OH-}. (Restreint au milieu aqueux.)
+  \item \textbf{Brønsted-Lowry} (la plus utilisée) — un \textbf{acide} \emph{cède} un proton \ce{H+} ; une
+        \textbf{base} \emph{capte} un proton \ce{H+}.
+  \item \textbf{Lewis} (la plus générale) — un \textbf{acide} \emph{accepte} un doublet d'électrons ; une
+        \textbf{base} \emph{donne} un doublet d'électrons.
+\end{itemize}
+Chaque théorie \emph{englobe} la précédente : tout acide de Brønsted est un acide de Lewis, mais l'inverse est
+faux (\ce{Ag+} est un acide de Lewis sans jamais échanger de \ce{H+}).
+\end{cle}
+
+\begin{methode}[construire le conjugué d'une espèce]
+Un \textbf{couple acide/base conjugués} \ce{HA/A-} relie deux espèces qui diffèrent d'un seul \ce{H+} :
+\[ \ce{HA <=> A- + H+}\qquad\text{ou, en milieu aqueux :}\qquad \ce{HA + H2O <=> A- + H3O+}. \]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{base conjuguée} d'un acide : on lui \textbf{retire un \ce{H+}} (un H et une charge $+$) ;
+  \item \textbf{acide conjugué} d'une base : on lui \textbf{ajoute un \ce{H+}} (un H et une charge $+$).
+\end{itemize}
+\end{methode}
+
+\begin{exemplebox}[quelques couples à connaître]
+\ce{HCl/Cl-},\quad \ce{CH3COOH/CH3COO-} (vinaigre),\quad \ce{NH4+/NH3} (l'ion ammonium est l'\emph{acide} de
+l'ammoniac),\quad \ce{H2O/OH-},\quad \ce{H3O+/H2O},\quad \ce{H2CO3/HCO3-} et \ce{HCO3-/CO3^{2-}} (couples du sang).
+\end{exemplebox}
+
+\begin{piege}[deux erreurs classiques sur les conjugués]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1.5pt]
+  \item L'acide conjugué de \ce{H3O+} \textbf{n'existe pas} (\ce{H4O^{2+}} n'existe pas en solution). De même
+        \ce{OH-} n'a pas de base conjuguée observable dans l'eau.
+  \item \ce{HCO3-} est l'\textbf{acide} conjugué de \ce{CO3^{2-}}, \emph{pas} sa base : pour trouver la base
+        conjuguée de \ce{CO3^{2-}} il faudrait lui ajouter un \ce{H+}, ce qui donne \ce{HCO3-}\ldots\ qui en est
+        l'acide. (On tourne en rond : \ce{CO3^{2-}} est une base « terminale ».)
+\end{itemize}
+\end{piege}
+
+\begin{cle}[ampholyte (espèce amphiprotique)]
+Un \textbf{ampholyte} peut se comporter \emph{soit comme un acide, soit comme une base}. C'est le cas dès qu'une
+espèce possède à la fois un \ce{H} cédable \emph{et} un site capteur de \ce{H+}. L'eau en est l'exemple majeur
+(\ce{H2O/OH-} en acide, \ce{H3O+/H2O} en base) ; de même \ce{HCO3-}, \ce{H2PO4-}, \ce{HPO4^{2-}} sont des
+ampholytes. Pour le montrer, on écrit ses \textbf{deux} demi-équations.
+\end{cle}
+
+\begin{cle}[électrolytes forts / faibles et degré d'ionisation $\alpha$]
+Un \textbf{électrolyte} libère des ions dans l'eau. Il est \textbf{fort} s'il est \emph{totalement} dissocié
+(flèche \ce{->} : acides forts \ce{HCl}, \ce{HNO3}, \ce{H2SO4}, \ce{HClO4} ; bases fortes \ce{NaOH}, \ce{KOH}),
+\textbf{faible} s'il est \emph{partiellement} dissocié (flèche d'équilibre \ce{<=>} : \ce{CH3COOH}, \ce{HF},
+\ce{HNO2}, \ce{NH3}). On quantifie la dissociation par le \textbf{degré d'ionisation}
+\[ \boxed{\alpha = \dfrac{\text{quantité dissociée}}{\text{quantité dissoute}}},\qquad 0 \le \alpha \le 1. \]
+$\alpha = 1$ ($100\,\%$) : électrolyte fort ; $\alpha < 1$ : électrolyte faible.
+\end{cle}
+
+\begin{remarque}[plus on dilue, plus $\alpha$ grandit]
+Pour un acide faible, on montre que $\alpha \approx \sqrt{K_a/C_a}$ (loi de dilution d'Ostwald) : diluer
+augmente le \emph{taux} de dissociation. Ce résultat sera exploité au thème~3.
+\end{remarque}
+
+\end{document}

@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}{\large\bfseries\color{primarydark} Thème 1 — Corrigé Difficile}\end{center}
+
+\begin{corrige}[retrouver une formule à partir des pourcentages massiques]
+Sur $\SI{100}{\gram}$ de composé, il y a $\SI{26.6}{\gram}$ de \ce{K}, $\SI{35.4}{\gram}$ de \ce{Cr}
+et $100-26{,}6-35{,}4 = \SI{38.0}{\gram}$ de \ce{O}. On convertit chaque masse en moles :
+\[ n(\ce{K}) = \frac{26{,}6}{39} = 0{,}682 ;\quad n(\ce{Cr}) = \frac{35{,}4}{52} = 0{,}681 ;\quad
+   n(\ce{O}) = \frac{38{,}0}{16} = 2{,}375. \]
+On divise par la plus petite ($0{,}681$) : \ $\ce{K}:\ce{Cr}:\ce{O} = 1{,}00 : 1{,}00 : 3{,}49$.
+En multipliant par $2$ pour obtenir des entiers : \ $2 : 2 : 7$.
+\[ \boxed{\ce{K2Cr2O7}} \quad\text{(dichromate de potassium).} \]
+\end{corrige}
+
+\begin{corrige}[égaliser des nombres d'atomes]
+On raisonne sur le nombre de \emph{moles d'atomes d'oxygène}.
+Eau : $n(\ce{H2O}) = \dfrac{3{,}6}{18} = \SI{0.2}{\mole}$, et chaque \ce{H2O} porte $1$ atome \ce{O} :
+$n(\ce{O}) = \SI{0.2}{\mole}$.
+Il faut donc $\SI{0.2}{\mole}$ d'atomes \ce{O} dans le \ce{CO2}, qui en porte $2$ par molécule :
+\[ n(\ce{CO2}) = \frac{0{,}2}{2} = \SI{0.1}{\mole}\ \Rightarrow\ m = 0{,}1\times 44 = \SI{4.4}{\gram}. \]
+\[ \boxed{m(\ce{CO2}) = \SI{4.4}{\gram}} \]
+\end{corrige}
+
+\begin{corrige}[identifier un métal par sa masse molaire]
+\begin{enumerate}[label=\alph*)]
+  \item $M = \dfrac{m}{n} = \dfrac{9{,}525}{0{,}15} = \SI{63.5}{\gram\per\mole}$.
+  \item Cette valeur correspond au \textbf{cuivre} \ce{Cu} ($M=\SI{63.5}{\gram\per\mole}$).
+  \item $N = n\,N_{\mathrm{A}} = 0{,}15\times 6{,}02\times10^{23} = 9{,}03\times10^{22}$ atomes.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[remonter à la formule d'un oxyde de soufre]
+\begin{enumerate}[label=\alph*)]
+  \item $n = \dfrac{N}{N_{\mathrm{A}}} = \dfrac{6{,}02\times10^{22}}{6{,}02\times10^{23}} = \SI{0.100}{\mole}$.
+  \item $M = \dfrac{m}{n} = \dfrac{8}{0{,}100} = \SI{80}{\gram\per\mole}$.
+  \item $M(\ce{SO_x}) = 32 + 16x = 80 \Rightarrow x = 3$. C'est le \textbf{trioxyde de soufre} \ce{SO3}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[bilan d'un mélange]
+\begin{enumerate}[label=\alph*)]
+  \item $m = n(\ce{N2})\,M(\ce{N2}) + n(\ce{O2})\,M(\ce{O2}) = 0{,}2\times 28 + 0{,}3\times 32
+        = 5{,}6 + 9{,}6 = \SI{15.2}{\gram}$.
+  \item Nombre total de \emph{molécules} : $n_{\text{tot}} = 0{,}2+0{,}3 = \SI{0.5}{\mole}$, soit
+        $N = 0{,}5\times 6{,}02\times10^{23} = 3{,}01\times10^{23}$ molécules.
+  \item Atomes : \ce{N2} donne $0{,}2\times 2 = \SI{0.4}{\mole}$ d'atomes, \ce{O2} donne
+        $0{,}3\times 2 = \SI{0.6}{\mole}$, soit $\SI{1.0}{\mole}$ au total :
+        $N_{\text{at}} = 6{,}02\times10^{23}$ atomes.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

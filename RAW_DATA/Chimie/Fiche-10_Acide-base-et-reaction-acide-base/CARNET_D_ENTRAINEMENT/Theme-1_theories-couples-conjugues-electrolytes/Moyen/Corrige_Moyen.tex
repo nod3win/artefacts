@@ -1,0 +1,93 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[le regard de Lewis]
+\begin{enumerate}[label=\alph*)]
+  \item Dans \ce{NH3 + BF3} : l'azote de \ce{NH3} possède un doublet libre qu'il \emph{donne} $\Rightarrow$
+        \ce{NH3} est la \textbf{base de Lewis} ; le bore de \ce{BF3} a une \textbf{lacune} électronique et
+        \emph{accepte} ce doublet $\Rightarrow$ \ce{BF3} est l'\textbf{acide de Lewis}. \\
+        Dans \ce{Ag+ + 2 NH3} : \ce{NH3} \emph{donne} ses doublets $\Rightarrow$ \textbf{base de Lewis} ;
+        \ce{Ag+} les \emph{accepte} $\Rightarrow$ \textbf{acide de Lewis}.
+  \item Aucune de ces réactions ne met en jeu un transfert de proton \ce{H+} : \ce{BF3} et \ce{Ag+} ne cèdent ni
+        ne captent d'\ce{H+}. Elles échappent donc à Brønsted-Lowry, mais entrent dans le cadre \emph{plus
+        général} de Lewis (échange de doublet).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[montrer qu'une espèce est un ampholyte]
+\begin{enumerate}[label=\alph*)]
+  \item En \textbf{acide} (couple \ce{HCO3-/CO3^{2-}}) : $\ce{HCO3- + H2O <=> CO3^{2-} + H3O+}$.
+  \item En \textbf{base} (couple \ce{H2CO3/HCO3-}) : $\ce{HCO3- + H3O+ <=> H2CO3 + H2O}$ \\
+        (ou, de façon équivalente, $\ce{HCO3- + H2O <=> H2CO3 + OH-}$).
+  \item \ce{HCO3-} peut à la fois \emph{céder} un \ce{H+} (a) et en \emph{capter} un (b) : il se comporte tantôt
+        en acide, tantôt en base. C'est la définition d'un \textbf{ampholyte}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[les couples successifs d'un polyacide]
+\begin{enumerate}[label=\alph*)]
+  \item On retire les \ce{H+} un par un : \[ \ce{H3PO4/H2PO4-},\qquad \ce{H2PO4-/HPO4^{2-}},\qquad \ce{HPO4^{2-}/PO4^{3-}}. \]
+  \item Une espèce est ampholyte si elle est \emph{à la fois} acide d'un couple et base d'un autre. Ce sont les
+        espèces \textbf{intermédiaires} : \textbf{\ce{H2PO4-}} et \textbf{\ce{HPO4^{2-}}}. \\
+        (\ce{H3PO4} n'est qu'acide ; \ce{PO4^{3-}} n'est que base.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[calculer un degré d'ionisation]
+$\alpha = \dfrac{\text{quantité dissociée}}{\text{quantité dissoute}}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\alpha = \dfrac{0,015}{0,50} = 0,030 = \qty{3,0}{\percent}$.
+  \item La fraction dissociée vaut $\alpha C_0$ :
+        \[ [\ce{A-}] = \alpha\,C_0 = 0,020 \times 0,10 = \qty{2,0e-3}{mol\per L}. \]
+        Le reste est non dissocié :
+        \[ [\ce{HA}] = C_0 - [\ce{A-}] = 0,10 - 0,002 = \qty{0,098}{mol\per L}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[repérer les deux couples d'une réaction]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3COOH} et \ce{CH3COO-} forment le couple \ce{CH3COOH/CH3COO-} ; \ce{NH4+} et \ce{NH3} forment le
+        couple \ce{NH4+/NH3}.
+  \item \ce{CH3COOH} (acide du 1\textsuperscript{er} couple) \emph{cède} son \ce{H+} ; \ce{NH3} (base du
+        2\textsuperscript{e} couple) le \emph{capte}. On obtient \ce{CH3COO-} et \ce{NH4+}.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[une réflexion totale qui trie les couleurs]
+\begin{enumerate}[label=\alph*)]
+  \item $\hat{\imath}_{\text{lim}}^{\text{rouge}}=\arcsin\!\left(\dfrac{1}{1{,}51}\right)=\arcsin(0{,}662)\approx\ang{41.5}$ ;
+        $\hat{\imath}_{\text{lim}}^{\text{bleu}}=\arcsin\!\left(\dfrac{1}{1{,}53}\right)=\arcsin(0{,}654)\approx\ang{40.8}$.
+  \item À $\hat{\imath}=\ang{41.0}$ :
+        \begin{itemize}[leftmargin=1.5em,topsep=1pt]
+          \item rouge : $n\sin\hat{\imath}=1{,}51\times\sin\ang{41.0}=1{,}51\times0{,}656=0{,}991<1$
+                (et $\ang{41.0}<\ang{41.5}$) $\Rightarrow$ le rouge est \textbf{réfracté}, il sort dans l'air ;
+          \item bleu : $1{,}53\times0{,}656=1{,}004>1$ (et $\ang{41.0}>\ang{40.8}$) $\Rightarrow$
+                \textbf{réflexion totale}, le bleu reste dans le verre.
+        \end{itemize}
+  \item Le faisceau \textbf{transmis} dans l'air est \textbf{rougeâtre} (seul le rouge sort) ; le
+        faisceau \textbf{réfléchi} dans le verre est \textbf{bleuâtre}. Une même surface, à cet angle
+        précis, sépare donc les couleurs par réflexion totale sélective.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[d'où vient la formule de la profondeur apparente ?]
+\begin{enumerate}[label=\alph*)]
+  \item La même distance horizontale $x$ s'écrit des deux côtés de la surface :
+        \[ x=h\tan\hat{\imath}_1\approx h\,\hat{\imath}_1
+           \qquad\text{et}\qquad x=h'\tan\hat{\imath}_2\approx h'\,\hat{\imath}_2. \]
+        En égalant : $h\,\hat{\imath}_1=h'\,\hat{\imath}_2$, donc
+        $\dfrac{h'}{h}=\dfrac{\hat{\imath}_1}{\hat{\imath}_2}$.
+  \item Snell–Descartes aux petits angles : $n_1\hat{\imath}_1=n_2\hat{\imath}_2$, soit
+        $\dfrac{\hat{\imath}_1}{\hat{\imath}_2}=\dfrac{n_2}{n_1}$. D'où
+        $\boxed{h'=\dfrac{n_2}{n_1}\,h}$.
+  \item $h'=\dfrac{1}{1{,}33}\times\qty{1.5}{m}\approx\qty{1.13}{m}$. Le poisson paraît à
+        $\qty{1.13}{m}$ mais est à $\qty{1.5}{m}$ : le pêcheur doit viser environ
+        $\qty{1.5}{m}-\qty{1.13}{m}\approx\qty{0.37}{m}$ \emph{plus bas} que l'image qu'il voit.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[dispersion par un prisme]
+\begin{enumerate}[label=\alph*)]
+  \item À la seconde face (verre $\to$ air), l'incidence interne vaut $A=\ang{30}$, donc
+        $\sin(\text{sortie})=n\sin\ang{30}=0{,}5\,n$ :
+        \[ \text{rouge}:\ \arcsin(0{,}5\times1{,}51)=\arcsin(0{,}755)\approx\ang{49.0} ;\quad
+           \text{bleu}:\ \arcsin(0{,}5\times1{,}53)=\arcsin(0{,}765)\approx\ang{49.9}. \]
+  \item $D=\text{(angle de sortie)}-A$ :
+        \[ D_{\text{rouge}}=\ang{49.0}-\ang{30}=\ang{19.0},\quad
+           D_{\text{bleu}}=\ang{49.9}-\ang{30}=\ang{19.9},\quad
+           \Delta D=D_{\text{bleu}}-D_{\text{rouge}}\approx\ang{0.9}. \]
+  \item Le \textbf{bleu} est le plus dévié ($D_{\text{bleu}}>D_{\text{rouge}}$) : c'est lui qui « tourne »
+        le plus, d'où l'étalement du spectre du rouge (le moins dévié) au violet (le plus dévié).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

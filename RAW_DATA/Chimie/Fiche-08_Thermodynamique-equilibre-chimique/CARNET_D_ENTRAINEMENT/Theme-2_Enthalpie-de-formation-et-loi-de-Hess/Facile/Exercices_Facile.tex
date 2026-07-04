@@ -1,0 +1,81 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{exo}[enthalpie de formation d'un corps pur simple]
+Donne l'enthalpie standard de formation $\Delta H^\circ_{\text{f}}$, ou indique qu'une donnée expérimentale est nécessaire.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{O2}(g)$
+  \item $\ce{N2}(g)$
+  \item $\ce{Fe}(s)$
+  \item $\ce{H2O}(l)$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[écrire l'expression de la loi de Hess]
+Écris l'expression de $\Delta H^\circ_{\text{r}}$ en fonction des $\Delta H^\circ_{\text{f}}$, \emph{sans calcul numérique}.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{CH4}(g) + 2\,\ce{O2}(g) \rightarrow \ce{CO2}(g) + 2\,\ce{H2O}(l)$
+  \item $2\,\ce{SO2}(g) + \ce{O2}(g) \rightarrow 2\,\ce{SO3}(g)$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[appliquer la loi de Hess]
+Calcule $\Delta H^\circ_{\text{r}}$ à partir des enthalpies de formation (en $\si{\kilo\joule\per\mol}$).
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{A} \rightarrow 2\,\ce{B}$, avec $\Delta H^\circ_{\text{f}}(\ce{A})=+10$ et $\Delta H^\circ_{\text{f}}(\ce{B})=-30$ ;
+  \item $\ce{X} + \ce{Y} \rightarrow \ce{Z}$, avec $\Delta H^\circ_{\text{f}}(\ce{X})=-50$, $\Delta H^\circ_{\text{f}}(\ce{Y})=-20$, $\Delta H^\circ_{\text{f}}(\ce{Z})=-110$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le cas d'une combustion]
+On considère $\ce{C}(s) + \ce{O2}(g) \rightarrow \ce{CO2}(g)$ avec $\Delta H^\circ_{\text{f}}(\ce{CO2})=\qty{-393}{\kilo\joule\per\mol}$.
+\begin{enumerate}[label=\alph*)]
+  \item Que valent $\Delta H^\circ_{\text{f}}(\ce{C})$ et $\Delta H^\circ_{\text{f}}(\ce{O2})$ ?
+  \item En déduis $\Delta H^\circ_{\text{r}}$ de la combustion.
+  \item La réaction est-elle exothermique ou endothermique ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[compléter un cycle]
+Deux chemins mènent des corps purs simples au composé $\ce{Z}$. Le chemin \emph{direct} a une enthalpie $\qty{-200}{\kilo\joule}$. Le chemin \emph{indirect} passe par un intermédiaire $\ce{Y}$ : «\,éléments $\rightarrow \ce{Y}$\,» vaut $\qty{-50}{\kilo\joule}$, puis «\,$\ce{Y} \rightarrow \ce{Z}$\,» vaut une valeur inconnue.
+\begin{enumerate}[label=\alph*)]
+  \item Écris l'égalité traduisant que $H$ est une fonction d'état.
+  \item Détermine l'enthalpie de l'étape $\ce{Y} \rightarrow \ce{Z}$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

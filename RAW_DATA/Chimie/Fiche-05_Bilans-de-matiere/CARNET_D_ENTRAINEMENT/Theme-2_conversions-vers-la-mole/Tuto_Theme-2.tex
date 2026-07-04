@@ -1,0 +1,105 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Convertir masses, volumes et solutions en moles
+\sisetup{per-mode=symbol}
+
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 2 — Convertir en quantité de matière (moles)}
+\end{center}
+
+\medskip
+Les coefficients d'une équation comptent des \textbf{moles}. Mais au laboratoire on mesure des
+\textbf{masses} (balance), des \textbf{volumes de gaz} (éprouvette) et des \textbf{solutions}
+(concentration). Trois relations — et trois seulement — servent de \emph{portes d'entrée} vers la
+mole. Les maîtriser dans les \emph{deux sens} est le cœur de tout calcul de chimie.
+
+\begin{cle}[les trois portes vers la mole]
+\[
+\underbrace{n=\dfrac{m}{M}}_{\text{à partir d'une masse}}\qquad
+\underbrace{n=\dfrac{V}{V_{\mathrm{m}}}}_{\text{gaz : }V_{\mathrm{m}}=\qty{22.4}{\litre\per\mole}\text{ (TPN)}}\qquad
+\underbrace{n=C\times V}_{\text{solution}}
+\]
+$n$ en \si{\mole} ; $m$ en \si{\gram} ; $M$ en \si{\gram\per\mole} ; $V_{\mathrm{gaz}}$ et
+$V_{\mathrm{solution}}$ en \si{\litre} ; $C$ en \si{\mole\per\litre}. On lit chaque relation à
+l'endroit ($\to$ moles) ou à l'envers ($m=nM$, $V=nV_{\mathrm{m}}$, $C=n/V$).
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[font=\small,>=Stealth,node distance=20mm]
+  \node[draw=defcol,fill=defcol!8,rounded corners=3pt,thick,minimum width=22mm,minimum height=10mm]
+       (n) {$n$ \;(\si{\mole})};
+  \node[draw=black!45,rounded corners=3pt,left=32mm of n,minimum height=9mm] (m) {$m$ (\si{\gram})};
+  \node[draw=black!45,rounded corners=3pt,right=32mm of n,minimum height=9mm] (v) {$V_{\text{gaz}}$ (\si{\litre})};
+  \node[draw=black!45,rounded corners=3pt,below=14mm of n,minimum height=9mm] (s) {solution $(C,V)$};
+  \draw[->,defcol,thick] (m.north east) to[bend left=12] node[above,black,font=\scriptsize]{$\div M$} (n.north west);
+  \draw[<-,black!55,thick] (m.south east) to[bend right=12] node[below,black,font=\scriptsize]{$\times M$} (n.south west);
+  \draw[->,defcol,thick] (v.north west) to[bend right=12] node[above,black,font=\scriptsize]{$\div V_{\mathrm{m}}$} (n.north east);
+  \draw[<-,black!55,thick] (v.south west) to[bend left=12] node[below,black,font=\scriptsize]{$\times V_{\mathrm{m}}$} (n.south east);
+  \draw[->,defcol,thick] (s) to[bend left=0] node[right,black,font=\scriptsize]{$n=C\,V$} (n);
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[convertir une donnée en moles (puis en autre chose)]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Repérer la nature de la donnée} : une masse ? un volume de gaz ? une solution ?
+  \item \textbf{Homogénéiser les unités} : masses en \si{\gram}, volumes en \si{\litre}
+        ($\qty{1}{\milli\litre}=\qty{1e-3}{\litre}$), $C$ en \si{\mole\per\litre}.
+  \item \textbf{Appliquer la bonne porte} pour obtenir $n$ en moles.
+  \item \textbf{Reconvertir} le résultat dans l'unité demandée ($m=nM$, $V=nV_{\mathrm{m}}$, $C=n/V$,
+        ou nombre d'entités $N=n\,N_A$).
+\end{enumerate}
+\end{methode}
+
+\begin{piege}[ne jamais confondre les unités]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item une quantité en \textbf{moles n'est ni une masse ni un volume} : pour une masse, multiplier
+        par $M$ ; pour un volume de gaz, par $V_{\mathrm{m}}$.
+  \item $\qty{1}{\milli\litre}\neq\qty{1}{\litre}$ : convertir \emph{avant} de calculer
+        ($\qty{20}{\milli\litre}=\qty{0.020}{\litre}$).
+  \item $V_{\mathrm{m}}=\qty{22.4}{\litre\per\mole}$ vaut \emph{seulement aux TPN}
+        ($\qty{0}{\celsius}$, $\qty{1}{atm}$).
+\end{itemize}
+\end{piege}
+
+\begin{remarque}[le nombre d'Avogadro : compter les entités]
+Une mole contient $N_A=\qty{6.02e23}{}$ entités. Pour passer des moles au \emph{nombre} de molécules
+(ou d'ions, d'atomes), on multiplie : $N=n\,N_A$. La masse d'une seule entité vaut $M/N_A$.
+\end{remarque}
+
+\end{document}

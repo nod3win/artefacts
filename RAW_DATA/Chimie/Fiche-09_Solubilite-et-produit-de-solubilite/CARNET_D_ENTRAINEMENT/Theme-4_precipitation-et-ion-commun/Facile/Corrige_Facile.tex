@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[calculer le quotient réactionnel $Q$]
+$Q$ a la même forme que $K_{\mathrm{ps}}$, avec les concentrations effectives.
+\begin{enumerate}[label=\alph*)]
+  \item $Q = [\ce{Ag+}][\ce{Cl-}] = (\num{1.0e-4})(\num{1.0e-5}) = \num{1.0e-9}$.
+  \item $Q = [\ce{Pb^{2+}}][\ce{Br-}]^{2} = (\num{1.0e-3})(\num{1.0e-2})^{2} = \num{1.0e-7}$.
+  \item $Q = [\ce{Mg^{2+}}][\ce{OH-}]^{2} = (\num{1.0e-2})(\num{1.0e-4})^{2} = \num{1.0e-10}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[comparer $Q$ et $K_{\mathrm{ps}}$]
+On compare à $K_{\mathrm{ps}}=\num{1.8e-10}$.
+\begin{enumerate}[label=\alph*)]
+  \item $Q=\num{1.0e-9} > K_{\mathrm{ps}}$ : solution \textbf{sursaturée}, il y a précipitation.
+  \item $Q=\num{1.0e-12} < K_{\mathrm{ps}}$ : solution \textbf{non saturée}, pas de précipité.
+  \item $Q=\num{1.8e-10} = K_{\mathrm{ps}}$ : solution \textbf{exactement saturée} (équilibre).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une solution de \ce{SnS} est-elle saturée ?]
+\begin{enumerate}[label=\alph*)]
+  \item $s_{\text{sat}} = \sqrt{K_{\mathrm{ps}}} = \sqrt{\num{1.0e-26}} = \qty{1.0e-13}{\mole\per\litre}$.
+  \item $[\ce{Sn^{2+}}]=\qty{1.0e-19}{\mole\per\litre}$ est \emph{très inférieure} à
+        $s_{\text{sat}}=\qty{1.0e-13}{\mole\per\litre}$ : la solution est \textbf{non saturée} (on
+        pourrait y dissoudre bien plus de \ce{SnS}).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[effet d'ion commun : $s'=K_{\mathrm{ps}}/C^{n}$]
+\begin{enumerate}[label=\alph*)]
+  \item $s' = \dfrac{K_{\mathrm{ps}}}{[\ce{Cl-}]} = \dfrac{\num{1.8e-10}}{0{,}10} = \qty{1.8e-9}{\mole\per\litre}$.
+  \item $s' = \dfrac{\num{1.8e-10}}{0{,}010} = \qty{1.8e-8}{\mole\per\litre}$ (moins d'ion commun
+        $\Rightarrow$ solubilité un peu plus grande).
+  \item $s' = \dfrac{K_{\mathrm{ps}}}{[\ce{OH-}]^{2}} = \dfrac{\num{9.0e-12}}{(0{,}10)^{2}}
+           = \dfrac{\num{9.0e-12}}{\num{1.0e-2}} = \qty{9.0e-10}{\mole\per\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux : précipitation et ion commun]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux.} L'ion commun \emph{diminue} la solubilité (Le Chatelier).
+  \item \textbf{Faux.} $K_{\mathrm{ps}}$ est une constante (à $T$ fixée) : il ne change pas ; c'est $s$
+        qui chute.
+  \item \textbf{Vrai.} $Q>K_{\mathrm{ps}}$ signifie sursaturation, donc précipitation.
+  \item \textbf{Vrai.} À l'équilibre, $Q=K_{\mathrm{ps}}$ par définition.
+\end{enumerate}
+\end{corrige}
+\end{document}

@@ -1,91 +1,94 @@
-% =====================================================================
-%  FICHE 11 — THEME 1 — Exercices FACILE — Le nombre d'oxydation
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{enumitem}
-\usepackage[most]{tcolorbox}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\newcommand{\NO}{\ensuremath{\mathrm{N.O.}}}
-
-\newcounter{exo}
-\newtcolorbox{exo}[1][]{enhanced,breakable,boxrule=0.9pt,arc=2pt,colback=primary!4,
-  colframe=primary,fonttitle=\bfseries,coltitle=white,left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-  title={Exercice~\refstepcounter{exo}\theexo\ifx\relax#1\relax\relax\else\ \textmd{--- \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 11 · Thème 1} — Le nombre d'oxydation}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 1 — Niveau Facile}\\[2pt]
-{\small\itshape Application directe des règles et de la somme des \NO. Justifie chaque valeur.}\\[-4pt]
-{\color{primary}\rule{\textwidth}{1pt}}
-\end{center}
+\begin{center}\color{primarydark}\large\bfseries Thème 1 — Nombre d'oxydation \quad$\bullet$\quad Niveau Facile\end{center}
 
-\begin{exo}[corps simples et ions monoatomiques — règles R1 et R2]
-Donne, en justifiant par la règle utilisée, le nombre d'oxydation de l'élément souligné dans
-chacune des espèces suivantes :
-\[
-\underline{\ce{O}}\text{ dans }\ce{O2},\qquad
-\underline{\ce{Na}}\text{ dans }\ce{Na+},\qquad
-\underline{\ce{Al}}\text{ dans }\ce{Al^{3+}},\qquad
-\underline{\ce{Cl}}\text{ dans }\ce{Cl^-},\qquad
-\underline{\ce{Fe}}\text{ dans }\ce{Fe(s)},\qquad
-\underline{\ce{P}}\text{ dans }\ce{P4}.
-\]
-\end{exo}
-
-\begin{exo}[le \NO\ de l'oxygène — règle R4 et ses exceptions]
-Détermine le nombre d'oxydation de l'\textbf{oxygène} dans chacun des composés suivants et précise
-à chaque fois s'il s'agit du cas général ou d'une exception :
-\[
-\ce{CaO},\qquad \ce{CO2},\qquad \ce{H2O2},\qquad \ce{Na2O2}.
-\]
-\end{exo}
-
-\begin{exo}[le \NO\ de l'hydrogène — règle R3 et ses exceptions]
-Détermine le nombre d'oxydation de l'\textbf{hydrogène} dans chacune des espèces suivantes :
-\[
-\ce{HCl},\qquad \ce{NH3},\qquad \ce{CaH2},\qquad \ce{H2}.
-\]
-Laquelle est un hydrure ? Pourquoi le \NO\ de H y est-il différent ?
-\end{exo}
-
-\begin{exo}[un seul atome inconnu — la somme des \NO]
-En utilisant la règle « $\sum\NO=$ charge globale », calcule le nombre d'oxydation de l'atome
-demandé :
-\begin{enumerate}[label=(\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
-  \item le \textbf{soufre} dans \ce{SO2} ;
-  \item le \textbf{carbone} dans \ce{CH4} ;
-  \item l'\textbf{azote} dans \ce{NH3}.
+\begin{exo}[corps simples et ions monoatomiques]
+Donne le nombre d'oxydation de l'élément indiqué dans chaque cas.
+\begin{enumerate}[label=\alph*)]
+  \item l'oxygène dans le dioxygène \ce{O2}
+  \item le fer métallique \ce{Fe}
+  \item l'ion calcium \ce{Ca^{2+}}
+  \item l'ion chlorure \ce{Cl^-}
+  \item l'ion aluminium \ce{Al^{3+}}
 \end{enumerate}
 \end{exo}
 
-\begin{exo}[vérifier une attribution par la somme]
-On propose l'attribution suivante pour la molécule neutre de dioxyde de soufre \ce{SO2} :
-$\NO(\ce{S})=+\mathrm{IV}$ et $\NO(\ce{O})=-\mathrm{II}$.
-Vérifie, par le calcul de $\sum\NO$, que cette attribution est bien \textbf{cohérente} avec le fait
-que \ce{SO2} est une molécule neutre.
+\begin{exo}[les exceptions de O et de H]
+Détermine le nombre d'oxydation de l'atome indiqué.
+\begin{enumerate}[label=\alph*)]
+  \item l'oxygène dans l'eau \ce{H2O}
+  \item l'oxygène dans le peroxyde d'hydrogène \ce{H2O2}
+  \item l'hydrogène dans le chlorure d'hydrogène \ce{HCl}
+  \item l'hydrogène dans l'hydrure de sodium \ce{NaH}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[atome central d'une molécule neutre]
+Détermine le nombre d'oxydation de l'atome indiqué.
+\begin{enumerate}[label=\alph*)]
+  \item le soufre dans \ce{H2S}
+  \item le soufre dans \ce{SO2}
+  \item l'azote dans l'ammoniac \ce{NH3}
+  \item le carbone dans le méthane \ce{CH4}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[atome au sein d'un ion polyatomique]
+Détermine le nombre d'oxydation de l'atome indiqué.
+\begin{enumerate}[label=\alph*)]
+  \item le soufre dans le sulfate \ce{SO4^{2-}}
+  \item l'azote dans le nitrate \ce{NO3^-}
+  \item le manganèse dans le permanganate \ce{MnO4^-}
+  \item le chrome dans le dichromate \ce{Cr2O7^{2-}}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[oxydation ou réduction ?]
+Pour chaque transformation d'un atome, calcule la variation de nombre d'oxydation, puis indique s'il
+s'agit d'une \textbf{oxydation} ou d'une \textbf{réduction}, et si l'atome \textbf{perd} ou
+\textbf{capte} des électrons.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Fe -> Fe^{2+}}
+  \item \ce{Cl2 -> 2 Cl^-}
+  \item \ce{Cu^{2+} -> Cu}
+  \item le soufre passant de \ce{H2S} à \ce{SO2}
+\end{enumerate}
 \end{exo}
 
 \end{document}

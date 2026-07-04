@@ -1,0 +1,95 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Le mouvement circulaire uniforme (MCU)
+\sisetup{per-mode=symbol}
+
+\noindent Un objet décrit un \textbf{MCU} si sa trajectoire est un cercle (rayon $R$) parcouru à
+\emph{vitesse constante en norme}. Bien que la vitesse (norme) soit constante, le mouvement est
+\textbf{accéléré} : la \emph{direction} du vecteur vitesse change sans cesse.
+
+\begin{cle}[les grandeurs du MCU]
+\begin{itemize}[leftmargin=1.5em,itemsep=2pt]
+  \item \textbf{Période} $T$ (durée d'un tour, en \si{\second}) et \textbf{fréquence} $f=\dfrac{1}{T}$ (en \si{\hertz}).
+  \item \textbf{Vitesse angulaire} : $\ \omega=\dfrac{2\pi}{T}$ (en \si{\radian\per\second}).
+  \item \textbf{Vitesse linéaire} (tangentielle) : $\ \boxed{v=\dfrac{2\pi R}{T}=\omega R}$ (en \si{\metre\per\second}).
+  \item \textbf{Accélération et force centripètes} (vers le centre) :
+        $\ \boxed{a_c=\dfrac{v^2}{R}}\qquad \boxed{F_c=m\,\dfrac{v^2}{R}=m\,a_c}$.
+\end{itemize}
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \def\R{2.2}
+  \draw[primary,line width=1pt] (0,0) circle (\R);
+  \fill (0,0) circle (1.3pt) node[below left]{$O$};
+  \foreach \a in {0,45,...,315}{ \draw[->,defcol,line width=0.8pt] (\a:\R) -- ++(\a+90:0.8); }
+  \coordinate (A) at (35:\R);
+  \draw[black!55] (0,0) -- (A); \node[black!70,font=\small] at (0.72,0.7){$R$};
+  \fill[primarydark] (A) circle (2.3pt) node[above right]{$A$};
+  \draw[->,line width=1.1pt,attncol] (A) -- ($(A)!0.42!(0,0)$) node[midway,below right,font=\small]{$\vv F_c$};
+  \node[defcol,font=\small,above left] at (125:\R){$\vv v$};
+  \node[font=\small,attncol] at (0,-0.55){$a_t=0$};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[résoudre un MCU]
+\begin{enumerate}[label=\arabic*),leftmargin=1.7em,topsep=2pt,itemsep=1.5pt]
+  \item De $T$ (ou $f$) : $\omega=\tfrac{2\pi}{T}$ et $v=\tfrac{2\pi R}{T}=\omega R$.
+  \item Accélération \emph{tangentielle} nulle ($a_t=0$) ; accélération \emph{centripète} $a_c=\tfrac{v^2}{R}$ (vers $O$).
+  \item Force centripète $F_c=m\,a_c=m\tfrac{v^2}{R}$ : c'est elle qui « courbe » la trajectoire (tension du fil, frottement, gravité\dots).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[une pierre au bout d'un fil]
+$m=\qty{0,2}{\kilogram}$, $R=\qty{0,5}{\metre}$, un tour en $T=\qty{1}{\second}$ :
+$v=\tfrac{2\pi\times\num{0,5}}{1}\approx\qty{3,14}{\metre\per\second}$,
+$\omega=\tfrac{2\pi}{1}\approx\qty{6,28}{\radian\per\second}$,
+$a_c=\tfrac{v^2}{R}\approx\qty{19,7}{\metre\per\second\squared}$,
+$F_c=m\,a_c\approx\qty{3,9}{\newton}$ (fournie par la tension du fil).
+\end{exemplebox}
+
+\begin{piege}[les pièges du MCU]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item Le MCU est \textbf{accéléré} même si $v$ (norme) est constante : la \emph{direction} de $\vv v$ change ($a_t=0$ mais $a_c\ne 0$).
+  \item $F_c\propto v^2$ : pour \textbf{doubler} $v$, il faut \textbf{quadrupler} $F_c$ (et non le doubler).
+  \item Si le fil casse, l'objet part en \textbf{ligne droite tangente} (inertie), pas « vers l'extérieur ». La force centrifuge est \emph{fictive}.
+  \item $v=\omega R$ : à même $\omega$, un point du \emph{bord} va plus vite qu'un point proche du centre.
+\end{itemize}
+\end{piege}
+\end{document}

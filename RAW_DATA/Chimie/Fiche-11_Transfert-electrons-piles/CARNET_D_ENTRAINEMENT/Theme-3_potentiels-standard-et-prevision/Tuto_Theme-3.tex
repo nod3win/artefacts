@@ -1,0 +1,116 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Potentiels standard et prévision des réactions
+\begin{center}\color{primarydark}\Large\bfseries Thème 3 — Potentiels standard et prévision\end{center}
+
+Tous les oxydants ne sont pas capables d'oxyder tous les réducteurs. Le \textbf{potentiel standard de
+réduction} $E_{\mathrm{r}}^{\circ}$ (en volts) hiérarchise les couples et permet de \textbf{prévoir}
+le sens spontané d'une réaction redox.
+
+\begin{cle}[lire un potentiel standard]
+$E_{\mathrm{r}}^{\circ}$ se rapporte \textbf{toujours} à la demi-équation écrite en \emph{réduction}
+$\mathrm{Ox}+n\,\ce{e^-}\rightleftharpoons\mathrm{Red}$.
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item plus $E_{\mathrm{r}}^{\circ}$ est \textbf{élevé}, plus $\mathrm{Ox}$ est un \textbf{oxydant fort} ;
+  \item plus $E_{\mathrm{r}}^{\circ}$ est \textbf{faible} (négatif), plus $\mathrm{Red}$ est un
+        \textbf{réducteur fort}.
+\end{itemize}
+\end{cle}
+
+\begin{cle}[règle de prévision (la « règle du gamma »)]
+Une réaction redox est \textbf{spontanée} (conditions standard) si l'\textbf{oxydant du couple le
+plus haut} réagit avec le \textbf{réducteur du couple le plus bas}. Autrement dit elle a lieu si
+\[
+\Delta E^{\circ}=E^{\circ}_{\mathrm{r}}(\text{oxydant})-E^{\circ}_{\mathrm{r}}(\text{réducteur})>0.
+\]
+Deux espèces du \emph{même} côté de l'échelle ne réagissent pas.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.66,every node/.style={transform shape}]
+  \draw[->,line width=1pt,primarydark] (0,-3.5) -- (0,3.7) node[above,font=\scriptsize]{$E^{\circ}_{\mathrm{r}}$ (V), oxydant fort en haut};
+  \node[font=\scriptsize\bfseries,attncol] at (1.15,3.35) {Oxydants};
+  \node[font=\scriptsize\bfseries,excol]   at (3.0,3.35) {Réducteurs};
+  \foreach \y/\e/\ox/\red in {%
+     3/{+2{,}87}/\ce{F2}/\ce{F^-},
+     2/{+1{,}51}/\ce{MnO4^-}/\ce{Mn^{2+}},
+     1/{+0{,}80}/\ce{Ag+}/\ce{Ag},
+     0/{+0{,}34}/\ce{Cu^{2+}}/\ce{Cu},
+     -1/{0{,}00}/\ce{H+}/\ce{H2},
+     -2/{-0{,}76}/\ce{Zn^{2+}}/\ce{Zn},
+     -3/{-2{,}84}/\ce{Ca^{2+}}/\ce{Ca}}{
+     \draw[primarydark!50] (0,\y)--(3.6,\y);
+     \draw[primarydark] (-0.08,\y)--(0.08,\y);
+     \node[left,font=\scriptsize,primarydark] at (-0.12,\y) {\e};
+     \node[font=\small,attncol] at (1.15,\y) {\ox};
+     \node[font=\small,excol]   at (3.0,\y) {\red};}
+  \draw[-{Stealth},defcol,line width=1.1pt,dashed] (0.85,1) to[bend left=28] (2.7,0);
+  \node[defcol,font=\scriptsize] at (4.05,0.6) {\ce{Ag+} oxyde \ce{Cu}};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[prévoir une réaction redox]
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.0em,topsep=1pt,itemsep=1pt]
+  \item Repérer les \textbf{deux couples} en présence et leurs $E_{\mathrm{r}}^{\circ}$.
+  \item Le couple de $E_{\mathrm{r}}^{\circ}$ \textbf{le plus élevé} fournit l'\textbf{oxydant} ; il
+        oxyde le \textbf{réducteur} du couple le plus bas.
+  \item Vérifier $\Delta E^{\circ}>0$, puis écrire l'équation dans le sens spontané.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[le fer dans l'acide chlorhydrique]
+Couples \ce{H+}/\ce{H2} ($0{,}00$~V) et \ce{Fe^{2+}}/\ce{Fe} ($-0{,}44$~V). Comme $0{,}00>-0{,}44$,
+le proton \ce{H+} (oxydant du couple haut) \textbf{oxyde} le fer : $\ce{Fe + 2 H+ -> Fe^{2+} + H2 ^}$.
+Il y a \textbf{dégagement de dihydrogène}. (Le fer s'arrête à \ce{Fe^{2+}}, car \ce{H+} ne peut pas
+l'oxyder jusqu'à \ce{Fe^{3+}}, couple situé plus haut.)
+\end{exemplebox}
+
+\begin{piege}[à éviter absolument]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=0pt]
+  \item Un métal \ce{M} est attaqué par un acide (\ce{H+}, $0$~V) avec dégagement de \ce{H2}
+        \textbf{seulement si} $E_{\mathrm{r}}^{\circ}(\ce{M^{n+}}/\ce{M})<0$ (Zn, Fe, Al\ldots oui ;
+        Cu, Ag, Au non).
+  \item Ne pas confondre \textbf{oxydant fort} ($E^{\circ}$ \emph{haut}) et \textbf{réducteur fort}
+        ($E^{\circ}$ \emph{bas}).
+  \item $E_{\mathrm{r}}^{\circ}$ ne dépend \emph{pas} du sens d'écriture : il est toujours donné en
+        réduction.
+\end{itemize}
+\end{piege}
+
+\end{document}

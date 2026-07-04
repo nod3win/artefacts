@@ -1,0 +1,111 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Diffraction et interférences
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 4 — Diffraction \& interférences}\\[2pt]
+{\large\color{primary} Conditions, différence de marche, fentes de Young}
+\end{center}
+
+\medskip
+Deux ondes qui se rencontrent \emph{s'additionnent}. Selon l'endroit, elles se renforcent ou
+s'annulent : ce sont les \textbf{interférences}. Tout se joue sur la \textbf{différence de
+marche}, c.-à-d. la différence des chemins parcourus. La \textbf{diffraction}, elle, est
+l'étalement d'une onde qui contourne un obstacle ou passe par une petite ouverture.
+
+\begin{cle}[diffraction]
+Une onde qui rencontre une \textbf{ouverture} (ou un \textbf{obstacle}) s'étale : elle change de
+direction. Le phénomène n'est \emph{net} que si la taille de l'ouverture est du \textbf{même
+ordre de grandeur que $\lambda$}. Après une petite fente, les fronts d'onde plans deviennent
+circulaires (comme si la fente était une nouvelle source).
+\end{cle}
+
+\begin{cle}[interférences : les deux conditions]
+Deux ondes \emph{cohérentes} (même $f$, même $\lambda$) issues de $S_1$ et $S_2$ se superposent
+en un point $M$. On note la \textbf{différence de marche} $\delta=d_1-d_2=S_1M-S_2M$ :
+\[ \boxed{\;\text{Constructive (ventre / brillant)} : \delta = n\lambda\;}\qquad
+   \boxed{\;\text{Destructive (nœud / sombre)} : \delta = (2n+1)\dfrac{\lambda}{2}\;} \]
+avec $n\in\Z$. La différence de marche se traduit en déphasage par
+$\Delta\varphi = \dfrac{2\pi\,\delta}{\lambda}$ :
+$\delta=n\lambda\Leftrightarrow\Delta\varphi=2\pi n$ (concordance), et
+$\delta=(2n+1)\lambda/2\Leftrightarrow\Delta\varphi=(2n+1)\pi$ (opposition).
+\end{cle}
+
+\begin{cle}[fentes de Young]
+Deux fentes distantes de $a$, écran à la distance $D\gg a$. La figure présente des franges
+brillantes régulièrement espacées de l'\textbf{interfrange} :
+\[ \boxed{\;i=\dfrac{\lambda D}{a}\;}\qquad
+   \boxed{\;\delta=d_1-d_2=\dfrac{a\,x}{D}\;} \]
+Les franges \textbf{brillantes} sont en $x_n=n\,i$ (là où $\delta=n\lambda$).
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1pt]
+  \item $i$ : interfrange (m) ; $\lambda$ : longueur d'onde (m) ; $a$ : écart des fentes (m) ;
+  \item $D$ : distance fentes--écran (m) ; $x$ : position sur l'écran depuis le centre (m).
+\end{itemize}
+\end{cle}
+
+\begin{methode}[nature de l'interférence en un point M]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt,label=\arabic*.]
+  \item Calcule la différence de marche $\delta=|d_1-d_2|$.
+  \item Divise par $\lambda$ : si $\delta/\lambda$ est \textbf{entier} ($0,1,2,\dots$)
+        $\Rightarrow$ \emph{constructive}.
+  \item Si $\delta/\lambda$ est un \textbf{demi-entier} ($0{,}5\,;1{,}5\,;2{,}5\dots$)
+        $\Rightarrow$ \emph{destructive}.
+  \item Sinon : interférence intermédiaire (ni maximale, ni nulle).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[interfrange en lumière rouge]
+$\lambda=\SI{600}{\nano\metre}$, $a=\SI{0.5}{\milli\metre}$, $D=\SI{2}{\metre}$ :
+\[ i=\frac{\lambda D}{a}=\frac{\num{6e-7}\times 2}{\num{5e-4}}=\SI{2.4e-3}{\metre}=\SI{2.4}{\milli\metre}. \]
+La 3\textsuperscript{e} frange brillante est en $x_3=3i=\SI{7.2}{\milli\metre}$.
+\end{exemplebox}
+
+\begin{piege}[à ne pas confondre]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item Destructive $=$ \emph{multiple impair} de $\lambda/2$ : $\lambda/2, 3\lambda/2, 5\lambda/2\dots$
+        Un $\delta=\lambda$ (soit $2\times\lambda/2$) est au contraire \emph{constructif} !
+  \item Interférences nettes $\Rightarrow$ sources \textbf{cohérentes} (même fréquence).
+        Sans cohérence, pas de franges stables.
+  \item $i$ est \emph{proportionnel} à $\lambda$ : la lumière rouge donne des franges plus
+        écartées que la bleue.
+\end{itemize}
+\end{piege}
+
+\end{document}

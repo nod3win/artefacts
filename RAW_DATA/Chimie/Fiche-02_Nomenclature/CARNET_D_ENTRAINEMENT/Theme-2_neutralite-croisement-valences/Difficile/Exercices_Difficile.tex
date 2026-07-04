@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{exo}[nitrate d'étain : lire la valence variable]
+L'étain existe aux degrés $+\mathrm{II}$ et $+\mathrm{IV}$ ; le nitrate est \ce{NO3-}.
+\begin{enumerate}[label=\alph*)]
+  \item Écris la formule du nitrate d'étain(IV).
+  \item Écris la formule du nitrate d'étain(II).
+  \item Un camarade propose \ce{Sr(NO3)2} pour la question a). Explique pourquoi c'est faux.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une substance pure à partir de deux ions]
+On assemble un ion d'aluminium \ce{Al^3+} avec un anion soufré.
+\begin{enumerate}[label=\alph*)]
+  \item Écris la formule brute de la substance formée avec l'ion \emph{sulfite}.
+  \item Écris la formule brute de la substance formée avec l'ion \emph{sulfate}.
+  \item Qu'est-ce qui distingue chimiquement le sulfite du sulfate ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[thiosulfate ou sulfite d'ammonium ?]
+Le cation est l'ammonium \ce{NH4+}.
+\begin{enumerate}[label=\alph*)]
+  \item Écris la formule du thiosulfate d'ammonium.
+  \item Écris la formule du sulfite d'ammonium.
+  \item En quoi l'ion thiosulfate \ce{S2O3^2-} diffère-t-il de l'ion sulfite \ce{SO3^2-} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[identifier un métal alcalin par la masse molaire]
+Le phosphate d'un métal \emph{alcalin} \ce{M} a pour formule générale \ce{M3PO4}. En dissolvant
+\qty{0,20}{\mol} de ce sel, on pèse \qty{42,4}{\gram}. \textbf{Données :}
+$M(\ce{P})=\qty{31}{\gram\per\mol}$, $M(\ce{O})=\qty{16}{\gram\per\mol}$.
+\begin{enumerate}[label=\alph*)]
+  \item Justifie pourquoi la formule est bien \ce{M3PO4} (et pas \ce{MPO4} ou \ce{M2PO4}).
+  \item Calcule la masse molaire du sel.
+  \item Déduis-en la masse molaire de \ce{M}, puis identifie le métal.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver un hydroxyde par sa composition massique]
+Un composé de formule \ce{M_{$x$}(OH)_{$y$}} contient, en masse, $57{,}5\,\%$ de l'élément métallique
+\ce{M}, dont la masse molaire vaut \qty{23}{\gram\per\mol}. \textbf{Donnée :}
+$M(\ce{OH})=\qty{17}{\gram\per\mol}$.
+\begin{enumerate}[label=\alph*)]
+  \item Identifie le métal \ce{M}.
+  \item Sachant que \ce{M} est monovalent, donne $x$ et $y$ et écris la formule.
+  \item Vérifie ton résultat en recalculant le pourcentage massique de \ce{M}.
+\end{enumerate}
+\end{exo}
+
+\end{document}

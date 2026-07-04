@@ -1,0 +1,109 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[coefficient de frottement cinétique]
+Un objet lancé sur une surface horizontale à $v=\qty{4}{\metre\per\second}$ s'arrête après une
+distance $d=\qty{10}{\metre}$. La force de frottement vaut $F_f=\mu\,mg$ (avec $\mu$ le coefficient de
+frottement cinétique) et $g=\qty{10}{\metre\per\second\squared}$.
+\begin{enumerate}[label=\alph*)]
+  \item Applique le théorème de l'énergie cinétique entre le lancement et l'arrêt, en écrivant le
+        travail du frottement $-\mu mg\,d$.
+  \item Isole $\mu$ (la masse se simplifie) et calcule sa valeur numérique.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[comment varie l'énergie cinétique pendant un lancer vertical ?]
+On lance verticalement vers le haut un objet de masse $m=\qty{0,2}{\kilogram}$ avec
+$v_0=\qty{10}{\metre\per\second}$ ($g=\qty{10}{\metre\per\second\squared}$, sans frottement). Pendant la
+montée, sa vitesse vaut $v(t)=v_0-g\,t$.
+\begin{enumerate}[label=\alph*)]
+  \item Exprime l'énergie cinétique $E_c(t)=\tfrac12 m\,v(t)^2$ et calcule ses valeurs à $t=\qty{0}{\second}$
+        et au sommet ($t=\qty{1}{\second}$).
+  \item Le graphe de $E_c$ en fonction du temps est-il une \emph{droite} ? Décris sa forme pendant la
+        montée puis la descente.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[descente d'un plan incliné avec frottement]
+Un bloc de masse $m=\qty{2}{\kilogram}$ part du repos et glisse sur $L=\qty{5}{\metre}$ le long d'un
+plan incliné à $\beta=\ang{30}$. Il subit une force de frottement constante $F_f=\qty{4}{\newton}$.
+On prend $g=\qty{10}{\metre\per\second\squared}$ et $\sin\ang{30}=0,5$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.9]
+  \coordinate (A) at (0,2.6); \coordinate (B) at (4.5,0); \coordinate (C) at (0,0);
+  \draw[fill=primary!8,draw=black!70] (A)--(B)--(C)--cycle;
+  \foreach \x in {0,0.4,...,4.3} \draw[black!45] (\x,0)--(\x-0.2,-0.22);
+  \draw[->,black!60] (1.0,0) arc (180:150:1.0); \node at (1.4,0.28){\small $\beta$};
+  \coordinate (M) at (2.2,1.27);
+  \draw[fill=defcol!25,draw=black!70,rotate around={-30:(M)}] ($(M)+(-0.28,0)$) rectangle ($(M)+(0.28,0.42)$);
+  \draw[->,line width=1pt,attncol] (M)--++(0,-1.1) node[right,black]{\small $\vv G$};
+  \draw[->,line width=1pt,primary] (M)++(0.15,0.28)--++({cos 150},{sin 150}) node[above,black]{\small $\vv F_f$};
+  \node at (3.0,1.75){\small $L=\qty{5}{\metre}$};
+  \node[above] at (A){\small $A$}; \node[below right] at (B){\small $B$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la hauteur de descente $h$, puis le travail du poids $W(\vv G)=mgh$ et le travail du
+        frottement $W(\vv F_f)=-F_f\,L$.
+  \item À l'aide du théorème de l'énergie cinétique ($\sum W=\tfrac12 m v_B^2$, départ au repos),
+        calcule la vitesse $v_B$ en bas. Compare-la à la vitesse sans frottement $\sqrt{2gh}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[force de freinage moyenne d'une voiture]
+Une voiture de masse $m=\qty{1000}{\kilogram}$ roule à $\qty{108}{\kilo\metre\per\hour}$ et s'arrête sur
+une distance $d=\qty{75}{\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Convertis la vitesse en \si{\metre\per\second} et calcule l'énergie cinétique initiale.
+  \item Déduis-en l'intensité moyenne $F$ de la force de freinage ($F\,d=E_c$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux : l'énergie cinétique]
+Indique si chaque affirmation est \textbf{vraie} ou \textbf{fausse}, en justifiant.
+\begin{enumerate}[label=\alph*)]
+  \item L'énergie cinétique d'un objet double lorsque sa vitesse double.
+  \item À masse et vitesse égales, un objet a la même énergie cinétique sur la Lune et sur la Terre.
+  \item Si le travail total des forces appliquées est nul, la vitesse du corps est conservée.
+  \item L'énergie cinétique d'un corps peut être négative.
+\end{enumerate}
+\end{exo}
+\end{document}

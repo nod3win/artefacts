@@ -1,0 +1,89 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: La charge formelle
+\newcommand{\CF}{\ensuremath{\mathrm{C.F.}}}
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 3 — La charge formelle}
+\end{center}
+
+\smallskip
+Une fois la structure dessinée, on attribue à chaque atome une \textbf{charge formelle} (\CF) :
+un outil de comptabilité qui dit si l'atome a, dans cette structure, \emph{plus} ou \emph{moins}
+d'électrons que lorsqu'il est neutre et isolé. C'est le juge de paix entre structures concurrentes.
+
+\begin{cle}[Formule de la charge formelle]
+\[ \boxed{\;\CF = N_{v}^{\text{atome}} - \Big(n_{\text{libres}} + \tfrac{1}{2}\,n_{\text{liants}}\Big)\;} \]
+En pratique, on compte plus vite avec :
+\[ \boxed{\;\CF = (\text{électrons de valence}) - 2\times(\text{doublets libres}) - (\text{nombre de liaisons})\;} \]
+car chaque liaison n'apporte qu'\emph{un} électron « propre » à l'atome (l'autre est au partenaire).
+\end{cle}
+
+\begin{methode}[Calculer une charge formelle]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1.5pt]
+  \item Repérer $N_v^{\text{atome}}$ (numéro de colonne : $\ce{H}=1,\ \ce{C}=4,\ \ce{N}=5,\ \ce{O}=6,\ \ce{Cl}=7$).
+  \item Compter les \textbf{doublets libres} de l'atome, les multiplier par $2$.
+  \item Compter le \textbf{nombre de liaisons} de l'atome (simple $=1$, double $=2$, triple $=3$).
+  \item $\CF = N_v - 2\times(\text{doublets libres}) - (\text{liaisons})$.
+\end{enumerate}
+\end{methode}
+
+\begin{cle}[Deux propriétés à connaître]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item La \textbf{somme} des charges formelles $=$ la \textbf{charge globale} de l'édifice
+        ($0$ pour une molécule neutre, $q$ pour un ion).
+  \item La \textbf{meilleure structure} est celle dont les \CF{} sont \textbf{minimales} (proches
+        de $0$), les charges négatives se plaçant sur les atomes les plus \textbf{électronégatifs}.
+\end{itemize}
+\end{cle}
+
+\begin{exemplebox}[charges formelles dans \ce{CO3^2-}]
+Oxygène \textbf{doublement} lié ($2$ doublets libres, $2$ liaisons) :
+$\CF = 6 - 4 - 2 = 0$. \quad
+Oxygène \textbf{simplement} lié ($3$ doublets, $1$ liaison) : $\CF = 6 - 6 - 1 = -1$. \quad
+Carbone ($0$ doublet, $4$ liaisons) : $\CF = 4 - 0 - 4 = 0$. \;
+Somme : $0 + 0 + (-1) + (-1) = -2$ : c'est bien la charge de l'ion.
+\end{exemplebox}
+
+\begin{piege}
+Ne confonds pas la charge formelle (comptabilité d'électrons dans \emph{une} structure) avec la
+charge \emph{réelle} d'un atome ou son nombre d'oxydation. Une molécule \textbf{neutre} peut très
+bien porter des charges formelles non nulles qui se compensent (ex. \ce{CO}, \ce{O3}).
+\end{piege}
+
+\end{document}

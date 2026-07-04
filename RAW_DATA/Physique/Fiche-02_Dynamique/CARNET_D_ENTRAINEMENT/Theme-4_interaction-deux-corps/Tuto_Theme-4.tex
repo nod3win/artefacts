@@ -1,0 +1,92 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: L'interaction entre deux corps
+\sisetup{per-mode=symbol}
+
+\noindent La \textbf{troisième loi} (action--réaction) dit que la force est la \emph{même} pour les deux
+corps en interaction. Mais comme $a=F/m$, leurs \textbf{accélérations diffèrent} selon la masse.
+
+\begin{cle}[action--réaction et accélérations]
+\begin{itemize}[leftmargin=1.5em,itemsep=3pt]
+  \item \textbf{Forces (3\textsuperscript{e} loi)} : $\ \vv F_{A\to B}=-\,\vv F_{B\to A}$ : \emph{même intensité}
+        $F$, sens opposés, sur \emph{deux corps différents} (elles ne se compensent jamais).
+  \item \textbf{Accélérations} : $\ \boxed{a_A=\dfrac{F}{m_A}}\qquad a_B=\dfrac{F}{m_B}$.
+  \item \textbf{Rapport} : $\ \dfrac{a_A}{a_B}=\dfrac{m_B}{m_A}$ : l'objet \emph{le plus léger} subit la plus
+        \emph{grande} accélération.
+\end{itemize}
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \fill[defcol!75] (-1.9,0) rectangle (-0.65,1.0) node[midway,white]{$A$};
+  \fill[excol!75] (0.65,0) rectangle (1.9,1.0) node[midway,white]{$B$};
+  \draw[->,line width=1.1pt,defcol] (-0.6,0.62) -- (0.6,0.62);
+  \node[defcol,above,font=\small] at (0,0.66){$\vv F_{A\to B}$};
+  \draw[->,line width=1.1pt,excol] (0.6,0.30) -- (-0.6,0.30);
+  \node[excol,below,font=\small] at (0,0.26){$\vv F_{B\to A}$};
+  \node[font=\small,align=center] at (0,-0.75){deux forces égales et opposées, sur \emph{deux corps différents}};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[reconnaître une paire action--réaction]
+Une paire action--réaction se lit toujours « force exercée \emph{par} A \emph{sur} B » $\leftrightarrow$
+« force exercée \emph{par} B \emph{sur} A ». Les deux forces :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1.5pt]
+  \item ont la \textbf{même intensité} et la même droite d'action, de \textbf{sens opposés} ;
+  \item sont de \textbf{même nature} (deux forces de contact, ou deux forces gravitationnelles\dots) ;
+  \item s'appliquent sur \textbf{deux corps distincts} $\Rightarrow$ on ne les additionne jamais ensemble.
+\end{itemize}
+\end{methode}
+
+\begin{exemplebox}[le recul du canon]
+Un canon de \qty{1000}{\kilogram} tire un boulet de \qty{10}{\kilogram}. La force sur le boulet égale
+(en réaction) celle sur le canon. Donc
+$\dfrac{a_{\text{boulet}}}{a_{\text{canon}}}=\dfrac{m_{\text{canon}}}{m_{\text{boulet}}}=\dfrac{1000}{10}=100$ :
+le boulet accélère \textbf{100 fois plus} que le canon. Le canon recule, mais lentement (grande inertie).
+\end{exemplebox}
+
+\begin{piege}[à ne pas confondre]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item Les forces d'action--réaction \textbf{ne se compensent pas} : agissant sur des corps différents,
+        elles ne s'additionnent pas (à ne pas confondre avec l'équilibre $\vv N+\vv G=\vv 0$ sur \emph{un} corps).
+  \item Forces \textbf{égales}, accélérations \textbf{différentes} : c'est la masse qui fait la différence.
+  \item Une force est toujours une \emph{interaction} : on dit « la force \emph{de} A \emph{sur} B », jamais « la force de A ».
+\end{itemize}
+\end{piege}
+\end{document}

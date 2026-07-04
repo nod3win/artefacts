@@ -1,0 +1,123 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Lignes de champ et condensateur plan
+\sisetup{per-mode=symbol}
+
+\begin{center}\large\bfseries\color{primarydark}
+Thème 4 — Lignes de champ et condensateur plan
+\end{center}
+
+Pour \emph{visualiser} un champ électrique, on trace des \textbf{lignes de champ} : le
+\guillemotleft~spectre électrique~\guillemotright. Leur allure renseigne d'un coup d'\oe il sur le
+sens, la direction et l'intensité de $\vv{E}$.
+
+\begin{cle}[ligne de champ et ses propriétés]
+Une \textbf{ligne de champ} est une courbe orientée \emph{tangente} en chaque point au vecteur
+$\vv{E}$, et orientée dans son sens. Propriétés :
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item elles \textbf{partent} des charges $+$ et \textbf{aboutissent} aux charges $-$ ;
+  \item elles ne se \textbf{croisent jamais} (le champ a une direction unique en chaque point) ;
+  \item leur \textbf{densité} traduit l'\emph{intensité} : lignes resserrées $\Rightarrow$ champ
+        fort ; lignes écartées $\Rightarrow$ champ faible ;
+  \item une charge test $+$ lâchée libre part en suivant la tangente à la ligne.
+\end{enumerate}
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.62,>=Stealth,font=\scriptsize,
+    ch/.style={circle,minimum size=6.5mm,inner sep=0pt,text=white,font=\bfseries\scriptsize}]
+  % charge + : diverge
+  \begin{scope}[xshift=-6.2cm]
+    \foreach \a in {0,45,...,315}{\draw[->,excol,line width=0.8pt] (0,0)--(\a:1.7);}
+    \node[ch,fill=attncol] at (0,0) {$+$};
+    \node[primarydark] at (0,-2.3) {charge $+$ : diverge};
+  \end{scope}
+  % charge - : converge
+  \begin{scope}[xshift=-1.6cm]
+    \foreach \a in {0,45,...,315}{\draw[->,excol,line width=0.8pt] (\a:1.7)--(0,0);}
+    \node[ch,fill=defcol] at (0,0) {$-$};
+    \node[primarydark] at (0,-2.3) {charge $-$ : converge};
+  \end{scope}
+  % dipole
+  \begin{scope}[xshift=4.6cm]
+    \node[ch,fill=attncol] (p) at (-1.3,0) {$+$};
+    \node[ch,fill=defcol] (n) at (1.3,0) {$-$};
+    \draw[->,excol,line width=0.8pt] (-1.0,0)--(1.0,0);
+    \foreach \s in {0.7,1.3}{
+      \draw[->,excol,line width=0.8pt] (-1.1,0.15*\s) .. controls (-0.5,\s) and (0.5,\s) .. (1.1,0.15*\s);
+      \draw[->,excol,line width=0.8pt] (-1.1,-0.15*\s) .. controls (-0.5,-\s) and (0.5,-\s) .. (1.1,-0.15*\s);}
+    \node[primarydark] at (0,-2.3) {dipôle : de $+$ vers $-$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{cle}[le condensateur plan : champ uniforme]
+Deux armatures parallèles, l'une $+Q$, l'autre $-Q$ : entre elles les lignes sont \textbf{parallèles
+et équiréparties} $\Rightarrow$ le champ est \textbf{uniforme} (même direction, même sens, même
+intensité). Le vecteur $\vv{E}$ va \textbf{de l'armature $+$ vers l'armature $-$} (vers le potentiel
+le plus bas). Son intensité :
+\[ \boxed{\,E = \dfrac{|U_{AB}|}{d}\,}\qquad(\si{\volt\per\metre}). \]
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95,>=Stealth,font=\scriptsize]
+  \fill[attncol!35] (-2.6,1.2) rectangle (2.6,1.35);
+  \fill[defcol!35] (-2.6,-1.35) rectangle (2.6,-1.2);
+  \node[attncol,font=\bfseries] at (3.05,1.28) {$+Q$};
+  \node[defcol,font=\bfseries] at (3.05,-1.28) {$-Q$};
+  \foreach \x in {-2.1,-1.4,-0.7,0,0.7,1.4,2.1}{\draw[->,excol,line width=0.9pt] (\x,1.1)--(\x,-1.1);}
+  \draw[<->,black!55] (-2.75,1.2)--(-2.75,-1.2) node[midway,left]{$d$};
+  \node[excol] at (0,1.75) {$\vv{E}$ uniforme, de $+$ vers $-$};
+\end{tikzpicture}
+\end{center}
+
+\begin{piege}[lire un spectre sans se tromper]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Les lignes ne se \textbf{coupent jamais} : un spectre où deux lignes se croisent est
+        \emph{impossible}.
+  \item \textbf{Densité} $=$ intensité : c'est \emph{là où les lignes se resserrent} que le champ
+        est le plus fort (près des charges, entre les plaques).
+  \item Le sens va \textbf{toujours} du $+$ vers le $-$ ; ne jamais inverser les flèches.
+  \item Entre deux charges de \emph{même signe}, il existe un \textbf{point neutre} où $\vv{E} =
+        \vv{0}$ : aucune ligne n'y passe.
+\end{itemize}
+\end{piege}
+
+\end{document}

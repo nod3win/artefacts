@@ -1,0 +1,102 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[repérer la (les) paire(s) qui n'est (ne sont) pas un couple conjugué]
+On vérifie que les deux membres diffèrent d'un seul \ce{H} et d'une seule charge.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{HClO / ClO-} : diffèrent d'un \ce{H+} $\Rightarrow$ \textbf{couple}.
+  \item \ce{H3O+ / OH-} : \textbf{pas un couple}. Ils diffèrent de \emph{deux} \ce{H+} (et de deux charges). Les
+        vrais couples de l'eau sont \ce{H3O+/H2O} et \ce{H2O/OH-}.
+  \item \ce{H2PO4- / HPO4^{2-}} : diffèrent d'un \ce{H+} $\Rightarrow$ \textbf{couple}.
+  \item \ce{NH4+ / NH2-} : \textbf{pas un couple}. Ils diffèrent de \emph{deux} \ce{H+} ; le conjugué de
+        \ce{NH4+} est \ce{NH3}, et celui de \ce{NH3} (comme acide) est \ce{NH2-}.
+  \item \ce{HSO4- / SO4^{2-}} : diffèrent d'un \ce{H+} $\Rightarrow$ \textbf{couple}.
+\end{enumerate}
+Réponse : \textbf{b) et d)} ne sont pas des couples conjugués.
+\end{corrige}
+
+\begin{corrige}[quelles réactions sont des réactions acide-base ?]
+Une réaction acide-base est un \textbf{transfert de \ce{H+}} ; une précipitation forme un solide insoluble sans
+échange de proton.
+\begin{enumerate}[label=\arabic*)]
+  \item \textbf{Acide-base} : \ce{HCN} cède son \ce{H+} à \ce{OH-} (formation d'\ce{H2O}).
+  \item Précipitation : formation du solide \ce{AgCl} ; aucun \ce{H+} échangé.
+  \item \textbf{Acide-base} : \ce{NH4+} cède un \ce{H+} à \ce{OH-} (formation de \ce{NH3} et \ce{H2O}).
+  \item Précipitation : formation du solide \ce{Cu(OH)2} ; pas de transfert de proton.
+  \item \textbf{Acide-base} : \ce{HCl} cède son \ce{H+} à \ce{HCO3-}, qui donne \ce{H2CO3 -> H2O + CO2}.
+\end{enumerate}
+Réponse : les réactions acide-base sont \textbf{1, 3 et 5}.
+\end{corrige}
+
+\begin{corrige}[électrolyte fort, faible ou nul ?]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{\ce{KCl}} : c'est un sel ionique soluble, \emph{totalement} dissocié
+        (\ce{KCl -> K+ + Cl-}) $\Rightarrow$ électrolyte fort. Le glucose et l'éthanol sont des molécules qui ne
+        s'ionisent pas (non-électrolytes) ; \ce{HF} est un électrolyte \emph{faible}.
+  \item La solution de \textbf{glucose} conduit le moins : c'est un non-électrolyte, elle ne contient
+        pratiquement \textbf{aucun ion}. (Vient ensuite \ce{HF}, faiblement dissocié ; \ce{KCl} conduit le plus.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[mesurer un degré d'ionisation, puis le prévoir]
+\begin{enumerate}[label=\alph*)]
+  \item Quantité d'acide apportée : $n_0 = C\,V = 0,10 \times 0,100 = \qty{1,0e-2}{mol}$. Quantité dissociée :
+        $\qty{5,0e-4}{mol}$. Donc
+        \[ \alpha = \frac{5,0\times10^{-4}}{1,0\times10^{-2}} = 0,050 = \qty{5,0}{\percent}. \]
+  \item $\alpha \ll 1$ : l'acide n'est que très partiellement dissocié $\Rightarrow$ électrolyte \textbf{faible}.
+  \item $\alpha \propto 1/\sqrt{C_a}$ : diviser $C_a$ par \num{4} \emph{augmente} $\alpha$ d'un facteur
+        $\sqrt{4} = 2$, soit $\alpha \approx \qty{10}{\percent}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux sur les définitions]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai.} \ce{HS- + H+ -> H2S} : \ce{H2S} est l'acide conjugué de \ce{HS-}.
+  \item \textbf{Faux.} En retirant un \ce{H+} à \ce{H2O} on obtient \ce{OH-} : la base conjuguée de l'eau est
+        \ce{OH-}. \ce{H3O+} en est l'\emph{acide} conjugué.
+  \item \textbf{Faux.} \ce{SO4^{2-}} s'obtient en \emph{retirant} un \ce{H+} à \ce{HSO4-} : c'est sa
+        \textbf{base} conjuguée.
+  \item \textbf{Faux.} L'inverse est vrai : tout acide de Brønsted est un acide de Lewis, mais \ce{BF3},
+        \ce{Ag+} (acides de Lewis) n'échangent pas de \ce{H+}.
+  \item \textbf{Vrai.} Ajouter un \ce{H+} à \ce{H3O+} donnerait \ce{H4O^{2+}}, inexistant en solution aqueuse.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

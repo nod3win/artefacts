@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[champ d'un fil rectiligne]
+Formule du fil : $B=\dfrac{\mu_0 I}{2\pi d}=\dfrac{2\cdot10^{-7}\,I}{d}$, avec $d=\qty{0.05}{\metre}$ :
+\[ B=\frac{2\cdot10^{-7}\times10}{0{,}05}=\frac{2\cdot10^{-6}}{0{,}05}=\qty{4e-5}{\tesla}. \]
+(Soit environ le champ magnétique terrestre.)
+\end{corrige}
+
+\begin{corrige}[champ au centre d'une spire]
+Formule de la spire ($N=1$) : $B=\dfrac{\mu_0 I}{2r}$, avec $r=\qty{0.02}{\metre}$ :
+\[ B=\frac{4\pi\times10^{-7}\times5}{2\times0{,}02}
+    =\frac{1{,}26\cdot10^{-6}\times5}{0{,}04}
+    =\frac{6{,}3\cdot10^{-6}}{0{,}04}\approx\qty{1.6e-4}{\tesla}. \]
+\end{corrige}
+
+\begin{corrige}[champ dans un solénoïde]
+Formule du solénoïde : $B=\dfrac{\mu_0 N I}{L}$, avec $L=\qty{0.5}{\metre}$ :
+\[ B=\frac{4\pi\times10^{-7}\times1000\times3}{0{,}5}
+    =\frac{1{,}26\cdot10^{-6}\times3000}{0{,}5}
+    =\frac{3{,}77\cdot10^{-3}}{0{,}5}\approx\qty{7.5e-3}{\tesla}=\qty{7.5}{\milli\tesla}. \]
+\end{corrige}
+
+\begin{corrige}[reconnaître un électro-aimant]
+\begin{enumerate}[label=\alph*)]
+  \item C'est un \textbf{électro-aimant} : une bobine parcourue par un courant, autour d'un noyau de
+        fer doux, se comporte comme un aimant (une face Nord, une face Sud) tant que le courant circule.
+  \item En ouvrant l'interrupteur, le courant s'annule ($I=0$) : le champ du solénoïde disparaît. Le
+        fer étant \textbf{doux}, il \textbf{perd immédiatement son aimantation} — l'électro-aimant
+        « lâche » sa charge. (Un fer « dur » resterait aimanté : ce serait un aimant permanent.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[la décroissance en $1/d$]
+Comme $B\propto 1/d$ (à $I$ fixé), le produit $B\times d$ est constant.
+\begin{enumerate}[label=\alph*)]
+  \item On \textbf{double} la distance $\Rightarrow$ $B$ est \textbf{divisé par 2} :
+        $B'=\dfrac{6\cdot10^{-5}}{2}=\qty{3e-5}{\tesla}$.
+  \item On \textbf{divise} la distance par 2 $\Rightarrow$ $B$ est \textbf{doublé} :
+        $B''=2\times6\cdot10^{-5}=\qty{1.2e-4}{\tesla}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

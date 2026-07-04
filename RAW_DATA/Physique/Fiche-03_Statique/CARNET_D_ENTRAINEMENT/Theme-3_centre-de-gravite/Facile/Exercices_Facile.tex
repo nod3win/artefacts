@@ -1,0 +1,106 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[centre de gravité de formes usuelles]
+Ces trois solides sont \textbf{homogènes}. Indique où se trouve leur centre de gravité $G$.
+\begin{enumerate}[label=\alph*)]
+  \item un cube ;
+  \item une plaque rectangulaire mince ;
+  \item un cylindre droit.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le triangle]
+On considère une plaque \textbf{triangulaire} homogène et mince.
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \coordinate (A) at (-1.6,-0.9); \coordinate (B) at (1.8,-0.9); \coordinate (C) at (0.2,1.5);
+  \draw[primary!70,line width=1pt,fill=primary!12] (A)--(B)--(C)--cycle;
+  \fill (A) circle (1pt); \fill (B) circle (1pt); \fill (C) circle (1pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle construction géométrique permet de placer son centre de gravité ?
+  \item Ce point est-il à l'intérieur ou à l'extérieur de la plaque ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux masses identiques]
+Deux masses \textbf{identiques} $m$ sont fixées aux extrémités $A$ et $B$ d'une tige légère de
+longueur \qty{60}{cm}.
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[black!60,line width=1pt] (-2.4,0)--(2.4,0);
+  \draw[fill=defcol!60,draw=defcol] (-2.4,0) circle (0.22) node[white]{\scriptsize $m$};
+  \draw[fill=defcol!60,draw=defcol] (2.4,0) circle (0.22) node[white]{\scriptsize $m$};
+  \node[below] at (-2.4,-0.3){$A$}; \node[below] at (2.4,-0.3){$B$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Où se situe le centre de gravité de l'ensemble ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux masses différentes]
+Sur une tige légère, une masse $m_1=\qty{1}{kg}$ est placée en $x_1=0$ et une masse $m_2=\qty{3}{kg}$
+en $x_2=\qty{40}{cm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la position $x_G$ du centre de gravité.
+  \item Est-il plus proche de $m_1$ ou de $m_2$ ? Est-ce cohérent ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un centre de gravité dans le vide]
+Un anneau homogène (une rondelle) est posé à plat.
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[primary!70,line width=1.2pt,fill=primary!12] (0,0) circle (1.1);
+  \draw[white,line width=1.2pt,fill=white] (0,0) circle (0.5);
+  \draw[primary!70,line width=1.2pt] (0,0) circle (0.5);
+  \fill (0,0) circle (1.4pt) node[right=2pt]{$G$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Où se trouve son centre de gravité ?
+  \item L'affirmation « le centre de gravité d'un corps est toujours \emph{dans} la matière » est-elle
+        vraie ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

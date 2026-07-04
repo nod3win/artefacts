@@ -1,0 +1,100 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[moment algébrique de plusieurs forces]
+Une barre peut tourner autour d'un axe $\Delta$. Deux forces s'y appliquent : $\vv F_1$
+($F_1=\qty{10}{N}$, bras $b_1=\qty{0.4}{m}$) tend à la faire tourner dans le sens \textbf{horaire} ;
+$\vv F_2$ ($F_2=\qty{20}{N}$, bras $b_2=\qty{0.15}{m}$) dans le sens \textbf{anti-horaire}. On compte
+positivement le sens horaire.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule le moment algébrique de chaque force.
+  \item Détermine le moment résultant et le sens de rotation de la barre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[bras de levier ou distance au point d'application ?]
+Une force $F=\qty{50}{N}$ est appliquée à l'extrémité d'un levier, à une distance $L=\qty{0.4}{m}$ de
+l'axe. Mais la force n'est pas perpendiculaire au levier : la distance \emph{perpendiculaire} de l'axe
+à sa ligne d'action ne vaut que $b=\qty{0.3}{m}$.
+\begin{enumerate}[label=\alph*)]
+  \item Lequel de $L$ ou $b$ faut-il utiliser pour le moment ? Calcule ce moment.
+  \item Quel moment obtiendrait-on si la force était \emph{perpendiculaire} au levier (bras $=L$) ?
+        Conclus sur l'orientation la plus efficace.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[est-ce un couple ?]
+Sur un solide, deux forces verticales sont appliquées : $\qty{6}{N}$ vers le haut au point $x=0$ et
+$\qty{6}{N}$ vers le bas au point $x=\qty{0.5}{m}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[primary!60,line width=1.4pt] (-0.6,0)--(3.1,0);
+  \draw[->,line width=1.2pt,defcol] (0,0)--(0,1.1) node[above]{\scriptsize \qty{6}{N}};
+  \draw[->,line width=1.2pt,attncol] (2.5,0)--(2.5,-1.1) node[below]{\scriptsize \qty{6}{N}};
+  \draw[<->,black!55] (0,1.3)--(2.5,1.3) node[midway,fill=white,inner sep=1pt]{\scriptsize $d=\qty{0.5}{m}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Ces deux forces forment-elles un couple ? Justifie (résultante, sens, lignes d'action).
+  \item Calcule le moment de ce couple.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le volant]
+On tourne un volant de rayon $r=\qty{0.2}{m}$ en poussant \emph{tangentiellement} avec chaque main :
+une force $F=\qty{15}{N}$ vers le haut d'un côté, $F=\qty{15}{N}$ vers le bas de l'autre (aux deux
+extrémités d'un diamètre).
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la distance $d$ entre les deux lignes d'action ?
+  \item Calcule le moment du couple appliqué au volant.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[travail et moment : même nombre, sens différent]
+Une force d'intensité $F=\qty{25}{N}$ est utilisée de deux façons.
+\begin{enumerate}[label=\alph*)]
+  \item Elle déplace une caisse de \qty{2}{m} \emph{dans sa propre direction} : calcule le travail $W$
+        (et donne son unité).
+  \item Elle est appliquée à un bras de levier \emph{perpendiculaire} de \qty{2}{m} : calcule le moment
+        $\mathcal{M}$ (et donne son unité).
+  \item Les deux résultats sont numériquement égaux : s'agit-il pour autant de la même grandeur ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

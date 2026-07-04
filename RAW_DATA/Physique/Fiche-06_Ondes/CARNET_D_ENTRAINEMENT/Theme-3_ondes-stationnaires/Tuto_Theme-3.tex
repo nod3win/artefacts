@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Ondes stationnaires et harmoniques d'une corde
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 3 — Ondes stationnaires}\\[2pt]
+{\large\color{primary} Nœuds, ventres et harmoniques d'une corde}
+\end{center}
+
+\medskip
+Quand une onde se réfléchit au bout d'une corde et revient sur elle-même, l'onde incidente et
+l'onde réfléchie se superposent : il apparaît une figure qui \emph{n'avance plus} mais
+\textbf{oscille sur place}, l'\textbf{onde stationnaire}. Ce thème apprend à repérer ses
+\textbf{nœuds} et \textbf{ventres}, et à calculer les \textbf{fréquences propres} d'une corde.
+
+\begin{cle}[onde stationnaire : nœuds et ventres]
+La superposition de l'onde incidente et de l'onde réfléchie crée :
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item des \textbf{nœuds} : points \emph{toujours immobiles} (élongation nulle) ;
+  \item des \textbf{ventres} : points qui oscillent avec l'\emph{amplitude maximale}.
+\end{itemize}
+Un « \textbf{fuseau} » est la portion de corde entre deux nœuds (elle contient un ventre).
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \def\Ls{9.0}\def\A{0.85}
+  \draw[excol,line width=3pt] (0,-0.7)--(0,0.7);
+  \draw[excol,line width=3pt] (\Ls,-0.7)--(\Ls,0.7);
+  \draw[defcol,line width=1pt,smooth,samples=200,domain=0:\Ls] plot(\x,{\A*sin(\x*(3*180/\Ls))});
+  \draw[black,line width=1pt,smooth,samples=200,domain=0:\Ls] plot(\x,{-\A*sin(\x*(3*180/\Ls))});
+  \foreach \k in {0,1,2,3}{\fill[primarydark] (\k*\Ls/3,0) circle (2.4pt);}
+  \foreach \xv in {1.5,4.5,7.5}{\draw[<->,black!55] (\xv,-\A) -- (\xv,\A);}
+  \node[below=2pt,font=\footnotesize,primarydark] at (0,-0.7){nœud};
+  \node[below=2pt,font=\footnotesize,primarydark] at (3,0){nœud};
+  \node[above=1pt,font=\footnotesize] at (1.5,\A){ventre};
+  \draw[<->,black!70,dashed](0,-1.15)--(3,-1.15)node[midway,fill=white,inner sep=1pt,font=\footnotesize]{$\lambda/2$};
+\end{tikzpicture}
+\end{center}
+
+\begin{cle}[les distances à connaître]
+\[ \underbrace{\text{nœud} \to \text{nœud}}_{\lambda/2}\qquad
+   \underbrace{\text{ventre} \to \text{ventre}}_{\lambda/2}\qquad
+   \underbrace{\text{nœud} \to \text{ventre voisin}}_{\lambda/4} \]
+Deux nœuds consécutifs (ou deux ventres) sont séparés de $\lambda/2$ ; un nœud et le ventre
+voisin, de $\lambda/4$.
+\end{cle}
+
+\begin{cle}[corde fixée à ses deux extrémités]
+Les deux bouts fixes imposent un \textbf{nœud} à chaque extrémité : la corde contient un nombre
+\emph{entier} de fuseaux. Seules certaines longueurs d'onde « rentrent » :
+\[ \boxed{\;\lambda_n = \frac{2L}{n}\;}\qquad
+   \boxed{\;f_n = \frac{n\,c}{2L}=n\,f_1\;}\qquad (n=1,2,3,\dots) \]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item $L$ : longueur de la corde ; $c$ : célérité sur la corde ;
+  \item $n=1$ : \textbf{mode fondamental} ($f_1$) ; $n=2$ : 2\textsuperscript{e} harmonique\ldots
+  \item le mode $n$ possède \textbf{$n$ ventres} (fuseaux) et \textbf{$n+1$ nœuds}
+        (extrémités comprises).
+\end{itemize}
+\end{cle}
+
+\begin{methode}[calculer les harmoniques]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt,label=\arabic*.]
+  \item Calcule le \textbf{fondamental} : $\lambda_1=2L$ puis $f_1=\dfrac{c}{2L}$.
+  \item Les harmoniques suivants sont des \emph{multiples entiers} : $f_n=n\,f_1$,
+        et $\lambda_n=\dfrac{2L}{n}=\dfrac{\lambda_1}{n}$.
+  \item Pour le nombre de ventres, souviens-toi : $n$ ventres $\Leftrightarrow$ harmonique $n$
+        $\Leftrightarrow$ fréquence $n\,f_1$.
+\end{enumerate}
+\end{methode}
+
+\begin{cle}[corde avec une extrémité libre]
+Une extrémité \emph{libre} impose un \textbf{ventre} (et non un nœud). Seuls les modes
+« impairs » subsistent :
+\[ \boxed{\;\lambda_n=\frac{4L}{2n-1}\;}\qquad
+   f_n=\frac{(2n-1)\,c}{4L}\qquad (n=1,2,3,\dots). \]
+\end{cle}
+
+\begin{piege}[deux erreurs classiques]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1.5pt]
+  \item Un nœud et son ventre voisin sont séparés de $\lambda/4$, \emph{pas} de $\lambda/2$.
+  \item Le nombre de ventres \emph{est} le numéro de l'harmonique : doubler la fréquence
+        (2 bouts fixes) double le nombre de ventres.
+\end{itemize}
+\end{piege}
+
+\end{document}

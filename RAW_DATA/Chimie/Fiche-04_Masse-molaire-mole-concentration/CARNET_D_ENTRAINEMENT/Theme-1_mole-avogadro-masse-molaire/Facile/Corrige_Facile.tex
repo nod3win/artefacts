@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}{\large\bfseries\color{primarydark} Thème 1 — Corrigé Facile}\end{center}
+
+\begin{corrige}[calculer une masse molaire]
+On additionne les masses molaires atomiques, pondérées par les indices de la formule.
+\begin{enumerate}[label=\alph*)]
+  \item $M(\ce{O2}) = 2\times 16 = \SI{32}{\gram\per\mole}$.
+  \item $M(\ce{CO2}) = 12 + 2\times 16 = \SI{44}{\gram\per\mole}$.
+  \item $M(\ce{NaCl}) = 23 + 35{,}5 = \SI{58.5}{\gram\per\mole}$.
+  \item $M(\ce{H2SO4}) = 2\times 1 + 32 + 4\times 16 = \SI{98}{\gram\per\mole}$.
+  \item $M(\ce{CaCO3}) = 40 + 12 + 3\times 16 = \SI{100}{\gram\per\mole}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[de la masse à la quantité de matière]
+On divise chaque masse par la masse molaire : $n = m/M$.
+\begin{enumerate}[label=\alph*)]
+  \item $n = \dfrac{64}{32} = \SI{2.00}{\mole}$.
+  \item $n = \dfrac{22}{44} = \SI{0.500}{\mole}$.
+  \item $n = \dfrac{29{,}25}{58{,}5} = \SI{0.500}{\mole}$.
+  \item $n = \dfrac{9{,}8}{98} = \SI{0.100}{\mole}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[de la quantité de matière au nombre d'entités]
+On multiplie par $N_{\mathrm{A}} = 6{,}02\times10^{23}$.
+\begin{enumerate}[label=\alph*)]
+  \item $N = 2\times 6{,}02\times10^{23} = 1{,}20\times10^{24}$ molécules.
+  \item $N = 0{,}5\times 6{,}02\times10^{23} = 3{,}01\times10^{23}$ atomes.
+  \item $N = 0{,}25\times 6{,}02\times10^{23} = 1{,}51\times10^{23}$ ions.
+  \item $N = 3\times 6{,}02\times10^{23} = 1{,}81\times10^{24}$ molécules.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[du nombre d'entités à la quantité de matière]
+On divise par $N_{\mathrm{A}}$.
+\begin{enumerate}[label=\alph*)]
+  \item $n = \dfrac{1{,}204\times10^{24}}{6{,}02\times10^{23}} = \SI{2.00}{\mole}$.
+  \item $n = \dfrac{3{,}01\times10^{23}}{6{,}02\times10^{23}} = \SI{0.500}{\mole}$.
+  \item $n = \dfrac{6{,}02\times10^{22}}{6{,}02\times10^{23}} = \SI{0.100}{\mole}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[une mole \og de quoi \fg{}~?]
+On multiplie la quantité de molécules par le nombre d'atomes concernés \emph{par} molécule.
+\begin{enumerate}[label=\alph*)]
+  \item Chaque \ce{CO2} porte $2$ atomes \ce{O} : $2\times 2 = \SI{4}{\mole}$ d'atomes d'oxygène.
+  \item Chaque \ce{H2O} porte $2$ atomes \ce{H} : $0{,}5\times 2 = \SI{1}{\mole}$ d'atomes d'hydrogène.
+  \item \ce{H3PO4} compte $3+1+4 = 8$ atomes : $1\times 8 = \SI{8}{\mole}$ d'atomes au total.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

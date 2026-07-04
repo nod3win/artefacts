@@ -1,130 +1,87 @@
-% =====================================================================
-%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 5
-%  Niveau MOYEN — Corrigé
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,}}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{corcol}{RGB}{0,114,178}
-\definecolor{astucecol}{RGB}{198,93,9}
-\definecolor{bondcol}{RGB}{60,60,70}
-\definecolor{piecol}{RGB}{198,93,9}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
-\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
-   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
-\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
-   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 5 — La résonance}}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Moyen · Corrigé}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
-\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\Large\bfseries\color{primarydark}Thème 5 — Corrigé du niveau Moyen}
-\end{center}
-\medskip
-
-\begin{cor}[l'ozone \ce{O3}]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
-  \item \rep les deux formes limites s'écrivent \quad\ce{O=O-O <-> O-O=O}. \\
-        On passe de l'une à l'autre en faisant « glisser » la double liaison de l'oxygène de gauche
-        vers celui de droite (un doublet libre devient double liaison d'un côté, la double liaison
-        redevient doublet libre de l'autre).
-  \item \rep les deux formes limites sont \emph{équivalentes} : la double liaison n'appartient
-        réellement ni à l'une ni à l'autre position. Les deux liaisons \ce{O-O} sont donc
-        \textbf{identiques}. Leur longueur est \textbf{intermédiaire} entre celle d'une liaison
-        simple \ce{O-O} (la plus longue) et celle d'une liaison double \ce{O=O} (la plus courte) :
-        c'est l'hybride des deux formes.
+\begin{corrige}[l'ozone \ce{O3}]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{O=O-O <-> O-O=O}. Dans chaque forme, l'oxygène \textbf{central} porte la charge $+1$
+        et l'oxygène \textbf{terminal simplement lié} porte la charge $-1$ (l'oxygène doublement
+        lié est neutre).
+  \item Les deux liaisons \ce{O-O} sont \textbf{identiques}, de longueur intermédiaire entre une
+        simple et une double : la double liaison est délocalisée sur les deux.
+  \item \textbf{Non} : la géométrie coudée est la même dans les deux formes (seuls les électrons
+        se déplacent).
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[l'ion carbonate \ce{CO3^2-}]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
-  \item \rep la double liaison \ce{C=O} peut se placer indifféremment sur \emph{chacun} des trois
-        oxygènes. Ces trois positions étant équivalentes, on obtient \textbf{trois} structures
-        limites de même énergie, reliées par $\longleftrightarrow$.
-  \item \rep les trois liaisons \ce{C-O} sont en réalité \textbf{identiques} (même longueur,
-        intermédiaire entre simple et double). Chacune a un « caractère double » partiel de
-        $\tfrac{1}{3}$.
-  \item \rep par symétrie, la charge $-2$ se répartit \emph{également} sur les trois oxygènes, soit
-        \[ \frac{-2}{3} \approx -0{,}67 \text{ par oxygène.} \]
+\begin{corrige}[l'ion carbonate \ce{CO3^2-}]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{3} formes équivalentes : la double liaison \ce{C=O} peut se placer sur \emph{chacun}
+        des trois oxygènes.
+  \item La charge $-2$ est répartie également sur les trois \ce{O}, soit $-\tfrac{2}{3}$ chacun.
+  \item \textbf{Intermédiaires} : les trois liaisons \ce{C-O} sont identiques, entre simple et double.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[l'ion nitrate \ce{NO3-}]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
-  \item \rep exactement comme le carbonate, la double liaison \ce{N=O} peut occuper les trois
-        positions équivalentes : il y a donc \textbf{3} formes limites équivalentes.
-  \item \rep les trois liaisons \ce{N-O} sont \textbf{toutes identiques}, de longueur intermédiaire
-        entre une simple \ce{N-O} et une double \ce{N=O}. (La charge $-1$ se répartit sur les trois
-        oxygènes, soit $-\tfrac{1}{3}$ chacun.)
+\begin{corrige}[l'ion nitrate \ce{NO3-}]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{3} formes équivalentes (double \ce{N=O} sur chaque oxygène).
+  \item Charge $-1$ répartie sur les trois \ce{O}, soit $-\tfrac{1}{3}$ chacun.
+  \item Les trois liaisons \ce{N-O} sont \textbf{identiques}, de longueur intermédiaire.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[deux flèches à ne pas confondre]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
-  \item \rep \ce{O=O-O <-> O-O=O} met en jeu \textbf{une seule} espèce (l'ozone, décrit par deux
-        formules). \ce{2 H2O <=> H3O+ + OH-} met en jeu \textbf{plusieurs} espèces distinctes
-        (\ce{H2O}, \ce{H3O+}, \ce{OH-}).
-  \item \rep $\longleftrightarrow$ (résonance) signifie « \emph{une même} espèce, dont les électrons
-        sont délocalisés, que l'on ne sait pas dessiner d'une seule formule ». $\rightleftharpoons$
-        (équilibre) signifie « \emph{deux} espèces réelles qui se transforment l'une en l'autre, et
-        coexistent ». Dans le premier cas rien ne se transforme ; dans le second, il y a une vraie
-        réaction chimique.
+\begin{corrige}[l'ion acétate \ce{CH3COO-}]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CH3-CO2^-} : \ce{CH3-C(=O)-O^- <-> CH3-C(-O^-)=O}. La double liaison \ce{C=O} passe
+        d'un oxygène à l'autre.
+  \item La charge $-1$ est délocalisée \textbf{sur les deux oxygènes} du carboxylate
+        ($-\tfrac{1}{2}$ chacun).
+  \item \textbf{Oui} : les deux liaisons \ce{C-O} deviennent identiques (longueur intermédiaire) —
+        c'est la grande stabilité de l'ion carboxylate.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[l'ion perchlorate \ce{ClO4-}]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=2pt]
-  \item \rep cette structure introduit une \emph{différence} entre les oxygènes (un seul porterait la
-        charge $-1$ et une seule liaison simple, les trois autres des doubles liaisons). Or
-        l'expérience montre que les quatre oxygènes sont \textbf{équivalents} et les quatre liaisons
-        \ce{Cl-O} \textbf{identiques} : la formule unique ne peut donc pas être « la » description
-        correcte.
-  \item \rep la résonance résout le paradoxe : la charge $-1$ et le « caractère double » ne sont
-        localisés sur aucun oxygène en particulier, mais \textbf{délocalisés également} sur les
-        quatre. La position de la charge $-1$ « tourne » sur les quatre oxygènes, ce qui donne
-        \textbf{4} formes limites équivalentes ; l'hybride est parfaitement symétrique (charge
-        moyenne $-\tfrac{1}{4}$ par oxygène).
+\begin{corrige}[le dioxyde de soufre \ce{SO2}]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{2} formes équivalentes : \ce{O=S-O <-> O-S=O}.
+  \item \textbf{Oui}, les deux liaisons \ce{S-O} sont identiques (délocalisation de la double).
+  \item \textbf{Non} : la molécule reste coudée ; la résonance ne change pas la géométrie.
 \end{enumerate}
-\end{cor}
-
-\begin{astucebox}[le raccourci « positions équivalentes »]
-Pour ces ions à un atome central entouré d'oxygènes équivalents, le nombre de formes limites égale
-tout simplement le \textbf{nombre d'oxygènes} pouvant porter la double liaison : 2 pour \ce{O3},
-3 pour \ce{CO3^2-} et \ce{NO3-}, 4 pour \ce{ClO4-}. Rappel : seuls les \emph{électrons} bougent,
-et $\longleftrightarrow \neq \rightleftharpoons$.
-\end{astucebox}
+\end{corrige}
 
 \end{document}

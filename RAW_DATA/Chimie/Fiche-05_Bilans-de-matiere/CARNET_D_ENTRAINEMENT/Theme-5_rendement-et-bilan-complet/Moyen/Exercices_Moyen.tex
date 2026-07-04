@@ -1,90 +1,89 @@
-% =====================================================================
-%  THÈME 5 — Rendement et bilan complet
-%  Niveau MOYEN — Exercices
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{142,93,168}
-\definecolor{primarydark}{RGB}{82,45,108}
-\definecolor{moycol}{RGB}{198,120,9}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 5} — Thème 5 : Rendement}}
-\fancyhead[R]{\small\textcolor{moycol}{\textsc{Moyen}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox[auto counter]{exo}[1][]{enhanced,breakable,boxrule=1pt,arc=3pt,
-  left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,colback=moycol!6,colframe=moycol,
-  fonttitle=\bfseries,coltitle=white,
-  title={Exercice~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-
-\begin{center}
-{\LARGE\bfseries\color{primarydark}Thème 5 — Rendement}\\[1pt]
-{\large\color{moycol}\textbf{Niveau Moyen}}\\[2pt]
-{\itshape Objectif : calculer la quantité théorique par la stœchiométrie, puis en déduire le rendement.}\\
-{\color{primary}\rule{0.66\linewidth}{1pt}}
-\end{center}
-
-\begin{exo}[fermentation du glucose]
-La fermentation alcoolique s'écrit $\ce{C6H12O6 -> 2 C2H5OH + 2 CO2}$. À partir de \SI{0,50}{\mole}
-de glucose, on récupère \SI{11,5}{\gram} d'éthanol \ce{C2H5OH} ($M=\SI{46}{\gram\per\mole}$).
-\textbf{a)} Quelle est la quantité \emph{théorique} d'éthanol (en mol, puis en g) ?\quad
-\textbf{b)} Quel est le rendement de la fermentation ?
+\sisetup{per-mode=symbol}
+\begin{exo}[rendement d'une fermentation]
+La fermentation du glucose s'écrit $\ce{C6H12O6 -> 2 C2H5OH + 2 CO2}$. On fait fermenter
+\qty{0.5}{\mole} de glucose et l'on recueille \qty{11.5}{\gram} d'éthanol
+($M=\qty{46}{\gram\per\mole}$).
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité \emph{théorique} d'éthanol prévoit-on ?
+  \item Quelle quantité d'éthanol obtient-on réellement ?
+  \item En déduire le rendement de la fermentation.
+\end{enumerate}
 \end{exo}
 
-\begin{exo}[aluminothermie du fer]
-La réaction $\ce{3 FeO + 2 Al -> 3 Fe + Al2O3}$ est réalisée avec \SI{144}{\gram} de \ce{FeO}
-($M=72$) et \SI{27}{\gram} d'aluminium ($M=27$). On obtient \SI{42}{\gram} de fer ($M=56$).
-\textbf{a)} Identifie le réactif limitant.\quad
-\textbf{b)} Calcule la masse théorique de fer.\quad
-\textbf{c)} En déduire le rendement.
+\begin{exo}[calcination du calcaire]
+On calcine \qty{100}{\gram} de calcaire \ce{CaCO3} : $\ce{CaCO3 -> CaO + CO2 ^}$. On donne
+$M(\ce{CaCO3})=\qty{100}{\gram\per\mole}$, $M(\ce{CaO})=\qty{56}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle masse \emph{théorique} de chaux \ce{CaO} peut-on obtenir ?
+  \item On recueille \qty{42}{\gram} de \ce{CaO}. Quel est le rendement ?
+\end{enumerate}
 \end{exo}
 
-\begin{exo}[synthèse du carbure de silicium]
-Le carbure de silicium (carborundum) est produit par $\ce{SiO2 + 3 C -> SiC + 2 CO}$. On fait réagir
-\SI{120}{\kilo\gram} de \ce{SiO2} ($M=60$) et \SI{36}{\kilo\gram} de carbone ($M=12$) ; on obtient
-\SI{32}{\kilo\gram} de \ce{SiC} ($M=40$).
-\textbf{a)} Quel est le réactif limitant ?\quad
-\textbf{b)} Quelle masse théorique de \ce{SiC} attend-on ?\quad
-\textbf{c)} Quel est le rendement ?
+\begin{exo}[remonter du produit voulu au réactif]
+On veut réellement produire \qty{0.9}{\mole} d'ammoniac par $\ce{N2 + 3 H2 -> 2 NH3}$ (\ce{H2} en
+excès), avec un rendement de \qty{75}{\percent}.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité \emph{théorique} de \ce{NH3} faut-il viser ?
+  \item Quelle quantité de \ce{N2} faut-il alors engager ?
+\end{enumerate}
 \end{exo}
 
-\begin{exo}[préparation du carbonate de sodium]
-Soit $\ce{2 NaCl + CaCO3 -> Na2CO3 + CaCl2}$. On part de \SI{29,25}{\gram} de \ce{NaCl}
-($M=58{,}5$) et \SI{45,0}{\gram} de \ce{CaCO3} ($M=100$) ; on récupère \SI{13,25}{\gram} de
-\ce{Na2CO3} ($M=106$).
-\textbf{a)} Détermine le réactif limitant.\quad
-\textbf{b)} Calcule la masse théorique de \ce{Na2CO3}, puis le rendement.
+\begin{exo}[rendement à partir du limitant]
+On plonge \qty{2.7}{\gram} d'aluminium ($M=\qty{27}{\gram\per\mole}$) dans \qty{200}{\milli\litre} de
+\ce{ZnCl2} à \qty{0.5}{\mole\per\litre} : $\ce{3 ZnCl2 + 2 Al -> 3 Zn + 2 AlCl3}$. On donne
+$M(\ce{Zn})=\qty{65.4}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Identifie le réactif limitant et la quantité \emph{théorique} de \ce{Zn}.
+  \item Quelle masse \emph{théorique} de zinc cela représente-t-il ?
+  \item On récupère \qty{3.27}{\gram} de \ce{Zn}. Quel est le rendement ?
+\end{enumerate}
 \end{exo}
 
-\begin{exo}[combustion du sulfure d'hydrogène avec pertes]
-On brûle \SI{10,2}{\gram} de \ce{H2S} ($M=34$) avec \SI{9,6}{\gram} de \ce{O2} ($M=32$) selon
-$\ce{2 H2S + 3 O2 -> 2 SO2 + 2 H2O}$. Le \textbf{rendement molaire est de \SI{50}{\percent}}.
-\textbf{a)} Quel est le réactif limitant ?\quad
-\textbf{b)} Quelle masse de \ce{SO2} ($M=64$) obtient-on \emph{réellement} ?
+\begin{exo}[synthèse du trioxyde de soufre]
+Pour $\ce{2 SO2 + O2 -> 2 SO3}$, on engage \qty{128}{\gram} de \ce{SO2} dans un excès d'oxygène.
+On donne $M(\ce{SO2})=\qty{64}{\gram\per\mole}$, $M(\ce{SO3})=\qty{80}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle masse \emph{théorique} de \ce{SO3} peut-on obtenir ?
+  \item On en recueille \qty{120}{\gram}. Quel est le rendement ?
+\end{enumerate}
 \end{exo}
 
 \end{document}

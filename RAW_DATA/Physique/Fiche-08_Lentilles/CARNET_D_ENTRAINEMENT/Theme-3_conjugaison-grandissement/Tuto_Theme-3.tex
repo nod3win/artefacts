@@ -1,0 +1,109 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+% THEME_TITLE: Relation de conjugaison et grandissement
+\sisetup{per-mode=symbol}
+
+Pour connaître la \emph{position} et la \emph{taille} de l'image \textbf{sans dessiner}, deux formules
+suffisent. Toute la difficulté est dans les \textbf{signes} : respecte le tableau et elles marchent
+dans tous les cas.
+
+\begin{cle}[les deux formules et leurs conventions]
+\[ \boxed{\ \dfrac{1}{f}=\dfrac{1}{u}+\dfrac{1}{v}\ }\qquad\qquad
+   \boxed{\ \gamma=\dfrac{i}{o}=-\dfrac{v}{u}\ } \]
+\begin{center}\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{>{\bfseries}l c c}
+\toprule
+Grandeur & \cellcolor{excol!12}signe $+$ & \cellcolor{attncol!12}signe $-$ \\
+\midrule
+$u$ (objet--lentille) & objet réel (cas usuel) & --- \\
+$v$ (image--lentille) & image \textbf{réelle} & image \textbf{virtuelle} \\
+$f$ (focale) & lentille \textbf{convergente} & lentille \textbf{divergente} \\
+$i$ (hauteur image) & image \textbf{droite} & image \textbf{renversée} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Ici $o>0$ (objet vers le haut), $u=\overline{OA}$, $v=\overline{OA'}$, $i$ = hauteur de l'image.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8,>=Stealth,font=\footnotesize]
+  \draw[black!35,dash pattern=on 3pt off 2pt] (-6.2,0)--(4.6,0);
+  \draw[line width=1.5pt,<->,black!65] (0,-1.9)--(0,1.9);
+  \fill[black] (0,0) circle (1.2pt); \node[above right] at (0,0) {$O$};
+  \fill[primary] (2,0) circle (1.4pt); \node[above] at (2,0) {$F'$};
+  \fill[primary] (-2,0) circle (1.4pt); \node[above] at (-2,0) {$F$};
+  \draw[attncol,line width=1.8pt,->] (-5,0)--(-5,1.4); \node[attncol,left] at (-5,0.7) {$o$};
+  \draw[excol,line width=1.8pt,->] (3.33,0)--(3.33,-0.93); \node[excol,right] at (3.33,-0.5) {$i$};
+  \draw[black!75,line width=0.8pt] (-5,1.4)--(0,0); \draw[defcol,line width=0.8pt,->] (0,0)--(3.9,-1.09);
+  \draw[black!75,line width=0.8pt] (-5,1.4)--(0,1.4); \draw[defcol,line width=0.8pt,->] (0,1.4)--(3.9,-1.33);
+  % cotes u et v
+  \draw[<->,black!55] (-5,-1.55)--(0,-1.55); \node[below,black!70] at (-2.5,-1.55) {$u>0$};
+  \draw[<->,black!55] (0,-1.55)--(3.33,-1.55); \node[below,black!70] at (1.7,-1.55) {$v>0$ (réelle)};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[résoudre un problème de conjugaison]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item Mettre \textbf{toutes les longueurs dans la même unité} et fixer les signes ($u>0$ ;
+        $f>0$ convergente / $f<0$ divergente).
+  \item Isoler l'inconnue : $\dfrac{1}{v}=\dfrac{1}{f}-\dfrac{1}{u}$ pour trouver $v$
+        (ou $\dfrac{1}{f}=\dfrac{1}{u}+\dfrac{1}{v}$ pour trouver $f$).
+  \item Calculer le grandissement $\gamma=-\dfrac{v}{u}$ puis la taille $i=\gamma\,o$.
+  \item \textbf{Interpréter les signes} : $v>0$ réelle / $v<0$ virtuelle ; $\gamma<0$ renversée /
+        $\gamma>0$ droite ; $|\gamma|>1$ agrandie / $|\gamma|<1$ réduite.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[un calcul complet]
+Convergente $f=+\qty{20}{\cm}$, objet réel à $u=+\qty{60}{\cm}$, hauteur $o=\qty{2}{\cm}$.
+\[ \frac{1}{v}=\frac{1}{20}-\frac{1}{60}=\frac{3-1}{60}=\frac{1}{30}\ \Rightarrow\ v=+\qty{30}{\cm}\ (\text{réelle}). \]
+\[ \gamma=-\frac{v}{u}=-\frac{30}{60}=-0{,}5\ \Rightarrow\ i=\gamma\,o=-\qty{1}{\cm}. \]
+Image \textbf{réelle}, \textbf{renversée}, \textbf{réduite} de moitié : c'est l'appareil photo.
+\end{exemplebox}
+
+\begin{piege}[trois signes qui coûtent des points]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Même unité} pour $u$, $v$, $f$ : ne mélange pas cm et m dans une même formule.
+  \item N'oublie pas le \textbf{« moins »} de $\gamma=-v/u$ : c'est lui qui renverse l'image réelle.
+  \item Une image \textbf{virtuelle} donne $v<0$ (et alors $\gamma>0$, image droite) : c'est le cas de
+        la loupe et de \emph{toute} lentille divergente.
+\end{itemize}
+\end{piege}
+
+\end{document}

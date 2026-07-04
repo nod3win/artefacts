@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[neutraliser un triacide]
+\begin{enumerate}[label=\alph*)]
+  \item Chaque \ce{H3PO4} cède \textbf{trois} \ce{H+}, donc à l'équivalence $\;3\,C_a V_a = C_b V_b$.
+  \item $V_b = \dfrac{3\,C_a V_a}{C_b} = \dfrac{3 \times 0{,}10 \times 25}{0{,}15} = \dfrac{7{,}5}{0{,}15}
+        = \mathbf{50\ mL}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[un tampon face à une base forte]
+\begin{enumerate}[label=\alph*)]
+  \item La base forte est consommée par l'acide du tampon : $\ce{NH4+ + OH- -> NH3 + H2O}$. Quantités
+        initiales : $n(\ce{NH4+}) = n(\ce{NH3}) = 0{,}200\times0{,}40 = \qty{0,080}{mol}$ ;
+        $n(\ce{OH-}) = 0{,}020\times1{,}0 = \qty{0,020}{mol}$. Après réaction :
+        \[ n(\ce{NH4+}) = 0{,}080 - 0{,}020 = \qty{0,060}{mol},\qquad n(\ce{NH3}) = 0{,}080 + 0{,}020 = \qty{0,100}{mol}. \]
+  \item $\mathrm{pH} = 9{,}2 + \log\dfrac{0{,}100}{0{,}060} = 9{,}2 + \log\tfrac{5}{3}
+        = 9{,}2 + (0{,}70 - 0{,}48) = 9{,}2 + 0{,}22 = \mathbf{9{,}42}$. Variation minime : le tampon a résisté.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[préparer un tampon par titrage partiel]
+Quantité initiale d'acide : $n_0 = 0{,}150 \times 0{,}20 = \qty{0,030}{mol}$. La soude transforme \ce{CH3COOH}
+en \ce{CH3COO-} : si on verse $x$ mol de \ce{NaOH}, alors $n(\ce{A-}) = x$ et $n(\ce{HA}) = 0{,}030 - x$.
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH} = \mathrm{p}K_a$ exige $[\ce{A-}] = [\ce{HA}]$ (demi-équivalence) : $x = 0{,}015$ mol, soit
+        $V = \dfrac{0{,}015}{0{,}20} = \qty{0,075}{L} = \mathbf{75\ mL}$.
+  \item $\mathrm{pH} = 4{,}74 + \log 2 \Rightarrow \dfrac{[\ce{A-}]}{[\ce{HA}]} = 2$, donc
+        $\dfrac{x}{0{,}030 - x} = 2 \Rightarrow x = 0{,}020$ mol, soit $V = \dfrac{0{,}020}{0{,}20}
+        = \qty{0,10}{L} = \mathbf{100\ mL}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[lire une courbe de titrage]
+\begin{enumerate}[label=\alph*)]
+  \item Le saut de pH (point d'inflexion) est centré sur $V_E = \mathbf{20\ mL}$.
+  \item La demi-équivalence est à $V_E/2 = \qty{10}{mL}$ ; on y lit $\mathrm{pH} = 4{,}74$. À ce point
+        $[\ce{HA}] = [\ce{A-}]$, donc $\mathrm{p}K_a = \mathbf{4{,}74}$.
+  \item \ce{HA} est un acide \textbf{faible} : son pH de départ ($\approx 2{,}9$) est élevé pour une
+        concentration de cet ordre (un acide fort à $0{,}1$ M partirait de $\mathrm{pH} = 1$), et il présente une
+        \emph{zone tampon}. Le pH à l'équivalence $\approx 8{,}7 > 7$ est \textbf{cohérent} : la base conjuguée
+        \ce{A-} formée rend le milieu basique (acide faible dosé par base forte).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[capstone : hydrolyse, y compris le sel d'acide et de base faibles]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{NaNO3} : base forte + acide fort $\Rightarrow$ \textbf{neutre}.
+  \item \ce{KF} : base forte (\ce{KOH}) + acide faible (\ce{HF}) $\Rightarrow$ \textbf{basique}
+        ($\ce{F- + H2O <=> HF + OH-}$).
+  \item \ce{NH4NO3} : base faible (\ce{NH3}) + acide fort (\ce{HNO3}) $\Rightarrow$ \textbf{acide}
+        ($\ce{NH4+ + H2O <=> NH3 + H3O+}$).
+  \item \ce{NH4F} : $\mathrm{pH} \approx \tfrac12(9{,}2 + 3{,}2) = \tfrac{12{,}4}{2} = 6{,}2 < 7$ $\Rightarrow$
+        \textbf{légèrement acide}. (L'acide \ce{NH4+} l'emporte de peu sur la base \ce{F-}, très faible.)
+\end{enumerate}
+\end{corrige}
+
+\end{document}

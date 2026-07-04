@@ -1,0 +1,118 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[objet suspendu : deux montages]
+Poids commun aux deux cas : $G = m\,g = 12\times 10 = \qty{120}{N}$.
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{VRAI.} Cas symétrique $\Rightarrow$ partage égal : chaque dynamomètre lit
+        $G/2 = 120/2 = \qty{60}{N}$.
+  \item \textbf{FAUX.} Les fils supportent \emph{exactement} le poids : la somme des contributions
+        verticales vaut $G=\qty{120}{N}$, et non \qty{240}{N}. Croire que chaque fil porte
+        \qty{120}{N} reviendrait à doubler le poids réellement suspendu.
+  \item \textbf{FAUX.} En montage asymétrique, les fils ne se partagent plus la charge également :
+        les deux indications diffèrent (le fil le plus proche de la verticale lit davantage).
+  \item \textbf{FAUX.} La charge totale est toujours le poids $G=\qty{120}{N}$, quelle que soit la
+        symétrie. Seul le \emph{partage} entre les deux fils change, pas la somme.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[plaque sur deux tiges]
+\begin{enumerate}[label=\alph*)]
+  \item À l'équilibre, la somme des indications égale le poids total :
+        $G_{\text{tot}} = 300 + 300 = \qty{600}{N}$.
+  \item Une masse de \qty{300}{kg} pèserait $G = 300\times 10 = \qty{3000}{N}$. Or la charge totale
+        \emph{mesurée} n'est que de \qty{600}{N} : la plaque seule ne peut donc pas peser plus que
+        \qty{600}{N}. L'affirmation est \textbf{impossible}.
+  \item Le poids total est conservé : $D_1+D_2 = \qty{600}{N}$. Donc
+        $D_2 = 600 - 380 = \qty{220}{N}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[suspension par deux câbles inclinés]
+\begin{enumerate}[label=\alph*)]
+  \item L'objet subit son poids $\vv G$ (vers le bas) et les deux tensions $\vv T$, dirigées le long
+        des câbles. Chaque tension a une composante verticale $T\cos\theta$ (vers le haut) et une
+        composante horizontale $T\sin\theta$. Par symétrie, les composantes horizontales s'annulent.
+        L'équilibre vertical ($\sum F_y=0$) donne :
+        \[ 2T\cos\theta - G = 0 \quad\Longrightarrow\quad 2T\cos\theta = G. \]
+  \item On isole $T$ :
+        \[ T = \frac{G}{2\cos\theta} = \frac{m\,g}{2\cos\theta}. \]
+  \item $G = 20\times 10 = \qty{200}{N}$ et $\cos\ang{60}=0{,}5$, donc
+        \[ T = \frac{200}{2\times 0{,}5} = \qty{200}{N}. \]
+        C'est \emph{bien plus} que la valeur naïve $G/2=\qty{100}{N}$ : plus les câbles sont inclinés,
+        plus la tension dans chacun est grande (l'égalité $T=G/2$ ne vaudrait que pour des câbles
+        \emph{verticaux}, $\theta=0$).
+  \item Rupture pour $T=\qty{500}{N}$ :
+        \[ \frac{m\,g}{2\cos\ang{60}} = 500 \;\Rightarrow\; \frac{m\times 10}{1} = 500
+        \;\Rightarrow\; m_{\max} = \qty{50}{kg}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[équilibre à vitesse constante]
+\begin{enumerate}[label=\alph*)]
+  \item Vitesse constante $\Rightarrow \vv a=\vv 0 \Rightarrow \sum\vv F=\vv 0$. Sur la verticale, le
+        frottement de l'air $f$ (haut) compense exactement le poids (bas) :
+        \[ f = G = m\,g = 80\times 10 = \qty{800}{N}. \]
+  \item $\sum\vv F=\vv 0$ se sépare en vertical et horizontal :
+        \begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+          \item \textbf{portance $=$ poids} (mêmes intensités, sens opposés), sinon l'avion monterait
+                ou descendrait ;
+          \item \textbf{force motrice $=$ résistance de l'air} (mêmes intensités, sens opposés), sinon
+                il accélérerait ou ralentirait.
+        \end{itemize}
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[chasse aux affirmations fausses]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Fausse.} Convertir : $m=\qty{0.200}{kg}$, donc $G = 0{,}200\times 10 = \qty{2}{N}$
+        (et non \qty{200}{N}).
+  \item \textbf{Correcte.} La masse (quantité de matière) ne change pas ; le poids $G=mg$ varie
+        légèrement car $g$ dépend du lieu (latitude, altitude).
+  \item \textbf{Correcte.} Tant que la caisse reste immobile, l'équilibre horizontal impose que le
+        frottement (statique) égale exactement la force appliquée : $f=\qty{30}{N}$. (S'il double,
+        le frottement double aussi, tant que la caisse ne glisse pas.)
+  \item \textbf{Fausse.} $\sum\vv F=\vv 0$ n'assure que l'équilibre de \emph{translation}. Un couple de
+        forces vérifie $\sum\vv F=\vv 0$ tout en faisant tourner le solide : il faut aussi
+        $\sum\mathcal{M}=0$.
+\end{enumerate}
+\textbf{Bilan :} deux affirmations sont correctes (\emph{b} et \emph{c}).
+\end{corrige}
+
+\end{document}

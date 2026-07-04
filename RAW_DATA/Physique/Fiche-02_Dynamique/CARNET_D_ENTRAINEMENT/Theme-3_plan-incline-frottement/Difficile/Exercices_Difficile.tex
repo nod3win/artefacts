@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[classer trois descentes]
+Trois corps A, B, C partent du repos et descendent \emph{sans frottement} des plans inclinés d'angles
+respectifs \ang{20}, \ang{30} et \ang{50}. Leurs masses sont $m_A=\qty{6}{\kilogram}$,
+$m_B=\qty{2}{\kilogram}$, $m_C=\qty{4}{\kilogram}$.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=0.8]
+  \foreach \x/\th/\lab/\mm in {0/20/A/6, 3.4/30/B/2, 6.8/50/C/4}{
+    \begin{scope}[shift={(\x,0)}]
+      \coordinate (O) at (0,0); \coordinate (Bb) at (2,0);
+      \coordinate (Cc) at (2,{2*tan(\th)});
+      \draw[thick,fill=black!5] (O)--(Bb)--(Cc)--cycle;
+      \draw (0.5,0) arc (0:\th:0.5);
+      \fill[defcol] (1,{1*tan(\th)}) circle (0.1);
+      \node[font=\scriptsize] at (1.0,-0.45){Cas \lab, $\ang{\th}$};
+      \node[font=\scriptsize] at (1.0,-0.85){$m_{\lab}=\qty{\mm}{\kilogram}$};
+    \end{scope}}
+\end{tikzpicture}
+\end{center}
+Classe A, B et C par ordre \textbf{croissant} d'accélération. Justifie.
+\end{exo}
+
+\begin{exo}[le cycliste : équilibre puis accélération]
+Le poids total d'un cycliste et de son vélo vaut $G=\qty{802}{\newton}$ ; on prend
+$g=\qty{10}{\metre\per\second\squared}$ et $\sin\ang{30}=\num{0,5}$, $\sin\ang{4}\approx\num{0,0698}$.
+\begin{enumerate}[label=\alph*)]
+  \item Sur une pente de \ang{4} parcourue en roue libre à \emph{vitesse constante}, calcule l'intensité du frottement $F_f$.
+  \item Sur une pente de \ang{30}, le frottement vaut désormais $F_f=\qty{20}{\newton}$. Calcule d'abord la masse $m$, puis l'accélération du cycliste.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[frottement statique : la force qui s'ajuste]
+Une caisse de masse $m=\qty{10}{\kilogram}$ est posée sur un sol horizontal. Les coefficients de
+frottement valent $\mu_s=\num{0,5}$ (statique) et $\mu_c=\num{0,3}$ (cinétique) ; $g=\qty{10}{\metre\per\second\squared}$.
+\begin{enumerate}[label=\alph*)]
+  \item On tire horizontalement avec \qty{40}{\newton} et la caisse \emph{reste immobile}. Que vaut la force de frottement ?
+  \item Vérifie qu'elle peut effectivement rester immobile (compare à la valeur maximale $\mu_s\, mg$).
+  \item Si l'on tire avec \qty{45}{\newton} sans qu'elle bouge, que vaut alors le frottement ? Au-delà de quelle force la caisse se met-elle à glisser ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[coefficient de frottement par un MRUA]
+Un bloc de masse $m=\qty{50}{\kilogram}$ repose sur une surface horizontale. On le tire avec une force
+horizontale constante $\vv F=\qty{400}{\newton}$ ; il adopte alors un MRUA d'accélération
+$a=\qty{2}{\metre\per\second\squared}$ ($g=\qty{10}{\metre\per\second\squared}$).
+Calcule le coefficient de frottement cinétique $\mu_c$ entre le bloc et la surface.
+\end{exo}
+
+\begin{exo}[vitesse au bas d'une pente]
+Un bloc part du repos et glisse \emph{sans frottement} le long d'un plan incliné à $\alpha=\ang{30}$
+($g=\qty{10}{\metre\per\second\squared}$, $\sin\ang{30}=\num{0,5}$).
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est son accélération le long de la pente ?
+  \item Quelle vitesse atteint-il après avoir parcouru \qty{10}{\metre} le long du plan ? (on utilise $v^2=2a\,d$)
+\end{enumerate}
+\end{exo}
+\end{document}

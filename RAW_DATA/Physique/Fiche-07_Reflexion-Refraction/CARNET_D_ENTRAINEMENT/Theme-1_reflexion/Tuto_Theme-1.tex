@@ -1,0 +1,112 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Réflexion — lois, normale et angles
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 — La réflexion}\\[2pt]
+{\color{primary}\itshape Lois de la réflexion, normale et angles, réflecteur en coin}
+\end{center}
+
+\begin{cle}[les deux lois de la réflexion]
+Quand un rayon lumineux frappe une surface réfléchissante (un \emph{miroir}), il est renvoyé
+en restant dans son milieu de départ. Deux lois gouvernent ce renvoi :
+\begin{enumerate}[label=(\roman*),leftmargin=2.1em,topsep=2pt,itemsep=1pt]
+  \item l'\textbf{angle d'incidence} $\hat{\imath}$ est égal à l'\textbf{angle de réflexion} $\hat{r}$ :
+        \[ \boxed{\hat{\imath}=\hat{r}} \]
+  \item le rayon incident, le rayon réfléchi et la normale sont \textbf{dans un même plan}.
+\end{enumerate}
+\end{cle}
+
+\begin{cle}[la normale : l'axe de référence de tous les angles]
+La \textbf{normale} est la droite \emph{perpendiculaire au miroir} au point d'impact. En optique,
+\textbf{tous les angles se mesurent par rapport à la normale}, jamais par rapport à la surface.
+Comme $\hat{\imath}=\hat{r}$, le rayon « rebondit » \emph{symétriquement} par rapport à la normale.
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15,>=Stealth]
+  \fill[pattern=north east lines,pattern color=black!40] (-3,-0.30) rectangle (3,0);
+  \draw[black,line width=1.4pt] (-3,0) -- (3,0);
+  \node[black!70,right,font=\footnotesize] at (3,-0.18){miroir};
+  \draw[dash pattern=on 3pt off 2pt,black!60] (0,0) -- (0,2.6);
+  \node[black!60,above,font=\footnotesize] at (0,2.6){normale};
+  \draw[->,line width=1.1pt] (-2.2,2.2) -- (0,0);
+  \node[left,font=\footnotesize] at (-2.2,2.05){rayon incident};
+  \draw[->,line width=1.1pt,primary] (0,0) -- (2.2,2.2);
+  \node[right,font=\footnotesize,primary] at (2.2,2.05){rayon réfléchi};
+  \draw[line width=0.7pt] (0,1) arc (90:135:1);
+  \node[font=\footnotesize] at (-0.5,1.2){$\hat{\imath}$};
+  \draw[line width=0.7pt,primary] (0,1) arc (90:45:1);
+  \node[font=\footnotesize,primary] at (0.5,1.2){$\hat{r}$};
+  \fill (0,0) circle (1.4pt);
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[traiter un problème de réflexion]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Tracer la normale} : perpendiculaire au miroir au point d'impact.
+  \item \textbf{Repérer l'angle donné} : est-il mesuré par rapport à la normale ou par rapport à la
+        surface ? Si c'est par rapport à la surface, convertir : $\hat{\imath}=90^\circ-(\text{angle avec le miroir})$.
+  \item \textbf{Appliquer} $\hat{r}=\hat{\imath}$.
+  \item Si besoin, calculer l'angle entre rayon incident et rayon réfléchi : il vaut $\hat{\imath}+\hat{r}=2\hat{\imath}$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[un rebond simple]
+Un rayon arrive sur un miroir sous un angle d'incidence $\hat{\imath}=\ang{30}$ (mesuré par rapport à
+la normale). Alors le rayon réfléchi repart sous $\hat{r}=\ang{30}$ de l'autre côté de la normale.
+L'angle \emph{entre} le rayon incident et le rayon réfléchi vaut $\hat{\imath}+\hat{r}=\ang{60}$.
+\end{exemplebox}
+
+\begin{piege}[« par rapport au miroir » $\ne$ « par rapport à la normale »]
+Un énoncé donne souvent l'angle d'un rayon \textbf{par rapport à la surface du miroir}. Il faut
+alors le convertir avant tout calcul, car la normale est perpendiculaire au miroir :
+\[ \hat{\imath}=90^\circ-(\text{angle mesuré par rapport au miroir}). \]
+Un rayon « à $\ang{40}$ du miroir » a en réalité un angle d'incidence $\hat{\imath}=\ang{50}$.
+C'est l'erreur la plus fréquente du chapitre.
+\end{piege}
+
+\begin{remarque}[le réflecteur en coin : deux miroirs perpendiculaires]
+Avec \textbf{deux miroirs perpendiculaires}, un rayon qui se réfléchit successivement sur les deux
+repart \textbf{exactement parallèle} à sa direction d'arrivée, mais en sens opposé, \emph{quel que soit}
+l'angle d'entrée. La première réflexion inverse une composante de la direction, la seconde inverse
+l'autre : la direction $\vv{u}=(u_x,u_y)$ devient $(-u_x,-u_y)=-\vv{u}$. C'est le principe du
+\emph{catadioptre} (vélos, bornes routières, réflecteurs déposés sur la Lune).
+\end{remarque}
+\end{document}

@@ -1,0 +1,95 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= DIFFICILE =================
+
+\begin{exo}[la pomme et la Terre --- vrai ou faux ?]
+Une pomme de masse $m$ est posée au sol. On s'intéresse aux forces de gravitation
+entre la pomme et la Terre. Indique pour chaque proposition si elle est
+\textbf{vraie} ou \textbf{fausse}, en justifiant.
+\begin{enumerate}[label=\alph*)]
+  \item La Terre attire la pomme et la pomme attire la Terre avec deux forces de
+        \emph{même} intensité.
+  \item Comme la Terre est bien plus massive, elle attire la pomme beaucoup plus fort
+        que la pomme n'attire la Terre.
+  \item Ces deux forces s'appliquent sur le même corps, donc elles se compensent et
+        leur somme est nulle.
+  \item La réaction (au sens de la 3\up{e} loi de Newton) de la force gravitationnelle
+        exercée par la Terre sur la pomme est la force gravitationnelle exercée par la
+        pomme sur la Terre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux satellites --- la racine du rapport]
+Deux satellites de \emph{même} masse sont en orbite : $A$ a son centre à
+$d_A=\qty{8000}{\kilo\metre}$ du centre de la Terre, $B$ à $d_B=\qty{6000}{\kilo\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Établis l'expression du rapport $\dfrac{F_A}{F_B}$ des forces subies.
+  \item Calcule la \emph{racine carrée} de ce rapport, $\sqrt{F_A/F_B}$.
+  \item Déduis-en lequel des deux satellites subit la force la plus intense.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le Soleil nous attire-t-il plus que la Terre ?]
+On compare, sur une personne de masse $m$, la force de gravitation exercée par la
+Terre (personne au sol) et celle exercée par le Soleil. Données :
+$M_T=\qty{6.0e24}{\kilogram}$, $R_T=\qty{6.4e6}{\metre}$,
+$M_S=\qty{2.0e30}{\kilogram}$, distance Terre--Soleil $D=\qty{1.5e11}{\metre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Exprime le rapport $\dfrac{F_S}{F_T}$ en fonction de $M_S$, $M_T$, $R_T$ et $D$
+        (la masse $m$ et $\mathcal{G}$ doivent se simplifier).
+  \item Calcule sa valeur numérique.
+  \item Qui, du Soleil ou de la Terre, attire le plus fortement la personne ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[combien de propositions correctes ?]
+Deux corps s'attirent avec une force $F$. Parmi les affirmations suivantes,
+indique celles qui sont \textbf{correctes}.
+\begin{enumerate}[label=\alph*)]
+  \item Si l'on double \emph{chacune} des deux masses, la force est multipliée par $4$.
+  \item Si l'on triple la distance, la force est divisée par $3$.
+  \item Si l'on double une masse et que l'on double aussi la distance, la force est
+        divisée par $2$.
+  \item Si l'on divise la distance par $3$, la force est multipliée par $9$.
+\end{enumerate}
+Combien de ces propositions sont correctes ?
+\end{exo}
+
+\end{document}

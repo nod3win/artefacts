@@ -1,0 +1,84 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}{\large\bfseries\color{primarydark} Thème 5 — Niveau Facile}\end{center}
+\emph{Rappels :} dilution $C_1V_1 = C_2V_2$ ; facteur $F = V_2/V_1 = C_1/C_2$ ;
+$\chi_{\ce{A}} = n_{\ce{A}}/n_{\text{tot}}$ ; molalité $m = n/m_{\text{solvant}}(\si{\kilo\gram})$.
+
+\begin{exo}[concentration après dilution]
+Calcule la concentration finale $C_2 = C_1V_1/V_2$.
+\begin{enumerate}[label=\alph*)]
+  \item $C_1 = \SI{1}{\mole\per\litre}$, $V_1 = \SI{10}{\milli\litre}$, $V_2 = \SI{100}{\milli\litre}$ ;
+  \item $C_1 = \SI{0.5}{\mole\per\litre}$, $V_1 = \SI{20}{\milli\litre}$, $V_2 = \SI{200}{\milli\litre}$ ;
+  \item $C_1 = \SI{2}{\mole\per\litre}$, $V_1 = \SI{25}{\milli\litre}$, $V_2 = \SI{250}{\milli\litre}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[volume de mère à prélever]
+Calcule le volume $V_1$ à prélever ($V_1 = C_2V_2/C_1$).
+\begin{enumerate}[label=\alph*)]
+  \item préparer $V_2 = \SI{100}{\milli\litre}$ à $C_2 = \SI{0.1}{\mole\per\litre}$ depuis $C_1 = \SI{1}{\mole\per\litre}$ ;
+  \item préparer $V_2 = \SI{250}{\milli\litre}$ à $C_2 = \SI{0.2}{\mole\per\litre}$ depuis $C_1 = \SI{2}{\mole\per\litre}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[facteur de dilution]
+\begin{enumerate}[label=\alph*)]
+  \item Une solution à $\SI{1.5}{\mole\per\litre}$ est diluée $3$ fois. Quelle est sa concentration finale~?
+  \item On prélève $\SI{50}{\milli\litre}$ d'une solution que l'on dilue $4$ fois. Quel est le volume final~?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[fraction molaire]
+Calcule la fraction molaire de chaque constituant.
+\begin{enumerate}[label=\alph*)]
+  \item mélange de $\SI{2}{\mole}$ de \ce{A} et $\SI{3}{\mole}$ de \ce{B} ;
+  \item mélange de $\SI{1}{\mole}$ de \ce{A}, $\SI{1}{\mole}$ de \ce{B} et $\SI{2}{\mole}$ de \ce{C}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[molalité]
+Calcule la molalité $m = n/m_{\text{solvant}}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{0.5}{\mole}$ de soluté dans $\SI{0.25}{\kilo\gram}$ d'eau ;
+  \item $\SI{0.2}{\mole}$ de soluté dans $\SI{500}{\gram}$ d'eau.
+\end{enumerate}
+\end{exo}
+
+\end{document}

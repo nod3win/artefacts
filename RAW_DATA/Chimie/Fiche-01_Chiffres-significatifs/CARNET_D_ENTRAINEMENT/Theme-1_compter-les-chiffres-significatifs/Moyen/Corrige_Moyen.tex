@@ -1,109 +1,94 @@
-% =====================================================================
-%  THÈME 1 — Compter les chiffres significatifs — CORRIGÉ — Niveau MOYEN
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\usepackage[version=4]{mhchem}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{fancyhdr}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{150,98,162}
-\definecolor{primarydark}{RGB}{92,52,110}
-\newcommand{\cs}{chiffre significatif}
-\newcommand{\CS}{chiffres significatifs}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 1} — Chiffres significatifs}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé · Moyen · Thème 1}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-
-\newtcolorbox[auto counter]{cor}[1][]{enhanced,breakable,boxrule=0.8pt,arc=2pt,
-  colback=primarydark!5,colframe=primarydark,left=3mm,right=3mm,top=2mm,bottom=2mm,
-  fonttitle=\bfseries,coltitle=white,
-  title={Correction — Exercice~\thetcbcounter\ifx\relax#1\relax\relax\else\ ---\ \textmd{\itshape #1}\fi}}
-
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-
-\begin{center}
-{\Large\bfseries\color{primarydark} Corrigé — Niveau Moyen}\\[1pt]
-{\color{primary} Thème 1 : compter les chiffres significatifs}
-\end{center}
-\vspace{2mm}
-
-\begin{cor}[L'ambiguïté des zéros de queue d'un entier]
-Un zéro de queue d'un entier (sans virgule) peut être soit mesuré, soit un simple cadrage : on ne
-peut pas trancher sans convention. Les zéros \emph{captifs}, eux, restent toujours significatifs.
-\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
-  \item a) $\num{100}$ : aucun chiffre non nul après le $1$ n'est garanti $\Rightarrow$ $1$, $2$ ou
-        $3$~CS possibles.
-  \item b) $\num{2030}$ : le $2$, le zéro \emph{captif} et le $3$ sont sûrs (3~CS) ; le zéro de queue
-        est ambigu $\Rightarrow$ $3$ ou $4$~CS.
-  \item c) $\num{4500}$ : le $4$ et le $5$ sont sûrs ; les deux zéros de queue sont ambigus
-        $\Rightarrow$ $2$, $3$ ou $4$~CS.
-\end{itemize}
-\end{cor}
-
-\begin{cor}[La notation scientifique lève l'ambiguïté]
-« Certain jusqu'à la dizaine » signifie que le dernier chiffre \emph{fiable} est celui des dizaines.
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item Chiffres fiables : $2$ (milliers), $5$ (centaines), $0$ (dizaines) $\Rightarrow \mathbf{3}$~CS.
-  \item On place la virgule après le premier chiffre non nul et on ne garde que les $3$~CS :
-        \[ \boxed{\num{2,50e3}\ \text{m}}. \]
-        Le zéro de queue de la mantisse est ici \emph{obligatoire} : il porte l'information « connu à
-        la dizaine ».
-  \item À $\pm\,\num{1}$~m près, le chiffre des unités devient fiable : $4$~CS, soit
-        $\num{2,500e3}$~m.
+\sisetup{per-mode=symbol}
+\begin{corrige}[l'ambiguïté des entiers]
+Un entier terminé par des zéros est ambigu : on ne sait pas si ces zéros résultent d'une mesure. La
+notation scientifique lève l'ambiguïté, car la mantisse ne contient que les CS.
+\begin{enumerate}[label=\alph*)]
+  \item $200$ : $1$, $2$ ou $3$ CS possibles. À $3$ CS : $\boxed{2,00\times10^{2}}$.
+  \item $4500$ : $2$, $3$ ou $4$ CS possibles. À $2$ CS : $\boxed{4,5\times10^{3}}$.
+  \item $70$ : $1$ ou $2$ CS possibles. À $2$ CS : $\boxed{7,0\times10^{1}}$.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[Compter sur une écriture scientifique]
-En notation scientifique, la puissance de dix ne porte aucun CS : tout se lit dans la mantisse.
-\begin{itemize}[leftmargin=1.6em,itemsep=1pt]
-  \item a) $\num{6,022e23}$ : $\mathbf{4}$~CS. \quad b) $\num{1,0e-7}$ : $\mathbf{2}$~CS. \quad
-        c) $\num{3,050e2}$ : $\mathbf{4}$~CS.
-  \item d) $\num{9e5}$ : $\mathbf{1}$~CS. \quad e) $\num{2,4000e-3}$ : $\mathbf{5}$~CS.
-\end{itemize}
-\end{cor}
-
-\begin{cor}[Lecture d'une balance de laboratoire]
-$m = \qty{0,02050}{\gram}$.
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item Le comptage démarre au $2$ : chiffres significatifs $2,\,0,\,5,\,0 \Rightarrow \boxed{\mathbf{4}\ \text{CS}}$.
-  \item Rôle des trois zéros :
-  \begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=0pt]
-    \item le premier ($0{,}0$) est un zéro \textbf{de tête} $\rightarrow$ non significatif (cadrage) ;
-    \item le zéro entre le $2$ et le $5$ est \textbf{captif} $\rightarrow$ significatif ;
-    \item le dernier zéro est un zéro \textbf{de queue après la virgule} $\rightarrow$ significatif
-          (c'est le chiffre incertain affiché).
-  \end{itemize}
+\begin{corrige}[lire les CS sur la notation scientifique]
+On compte simplement les chiffres de la mantisse ; la puissance de dix n'apporte aucun CS.
+\begin{enumerate}[label=\alph*)]
+  \item $4,00\times10^{3}$ : $\mathbf{3}$ CS.
+  \item $1,0\times10^{-7}$ : $\mathbf{2}$ CS.
+  \item $6,022\times10^{23}$ : $\mathbf{4}$ CS.
+  \item $2,50\times10^{-2}$ : $\mathbf{3}$ CS.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[Sur une étiquette d'eau minérale]
-\begin{enumerate}[label=\alph*),leftmargin=1.6em,itemsep=1pt]
-  \item $\qty{90,0}{\milli\gram\per\litre}$ : le zéro de queue après la virgule est significatif
-        $\Rightarrow \mathbf{3}$~CS. \quad $\qty{122}{\milli\gram\per\litre}$ : trois chiffres non nuls
-        $\Rightarrow \mathbf{3}$~CS.
-  \item Les deux valeurs ont le \emph{même} nombre de CS ($3$) : elles sont annoncées avec la
-        \textbf{même} précision relative d'écriture (de l'ordre de $\num{0,1}\,\%$). Le nombre de CS,
-        et non la longueur du nombre, est l'indicateur de précision.
+\begin{corrige}[le changement d'unité ne change pas les CS]
+Passer d'une unité à l'autre ne fait que déplacer la virgule : le nombre de CS est conservé.
+\begin{enumerate}[label=\alph*)]
+  \item $\num{1,302e4}\ \si{\milli\gram}$ : $\mathbf{4}$ CS.
+  \item $\qty{0,01302}{\kilo\gram}$ : $\mathbf{4}$ CS (les deux zéros de tête ne comptent pas).
+  \item $\num{1,302e-5}\ \si{\tonne}$ : $\mathbf{4}$ CS.
 \end{enumerate}
-\end{cor}
+\textbf{Conclusion.} Les trois écritures ont $4$ CS, comme $\qty{13,02}{\gram}$ : la précision de la
+mesure n'a pas changé, seule l'écriture a changé.
+\end{corrige}
+
+\begin{corrige}[mesuré ou exact ?]
+Un nombre \emph{compté} ou \emph{défini} est exact (infinité de CS) ; un nombre \emph{lu sur un
+instrument} est mesuré (nombre fini de CS).
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Exact} (comptage d'atomes) : infinité de CS.
+  \item \textbf{Mesuré} : $\qty{24,15}{\milli\litre}$ a $4$ CS.
+  \item \textbf{Exact} (définition) : infinité de CS.
+  \item \textbf{Mesuré} : $\qty{0,250}{\gram}$ a $3$ CS (le zéro de queue après la virgule compte).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[comparer la précision]
+La précision se lit sur le nombre de CS, indépendamment de l'unité. On compte :
+\begin{enumerate}[label=\alph*)]
+  \item $\qty{0,04500}{\metre}$ : $4$ CS.
+  \item $\qty{4,5}{\centi\metre}$ : $2$ CS.
+  \item $\qty{45,0}{\milli\metre}$ : $3$ CS.
+\end{enumerate}
+Ordre de la moins à la plus précise : $\text{b)}\ (2\ \text{CS}) < \text{c)}\ (3\ \text{CS}) <
+\text{a)}\ (4\ \text{CS})$. Bien que ce soit la \emph{même} longueur, c'est l'écriture qui affiche
+le plus de CS qui traduit la mesure la plus fine.
+\end{corrige}
 
 \end{document}

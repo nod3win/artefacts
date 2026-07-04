@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[le regard de Lewis]
+On donne deux réactions sans transfert de proton :
+\[ \ce{NH3 + BF3 -> H3N-BF3} \qquad\text{et}\qquad \ce{Ag+ + 2 NH3 -> [Ag(NH3)2]+}. \]
+\begin{enumerate}[label=\alph*)]
+  \item Dans chaque réaction, identifie l'\textbf{acide de Lewis} (accepteur de doublet) et la \textbf{base de
+        Lewis} (donneur de doublet).
+  \item Pourquoi ces deux réactions ne relèvent-elles pas de la théorie de Brønsted-Lowry ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[montrer qu'une espèce est un ampholyte]
+L'ion hydrogénocarbonate \ce{HCO3-} appartient à deux couples : \ce{H2CO3/HCO3-} et \ce{HCO3-/CO3^{2-}}.
+\begin{enumerate}[label=\alph*)]
+  \item Écris la demi-équation où \ce{HCO3-} joue le rôle d'un \textbf{acide} (il cède un \ce{H+}).
+  \item Écris la demi-équation où \ce{HCO3-} joue le rôle d'une \textbf{base} (il capte un \ce{H+}).
+  \item Conclus : pourquoi \ce{HCO3-} est-il un ampholyte ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[les couples successifs d'un polyacide]
+L'acide phosphorique \ce{H3PO4} peut céder ses trois protons l'un après l'autre.
+\begin{enumerate}[label=\alph*)]
+  \item Écris les \textbf{trois} couples acide/base successifs, du plus acide au moins acide.
+  \item Parmi les espèces \ce{H3PO4}, \ce{H2PO4-}, \ce{HPO4^{2-}}, \ce{PO4^{3-}}, lesquelles sont des
+        \textbf{ampholytes} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[calculer un degré d'ionisation]
+\begin{enumerate}[label=\alph*)]
+  \item On dissout \qty{0,50}{mol} d'un acide faible dans l'eau ; à l'équilibre, \qty{0,015}{mol} se sont
+        dissociées. Calcule le degré d'ionisation $\alpha$ (en \%).
+  \item Un acide faible \ce{HA} de concentration apportée $C_0 = \qty{0,10}{mol\per L}$ a un degré
+        d'ionisation $\alpha = \qty{2,0}{\percent}$. Calcule $[\ce{A-}]$ et $[\ce{HA}]$ restant à l'équilibre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[repérer les deux couples d'une réaction]
+On considère la réaction acide-base :
+\[ \ce{CH3COOH + NH3 <=> CH3COO- + NH4+}. \]
+\begin{enumerate}[label=\alph*)]
+  \item Identifie le couple auquel appartiennent \ce{CH3COOH} et \ce{CH3COO-}, et celui auquel appartiennent
+        \ce{NH3} et \ce{NH4+}.
+  \item Quelle espèce a \emph{cédé} le proton, quelle espèce l'a \emph{capté} ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

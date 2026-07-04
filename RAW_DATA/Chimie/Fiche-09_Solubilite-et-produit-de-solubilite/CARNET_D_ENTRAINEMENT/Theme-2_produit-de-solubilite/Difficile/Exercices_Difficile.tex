@@ -1,0 +1,86 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[la bonne expression parmi quatre]
+On propose quatre expressions candidates pour le produit de solubilité de \ce{Ag3PO4} :
+\begin{center}
+\begin{tabular}{ll ll}
+\textbf{A.} $3\,[\ce{Ag+}]\,[\ce{PO4^{3-}}]$ &\quad&
+\textbf{B.} $[\ce{Ag^{3+}}]\,[\ce{PO4^{3-}}]$ \\[4pt]
+\textbf{C.} $[\ce{Ag+}]^{3}+[\ce{PO4^{3-}}]$ &\quad&
+\textbf{D.} $[\ce{Ag+}]^{3}\,[\ce{PO4^{3-}}]$ \\
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Écris l'équation de dissolution de \ce{Ag3PO4}.
+  \item Indique la \textbf{seule} expression correcte.
+  \item Pour chacune des trois autres, explique précisément l'erreur.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[assertions sur les unités : \ce{Pb3(PO4)2}]
+On considère le phosphate de plomb \ce{Pb3(PO4)2}. Pour chaque assertion, dis si elle est correcte et
+justifie.
+\begin{enumerate}[label=\alph*)]
+  \item L'unité de la solubilité de \ce{Pb3(PO4)2} est $\mathrm{M}^{5}$.
+  \item L'unité du produit de solubilité de \ce{Pb3(PO4)2} est $\mathrm{mol^{5}\,L^{-5}}$.
+  \item Le produit de solubilité est une constante d'équilibre.
+  \item $K_{\mathrm{ps}}$ varie avec la température.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois solutions saturées analysées]
+Un laboratoire mesure les concentrations ioniques dans trois solutions saturées. Calcule le
+$K_{\mathrm{ps}}$ de chaque sel.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CaF2} : $[\ce{Ca^{2+}}]=\qty{2.0e-4}{\mole\per\litre}$, $[\ce{F-}]=\qty{4.0e-4}{\mole\per\litre}$.
+  \item \ce{Ag3PO4} : $[\ce{Ag+}]=\qty{6.0e-5}{\mole\per\litre}$, $[\ce{PO4^{3-}}]=\qty{2.0e-5}{\mole\per\litre}$.
+  \item \ce{Ca3(PO4)2} : $[\ce{Ca^{2+}}]=\qty{3.0e-7}{\mole\per\litre}$, $[\ce{PO4^{3-}}]=\qty{2.0e-7}{\mole\per\litre}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remonter à la formule du sel]
+On te donne l'expression du produit de solubilité d'un sel inconnu :
+\[ K_{\mathrm{ps}} = [\ce{M^{3+}}]^{2}\,[\ce{SO4^{2-}}]^{3}. \]
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la formule brute du sel ?
+  \item Écris son équation de dissolution.
+  \item Ce sel est-il un sel de type $\mathrm{MX}_n$ (un seul cation) ? Quel est son type $p{:}q$ ?
+\end{enumerate}
+\end{exo}
+\end{document}

@@ -1,0 +1,81 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+\begin{document}
+\begin{corrige}[Les trois formules générales]
+\begin{enumerate}[label=\alph*)]
+  \item alcane : $\ce{C_nH_{2n+2}}$.
+  \item alcène : $\ce{C_nH_{2n}}$ (une double liaison retire $2$~H à l'alcane).
+  \item alcyne : $\ce{C_nH_{2n-2}}$ (une triple liaison retire $4$~H à l'alcane).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Combien d'hydrogènes ? --- alcanes]
+On applique $2n+2$ hydrogènes.
+\begin{enumerate}[label=\alph*)]
+  \item $n=2$ : $2n+2=6 \Rightarrow \ce{C2H6}$ (éthane).
+  \item $n=5$ : $2n+2=12 \Rightarrow \ce{C5H12}$ (pentane).
+  \item $n=10$ : $2n+2=22 \Rightarrow \ce{C10H22}$ (décane).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Combien d'hydrogènes ? --- alcènes et alcynes]
+\begin{enumerate}[label=\alph*)]
+  \item alcène, $n=4$ : $2n=8$~H $\Rightarrow \ce{C4H8}$.
+  \item alcyne, $n=4$ : $2n-2=6$~H $\Rightarrow \ce{C4H6}$.
+  \item alcène, $n=6$ : $2n=12$~H $\Rightarrow \ce{C6H12}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Reconnaître la famille]
+Pour $n=3$ carbones : $2n+2=8$, $2n=6$, $2n-2=4$.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{C3H8}$ : $8=2n+2$ $\Rightarrow$ \textbf{alcane} (propane).
+  \item $\ce{C3H6}$ : $6=2n$ $\Rightarrow$ \textbf{alcène} (propène).
+  \item $\ce{C3H4}$ : $4=2n-2$ $\Rightarrow$ \textbf{alcyne} (propyne).
+  \item $\ce{C7H16}$ : $16=2\times7+2$ $\Rightarrow$ \textbf{alcane} (heptane).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[Est-ce un alcane ?]
+On teste $m\overset{?}{=}2n+2$.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{C6H14}$ : $2\times6+2=14$ $\Rightarrow$ \textbf{oui} (hexane).
+  \item $\ce{C6H12}$ : $2\times6+2=14\neq12$ $\Rightarrow$ \textbf{non} (il manque $2$~H : une insaturation).
+  \item $\ce{C10H22}$ : $2\times10+2=22$ $\Rightarrow$ \textbf{oui} (décane).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

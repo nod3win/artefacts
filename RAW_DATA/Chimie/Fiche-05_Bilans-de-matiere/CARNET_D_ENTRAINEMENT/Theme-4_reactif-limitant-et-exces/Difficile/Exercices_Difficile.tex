@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{center}\small\itshape
+Aux TPN : $V_{\mathrm{m}}=\qty{22.4}{\litre\per\mole}$. Rendement \qty{100}{\percent}.
+\end{center}
+
+\begin{exo}[données mêlées : masse et solution]
+Le permanganate oxyde l'acide chlorhydrique concentré :
+$\ce{2 KMnO4 + 16 HCl -> 2 KCl + 2 MnCl2 + 5 Cl2 ^ + 8 H2O}$. On introduit \qty{15.8}{\gram} de
+\ce{KMnO4} ($M=\qty{158}{\gram\per\mole}$) et \qty{200}{\milli\litre} d'acide à \qty{6}{\mole\per\litre}.
+\begin{enumerate}[label=\alph*)]
+  \item Convertis les deux réactifs en quantités de matière.
+  \item Quel est le réactif limitant ?
+  \item Quel volume de dichlore \ce{Cl2} (aux TPN) se dégage-t-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois réactifs, trois formes de données]
+Pour $\ce{2 K2Cr2O7 + 3 C + 8 H2SO4 -> 3 CO2 ^ + 2 Cr2(SO4)3 + 2 K2SO4 + 8 H2O}$, on mélange
+\qty{58.8}{\gram} de \ce{K2Cr2O7} ($M=\qty{294}{\gram\per\mole}$), \qty{3.6}{\gram} de carbone
+($M=\qty{12}{\gram\per\mole}$) et \qty{200}{\milli\litre} d'acide sulfurique à \qty{3}{\mole\per\litre}.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule les trois quantités de matière.
+  \item Détermine le réactif limitant en comparant les rapports $n/\nu$.
+  \item Quel volume de \ce{CO2} (aux TPN) obtient-on ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[combustion à oxygène limité]
+On brûle \qty{88}{\gram} de propane dans \qty{16}{\gram} de dioxygène :
+$\ce{C3H8 + 5 O2 -> 3 CO2 + 4 H2O}$. On donne $M(\ce{C3H8})=\qty{44}{\gram\per\mole}$,
+$M(\ce{O2})=\qty{32}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule les quantités de \ce{C3H8} et de \ce{O2}.
+  \item Quel est le réactif limitant ?
+  \item Quel volume de \ce{CO2} (aux TPN) se forme-t-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[bilan complet et conservation de la masse]
+On fait réagir \qty{28}{\gram} de \ce{N2} avec \qty{9}{\gram} de \ce{H2} : $\ce{N2 + 3 H2 -> 2 NH3}$.
+On donne $M(\ce{N2})=\qty{28}{\gram\per\mole}$, $M(\ce{H2})=\qty{2}{\gram\per\mole}$,
+$M(\ce{NH3})=\qty{17}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le réactif limitant.
+  \item Quelle masse d'ammoniac se forme ?
+  \item Quelle masse de réactif en excès reste-t-il ? Vérifie la conservation de la masse.
+\end{enumerate}
+\end{exo}
+
+\end{document}

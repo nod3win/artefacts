@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[équations de dissolution avec ions polyatomiques]
+Les ions polyatomiques (\ce{SO4^{2-}}, \ce{PO4^{3-}}, \ce{CO3^{2-}}, \ce{OH-}, \ce{NH4+}) restent
+groupés ; l'indice hors parenthèse devient le coefficient de l'ion.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Ag2SO4(s) <=> 2 Ag^{+}(aq) + SO4^{2-}(aq)}$
+  \item $\ce{Ca3(PO4)2(s) <=> 3 Ca^{2+}(aq) + 2 PO4^{3-}(aq)}$
+  \item $\ce{Mg(OH)2(s) <=> Mg^{2+}(aq) + 2 OH^{-}(aq)}$
+  \item $\ce{(NH4)2CO3(s) <=> 2 NH4^{+}(aq) + CO3^{2-}(aq)}$
+  \item $\ce{Al2(SO4)3(s) <=> 2 Al^{3+}(aq) + 3 SO4^{2-}(aq)}$
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[calculer $M$ puis convertir $s_m\to s$]
+On additionne les masses molaires atomiques (pondérées par les indices), puis $s=s_m/M$.
+\begin{enumerate}[label=\alph*)]
+  \item $M(\ce{PbBr2}) = 207{,}2 + 2\times 79{,}9 = \qty{367.0}{\gram\per\mole}$, d'où
+        \[ s = \dfrac{\qty{4.84}{\gram\per\litre}}{\qty{367.0}{\gram\per\mole}} = \qty{1.32e-2}{\mole\per\litre}. \]
+  \item $M(\ce{Ag2CrO4}) = 2\times 107{,}9 + 52{,}0 + 4\times 16{,}0 = \qty{331.8}{\gram\per\mole}$, d'où
+        \[ s = \dfrac{\qty{2.16e-2}{\gram\per\litre}}{\qty{331.8}{\gram\per\mole}} = \qty{6.5e-5}{\mole\per\litre}. \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[quel volume d'eau pour tout dissoudre ?]
+Règle de trois : $s\times V = n \Rightarrow V = n/s$.
+\begin{enumerate}[label=\alph*)]
+  \item $V = \dfrac{\qty{6.0e-3}{\mole}}{\qty{3.0e-6}{\mole\per\litre}} = \qty{2.0e3}{\litre}$
+        (soit \qty{2000}{\litre} — l'énorme volume d'eau qu'il faudrait pour dissoudre un calcul rénal).
+  \item $V = \dfrac{\qty{6.9e-3}{\mole}}{\qty{6.9e-5}{\mole\per\litre}} = \qty{100}{\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[masse dissoute dans un volume donné]
+On applique $m = s\times V\times M$.
+\begin{enumerate}[label=\alph*)]
+  \item $m = \qty{1.0e-5}{\mole\per\litre}\times\qty{2.0}{\litre}\times\qty{233.4}{\gram\per\mole}
+           = \qty{4.67e-3}{\gram}$.
+  \item $m = \qty{2.1e-4}{\mole\per\litre}\times\qty{0.25}{\litre}\times\qty{78.1}{\gram\per\mole}
+           = \qty{4.10e-3}{\gram}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[concentrations ioniques à partir de $s$]
+$[\ce{M^{q+}}]=p\,s$ et $[\ce{X^{p-}}]=q\,s$ : on multiplie $s$ par le coefficient de chaque ion.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Ag2SO4} : $[\ce{Ag+}]=2s=\qty{3.0e-2}{\mole\per\litre}$ et
+        $[\ce{SO4^{2-}}]=s=\qty{1.5e-2}{\mole\per\litre}$.
+  \item \ce{Ca3(PO4)2} : $[\ce{Ca^{2+}}]=3s=\qty{3.0e-7}{\mole\per\litre}$ et
+        $[\ce{PO4^{3-}}]=2s=\qty{2.0e-7}{\mole\per\litre}$.
+  \item \ce{Fe(OH)3} : $[\ce{Fe^{3+}}]=s=\qty{2.0e-10}{\mole\per\litre}$ et
+        $[\ce{OH-}]=3s=\qty{6.0e-10}{\mole\per\litre}$.
+\end{enumerate}
+\end{corrige}
+\end{document}

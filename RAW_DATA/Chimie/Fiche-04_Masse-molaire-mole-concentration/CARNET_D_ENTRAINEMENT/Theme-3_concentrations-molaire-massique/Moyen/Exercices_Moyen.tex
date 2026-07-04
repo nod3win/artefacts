@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}{\large\bfseries\color{primarydark} Thème 3 — Niveau Moyen}\end{center}
+\emph{Données (\si{\gram\per\mole}) :} $\ce{NaCl}=58{,}5$, glucose \ce{C6H12O6}$=180$,
+\ce{NaBr}$=102{,}9$, \ce{NaOH}$=40$, paracétamol \ce{C8H9NO2}$=151$.
+
+\begin{exo}[quelle masse peser~?]
+Quelle masse de soluté faut-il dissoudre pour préparer :
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{250}{\milli\litre}$ de \ce{NaCl} à $\SI{0.2}{\mole\per\litre}$~?
+  \item $\SI{500}{\milli\litre}$ de glucose à $\SI{0.1}{\mole\per\litre}$~?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[de la concentration massique à la molarité]
+Détermine la molarité de chaque solution.
+\begin{enumerate}[label=\alph*)]
+  \item Une solution contient $\SI{10.29}{\gram}$ de \ce{NaBr} par litre.
+  \item Une solution de soude contient $\SI{40}{\gram}$ de \ce{NaOH} par litre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la plus concentrée]
+Parmi ces quatre solutions, laquelle a la plus grande molarité~? Justifie en calculant chaque $C$.
+\begin{enumerate}[label=\alph*)]
+  \item $\SI{117}{\gram}$ de \ce{NaCl} dans $\SI{2}{\litre}$ de solution ;
+  \item $\SI{1.5}{\mole}$ de soluté dans $\SI{2}{\litre}$ ;
+  \item $\SI{0.5}{\mole}$ de soluté dans $\SI{250}{\milli\litre}$ ;
+  \item $\SI{3}{\mole}$ de soluté dans $\SI{4}{\litre}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[une application pharmaceutique]
+Un flacon de $\SI{200}{\milli\litre}$ contient $\SI{755}{\milli\gram}$ de paracétamol
+\ce{C8H9NO2}.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle quantité de matière de paracétamol contient-il~?
+  \item Quelle est la concentration molaire de la solution~?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[parcours dans la solution de glucose]
+Une solution de glucose \ce{C6H12O6} a une concentration massique $C_m = \SI{18}{\gram\per\litre}$.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est sa concentration molaire~?
+  \item Quelle quantité de matière contient $\SI{250}{\milli\litre}$ de cette solution~?
+  \item Quelle masse de glucose y est dissoute dans ces $\SI{250}{\milli\litre}$~?
+\end{enumerate}
+\end{exo}
+
+\end{document}

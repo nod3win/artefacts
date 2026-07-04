@@ -1,0 +1,82 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[deux champs perpendiculaires de même norme]
+Les deux champs étant orthogonaux, on applique le théorème de Pythagore (surtout pas $B_1+B_2$ !).
+\begin{enumerate}[label=\alph*)]
+  \item $B_{\text{tot}}=\sqrt{B_1^2+B_2^2}=\sqrt{2}\,B_1=1{,}414\times\num{1.0e-4}
+        \approx\qty{1.41e-4}{\tesla}.$
+  \item $\tan\theta=\dfrac{B_2}{B_1}=1 \Rightarrow \theta=\ang{45}$ : le champ résultant est la
+        \textbf{bissectrice} de l'angle droit (logique, puisque $B_1=B_2$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[superposition orthogonale : Pythagore]
+\begin{enumerate}[label=\alph*)]
+  \item $B_{\text{tot}}=\sqrt{B_1^2+B_2^2}=\sqrt{(3\cdot10^{-4})^2+(4\cdot10^{-4})^2}
+        =\sqrt{9+16}\times10^{-4}=\sqrt{25}\times10^{-4}=\qty{5e-4}{\tesla}.$
+        (C'est le triangle $3$–$4$–$5$.)
+  \item $\tan\theta=\dfrac{B_2}{B_1}=\dfrac{4}{3}\Rightarrow \theta\approx\ang{53}$ au-dessus de
+        l'horizontale $\vv{B}_1$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[fil horizontal : champ au-dessus et au-dessous]
+Main droite : \textbf{pouce vers la droite} (sens de $I$), les doigts s'enroulent autour du fil.
+\begin{enumerate}[label=\alph*)]
+  \item Au-dessus du fil, les doigts sortent vers l'avant : au point $P$, $\vv{B}$ \textbf{sort} de la
+        feuille, $\odot$.
+  \item Au-dessous, les doigts plongent vers l'arrière : au point $Q$, $\vv{B}$ \textbf{entre} dans la
+        feuille, $\otimes$. Le champ « tourne » bien autour du fil (sens opposés de part et d'autre).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux fils identiques : champ au milieu]
+\begin{enumerate}[label=\alph*)]
+  \item Chaque courant sort de la feuille : main droite, pouce vers soi, doigts en sens
+        trigonométrique. \textbf{Fil 1} (à gauche de $M$) crée en $M$ un champ dirigé \textbf{vers le
+        haut} ; \textbf{fil 2} (à droite de $M$) crée en $M$ un champ dirigé \textbf{vers le bas}.
+        Les deux champs sont donc \textbf{opposés}.
+  \item De même norme ($\qty{4e-5}{\tesla}$) et de sens contraires, ils se \textbf{compensent} :
+        \[ B_{\text{tot}}=|B_1-B_2|=0. \]
+        Le champ résultant est \textbf{nul} au milieu de deux fils identiques parcourus dans le même sens.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

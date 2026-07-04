@@ -1,0 +1,109 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[covalente ou ionique ?]
+Indique si la liaison est plutôt \textbf{covalente} ou \textbf{ionique}.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Cl2}
+  \item \ce{KCl}
+  \item \ce{O2}
+  \item \ce{MgO}
+  \item \ce{HCl}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[électrons de valence d'un atome]
+Donne le nombre d'électrons de valence de chaque atome (utilise le numéro de colonne).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{N}
+  \item \ce{O}
+  \item \ce{C}
+  \item \ce{Cl}
+  \item \ce{H}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[octet ou duet ?]
+Chaque atome cherche à respecter soit l'octet, soit le duet. Précise lequel.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{H}
+  \item \ce{C}
+  \item \ce{O}
+  \item \ce{He}
+  \item \ce{F}
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[l'octet est-il respecté ?]
+Pour chaque atome central décrit, compte le nombre total d'électrons qui l'entourent, puis dis
+s'il respecte l'octet (ou le duet).
+\begin{enumerate}[label=\alph*)]
+  \item \ce{N} dans \ce{NH3} : $3$ liaisons et $1$ doublet non liant.
+  \item \ce{C} dans \ce{CH4} : $4$ liaisons, aucun doublet non liant.
+  \item \ce{O} dans \ce{H2O} : $2$ liaisons et $2$ doublets non liants.
+  \item \ce{H} dans \ce{HCl} : $1$ liaison.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[doublets liants et non liants]
+Voici la structure de Lewis de l'ammoniac \ce{NH3}.
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \definecolor{lonepair}{RGB}{120,94,200}
+  \coordinate (N) at (0,0);
+  \coordinate (Hh) at (0,1.4);
+  \coordinate (Hl) at (-1.4,-0.85);
+  \coordinate (Hr) at (1.4,-0.85);
+  \draw[line width=1.2pt,black!70] (N)--($(Hh)+(0,-0.3)$);
+  \draw[line width=1.2pt,black!70] (N)--($(Hl)+(0.26,0.16)$);
+  \draw[line width=1.2pt,black!70] (N)--($(Hr)+(-0.26,0.16)$);
+  \node[font=\large\bfseries] at (N) {N};
+  \node[font=\large\bfseries] at (Hh) {H};
+  \node[font=\large\bfseries] at (Hl) {H};
+  \node[font=\large\bfseries] at (Hr) {H};
+  \foreach \a in {205,235}{\fill[lonepair] ($(N)+(\a:0.6)$) circle (2.4pt);}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Combien de doublets \emph{liants} entourent l'azote ?
+  \item Combien de doublets \emph{non liants} porte-t-il ?
+  \item L'azote respecte-t-il l'octet ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,90 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{exo}[les exceptions : peroxydes et hydrures]
+Les règles « $\ce{O}=-\mathrm{II}$ » et « $\ce{H}=+\mathrm{I}$ » souffrent deux exceptions. Détermine le
+n.o.\ demandé, en identifiant à chaque fois s'il s'agit d'un peroxyde ou d'un hydrure.
+\begin{enumerate}[label=\alph*)]
+  \item le n.o.\ de l'oxygène dans le peroxyde d'hydrogène \ce{H2O2} (sachant $\ce{H}=+\mathrm{I}$) ;
+  \item le n.o.\ de l'oxygène dans \ce{Na2O2} (sachant $\ce{Na}=+\mathrm{I}$) ;
+  \item le n.o.\ de l'hydrogène dans l'hydrure de sodium \ce{NaH} ;
+  \item le n.o.\ de l'hydrogène dans l'hydrure de calcium \ce{CaH2} (sachant $\ce{Ca}=+\mathrm{II}$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[étage d'oxydation et décompte des électrons]
+On étudie l'oxyde \ce{Cu2O} à l'état fondamental. \textbf{Données :} $\ce{^{63,54}_{29}Cu}$,
+$\ce{^{15,99}_{8}O}$.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine l'étage d'oxydation du cuivre dans \ce{Cu2O}.
+  \item Combien d'électrons possède alors un atome de cuivre dans ce composé ?
+  \item Combien d'électrons possède l'atome d'oxygène dans ce composé ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[nombre d'électrons d'un ion monoatomique]
+Le nombre d'électrons d'un ion vaut $Z - q$, où $q$ est sa charge. Calcule-le pour chaque ion.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Al^3+} ($Z=13$)
+  \item \ce{S^2-} ($Z=16$)
+  \item \ce{Fe^3+} ($Z=26$)
+  \item \ce{N^3-} ($Z=7$)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[raisonnement inverse : du n.o.\ à la charge de l'oxoanion]
+Dans chaque cas, on donne le n.o.\ de l'atome central et le nombre d'atomes d'oxygène ($\ce{O}=-\mathrm{II}$).
+Détermine la grandeur manquante.
+\begin{enumerate}[label=\alph*)]
+  \item Un oxoanion du soufre $\ce{SO3}$ où le soufre est au degré $+\mathrm{IV}$ : quelle est sa charge ?
+  \item Un oxoanion du chlore contenant \emph{un} oxygène, où le chlore est au degré $+\mathrm{I}$ : quelle est sa charge ?
+  \item Un oxoanion de charge $-1$ où l'azote est au degré $+\mathrm{V}$ : combien d'atomes d'oxygène contient-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[synthèse : les deux oxydes du fer]
+Le fer forme deux oxydes courants : \ce{FeO} et \ce{Fe2O3} ($\ce{O}=-\mathrm{II}$). \textbf{Donnée :} $Z(\ce{Fe})=26$.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine le n.o.\ du fer dans \ce{FeO}, puis dans \ce{Fe2O3}.
+  \item En déduire lequel correspond au « fer(II) » et lequel au « fer(III) ».
+  \item Combien d'électrons possède l'ion fer dans \ce{Fe2O3} ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,97 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[résultante complète — même sens]
+Deux forces parallèles de \textbf{même sens}, $F_1=\qty{2}{N}$ (en $A$) et $F_2=\qty{3}{N}$ (en $B$),
+sont appliquées aux extrémités d'une tige avec $\overline{AB}=\qty{50}{cm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité de la résultante.
+  \item Détermine la position du point d'application $O$ (distances $\overline{AO}$ et $\overline{BO}$).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[résultante complète — sens opposé]
+Mêmes points $A$ et $B$ ($\overline{AB}=\qty{60}{cm}$), mais les forces sont \textbf{de sens opposé} :
+$F_1=\qty{2}{N}$ en $A$ et $F_2=\qty{5}{N}$ en $B$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule l'intensité $F_r$ de la résultante et donne son sens.
+  \item Situe le point $O$ (de quel côté, et à quelle distance de $B$ ?).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver une force inconnue]
+Deux forces parallèles de même sens ont une résultante $R=\qty{12}{N}$. On sait que $F_1=\qty{4}{N}$.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine l'intensité $F_2$ de la seconde force.
+  \item Calcule alors le rapport $\dfrac{\overline{AO}}{\overline{BO}}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[panneau tenu par deux cordes]
+Un panneau est soutenu par deux cordes verticales tirant \textbf{vers le haut} en $A$ et $B$
+($\overline{AB}=\qty{50}{cm}$) : $F_1=\qty{8}{N}$ et $F_2=\qty{12}{N}$. Le poids du panneau, vertical
+vers le bas, équilibre exactement ces deux forces.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1]
+  \draw[primary!70,line width=1.6pt,fill=primary!10] (-2.2,-0.12) rectangle (2.2,0.12);
+  \fill (-1.8,0) circle (1.3pt) node[below=3pt]{$A$};
+  \fill (1.8,0) circle (1.3pt) node[below=3pt]{$B$};
+  \draw[->,line width=1.1pt,defcol] (-1.8,0.12)--(-1.8,1.2) node[above]{$\vv F_1$};
+  \draw[->,line width=1.1pt,attncol] (1.8,0.12)--(1.8,1.7) node[above]{$\vv F_2$};
+  \draw[->,line width=1.1pt,orange] (0.4,-0.12)--(0.4,-1.3) node[below]{$\vv G$};
+  \fill (0.4,0) circle (1.3pt) node[above=2pt]{$O$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est l'intensité du poids du panneau ?
+  \item En quel point $O$ le poids s'applique-t-il (distances à $A$ et $B$) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[même sens ou sens opposé : comparaison]
+On applique les mêmes forces $F_1=\qty{1}{N}$ (en $A$) et $F_2=\qty{3}{N}$ (en $B$), avec
+$\overline{AB}=\qty{40}{cm}$, dans deux situations.
+\begin{enumerate}[label=\alph*)]
+  \item Forces de \textbf{même sens} : donne l'intensité de la résultante et la distance $\overline{BO}$.
+  \item Forces de \textbf{sens opposé} : donne l'intensité de la résultante et la distance $\overline{BO}$.
+  \item Dans quel cas la résultante est-elle la plus intense ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

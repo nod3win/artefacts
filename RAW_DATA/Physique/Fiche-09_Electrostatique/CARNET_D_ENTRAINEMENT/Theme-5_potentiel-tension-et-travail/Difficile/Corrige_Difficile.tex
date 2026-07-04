@@ -1,0 +1,92 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[l'expérience de Millikan]
+\begin{enumerate}[label=\alph*)]
+  \item Poids vers le bas $\Rightarrow$ force électrique vers le haut. $\vv{E}$ va de $A$ ($+$) vers
+        $B$ ($-$), donc vers le bas. Pour que $\vv{F}=q\vv{E}$ soit opposée à $\vv{E}$, il faut
+        $q<0$ : la particule est \textbf{négative}.
+  \item $m = \SI{32e-12}{\gram} = \SI{3.2e-14}{\kilogram}$.
+        \[ E = \frac{U_{AB}}{d} = \frac{200}{0{,}020} = \SI{1e4}{\volt\per\metre}, \qquad
+           |q| = \frac{m g}{E} = \frac{\num{3.2e-14}\times 10}{\num{1e4}} = \SI{3.2e-17}{\coulomb}. \]
+        \[ N = \frac{|q|}{e} = \frac{\num{3.2e-17}}{\num{1.6e-19}} = 200\ \text{électrons en excès}. \]
+  \item \textbf{Non}. La particule porte déjà $200$ électrons \emph{en trop} ; pour la rendre neutre
+        il faudrait lui en \emph{retirer} $200$. En lui en \emph{ajoutant} $200$, on doublerait son
+        excès (charge $\SI{-6.4e-17}{\coulomb}$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[travail dans un champ uniforme]
+\begin{enumerate}[label=\alph*)]
+  \item $F = q\,E = 1\times 3 = \SI{3}{\newton}$. Comme $q>0$, $\vv{F}$ a le même sens que $\vv{E}$ :
+        \textbf{vers le haut}.
+  \item La force est verticale (vers le haut) ; seul le déplacement vertical compte. La charge
+        descend de $\SI{2}{\metre}$ (déplacement \emph{opposé} à la force) :
+        \[ W_{A\to B} = -F\times 2 = -3\times 2 = \SI{-6}{\joule}. \]
+        Le déplacement horizontal ($\SI{1}{\metre}$), perpendiculaire à $\vv{F}$, ne travaille pas.
+        Le travail est \emph{négatif} : la force électrique s'oppose à la descente.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[le condensateur branché sur une batterie]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Faux}. La borne positive est reliée à l'armature \emph{positive} (elle y attire les
+        électrons).
+  \item \textbf{Vrai}. Comme dans une pile, le potentiel croît de l'armature $-$ vers l'armature $+$.
+  \item \textbf{Vrai}. Une armature porte $+Q$, l'autre $-Q$ : la charge totale est nulle.
+  \item \textbf{Faux}. $\vv{E}$ pointe vers l'armature de potentiel le plus \emph{bas} (du $+$ vers
+        le $-$).
+  \item \textbf{Vrai}. Entre deux plaques parallèles, le champ est uniforme.
+\end{enumerate}
+\textbf{Bilan : 3 propositions correctes} (b, c, e).
+\end{corrige}
+
+\begin{corrige}[capstone : relier $E$, $U$ et $W$]
+\begin{enumerate}[label=\alph*)]
+  \item $E = \dfrac{U_{AB}}{d} = \dfrac{200}{0{,}05} = \SI{4000}{\volt\per\metre}$.
+  \item $W_{A\to B} = q\,U_{AB} = \num{5e-6}\times 200 = \SI{1e-3}{\joule}$ ($>0$ : la force
+        pousse la charge $+$ de $A$ vers $B$).
+  \item $W = |q|\,E\,d = \num{5e-6}\times 4000\times 0{,}05 = \num{5e-6}\times 200 = \SI{1e-3}{\joule}$.
+        On retrouve bien le même résultat : $U_{AB} = E\,d$ dans un champ uniforme.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

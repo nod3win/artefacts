@@ -1,0 +1,103 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+
+\begin{exo}[la vitesse double]
+En passant d'un milieu 1 à un milieu 2, la vitesse de propagation d'une lumière monochromatique
+\textbf{double} ($c_2=2\,c_1$). On note $\lambda_1$ et $\lambda_2$ ses longueurs d'onde dans les deux
+milieux.
+\begin{enumerate}[label=\alph*)]
+  \item Exprime $\lambda_1$ en fonction de $\lambda_2$.
+  \item Lequel des deux milieux a le plus grand indice de réfraction ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la longueur d'onde dans le verre]
+Une lumière monochromatique a, dans l'air ($n_1=1$), une longueur d'onde $\lambda_1=\qty{600}{nm}$.
+Elle pénètre dans du verre ($n_2=1{,}5$). On prend $c=\qty{3.0e8}{m/s}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule les célérités $c_1$ (air) et $c_2$ (verre).
+  \item Déduis-en la longueur d'onde $\lambda_2$ dans le verre.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[lire les vitesses sur un schéma]
+À l'interface entre deux milieux, on observe que le rayon réfracté \textbf{se rapproche de la
+normale}.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \fill[defcol!12] (-2.4,-1.9) rectangle (2.4,0);
+  \draw[primary,line width=1.5pt] (-2.4,0) -- (2.4,0);
+  \draw[dash pattern=on 3pt off 2pt,black!60] (0,-1.9) -- (0,1.9);
+  \node[font=\scriptsize] at (-1.95,1.1){milieu 1 ($n_1,c_1$)};
+  \node[font=\scriptsize] at (-1.95,-1.2){milieu 2 ($n_2,c_2$)};
+  \draw[->,line width=1pt] ({-1.9*sin(50)},{1.9*cos(50)}) -- (0,0);
+  \draw[->,line width=1pt,primary] (0,0) -- ({1.9*sin(28)},{-1.9*cos(28)});
+  \draw[line width=0.6pt] (0,0.85) arc (90:130:0.85);
+  \node[font=\scriptsize] at (-0.42,1.0){$\hat{\imath}_1$};
+  \draw[line width=0.6pt,primary] (0,-0.85) arc (270:242:0.85);
+  \node[primary,font=\scriptsize] at (0.3,-1.05){$\hat{\imath}_2$};
+  \fill (0,0) circle (1.2pt);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Quel milieu est le plus réfringent ? Compare $n_1$ et $n_2$.
+  \item Compare les célérités $c_1$ et $c_2$ de la lumière dans les deux milieux.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[bilan complet air $\to$ eau]
+Une lumière verte de fréquence $f=\qty{5.0e14}{Hz}$ passe de l'air ($n_1=1$) à l'eau ($n_2=1{,}33$).
+On prend $c=\qty{3.0e8}{m/s}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la célérité $c_2$ dans l'eau.
+  \item Calcule les longueurs d'onde $\lambda_1$ (air) et $\lambda_2$ (eau).
+  \item Que devient la fréquence dans l'eau ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la couleur change-t-elle sous l'eau ?]
+Une lumière monochromatique (raie du sodium) a une longueur d'onde $\lambda_0=\qty{589}{nm}$ dans le
+vide. On l'envoie dans l'eau ($n=1{,}33$).
+\begin{enumerate}[label=\alph*)]
+  \item Calcule sa longueur d'onde $\lambda_{\text{eau}}$ dans l'eau.
+  \item La couleur perçue par un plongeur change-t-elle ? Justifie.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Réfraction — la loi de Snell–Descartes
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 — La loi de Snell–Descartes}\\[2pt]
+{\color{primary}\itshape Calculer un angle de réfraction, prévoir le sens de la déviation}
+\end{center}
+
+\begin{cle}[la loi de la réfraction]
+Quand un rayon passe d'un milieu 1 (indice $n_1$) à un milieu 2 (indice $n_2$), il traverse le
+\emph{dioptre} en \textbf{changeant de direction}. L'angle d'incidence $\hat{\imath}_1$ et l'angle
+de réfraction $\hat{\imath}_2$ (tous deux mesurés \textbf{par rapport à la normale}) vérifient :
+\[ \boxed{\,n_1\sin\hat{\imath}_1 = n_2\sin\hat{\imath}_2\,} \]
+Le rayon incident, le rayon réfracté et la normale sont dans un même plan.
+\end{cle}
+
+\begin{cle}[dans quel sens le rayon est-il dévié ?]
+Réécrivons la loi sous la forme $\sin\hat{\imath}_2=\dfrac{n_1}{n_2}\sin\hat{\imath}_1$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item si $n_2>n_1$ (on entre dans un milieu \emph{plus} réfringent) : $\hat{\imath}_2<\hat{\imath}_1$,
+        le rayon \textbf{se rapproche de la normale} ;
+  \item si $n_2<n_1$ (milieu \emph{moins} réfringent) : $\hat{\imath}_2>\hat{\imath}_1$, le rayon
+        \textbf{s'éloigne de la normale}.
+\end{itemize}
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \begin{scope}
+    \fill[defcol!12] (-2.3,-1.9) rectangle (2.3,0);
+    \draw[primary,line width=1.6pt] (-2.3,0) -- (2.3,0);
+    \draw[dash pattern=on 3pt off 2pt,black!60] (0,-1.9) -- (0,1.9);
+    \node[font=\scriptsize] at (-1.7,1.4){$n_1$};
+    \node[font=\scriptsize] at (-1.7,-1.5){$n_2>n_1$};
+    \draw[->,line width=1pt] (-1.7,1.7) -- (0,0);
+    \draw[->,line width=1pt,primary] (0,0) -- ({1.85*sin(24)},{-1.85*cos(24)});
+    \draw[line width=0.6pt] (0,0.8) arc (90:133:0.8);
+    \node[font=\scriptsize] at (-0.4,0.95){$\hat{\imath}_1$};
+    \draw[line width=0.6pt,primary] (0,-0.85) arc (270:246:0.85);
+    \node[font=\scriptsize,primary] at (0.3,-1.05){$\hat{\imath}_2$};
+    \node[font=\scriptsize,align=center] at (0,-2.3){se rapproche\\de la normale};
+  \end{scope}
+  \begin{scope}[xshift=6cm]
+    \fill[excol!10] (-2.3,-1.9) rectangle (2.3,0);
+    \draw[primary,line width=1.6pt] (-2.3,0) -- (2.3,0);
+    \draw[dash pattern=on 3pt off 2pt,black!60] (0,-1.9) -- (0,1.9);
+    \node[font=\scriptsize] at (-1.7,1.4){$n_1$};
+    \node[font=\scriptsize] at (-1.7,-1.5){$n_2<n_1$};
+    \draw[->,line width=1pt] ({-1.7*sin(24)},{1.7*cos(24)}) -- (0,0);
+    \draw[->,line width=1pt,primary] (0,0) -- ({1.9*sin(48)},{-1.9*cos(48)});
+    \draw[line width=0.6pt] (0,0.85) arc (90:114:0.85);
+    \node[font=\scriptsize] at (-0.28,1.0){$\hat{\imath}_1$};
+    \draw[line width=0.6pt,primary] (0,-0.85) arc (270:222:0.85);
+    \node[font=\scriptsize,primary] at (0.5,-1.0){$\hat{\imath}_2$};
+    \node[font=\scriptsize,align=center] at (0,-2.3){s'éloigne\\de la normale};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[calculer un angle de réfraction]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Tracer la normale} et vérifier que l'angle donné est bien mesuré par rapport à elle
+        (sinon convertir : $\hat{\imath}=90^\circ-(\text{angle avec le dioptre})$).
+  \item \textbf{Isoler} l'inconnue : $\sin\hat{\imath}_2=\dfrac{n_1\sin\hat{\imath}_1}{n_2}$.
+  \item \textbf{Calculer} $\hat{\imath}_2=\arcsin(\cdots)$.
+  \item \textbf{Vérifier le sens} : le rayon doit se rapprocher de la normale si $n_2>n_1$, s'en
+        éloigner si $n_2<n_1$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[air $\to$ verre]
+Air ($n_1=1$) vers verre ($n_2=1{,}5$), incidence $\hat{\imath}_1=\ang{50}$ :
+\[ \sin\hat{\imath}_2=\frac{1\times\sin\ang{50}}{1{,}5}=\frac{0{,}766}{1{,}5}=0{,}511
+   \;\Rightarrow\;\hat{\imath}_2=\arcsin(0{,}511)\approx\ang{30.7}. \]
+On entre dans un milieu plus réfringent : $\hat{\imath}_2<\hat{\imath}_1$, cohérent.
+\end{exemplebox}
+
+\begin{piege}[deux fautes classiques]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Angle mal repéré} : un angle « à $\ang{40}$ du dioptre » vaut $\hat{\imath}=\ang{50}$
+        par rapport à la normale. On mesure toujours \emph{par rapport à la normale}.
+  \item \textbf{Rapport à l'envers} : la loi s'écrit $n_1\sin\hat{\imath}_1=n_2\sin\hat{\imath}_2$.
+        Une valeur $\sin\hat{\imath}_2>1$ n'est pas une erreur de calcul : elle signale qu'il n'y a
+        \emph{pas} de réfraction (réflexion totale, voir Thème 4).
+\end{itemize}
+\end{piege}
+\end{document}

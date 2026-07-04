@@ -1,0 +1,106 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Nature des liaisons et règle de l'octet
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 1 — Nature des liaisons et règle de l'octet}
+\end{center}
+
+\smallskip
+Avant de dessiner la moindre molécule, il faut savoir \emph{de quoi} elle est faite : quel type
+de liaison assemble ses atomes, et combien d'électrons chaque atome cherche à s'entourer.
+
+\begin{cle}[Les trois types de liaisons]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Covalente} : mise en commun d'un \emph{doublet liant}, chaque atome fournissant
+        \emph{un} électron. Typique entre deux non-métaux d'électronégativités voisines
+        (ex. \ce{Cl2}, \ce{O2}, \ce{HCl}).
+  \item \textbf{Ionique} : \emph{transfert total} d'un ou plusieurs électrons d'un atome peu
+        électronégatif (devient un \textbf{cation}) vers un atome très électronégatif (devient un
+        \textbf{anion}). C'est l'attraction $+/-$ qui lie. Typique métal $+$ non-métal
+        (ex. \ce{NaCl}, \ce{MgO}).
+  \item \textbf{Covalente de coordination} (dative) : partage d'un doublet dont \emph{les deux}
+        électrons proviennent d'un \emph{seul} atome (le \textbf{donneur}, qui a un doublet libre)
+        vers un \textbf{accepteur} à case vide (ex. la $4^{\text{e}}$ liaison de \ce{NH4+}).
+\end{itemize}
+\end{cle}
+
+\begin{methode}[Reconnaître le type de liaison en 3 réflexes]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1.5pt]
+  \item Deux atomes \emph{identiques} ou deux non-métaux voisins $\Rightarrow$ \textbf{covalente}.
+  \item Un \emph{métal} et un \emph{non-métal} (grand écart d'électronégativité) $\Rightarrow$
+        \textbf{ionique}.
+  \item Un atome à \emph{doublet libre} qui se lie à un atome (ou ion) à \emph{case vide}
+        $\Rightarrow$ \textbf{dative}. Une fois formée, elle est identique à une covalente ordinaire.
+\end{enumerate}
+\end{methode}
+
+\begin{cle}[Électrons de valence, octet et duet]
+Le nombre d'électrons de valence d'un atome est égal à son \textbf{numéro de colonne} :
+\[ \ce{H}=1,\quad \ce{C}=4,\quad \ce{N}=5,\quad \ce{O}=6,\quad \ce{F},\ce{Cl}=7. \]
+Chaque atome cherche à s'entourer de \textbf{8 électrons} (\textbf{octet}, configuration d'un gaz
+rare) — \emph{sauf} \ce{H} et \ce{He} qui visent \textbf{2 électrons} (\textbf{duet}). On compte
+autour d'un atome ses \emph{doublets non liants} \textbf{et} ses \emph{doublets liants} : chaque
+liaison apporte $2$ électrons \emph{à chacun} des deux atomes.
+\end{cle}
+
+\begin{piege}[Les exceptions à l'octet]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Lacune électronique} (sous-octet) : le \textbf{bore} se contente de $6$~e$^-$
+        (\ce{BF3}, \ce{BH3}), le \textbf{béryllium} de $4$~e$^-$ (\ce{BeCl2}).
+  \item \textbf{Octet étendu} (hypervalence) : les éléments de la \textbf{3\textsuperscript{e}
+        période et au-delà} (\ce{P}, \ce{S}, \ce{Cl}, \ce{Br}, \ce{I}, \ce{Xe}\ldots) peuvent
+        dépasser $8$~e$^-$ : \ce{PCl5} ($10$), \ce{SF6} ($12$).
+  \item En revanche \ce{C}, \ce{N}, \ce{O}, \ce{F} sont \textbf{strictement} limités à $8$~e$^-$.
+\end{itemize}
+\end{piege}
+
+\begin{exemplebox}[un exemple de chaque type]
+\ce{Cl2} : liaison \textbf{covalente} (un doublet partagé, un e$^-$ de chaque \ce{Cl}). \quad
+\ce{NaCl} : liaison \textbf{ionique} (\ce{Na} cède son e$^-$ à \ce{Cl} $\to$ \ce{Na+} + \ce{Cl-}).
+\quad \ce{NH4+} : trois liaisons \ce{N-H} covalentes $+$ une \textbf{dative} (le doublet libre de
+l'azote capte \ce{H+}).
+\end{exemplebox}
+
+\begin{remarque}
+« S'entourer de $8$ électrons » ne signifie pas « posséder $8$ électrons en propre » : les
+électrons liants sont \emph{comptés deux fois}, une fois pour chaque atome de la liaison — d'où
+la possibilité de compléter deux octets en ne partageant qu'un doublet.
+\end{remarque}
+
+\end{document}

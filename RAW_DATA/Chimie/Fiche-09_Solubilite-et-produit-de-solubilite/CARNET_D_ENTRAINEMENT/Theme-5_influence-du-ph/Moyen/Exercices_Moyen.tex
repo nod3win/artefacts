@@ -1,189 +1,78 @@
-% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit{\molar}{M}
-\DeclareSIUnit{\Molar}{mol\,L^{-1}}
-\usepackage[version=4]{mhchem}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
-  decorations.markings,angles,quotes,patterns,backgrounds,
-  shapes.geometric,shapes.misc,fadings,intersections,fit}
-\pgfplotsset{compat=1.18}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
-
-% ---------- Palette ----------
-\definecolor{primary}{RGB}{150,98,162}
-\definecolor{primarydark}{RGB}{92,52,110}
-\definecolor{defcol}{RGB}{0,114,178}
-\definecolor{thmcol}{RGB}{0,140,120}
-\definecolor{formulacol}{RGB}{198,93,9}
-\definecolor{remarkcol}{RGB}{120,94,200}
-\definecolor{attncol}{RGB}{200,40,55}
-\definecolor{excol}{RGB}{0,135,90}
-\definecolor{methcol}{RGB}{90,90,100}
-\definecolor{cationcol}{RGB}{0,90,190}
-\definecolor{anioncol}{RGB}{200,60,55}
-\definecolor{cristalcol}{RGB}{110,105,120}
-\definecolor{eaucol}{RGB}{120,180,220}
-\definecolor{solcol}{RGB}{0,135,90}
-\definecolor{kpscol}{RGB}{198,93,9}
-\definecolor{qcol}{RGB}{120,94,200}
-\definecolor{precipcol}{RGB}{110,70,40}
-\definecolor{exercol}{RGB}{150,98,162}
-\definecolor{corrcol}{RGB}{0,120,100}
-
-% ---------- Macros ----------
-\newcommand{\Kps}{K_{\mathrm{ps}}}
-\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
-
-% ---------- Style des boîtes ----------
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
-   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
-
-\newtcolorbox[auto counter]{definition}[1][]{%
-  boxbase,colback=defcol!5,colframe=defcol,
-  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox[auto counter]{theoreme}[1][]{%
-  boxbase,colback=thmcol!6,colframe=thmcol,
-  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox[auto counter]{formule}[1][]{%
-  boxbase,colback=formulacol!6,colframe=formulacol,
-  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox{remarque}[1][]{%
-  boxbase,colback=remarkcol!6,colframe=remarkcol,
-  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{attention}[1][]{%
-  boxbase,colback=attncol!6,colframe=attncol,
-  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{exemple}[1][]{%
-  boxbase,colback=excol!5,colframe=excol,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{methode}[1][]{%
-  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
-  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{astuce}[1][]{%
-  boxbase,colback=primary!7,colframe=primary,
-  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-
-\newtcolorbox[auto counter]{exercice}[1][]{%
-  boxbase,colback=exercol!4,colframe=exercol,
-  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox[auto counter]{correction}[1][]{%
-  boxbase,colback=corrcol!4,colframe=corrcol,
-  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-
-% ---------- Environnement « où : » ----------
-\newenvironment{ou}{%
-  \par\smallskip\noindent\textbf{où :}\nopagebreak
-  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
-  {\end{itemize}}
-
-% ---------- Styles TikZ ----------
-\tikzset{
-  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
-              minimum size=5mm,font=\bfseries\scriptsize,text=white},
-  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
-             minimum size=5mm,font=\bfseries\scriptsize,text=white},
-  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
-              minimum size=5mm,font=\bfseries\scriptsize,text=white},
-  ptn/.style={circle,fill=black,inner sep=1.1pt}}
-
-% ---------- En-têtes ----------
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\usepackage{titlesec}
-\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
-\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
-
-% ---------- Bandeau de titre ----------
-% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
-\newcommand{\bandeau}[3]{%
-\begin{center}
-\begin{tikzpicture}
-\node[rectangle,rounded corners=7pt,fill=primary,text=white,
-      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
-  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
-\end{tikzpicture}
-\end{center}
-\vspace{2mm}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
 \begin{document}
-\bandeau{Thème 5 — Influence du pH}%
-{Exercices — Niveau Moyen}%
-{Calculs de pH de précipitation et dissolution en milieu acide}
+\sisetup{per-mode=symbol}
+\begin{exo}[pH de début de précipitation de \ce{Al(OH)3}]
+Une solution contient $[\ce{Al^{3+}}]=\qty{1.0e-3}{\mole\per\litre}$ ; on donne
+$K_{\mathrm{ps}}(\ce{Al(OH)3})=\num{2.0e-32}$. À partir de quel pH l'hydroxyde d'aluminium commence-t-il
+à précipiter ? (Calcule d'abord $[\ce{OH-}]$, puis le pH.)
+\end{exo}
 
-\noindent\textit{Consigne : mène les calculs de pH jusqu'à une valeur numérique. Rappel :
-$\mathrm{pH}=14+\log[\ce{OH-}]$.}
-\medskip
+\begin{exo}[pH de début de précipitation de \ce{Mg(OH)2}]
+Une solution contient $[\ce{Mg^{2+}}]=\qty{0.010}{\mole\per\litre}$ ; on donne
+$K_{\mathrm{ps}}(\ce{Mg(OH)2})=\num{9.0e-12}$. Détermine le pH de début de précipitation de
+\ce{Mg(OH)2}.
+\end{exo}
 
-\begin{exercice}[pH de précipitation de \ce{Al(OH)3}]
-Solution avec $[\ce{Al^3+}]=\qty{1{,}0e-3}{\molar}$ ; $\Kps(\ce{Al(OH)3})=\num{2{,}0e-32}$.
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Calcule $[\ce{OH-}]$ de début de précipitation.
-  \item En déduis le pH de début de précipitation (valeur numérique).
-  \item Commente : cette valeur est-elle acide ou basique ?
+\begin{exo}[dissolution des sels d'acides faibles en milieu acide]
+Pour chaque sel, écris la réaction de dissolution par un acide fort (\ce{H3O+}) et explique en une
+phrase pourquoi la solubilité augmente.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CaCO3} (l'acide faible est \ce{H2CO3}, qui donne \ce{CO2} + \ce{H2O}).
+  \item \ce{FeS} (l'acide faible est \ce{H2S}, gazeux).
 \end{enumerate}
-\end{exercice}
+\end{exo}
 
-\begin{exercice}[pH de précipitation de \ce{Mg(OH)2}]
-Dans l'eau de mer, $[\ce{Mg^2+}]=\qty{0{,}06}{\molar}$ ; $\Kps(\ce{Mg(OH)2})=\num{9{,}0e-12}$.
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Calcule $[\ce{OH-}]$ nécessaire pour amorcer la précipitation de \ce{Mg(OH)2}.
-  \item Calcule le pH correspondant.
+\begin{exo}[\ce{Fe(OH)3} précipite-t-il à pH $=3$ ?]
+Une eau industrielle contient $[\ce{Fe^{3+}}]=\qty{1.0e-2}{\mole\per\litre}$ à
+$\mathrm{pH}=3$. On donne $K_{\mathrm{ps}}(\ce{Fe(OH)3})=\num{2.0e-39}$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $[\ce{OH-}]$ à ce pH.
+  \item Calcule $Q$ et conclus : \ce{Fe(OH)3} précipite-t-il déjà à $\mathrm{pH}=3$ ?
 \end{enumerate}
-\end{exercice}
+\end{exo}
 
-\begin{exercice}[pH de précipitation de \ce{Fe(OH)3}]
-Solution avec $[\ce{Fe^3+}]=\qty{1{,}0e-2}{\molar}$ ; $\Kps(\ce{Fe(OH)3})=\num{2{,}0e-39}$.
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Calcule $[\ce{OH-}]$ de début de précipitation, puis le pH.
-  \item \ce{Fe(OH)3} précipite-t-il déjà en milieu acide ? Que peux-tu en conclure sur la difficulté de
-        garder du fer(III) en solution ?
+\begin{exo}[solubilité d'un hydroxyde à pH imposé]
+La solubilité d'un hydroxyde est $s=[\ce{M^{n+}}]=K_{\mathrm{ps}}/[\ce{OH-}]^{n}$ lorsque le pH est
+fixé. Pour \ce{Mg(OH)2} ($K_{\mathrm{ps}}=\num{9.0e-12}$), calcule $s$ à :
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH}=9$ ;
+  \item $\mathrm{pH}=11$.
 \end{enumerate}
-\end{exercice}
-
-\begin{exercice}[le calcaire et l'acide]
-On verse de l'acide (par exemple du vinaigre) sur du carbonate de calcium \ce{CaCO3} (craie).
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Écris l'équation de la réaction de \ce{CaCO3} solide avec les ions \ce{H3O+} (il se dégage du
-        \ce{CO2}).
-  \item Explique, avec l'argument de Le Chatelier, pourquoi la solubilité de \ce{CaCO3}
-        \textbf{augmente} en milieu acide.
-  \item Pourquoi observe-t-on une \textbf{effervescence} ? L'eau pure produit-elle le même effet ?
-\end{enumerate}
-\end{exercice}
-
-\begin{exercice}[classer trois hydroxydes]
-On reprend les trois pH de début de précipitation calculés ci-dessus :
-\ce{Al(OH)3}\,($\approx 4{,}4$), \ce{Mg(OH)2}\,($\approx 9{,}1$), \ce{Fe(OH)3}\,($\approx 1{,}8$).
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Range ces hydroxydes dans l'ordre où ils précipitent quand on \textbf{augmente
-        progressivement} le pH.
-  \item Une solution contient à la fois \ce{Fe^{3+}} et \ce{Mg^{2+}}. À quel pH pourrait-on précipiter
-        \emph{sélectivement} le fer sans faire précipiter le magnésium ? Donne un intervalle plausible.
-\end{enumerate}
-\end{exercice}
-
+Que constate-t-on ?
+\end{exo}
 \end{document}

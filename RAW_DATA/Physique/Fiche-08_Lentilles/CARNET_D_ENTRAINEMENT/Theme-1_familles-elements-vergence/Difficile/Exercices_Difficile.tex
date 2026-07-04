@@ -1,0 +1,83 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[vrai ou faux : repérer les affirmations correctes]
+Pour chaque affirmation, réponds par \textbf{vrai} ou \textbf{faux} et \emph{justifie en une ligne}.
+\begin{enumerate}[label=\alph*)]
+  \item La vergence d'une lentille est l'opposé de sa distance focale.
+  \item Une loupe est une lentille divergente.
+  \item Une lentille à bords épais a une distance focale négative.
+  \item Une lentille de vergence $+8~\delta$ a une distance focale de \qty{8}{\cm}.
+  \item En accolant deux lentilles, la vergence du système est la somme des vergences.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un jeu de trois lentilles accolées]
+Un opticien accole trois lentilles minces de vergences
+\[ C_1=+5~\delta,\qquad C_2=-8~\delta,\qquad C_3=+1~\delta. \]
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la vergence équivalente $C_{\text{éq}}$ du système.
+  \item Le système est-il convergent ou divergent ? Donne sa distance focale $f_{\text{éq}}$ (en cm).
+  \item Par quelle \emph{unique} lentille pourrait-on remplacer l'ensemble sans rien changer ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[remonter à une lentille inconnue]
+On accole une lentille convergente $L_1$ de distance focale $f_1=+\qty{20}{\cm}$ et une lentille
+inconnue $L_2$. On mesure que le système équivalent a une vergence $C_{\text{éq}}=+2~\delta$.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine la vergence $C_1$ de $L_1$.
+  \item Déduis-en la vergence $C_2$, la nature et la distance focale $f_2$ de $L_2$.
+  \item Par quelle lentille $L_2'$ faudrait-il remplacer $L_2$ pour rendre le système
+        \textbf{afocal} ($C_{\text{éq}}=0$) ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[qui plie le plus la lumière ?]
+On compare quatre lentilles :
+\[ L_1:\ C=+2~\delta\quad L_2:\ f=+\qty{5}{\cm}\quad L_3:\ f=-\qty{25}{\cm}\quad L_4:\ C=-4~\delta. \]
+\begin{enumerate}[label=\alph*)]
+  \item Exprime toutes ces lentilles par leur \textbf{vergence}, puis sépare les convergentes des
+        divergentes.
+  \item Range les quatre lentilles par \textbf{pouvoir de déviation décroissant} (c'est-à-dire par
+        $|C|$ décroissant) et indique laquelle « plie » le plus fortement la lumière.
+\end{enumerate}
+\end{exo}
+
+\end{document}

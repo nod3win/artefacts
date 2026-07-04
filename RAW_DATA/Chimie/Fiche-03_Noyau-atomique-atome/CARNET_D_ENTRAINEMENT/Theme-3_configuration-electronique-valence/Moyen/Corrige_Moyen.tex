@@ -1,0 +1,91 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[configuration : ouvrir la couche N]
+On garde la couche externe $\le 8$.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Ar}$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$ (M externe, plafonnée à $8$).
+  \item $\ce{K}$ : $18+1$ : la M est déjà à $8$, le $19^\text{e}$ électron ouvre N :
+        $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8(\mathrm{N})^1$.
+  \item $\ce{Ca}$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8(\mathrm{N})^2$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[configuration électronique d'un ion]
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Na^{+}}$ : $11-1 = 10$ électrons $\to (\mathrm{K})^2(\mathrm{L})^8$ (configuration du néon).
+  \item $\ce{Mg^{2+}}$ : $12-2 = 10 \to (\mathrm{K})^2(\mathrm{L})^8$.
+  \item $\ce{O^{2-}}$ : $8+2 = 10 \to (\mathrm{K})^2(\mathrm{L})^8$.
+  \item $\ce{Cl^{-}}$ : $17+1 = 18 \to (\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$ (configuration de l'argon).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[répartition par couche]
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Cl^{-}}$ : $18$ électrons $\to (\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$. Répartition :
+        $2$ sur K, $8$ sur L, $8$ sur M. Couche de valence : M ($8$ électrons).
+  \item $\ce{Ca^{2+}}$ : $18$ électrons $\to (\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8$. Répartition :
+        $2$ sur K, $8$ sur L, $8$ sur M. Couche de valence : M ($8$ électrons).
+\end{enumerate}
+$\ce{Cl^{-}}$ et $\ce{Ca^{2+}}$ ont la même configuration ($18$ électrons, celle de l'argon).
+\end{corrige}
+
+\begin{corrige}[vrai ou faux : configurations]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{\textcolor{attncol}{FAUX}} : la couche externe ne dépasse pas $8$. La bonne
+        configuration est $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8(\mathrm{N})^2$.
+  \item \textbf{\textcolor{attncol}{FAUX}} : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^5$, donc la
+        valence est $(\mathrm{M})^5$, pas $(\mathrm{L})^5$.
+  \item \textbf{\textcolor{excol}{VRAI}} : $\ce{Na^{+}}$ a $10$ électrons, soit
+        $(\mathrm{K})^2(\mathrm{L})^8$, comme le néon.
+  \item \textbf{\textcolor{excol}{VRAI}} : $\ce{S}$ est $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^6$,
+        donc $6$ électrons de valence.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[symbole de Lewis et célibataires]
+Électrons de valence = électrons de la couche externe.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{B}$ : $(\mathrm{K})^2(\mathrm{L})^3$, $3$ électrons de valence : $0$ doublet, $3$ célibataires.
+  \item $\ce{O}$ : $(\mathrm{K})^2(\mathrm{L})^6$, $6$ électrons de valence : $2$ doublets, $2$ célibataires.
+  \item $\ce{Si}$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^4$, $4$ électrons de valence : $0$ doublet,
+        $4$ célibataires.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

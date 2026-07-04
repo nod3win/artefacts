@@ -1,0 +1,92 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[où la force résultante s'annule-t-elle ?]
+\begin{enumerate}[label=\alph*)]
+  \item Les deux charges étant \emph{positives}, une charge test placée à l'extérieur subirait deux
+        forces de \emph{même sens} (jamais nulles). Le point doit donc être \textbf{entre} les
+        charges, où les deux forces s'opposent, et plus près de la \emph{petite} charge $q_1$.
+  \item Soit $x = $ distance à $q_1$, donc $L-x$ à $q_2$. On annule la résultante :
+        \[ K\,\frac{|q_1|}{x^2} = K\,\frac{|q_2|}{(L-x)^2}
+           \;\Longrightarrow\; \frac{L-x}{x} = \sqrt{\frac{|q_2|}{|q_1|}} = \sqrt{\frac{4}{1}} = 2. \]
+        D'où $L-x = 2x$, soit $x = L/3 = 30/3 = \SI{10}{\centi\metre}$ de $q_1$
+        (et $\SI{20}{\centi\metre}$ de $q_2$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[quelle charge annule la force sur une autre ?]
+\begin{enumerate}[label=\alph*)]
+  \item $q_2$ ($+$) \emph{repousse} $q_1$ vers la gauche (vers $Q$). Pour équilibrer, $Q$ doit
+        \emph{repousser} $q_1$ vers la droite : $Q$ et $q_1$ sont de \emph{même signe}, donc $Q$ est
+        \textbf{positive}.
+  \item On égalise les intensités des deux forces sur $q_1$ :
+        \[ K\,\frac{|Q|\,q_1}{(0{,}10)^2} = K\,\frac{q_2\,q_1}{(0{,}20)^2}
+           \;\Longrightarrow\; \frac{|Q|}{0{,}01} = \frac{12}{0{,}04}. \]
+        Donc $|Q| = 0{,}01\times\dfrac{12}{0{,}04} = \SI{3}{\nano\coulomb}$, soit $Q = \SI{+3}{\nano\coulomb}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[direction de la résultante : le carré]
+Les quatre charges sont à la même distance (demi-diagonale) de $O$ ; chacune \emph{repousse} $+q$
+selon la diagonale, dans le sens \guillemotleft~du coin vers le centre et au-delà~\guillemotright.
+\begin{enumerate}[label=\alph*)]
+  \item Les deux charges $+Q$ (gauche) donnent une résultante vers la droite ; les deux $+2Q$
+        (droite) une résultante, deux fois plus forte, vers la gauche. \textbf{Verticalement}, haut
+        et bas se compensent (mêmes charges symétriques) : la composante \textbf{verticale
+        s'annule}.
+  \item Il reste la composante horizontale : $+2Q$ (à droite) l'emporte sur $+Q$ (à gauche). La
+        résultante est donc \textbf{horizontale, dirigée vers la gauche} (vers le côté des charges
+        $+Q$, les plus faibles). En intensité elle est proportionnelle à $2Q-Q = Q$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[direction de la résultante : sur l'axe]
+\begin{enumerate}[label=\alph*)]
+  \item Les deux charges $+Q$ sont symétriques par rapport à l'axe $x$ et à même distance de $P$ :
+        elles attirent $-Q$ avec des forces de \emph{même intensité}, l'une vers le haut, l'autre
+        vers le bas. Leurs composantes verticales sont opposées et \textbf{s'annulent}.
+  \item Il ne reste que les composantes horizontales, toutes deux dirigées \emph{vers} les charges
+        (attraction $+/-$), c'est-à-dire vers la gauche. La résultante est donc
+        \textbf{horizontale, dirigée vers la gauche} (le long de l'axe $x$, vers l'origine).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

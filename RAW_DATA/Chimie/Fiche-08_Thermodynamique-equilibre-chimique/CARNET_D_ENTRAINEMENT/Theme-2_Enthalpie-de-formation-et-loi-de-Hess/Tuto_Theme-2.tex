@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Enthalpie de formation et loi de Hess
+\begin{center}
+{\Large\bfseries\color{primarydark} Thème 2 — Enthalpie de formation et loi de Hess}\\[2pt]
+{\color{primary}\small Calculer l'enthalpie d'une réaction sans la mesurer}
+\end{center}
+
+\begin{cle}[les deux idées à retenir]
+L'\textbf{enthalpie standard de formation} $\Delta H^\circ_{\text{f}}$ d'un composé est l'enthalpie de la réaction qui forme \textbf{une mole} de ce composé à partir des \textbf{corps purs simples} pris dans leur état le plus stable. Elle se mesure en $\si{\kilo\joule\per\mol}$.
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Convention} : pour un \emph{corps pur simple} dans son état stable, $\Delta H^\circ_{\text{f}}=0$ \; (ex. $\ce{O2}$, $\ce{N2}$, $\ce{H2}$, $\ce{Fe}(s)$, $\ce{C}(s)$).
+  \item $H$ est une \textbf{fonction d'état} : $\Delta H$ ne dépend que des états initial et final, jamais du chemin suivi. On peut donc décomposer une réaction en étapes dont les enthalpies s'\textbf{additionnent}.
+\end{itemize}
+\end{cle}
+
+\begin{methode}[calculer $\Delta H^\circ_{\text{r}}$ par la loi de Hess]
+\[ \boxed{\;\Delta H^\circ_{\text{r}} = \sum_i n_i\,\Delta H^\circ_{\text{f}}(\text{produits}) - \sum_j n_j\,\Delta H^\circ_{\text{f}}(\text{réactifs})\;} \]
+\begin{enumerate}[label=\arabic*.,leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item repérer les coefficients stœchiométriques $n$ (ce sont les facteurs devant chaque $\Delta H^\circ_{\text{f}}$) ;
+  \item sommer les $\Delta H^\circ_{\text{f}}$ des \textbf{produits}, retrancher ceux des \textbf{réactifs} ;
+  \item les corps purs simples apportent $0$.
+\end{enumerate}
+\textbf{Variante « cycle »} : en parcourant un cycle fermé et en revenant au départ, la somme des $\Delta H$ est \textbf{nulle}. Une flèche parcourue à contre-sens change de signe.
+\end{methode}
+
+\begin{exemplebox}[oxydation du dioxyde de soufre]
+Pour $2\,\ce{SO2}(g) + \ce{O2}(g) \rightarrow 2\,\ce{SO3}(g)$, avec $\Delta H^\circ_{\text{f}}(\ce{SO2})=\qty{-300}{\kilo\joule\per\mol}$ et $\Delta H^\circ_{\text{f}}(\ce{SO3})=\qty{-400}{\kilo\joule\per\mol}$ :
+\[ \Delta H^\circ_{\text{r}} = \underbrace{2(-400)}_{\text{produits}} - \big[\underbrace{2(-300)}_{\ce{SO2}} + \underbrace{0}_{\ce{O2}}\big] = -800 + 600 = \qty{-200}{\kilo\joule}. \]
+Soit $\qty{-100}{\kilo\joule}$ par mole de $\ce{SO3}$ : la réaction est exothermique.
+\end{exemplebox}
+
+\begin{piege}[où l'on se trompe]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item les \textbf{coefficients} multiplient les $\Delta H^\circ_{\text{f}}$ : ne pas les oublier.
+  \item \textbf{produits $-$ réactifs}, dans cet ordre (inverser donne le signe opposé).
+  \item l'\textbf{état physique} compte : $\Delta H^\circ_{\text{f}}(\ce{H2O}(l))\ne\Delta H^\circ_{\text{f}}(\ce{H2O}(g))$. Toujours vérifier $(s)$, $(l)$, $(g)$.
+  \item \textbf{inverser} une réaction change le signe de $\Delta H$ ; la \textbf{multiplier} par $k$ multiplie $\Delta H$ par $k$.
+\end{itemize}
+\end{piege}
+
+\end{document}

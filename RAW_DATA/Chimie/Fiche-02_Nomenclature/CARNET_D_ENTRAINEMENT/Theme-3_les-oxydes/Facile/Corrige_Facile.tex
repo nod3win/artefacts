@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[nommer un oxyde métallique à valence fixe]
+Métaux à valence unique : pas de chiffre romain.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CaO} : oxyde de calcium.
+  \item \ce{K2O} : oxyde de potassium.
+  \item \ce{ZnO} : oxyde de zinc.
+  \item \ce{Al2O3} : oxyde d'aluminium.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[écrire un oxyde métallique à valence fixe]
+On croise la valence du métal avec $2$ (celle de \ce{O^2-}), puis on simplifie.
+\begin{enumerate}[label=\alph*)]
+  \item oxyde de sodium : \ce{Na+} (valence 1) $\Rightarrow$ \ce{Na2O}.
+  \item oxyde de magnésium : \ce{Mg^2+} (valence 2) $\Rightarrow$ \ce{Mg2O2}\,$\to$\,\ce{MgO}.
+  \item oxyde d'argent : \ce{Ag+} (valence 1) $\Rightarrow$ \ce{Ag2O}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[nommer un oxyde non métallique \ce{XO_n}]
+Un seul atome de $X$ : le préfixe est le nombre d'oxygènes.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{CO} : monoxyde de carbone.
+  \item \ce{CO2} : dioxyde de carbone.
+  \item \ce{SO3} : trioxyde de soufre.
+  \item \ce{NO2} : dioxyde d'azote.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[écrire un oxyde non métallique à partir du préfixe]
+\begin{enumerate}[label=\alph*)]
+  \item monoxyde d'azote : \ce{NO}.
+  \item dioxyde d'iode : \ce{IO2}.
+  \item trioxyde de brome : \ce{BrO3}.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[choisir la bonne règle : métal ou non-métal ?]
+\begin{enumerate}[label=\alph*)]
+  \item \ce{MgO} : oxyde \emph{métallique} (magnésium) $\Rightarrow$ oxyde de magnésium.
+  \item \ce{SO2} : oxyde \emph{non métallique} (soufre) $\Rightarrow$ dioxyde de soufre.
+  \item \ce{Na2O} : oxyde \emph{métallique} (sodium) $\Rightarrow$ oxyde de sodium.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

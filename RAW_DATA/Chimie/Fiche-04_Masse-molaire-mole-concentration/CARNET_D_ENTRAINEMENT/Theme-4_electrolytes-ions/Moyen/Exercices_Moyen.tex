@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}{\large\bfseries\color{primarydark} Thème 4 — Niveau Moyen}\end{center}
+\emph{Données (\si{\gram\per\mole}) :} \ce{Ba(OH)2}$=171$, \ce{NaCl}$=58{,}5$.
+
+\begin{exo}[base forte : concentration en ions hydroxyde]
+On dissout $\SI{0.0855}{\gram}$ d'hydroxyde de baryum \ce{Ba(OH)2} dans $\SI{500}{\milli\litre}$ d'eau.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est la concentration molaire du soluté~?
+  \item En déduire $[\ce{OH-}]$ (on rappelle \ce{Ba(OH)2 -> Ba^2+ + 2 OH-}).
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[ions nitrate à partir d'une quantité]
+Une solution de volume $\SI{200}{\milli\litre}$ contient $\SI{0.050}{\mole}$ de nitrate de baryum
+\ce{Ba(NO3)2}. Quelle est $[\ce{NO3-}]$~?
+\end{exo}
+
+\begin{exo}[mélange de deux sources de chlorure]
+Dans une fiole, on mélange $\SI{100}{\milli\litre}$ de \ce{NaCl} à $\SI{0.5}{\mole\per\litre}$ et
+$\SI{100}{\milli\litre}$ de \ce{CaCl2} à $\SI{0.5}{\mole\per\litre}$ ; le volume total est
+$\SI{200}{\milli\litre}$. Quelle est $[\ce{Cl-}]$~?
+\end{exo}
+
+\begin{exo}[de la concentration massique aux ions]
+Une solution contient $\SI{11.7}{\gram}$ de \ce{NaCl} par litre.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est sa concentration molaire~?
+  \item En déduire $[\ce{Na+}]$ et $[\ce{Cl-}]$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[comparer plusieurs sels à même concentration]
+Chaque solution est à $\SI{0.2}{\mole\per\litre}$. Donne $[\ce{Cl-}]$ pour chacune.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{NaCl} ; \quad b) \ce{MgCl2} ; \quad c) \ce{AlCl3}.
+\end{enumerate}
+\end{exo}
+
+\end{document}

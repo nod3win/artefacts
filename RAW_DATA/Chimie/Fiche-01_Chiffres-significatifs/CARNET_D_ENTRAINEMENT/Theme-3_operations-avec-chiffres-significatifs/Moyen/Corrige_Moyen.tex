@@ -1,0 +1,86 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[la soustraction qui détruit la précision]
+On arrondit au nombre de décimales du moins précis ; le nombre de CS, lui, s'effondre.
+\begin{enumerate}[label=\alph*)]
+  \item $0,11 \to \boxed{0,1}$ ($1$ décimale) : il ne reste que $1$ CS.
+  \item $0,3 \to \boxed{0,3}$ ($1$ décimale) : $1$ CS.
+  \item $0,022 \to \boxed{0,02}$ ($2$ décimales, imposées par $5,41$) : $1$ CS.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[calcul mixte : masse molaire puis moles]
+\begin{enumerate}[label=\alph*)]
+  \item $M(\ce{H2O}) = 2\times1,008 + 16,00 = 2,016 + 16,00 = 18,016$. C'est une addition : on garde le
+        minimum de décimales ($16,00$, $2$ décimales) $\Rightarrow \boxed{M(\ce{H2O})\approx\qty{18,02}{\gram\per\mole}}$.
+  \item $n = \dfrac{m}{M} = \dfrac{9,00}{18,02} = 0,4994\ldots$ La donnée la plus pauvre est $\qty{9,00}{\gram}$
+        ($3$ CS) $\Rightarrow \boxed{n\approx\qty{0,499}{\mole}}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[quand un facteur est exact]
+Le $5$ et le $4$ sont exacts : c'est l'autre donnée qui fixe le nombre de CS.
+\begin{enumerate}[label=\alph*)]
+  \item $5\times2,50 = 12,5 \to \boxed{\qty{12,5}{\gram}}$ ($3$ CS, comme $2,50$).
+  \item $250,0\div4 = 62,5 \to \boxed{\qty{62,50}{\gram}}$ ($4$ CS, comme $250,0$).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pH : le bon nombre de décimales]
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH}=-\log(2,5\times10^{-4})=3,602\ldots$ ; $2$ CS $\Rightarrow 2$ décimales $\Rightarrow
+        \boxed{\mathrm{pH}\approx3,60}$.
+  \item $\mathrm{pH}=-\log(1,00\times10^{-3})=3,000$ ; $3$ CS $\Rightarrow 3$ décimales $\Rightarrow
+        \boxed{\mathrm{pH}=3,000}$.
+  \item $[\ce{H3O+}]=10^{-2,00}=\boxed{1,0\times10^{-2}\ \si{\mol\per\litre}}$ : les $2$ décimales du pH
+        donnent $2$ CS.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[applique la bonne règle]
+\begin{enumerate}[label=\alph*)]
+  \item $+$ : $48,28 \to \boxed{48,3}$ ($1$ décimale).
+  \item $\times$ : $0,8 \to \boxed{0,80}$ ($2$ CS, comme $6,4$).
+  \item $\div$ : $31,4 \to \boxed{31,4}$ ($3$ CS).
+  \item $-$ : $11,77 \to \boxed{11,8}$ ($1$ décimale).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

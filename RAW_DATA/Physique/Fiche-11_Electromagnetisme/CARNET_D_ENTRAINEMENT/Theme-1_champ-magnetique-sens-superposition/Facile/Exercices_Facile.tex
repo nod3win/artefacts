@@ -1,0 +1,132 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[lire les lignes de champ d'un aimant]
+Un aimant droit crée le spectre magnétique ci-dessous. Deux points $A$ et $C$ sont repérés.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \fill[red!75] (-1.5,-0.32) rectangle (0,0.32);
+  \fill[blue!65] (0,-0.32) rectangle (1.5,0.32);
+  \node[white,font=\bfseries] at (-0.75,0){N};
+  \node[white,font=\bfseries] at (0.75,0){S};
+  \foreach \s in {0.45,0.9,1.35}{
+    \draw[blue!70!black,line width=0.8pt]
+      (-1.5,0.28) .. controls (-1.5-\s,0.55) and (1.5+\s,0.55) .. (1.5,0.28)
+      .. controls (1.5+\s*0.6,-0.55) and (-1.5-\s*0.6,-0.55) .. (-1.5,0.28);
+  }
+  \fill[black] (-1.75,0.55) circle (1.3pt) node[left,font=\footnotesize]{$A$};
+  \fill[black] (2.7,0.0) circle (1.3pt) node[right,font=\footnotesize]{$C$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item À l'\emph{extérieur} de l'aimant, dans quel sens les lignes de champ sont-elles orientées ?
+  \item Au point $A$ (tout près d'un pôle) ou au point $C$ (loin de l'aimant) : où le champ
+        $\vv{B}$ est-il le plus intense ? Justifie.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[sens de $\vv{B}$ autour d'un fil : main droite]
+Un fil rectiligne vertical est parcouru par un courant $I$ orienté \textbf{vers le haut}. Deux points
+$M$ (à droite) et $N$ (à gauche) sont situés dans le plan de la feuille.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[red!80!black,line width=2pt] (0,-1.4) -- (0,1.4);
+  \draw[red!80!black,->,line width=2pt] (0,0.3) -- (0,1.0);
+  \node[red!80!black,left] at (-0.08,1.1){$I$};
+  \fill[black] (1.5,0) circle (1.4pt) node[below,font=\footnotesize]{$M$};
+  \fill[black] (-1.5,0) circle (1.4pt) node[below,font=\footnotesize]{$N$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Au point $M$, le champ $\vv{B}$ \textbf{sort}-il de la feuille ($\odot$) ou y \textbf{entre}-t-il ($\otimes$) ?
+  \item Même question au point $N$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[superposition de deux champs alignés]
+En un point $M$, deux sources créent chacune un champ magnétique de \textbf{même direction}
+(horizontale), d'intensités $B_1=\qty{3e-5}{\tesla}$ et $B_2=\qty{2e-5}{\tesla}$.
+\begin{enumerate}[label=\alph*)]
+  \item Si les deux champs sont de \textbf{même sens}, quelle est l'intensité du champ résultant ?
+  \item S'ils sont de \textbf{sens opposés}, quelle est l'intensité du champ résultant, et dans quel
+        sens pointe-t-il ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[sens de $\vv{B}$ dans une spire]
+Une spire circulaire est parcourue par le courant $I$ dans le sens indiqué (sens
+trigonométrique, vu de face).
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[red!80!black,line width=1.8pt] (0,0) circle (1.1);
+  \draw[red!80!black,->,line width=1.8pt] (1.1,0.06) arc (3:60:1.1);
+  \node[red!80!black] at (0.55,1.15){$I$};
+  \fill[black] (0,0) circle (1.2pt) node[below right,font=\footnotesize]{centre};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item À l'intérieur de la spire, le champ $\vv{B}$ \textbf{sort}-il vers toi ($\odot$) ou
+        \textbf{s'enfonce}-t-il dans la feuille ($\otimes$) ?
+  \item Quelle face de la spire (celle tournée vers toi, ou celle de derrière) est la face
+        \textbf{Nord} ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[fil vu en bout : convention $\odot/\otimes$]
+Un fil perpendiculaire à la feuille est traversé par un courant $I$ qui \textbf{sort} de la feuille
+(symbole $\odot$). Un point $P$ est situé juste au-dessus du fil.
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \draw[red!80!black,line width=1.6pt] (0,0) circle (0.16);
+  \fill[red!80!black] (0,0) circle (0.05);
+  \node[red!80!black,right] at (0.22,0){$I$ (sort)};
+  \draw[blue!70!black,line width=0.8pt] (0,0) circle (1.1);
+  \draw[blue!70!black,->,line width=0.9pt] (1.1,0.05) arc (3:45:1.1);
+  \fill[black] (0,1.1) circle (1.3pt) node[above,font=\footnotesize]{$P$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Les lignes de champ tournent-elles autour du fil dans le sens \textbf{horaire} ou
+        \textbf{trigonométrique} (anti-horaire) ?
+  \item Au point $P$, le vecteur $\vv{B}$ pointe-t-il vers la \textbf{gauche} ou vers la
+        \textbf{droite} ?
+\end{enumerate}
+\end{exo}
+
+\end{document}

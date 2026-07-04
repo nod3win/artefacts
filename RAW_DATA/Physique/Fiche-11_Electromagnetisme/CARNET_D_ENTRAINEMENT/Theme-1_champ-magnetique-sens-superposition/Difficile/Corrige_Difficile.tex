@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{corrige}[la boussole déviée par un fil]
+Les deux champs horizontaux sont perpendiculaires : on compose par Pythagore. Avec
+$B_f=\qty{3.46e-5}{\tesla}=2\sqrt{3}\times10^{-5}$ :
+\begin{enumerate}[label=\alph*)]
+  \item $B_{\text{tot}}=\sqrt{B_H^2+B_f^2}=\sqrt{(2)^2+(2\sqrt3)^2}\times10^{-5}
+        =\sqrt{4+12}\times10^{-5}=\sqrt{16}\times10^{-5}=\qty{4e-5}{\tesla}.$
+  \item L'aiguille s'aligne sur $\vv{B}_{\text{tot}}$ :
+        \[ \tan\alpha=\frac{B_f}{B_H}=\frac{3{,}46}{2}=\sqrt{3}\;\Rightarrow\;\alpha=\ang{60}. \]
+        L'aiguille tourne de \ang{60} \textbf{vers l'Est}. C'est précisément l'expérience d'Ørsted :
+        le courant « détourne » la boussole d'autant plus que $B_f$ est grand devant $B_H$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[deux fils de courants opposés : champ au milieu]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Fil 1} ($\odot$, à gauche de $M$) : main droite $\Rightarrow$ $\vv{B}_1$ dirigé
+        \textbf{vers le haut} en $M$. \textbf{Fil 2} ($\otimes$, à droite de $M$) : courant entrant,
+        les lignes tournent en sens horaire ; à gauche du fil 2 (donc en $M$) le champ $\vv{B}_2$ est
+        aussi dirigé \textbf{vers le haut}. Les deux champs sont \textbf{de même sens}.
+  \item Ils s'\textbf{ajoutent} :
+        \[ B_{\text{tot}}=B_1+B_2=4\cdot10^{-5}+4\cdot10^{-5}=\qty{8e-5}{\tesla}\ \text{(vers le haut).} \]
+        \textbf{À retenir} : au milieu de deux fils, courants de \emph{même} sens $\Rightarrow$ champ
+        \textbf{nul} ; courants \emph{opposés} $\Rightarrow$ champ \textbf{maximal} (les contributions
+        s'ajoutent). C'est l'inverse de l'intuition !
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[superposition à \ang{60} : passer par les composantes]
+\begin{enumerate}[label=\alph*)]
+  \item Sur l'axe horizontal ($x$) et vertical ($y$), avec $B=\qty{4e-4}{\tesla}$ :
+        \[ \vv{B}_1=(B,\;0),\qquad \vv{B}_2=(B\cos\ang{60},\;B\sin\ang{60})=(2\cdot10^{-4},\;3{,}46\cdot10^{-4}). \]
+        Composantes du résultant :
+        \[ R_x=B+B\cos\ang{60}=4\cdot10^{-4}+2\cdot10^{-4}=\qty{6e-4}{\tesla},\quad
+           R_y=B\sin\ang{60}=\qty{3.46e-4}{\tesla}. \]
+  \item Norme :
+        \[ B_{\text{tot}}=\sqrt{R_x^2+R_y^2}=\sqrt{6^2+3{,}46^2}\times10^{-4}
+           \approx\sqrt{48}\times10^{-4}\approx\qty{6.9e-4}{\tesla}. \]
+        Angle avec l'horizontale : $\tan\varphi=\dfrac{R_y}{R_x}=\dfrac{3{,}46}{6}=0{,}577
+        \Rightarrow \varphi=\ang{30}$. La résultante \textbf{bissecte} l'angle des deux champs
+        (normal, puisqu'ils ont la même norme).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[annuler un champ avec un fil]
+\begin{enumerate}[label=\alph*)]
+  \item Pour que $\vv{B}_A+\vv{B}_f=\vv{0}$, il faut $\vv{B}_f=-\vv{B}_A$ : même intensité
+        $\qty{6e-5}{\tesla}$, même direction (horizontale), mais sens \textbf{opposé}, donc dirigé
+        \textbf{vers la gauche}.
+  \item Le point $M$ est \emph{au-dessous} du fil. On veut qu'en ce point le champ pointe vers la
+        gauche. Par la règle de la main droite, cela impose un courant \textbf{entrant} dans la feuille
+        ($\otimes$) : pouce enfoncé dans la feuille, les doigts tournent en sens horaire, et sous le
+        fil la tangente est bien dirigée vers la gauche. Avec ce sens et une intensité réglée pour
+        $B_f=\qty{6e-5}{\tesla}$, le champ total est nul en $M$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

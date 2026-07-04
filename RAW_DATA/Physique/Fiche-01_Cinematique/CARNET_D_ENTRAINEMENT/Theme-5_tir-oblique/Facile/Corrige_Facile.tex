@@ -1,0 +1,77 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[décomposer la vitesse initiale]
+\begin{enumerate}[label=\alph*)]
+  \item $v_{0x}=20\cos\ang{30}=10\sqrt3\approx\qty{17,3}{\metre\per\second}$ ; $v_{0y}=20\sin\ang{30}=\qty{10}{\metre\per\second}$.
+  \item $v_{0x}=v_{0y}=20\cos\ang{45}=\dfrac{20}{\sqrt2}=10\sqrt2\approx\qty{14,1}{\metre\per\second}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[temps de montée]
+\begin{enumerate}[label=\alph*)]
+  \item $t_s=\dfrac{v_{0y}}{g}=\dfrac{15}{10}=\qty{1,5}{\second}$.
+  \item Au sommet, la vitesse verticale est nulle : $v_y=\qty{0}{\metre\per\second}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[hauteur maximale]
+\begin{enumerate}[label=\alph*)]
+  \item $y_{\max}=\dfrac{v_{0y}^2}{2g}=\dfrac{20^2}{2\times10}=\dfrac{400}{20}=\qty{20}{\metre}$.
+  \item La vitesse horizontale est constante (MRU) : $v_x=v_{0x}=\qty{12}{\metre\per\second}$ au sommet comme partout.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[portée par la formule]
+\begin{enumerate}[label=\alph*)]
+  \item $x_p=\dfrac{v_0^2\sin(2\theta)}{g}=\dfrac{30^2\times\sin\ang{90}}{10}=\dfrac{900\times1}{10}=\qty{90}{\metre}$.
+  \item $\sin(2\times\ang{45})=\sin\ang{90}=1$ (c'est la valeur maximale, d'où la portée maximale à \ang{45}).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'angle qui porte le plus loin]
+\begin{enumerate}[label=\alph*)]
+  \item L'angle $\theta=\ang{45}$, car $\sin(2\theta)=1$ y est maximal.
+  \item \textbf{Même portée} : \ang{30} et \ang{60} sont complémentaires, et $\sin\ang{60}=\sin\ang{120}$, donc $\sin(2\theta)$ est identique. (Le tir à \ang{60} monte toutefois plus haut.)
+\end{enumerate}
+\end{corrige}
+
+\end{document}

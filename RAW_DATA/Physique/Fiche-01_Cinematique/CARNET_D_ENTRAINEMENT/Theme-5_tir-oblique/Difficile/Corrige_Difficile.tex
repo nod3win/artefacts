@@ -1,0 +1,88 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[la bille lancée à 60°]
+\begin{enumerate}[label=\alph*)]
+  \item $v_{0x}=30\cos\ang{60}=\qty{15}{\metre\per\second}$ ; $v_{0y}=30\sin\ang{60}=15\sqrt3\approx\qty{25,98}{\metre\per\second}$.
+        $t_s=\dfrac{v_{0y}}{g}=\dfrac{15\sqrt3}{10}=1{,}5\sqrt3\approx\qty{2,6}{\second}$ ; $T=2t_s\approx\qty{5,2}{\second}$.
+  \item $y_{\max}=\dfrac{v_{0y}^2}{2g}=\dfrac{(15\sqrt3)^2}{20}=\dfrac{675}{20}=\qty{33,75}{\metre}$.
+  \item $x_p=v_{0x}\,T=15\times3\sqrt3=45\sqrt3\approx\qty{77,9}{\metre}$ (ou $\dfrac{v_0^2\sin\ang{120}}{g}=45\sqrt3$).
+  \item Elle repart et revient à la même hauteur (le sol) : par symétrie sa vitesse a la même norme qu'au départ, $v=v_0=\qty{30}{\metre\per\second}$. (Au sommet, en revanche, il ne reste que $v_{0x}=\qty{15}{\metre\per\second}$.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'archer : 45° ou 60° ?]
+\begin{enumerate}[label=\alph*)]
+  \item Le temps de vol $T=\dfrac{2v_0\sin\theta}{g}$ croît avec $\theta$ : comme $\sin\ang{60}>\sin\ang{45}$, la flèche à \textbf{\ang{60}} reste plus longtemps en l'air.
+  \item La portée est maximale à \ang{45} ($\sin(2\theta)=1$) ; celle à \ang{60} vaut $\sin\ang{120}=\sin\ang{60}<1$. C'est donc la flèche à \textbf{\ang{45}} qui retombe le plus loin.
+  \item La flèche à \ang{60} vole plus longtemps et monte plus haut, mais celle à \ang{45} atteint un point du sol plus éloigné.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux sur la trajectoire parabolique]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{V} : l'accélération vaut $\vv{g}$ (constante) en tout point.
+  \item \textbf{F} : au sommet seule $v_y$ s'annule ; l'accélération reste $g$.
+  \item \textbf{V} : la composante horizontale $v_0\cos\theta$ subsiste, seule la verticale s'annule.
+  \item \textbf{V} : la trajectoire est symétrique (même hauteur de départ et d'arrivée).
+  \item \textbf{V} : par symétrie, la norme de la vitesse au sol est la même qu'au lancer.
+\end{enumerate}
+\textbf{Bilan : 4 affirmations vraies} (a, c, d, e).
+\end{corrige}
+
+\begin{corrige}[remonter à la vitesse et à l'angle]
+\begin{enumerate}[label=\alph*)]
+  \item $\dfrac{y_{\max}}{x_p}=\dfrac{\tan\theta}{4}\Rightarrow \tan\theta=\dfrac{4\,y_{\max}}{x_p}=\dfrac{4\times20}{80}=1 \Rightarrow \theta=\ang{45}$.
+  \item À \ang{45}, $x_p=\dfrac{v_0^2}{g}\Rightarrow v_0=\sqrt{x_p\,g}=\sqrt{80\times10}=\sqrt{800}=20\sqrt2\approx\qty{28,3}{\metre\per\second}$.
+        (Vérification : $y_{\max}=\dfrac{v_0^2\sin^2\ang{45}}{2g}=\dfrac{800\times0{,}5}{20}=\qty{20}{\metre}$ $\checkmark$.)
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[l'allure des deux composantes]
+$v_{0x}=25\times0{,}6=\qty{15}{\metre\per\second}$ ; $v_{0y}=25\times0{,}8=\qty{20}{\metre\per\second}$.
+\begin{enumerate}[label=\alph*)]
+  \item $x(t)=15\,t$ ; $y(t)=20\,t-\tfrac12\times10\times t^2=20\,t-5\,t^2$.
+  \item $x(t)$ est une \textbf{droite} passant par l'origine (MRU) ; $y(t)$ est une \textbf{parabole} (sommet à $t=\qty{2}{\second}$, $y=\qty{20}{\metre}$).
+  \item Horizontalement, aucune force n'agit : la vitesse $v_x$ est constante, donc $x$ croît linéairement. Verticalement, la pesanteur impose une accélération constante $g$, donc $y$ varie de façon quadratique.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

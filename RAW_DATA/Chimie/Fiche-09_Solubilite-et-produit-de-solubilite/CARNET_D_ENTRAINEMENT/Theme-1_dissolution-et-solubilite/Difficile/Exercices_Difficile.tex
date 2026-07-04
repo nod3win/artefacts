@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{exo}[repérer les équations correctes]
+Parmi ces équations de dissolution, indique lesquelles sont \textbf{correctement écrites}. Pour chaque
+équation fausse, explique l'erreur et corrige-la.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Fe2(SO4)3(s) -> 2 Fe^{2+}(aq) + 3 SO4^{2-}(aq)}$
+  \item $\ce{Ca3(PO4)2(s) -> 3 Ca^{2+}(aq) + 2 PO4^{3-}(aq)}$
+  \item $\ce{AgCl(s) -> Ag^{2+}(aq) + Cl^{-}(aq)}$
+  \item $\ce{(NH4)2CO3(s) -> 2 NH4^{+}(aq) + CO3^{2-}(aq)}$
+  \item $\ce{Al(OH)3(s) -> Al^{3+}(aq) + 3 OH^{-}(aq)}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[dissolution de l'iodate de strontium]
+On dissout $n=\qty{0.010}{\mole}$ d'iodate de strontium \ce{Sr(IO3)2} dans l'eau pour former
+\qty{1.0}{\litre} de solution (dissolution supposée totale).
+\begin{enumerate}[label=\alph*)]
+  \item Écris l'équation de dissolution.
+  \item Combien de moles d'ions \ce{Sr^{2+}} et d'ions \ce{IO3-} contient la solution ? Y a-t-il
+        \emph{autant} d'ions strontium que d'ions iodate ?
+  \item Vérifie que la solution est électriquement neutre.
+  \item La solution conduit-elle le courant électrique ? Justifie.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[mélange de deux sels : bilan des ions]
+On dissout \qty{5.85}{\gram} de \ce{NaCl} et \qty{1.11}{\gram} de \ce{CaCl2} dans l'eau, puis on
+complète à \qty{500}{\milli\litre}. \emph{Données :} $M(\ce{NaCl})=\qty{58.5}{\gram\per\mole}$,
+$M(\ce{CaCl2})=\qty{111.0}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Écris les deux équations de dissolution.
+  \item Calcule les concentrations $[\ce{Na+}]$, $[\ce{Ca^{2+}}]$ et $[\ce{Cl-}]$ dans la solution
+        finale (le \ce{Cl-} vient des \emph{deux} sels).
+  \item Vérifie l'électroneutralité de la solution.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[identifier un sel par sa solubilité]
+Un fluorure peu soluble de formule \ce{MF2} (où \ce{M} est un métal inconnu) a, à \qty{25}{\degreeCelsius},
+une solubilité molaire $s=\qty{2.1e-4}{\mole\per\litre}$ et une solubilité massique
+$s_m=\qty{1.64e-2}{\gram\per\litre}$. \emph{Donnée :} $M(\ce{F})=\qty{19.0}{\gram\per\mole}$.
+\begin{enumerate}[label=\alph*)]
+  \item Déduis-en la masse molaire $M$ du sel \ce{MF2}.
+  \item Calcule la masse molaire du métal \ce{M} et identifie-le.
+  \item Donne les concentrations $[\ce{M^{2+}}]$ et $[\ce{F-}]$ à saturation.
+\end{enumerate}
+\end{exo}
+\end{document}

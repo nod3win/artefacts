@@ -1,0 +1,102 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\begin{exo}[quand la couche M se remplit jusqu'à 18]
+Pour ces éléments, la couche M est \emph{interne} (une couche N est ouverte au-dessus) et peut donc
+contenir jusqu'à $18$ électrons. Écris la configuration et donne le nombre d'électrons de valence.
+\begin{enumerate}[label=\alph*)]
+  \item sélénium $\ce{Se}$ ($Z = 34$)
+  \item brome $\ce{Br}$ ($Z = 35$)
+  \item krypton $\ce{Kr}$ ($Z = 36$)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[reconnaître un halogène à son $Z$]
+Un halogène possède $7$ électrons de valence. Pour chaque numéro atomique, établis la configuration,
+lis le nombre d'électrons de valence, et dis si l'atome est un halogène.
+\begin{enumerate}[label=\alph*)]
+  \item $Z = 9$
+  \item $Z = 16$
+  \item $Z = 17$
+  \item $Z = 35$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[isoélectronie]
+\textit{Données :} $Z(\mathrm{Na})=11$, $Z(\mathrm{S})=16$, $Z(\mathrm{Ar})=18$, $Z(\mathrm{K})=19$,
+$Z(\mathrm{Ca})=20$.
+
+\smallskip
+Détermine la configuration électronique de chaque espèce, puis regroupe celles qui ont \textbf{la même
+configuration}.
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Ar}$
+  \item $\ce{K^{+}}$
+  \item $\ce{Ca^{2+}}$
+  \item $\ce{S^{2-}}$
+  \item $\ce{Na^{+}}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trouver un élément par sa période et son groupe]
+La \emph{période} est le numéro de la dernière couche occupée (K$\to 1$, L$\to 2$, M$\to 3$, N$\to 4$) ;
+le \emph{groupe} (colonne A) est le nombre d'électrons de valence. Donne la configuration, $Z$ et le
+symbole de l'élément.
+\begin{enumerate}[label=\alph*)]
+  \item période 3, groupe 2 ($2$ électrons de valence)
+  \item période 2, groupe 6 ($6$ électrons de valence)
+  \item période 3, groupe 7 ($7$ électrons de valence)
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[vrai ou faux — synthèse]
+\textit{Données :} $Z(\mathrm{Ne})=10$, $Z(\mathrm{Mg})=12$, $Z(\mathrm{Br})=35$.
+
+\smallskip
+Pour chaque proposition, indique si elle est \textbf{vraie} ou \textbf{fausse}, en justifiant.
+\begin{enumerate}[label=\alph*)]
+  \item Dans le modèle en couches, la couche la plus externe d'un atome peut contenir jusqu'à $18$
+        électrons.
+  \item L'ion $\ce{Mg^{2+}}$ et l'atome de néon ont la même configuration électronique.
+  \item Le brome ($Z=35$) a pour configuration $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}
+        (\mathrm{N})^7$ et $7$ électrons de valence.
+  \item Un atome dont la couche de valence porte un octet ($8$ électrons) est un gaz noble, très stable.
+\end{enumerate}
+\end{exo}
+
+\end{document}

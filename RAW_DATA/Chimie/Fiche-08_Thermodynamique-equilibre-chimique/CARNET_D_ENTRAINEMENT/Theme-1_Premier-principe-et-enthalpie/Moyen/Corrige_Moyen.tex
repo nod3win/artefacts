@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\begin{corrige}[calculer le travail des forces de pression]
+On convertit : $\qty{1}{\litre}=\qty{1e-3}{\cubic\metre}$, puis $W=-p\,\Delta V$.
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta V = \qty{+2.0e-3}{\cubic\metre}$ : $W = -\,\qty{1.0e5}{\pascal}\times \qty{2.0e-3}{\cubic\metre} = \qty{-200}{\joule}$ (travail cédé).
+  \item $\Delta V = \qty{-0.50e-3}{\cubic\metre}$ : $W = -\,\qty{1.0e5}{\pascal}\times(\qty{-0.50e-3}{\cubic\metre}) = \qty{+50}{\joule}$ (travail reçu).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[appliquer $\Delta U = Q + W$]
+On additionne chaleur et travail en respectant les signes.
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta U = 500 + (-200) = \qty{+300}{\joule}$.
+  \item $\Delta U = -300 + 120 = \qty{-180}{\joule}$.
+  \item chaleur reçue $\Rightarrow Q=\qty{+1500}{\joule}$ ; travail cédé $\Rightarrow W=\qty{-400}{\joule}$. Donc $\Delta U = 1500 - 400 = \qty{+1100}{\joule}=\qty{+1.1}{\kilo\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[du diagramme aux valeurs]
+On utilise $\Delta H = H_{\text{prod.}}-H_{\text{réac.}}$.
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta H = 30 - 100 = \qty{-70}{\kilo\joule}$.
+  \item $\Delta H<0$ : la réaction est \textbf{exothermique}.
+  \item elle \textbf{dégage} $\qty{70}{\kilo\joule}$ vers le milieu extérieur.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[inverser et multiplier une équation]
+$\Delta H$ est proportionnel à l'équation : inverser change le signe, multiplier par $k$ multiplie $\Delta H$ par $k$.
+\begin{enumerate}[label=\alph*)]
+  \item réaction inverse : $\Delta H = \qty{+92}{\kilo\joule}$.
+  \item coefficients $\times 2$ : $\Delta H = 2\times(-92) = \qty{-184}{\kilo\joule}$.
+  \item coefficients $\times \tfrac12$ : $\Delta H = \tfrac12\times(-92) = \qty{-46}{\kilo\joule}$ par mole de $\ce{NH3}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[enchaîner travail et premier principe]
+\begin{enumerate}[label=\alph*)]
+  \item $\Delta V = \qty{+3.0e-3}{\cubic\metre}$, donc $W = -\,\qty{1.0e5}{\pascal}\times\qty{3.0e-3}{\cubic\metre} = \qty{-300}{\joule}$.
+  \item $\Delta U = Q + W = 600 + (-300) = \qty{+300}{\joule}$.
+\end{enumerate}
+\end{corrige}
+
+\end{document}

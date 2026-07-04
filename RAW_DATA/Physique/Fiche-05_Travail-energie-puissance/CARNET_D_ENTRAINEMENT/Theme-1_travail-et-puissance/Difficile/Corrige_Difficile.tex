@@ -1,0 +1,101 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{corrige}[le travail du poids sur un tour complet]
+\begin{enumerate}[label=\alph*)]
+  \item Après un tour complet, la personne revient à la \emph{même} altitude : $h_{\text{arrivée}}=h_{\text{départ}}$,
+        donc $\Delta E_p=mg(h_{\text{arrivée}}-h_{\text{départ}})=\qty{0}{\joule}$.
+  \item $W(\vv G)=-\Delta E_p=\qty{0}{\joule}$. Le travail du poids sur toute trajectoire
+        \emph{fermée} est nul (le poids est une force conservative) : le résultat ne dépend
+        \emph{ni} de $R$, \emph{ni} de $m$. Sur un demi-tour (montée), $W(\vv G)<0$ ; sur l'autre
+        demi-tour (descente), $W(\vv G)>0$ ; les deux se compensent exactement.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[monter un meuble : la rampe change la force, pas le travail]
+\begin{enumerate}[label=\alph*)]
+  \item $W=mgh=100\times10\times4=\qty{4000}{\joule}=\qty{4}{\kilo\joule}$. Ce travail ne dépend
+        \emph{que} de la hauteur $h$ : la longueur de la rampe n'y change rien.
+  \item $F=\dfrac{mgh}{L}=\dfrac{4000}{5}=\qty{800}{\newton}$, alors que le poids vaut
+        $mg=\qty{1000}{\newton}$. La rampe permet de fournir la même énergie ($\qty{4}{\kilo\joule}$)
+        avec une force \emph{plus faible} ($\qty{800}{\newton}<\qty{1000}{\newton}$), au prix d'une
+        distance plus longue : c'est le principe de la machine simple.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[à quoi sert le travail du moteur d'une moto qui roule à vitesse constante ?]
+\begin{enumerate}[label=\alph*)]
+  \item La vitesse est constante, donc $E_c$ ne change pas : $\Delta E_c=\qty{0}{\joule}$. Le théorème
+        de l'énergie cinétique impose alors $\sum W=\Delta E_c=0$, soit
+        $W(\vv G)+W(\vv N)+W(\vv F_m)+W(\vv F_f)=0$.
+  \item Sur une route \emph{horizontale}, le poids et la normale sont perpendiculaires au déplacement :
+        $W(\vv G)=W(\vv N)=0$. Il reste $W(\vv F_m)+W(\vv F_f)=0$, donc
+        \[
+        W(\vv F_m)=-\,W(\vv F_f)=\bigl|W(\vv F_f)\bigr|.
+        \]
+        \emph{Le travail moteur sert intégralement à compenser le travail (négatif) des frottements.}
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[puissance moyenne d'un moteur au démarrage]
+\begin{enumerate}[label=\alph*)]
+  \item $v=\dfrac{72}{3,6}=\qty{20}{\metre\per\second}$, d'où
+        $E_c=\tfrac12 m v^2=\tfrac12\times1000\times20^2=\tfrac12\times1000\times400=\qty{200000}{\joule}=\qty{200}{\kilo\joule}$.
+  \item Le moteur fournit $W=\Delta E_c=\qty{200000}{\joule}$ (départ au repos), donc
+        \[
+        P=\frac{W}{\Delta t}=\frac{200000}{10}=\qty{20000}{\watt}=\qty{20}{\kilo\watt}.
+        \]
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[vrai ou faux : le signe et la valeur d'un travail]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Vrai}. Le poids est vertical, le déplacement horizontal : $\alpha=\ang{90}$,
+        $W(\vv G)=G\times d\times\cos\ang{90}=0$.
+  \item \textbf{Vrai}. La force centripète pointe vers le centre, le déplacement est tangent au
+        cercle : ils sont perpendiculaires à chaque instant, donc $W=0$.
+  \item \textbf{Faux}. Le frottement de glissement est opposé au déplacement ($\alpha=\ang{180}$),
+        donc $\cos\alpha=-1$ et $W<0$ : son travail est \emph{résistant}.
+  \item \textbf{Faux}. À travail $W$ égal, $P=W/\Delta t$ : le plus puissant est celui qui met le
+        \emph{moins} de temps (le plus rapide).
+\end{enumerate}
+\end{corrige}
+\end{document}

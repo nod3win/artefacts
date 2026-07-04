@@ -1,0 +1,170 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{center}
+{\large\bfseries\color{primarydark} Thème 1 — Niveau Difficile}\\[-2pt]
+{\color{primary}\rule{5cm}{1pt}}
+\end{center}
+
+\begin{exo}[la longueur d'onde à partir d'un enregistrement]
+Une onde sinusoïdale se propage le long d'une corde à la célérité $v=\SI{0.5}{\metre\per\second}$.
+On enregistre l'élongation d'\emph{un} point de la corde en fonction du temps.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11.5cm,height=5.2cm,
+  xmin=0,xmax=5,ymin=-12,ymax=12,
+  xtick={0,1,2,3,4,5},ytick={-10,0,10},
+  grid=both,grid style={black!12},axis lines=left,
+  xlabel={$t$ (s)},ylabel={élongation (cm)},
+  xlabel style={at={(axis description cs:0.5,-0.13)}},
+  tick label style={font=\footnotesize},samples=220,clip=false]
+  \addplot[primary,line width=1.3pt,domain=0:5]{10*sin(deg(2*pi*x/2))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Lis la période $T$ de l'onde sur le graphe, puis calcule sa fréquence $f$.
+  \item Calcule la longueur d'onde $\lambda$ (en \si{\metre} puis en \si{\centi\metre}).
+  \item Ce graphe permet-il de lire directement $\lambda$ ? Explique pourquoi.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux graphes, une vitesse]
+Une même onde transversale, se propageant vers les $x>0$, est décrite par \emph{deux} graphes :
+à gauche, une photo de la corde à un instant fixé ($y$ en fonction de $x$)~; à droite,
+le mouvement d'un point fixe ($y$ en fonction de $t$).
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=7.2cm,height=4.7cm,
+  xmin=0,xmax=8,ymin=-6,ymax=6,
+  xtick={0,2,4,6,8},ytick={-5,0,5},
+  grid=both,grid style={black!12},axis lines=left,
+  title={\footnotesize photo à $t$ fixé},
+  xlabel={$x$ (m)},ylabel={$y$ (cm)},
+  xlabel style={at={(axis description cs:0.5,-0.16)}},
+  tick label style={font=\footnotesize},samples=200,clip=false]
+  \addplot[defcol,line width=1.2pt,domain=0:8]{5*sin(deg(2*pi*x/4))};
+\end{axis}
+\end{tikzpicture}\hspace{0.5cm}%
+\begin{tikzpicture}
+\begin{axis}[
+  width=7.2cm,height=4.7cm,
+  xmin=0,xmax=1.25,ymin=-6,ymax=6,
+  xtick={0,0.25,0.5,0.75,1,1.25},ytick={-5,0,5},
+  grid=both,grid style={black!12},axis lines=left,
+  title={\footnotesize point fixe},
+  xlabel={$t$ (s)},ylabel={$y$ (cm)},
+  xlabel style={at={(axis description cs:0.5,-0.16)}},
+  tick label style={font=\footnotesize},samples=200,clip=false]
+  \addplot[primary,line width=1.2pt,domain=0:1.25]{5*sin(deg(2*pi*x/0.5))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Sur quel graphe lit-on la longueur d'onde $\lambda$ ? Donne sa valeur.
+  \item Sur quel graphe lit-on la période $T$ ? Donne sa valeur.
+  \item Calcule la célérité $v$ de l'onde.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[échographie : la profondeur d'un obstacle]
+Une sonde d'échographie envoie une brève impulsion ultrasonore, qui se réfléchit sur un
+organe et revient vers la sonde. L'oscilloscope montre l'impulsion émise (1) et l'écho reçu (2).
+La célérité des ultrasons dans les tissus est $v=\SI{1500}{\metre\per\second}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  % axe temps
+  \draw[black!70,line width=1pt](0,0)--(10.4,0)node[right,font=\footnotesize]{$t$};
+  \foreach \i in {0,...,10}{\draw[black!45](\i,0.1)--(\i,-0.1);}
+  % impulsion 1 en division 1
+  \draw[primary,line width=1.4pt](1,0)--(1,2.1)--(1.15,0);
+  \node[primary,font=\bfseries] at (1,2.4){1};
+  % impulsion 2 (écho) en division 9
+  \draw[defcol,line width=1.4pt](9,0)--(9,1.3)--(9.15,0);
+  \node[defcol,font=\bfseries] at (9,1.6){2};
+  % cote entre les deux
+  \draw[<->,black](1,-0.6)--(9,-0.6)node[midway,fill=white,inner sep=1pt,font=\footnotesize]{8 divisions};
+  \node[below,font=\footnotesize] at (5,-1.05) {1 division $=\SI{10}{\micro\second}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Détermine la durée $\Delta t$ qui sépare l'impulsion émise de l'écho.
+  \item Cette durée correspond à un trajet \emph{aller-retour}. À quelle profondeur $d$ se
+        trouve l'organe ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[rides à la surface de l'eau]
+Une pointe frappe la surface de l'eau au point $S$ à rythme régulier et crée des rides
+circulaires. On photographie la surface : les cercles en \textbf{trait plein} sont les crêtes,
+ceux en \textbf{pointillés} les creux. La longueur d'onde vaut $\lambda=\SI{4}{\centi\metre}$.
+Un petit flotteur est placé en $A$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \foreach \r in {1,2,3}{\draw[defcol,line width=1pt] (0,0) circle (\r);}
+  \foreach \r in {0.5,1.5,2.5}{\draw[defcol!70,dashed,line width=0.7pt] (0,0) circle (\r);}
+  \fill[primary] (0,0) circle (2.4pt) node[below left,black,font=\footnotesize]{$S$};
+  \coordinate (A) at (35:3);
+  \fill[black] (A) circle (2.4pt) node[above right,font=\footnotesize]{$A$};
+  \draw[black!55,dashed] (0,0)--(A);
+\end{tikzpicture}
+\end{center}
+Le flotteur $A$ est situé exactement sur la \textbf{3\textsuperscript{e} crête} (le 3\textsuperscript{e}
+cercle en trait plein) à partir de $S$.
+\begin{enumerate}[label=\alph*)]
+  \item En comptant les crêtes, exprime la distance $d=SA$ en fonction de $\lambda$.
+  \item Calcule $d$ en centimètres.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un son qui change de milieu]
+Un émetteur plongé dans l'eau produit un son de fréquence $f=\SI{250}{\hertz}$. Célérité du son :
+\SI{1500}{\metre\per\second} dans l'eau, \SI{340}{\metre\per\second} dans l'air.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la longueur d'onde $\lambda_{\text{eau}}$ dans l'eau.
+  \item Le son ressort dans l'air. Quelle est alors sa fréquence ? Justifie.
+  \item Calcule la longueur d'onde $\lambda_{\text{air}}$ dans l'air, et compare-la à
+        $\lambda_{\text{eau}}$ (donne le rapport).
+\end{enumerate}
+\end{exo}
+
+\end{document}

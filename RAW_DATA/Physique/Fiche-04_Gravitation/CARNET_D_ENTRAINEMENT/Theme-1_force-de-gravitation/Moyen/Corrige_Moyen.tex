@@ -1,0 +1,95 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+% ================= CORRIGÉ MOYEN =================
+
+\begin{corrige}[attraction Terre--Soleil]
+\[
+F=\mathcal{G}\,\frac{M_S M_T}{d^2}.
+\]
+\textbf{Numérateur :} $\num{6.67e-11}\times\num{2.0e30}\times\num{6.0e24}
+=\num{6.67e-11}\times\num{1.2e55}\approx\num{8.0e44}$.\\
+\textbf{Dénominateur :} $d^2=(\num{1.5e11})^2=\num{2.25e22}$.\\
+\textbf{Quotient :}
+\[
+F=\frac{\num{8.0e44}}{\num{2.25e22}}\approx\qty{3.6e22}{\newton}.
+\]
+\end{corrige}
+
+\begin{corrige}[deux satellites de même masse]
+Les masses étant égales, $\mathcal{G}$ et $m$ se simplifient dans le rapport.
+\begin{enumerate}[label=\alph*)]
+  \item $\ds \frac{F_A}{F_B}=\frac{\mathcal{G}m^2/d_A^2}{\mathcal{G}m^2/d_B^2}
+        =\left(\frac{d_B}{d_A}\right)^2$.
+  \item $\ds \left(\frac{\num{6.0e6}}{\num{9.0e6}}\right)^2=\left(\frac23\right)^2
+        =\frac49\approx 0{,}44$.
+  \item Comme $F_A/F_B<1$, on a $F_A<F_B$ : c'est \textbf{$B$}, le plus proche du centre,
+        qui subit la force la plus intense.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[retrouver la distance]
+On isole $d$ dans $F=\mathcal{G}\,m_A m_B/d^2$, soit $d=\sqrt{\dfrac{\mathcal{G}\,m_A m_B}{F}}$ :
+\[
+d=\sqrt{\frac{\num{6.67e-11}\times 1000\times 1000}{\num{6.67e-3}}}
+ =\sqrt{\frac{\num{6.67e-5}}{\num{6.67e-3}}}
+ =\sqrt{\num{1.0e-2}}=\qty{0.10}{\metre}.
+\]
+\end{corrige}
+
+\begin{corrige}[masses et distance modifiées]
+On sépare l'effet des masses (numérateur) et de la distance (dénominateur, au carré).
+\begin{enumerate}[label=\alph*)]
+  \item $m_A\to 4m_A$ : facteur $\times 4$.
+  \item $d\to 2d$ : facteur $\div\,2^2=\div\,4$.
+  \item Facteur total $=\dfrac{4}{4}=1$ : la force est \textbf{inchangée},
+        $F=F_0=\qty{8.0e-9}{\newton}$. Un piège classique : quadrupler une masse et
+        doubler la distance se compensent exactement.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[retrouver une masse]
+On isole $m_B$ dans $F=\mathcal{G}\,m_A m_B/d^2$, soit $m_B=\dfrac{F\,d^2}{\mathcal{G}\,m_A}$ :
+\[
+m_B=\frac{\num{6.67e-7}\times(1{,}0)^2}{\num{6.67e-11}\times 100}
+   =\frac{\num{6.67e-7}}{\num{6.67e-9}}=\qty{100}{\kilogram}.
+\]
+\end{corrige}
+
+\end{document}

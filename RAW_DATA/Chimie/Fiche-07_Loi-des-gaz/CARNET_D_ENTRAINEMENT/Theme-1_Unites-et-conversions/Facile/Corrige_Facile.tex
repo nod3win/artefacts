@@ -1,0 +1,80 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+
+\begin{corrige}[température : Celsius $\leftrightarrow$ Kelvin]
+On ajoute $273$ pour aller vers les kelvins, on retranche $273$ pour revenir aux \si{\degreeCelsius}.
+\begin{enumerate}[label=\alph*)]
+  \item $T=25+273=\qty{298}{\kelvin}$.
+  \item $T=127+273=\qty{400}{\kelvin}$.
+  \item $\theta=373-273=\qty{100}{\degreeCelsius}$.
+  \item $T=-23+273=\qty{250}{\kelvin}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pression : autour de l'atmosphère]
+On applique les équivalences $\qty{1}{atm}=\qty{760}{mmHg}=\qty{101325}{\pascal}$.
+\begin{enumerate}[label=\alph*)]
+  \item $p=2\times760=\qty{1520}{mmHg}$.
+  \item $p=0{,}5\times760=\qty{380}{mmHg}$.
+  \item $p=\dfrac{760}{760}=\qty{1}{atm}$.
+  \item $p=\qty{101325}{\pascal}$ (par définition de l'atmosphère).
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[volume : litres, millilitres, mètres cubes]
+Une plus petite unité donne un plus grand nombre, et inversement.
+\begin{enumerate}[label=\alph*)]
+  \item $V=5\times1000=\qty{5000}{\milli\litre}$.
+  \item $V=2\times\num{e-3}=\qty{0.002}{\meter\cubed}$.
+  \item $V=\dfrac{250}{1000}=\qty{0.25}{\litre}$.
+  \item $V=3\times1000=\qty{3000}{\litre}$.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[pression : pascals, kilopascals, bars]
+On utilise $\qty{1}{bar}=\qty{e5}{\pascal}=\qty{100}{\kilo\pascal}$.
+\begin{enumerate}[label=\alph*)]
+  \item $p=3\times\num{e5}=\qty{3e5}{\pascal}$.
+  \item $p=150\times1000=\qty{150000}{\pascal}=\qty{1.5e5}{\pascal}$.
+  \item $p=2\times100=\qty{200}{\kilo\pascal}$.
+  \item $p\approx\qty{101.3}{\kilo\pascal}$ (car $\qty{1}{atm}=\qty{101325}{\pascal}$).
+\end{enumerate}
+\end{corrige}
+
+\end{document}

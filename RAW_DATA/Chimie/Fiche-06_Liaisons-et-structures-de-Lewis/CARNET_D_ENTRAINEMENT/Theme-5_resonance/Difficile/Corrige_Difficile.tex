@@ -1,175 +1,96 @@
-% =====================================================================
-%  CARNET D'ENTRAINEMENT — FICHE 6 — THÈME 5
-%  Niveau DIFFICILE — Corrigé
-% =====================================================================
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage[version=4]{mhchem}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,}}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{tikz}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
-\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=8pt]{geometry}
-
-\definecolor{primary}{RGB}{146,95,160}
-\definecolor{primarydark}{RGB}{92,52,104}
-\definecolor{corcol}{RGB}{0,114,178}
-\definecolor{astucecol}{RGB}{198,93,9}
-\definecolor{bondcol}{RGB}{60,60,70}
-\definecolor{piecol}{RGB}{198,93,9}
-
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
-   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
-\newtcolorbox[auto counter]{cor}[1][]{boxbase,colback=corcol!5,colframe=corcol,
-   title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ —\itshape\ #1}\fi}}
-\newtcolorbox{astucebox}[1][]{boxbase,colback=astucecol!8,colframe=astucecol,
-   title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6 · Thème 5 — La résonance}}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile · Corrigé}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
-
-\newcommand{\rep}{\textbf{\textcolor{corcol}{Réponse : }}}
-
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
 \begin{document}
-\begin{center}
-{\Large\bfseries\color{primarydark}Thème 5 — Corrigé du niveau Difficile}
-\end{center}
-\medskip
-
-\begin{cor}[l'ion carbonate \ce{CO3^2-}, pas à pas]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
-  \item \rep une structure de Lewis unique impose une double liaison \ce{C=O} sur \emph{un} oxygène
-        précis et deux liaisons simples \ce{C-O^-} sur les deux autres. Elle rend donc les oxygènes
-        \emph{différents}, alors que l'expérience montre qu'ils sont tous équivalents (liaisons de
-        même longueur). Une seule formule ne peut pas rendre compte de cette symétrie : il faut
-        plusieurs formes limites.
-  \item \rep les \textbf{trois} formes limites se déduisent en plaçant la double liaison
-        successivement sur chacun des trois oxygènes ; les deux oxygènes restants portent alors
-        chacun une charge $\ominus$ (charge totale $-2$) :
-
-\begin{center}
-\begin{tikzpicture}[scale=0.7,every node/.style={font=\small}]
-  \tikzset{
-    Oatom/.style={font=\bfseries},
-    Catom/.style={font=\bfseries},
-    sbond/.style={bondcol,line width=1.1pt},
-    dbond/.style={bondcol,double,double distance=1.7pt,line width=0.6pt},
-  }
-  % ---- Form 1 : double en haut ----
-  \begin{scope}[xshift=0cm]
-    \coordinate (C) at (0,0);
-    \coordinate (T) at (90:1.3);
-    \coordinate (BL) at (210:1.3);
-    \coordinate (BR) at (330:1.3);
-    \draw[dbond] (C)--(T);
-    \draw[sbond] (C)--(BL);
-    \draw[sbond] (C)--(BR);
-    \node[Catom] at (C){C};
-    \node[Oatom] at (T){O};\node[Oatom] at (BL){O};\node[Oatom] at (BR){O};
-    \node[piecol] at ($(BL)+(-0.42,-0.12)$){$\ominus$};
-    \node[piecol] at ($(BR)+(0.42,-0.12)$){$\ominus$};
-  \end{scope}
-  \node at (2.5,0){$\longleftrightarrow$};
-  % ---- Form 2 : double en bas-gauche ----
-  \begin{scope}[xshift=5cm]
-    \coordinate (C) at (0,0);
-    \coordinate (T) at (90:1.3);
-    \coordinate (BL) at (210:1.3);
-    \coordinate (BR) at (330:1.3);
-    \draw[dbond] (C)--(BL);
-    \draw[sbond] (C)--(T);
-    \draw[sbond] (C)--(BR);
-    \node[Catom] at (C){C};
-    \node[Oatom] at (T){O};\node[Oatom] at (BL){O};\node[Oatom] at (BR){O};
-    \node[piecol] at ($(T)+(0,0.42)$){$\ominus$};
-    \node[piecol] at ($(BR)+(0.42,-0.12)$){$\ominus$};
-  \end{scope}
-  \node at (7.5,0){$\longleftrightarrow$};
-  % ---- Form 3 : double en bas-droite ----
-  \begin{scope}[xshift=10cm]
-    \coordinate (C) at (0,0);
-    \coordinate (T) at (90:1.3);
-    \coordinate (BL) at (210:1.3);
-    \coordinate (BR) at (330:1.3);
-    \draw[dbond] (C)--(BR);
-    \draw[sbond] (C)--(T);
-    \draw[sbond] (C)--(BL);
-    \node[Catom] at (C){C};
-    \node[Oatom] at (T){O};\node[Oatom] at (BL){O};\node[Oatom] at (BR){O};
-    \node[piecol] at ($(T)+(0,0.42)$){$\ominus$};
-    \node[piecol] at ($(BL)+(-0.42,-0.12)$){$\ominus$};
-  \end{scope}
-\end{tikzpicture}
-\end{center}
-        (D'une forme à la suivante, un doublet libre d'un oxygène chargé forme une double liaison
-        vers \ce{C}, tandis que la double liaison \ce{C=O} redevient un doublet libre sur un autre
-        oxygène : \emph{seuls les électrons se déplacent}.)
-  \item \rep les trois liaisons \ce{C-O} sont \textbf{identiques}, de longueur \textbf{intermédiaire}
-        entre celle d'une liaison simple \ce{C-O} (plus longue) et celle d'une liaison double
-        \ce{C=O} (plus courte). Chaque liaison a un caractère double de $\tfrac{1}{3}$.
-  \item \rep par symétrie, la charge $-2$ est répartie également : chaque oxygène porte en moyenne
-        \[ \frac{-2}{3}\approx -0{,}67. \]
+\newcommand{\AX}[2]{\ensuremath{\mathrm{AX_{#1}E_{#2}}}}
+\begin{corrige}[la résonance de \ce{ClO4-}]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{4} formes limites équivalentes : la charge $-1$ (et la simple liaison) peut se
+        placer sur chacun des quatre oxygènes.
+  \item La charge $-1$ est délocalisée également sur les quatre \ce{O}, soit $-\tfrac{1}{4}$ chacun.
+  \item Les quatre liaisons \ce{Cl-O} réelles sont \textbf{identiques} (longueur intermédiaire).
+        La géométrie \textbf{tétraédrique} (\AX{4}{0}) n'est \emph{pas} affectée par la résonance.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[l'ion perchlorate \ce{ClO4-}, pas à pas]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
-  \item \rep il y a \textbf{4} formes limites équivalentes : la charge $-1$ (et la liaison simple qui
-        l'accompagne) peut se placer sur \emph{chacun} des quatre oxygènes équivalents.
-  \item \rep en passant d'une forme à la suivante : un \textbf{doublet libre} de l'oxygène qui portait
-        la charge $-1$ se rabat pour former une \textbf{double liaison} \ce{Cl=O} ; simultanément,
-        l'une des doubles liaisons $\pi$ portées par le chlore \textbf{redevient un doublet libre}
-        sur un autre oxygène, qui prend alors la charge $-1$. Les noyaux ne bougent pas.
-  \item \rep \textbf{non}, la géométrie tétraédrique n'est pas affectée. La résonance ne déplace que
-        des électrons : les positions des atomes (donc les angles \ce{O-Cl-O} $\approx 109{,}5^\circ$)
-        sont les mêmes dans toutes les formes limites. La géométrie est une propriété de l'hybride,
-        pas d'une forme particulière.
-  \item \rep la charge $-1$ n'est localisée sur \emph{aucun} oxygène en particulier : elle est
-        \textbf{délocalisée également} sur les quatre oxygènes, soit une charge moyenne de
-        $-\tfrac{1}{4}$ par oxygène. C'est ce qui rend les quatre \ce{Cl-O} rigoureusement identiques.
+\begin{corrige}[le benzène \ce{C6H6}]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{2} formes de Kekulé (les doubles liaisons alternées peuvent occuper deux jeux de
+        positions).
+  \item Les six liaisons \ce{C-C} sont \textbf{identiques}, de longueur intermédiaire entre une
+        simple et une double : aucune n'est « vraiment » simple ou double.
+  \item Les électrons $\pi$ sont \textbf{délocalisés} sur tout le cycle (un « nuage » $\pi$ commun
+        aux six carbones), ce qui confère au benzène sa grande stabilité.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{cor}[l'ozone \ce{O3}, molécule de l'atmosphère]
-\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
-  \item \rep les deux formes limites : \quad \ce{O=O-O <-> O-O=O}.
-  \item \rep la molécule réelle est l'\textbf{hybride} de ces deux formes. Elle reste \textbf{coudée}
-        (l'atome central porte un doublet non liant ; la géométrie ne change pas avec la résonance).
-        Ses deux liaisons \ce{O-O} sont \textbf{identiques}, de longueur intermédiaire entre une
-        simple et une double liaison (caractère double $\tfrac{1}{2}$ chacune).
-  \item \rep la flèche $\longleftrightarrow$ ne décrit \emph{pas} un mouvement : la molécule ne
-        « bascule » pas d'une structure à l'autre. Il n'existe \textbf{qu'une seule} espèce, réelle
-        et stable, dont les électrons $\pi$ sont délocalisés en permanence ; les deux dessins ne sont
-        que deux \emph{approximations} imparfaites de cette unique molécule. Un basculement entre
-        deux espèces qui s'interconvertissent, lui, se noterait $\rightleftharpoons$ (équilibre
-        chimique) et mettrait en jeu \emph{deux} espèces distinctes — ce qui n'est pas le cas ici.
+\begin{corrige}[des formes limites qui ne se valent pas]
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Non} : seules les formes \emph{équivalentes} contribuent à parts égales. Ici (I)
+        et (II) ont des énergies différentes.
+  \item La forme \textbf{(I)} pèse le plus : selon les critères de stabilité (charges formelles
+        \emph{minimales}, octet respecté), la forme la plus stable contribue davantage à l'hybride.
+        La forme (II), avec sa séparation de charges, est minoritaire.
 \end{enumerate}
-\end{cor}
+\end{corrige}
 
-\begin{astucebox}[garder le cap]
-Trois automatismes pour ne pas tomber dans les pièges : \textbf{(1)}~seuls les \emph{électrons}
-bougent d'une forme à l'autre, jamais les atomes ; \textbf{(2)}~la \emph{géométrie} est celle de
-l'hybride et ne change jamais ; \textbf{(3)}~$\longleftrightarrow$ (une espèce délocalisée) n'est
-\emph{jamais} $\rightleftharpoons$ (deux espèces en équilibre).
-\end{astucebox}
+\begin{corrige}[corriger une idée fausse]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Il n'y a qu'une seule espèce.} La flèche $\leftrightarrow$ est une flèche de
+        \emph{résonance}, pas d'équilibre ($\rightleftharpoons$) : l'ozone réel est un
+        \textbf{hybride} unique, pas un mélange de deux molécules qui s'interconvertissent.
+  \item \textbf{Les noyaux ne bougent pas.} Seuls les électrons sont délocalisés : les deux
+        liaisons \ce{O-O} sont \emph{en permanence} identiques (intermédiaires), et non
+        alternativement simple puis double.
+\end{itemize}
+\end{corrige}
+
+\begin{corrige}[synthèse : l'ion formiate \ce{HCO2-}]
+\begin{enumerate}[label=\alph*)]
+  \item $n_v = \underbrace{1}_{\ce{H}} + \underbrace{4}_{\ce{C}} + \underbrace{2\times 6}_{2\,\ce{O}}
+        + \underbrace{1}_{-q} = 18$. Avec $n_{\max} = 8\times 3 + 2 = 26$, on a $n_l = 26-18 = 8
+        \Rightarrow 4$ liaisons : les $3$ liaisons simples \ce{C-H} et \ce{C-O} ($\times 2$) plus
+        \textbf{une double} \ce{C=O}. \checkmark
+  \item \ce{H-C(=O)-O^- <-> H-C(-O^-)=O} : la charge $-1$ est délocalisée sur \textbf{les deux
+        oxygènes} ($-\tfrac{1}{2}$ chacun) ; les deux liaisons \ce{C-O} sont identiques.
+  \item Le carbone est lié à $3$ atomes ($1$ \ce{H}, $2$ \ce{O}) et n'a aucun doublet libre :
+        \AX{3}{0}, géométrie \textbf{trigonale plane} ($120^\circ$). La résonance \textbf{ne la
+        modifie pas} (seuls les électrons se déplacent).
+\end{enumerate}
+\end{corrige}
 
 \end{document}

@@ -1,0 +1,98 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+\begin{corrige}[repérer les équations correctes]
+On vérifie deux choses : la \emph{charge} de chaque ion et la \emph{conservation} (atomes + charge
+globale nulle, puisque le solide est neutre).
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Fausse.} Le fer y est ici \ce{Fe^{2+}}, or dans \ce{Fe2(SO4)3} il est \ce{Fe^{3+}}
+        (et la charge ne serait pas neutre : $2(+2)+3(-2)=-2$). Correct :
+        $\ce{Fe2(SO4)3(s) -> 2 Fe^{3+}(aq) + 3 SO4^{2-}(aq)}$.
+  \item \textbf{Correcte.} $3(+2)+2(-3)=0$ : atomes et charges équilibrés.
+  \item \textbf{Fausse.} L'argent est \ce{Ag+}, pas \ce{Ag^{2+}}. Correct :
+        $\ce{AgCl(s) -> Ag^{+}(aq) + Cl^{-}(aq)}$.
+  \item \textbf{Correcte.} $2(+1)+(-2)=0$.
+  \item \textbf{Correcte.} $(+3)+3(-1)=0$.
+\end{enumerate}
+Les équations \textbf{b, d, e} sont correctes.
+\end{corrige}
+
+\begin{corrige}[dissolution de l'iodate de strontium]
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{Sr(IO3)2(s) -> Sr^{2+}(aq) + 2 IO3^{-}(aq)}$ (type $1{:}2$).
+  \item Une unité libère 1 \ce{Sr^{2+}} et 2 \ce{IO3-} :
+        \[ n(\ce{Sr^{2+}}) = \qty{0.010}{\mole}, \qquad n(\ce{IO3-}) = 2\times\qty{0.010}{\mole}=\qty{0.020}{\mole}. \]
+        \textbf{Non} : il y a \emph{deux fois plus} d'ions iodate que d'ions strontium.
+  \item Charges positives : $2\times n(\ce{Sr^{2+}}) = 2\times 0{,}010 = \qty{0.020}{\mole}$ de charges~$+$.
+        Charges négatives : $1\times n(\ce{IO3-}) = \qty{0.020}{\mole}$ de charges~$-$. Elles se
+        compensent : la solution est \textbf{neutre}.
+  \item \textbf{Oui} : \ce{Sr(IO3)2} est un composé ionique, donc un \textbf{électrolyte} ; la solution
+        contient des ions mobiles et \textbf{conduit} le courant.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[mélange de deux sels : bilan des ions]
+\begin{enumerate}[label=\alph*)]
+  \item $\ce{NaCl(s) -> Na^{+}(aq) + Cl^{-}(aq)}$ \quad et \quad
+        $\ce{CaCl2(s) -> Ca^{2+}(aq) + 2 Cl^{-}(aq)}$.
+  \item Quantités : $n(\ce{NaCl})=\dfrac{5{,}85}{58{,}5}=\qty{0.100}{\mole}$ et
+        $n(\ce{CaCl2})=\dfrac{1{,}11}{111{,}0}=\qty{0.0100}{\mole}$, dans $V=\qty{0.500}{\litre}$.
+        \begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+          \item $[\ce{Na+}] = \dfrac{0{,}100}{0{,}500} = \qty{0.200}{\mole\per\litre}$ ;
+          \item $[\ce{Ca^{2+}}] = \dfrac{0{,}0100}{0{,}500} = \qty{0.0200}{\mole\per\litre}$ ;
+          \item $[\ce{Cl-}] = \dfrac{0{,}100 + 2\times 0{,}0100}{0{,}500}
+                 = \dfrac{0{,}120}{0{,}500} = \qty{0.240}{\mole\per\litre}$.
+        \end{itemize}
+  \item Charges~$+$ : $[\ce{Na+}] + 2[\ce{Ca^{2+}}] = 0{,}200 + 2\times 0{,}0200 = \qty{0.240}{\mole\per\litre}$,
+        égales aux charges~$-$ : $[\ce{Cl-}]=\qty{0.240}{\mole\per\litre}$. La solution est neutre.
+\end{enumerate}
+\end{corrige}
+
+\begin{corrige}[identifier un sel par sa solubilité]
+\begin{enumerate}[label=\alph*)]
+  \item La masse molaire est le rapport des deux solubilités :
+        \[ M = \dfrac{s_m}{s} = \dfrac{\qty{1.64e-2}{\gram\per\litre}}{\qty{2.1e-4}{\mole\per\litre}}
+             = \qty{78.1}{\gram\per\mole}. \]
+  \item Comme $M(\ce{MF2}) = M(\ce{M}) + 2\,M(\ce{F})$ :
+        \[ M(\ce{M}) = 78{,}1 - 2\times 19{,}0 = \qty{40.1}{\gram\per\mole}. \]
+        C'est le \textbf{calcium} : le sel est \ce{CaF2} (fluorine).
+  \item Type $1{:}2$ : $[\ce{Ca^{2+}}]=s=\qty{2.1e-4}{\mole\per\litre}$ et
+        $[\ce{F-}]=2s=\qty{4.2e-4}{\mole\per\litre}$.
+\end{enumerate}
+\end{corrige}
+\end{document}

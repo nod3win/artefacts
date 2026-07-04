@@ -1,0 +1,125 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: Grandeurs caractéristiques et propagation d'une onde
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 — Grandeurs caractéristiques}\\[2pt]
+{\large\color{primary} Période, fréquence, longueur d'onde, célérité}
+\end{center}
+
+\medskip
+Une onde, c'est une perturbation qui \emph{voyage} dans un milieu (corde, air, eau\ldots)
+en transportant de l'énergie, mais \textbf{jamais de matière} : chaque point du milieu ne
+fait qu'osciller sur place. Ce thème installe le vocabulaire et les deux réflexes de calcul
+qui reviennent dans presque tous les exercices d'ondes : passer de $T$ à $f$, et relier
+$\lambda$, $v$ et $f$.
+
+\begin{cle}[le vocabulaire de base]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Période} $T$ : durée d'\emph{une} oscillation complète, en \si{\second}.
+  \item \textbf{Fréquence} $f$ : nombre d'oscillations \emph{par seconde}, en \si{\hertz}
+        ($\SI{1}{\hertz}=\SI{1}{\per\second}$).
+  \item \textbf{Longueur d'onde} $\lambda$ : distance entre deux points qui vibrent
+        \emph{à l'identique} (deux crêtes successives), en \si{\metre}. C'est la
+        « période dans l'espace ».
+  \item \textbf{Célérité} $v$ : vitesse de \emph{propagation} de l'onde, en \si{\metre\per\second}.
+\end{itemize}
+\end{cle}
+
+\begin{cle}[les deux relations à connaître par cœur]
+\[ T=\frac{1}{f}\qquad\Longleftrightarrow\qquad f=\frac{1}{T}
+   \qquad\qquad
+   \boxed{\;\lambda = v\,T = \frac{v}{f}\;}\quad\Longleftrightarrow\quad v=\lambda f \]
+\emph{Interprétation.} Pendant une période $T$, la source fait \emph{un} aller-retour complet
+et, dans le même temps, l'onde avance \emph{exactement} d'une longueur d'onde $\lambda$.
+La relation $\lambda=vT$ n'est donc que « distance = vitesse $\times$ temps » sur une période.
+\end{cle}
+
+\begin{methode}[relier T, f, $\lambda$, v sans se tromper]
+\begin{enumerate}[leftmargin=1.6em,topsep=2pt,itemsep=1.5pt,label=\arabic*.]
+  \item Convertis d'abord \textbf{tout en unités SI} : \si{\hertz}, \si{\metre},
+        \si{\second}, \si{\metre\per\second} (attention aux \si{\milli\second},
+        \si{\centi\metre}, \si{\kilo\hertz}\ldots).
+  \item Repère la grandeur \emph{cherchée} et écris la formule qui la relie à ce que tu \emph{connais}.
+  \item Isole l'inconnue, remplace les valeurs, garde l'unité à chaque étape.
+  \item Vérifie l'ordre de grandeur : un son ($v\approx\SI{340}{\metre\per\second}$) audible
+        a $\lambda$ de quelques \si{\centi\metre} à quelques \si{\metre}.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[du son dans l'air]
+Un haut-parleur émet $f=\SI{100}{\hertz}$, célérité du son $v=\SI{340}{\metre\per\second}$.
+\[ T=\frac{1}{f}=\frac{1}{100}=\SI{10}{\milli\second},\qquad
+   \lambda=\frac{v}{f}=\frac{340}{100}=\SI{3.4}{\metre}. \]
+Les zones de compression sont espacées de \SI{3.4}{\metre}, et une oscillation dure
+un centième de seconde.
+\end{exemplebox}
+
+\begin{cle}[longitudinale ou transversale ?]
+On classe l'onde selon la \emph{direction de vibration} par rapport à la direction de
+propagation :
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=2pt]
+  \item \textbf{longitudinale} : vibration \emph{parallèle} à la propagation
+        (compression/raréfaction). Exemple type : le \textbf{son} dans l'air, le ressort
+        comprimé.
+  \item \textbf{transversale} : vibration \emph{perpendiculaire} à la propagation.
+        Exemples : la \textbf{corde} qu'on secoue, les vagues, la lumière.
+\end{itemize}
+\end{cle}
+
+\begin{piege}[deux confusions classiques]
+\begin{itemize}[leftmargin=1.4em,topsep=2pt,itemsep=2pt]
+  \item \textbf{La fréquence est imposée par la source.} Quand l'onde change de milieu
+        (air $\to$ eau), $f$ \emph{ne change pas} ; ce sont $v$ \emph{et} $\lambda$ qui
+        changent, puisque $\lambda=v/f$.
+  \item \textbf{Graphe $y(t)$ vs graphe $y(x)$.} Sur un graphe en fonction du \emph{temps},
+        on lit la période $T$. Sur un « instantané » en fonction de la \emph{position},
+        on lit la longueur d'onde $\lambda$. Ne lis jamais $\lambda$ sur un axe en secondes~!
+\end{itemize}
+\end{piege}
+
+\begin{remarque}
+Le \textbf{retard} d'un point P situé à la distance $x$ de la source vaut $\tau=x/v$ :
+P refait, à l'instant $t$, ce que faisait la source à l'instant antérieur $t-\tau$.
+Une perturbation deux fois plus grande ne va pas plus vite : $v$ ne dépend que du milieu,
+pas de l'amplitude.
+\end{remarque}
+
+\end{document}

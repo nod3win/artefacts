@@ -1,182 +1,84 @@
-% ===================================================================== PREAMBULE COMMUN — Carnet d'entraînement Fiche 9
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
 \usepackage[french]{babel}
-\usepackage{amsmath,amssymb,mathtools}
-\usepackage{icomma}
-\usepackage{siunitx}
-\sisetup{output-decimal-marker={,},per-mode=symbol}
-\DeclareSIUnit{\molar}{M}
-\DeclareSIUnit{\Molar}{mol\,L^{-1}}
-\usepackage[version=4]{mhchem}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage[most]{tcolorbox}
-\usepackage{enumitem}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{fancyhdr}
-\usepackage[hidelinks]{hyperref}
-\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
-  decorations.markings,angles,quotes,patterns,backgrounds,
-  shapes.geometric,shapes.misc,fadings,intersections,fit}
-\pgfplotsset{compat=1.18}
-\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
-
-% ---------- Palette ----------
-\definecolor{primary}{RGB}{150,98,162}
-\definecolor{primarydark}{RGB}{92,52,110}
-\definecolor{defcol}{RGB}{0,114,178}
-\definecolor{thmcol}{RGB}{0,140,120}
-\definecolor{formulacol}{RGB}{198,93,9}
-\definecolor{remarkcol}{RGB}{120,94,200}
-\definecolor{attncol}{RGB}{200,40,55}
-\definecolor{excol}{RGB}{0,135,90}
-\definecolor{methcol}{RGB}{90,90,100}
-\definecolor{cationcol}{RGB}{0,90,190}
-\definecolor{anioncol}{RGB}{200,60,55}
-\definecolor{cristalcol}{RGB}{110,105,120}
-\definecolor{eaucol}{RGB}{120,180,220}
-\definecolor{solcol}{RGB}{0,135,90}
-\definecolor{kpscol}{RGB}{198,93,9}
-\definecolor{qcol}{RGB}{120,94,200}
-\definecolor{precipcol}{RGB}{110,70,40}
-\definecolor{exercol}{RGB}{150,98,162}
-\definecolor{corrcol}{RGB}{0,120,100}
-
-% ---------- Macros ----------
-\newcommand{\Kps}{K_{\mathrm{ps}}}
-\newcommand{\Ce}[1]{\left[\,\ce{#1}\,\right]}
-
-% ---------- Style des boîtes ----------
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
 \tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
-   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
-   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
-
-\newtcolorbox[auto counter]{definition}[1][]{%
-  boxbase,colback=defcol!5,colframe=defcol,
-  title={\textsc{Définition}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox[auto counter]{theoreme}[1][]{%
-  boxbase,colback=thmcol!6,colframe=thmcol,
-  title={\textsc{Loi / Propriété}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox[auto counter]{formule}[1][]{%
-  boxbase,colback=formulacol!6,colframe=formulacol,
-  title={\textsc{Formule}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox{remarque}[1][]{%
-  boxbase,colback=remarkcol!6,colframe=remarkcol,
-  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{attention}[1][]{%
-  boxbase,colback=attncol!6,colframe=attncol,
-  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{exemple}[1][]{%
-  boxbase,colback=excol!5,colframe=excol,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
   title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{methode}[1][]{%
-  boxbase,colback=methcol!7,colframe=methcol,sharp corners,
-  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-\newtcolorbox{astuce}[1][]{%
-  boxbase,colback=primary!7,colframe=primary,
-  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
-
-\newtcolorbox[auto counter]{exercice}[1][]{%
-  boxbase,colback=exercol!4,colframe=exercol,
-  title={\textsc{Exercice}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-\newtcolorbox[auto counter]{correction}[1][]{%
-  boxbase,colback=corrcol!4,colframe=corrcol,
-  title={\textsc{Corrigé}~\thetcbcounter\ \ifx\relax#1\relax\relax\else\textmd{--- \itshape #1}\fi}}
-
-% ---------- Environnement « où : » ----------
-\newenvironment{ou}{%
-  \par\smallskip\noindent\textbf{où :}\nopagebreak
-  \begin{itemize}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt,parsep=0pt]}%
-  {\end{itemize}}
-
-% ---------- Styles TikZ ----------
-\tikzset{
-  cat/.style={circle,fill=cationcol,draw=cationcol!50!black,inner sep=0pt,
-              minimum size=5mm,font=\bfseries\scriptsize,text=white},
-  an/.style={circle,fill=anioncol,draw=anioncol!50!black,inner sep=0pt,
-             minimum size=5mm,font=\bfseries\scriptsize,text=white},
-  crx/.style={circle,fill=cristalcol,draw=black!50,inner sep=0pt,
-              minimum size=5mm,font=\bfseries\scriptsize,text=white},
-  ptn/.style={circle,fill=black,inner sep=1.1pt}}
-
-% ---------- En-têtes ----------
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 9} — Solubilité et produit de solubilité}}
-\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
-\usepackage{titlesec}
-\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
-\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
-
-% ---------- Bandeau de titre ----------
-% #1 = thème/étiquette   #2 = titre principal   #3 = sous-titre
-\newcommand{\bandeau}[3]{%
-\begin{center}
-\begin{tikzpicture}
-\node[rectangle,rounded corners=7pt,fill=primary,text=white,
-      minimum width=15.6cm,minimum height=1.95cm,align=center,inner sep=8pt]
-  {{\large\bfseries #1}\\[3pt]{\Large\bfseries #2}\\[3pt]{\small #3}};
-\end{tikzpicture}
-\end{center}
-\vspace{2mm}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% =========================================================================
 \begin{document}
-\bandeau{Thème 5 — Influence du pH}%
-{Exercices — Niveau Facile}%
-{Relation pH$/[\ce{OH-}]$, sens de l'effet, et mise en place du calcul}
-
-\noindent\textit{Consigne : une mécanique par question. On travaille à \qty{25}{\degreeCelsius}
-($K_e=\num{1{,}0e-14}$).}
-\medskip
-
-\begin{exercice}[relation pH $\leftrightarrow$ concentration en \ce{OH-}]
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Une solution a $[\ce{OH-}]=\qty{1{,}0e-3}{\molar}$. Calcule son pH.
-  \item Une solution a un $\mathrm{pH}=5$. Calcule $[\ce{OH-}]$.
+\sisetup{per-mode=symbol}
+\begin{exo}[{convertir entre $[\ce{OH-}]$ et pH}]
+À \qty{25}{\degreeCelsius}, utilise $\mathrm{pH}=14+\log[\ce{OH-}]$ et $[\ce{OH-}]=10^{\mathrm{pH}-14}$.
+\begin{enumerate}[label=\alph*)]
+  \item $[\ce{OH-}]=\qty{1.0e-3}{\mole\per\litre}$ : quel pH ?
+  \item $[\ce{OH-}]=\qty{1.0e-6}{\mole\per\litre}$ : quel pH ?
+  \item $\mathrm{pH}=10$ : quelle $[\ce{OH-}]$ ?
+  \item $\mathrm{pH}=12$ : quelle $[\ce{OH-}]$ ?
 \end{enumerate}
-\end{exercice}
+\end{exo}
 
-\begin{exercice}[sens de l'effet du pH]
-Pour chacun des sels suivants, indique si sa solubilité \textbf{augmente}, \textbf{diminue} ou
-\textbf{ne change pas} lorsque le pH \emph{augmente} :
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item l'hydroxyde de fer(III) \ce{Fe(OH)3} ;
-  \item le carbonate de calcium \ce{CaCO3} (sel d'acide faible) ;
-  \item le chlorure d'argent \ce{AgCl}.
+\begin{exo}[classer les sels dans les trois cas]
+Pour chaque sel, indique le cas (1 : hydroxyde, 2 : sel d'acide faible, 3 : autre) et l'effet du pH.
+\begin{enumerate}[label=\alph*)]
+  \item \ce{Mg(OH)2}
+  \item \ce{CaCO3}
+  \item \ce{AgCl}
+  \item \ce{FeS}
+  \item \ce{BaSO4}
 \end{enumerate}
-\end{exercice}
+\end{exo}
 
-\begin{exercice}[qui se dissout en milieu acide ?]
-Parmi ces sels, lesquels voient leur solubilité \textbf{augmenter} en milieu acide, et lesquels sont
-\textbf{indifférents} au pH ? Justifie en une ligne (nature de l'anion) :
-\[ \ce{CaCO3},\quad \ce{BaSO4},\quad \ce{CaC2O4},\quad \ce{AgCl},\quad \ce{FeS}. \]
-\end{exercice}
-
-\begin{exercice}[mise en équation — \ce{Al(OH)3}]
-Une solution contient $[\ce{Al^3+}]=\qty{1{,}0e-3}{\molar}$ ; $\Kps(\ce{Al(OH)3})=\num{2{,}0e-32}$.
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Écris la condition de début de précipitation ($Q=\Kps$) pour \ce{Al(OH)3}.
-  \item Isole $[\ce{OH-}]$ (laisse sous forme de racine cubique).
-  \item Écris l'expression du pH de début de précipitation (forme littérale, sans calcul final).
+\begin{exo}[vrai ou faux : sens de l'effet du pH]
+Indique si chaque affirmation est vraie ou fausse.
+\begin{enumerate}[label=\alph*)]
+  \item Un hydroxyde métallique précipite quand le pH augmente.
+  \item Le carbonate de calcium est plus soluble en milieu basique qu'en milieu acide.
+  \item La solubilité de \ce{AgCl} dépend fortement du pH.
+  \item En milieu très acide, un hydroxyde métallique est plus soluble.
 \end{enumerate}
-\end{exercice}
+\end{exo}
 
-\begin{exercice}[seuil en \ce{OH-} d'un hydroxyde]
-Pour l'hydroxyde de magnésium \ce{Mg(OH)2} ($\Kps=\num{9{,}0e-12}$) dans une solution où
-$[\ce{Mg^2+}]=\qty{9{,}0e-2}{\molar}$ :
-\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=2pt,itemsep=1pt]
-  \item Écris $[\ce{OH-}]$ de début de précipitation en fonction de $\Kps$ et $[\ce{Mg^2+}]$.
-  \item Calcule la valeur numérique de $[\ce{OH-}]$.
+\begin{exo}[le pH décide-t-il la précipitation ?]
+Une solution contient $[\ce{Mg^{2+}}]=\qty{0.010}{\mole\per\litre}$. On donne
+$K_{\mathrm{ps}}(\ce{Mg(OH)2})=\num{9.0e-12}$. Pour chaque pH, calcule $[\ce{OH-}]$ puis
+$Q=[\ce{Mg^{2+}}][\ce{OH-}]^{2}$ et conclus.
+\begin{enumerate}[label=\alph*)]
+  \item $\mathrm{pH}=10$.
+  \item $\mathrm{pH}=8$.
 \end{enumerate}
-\end{exercice}
+\end{exo}
 
+\begin{exo}[quels sels sont sensibles au pH ?]
+Parmi ces sels, lesquels voient leur solubilité varier avec le pH ? Justifie brièvement.
+\ce{AgCl}, \quad \ce{Fe(OH)3}, \quad \ce{CaCO3}, \quad \ce{BaSO4}, \quad \ce{Al(OH)3}.
+\end{exo}
 \end{document}

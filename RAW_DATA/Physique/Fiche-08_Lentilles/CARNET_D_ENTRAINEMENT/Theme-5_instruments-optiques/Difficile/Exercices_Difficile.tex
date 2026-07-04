@@ -1,0 +1,79 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\begin{document}
+\sisetup{per-mode=symbol}
+
+\begin{exo}[vrai ou faux sur le microscope]
+Réponds par \textbf{vrai} ou \textbf{faux} et justifie brièvement.
+\begin{enumerate}[label=\alph*)]
+  \item Pour obtenir une image à l'infini, l'image donnée par l'objectif doit se trouver dans le plan
+        focal de l'oculaire.
+  \item Si on remplace l'oculaire par un autre de focale \emph{double}, le grossissement est divisé
+        par deux.
+  \item L'image donnée par l'objectif est droite et agrandie.
+  \item L'oculaire est un système divergent.
+  \item L'image finale donnée par l'oculaire est virtuelle, droite et agrandie.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la loupe brisée]
+Une loupe (lentille convergente) tombe et se casse en deux morceaux, un grand et un petit. Peut-on
+encore s'en servir pour observer un objet ? Justifie en te rappelant que \emph{chaque} portion de
+lentille reçoit de la lumière issue de tout l'objet.
+\end{exo}
+
+\begin{exo}[choisir le bon oculaire]
+Un microscope a un objectif de grandissement $|\gamma_1|=30$ et un oculaire de grossissement $\times 10$.
+\begin{enumerate}[label=\alph*)]
+  \item Quel est le grossissement total ?
+  \item On remplace l'oculaire par un autre de \textbf{focale double}. Que devient le grossissement
+        total ?
+  \item Pourquoi préfère-t-on, pour grossir fortement, un oculaire de \emph{courte} focale ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[photo ou projecteur ?]
+Deux dispositifs emploient un objectif convergent de focale $f=\qty{5}{\cm}$.
+\begin{enumerate}[label=\alph*)]
+  \item Dispositif 1 : objet à $u=\qty{200}{\cm}$. Calcule $v$ et $\gamma$, décris l'image et nomme
+        l'instrument.
+  \item Dispositif 2 : objet à $u=\qty{6}{\cm}$. Calcule $v$ et $\gamma$, décris l'image et nomme
+        l'instrument.
+\end{enumerate}
+\end{exo}
+
+\end{document}

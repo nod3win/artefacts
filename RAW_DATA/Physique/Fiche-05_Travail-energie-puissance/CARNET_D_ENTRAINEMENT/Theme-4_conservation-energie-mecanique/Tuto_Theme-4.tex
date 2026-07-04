@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+% THEME_TITLE: La conservation de l'énergie mécanique
+\sisetup{per-mode=symbol}
+
+L'\textbf{énergie mécanique} $E_m$ est la somme de l'énergie cinétique et de l'énergie potentielle.
+Ce thème — le plus riche de la fiche — exploite sa \textbf{conservation} pour relier directement une
+\emph{vitesse} à une \emph{hauteur}, sans passer par le détail du mouvement.
+
+\begin{cle}[énergie mécanique et sa conservation]
+\[
+E_m=E_c+E_p \qquad\text{et, \emph{sans frottement}:}\qquad \boxed{\;E_m=E_c+E_p=\text{Cte}\;}
+\]
+Il y a alors \emph{conversion continuelle} de $E_c$ en $E_p$ et inversement, mais leur \textbf{somme}
+ne change pas. Entre deux points $A$ et $B$ :
+\[
+\boxed{\;\tfrac12 m v_A^2+mgh_A=\tfrac12 m v_B^2+mgh_B\;}
+\]
+\end{cle}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+% piste cuvette
+\begin{scope}
+  \draw[primary,line width=1.3pt] plot[domain=-2.6:2.6,smooth] (\x,{0.32*\x*\x});
+  \foreach \x in {-2.6,-2.2,...,2.4} \draw[black!35] (\x,{0.32*\x*\x})--++(-0.14,-0.14);
+  \fill[attncol] (-2.4,1.84) circle (0.14); \node[attncol,left] at (-2.55,1.95){\scriptsize $A$};
+  \fill[defcol] (0,0.05) circle (0.14); \node[defcol,below] at (0,-0.1){\scriptsize $O$};
+  \draw[->,defcol,line width=0.9pt] (0.22,0.05)--(1.0,0.05) node[right]{\scriptsize $\vv v$};
+  \draw[<->,black!55,dashed] (-3.0,0)--(-3.0,1.84) node[midway,left]{\scriptsize $h$};
+  \draw[dashed,black!40] (-3.0,0)--(0,0); \draw[dashed,black!40] (-3.0,1.84)--(-2.4,1.84);
+\end{scope}
+% barres d'energie
+\begin{scope}[shift={(5.6,0)}]
+  \def\H{2.2}
+  \draw[->,>=Stealth,black!70] (0,0)--(0,2.7) node[above]{\scriptsize $E$ (\si{\joule})};
+  \draw[->,>=Stealth,black!70] (0,0)--(5.2,0);
+  \fill[attncol!70] (0.5,0) rectangle (1.15,\H); \node[below] at (0.82,0){\scriptsize $A$};
+  \fill[attncol!70] (2.1,0) rectangle (2.75,{0.5*\H}); \fill[defcol!70] (2.1,{0.5*\H}) rectangle (2.75,\H);
+  \node[below] at (2.42,0){\scriptsize milieu};
+  \fill[defcol!70] (3.7,0) rectangle (4.35,\H); \node[below] at (4.02,0){\scriptsize $O$};
+  \draw[excol,line width=0.9pt,dashed] (0.1,\H)--(4.8,\H); \node[excol,right] at (4.4,\H){\scriptsize $E_m$};
+  \fill[attncol!70] (0.2,-1.0) rectangle (0.5,-0.75); \node[right] at (0.5,-0.87){\scriptsize $E_p=mgh$};
+  \fill[defcol!70] (2.5,-1.0) rectangle (2.8,-0.75); \node[right] at (2.8,-0.87){\scriptsize $E_c=\tfrac12 mv^2$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[résoudre par conservation de l'énergie]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item Repérer deux instants (initial / final) et choisir la référence $E_p=0$ (le point le plus bas).
+  \item Écrire $E_c+E_p$ au départ $=$ $E_c+E_p$ à l'arrivée.
+  \item Simplifier (souvent la masse $m$ disparaît) et isoler l'inconnue.
+\end{enumerate}
+Deux résultats reviennent sans cesse :
+\[
+\boxed{\;v=\sqrt{2gh}\;}\ \text{(vitesse en bas d'une chute de hauteur $h$)}\qquad
+\boxed{\;h_{\max}=\dfrac{v_0^2}{2g}\;}\ \text{(hauteur atteinte avec $v_0$)}.
+\]
+\end{methode}
+
+\begin{cle}[indépendance de la masse]
+Dans $v=\sqrt{2gh}$ et $h_{\max}=\dfrac{v_0^2}{2g}$, la masse \emph{n'apparaît pas} : sans frottement,
+deux objets de masses différentes lâchés de la même hauteur arrivent en bas à la \emph{même} vitesse,
+et deux objets lancés à la même vitesse montent à la \emph{même} hauteur. Le résultat ne dépend pas
+non plus de l'\emph{inclinaison} de la pente.
+\end{cle}
+
+\begin{remarque}[et s'il y a des frottements ?]
+Avec frottement, $E_m$ n'est plus conservée : elle \emph{diminue}. L'énergie mécanique perdue a été
+\emph{dissipée} (en chaleur) par les frottements :
+\[
+E_{\text{dissipée}}=E_m(\text{initial})-E_m(\text{final}).
+\]
+Pour une chute où l'objet part du repos et arrive à la vitesse $v$ :
+$E_{\text{dissipée}}=mgh-\tfrac12 m v^2$.
+\end{remarque}
+
+\begin{piege}[erreurs classiques]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item Vouloir « garder » la masse ou l'angle dans $v=\sqrt{2gh}$ : ils n'y sont pas.
+  \item Oublier l'énergie cinétique \emph{initiale} quand l'objet ne part pas du repos
+        ($h_{\max}$ se calcule alors à partir de $E_c$ initiale \emph{en plus} de sa hauteur de départ).
+  \item Appliquer $E_m=$ Cte \emph{malgré} des frottements : il faut alors un bilan avec dissipation.
+\end{itemize}
+\end{piege}
+\end{document}

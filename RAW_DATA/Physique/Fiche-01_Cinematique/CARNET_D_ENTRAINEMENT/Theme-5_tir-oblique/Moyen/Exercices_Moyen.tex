@@ -1,0 +1,85 @@
+% ===== PRÉAMBULE CANONIQUE — à coller VERBATIM en tête de CHAQUE .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}  % \qty{}{}, \si{}, \ang{}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz} % circuits (élec.)
+\usepackage[most]{tcolorbox}\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,decorations.markings,intersections}
+\definecolor{primary}{RGB}{222,49,99}\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{defcol}{RGB}{0,114,178}\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+% --- boîtes TUTORIEL (noms EXACTS, ne pas renommer) ---
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=black!4,colframe=black!45,
+  title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+% --- boîtes EXERCICE / CORRIGÉ (noms EXACTS, auto-comptées) ---
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% (un \usepackage{fancyhdr}+en-tête est possible ; il est ignoré côté web)
+% =========================================================================
+\begin{document}
+\sisetup{per-mode=symbol}
+On prend $g=\qty{10}{\metre\per\second\squared}$ ; frottements négligés.
+
+\begin{exo}[tir oblique complet]
+Une balle est lancée à $v_0=\qty{20}{\metre\per\second}$ sous un angle $\theta=\ang{30}$.
+\begin{enumerate}[label=\alph*)]
+  \item Décompose la vitesse initiale ($v_{0x}$, $v_{0y}$).
+  \item Détermine le temps de montée $t_s$ et la durée totale du vol $T$.
+  \item Calcule la hauteur maximale $y_{\max}$ et la portée $x_p$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[la vitesse au sommet]
+Un projectile est lancé à $v_0=\qty{25}{\metre\per\second}$ sous un angle tel que $\cos\theta=0{,}6$ et $\sin\theta=0{,}8$.
+\begin{enumerate}[label=\alph*)]
+  \item Donne $v_{0x}$ et $v_{0y}$.
+  \item Quelle est la norme de la vitesse \emph{au sommet} de la trajectoire ?
+  \item Quelle est la hauteur maximale atteinte ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[deux angles complémentaires]
+Deux projectiles sont lancés à la même vitesse $v_0=\qty{20}{\metre\per\second}$, l'un à \ang{30}, l'autre à \ang{60}.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la portée de chacun. Que constates-tu ?
+  \item Calcule la hauteur maximale de chacun. Laquelle est la plus grande ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[retrouver l'angle de tir]
+On veut qu'un projectile lancé à $v_0=\qty{20}{\metre\per\second}$ ait une portée de \qty{20}{\metre}.
+\begin{enumerate}[label=\alph*)]
+  \item Détermine $\sin(2\theta)$ nécessaire.
+  \item Quels sont les deux angles de tir possibles ?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[tir à 45° depuis le sol]
+Un projectile est lancé à $v_0=\qty{40}{\metre\per\second}$ sous un angle de \ang{45}.
+\begin{enumerate}[label=\alph*)]
+  \item Quelle est sa hauteur maximale ?
+  \item Quelle est sa portée ?
+\end{enumerate}
+\end{exo}
+
+\end{document}
