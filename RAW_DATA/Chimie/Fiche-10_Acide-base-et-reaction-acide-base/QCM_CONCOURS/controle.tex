@@ -1,0 +1,219 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+
+\begin{center}
+{\Large\bfseries QCM concours --- Chimie}\\[2pt]
+{\large Fiche 10 --- Acide-base et réaction acide-base}\\[2pt]
+\textit{10 questions, niveau concours difficile --- une seule réponse correcte sur quatre.}
+\end{center}
+\vspace{6pt}\hrule\vspace{10pt}
+
+% ------------------------------------------------------------------ Q1
+\noindent\textbf{CHIM-F10-Q01 --- Constante d'équilibre d'une réaction acide-base}\par
+On mélange l'acide carbonique \ce{H2CO3} et l'ion carbonate \ce{CO3^{2-}}, qui réagissent selon
+\[ \ce{H2CO3 + CO3^{2-} <=> 2 HCO3-}. \]
+On donne $\mathrm{p}K_a(\ce{H2CO3}/\ce{HCO3-}) = \num{6.4}$ et $\mathrm{p}K_a(\ce{HCO3-}/\ce{CO3^{2-}}) = \num{10.4}$. La constante d'équilibre $K_{\text{équi}}$ de cette réaction vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \num{1.0e8}
+\item \num{1.0e-4}
+\item \num{1.0e4}
+\item \num{1.0e2}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+L'acide réactif est \ce{H2CO3} ($\mathrm{p}K_a = \num{6.4}$) et l'acide \emph{formé} est \ce{HCO3-} ($\mathrm{p}K_a = \num{10.4}$). Or $K_{\text{équi}} = 10^{\Delta\mathrm{p}K_a}$ avec $\Delta\mathrm{p}K_a = \mathrm{p}K_a(\text{acide formé}) - \mathrm{p}K_a(\text{acide réactif}) = \num{10.4} - \num{6.4} = \num{4.0}$. Donc $K_{\text{équi}} = 10^{4} = \num{1.0e4}$. La réaction est d'ailleurs complète ($\Delta\mathrm{p}K_a > 2$), ce qui est cohérent : \ce{H2CO3} est un acide plus fort que \ce{HCO3-}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : $\Delta\mathrm{p}K_a$ doublé (facteur 2 injustifié devant l'exposant) $\Rightarrow 10^{8} = \num{1.0e8}$.
+\item B : signe de $\Delta\mathrm{p}K_a$ inversé (réactif et formé permutés), $\Delta\mathrm{p}K_a = \num{6.4}-\num{10.4} = \num{-4.0} \Rightarrow 10^{-4} = \num{1.0e-4}$.
+\item D : $\Delta\mathrm{p}K_a$ divisé par 2 (confusion avec le facteur $\tfrac12$ du pH d'un acide faible) $\Rightarrow 10^{2} = \num{1.0e2}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q2
+\noindent\textbf{CHIM-F10-Q02 --- Prévision du sens : réaction totale, limitée ou impossible}\par
+On considère la réaction $\ce{NH4+ + CO3^{2-} <=> NH3 + HCO3-}$, avec $\mathrm{p}K_a(\ce{NH4+}/\ce{NH3}) = \num{9.25}$ et $\mathrm{p}K_a(\ce{HCO3-}/\ce{CO3^{2-}}) = \num{10.4}$ (on donne $10^{0{,}15} \approx \num{1.4}$). Cette réaction est :
+\begin{enumerate}[label=\Alph*)]
+\item une réaction équilibrée (limitée), $K_{\text{équi}} \approx \num{14}$
+\item une réaction totale, $K_{\text{équi}} \approx \num{14}$
+\item une réaction impossible, $K_{\text{équi}} \approx \num{7.1e-2}$
+\item une réaction équilibrée (limitée), $K_{\text{équi}} \approx \num{1.2}$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Acide réactif \ce{NH4+} ($\mathrm{p}K_a = \num{9.25}$), acide formé \ce{HCO3-} ($\mathrm{p}K_a = \num{10.4}$) : $\Delta\mathrm{p}K_a = \num{10.4} - \num{9.25} = \num{1.15}$, d'où $K_{\text{équi}} = 10^{1{,}15} = 10 \times 10^{0{,}15} \approx \num{14}$. Comme $0 < \Delta\mathrm{p}K_a < 2$ (soit $1 \le K \le 10^{2}$), la réaction est \textbf{équilibrée} (limitée), et non totale.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : bon calcul de $K \approx \num{14}$ mais mauvais critère (on qualifie de « totale » dès que $K > 1$, en oubliant le seuil $K \ge 10^{2}$).
+\item C : signe de $\Delta\mathrm{p}K_a$ inversé $\Rightarrow \Delta\mathrm{p}K_a = \num{-1.15}$, $K = 10^{-1{,}15} \approx \num{7.1e-2}$ (« impossible »).
+\item D : oubli de l'exponentielle, on prend $K = \Delta\mathrm{p}K_a = \num{1.15} \approx \num{1.2}$ (confusion logarithme / puissance de 10).
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q3
+\noindent\textbf{CHIM-F10-Q03 --- pH d'un mélange de deux acides forts}\par
+On mélange \qty{100}{\milli\litre} d'acide chlorhydrique \ce{HCl} à \qty{0.030}{\mol\per\litre} et \qty{100}{\milli\litre} d'acide nitrique \ce{HNO3} à \qty{0.070}{\mol\per\litre}. Ces deux acides forts sont totalement dissociés. Le pH du mélange vaut (on donne $\log 2 = \num{0.30}$, $\log 5 = \num{0.70}$) :
+\begin{enumerate}[label=\Alph*)]
+\item \num{1.00}
+\item \num{1.30}
+\item \num{1.70}
+\item \num{2.00}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Chaque acide fort libère une mole de \ce{H3O+} par mole. Quantités : $n(\ce{H3O+}) = \num{0.100}\times\num{0.030} + \num{0.100}\times\num{0.070} = \num{0.0030} + \num{0.0070} = \num{0.010}$ \si{\mol}. Le volume total est $\num{0.200}$ \si{\litre}, donc $[\ce{H3O+}] = \num{0.010}/\num{0.200} = \num{0.050}$ \si{\mol\per\litre}. Enfin $\mathrm{pH} = -\log(\num{5.0e-2}) = 2 - \log 5 = 2 - \num{0.70} = \num{1.30}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oubli de la dilution mutuelle (on additionne les molarités, $\num{0.030}+\num{0.070}=\num{0.10}$) $\Rightarrow \mathrm{pH} = -\log(\num{0.10}) = \num{1.00}$.
+\item C : confusion $\log 5$ / $\log 2$ : $\mathrm{pH} = 2 - \log 2 = 2 - \num{0.30} = \num{1.70}$.
+\item D : confusion quantité de matière / concentration : on prend $[\ce{H3O+}] = \num{0.010}$ (le nombre de moles) sans diviser par le volume $\Rightarrow \mathrm{pH} = \num{2.00}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q4
+\noindent\textbf{CHIM-F10-Q04 --- pH d'un acide faible}\par
+Un acide faible \ce{HA} de $\mathrm{p}K_a = \num{4.80}$ est en solution à la concentration $C_a = \qty{0.10}{\mol\per\litre}$. En utilisant la formule $\mathrm{pH} = \tfrac{1}{2}(\mathrm{p}K_a - \log C_a)$, son pH vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \num{1.90}
+\item \num{2.35}
+\item \num{5.80}
+\item \num{2.90}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+On applique la formule : $\mathrm{pH} = \tfrac12(\mathrm{p}K_a - \log C_a) = \tfrac12\bigl(\num{4.80} - \log(\num{0.10})\bigr) = \tfrac12\bigl(\num{4.80} - (\num{-1})\bigr) = \tfrac12(\num{5.80}) = \num{2.90}$. On vérifie $\alpha = \sqrt{K_a/C_a} \approx \qty{1.3}{\percent} \ll 1$ : l'acide est bien faiblement dissocié, la formule est valide.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : erreur de signe sur $\log C_a$, on écrit $\tfrac12(\mathrm{p}K_a + \log C_a) = \tfrac12(\num{4.80}-\num{1}) = \num{1.90}$.
+\item B : oubli du logarithme, on utilise $C_a = \num{0.10}$ à la place de $\log C_a = \num{-1}$ : $\tfrac12(\num{4.80}-\num{0.10}) = \num{2.35}$.
+\item C : oubli du facteur $\tfrac12$, on prend $\mathrm{pH} = \mathrm{p}K_a - \log C_a = \num{4.80}+\num{1} = \num{5.80}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q5
+\noindent\textbf{CHIM-F10-Q05 --- pH d'une base forte}\par
+On dissout de l'hydroxyde de sodium \ce{NaOH} (base forte) pour obtenir une concentration $C_b = \qty{0.020}{\mol\per\litre}$. À \qty{25}{\celsius}, le pH de la solution vaut (on donne $\log 2 = \num{0.30}$) :
+\begin{enumerate}[label=\Alph*)]
+\item \num{1.70}
+\item \num{11.70}
+\item \num{12.00}
+\item \num{12.30}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La soude est totalement dissociée : $[\ce{OH-}] = C_b = \num{0.020}$ \si{\mol\per\litre}. On calcule $\mathrm{pOH} = -\log(\num{2.0e-2}) = 2 - \log 2 = 2 - \num{0.30} = \num{1.70}$, puis $\mathrm{pH} = 14 - \mathrm{pOH} = 14 - \num{1.70} = \num{12.30}$. (De façon équivalente, $\mathrm{pH} = 14 + \log C_b = 14 + (\num{-1.70}) = \num{12.30}$.)\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : on calcule $\mathrm{pOH} = \num{1.70}$ et on l'annonce comme pH, en oubliant la relation $\mathrm{pH} = 14 - \mathrm{pOH}$ (base traitée comme un acide).
+\item B : erreur de signe sur la mantisse, $\log(\num{0.020})$ pris égal à $\num{-2.30}$ $\Rightarrow \mathrm{pH} = 14 - \num{2.30} = \num{11.70}$.
+\item C : $C_b$ assimilée à $10^{-2}$ (mantisse $\log 2$ négligée) $\Rightarrow \mathrm{pH} = 14 - 2 = \num{12.00}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q6
+\noindent\textbf{CHIM-F10-Q06 --- pH d'une solution tampon (Henderson-Hasselbalch)}\par
+Une solution tampon contient l'acide éthanoïque \ce{CH3COOH} à \qty{0.10}{\mol\per\litre} et l'ion éthanoate \ce{CH3COO-} à \qty{0.20}{\mol\per\litre}. Le couple a $\mathrm{p}K_a = \num{4.75}$ (on donne $\log 2 = \num{0.30}$). Le pH de ce tampon vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \num{5.05}
+\item \num{4.45}
+\item \num{4.75}
+\item \num{5.35}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+On applique l'équation de Henderson-Hasselbalch : $\mathrm{pH} = \mathrm{p}K_a + \log\dfrac{[\ce{CH3COO-}]}{[\ce{CH3COOH}]} = \num{4.75} + \log\dfrac{\num{0.20}}{\num{0.10}} = \num{4.75} + \log 2 = \num{4.75} + \num{0.30} = \num{5.05}$. La base conjuguée étant en excès, on a bien $\mathrm{pH} > \mathrm{p}K_a$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : inversion du rapport, on écrit $\log\dfrac{[\ce{CH3COOH}]}{[\ce{CH3COO-}]} = \log(\num{0.5}) = \num{-0.30}$ $\Rightarrow \mathrm{pH} = \num{4.45}$.
+\item C : oubli du terme logarithmique, on suppose $\mathrm{pH} = \mathrm{p}K_a = \num{4.75}$ (comme si le tampon était à parts égales).
+\item D : $\log 2$ confondu avec $\log 4 = \num{0.60}$ $\Rightarrow \mathrm{pH} = \num{4.75}+\num{0.60} = \num{5.35}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q7
+\noindent\textbf{CHIM-F10-Q07 --- Tampon : ajout d'un acide fort}\par
+Un tampon de volume \qty{100}{\milli\litre} contient \ce{CH3COOH} et sa base conjuguée \ce{CH3COO-}, chacun à \qty{0.50}{\mol\per\litre} ($\mathrm{p}K_a = \num{4.75}$). On y ajoute \qty{30}{\milli\litre} d'acide chlorhydrique \ce{HCl} à \qty{1.0}{\mol\per\litre} (on donne $\log 2 = \num{0.30}$). Le pH final du mélange vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \num{4.35}
+\item \num{4.75}
+\item \num{4.15}
+\item \num{5.35}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Quantités initiales : $n(\ce{CH3COOH}) = n(\ce{CH3COO-}) = \num{0.100}\times\num{0.50} = \num{0.050}$ \si{\mol} ; acide fort ajouté $n(\ce{H3O+}) = \num{0.030}\times\num{1.0} = \num{0.030}$ \si{\mol}. L'acide fort est consommé \emph{totalement} par la base conjuguée : $\ce{CH3COO- + H3O+ -> CH3COOH + H2O}$. D'où $n(\ce{CH3COO-}) = \num{0.050}-\num{0.030} = \num{0.020}$ \si{\mol} et $n(\ce{CH3COOH}) = \num{0.050}+\num{0.030} = \num{0.080}$ \si{\mol}. Henderson : $\mathrm{pH} = \num{4.75} + \log\dfrac{\num{0.020}}{\num{0.080}} = \num{4.75} + \log(\num{0.25}) = \num{4.75} - \num{0.60} = \num{4.15}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : on ne met à jour que la base ($n(\ce{CH3COO-})=\num{0.020}$) en oubliant que l'acide augmente d'autant : $\mathrm{pH} = \num{4.75}+\log(\num{0.020}/\num{0.050}) = \num{4.75}-\num{0.40} = \num{4.35}$.
+\item B : on néglige l'acide ajouté et on garde le tampon initial ($[\ce{A-}]=[\ce{HA}]$) $\Rightarrow \mathrm{pH} = \mathrm{p}K_a = \num{4.75}$.
+\item D : sens de la réaction inversé (l'acide fort ferait \emph{augmenter} \ce{CH3COO-}) : $\log(\num{0.080}/\num{0.020}) = +\num{0.60} \Rightarrow \mathrm{pH} = \num{5.35}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q8
+\noindent\textbf{CHIM-F10-Q08 --- Titrage d'un triacide}\par
+On titre \qty{20}{\milli\litre} d'acide phosphorique \ce{H3PO4} (triacide) par de la soude \ce{NaOH} à \qty{0.30}{\mol\per\litre}. La neutralisation complète des trois acidités est atteinte lorsqu'on a versé \qty{20}{\milli\litre} de soude. La concentration $C_a$ de l'acide phosphorique vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.30}{\mol\per\litre}
+\item \qty{0.10}{\mol\per\litre}
+\item \qty{0.15}{\mol\per\litre}
+\item \qty{0.90}{\mol\per\litre}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+\ce{H3PO4} libère \textbf{3} protons : à l'équivalence complète, $3\,C_a V_a = C_b V_b$. On isole $C_a = \dfrac{C_b V_b}{3\,V_a} = \dfrac{\num{0.30}\times\num{20}}{3\times\num{20}} = \dfrac{\num{0.30}}{3} = \qty{0.10}{\mol\per\litre}$ (les volumes étant égaux, ils se simplifient).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oubli du facteur 3 (acide traité comme un monoacide), $C_a = C_b V_b/V_a = \qty{0.30}{\mol\per\litre}$.
+\item C : confusion triacide / diacide, facteur 2 au lieu de 3 : $C_a = \num{0.30}/2 = \qty{0.15}{\mol\per\litre}$.
+\item D : facteur 3 placé au numérateur ($\times 3$ au lieu de $\div 3$) : $C_a = 3\times\num{0.30} = \qty{0.90}{\mol\per\litre}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q9
+\noindent\textbf{CHIM-F10-Q09 --- Concentration en ions hydroxyde à partir du pH}\par
+Une solution aqueuse d'ammoniac a un pH de \num{11.3} à \qty{25}{\celsius}. Sa concentration en ions hydroxyde $[\ce{OH-}]$ vaut (on donne $\log 2 = \num{0.30}$) :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{1.0e-3}{\mol\per\litre}
+\item \qty{2.0e-3}{\mol\per\litre}
+\item \qty{5.0e-3}{\mol\per\litre}
+\item \qty{5.0e-12}{\mol\per\litre}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+On passe d'abord au pOH : $\mathrm{pOH} = 14 - \mathrm{pH} = 14 - \num{11.3} = \num{2.7}$. Alors $[\ce{OH-}] = 10^{-\mathrm{pOH}} = 10^{-2{,}7} = 10^{-3}\times 10^{0{,}3} = 10^{-3}\times 2 = \qty{2.0e-3}{\mol\per\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : mantisse négligée, $10^{-2{,}7}$ arrondi à $10^{-3}$ $\Rightarrow [\ce{OH-}] = \qty{1.0e-3}{\mol\per\litre}$.
+\item C : confusion $10^{0{,}3}=2$ et $10^{0{,}7}=5$ : mantisse prise égale à 5 $\Rightarrow \qty{5.0e-3}{\mol\per\litre}$.
+\item D : oubli de la conversion pH $\to$ pOH, on calcule $10^{-\mathrm{pH}} = 10^{-11{,}3}$ (c'est en fait $[\ce{H3O+}]$) $\Rightarrow \qty{5.0e-12}{\mol\per\litre}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q10
+\noindent\textbf{CHIM-F10-Q10 --- Degré d'ionisation (loi de dilution d'Ostwald)}\par
+L'acide nitreux \ce{HNO2} ($K_a = \num{4.0e-4}$) est en solution à $C_a = \qty{0.040}{\mol\per\litre}$. Son degré d'ionisation $\alpha$, donné par la loi d'Ostwald $\alpha \approx \sqrt{K_a/C_a}$, vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{10}{\percent}
+\item \qty{1.0}{\percent}
+\item \qty{0.40}{\percent}
+\item \qty{0.10}{\percent}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+On calcule $\alpha = \sqrt{K_a/C_a} = \sqrt{\dfrac{\num{4.0e-4}}{\num{4.0e-2}}} = \sqrt{10^{-2}} = 10^{-1} = \num{0.10}$, soit \qty{10}{\percent}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : oubli de la racine carrée, $\alpha = K_a/C_a = 10^{-2} = \qty{1.0}{\percent}$.
+\item C : produit au lieu du quotient, $\alpha = \sqrt{K_a\,C_a} = \sqrt{\num{16e-6}} = \num{4.0e-3} = \qty{0.40}{\percent}$.
+\item D : confusion fraction / pourcentage, la valeur $\alpha = \num{0.10}$ annoncée comme \qty{0.10}{\percent} (oubli du facteur 100).
+\end{itemize}
+\vspace{6pt}\hrule
+
+\end{document}
