@@ -1,0 +1,99 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Primitives \& règle du dU}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+
+\section*{Niveau Moyen — Corrigé détaillé}
+
+\begin{corr}[1 — puissance d'une expression affine]
+On pose $U=x+3$, donc $U'=1$ et $\dd U=\dd x$ : le $\dd U$ est déjà présent. Forme 1 avec $n=3$ :
+\[
+J_1=\int U^3\,\dd U=\frac{U^4}{4}+C=\boxed{\,\frac{(x+3)^4}{4}+C.\,}
+\]
+\textbf{Vérification :} $\Bigl[\tfrac{(x+3)^4}{4}\Bigr]'=\tfrac{4(x+3)^3\cdot 1}{4}=(x+3)^3$. \checkmark
+\end{corr}
+
+\begin{corr}[2 — cosinus composé]
+On pose $U=2x$, d'où $\dd U=2\,\dd x$, soit $\dd x=\tfrac12\,\dd U$. Forme 3 :
+\[
+J_2=\int \cos(2x)\,\dd x=\int \cos U\cdot\tfrac12\,\dd U=\tfrac12\sin U+C
+=\boxed{\,\tfrac12\sin(2x)+C.\,}
+\]
+\textbf{Vérification :} $\Bigl[\tfrac12\sin(2x)\Bigr]'=\tfrac12\cdot 2\cos(2x)=\cos(2x)$. \checkmark
+\end{corr}
+
+\begin{corr}[3 — exponentielle composée]
+On pose $U=2x$, $\dd U=2\,\dd x$, soit $\dd x=\tfrac12\,\dd U$. Forme 6 avec $a=e$ :
+\[
+J_3=\int e^{2x}\,\dd x=\tfrac12\int e^{U}\,\dd U=\tfrac12 e^{U}+C
+=\boxed{\,\tfrac12 e^{2x}+C.\,}
+\]
+\textbf{Vérification :} $\Bigl[\tfrac12 e^{2x}\Bigr]'=\tfrac12\cdot 2\,e^{2x}=e^{2x}$. \checkmark
+\end{corr}
+
+\begin{corr}[4 — le $\dd U$ presque prêt]
+On pose $U=x^2+3$, donc $U'=2x$ et $\dd U=2x\,\dd x$ : le numérateur \emph{est} exactement $\dd U$.
+Forme 2 :
+\[
+J_4=\int \frac{2x\,\dd x}{x^2+3}=\int\frac{\dd U}{U}=\ln|U|+C=\boxed{\,\ln(x^2+3)+C.\,}
+\]
+La valeur absolue est superflue car $x^2+3>0$ pour tout $x$.\\
+\textbf{Vérification :} $\bigl[\ln(x^2+3)\bigr]'=\dfrac{2x}{x^2+3}$. \checkmark
+\end{corr}
+
+\begin{corr}[5 — la forme $1/\cos^2$ composée]
+On pose $U=3x$, d'où $\dd U=3\,\dd x$, soit $\dd x=\tfrac13\,\dd U$. Forme 4 :
+\[
+J_5=\int \frac{\dd x}{\cos^2(3x)}=\tfrac13\int\frac{\dd U}{\cos^2 U}=\tfrac13\tg U+C
+=\boxed{\,\tfrac13\tan(3x)+C.\,}
+\]
+\textbf{Vérification :} $\Bigl[\tfrac13\tan(3x)\Bigr]'=\tfrac13\cdot\dfrac{3}{\cos^2(3x)}=\dfrac{1}{\cos^2(3x)}$. \checkmark
+\end{corr}
+
+\end{document}

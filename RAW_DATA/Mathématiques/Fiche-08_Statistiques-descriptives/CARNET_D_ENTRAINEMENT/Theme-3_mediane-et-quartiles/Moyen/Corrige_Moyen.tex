@@ -1,0 +1,123 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,patterns,backgrounds,shapes.geometric,decorations.pathreplacing,decorations.markings}
+\usepackage[a4paper,margin=2.15cm,headheight=26pt,headsep=12pt]{geometry}
+\usepackage{titlesec}
+
+% ---------------- Palette ----------------
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{barcol}{RGB}{0,151,169}
+\definecolor{barcold}{RGB}{0,110,124}
+\definecolor{modecol}{RGB}{200,55,55}
+\definecolor{meancol}{RGB}{0,90,200}
+\definecolor{medcol}{RGB}{160,90,190}
+\definecolor{quartcol}{RGB}{0,135,90}
+\definecolor{ogivecol}{RGB}{176,74,0}
+
+% ---------------- Boîtes ----------------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+  fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox{definition}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{propriete}[1][]{boxbase,colback=thmcol!7,colframe=thmcol,
+  title={\textsc{Propriété}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% Boîte "exercice" et "corrigé" (titre libre passé en argument)
+\newtcolorbox{exobox}[1]{boxbase,colback=primary!4,colframe=primary,
+  before skip=8pt,after skip=8pt,title={#1}}
+\newtcolorbox{corbox}[1]{boxbase,colback=excol!5,colframe=excol!85!black,
+  before skip=8pt,after skip=8pt,title={#1}}
+
+% ---------------- En-tête ----------------
+\newcommand{\docpart}[1]{\def\thedocpart{#1}}
+\docpart{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Statistiques descriptives}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{\thedocpart}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\setlist{topsep=2pt,itemsep=1.5pt,parsep=0pt}
+
+% Bandeau de titre du document
+\newcommand{\bandeau}[2]{%
+\begin{tcolorbox}[boxbase,colback=primary,colframe=primarydark,halign=center,
+   before skip=2pt,after skip=12pt]
+{\LARGE\bfseries\color{white} #1}\\[3pt]{\normalsize\color{white} #2}
+\end{tcolorbox}}
+
+\newcommand{\ecm}{\sigma_m}
+\newcommand{\ect}{\sigma}
+\newcommand{\med}{M\!e}
+\docpart{Moyen — Corrigé — Thème 3}
+\begin{document}
+\bandeau{Thème 3 — Médiane et quartiles}{Niveau Moyen — corrigé}
+
+\begin{corbox}{Corrigé 1 — Médiane par interpolation}
+Rang visé $\tfrac{N}{2}=25$. Premier cumul $\geqslant25$ : $[20,30[$ ($n_c=32$).
+Donc $a=20,\ b=30,\ n_{\text{classe}}=16$ et $r=25-16=9$ :
+\[ \med=20+\frac{9}{16}\times10=20+5{,}625=\mathbf{25{,}63\ \text{min}}. \]
+\end{corbox}
+
+\begin{corbox}{Corrigé 2 — Premier quartile $Q_1$}
+Rang visé $\tfrac{N}{4}=12{,}5$. Premier cumul $\geqslant12{,}5$ : $[10,20[$ ($n_c=16$).
+$a=10,\ b=20,\ n_{\text{classe}}=10$, $r=12{,}5-6=6{,}5$ :
+\[ Q_1=10+\frac{6{,}5}{10}\times10=10+6{,}5=\mathbf{16{,}5\ \text{min}}. \]
+\end{corbox}
+
+\begin{corbox}{Corrigé 3 — Troisième quartile $Q_3$}
+Rang visé $\tfrac{3N}{4}=37{,}5$. Premier cumul $\geqslant37{,}5$ : $[30,40[$ ($n_c=44$).
+$a=30,\ b=40,\ n_{\text{classe}}=12$, $r=37{,}5-32=5{,}5$ :
+\[ Q_3=30+\frac{5{,}5}{12}\times10=30+4{,}58=\mathbf{34{,}58\ \text{min}}. \]
+\end{corbox}
+
+\begin{corbox}{Corrigé 4 — Médiane d'une série discrète tabulée}
+Effectifs cumulés : $4;\ 13;\ 21;\ 24;\ 25$. $n=25$ impair, rang $\tfrac{25+1}{2}=13$.
+Le $13^{\text{e}}$ individu tombe là où le cumul atteint $13$, soit la valeur $x=1$ :
+$\med=\mathbf{1}$.
+\end{corbox}
+
+\begin{corbox}{Corrigé 5 — Écart interquartile}
+\[ Q_3-Q_1=34{,}58-16{,}5=\mathbf{18{,}08\ \text{min}}. \]
+Interprétation : les $50\,\%$ « centraux » des trajets durent entre $16{,}5$ et $34{,}58$ minutes ;
+plus cet écart est petit, plus les durées du milieu sont resserrées.
+\end{corbox}
+\end{document}

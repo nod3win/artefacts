@@ -1,0 +1,143 @@
+% =====================================================================
+%  Thème 4 — Équations trigonométriques — NIVEAU DIFFICILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 4 — Équations trigonométriques}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Angle double — le sinus}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+\item[\textbf{(a)}] \rep $2\sin(2x)=1\Leftrightarrow \sin(2x)=\dfrac12=\sin\dfrac{\pi}{6}$. On écrit
+les familles \textbf{pour $2x$} :
+\[
+2x=\frac{\pi}{6}+2k\pi \qquad\text{ou}\qquad 2x=\pi-\frac{\pi}{6}+2k\pi=\frac{5\pi}{6}+2k\pi.
+\]
+\item[\textbf{(b)}] \rep On divise \textbf{chaque} famille par $2$ ; le $+2k\pi$ devient $+k\pi$ :
+\[
+x=\frac{\pi}{12}+k\pi \qquad\text{ou}\qquad x=\frac{5\pi}{12}+k\pi,\qquad k\in\Z.
+\]
+C'est ce passage de $2k\pi$ à $k\pi$ qui double le nombre de solutions sur un tour.
+\item[\textbf{(c)}] \rep Dans $[0\,;\,2\pi[$, on prend $k=0$ puis $k=1$ :
+\[
+\frac{\pi}{12},\quad \frac{5\pi}{12},\quad \frac{\pi}{12}+\pi=\frac{13\pi}{12},\quad
+\frac{5\pi}{12}+\pi=\frac{17\pi}{12}.
+\]
+\[
+\boxed{\,S=\left\{\frac{\pi}{12}\,;\,\frac{5\pi}{12}\,;\,\frac{13\pi}{12}\,;\,\frac{17\pi}{12}\right\}.}
+\]
+\end{itemize}
+
+\exo{Angle double — la tangente}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+\item[\textbf{(a)}] \rep $\tg(2x)=1=\tg\dfrac{\pi}{4}$. La tangente a pour période $\pi$, donc
+\emph{pour $2x$} : $2x=\dfrac{\pi}{4}+k\pi$. On divise par $2$ :
+\[
+x=\frac{\pi}{8}+\frac{k\pi}{2},\qquad k\in\Z.
+\]
+\item[\textbf{(b)}] \rep Le pas est $\dfrac{\pi}{2}$ : sur un tour de longueur $2\pi$ on attend
+$\dfrac{2\pi}{\pi/2}=4$ solutions. Pour $k=0,1,2,3$ :
+\[
+\frac{\pi}{8},\quad \frac{\pi}{8}+\frac{\pi}{2}=\frac{5\pi}{8},\quad
+\frac{\pi}{8}+\pi=\frac{9\pi}{8},\quad \frac{\pi}{8}+\frac{3\pi}{2}=\frac{13\pi}{8}.
+\]
+\[
+\boxed{\,S=\left\{\frac{\pi}{8}\,;\,\frac{5\pi}{8}\,;\,\frac{9\pi}{8}\,;\,\frac{13\pi}{8}\right\}.}
+\]
+\end{itemize}
+
+\exo{Équation linéaire ramenée à une tangente}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+\item[\textbf{(a)}] \rep Si $\cos x=0$, l'équation devient $\sin x=0$. Or $\cos x$ et $\sin x$ ne
+peuvent être nuls en même temps ($\cos^2x+\sin^2x=1$). Donc $\cos x\neq0$ pour toute solution.
+\item[\textbf{(b)}] \rep On divise par $\cos x\ (\neq0)$ :
+\[
+\sin x-\sqrt3\,\cos x=0 \Leftrightarrow \frac{\sin x}{\cos x}=\sqrt3 \Leftrightarrow \tg x=\sqrt3
+=\tg\frac{\pi}{3}.
+\]
+D'où (période $\pi$) : $x=\dfrac{\pi}{3}+k\pi,\ k\in\Z$.
+\item[\textbf{(c)}] \rep Dans $[0\,;\,2\pi[$ : $k=0\Rightarrow \dfrac{\pi}{3}$ ;
+$k=1\Rightarrow \dfrac{\pi}{3}+\pi=\dfrac{4\pi}{3}$. Donc
+\[
+\boxed{\,S=\left\{\frac{\pi}{3}\,;\,\frac{4\pi}{3}\right\}.}
+\]
+\end{itemize}
+
+\exo{Mise en situation périodique — deux roues}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+\item[\textbf{(a)}] \rep $\sin x=\dfrac12=\sin\dfrac{\pi}{6}$ : $x=\dfrac{\pi}{6}+2k\pi$ ou
+$x=\pi-\dfrac{\pi}{6}+2k\pi=\dfrac{5\pi}{6}+2k\pi$. Dans $[0\,;\,2\pi[$ :
+$x=\dfrac{\pi}{6}$ ou $x=\dfrac{5\pi}{6}$.
+\item[\textbf{(b)}] \rep $\sin x=-\dfrac{\sqrt2}{2}=\sin\!\left(-\dfrac{\pi}{4}\right)$ :
+$x=-\dfrac{\pi}{4}+2k\pi$ ou $x=\pi+\dfrac{\pi}{4}+2k\pi=\dfrac{5\pi}{4}+2k\pi$. Dans $[0\,;\,2\pi[$ :
+$-\dfrac{\pi}{4}+2\pi=\dfrac{7\pi}{4}$ et $\dfrac{5\pi}{4}$. Donc $x=\dfrac{5\pi}{4}$ ou
+$x=\dfrac{7\pi}{4}$.
+\item[\textbf{(c)}] \rep $\sin(2x)=\dfrac{\sqrt2}{2}=\sin\dfrac{\pi}{4}$. Familles \textbf{pour $2x$} :
+\[
+2x=\frac{\pi}{4}+2k\pi \ \text{ou}\ 2x=\frac{3\pi}{4}+2k\pi
+\ \Rightarrow\ x=\frac{\pi}{8}+k\pi \ \text{ou}\ x=\frac{3\pi}{8}+k\pi.
+\]
+Dans $[0\,;\,2\pi[$ (k=0 puis k=1) :
+\[
+\boxed{\,x\in\left\{\frac{\pi}{8}\,;\,\frac{3\pi}{8}\,;\,\frac{9\pi}{8}\,;\,\frac{11\pi}{8}\right\}.}
+\]
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.9,line cap=round,>=Stealth]
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.3,0)--(1.35,0) node[right]{\scriptsize$\cos$};
+  \draw[->,black!70] (0,-1.3)--(0,1.35) node[above]{\scriptsize$\sin$};
+  \foreach \a in {22.5,67.5,202.5,247.5}{
+     \fill[primarydark] (\a:1) circle (0.028);
+     \draw[primarydark!45] (0,0)--(\a:1);
+  }
+  \node[primarydark,font=\scriptsize,above right] at (22.5:1) {$\frac{\pi}{8}$};
+  \node[primarydark,font=\scriptsize,above left] at (67.5:1) {$\frac{3\pi}{8}$};
+  \node[primarydark,font=\scriptsize,below left] at (202.5:1) {$\frac{9\pi}{8}$};
+  \node[primarydark,font=\scriptsize,below left] at (247.5:1) {$\frac{11\pi}{8}$};
+  \fill (0,0) circle (0.02);
+\end{tikzpicture}\\[-2pt]
+{\scriptsize Les quatre solutions de $\sin(2x)=\frac{\sqrt2}{2}$ dans $[0;2\pi[$ (question c).}
+\end{center}
+
+\end{document}

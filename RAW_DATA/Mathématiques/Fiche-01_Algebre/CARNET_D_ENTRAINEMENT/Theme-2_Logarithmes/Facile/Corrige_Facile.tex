@@ -1,0 +1,68 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Logarithmes}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Facile — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[la définition]
+On cherche l'exposant à donner à la base.
+\[ \text{a) }\log_2 8=3\ (2^3=8);\quad \text{b) }\log_3 81=4\ (3^4=81);\quad \text{c) }\log_{10}1000=3;\quad
+   \text{d) }\log_5 1=0;\quad \text{e) }\ln e=1. \]
+\end{corrige}
+
+\begin{corrige}[développer]
+\[ \text{a) }\log_a x+\log_a y;\quad \text{b) }\log_a x-\log_a y;\quad \text{c) }3\log_a x;\quad
+   \text{d) }2\ln x;\quad \text{e) }\log_a(x^{2}y)=2\log_a x+\log_a y. \]
+\end{corrige}
+
+\begin{corrige}[valeurs remarquables]
+\[ \text{a) }1;\quad \text{b) }\ln e^{4}=4\ln e=4;\quad \text{c) }0;\quad
+   \text{d) }\ln\tfrac1e=-\ln e=-1;\quad \text{e) }\log_{10}0{,}01=\log_{10}10^{-2}=-2. \]
+\end{corrige}
+
+\begin{corrige}[isoler l'exposant]
+\begin{align*}
+&\text{a) }x=\ln 7; &&\text{b) }x=\log_{10}100=2; &&\text{c) }2x=5\Rightarrow x=\tfrac52;\\
+&\text{d) }-x=\ln 3\Rightarrow x=-\ln 3; &&\text{e) }x=\log_{10}5=\log 5. &&
+\end{align*}
+\end{corrige}
+
+\begin{corrige}[le piège des carrés]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item a) \textbf{Vrai} : $\ln(x^{2})=2\ln x$ (propriété du log d'une puissance).
+  \item b) \textbf{Faux} : $\ln^{2}x=(\ln x)^{2}\neq 2\ln x$ en général.
+  \item c) \textbf{Vrai} : $\ln^{2}x$ est justement une \emph{notation} pour $(\ln x)^{2}$.
+  \item d) \textbf{Faux} : $\ln(x^{2})=2\ln x$, alors que $\ln^{2}x=(\ln x)^{2}$ : ce sont deux objets différents.
+\end{itemize}
+\end{corrige}
+
+\end{document}

@@ -1,0 +1,109 @@
+% =====================================================================
+%  Thème 5 — Résolution des triangles — NIVEAU FACILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 5 — Résolution des triangles}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} appliquer \emph{une} formule à la fois (aire, loi des sinus, loi des cosinus,
+triangle rectangle). \textbf{Tout se fait sans calculatrice.} Donne des valeurs \emph{exactes}
+(garde les $\sqrt{\ }$, par exemple $5\sqrt3$). Convention : côtés $a=\overline{BC}$, $b=\overline{CA}$,
+$c=\overline{AB}$ opposés aux sommets $A,B,C$.
+\end{consigne}
+
+\exo{Calculer une aire ($\mathcal{A}=\tfrac12\,ab\sin\hat C$)}
+Pour chaque triangle, on donne \textbf{deux côtés} et l'\textbf{angle compris} entre eux. Calcule l'aire.
+\[
+\textbf{(a)}\ 6\text{ et }8,\ 30\degr \qquad
+\textbf{(b)}\ 5\text{ et }4,\ 90\degr \qquad
+\textbf{(c)}\ 10\text{ et }6,\ 60\degr
+\]
+\[
+\textbf{(d)}\ 8\text{ et }8,\ 45\degr \qquad
+\textbf{(e)}\ 3\text{ et }4,\ 120\degr
+\]
+
+\exo{Trouver le 3\textsuperscript{e} côté (loi des cosinus)}
+On connaît deux côtés et l'angle compris $\hat C$. Calcule le côté opposé $c$ (valeur exacte).
+\[
+\textbf{(a)}\ a=5,\ b=8,\ \hat C=60\degr \qquad
+\textbf{(b)}\ a=3,\ b=5,\ \hat C=120\degr
+\]
+\[
+\textbf{(c)}\ a=6,\ b=8,\ \hat C=90\degr \qquad
+\textbf{(d)}\ a=2,\ b=3,\ \hat C=60\degr
+\]
+
+\exo{Trouver un côté manquant (loi des sinus)}
+Dans chaque triangle, utilise $\dfrac{\sin\hat A}{a}=\dfrac{\sin\hat B}{b}=\dfrac{\sin\hat C}{c}$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item $\hat A=30\degr$, $a=6$, $\hat B=90\degr$ : calcule $b$.
+\item $\hat A=30\degr$, $a=5$, $\hat C=45\degr$ : calcule $c$.
+\item $\hat A=60\degr$, $a=3$, $\hat B=90\degr$ : calcule $b$.
+\end{enumerate}
+
+\exo{Retrouver un angle à partir des trois côtés}
+On donne les trois côtés. Calcule $\cos\hat C=\dfrac{a^2+b^2-c^2}{2ab}$ puis reconnais l'angle
+remarquable $\hat C$.
+\[
+\textbf{(a)}\ a=3,\ b=5,\ c=7 \qquad
+\textbf{(b)}\ a=5,\ b=8,\ c=7
+\]
+\[
+\textbf{(c)}\ a=6,\ b=8,\ c=10 \qquad
+\textbf{(d)}\ a=2,\ b=3,\ c=\sqrt7
+\]
+
+\exo{Le triangle rectangle (SOH-CAH-TOA et Pythagore)}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Un triangle rectangle a un angle aigu de $60\degr$ et une hypoténuse de longueur $6$.
+      Calcule la longueur du côté \textbf{opposé} et celle du côté \textbf{adjacent} à cet angle.
+\item Un triangle rectangle isocèle a ses deux côtés de l'angle droit égaux à $5$.
+      Combien vaut son hypoténuse ? Que valent ses deux angles aigus ?
+\item Les deux côtés de l'angle droit d'un triangle rectangle mesurent $5$ et $12$.
+      Calcule l'hypoténuse (théorème de Pythagore).
+\end{enumerate}
+
+\end{document}

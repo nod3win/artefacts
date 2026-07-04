@@ -1,0 +1,117 @@
+% =====================================================================
+%  Thème 3 — Relation fondamentale & formules d'addition — NIVEAU DIFFICILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 3 — Relation fondamentale \& formules d'addition}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{La chaîne complète}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\cos^2\alpha=1-\sin^2\alpha=1-\dfrac19=\dfrac89$. Au quadrant I $\cos>0$, donc
+$\cos\alpha=\sqrt{\dfrac89}=\dfrac{2\sqrt2}{3}$.
+\item[\textbf{(b)}] \rep $\sin2\alpha=2\sin\alpha\cos\alpha=2\cdot\dfrac13\cdot\dfrac{2\sqrt2}{3}
+=\dfrac{4\sqrt2}{9}$ ; \ $\cos2\alpha=1-2\sin^2\alpha=1-\dfrac29=\dfrac79$.
+\item[\textbf{(c)}] \rep $\sin\!\Big(2\alpha-\dfrac{\pi}{3}\Big)
+=\sin2\alpha\cos\dfrac{\pi}{3}-\cos2\alpha\sin\dfrac{\pi}{3}
+=\dfrac{4\sqrt2}{9}\cdot\dfrac12-\dfrac79\cdot\dfrac{\sqrt3}{2}=\dfrac{4\sqrt2-7\sqrt3}{18}$.
+\item[\textbf{(d)}] \rep $\cos\!\Big(2\alpha+\dfrac{\pi}{3}\Big)
+=\cos2\alpha\cos\dfrac{\pi}{3}-\sin2\alpha\sin\dfrac{\pi}{3}
+=\dfrac79\cdot\dfrac12-\dfrac{4\sqrt2}{9}\cdot\dfrac{\sqrt3}{2}=\dfrac{7-4\sqrt6}{18}$.
+\end{itemize}
+
+\exo{Démontrer les formules de l'angle double}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep Dans $\cos(a+b)=\cos a\cos b-\sin a\sin b$, on pose $b=a$ :
+\[
+\cos2a=\cos(a+a)=\cos a\cos a-\sin a\sin a=\cos^2a-\sin^2a.
+\]
+\item[\textbf{(b)}] \rep On remplace tour à tour à l'aide de $\cos^2a+\sin^2a=1$ :
+\[
+\cos2a=\cos^2a-\sin^2a=\cos^2a-(1-\cos^2a)=2\cos^2a-1,
+\]
+\[
+\cos2a=\cos^2a-\sin^2a=(1-\sin^2a)-\sin^2a=1-2\sin^2a.
+\]
+\item[\textbf{(c)}] \rep En partant de $\cos2x=1-2\sin^2x$ (avec $a=x$), on isole $\sin^2x$ :
+\[
+2\sin^2x=1-\cos2x\quad\Longrightarrow\quad \sin^2x=\dfrac{1-\cos2x}{2}.
+\]
+\end{itemize}
+
+\exo{Point sur le cercle et angle double}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $1+\tg^2\alpha=1+\dfrac94=\dfrac{13}{4}=\dfrac{1}{\cos^2\alpha}$, d'où
+$\cos^2\alpha=\dfrac{4}{13}$. Quadrant II : $\cos<0$, donc
+$\cos\alpha=-\dfrac{2}{\sqrt{13}}=-\dfrac{2\sqrt{13}}{13}$. Puis
+$\sin\alpha=\tg\alpha\cdot\cos\alpha=\Big(-\tfrac32\Big)\Big(-\tfrac{2\sqrt{13}}{13}\Big)
+=\dfrac{3\sqrt{13}}{13}$.
+Ainsi $M=\left(-\dfrac{2\sqrt{13}}{13}\,;\,\dfrac{3\sqrt{13}}{13}\right)$.
+\item[\textbf{(b)}] \rep
+$\sin2\alpha=2\sin\alpha\cos\alpha=2\cdot\dfrac{3\sqrt{13}}{13}\cdot\Big(-\dfrac{2\sqrt{13}}{13}\Big)
+=2\cdot\dfrac{-6\cdot13}{169}=-\dfrac{12}{13}$ ;
+\[
+\cos2\alpha=2\cos^2\alpha-1=2\cdot\dfrac{4}{13}-1=\dfrac{8}{13}-1=-\dfrac{5}{13}.
+\]
+\item[\textbf{(c)}] \rep Par le quotient :
+$\tg2\alpha=\dfrac{\sin2\alpha}{\cos2\alpha}=\dfrac{-12/13}{-5/13}=\dfrac{12}{5}$.
+Par la formule :
+$\tg2\alpha=\dfrac{2\tg\alpha}{1-\tg^2\alpha}=\dfrac{2\cdot(-\frac32)}{1-\frac94}
+=\dfrac{-3}{-\frac54}=\dfrac{12}{5}$. Les deux résultats coïncident.
+\end{itemize}
+
+\exo{Une formule de l'angle triple}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\sin3a=\sin(2a+a)=\sin2a\cos a+\cos2a\sin a$.
+\item[\textbf{(b)}] \rep On remplace $\sin2a=2\sin a\cos a$ et $\cos2a=1-2\sin^2a$ :
+\[
+\sin3a=(2\sin a\cos a)\cos a+(1-2\sin^2a)\sin a=2\sin a\cos^2a+\sin a-2\sin^3a.
+\]
+Avec $\cos^2a=1-\sin^2a$ :
+\[
+\sin3a=2\sin a(1-\sin^2a)+\sin a-2\sin^3a=2\sin a-2\sin^3a+\sin a-2\sin^3a=3\sin a-4\sin^3a.
+\]
+\item[\textbf{(c)}] \rep Avec $\sin a=\dfrac12$ :
+$\sin3a=3\cdot\dfrac12-4\cdot\dfrac18=\dfrac32-\dfrac12=1$, ce qui est bien $\sin90\degr=1$.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,152 @@
+% ===================== PREAMBULE COMMUN (à copier VERBATIM en tête de CHAQUE .tex) =====================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,angles,quotes,patterns,backgrounds,shapes.geometric}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{219,54,77}
+\definecolor{primarydark}{RGB}{150,28,46}
+\definecolor{primarylight}{RGB}{250,224,228}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{courbe}{RGB}{40,90,200}
+\definecolor{courbeB}{RGB}{210,60,40}
+\definecolor{courbeC}{RGB}{30,150,80}
+\definecolor{axiscol}{RGB}{60,60,60}
+\definecolor{gridcol}{RGB}{200,205,215}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pgfplotsset{repere/.style={axis lines=middle,
+    axis line style={-{Stealth[length=2.2mm]},axiscol,line width=0.8pt},
+    label style={font=\footnotesize},tick label style={font=\scriptsize},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=north west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south east},
+    xlabel={$x$},ylabel={$y$},grid=both,minor tick num=0,
+    major grid style={gridcol,line width=0.4pt},samples=200,clip=false}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} — Les fonctions}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+\newcommand{\R}{\mathbb{R}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\N}{\mathbb{N}}
+\newcommand{\Df}{D_f}
+\newcommand{\croit}{\textcolor{thmcol}{\Large$\nearrow$}}
+\newcommand{\decroit}{\textcolor{thmcol}{\Large$\searrow$}}
+
+\newcommand{\exercice}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Exercice #1}\par\nopagebreak\smallskip}
+\newcommand{\titrecarnet}[3]{%
+\begin{center}\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,minimum width=15cm,
+  minimum height=1.7cm,align=center,inner sep=8pt]
+  {{\LARGE\bfseries #1}\\[2pt]{\normalsize #2}};
+\end{tikzpicture}\end{center}
+\begin{center}\itshape\color{primarydark}#3\end{center}\medskip}
+
+% ---- RÈGLES D'USAGE DES MACROS ----
+% * \croit et \decroit s'emploient en mode TEXTE (dans une cellule de tableau),
+%   JAMAIS entre $...$ (ils contiennent déjà un $\nearrow$).
+% * \titrecarnet{Titre}{Sous-titre}{Ligne en italique} : bandeau de titre.
+% * \exercice{1} : titre d'exercice.
+% * Boîtes : \begin{idee}...\end{idee}, \begin{exemple}[titre]...\end{exemple},
+%   \begin{methode}[titre]...\end{methode}, \begin{piege}[titre]...\end{piege}.
+% Le corps du document commence après \begin{document}.
+\begin{document}
+\titrecarnet{Thème 2 — Parité, symétries \& périodicité}{Tutoriel}{Repérer les symétries d'une courbe : axe, centre, parité, période.}
+
+\section*{1. Parité : paire, impaire, ou ni l'un ni l'autre}
+
+\begin{idee}[le test se fait toujours sur $f(-x)$]
+On calcule $f(-x)$, puis on compare :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item si $f(-x)=f(x)$ : $f$ est \textbf{paire} — courbe symétrique par rapport à l'\emph{axe des $y$} ;
+  \item si $f(-x)=-f(x)$ : $f$ est \textbf{impaire} — courbe symétrique par rapport à l'\emph{origine} $(0;0)$ ;
+  \item sinon : $f$ n'est \textbf{ni paire ni impaire} (le cas le plus fréquent !).
+\end{itemize}
+\end{idee}
+
+\begin{piege}
+« Paire » et « impaire » ne couvrent pas tous les cas. Pour prouver qu'une fonction n'est \emph{ni} l'une \emph{ni} l'autre, il suffit d'un contre-exemple : par exemple pour $f(x)=2x+1$, $f(1)=3$ mais $f(-1)=-1$, donc $f(-1)\neq f(1)$ et $f(-1)\neq -f(1)=-3$.
+\end{piege}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=6.6cm,height=4.4cm,xmin=-2.4,xmax=2.4,ymin=-0.5,ymax=4.2,
+   xtick={-2,-1,1,2},ytick={1,2,3},samples=80,title={\footnotesize paire : $x^2+1$}]
+  \addplot[courbe,line width=1.2pt,domain=-1.9:1.9]{x^2+1};
+  \draw[dashed,gray](axis cs:0,-0.5)--(axis cs:0,4.2);
+  \filldraw[courbeB](axis cs:1.3,2.69)circle(1.5pt);\filldraw[courbeB](axis cs:-1.3,2.69)circle(1.5pt);
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[repere,width=6.6cm,height=4.4cm,xmin=-2.1,xmax=2.1,ymin=-3.2,ymax=3.2,
+   xtick={-2,-1,1,2},ytick={-2,2},samples=80,restrict y to domain=-3.2:3.2,title={\footnotesize impaire : $x^3$}]
+  \addplot[courbe,line width=1.2pt,domain=-1.45:1.45]{x^3};
+  \filldraw[courbeB](axis cs:1.2,1.728)circle(1.5pt);\filldraw[courbeB](axis cs:-1.2,-1.728)circle(1.5pt);
+  \filldraw[black](axis cs:0,0)circle(1.4pt);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section*{2. Axe et centre de symétrie}
+
+\begin{idee}
+\begin{itemize}[leftmargin=1.5em,topsep=2pt]
+  \item \textbf{Axe de symétrie} $x=a$ : \ $f(a-x)=f(a+x)$ pour tout $x$. \ Pour une parabole $ax^2+bx+c$ : axe $x=-\dfrac{b}{2a}$.
+  \item \textbf{Centre de symétrie} $(a;b)$ : \ $f(a-x)+f(a+x)=2b$ pour tout $x$ (invariance par demi-tour).
+\end{itemize}
+\end{idee}
+
+\begin{exemple}
+$f(x)=x^3+2$ admet le centre $(0;2)$ : $f(-x)+f(x)=(-x^3+2)+(x^3+2)=4=2\times 2$. \checkmark
+\end{exemple}
+
+\section*{3. Périodicité}
+
+$f$ est \textbf{périodique de période $T$} si $f(x+T)=f(x)$ pour tout $x$ ($T$ = plus petit décalage $>0$ qui laisse la courbe inchangée). Le motif se répète tous les $T$.
+
+\begin{idee}[périodes à connaître]
+$\sin x$ et $\cos x$ : $T=2\pi$. \quad $\tan x$ : $T=\pi$. \quad $\sin(kx)$ et $\cos(kx)$ : $T=\dfrac{2\pi}{k}$. \quad $|\sin x|$ : $T=\pi$.
+\end{idee}
+
+\begin{exemple}
+$\sin(2x)$ a pour période $T=\pi$ car $\sin\!\big(2(x+\pi)\big)=\sin(2x+2\pi)=\sin(2x)$.
+\end{exemple}
+\end{document}

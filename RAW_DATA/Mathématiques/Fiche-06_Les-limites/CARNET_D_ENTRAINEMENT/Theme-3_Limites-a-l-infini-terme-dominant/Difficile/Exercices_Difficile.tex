@@ -1,0 +1,83 @@
+% =====================================================================
+%  Thème 3 — EXERCICES — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 3 — Limites à l'infini : le terme dominant}\\[2pt]
+{\large\color{primary}Exercices — Niveau Difficile}
+\end{center}
+\vspace{4pt}
+{\small\itshape Niveau concours : un paramètre à ajuster, une combinaison à réduire, et une mise en
+situation avec asymptote horizontale.}
+\vspace{6pt}
+
+\begin{exercice}[une famille de fonctions rationnelles]
+Pour un réel $m$, on pose $f_m(x)=\dfrac{m x^2+2x-1}{x^2+3}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Pour $m=4$, calculer $\displaystyle\lim_{x\to+\infty} f_4(x)$ et donner l'asymptote horizontale.
+  \item Exprimer $\displaystyle\lim_{x\to+\infty} f_m(x)$ en fonction de $m$ (on suppose $m\neq 0$).
+  \item Déterminer $m$ pour que la courbe admette la droite $y=2$ comme asymptote horizontale.
+  \item Existe-t-il une valeur de $m$ pour laquelle $\displaystyle\lim_{x\to+\infty} f_m(x)=0$ ?
+        \emph{Indication : que devient le degré du numérateur si $m=0$ ?}
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[réduire puis passer à la limite]
+Soit $h(x)=\dfrac{x^2+1}{x-1}-x$, définie sur $\R\setminus\{1\}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Réduire $h(x)$ au même dénominateur.
+  \item Développer et simplifier le numérateur pour écrire $h(x)$ comme une seule fraction rationnelle.
+  \item En déduire $\displaystyle\lim_{x\to+\infty} h(x)$ et $\displaystyle\lim_{x\to-\infty} h(x)$.
+  \item La courbe de $h$ admet-elle une asymptote horizontale ? Laquelle ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[mise en situation : capacité d'accueil d'un milieu]
+Une culture de bactéries compte $N(t)=\dfrac{500\,t}{t+20}$ milliers d'individus, où $t\geq 0$ est le
+temps (en heures).
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Calculer $N(0)$, $N(20)$ et $N(180)$ (arrondir au millier).
+  \item Calculer $\displaystyle\lim_{t\to+\infty} N(t)$ par la règle du terme dominant.
+  \item Interpréter cette limite : que représente-t-elle pour la population ? Comment s'appelle la droite
+        horizontale correspondante ?
+  \item La population dépassera-t-elle un jour $500\,000$ individus ? Justifier à partir de la limite.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

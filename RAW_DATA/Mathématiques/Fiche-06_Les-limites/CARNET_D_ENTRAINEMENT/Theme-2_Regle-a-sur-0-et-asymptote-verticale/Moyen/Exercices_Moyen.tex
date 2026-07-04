@@ -1,0 +1,94 @@
+% =====================================================================
+%  Thème 2 — EXERCICES — Niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 2 — Règle $\dfrac{a}{0^{\pm}}$ \& asymptote verticale}\\[2pt]
+{\large\color{primary}Exercices — Niveau Moyen}
+\end{center}
+\vspace{4pt}
+{\small\itshape On calcule une limite en un point interdit : limite du numérateur, tableau de signes
+du dénominateur, puis règle $\frac{a}{0^{\pm}}$ de chaque côté.}
+\vspace{6pt}
+
+\begin{exercice}[étude complète des deux côtés]
+Soit $f(x)=\dfrac{3x-1}{x-2}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Donner $D_f$ et la limite du numérateur en $2$ (son signe).
+  \item Étudier le signe de $x-2$ à gauche et à droite de $2$.
+  \item En déduire $\displaystyle\lim_{x\to 2^{-}} f(x)$ et $\displaystyle\lim_{x\to 2^{+}} f(x)$.
+  \item $f$ a-t-elle une limite en $2$ ? Quelle asymptote en déduit-on ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[dénominateur qui change de signe]
+Soit $g(x)=\dfrac{4}{3-x}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Dresser le tableau de signes de $3-x$ autour de $3$.
+  \item Calculer $\displaystyle\lim_{x\to 3^{-}} g(x)$ et $\displaystyle\lim_{x\to 3^{+}} g(x)$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[dénominateur au carré]
+Soit $h(x)=\dfrac{-2}{(x+1)^2}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Quel est le signe de $(x+1)^2$ pour $x\neq -1$ ? Vers quoi tend-il en $-1$ ?
+  \item En déduire $\displaystyle\lim_{x\to -1^{-}} h(x)$ et $\displaystyle\lim_{x\to -1^{+}} h(x)$.
+  \item $h$ a-t-elle une limite (globale) en $-1$ ? Si oui, laquelle ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[dénominateur factorisé]
+Soit $k(x)=\dfrac{5}{(x-1)(x-4)}$. On étudie la limite en $x_0=4$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item En $4$, quel est le signe du facteur $(x-1)$ ? (il ne s'annule pas en $4$)
+  \item En déduire le signe du produit $(x-1)(x-4)$ à droite puis à gauche de $4$.
+  \item Calculer $\displaystyle\lim_{x\to 4^{-}} k(x)$ et $\displaystyle\lim_{x\to 4^{+}} k(x)$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[reconnaître le bon outil]
+Pour chaque limite, dire d'abord si le remplacement direct donne un nombre, une forme
+$\frac{a}{0^{\pm}}$ (avec $a\neq 0$), ou une forme $\frac{0}{0}$ (indéterminée). \emph{Ne calculer
+que les deux premiers types.}
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 3}\frac{x+2}{x-1}$ \qquad b) $\displaystyle\lim_{x\to 1^{+}}\frac{x+2}{x-1}$
+  \item $\displaystyle\lim_{x\to 2}\frac{x^2-4}{x-2}$
+\end{enumerate}
+\end{exercice}
+
+\end{document}

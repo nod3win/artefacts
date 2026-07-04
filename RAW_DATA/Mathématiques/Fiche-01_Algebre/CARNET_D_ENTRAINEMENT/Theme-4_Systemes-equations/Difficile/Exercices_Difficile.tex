@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\euro}{\texteuro}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Systèmes d'équations}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Difficile — Exercices}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}\\[3pt]
+{\small\itshape Niveau concours. Les sous-questions construisent la difficulté pas à pas.}
+\end{center}
+\vspace{1mm}
+
+\begin{exo}[mise en situation à 3 inconnues : pivot de Gauss]
+Dans une cafétéria, on note $x$, $y$, $z$ les prix unitaires (en \euro) d'un café, d'un croissant et
+d'un jus. On relève trois additions :
+\begin{itemize}[leftmargin=1.6em,topsep=1pt,itemsep=0.5pt]
+  \item $2$ cafés, $1$ croissant et $1$ jus : $11$~\euro ;
+  \item $1$ café, $2$ croissants et $1$ jus : $12$~\euro ;
+  \item $1$ café, $1$ croissant et $2$ jus : $13$~\euro.
+\end{itemize}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=1pt,itemsep=2pt]
+  \item Écris le système correspondant.
+  \item Résous-le par le pivot de Gauss.
+  \item Donne le prix de chaque article et vérifie sur une addition.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[système avec paramètre : discuter le nombre de solutions]
+Soit $a$ un réel. On considère $\ds\begin{cases} ax+y=1\\ x+ay=1\end{cases}$
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=1pt,itemsep=2pt]
+  \item Montre que le « déterminant » $a^{2}-1$ gouverne l'existence d'une solution unique. Pour quelles valeurs de $a$ le système a-t-il une \emph{unique} solution~? Donne alors $(x\,;y)$.
+  \item Étudie le cas $a=1$ : que devient le système~? Combien de solutions~?
+  \item Étudie le cas $a=-1$ : que devient le système~? Combien de solutions~?
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[trois notes d'examen]
+Un étudiant a passé trois examens, de notes respectives $x$, $y$ et $z$ (dans l'ordre chronologique).
+On sait que, s'il obtient à un quatrième examen une note égale à celle du \emph{premier}, sa moyenne
+sur les quatre examens vaudra $10$ ; égale à celle du \emph{deuxième}, elle vaudra $12$ ; égale à
+celle du \emph{troisième}, elle vaudra $14$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=1pt,itemsep=2pt]
+  \item Traduis chaque condition en équation (une moyenne de quatre notes est leur somme divisée par $4$).
+  \item En posant $S=x+y+z$, montre que $S=36$, puis résous.
+  \item Donne les trois notes.
+\end{enumerate}
+\end{exo}
+
+\end{document}

@@ -1,0 +1,138 @@
+% ===================== PREAMBULE COMMUN (à copier VERBATIM en tête de CHAQUE .tex) =====================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,angles,quotes,patterns,backgrounds,shapes.geometric}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{219,54,77}
+\definecolor{primarydark}{RGB}{150,28,46}
+\definecolor{primarylight}{RGB}{250,224,228}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{courbe}{RGB}{40,90,200}
+\definecolor{courbeB}{RGB}{210,60,40}
+\definecolor{courbeC}{RGB}{30,150,80}
+\definecolor{axiscol}{RGB}{60,60,60}
+\definecolor{gridcol}{RGB}{200,205,215}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pgfplotsset{repere/.style={axis lines=middle,
+    axis line style={-{Stealth[length=2.2mm]},axiscol,line width=0.8pt},
+    label style={font=\footnotesize},tick label style={font=\scriptsize},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=north west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south east},
+    xlabel={$x$},ylabel={$y$},grid=both,minor tick num=0,
+    major grid style={gridcol,line width=0.4pt},samples=200,clip=false}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} — Les fonctions}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+\newcommand{\R}{\mathbb{R}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\N}{\mathbb{N}}
+\newcommand{\Df}{D_f}
+\newcommand{\croit}{\textcolor{thmcol}{\Large$\nearrow$}}
+\newcommand{\decroit}{\textcolor{thmcol}{\Large$\searrow$}}
+
+\newcommand{\exercice}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Exercice #1}\par\nopagebreak\smallskip}
+\newcommand{\titrecarnet}[3]{%
+\begin{center}\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,minimum width=15cm,
+  minimum height=1.7cm,align=center,inner sep=8pt]
+  {{\LARGE\bfseries #1}\\[2pt]{\normalsize #2}};
+\end{tikzpicture}\end{center}
+\begin{center}\itshape\color{primarydark}#3\end{center}\medskip}
+
+% ---- RÈGLES D'USAGE DES MACROS ----
+% * \croit et \decroit s'emploient en mode TEXTE (dans une cellule de tableau),
+%   JAMAIS entre $...$ (ils contiennent déjà un $\nearrow$).
+% * \titrecarnet{Titre}{Sous-titre}{Ligne en italique} : bandeau de titre.
+% * \exercice{1} : titre d'exercice.
+% * Boîtes : \begin{idee}...\end{idee}, \begin{exemple}[titre]...\end{exemple},
+%   \begin{methode}[titre]...\end{methode}, \begin{piege}[titre]...\end{piege}.
+% Le corps du document commence après \begin{document}.
+\begin{document}
+\titrecarnet{Thème 3 — Géométrie analytique des droites}{Exercices — niveau Difficile}{Constructions multi-étapes, niveau concours.}
+
+\exercice{1}
+Dans un repère orthonormé, $d$ est la droite de pente $m=2$ passant par $(-1;3)$, et $d'$ la droite perpendiculaire à $d$ passant par $(0;4)$.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt]
+  \item Déterminer l'équation de $d'$.
+  \item Quelle est l'abscisse du point où $d'$ coupe l'axe des abscisses ?
+\end{enumerate}
+
+\exercice{2}
+On considère les points $A(0;0)$, $B(4;0)$ et $C(4;3)$.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt]
+  \item Calculer $\overline{AB}$, $\overline{BC}$ et $\overline{AC}$.
+  \item Montrer que le triangle $ABC$ est rectangle en $B$.
+  \item En déduire son aire.
+\end{enumerate}
+
+\exercice{3}
+Soit $A(2;3)$, $B(7;6)$ et $C(4;1)$. On note $d_1$ la droite $(AB)$, $d_2$ la droite passant par $C$ et perpendiculaire à $d_1$, et $d_3:\ y=-2x+8$.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt]
+  \item Déterminer la pente de $d_1$, puis l'équation de $d_2$.
+  \item Déterminer les coordonnées du point d'intersection de $d_2$ et $d_3$.
+\end{enumerate}
+
+\exercice{4}
+\textbf{Synthèse.} La fonction $f(x)=\lvert 2x-3\rvert$ a une courbe en forme de V, de sommet $A\big(\tfrac32;0\big)$, passant par $B(0;3)$ et $C(3;3)$. On donne aussi le point $P(-2;1)$, hors de la courbe.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt]
+  \item Déterminer l'équation de la branche droite $(AC)$.
+  \item Déterminer l'équation de la branche gauche $(AB)$.
+  \item Montrer que le triangle $ABC$ est isocèle en $A$ (comparer $\overline{AB}$ et $\overline{AC}$).
+  \item Calculer la distance du point $P(-2;1)$ à la droite $(AB)$.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[repere,width=9.5cm,height=5.4cm,xmin=-2.8,xmax=4,ymin=-0.7,ymax=4,
+   xtick={-2,-1,1,2,3},ytick={1,2,3},samples=2]
+  \addplot[courbe,line width=1.3pt,domain=-0.4:1.5]{-(2*x-3)};
+  \addplot[courbe,line width=1.3pt,domain=1.5:3.4]{2*x-3};
+  \filldraw[primary](axis cs:1.5,0)circle(2pt)node[anchor=north,font=\scriptsize]{$A$};
+  \filldraw[courbeC](axis cs:0,3)circle(2pt)node[anchor=south east,font=\scriptsize]{$B$};
+  \filldraw[courbeC](axis cs:3,3)circle(2pt)node[anchor=south west,font=\scriptsize]{$C$};
+  \filldraw[courbeB](axis cs:-2,1)circle(2pt)node[anchor=south,font=\scriptsize]{$P$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{document}

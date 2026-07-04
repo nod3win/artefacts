@@ -1,0 +1,192 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Variations, extremums \& concavité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé --- Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Variations, extremums \& concavité}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Corrigé détaillé --- Niveau Moyen}
+\end{center}
+\vspace{2mm}
+
+\begin{corr}[1 --- $f(x)=x^3-3x^2+1$]
+$f'(x)=3x^2-6x=3x(x-2)$. \quad $f'(x)=0 \iff x=0$ ou $x=2$.\\
+Signe du produit $x(x-2)$ (parabole $\smile$) : $+$ à l'extérieur de $[0,2]$, $-$ entre.
+Valeurs : $f(0)=1$, \ $f(2)=8-12+1=-3$.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (8.4,2.4);
+\draw[thick] (0,1.6) -- (8.4,1.6);
+\draw[thick] (0,0.8) -- (8.4,0.8);
+\draw[thick] (1.4,0) -- (1.4,2.4);
+\node at (0.7,2.0) {$x$}; \node at (0.7,1.2) {$f'(x)$}; \node at (0.7,0.4) {$f$};
+\node at (1.9,2.0) {$-\infty$}; \node at (4.0,2.0) {$0$}; \node at (6.0,2.0) {$2$}; \node at (7.9,2.0) {$+\infty$};
+\node[plus] at (2.9,1.2) {$+$}; \node at (4.0,1.2) {$0$}; \node[moins] at (5.0,1.2) {$-$};
+\node at (6.0,1.2) {$0$}; \node[plus] at (7.1,1.2) {$+$};
+% flèches
+\draw[->,thick,tang] (1.9,0.15) -- (3.8,0.65);
+\draw[->,thick,tang] (4.2,0.65) -- (5.8,0.15);
+\draw[->,thick,tang] (6.2,0.15) -- (7.9,0.65);
+\node at (4.0,0.72) {\footnotesize $1$}; \node at (6.0,0.12) {\footnotesize $-3$};
+\end{tikzpicture}
+\end{center}
+\textbf{Maximum} local $f(0)=1$ en $x=0$ ; \textbf{minimum} local $f(2)=-3$ en $x=2$.
+\end{corr}
+
+\begin{corr}[2 --- $f(x)=3x^3-3x^2+x+1$]
+$f'(x)=9x^2-6x+1$. On reconnaît une identité remarquable : $f'(x)=(3x-1)^2$.\\
+Un carré est toujours $\geq 0$ : $f'(x)\geq 0$, et $f'(x)=0 \iff x=\tfrac13$ (racine double).
+En $\tfrac13$, $f'$ \textbf{ne change pas de signe} (reste $+$).
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (8.4,2.4);
+\draw[thick] (0,1.6) -- (8.4,1.6);
+\draw[thick] (0,0.8) -- (8.4,0.8);
+\draw[thick] (1.4,0) -- (1.4,2.4);
+\node at (0.7,2.0) {$x$}; \node at (0.7,1.2) {$f'(x)$}; \node at (0.7,0.4) {$f$};
+\node at (2.2,2.0) {$-\infty$}; \node at (4.9,2.0) {$\tfrac13$}; \node at (7.7,2.0) {$+\infty$};
+\node[plus] at (3.5,1.2) {$+$}; \node at (4.9,1.2) {$0$}; \node[plus] at (6.3,1.2) {$+$};
+\draw[->,thick,tang] (2.2,0.15) -- (7.7,0.65);
+\end{tikzpicture}
+\end{center}
+$f$ est \textbf{strictement croissante sur $\R$}, avec une tangente horizontale en $x=\tfrac13$ :
+\textbf{aucun extremum} (point d'inflexion à tangente horizontale).
+\end{corr}
+
+\begin{corr}[3 --- $f(x)=\dfrac{x^5}{5}-16x$]
+$f'(x)=x^4-16=(x^2-4)(x^2+4)=(x-2)(x+2)(x^2+4)$.\\
+Le facteur $x^2+4>0$ toujours : le signe de $f'$ est celui de $(x-2)(x+2)$ (parabole $\smile$).
+Racines : $x=-2$ et $x=2$.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (8.4,2.4);
+\draw[thick] (0,1.6) -- (8.4,1.6);
+\draw[thick] (0,0.8) -- (8.4,0.8);
+\draw[thick] (1.4,0) -- (1.4,2.4);
+\node at (0.7,2.0) {$x$}; \node at (0.7,1.2) {$f'(x)$}; \node at (0.7,0.4) {$f$};
+\node at (1.9,2.0) {$-\infty$}; \node at (4.0,2.0) {$-2$}; \node at (6.0,2.0) {$2$}; \node at (7.9,2.0) {$+\infty$};
+\node[plus] at (2.9,1.2) {$+$}; \node at (4.0,1.2) {$0$}; \node[moins] at (5.0,1.2) {$-$};
+\node at (6.0,1.2) {$0$}; \node[plus] at (7.1,1.2) {$+$};
+\draw[->,thick,tang] (1.9,0.15) -- (3.8,0.65);
+\draw[->,thick,tang] (4.2,0.65) -- (5.8,0.15);
+\draw[->,thick,tang] (6.2,0.15) -- (7.9,0.65);
+\node at (4.0,0.72) {\footnotesize max}; \node at (6.0,0.12) {\footnotesize min};
+\end{tikzpicture}
+\end{center}
+$f'$ change de signe en $-2$ ($+\to-$ : maximum) et en $2$ ($-\to+$ : minimum) :
+$f$ possède exactement \textbf{$2$ extremums}.
+\end{corr}
+
+\begin{corr}[4 --- $f(x)=\dfrac{x}{x+1}$, $x\neq -1$]
+Quotient $\left(\dfrac uv\right)'=\dfrac{u'v-uv'}{v^2}$ avec $u=x$, $v=x+1$ :
+\[
+f'(x)=\frac{1\cdot(x+1)-x\cdot 1}{(x+1)^2}=\frac{x+1-x}{(x+1)^2}=\frac{1}{(x+1)^2}.
+\]
+Un carré au dénominateur : $f'(x)>0$ pour tout $x\neq-1$. $f'$ ne s'annule jamais.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (8.4,1.6);
+\draw[thick] (0,0.8) -- (8.4,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f'(x)$};
+\node at (2.0,1.2) {$-\infty$}; \node at (4.6,1.2) {$-1$}; \node at (7.6,1.2) {$+\infty$};
+\draw[thick] (4.6,0) -- (4.6,0.8); % double barre valeur interdite
+\draw[thick] (4.75,0) -- (4.75,0.8);
+\node[plus] at (3.0,0.4) {$+$}; \node[plus] at (6.2,0.4) {$+$};
+\end{tikzpicture}
+\end{center}
+$f$ est \textbf{croissante} sur $]-\infty,-1[$ et sur $]-1,+\infty[$ (double barre : valeur interdite),
+\textbf{aucun extremum}.
+\end{corr}
+
+\begin{corr}[5 --- $f(x)=x+\dfrac{1}{x}$, $x\neq 0$]
+$f'(x)=1-\dfrac{1}{x^2}=\dfrac{x^2-1}{x^2}=\dfrac{(x-1)(x+1)}{x^2}$.\\
+$x^2>0$ : le signe de $f'$ est celui de $(x-1)(x+1)$. Racines $-1$ et $1$ ; $0$ interdit.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (9,2.4);
+\draw[thick] (0,1.6) -- (9,1.6);
+\draw[thick] (0,0.8) -- (9,0.8);
+\draw[thick] (1.4,0) -- (1.4,2.4);
+\node at (0.7,2.0) {$x$}; \node at (0.7,1.2) {$f'(x)$}; \node at (0.7,0.4) {$f$};
+\node at (1.9,2.0) {$-\infty$}; \node at (3.4,2.0) {$-1$}; \node at (5.0,2.0) {$0$};
+\node at (6.6,2.0) {$1$}; \node at (8.4,2.0) {$+\infty$};
+\node[plus] at (2.6,1.2) {$+$}; \node at (3.4,1.2) {$0$}; \node[moins] at (4.2,1.2) {$-$};
+\draw[thick] (4.95,0.8) -- (4.95,1.6); \draw[thick] (5.1,0.8) -- (5.1,1.6);
+\node[moins] at (5.8,1.2) {$-$}; \node at (6.6,1.2) {$0$}; \node[plus] at (7.6,1.2) {$+$};
+% variation avec valeurs -2 en -1 (max) et 2 en 1 (min)
+\draw[->,thick,tang] (1.9,0.15) -- (3.2,0.6);
+\node at (3.4,0.72) {\footnotesize $-2$};
+\draw[->,thick,tang] (3.6,0.6) -- (4.7,0.2);
+\draw[->,thick,tang] (5.3,0.6) -- (6.4,0.2);
+\node at (6.6,0.12) {\footnotesize $2$};
+\draw[->,thick,tang] (6.8,0.2) -- (8.4,0.6);
+\end{tikzpicture}
+\end{center}
+$f'$ passe de $+$ à $-$ en $-1$ : \textbf{maximum} local $f(-1)=-1-1=\mathbf{-2}$.\\
+$f'$ passe de $-$ à $+$ en $1$ : \textbf{minimum} local $f(1)=1+1=\mathbf{2}$.
+\end{corr}
+
+\end{document}

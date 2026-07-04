@@ -1,0 +1,112 @@
+% ===================== PREAMBULE COMMUN (à copier VERBATIM en tête de CHAQUE .tex) =====================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\captionsetup{labelformat=empty,justification=centering,font=small}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,angles,quotes,patterns,backgrounds,shapes.geometric}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{219,54,77}
+\definecolor{primarydark}{RGB}{150,28,46}
+\definecolor{primarylight}{RGB}{250,224,228}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{courbe}{RGB}{40,90,200}
+\definecolor{courbeB}{RGB}{210,60,40}
+\definecolor{courbeC}{RGB}{30,150,80}
+\definecolor{axiscol}{RGB}{60,60,60}
+\definecolor{gridcol}{RGB}{200,205,215}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=primary!7,colframe=primary,
+  title={\textsc{Piège}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pgfplotsset{repere/.style={axis lines=middle,
+    axis line style={-{Stealth[length=2.2mm]},axiscol,line width=0.8pt},
+    label style={font=\footnotesize},tick label style={font=\scriptsize},
+    every axis x label/.style={at={(current axis.right of origin)},anchor=north west},
+    every axis y label/.style={at={(current axis.above origin)},anchor=south east},
+    xlabel={$x$},ylabel={$y$},grid=both,minor tick num=0,
+    major grid style={gridcol,line width=0.4pt},samples=200,clip=false}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 4} — Les fonctions}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Carnet d'entraînement}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+
+\newcommand{\R}{\mathbb{R}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\N}{\mathbb{N}}
+\newcommand{\Df}{D_f}
+\newcommand{\croit}{\textcolor{thmcol}{\Large$\nearrow$}}
+\newcommand{\decroit}{\textcolor{thmcol}{\Large$\searrow$}}
+
+\newcommand{\exercice}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Exercice #1}\par\nopagebreak\smallskip}
+\newcommand{\titrecarnet}[3]{%
+\begin{center}\begin{tikzpicture}
+\node[rectangle,rounded corners=7pt,fill=primary,text=white,minimum width=15cm,
+  minimum height=1.7cm,align=center,inner sep=8pt]
+  {{\LARGE\bfseries #1}\\[2pt]{\normalsize #2}};
+\end{tikzpicture}\end{center}
+\begin{center}\itshape\color{primarydark}#3\end{center}\medskip}
+
+% ---- RÈGLES D'USAGE DES MACROS ----
+% * \croit et \decroit s'emploient en mode TEXTE (dans une cellule de tableau),
+%   JAMAIS entre $...$ (ils contiennent déjà un $\nearrow$).
+% * \titrecarnet{Titre}{Sous-titre}{Ligne en italique} : bandeau de titre.
+% * \exercice{1} : titre d'exercice.
+% * Boîtes : \begin{idee}...\end{idee}, \begin{exemple}[titre]...\end{exemple},
+%   \begin{methode}[titre]...\end{methode}, \begin{piege}[titre]...\end{piege}.
+% Le corps du document commence après \begin{document}.
+\begin{document}
+\titrecarnet{Thème 4 — Fonction du second degré}{Exercices — niveau Moyen}{Sommet, orientation, factorisation, signe, paramètre.}
+
+\exercice{1}
+Soit $f(x)=-x^2+4x-3$. Déterminer : l'orientation de la parabole, le sommet, l'axe de symétrie et les racines.
+
+\exercice{2}
+Factoriser le trinôme $x^2-x-6$.
+
+\exercice{3}
+On considère $f(x)=36x-2x^2-34$.
+\begin{enumerate}[label=\alph*),leftmargin=1.8em,topsep=2pt]
+  \item Le sommet est-il un minimum ou un maximum ? Justifier.
+  \item Calculer l'ordonnée du sommet et préciser son signe.
+\end{enumerate}
+
+\exercice{4}
+Dresser le tableau de signes du trinôme $x^2-4$.
+
+\exercice{5}
+Pour quelles valeurs du réel $m$ le trinôme $x^2+mx+1$ admet-il une racine double ?
+\end{document}

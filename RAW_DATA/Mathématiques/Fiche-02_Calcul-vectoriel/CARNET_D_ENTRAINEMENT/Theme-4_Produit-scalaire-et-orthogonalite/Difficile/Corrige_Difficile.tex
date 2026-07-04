@@ -1,0 +1,81 @@
+% =====================================================================
+%  Thème 4 — Produit scalaire et orthogonalité — DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Difficile — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Produit scalaire et orthogonalité — Corrigé Difficile}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\vc{PQ}\,(2-0;2-2)=(2;0)$ \quad et \quad $\vc{RP}\,(0-2;2-0)=(-2;2)$.
+  \item $\vc{PQ}\cdot\vc{RP}=2\times(-2)+0\times2=-4$.
+  \item $\vc{PR}\,(2;-2)$ et $\vc{QS}\,(0-2;0-2)=(-2;-2)$, donc
+        $\vc{PR}\cdot\vc{QS}=2\times(-2)+(-2)\times(-2)=-4+4=0$. Les diagonales $[PR]$ et $[QS]$ du
+        carré sont \textbf{perpendiculaires}.
+\end{enumerate}
+\rep On lit les composantes sur la figure, puis on applique $xx'+yy'$ : un produit scalaire dans une
+figure se ramène toujours à un calcul de coordonnées.
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\vec u\cdot\vec v=(t+1)\times2+2\times t=2t+2+2t=4t+2=0 \Rightarrow t=-\dfrac12$.
+  \item $\vec a\cdot\vec b=t\times t+3\times(-12)=t^2-36=0 \Rightarrow t=6 \text{ ou } t=-6$.
+\end{enumerate}
+\rep Selon la place du paramètre, la condition d'orthogonalité est du premier degré (une solution) ou
+du second degré (deux solutions).
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\norm{\vec F}=\sqrt{6^2+8^2}=\sqrt{36+64}=\sqrt{100}=10$~N.
+  \item $W_1=\vec F\cdot\vec d_1=6\times3+8\times0=18$~J.
+  \item $W_2=\vec F\cdot\vec d_2=6\times4+8\times(-3)=24-24=0$~J. Le travail est \emph{nul} :
+        cela signifie que $\vec d_2$ est \textbf{perpendiculaire} à $\vec F$
+        ($\vec F\cdot\vec d_2=0$). Une force ne travaille pas lorsqu'elle est perpendiculaire au
+        déplacement.
+\end{enumerate}
+\rep Le produit scalaire donne un sens physique à l'orthogonalité : « travail nul » $=$ « force
+perpendiculaire au déplacement ».
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\Alph*.},leftmargin=2.2em,itemsep=3pt]
+  \item \textbf{Vrai}. $\vc{OG}\,(2;2)$, $\vc{OH}\,(2;0)$ : $\vc{OG}\cdot\vc{OH}=2\times2+2\times0=4$.
+  \item \textbf{Faux}. Le produit scalaire vaut $4\neq0$, donc $\vc{OG}$ et $\vc{OH}$ ne sont pas
+        orthogonaux.
+  \item \textbf{Vrai}. $\vc{OE}\,(0;1)$, $\vc{OH}\,(2;0)$ : $\vc{OE}\cdot\vc{OH}=0\times2+1\times0=0$,
+        donc $\vc{OE}\perp\vc{OH}$.
+  \item \textbf{Vrai}. $\vc{OF}\,(0;2)$ et $\vc{OF}\cdot\bigl(3\vc{OF}\bigr)=3\,(\vc{OF}\cdot\vc{OF})
+        =3\,\norm{\vc{OF}}^2=3\times(0^2+2^2)=3\times4=12$.
+\end{enumerate}
+\rep La D combine \emph{linéarité} ($3$ sort du produit) et \emph{carré scalaire}
+($\vc{OF}\cdot\vc{OF}=\norm{\vc{OF}}^2$).
+
+\end{document}

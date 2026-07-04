@@ -1,0 +1,120 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+% Ne modifier QUE :
+%   - les deux lignes \fancyhead[L] et \fancyhead[R]
+%   - le bloc titre \begin{center}...\end{center} juste après \begin{document}
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 3} — Fonctions composées}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Exercices — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Plusieurs couches \& fonctions inconnues}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Niveau difficile — éplucher l'oignon jusqu'au c\oe ur}
+\end{center}
+\vspace{2mm}
+
+\begin{cle}[consigne]
+Ici l'oignon a \emph{plusieurs couches}, ou bien la fonction intérieure est \emph{inconnue}
+($f$, $u$). Les sous-questions te guident : traite une couche à la fois, puis assemble.
+\end{cle}
+
+\begin{exo}[1 --- trois couches : carré $\circ$ sinus $\circ$ racine]
+Soit $y=\sin^2\!\big(\sqrt{x}+1\big)$.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=2pt]
+\item Couche externe (le carré) : justifier que $y'=2\sin(\sqrt x+1)\cdot\big(\sin(\sqrt x+1)\big)'$.
+\item Couche sinus : montrer que $\big(\sin(\sqrt x+1)\big)'=\dfrac{1}{2\sqrt x}\cos(\sqrt x+1)$.
+\item Assembler puis, à l'aide de $2\sin\theta\cos\theta=\sin 2\theta$, montrer que
+      $y'=\dfrac{1}{2\sqrt x}\,\sin\!\big(2(\sqrt x+1)\big)$. Préciser le domaine.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[2 --- racine $\circ$ logarithme $\circ$ cosinus]
+Soit $y=\sqrt{\ln(\cos x+2)}$.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=2pt]
+\item Réécrire $y=\big(\ln(\cos x+2)\big)^{1/2}$ et dériver la couche puissance $\tfrac12$.
+\item Dériver la couche logarithme (poser $U=\cos x+2$, donner $U'$).
+\item Assembler et montrer que
+      $y'=\dfrac{-\sin x}{2(\cos x+2)\sqrt{\ln(\cos x+2)}}$.
+\end{enumerate}
+{\footnotesize\itshape Remarque : $\cos x+2\ge 1>0$, la racine et le $\ln$ sont bien définis.}
+\end{exo}
+
+\begin{exo}[3 --- fonction inconnue $f$]
+Soit $f$ une fonction dérivable.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=2pt]
+\item Montrer que $\big(f^2\big)'=2f'f$ (par la règle du produit ou la formule $(U^2)'$).
+\item Montrer que $\big(3\ln|f|\big)'=\dfrac{3f'}{f}$ (là où $f\neq 0$).
+\item Application : $f(x)=x^2+1$. Calculer $\big(f^2\big)'$ et $\big(3\ln|f|\big)'$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[4 --- fonction inconnue $u$ et changement de variable]
+Soit $u$ une fonction dérivable.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=2pt]
+\item On pose $v(x)=u(3x)$. Montrer que $v'(x)=3u'(3x)$. Si $u(x)=x^2$, vérifier que $v'(x)=18x$.
+\item On pose $v(x)=u\big(\ln(x+1)\big)$. Exprimer $v'(x)$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

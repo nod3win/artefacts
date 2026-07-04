@@ -1,0 +1,140 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 2 — Règle a/0± et fonctions rationnelles en un point interdit
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  courbe/.style={line width=1.1pt,curvecol},
+  asy/.style={dashed,black!55,line width=0.8pt},
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titlespacing{\section}{0pt}{6pt}{3pt}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large Thème 2 — La règle $\dfrac{a}{0^{\pm}}$ et l'asymptote verticale}]
+\textbf{Mécanique travaillée :} calculer la limite d'une fonction rationnelle en un point $x_0$ qui
+\emph{annule le dénominateur} (donc $x_0\notin D_f$). On y arrive avec un \textbf{tableau de signes}
+du dénominateur et la \textbf{règle des signes} $\frac{a}{0^{\pm}}\to\pm\infty$.
+\end{tcolorbox}
+
+\section{1. La règle $\dfrac{a}{0^{\pm}}$}
+
+Diviser un nombre $a\neq 0$ par une quantité qui \emph{tend vers $0$} donne l'infini. Le \emph{signe}
+de cet infini se lit par la règle des signes, en traitant «~$0^{+}$~» comme un $+$ et «~$0^{-}$~»
+comme un $-$.
+
+\begin{idee}[les quatre cas à connaître par cœur]
+\[ \frac{a}{0^{+}}\to +\infty\ (a>0),\qquad \frac{a}{0^{+}}\to -\infty\ (a<0), \]
+\[ \frac{a}{0^{-}}\to -\infty\ (a>0),\qquad \frac{a}{0^{-}}\to +\infty\ (a<0). \]
+\end{idee}
+
+\begin{attention}[ce n'est PAS une forme indéterminée]
+$\dfrac{a}{0^{\pm}}$ avec $a\neq 0$ se conclut \emph{directement} par $\pm\infty$. On ne confond pas
+avec $\dfrac{0}{0}$, qui, elle, est indéterminée (thèmes 3 et 5). Ici le numérateur \emph{ne tend
+pas vers $0$}.
+\end{attention}
+
+\section{2. Méthode : limite rationnelle en un point interdit}
+
+\begin{methode}[limite de $\frac{P(x)}{Q(x)}$ en $x_0$ avec $Q(x_0)=0$ et $P(x_0)\neq 0$]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item Calculer $\displaystyle\lim_{x\to x_0} P(x)=a$ (un nombre non nul).
+  \item Dresser le \textbf{tableau de signes} du dénominateur $Q$ autour de $x_0$ : est-il $0^{+}$ ou
+        $0^{-}$ à droite ? à gauche ?
+  \item Appliquer la règle $\dfrac{a}{0^{\pm}}$ de chaque côté.
+  \item Conclure : si les deux côtés donnent le \emph{même} infini, la limite existe (infinie) ; s'ils
+        diffèrent, pas de limite globale. Dans tous les cas, $x=x_0$ est une \textbf{asymptote verticale}.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\displaystyle\lim_{x\to 1}\frac{-2x+5}{1-x}$]
+Domaine $\R\setminus\{1\}$. Numérateur en $1$ : $-2(1)+5=3\ (>0)$. Dénominateur $1-x$ : positif si
+$x<1$, négatif si $x>1$.
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c|ccccc}
+\toprule
+$x$ & $-\infty$ & & $1$ & & $+\infty$\\
+\midrule
+$1-x$ & & $+\ \ +\ \ +$ & $0$ & $-\ \ -\ \ -$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+Donc $x\to 1^{-}\Rightarrow 1-x\to 0^{+}$ et $x\to 1^{+}\Rightarrow 1-x\to 0^{-}$ :
+\[ \lim_{x\to 1^{-}}\frac{-2x+5}{1-x}=\frac{3}{0^{+}}=+\infty,\qquad
+   \lim_{x\to 1^{+}}\frac{-2x+5}{1-x}=\frac{3}{0^{-}}=-\infty. \]
+Les deux côtés diffèrent : pas de limite globale en $1$ ; la droite $x=1$ est asymptote verticale.
+\end{exemple}
+
+\begin{exemple}[dénominateur au carré : même signe des deux côtés]
+$\displaystyle\lim_{x\to 2}\frac{1}{(x-2)^2}$. Le numérateur vaut $1>0$ ; le dénominateur $(x-2)^2$
+est \emph{toujours} $>0$ (carré), donc tend vers $0^{+}$ des deux côtés :
+\[ \lim_{x\to 2^{-}}\frac{1}{(x-2)^2}=\frac{1}{0^{+}}=+\infty=\lim_{x\to 2^{+}}\frac{1}{(x-2)^2}. \]
+Ici la limite \emph{existe} : $\displaystyle\lim_{x\to 2}\frac{1}{(x-2)^2}=+\infty$.
+\end{exemple}
+
+\begin{astuce}[le tableau de signes en 10 secondes]
+Pour un facteur affine $(\alpha x+\beta)$, le signe change en $x=-\frac{\beta}{\alpha}$ ; il est du
+signe de $\alpha$ « à droite » de cette racine. Pour un carré $(\dots)^2$ ou toute puissance paire,
+le signe est \emph{constant positif} (sauf au zéro) : les deux côtés se comportent pareil.
+\end{astuce}
+
+\end{document}

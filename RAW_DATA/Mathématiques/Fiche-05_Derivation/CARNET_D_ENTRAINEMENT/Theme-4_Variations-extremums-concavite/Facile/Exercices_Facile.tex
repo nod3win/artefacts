@@ -1,0 +1,96 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Variations, extremums \& concavité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Exercices --- Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Variations, extremums \& concavité}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Exercices --- Niveau Facile : calculer $f'$, résoudre $f'=0$, lire le signe}
+\end{center}
+\vspace{2mm}
+
+\begin{exo}[1]
+Soit $f(x)=x^2-4x+3$. Calculer $f'$, résoudre $f'(x)=0$, puis en déduire la nature
+et la valeur de l'extremum.
+\end{exo}
+
+\begin{exo}[2]
+Soit $f(x)=-x^2+2x$. Déterminer la nature de l'extremum de $f$.
+\end{exo}
+
+\begin{exo}[3]
+Soit $f(x)=x^3-3x$. Trouver les racines de $f'$ et étudier leur signe.
+\end{exo}
+
+\begin{exo}[4]
+Soit $f(x)=x^4-2x^2$. Déterminer les racines de $f'$.
+\end{exo}
+
+\begin{exo}[5]
+Soit $f(x)=x^3$. Montrer que $f'(x)\geq 0$ sur $\R$ et que $f'$ s'annule en $0$
+\textbf{sans changer de signe}. Qu'en conclure sur l'existence d'un extremum ?
+\end{exo}
+
+\end{document}

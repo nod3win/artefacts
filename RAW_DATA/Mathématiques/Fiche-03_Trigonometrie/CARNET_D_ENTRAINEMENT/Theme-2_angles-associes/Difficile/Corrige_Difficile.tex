@@ -1,0 +1,112 @@
+% =====================================================================
+%  Thème 2 — Angles associés — NIVEAU DIFFICILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 2 — Angles associés}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Un angle, deux chemins}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\dfrac{5\pi}{6}=\pi-\dfrac{\pi}{6}$ \emph{(supplémentaires)}, donc
+$\cos\dfrac{5\pi}{6}=-\cos\dfrac{\pi}{6}=-\dfrac{\sqrt3}{2}$.
+\item[\textbf{(b)}] \rep $\dfrac{5\pi}{6}=\dfrac{\pi}{2}+\dfrac{\pi}{3}$ \emph{(anti-complémentaires)},
+donc $\cos\dfrac{5\pi}{6}=-\sin\dfrac{\pi}{3}=-\dfrac{\sqrt3}{2}$.
+\item[\textbf{(c)}] \rep Les deux méthodes donnent $-\dfrac{\sqrt3}{2}$ : elles \textbf{coïncident}.
+C'est normal, $\pi-\dfrac{\pi}{6}$ et $\dfrac{\pi}{2}+\dfrac{\pi}{3}$ sont le même angle.
+\item[\textbf{(d)}] \rep Supplémentaires : $\sin\dfrac{5\pi}{6}=\sin\dfrac{\pi}{6}=\dfrac12$.
+Anti-complémentaires : $\sin\!\left(\dfrac{\pi}{2}+\dfrac{\pi}{3}\right)=\cos\dfrac{\pi}{3}=\dfrac12$.
+Même résultat : $\sin\dfrac{5\pi}{6}=\dfrac12$.
+\end{itemize}
+
+\exo{Prouver une simplification}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\sin(\pi-\alpha)=\sin\alpha$ \emph{(supplém.)} et $\sin(\pi+\alpha)=-\sin\alpha$
+\emph{(anti-supplém.)}, donc $A=\sin\alpha-\sin\alpha=\mathbf{0}$.
+\item[\textbf{(b)}] \rep $\cos(\pi+\alpha)=-\cos\alpha$ \emph{(anti-supplém.)} et $\cos(-\alpha)=\cos\alpha$
+\emph{(opposés)}, donc $B=-\cos\alpha-\cos\alpha=\mathbf{-2\cos\alpha}$.
+\item[\textbf{(c)}] \rep $\tg(\pi-\alpha)=-\tg\alpha$ \emph{(supplém.)} et $\tg(\pi+\alpha)=\tg\alpha$
+\emph{(anti-supplém.)}, donc $C=-\tg\alpha+\tg\alpha=\mathbf{0}$.
+\item[\textbf{(d)}] \rep $\sin\!\left(\dfrac{\pi}{2}+\alpha\right)=\cos\alpha$ \emph{(anti-complém.)} et
+$\sin(\pi-\alpha)=\sin\alpha$ \emph{(supplém.)}, donc
+$D=\cos^2\alpha+\sin^2\alpha=\mathbf{1}$ (identité fondamentale).
+\end{itemize}
+
+\exo{Quatre points associés}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep En appliquant les familles à $M=(a\,;\,b)=(\cos\alpha\,;\,\sin\alpha)$ :
+\[
+N\ (\pi-\alpha)=(-a\,;\,b),\qquad
+P\ (-\alpha)=(a\,;\,-b),\qquad
+Q\ (\pi+\alpha)=(-a\,;\,-b).
+\]
+\item[\textbf{(b)}] \rep Même \textbf{ordonnée} (même $\sin$) : $M$ et $N$ (ordonnée $b$) ; $P$ et $Q$
+(ordonnée $-b$). \ Même \textbf{abscisse} (même $\cos$) : $M$ et $P$ (abscisse $a$) ; $N$ et $Q$
+(abscisse $-a$).
+\item[\textbf{(c)}] \rep $M=(a\,;\,b)$ et $Q=(-a\,;\,-b)$ sont opposés coordonnée par coordonnée :
+ils sont \textbf{symétriques par rapport au centre $O$} (anti-supplémentaires).
+\item[\textbf{(d)}] \rep Pour $\alpha=\dfrac{\pi}{6}$ : $a=\cos\dfrac{\pi}{6}=\dfrac{\sqrt3}{2}$,
+$b=\sin\dfrac{\pi}{6}=\dfrac12$. D'où
+\[
+M=\left(\tfrac{\sqrt3}{2}\,;\,\tfrac12\right),\
+N=\left(-\tfrac{\sqrt3}{2}\,;\,\tfrac12\right),\
+P=\left(\tfrac{\sqrt3}{2}\,;\,-\tfrac12\right),\
+Q=\left(-\tfrac{\sqrt3}{2}\,;\,-\tfrac12\right).
+\]
+\end{itemize}
+
+\exo{Toutes les écritures d'un même nombre}
+On ramène chaque expression à une valeur remarquable.
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\sin\dfrac{5\pi}{6}=\sin\!\left(\pi-\dfrac{\pi}{6}\right)=\sin\dfrac{\pi}{6}=\dfrac12$
+\emph{(supplém.)}. \textbf{Oui.}
+\item[\textbf{(b)}] \rep $\cos\dfrac{2\pi}{3}=\cos\!\left(\pi-\dfrac{\pi}{3}\right)=-\cos\dfrac{\pi}{3}=-\dfrac12$
+\emph{(supplém.)}. \textbf{Non} (vaut $-\tfrac12$).
+\item[\textbf{(c)}] \rep $-\sin\!\left(-\dfrac{\pi}{6}\right)=-\left(-\sin\dfrac{\pi}{6}\right)=\sin\dfrac{\pi}{6}=\dfrac12$
+\emph{(opposés)}. \textbf{Oui.}
+\item[\textbf{(d)}] \rep $\sin\!\left(\dfrac{\pi}{2}+\dfrac{\pi}{3}\right)=\cos\dfrac{\pi}{3}=\dfrac12$
+\emph{(anti-complém.)}. \textbf{Oui.}
+\item[\textbf{(e)}] \rep $-\cos\dfrac{2\pi}{3}=-\left(-\dfrac12\right)=\dfrac12$ \emph{(supplém.)}. \textbf{Oui.}
+\end{itemize}
+Bilan : (a), (c), (d) et (e) valent $\dfrac12$ ; seule (b) vaut $-\dfrac12$.
+
+\end{document}

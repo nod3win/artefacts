@@ -1,0 +1,90 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Logarithmes}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Facile — Exercices}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}\\[3pt]
+{\small\itshape Une seule mécanique à la fois. Aucune calculatrice.}
+\end{center}
+\vspace{1mm}
+
+\begin{exo}[la définition : un log est un exposant]
+Calcule (utilise $\log_a x=y\iff x=a^{y}$) :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $\log_2 8$ \qquad
+  \item $\log_3 81$ \qquad
+  \item $\log_{10} 1000$ \qquad
+  \item $\log_5 1$ \qquad
+  \item $\ln e$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[développer avec les trois propriétés]
+Développe (produit $\to$ somme, quotient $\to$ différence, puissance $\to$ produit), $x,y>0$ :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $\log_a(xy)$ \qquad
+  \item $\ds\log_a\Bigl(\frac{x}{y}\Bigr)$ \qquad
+  \item $\log_a\bigl(x^{3}\bigr)$ \qquad
+  \item $\ln\bigl(x^{2}\bigr)$ \qquad
+  \item $\log_a\bigl(x^{2}y\bigr)$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[valeurs remarquables]
+Donne la valeur exacte :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $\log_{10} 10$ \qquad
+  \item $\ln e^{4}$ \qquad
+  \item $\log_2 1$ \qquad
+  \item $\ds\ln\frac{1}{e}$ \qquad
+  \item $\log_{10} 0{,}01$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[appliquer $\ln$ pour isoler un exposant]
+Résous dans $\R$ en appliquant $\ln$ (ou $\log$) aux deux membres :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $e^{x}=7$ \qquad
+  \item $10^{x}=100$ \qquad
+  \item $e^{2x}=e^{5}$ \qquad
+  \item $e^{-x}=3$ \qquad
+  \item $10^{x}=5$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[le piège $\ln^{2}x$ contre $\ln x^{2}$]
+Pour $x>0$, réponds par \emph{vrai} ou \emph{faux} et corrige si nécessaire :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $\ln(x^{2})=2\ln x$. \qquad
+  \item $\ln^{2}x=2\ln x$. \qquad
+  \item $(\ln x)^{2}=\ln^{2}x$. \qquad
+  \item $\ln(x^{2})=\ln^{2}x$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

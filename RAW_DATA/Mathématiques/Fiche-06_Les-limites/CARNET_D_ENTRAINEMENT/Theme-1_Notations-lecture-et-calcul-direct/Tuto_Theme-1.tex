@@ -1,0 +1,209 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 1 — Notations, lecture graphique, calcul direct & continuité
+%  TUTORIEL
+%  Compilation : pdflatex (2 passes conseillées).
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encodage & langue ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% ---------- Mathématiques ----------
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+
+% ---------- Graphismes / boîtes ----------
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections,decorations.pathmorphing}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+% ---------- Palette ----------
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+% ---------- Styles de boîtes ----------
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---------- Styles TikZ ----------
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  courbe/.style={line width=1.1pt,curvecol},
+  asy/.style={dashed,black!55,line width=0.8pt},
+  proj/.style={dashed,black!55,line width=0.6pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+  ptouvert/.style={circle,draw,fill=white,inner sep=1.1pt,line width=0.7pt},
+}
+
+% ---------- En-têtes ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titlespacing{\section}{0pt}{6pt}{3pt}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+% ---------- Titre ----------
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large Thème 1 — Notations, lecture graphique \& calcul direct}]
+\textbf{Mécanique travaillée :} \emph{lire} une notation de limite, \emph{calculer} une limite
+par remplacement direct quand la fonction est définie, distinguer \emph{limite à gauche} et
+\emph{limite à droite}, et relier tout cela à la \emph{continuité} en un point (et à la lecture
+d'un graphe).
+\end{tcolorbox}
+
+\section{1. Que veut dire « $\displaystyle\lim_{x\to x_0} f(x)=\ell$ » ?}
+
+Étudier une limite, c'est répondre à : « \emph{vers quelle valeur se rapproche $f(x)$ quand $x$
+se rapproche de la cible ?} » La cible est soit un nombre $x_0$, soit $+\infty$, soit $-\infty$.
+On ne demande pas forcément la valeur \emph{au} point : on regarde le comportement \emph{autour}.
+
+\begin{idee}[décoder la notation]
+Dans $\displaystyle\lim_{x\to x_0} f(x)=\ell$ :
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item ce qui est \emph{sous} le $\lim$ ($x\to x_0$) indique \textbf{comment bouge la variable} ;
+  \item le résultat à droite ($\ell$) est \textbf{la valeur-cible} de $f(x)$ : un réel, ou $+\infty$, ou $-\infty$.
+\end{itemize}
+\end{idee}
+
+\section{2. Calcul direct par remplacement}
+
+La plupart des fonctions usuelles (polynômes, $\sin$, $\cos$, $\exp$, $\ln$, $\sqrt{\,}$, et les
+quotients \emph{là où le dénominateur ne s'annule pas}) sont \textbf{continues sur leur domaine}.
+Pour elles, calculer $\displaystyle\lim_{x\to x_0} f(x)$ avec $x_0\in D_f$ revient simplement à
+\textbf{remplacer $x$ par $x_0$}.
+
+\begin{methode}[calcul direct d'une limite en un point du domaine]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1pt]
+  \item Vérifier que $x_0$ appartient au domaine $D_f$ (pas de division par $0$, pas de racine de négatif\dots).
+  \item Remplacer chaque $x$ par $x_0$ et calculer.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[remplacement immédiat]
+\[ \lim_{x\to 3}\bigl(2x^2-5x+1\bigr)=2\cdot 3^2-5\cdot 3+1=18-15+1=4, \qquad
+   \lim_{x\to 0}\frac{x+2}{3}=\frac{0+2}{3}=\frac{2}{3}. \]
+Les propriétés des limites (la limite d'une somme est la somme des limites, celle d'un produit le
+produit des limites, celle d'un quotient le quotient \emph{si le dénominateur ne tend pas vers $0$})
+justifient ce remplacement.
+\end{exemple}
+
+\section{3. Limite à gauche et limite à droite}
+
+Parfois $f$ ne se comporte pas pareil selon le côté d'où l'on arrive. On note :
+\[ \lim_{x\to x_0^{+}} f(x)\ \ (\text{par la \textbf{droite}, }x>x_0),\qquad
+   \lim_{x\to x_0^{-}} f(x)\ \ (\text{par la \textbf{gauche}, }x<x_0). \]
+
+\begin{idee}[existence d'une limite globale]
+$f$ possède une limite (globale) en $x_0$ \textbf{si et seulement si} les deux limites latérales
+existent \emph{et sont égales} :
+\[ \lim_{x\to x_0^{-}} f(x)=\lim_{x\to x_0^{+}} f(x)\ \Longrightarrow\ f\text{ possède une limite en }x_0. \]
+Si elles diffèrent, $f$ n'a \emph{pas} de limite en $x_0$.
+\end{idee}
+
+\section{4. Lien avec la continuité (lecture d'un graphe)}
+
+\begin{idee}[trois situations en un point $x_0$]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Limite qui existe} (mais $x_0\notin D_f$) : la courbe « pointe » vers une valeur,
+        représentée par un \emph{rond ouvert} (un trou).
+  \item \textbf{Continuité en $x_0$} (avec $x_0\in D_f$) : les deux limites latérales sont égales
+        \emph{et} valent $f(x_0)$ ~:~ $\displaystyle\lim_{x\to x_0^{-}}f=\lim_{x\to x_0^{+}}f=f(x_0)$. La courbe passe par le point, sans saut ni trou.
+  \item \textbf{Continuité d'un seul côté} : une seule limite latérale colle à $f(x_0)$ ; la courbe
+        présente un \emph{saut}.
+\end{itemize}
+\end{idee}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+% --- graphe 1 : limite existe, trou ---
+\begin{scope}
+  \draw[axe] (-0.3,0) -- (4.2,0) node[right]{$x$};
+  \draw[axe] (0,-0.3) -- (0,3.2) node[above]{$y$};
+  \draw[courbe,smooth,samples=80,domain=0.3:3.8] plot ({\x},{1.5+0.7*cos(deg(1.2*(\x-0.8)))});
+  \pgfmathsetmacro\yz{1.5+0.7*cos(deg(1.2*(2.4-0.8)))}
+  \node[ptouvert] at (2.4,\yz){};
+  \draw[proj] (2.4,\yz)--(2.4,0) node[below]{$x_0$};
+  \node[font=\scriptsize,align=center] at (2,3.0){limite existe\\ (trou)};
+\end{scope}
+% --- graphe 2 : continue ---
+\begin{scope}[xshift=5.6cm]
+  \draw[axe] (-0.3,0) -- (4.2,0) node[right]{$x$};
+  \draw[axe] (0,-0.3) -- (0,3.2) node[above]{$y$};
+  \draw[courbe,smooth,samples=80,domain=0.3:3.8] plot ({\x},{1.5+0.7*cos(deg(1.2*(\x-0.8)))});
+  \pgfmathsetmacro\yz{1.5+0.7*cos(deg(1.2*(2.4-0.8)))}
+  \node[pt,fill=primary] at (2.4,\yz){};
+  \draw[proj] (2.4,\yz)--(2.4,0) node[below]{$x_0$};
+  \draw[proj] (2.4,\yz)--(0,\yz) node[left]{\scriptsize$f(x_0)$};
+  \node[font=\scriptsize,align=center] at (2,3.0){continue en $x_0$};
+\end{scope}
+% --- graphe 3 : saut ---
+\begin{scope}[xshift=11.2cm]
+  \draw[axe] (-0.3,0) -- (4.2,0) node[right]{$x$};
+  \draw[axe] (0,-0.3) -- (0,3.2) node[above]{$y$};
+  \draw[courbe,smooth,samples=50,domain=0.3:2.4] plot ({\x},{0.8+0.35*cos(deg(1.5*(\x-0.3)))});
+  \draw[courbe,smooth,samples=50,domain=2.4:3.8] plot ({\x},{2.3+0.35*cos(deg(1.5*(\x-2.4)))});
+  \node[pt,fill=primary] at (2.4,2.3){};
+  \pgfmathsetmacro\yg{0.8+0.35*cos(deg(1.5*(2.4-0.3)))}
+  \node[ptouvert] at (2.4,\yg){};
+  \draw[proj] (2.4,2.3)--(2.4,0) node[below]{$x_0$};
+  \node[font=\scriptsize,align=center] at (2,3.0){saut\\ (continue à droite)};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{attention}[ne pas confondre « valeur » et « tendance »]
+La limite décrit une \emph{tendance} : elle peut exister même là où $f$ n'est pas définie, et
+peut différer de $f(x_0)$ lorsque la fonction fait un saut. Toujours vérifier les \emph{deux}
+côtés avant de conclure qu'une limite globale existe.
+\end{attention}
+
+\begin{astuce}[réflexe de départ]
+Face à une limite en un point : on \emph{remplace d'abord}. Si le remplacement donne un nombre
+« franc » (sans division par $0$, sans racine interdite), c'est fini. Sinon, on passe aux
+techniques des thèmes suivants (règle $\frac{a}{0^{\pm}}$, terme dominant, conjugué, l'Hospital).
+\end{astuce}
+
+\end{document}

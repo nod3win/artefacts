@@ -1,0 +1,100 @@
+% =====================================================================
+%  Thème 1 — Conversions & cercle trigonométrique — NIVEAU FACILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 1 — Conversions \& cercle trigonométrique}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Des degrés vers les radians}
+On multiplie par $\dfrac{\pi}{180}$ puis on simplifie.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $45\times\dfrac{\pi}{180}=\dfrac{45\pi}{180}=\dfrac{\pi}{4}$.
+\item[\textbf{(b)}] \rep $90\times\dfrac{\pi}{180}=\dfrac{\pi}{2}$.
+\item[\textbf{(c)}] \rep $150\times\dfrac{\pi}{180}=\dfrac{150\pi}{180}=\dfrac{5\pi}{6}$.
+\item[\textbf{(d)}] \rep $210\times\dfrac{\pi}{180}=\dfrac{210\pi}{180}=\dfrac{7\pi}{6}$.
+\item[\textbf{(e)}] \rep $300\times\dfrac{\pi}{180}=\dfrac{300\pi}{180}=\dfrac{5\pi}{3}$.
+\end{itemize}
+
+\exo{Des radians vers les degrés}
+On multiplie par $\dfrac{180}{\pi}$ ; le $\pi$ se simplifie.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\dfrac{\pi}{6}\times\dfrac{180}{\pi}=\dfrac{180}{6}=30\degr$.
+\item[\textbf{(b)}] \rep $\dfrac{3\pi}{4}\times\dfrac{180}{\pi}=\dfrac{3\times180}{4}=135\degr$.
+\item[\textbf{(c)}] \rep $\dfrac{5\pi}{3}\times\dfrac{180}{\pi}=\dfrac{5\times180}{3}=300\degr$.
+\item[\textbf{(d)}] \rep $\dfrac{7\pi}{6}\times\dfrac{180}{\pi}=\dfrac{7\times180}{6}=210\degr$.
+\item[\textbf{(e)}] \rep $2\pi\times\dfrac{180}{\pi}=360\degr$ (un tour complet).
+\end{itemize}
+
+\exo{Dans quel quadrant ?}
+On situe l'angle par rapport à $90\degr,180\degr,270\degr,360\degr$ (soit
+$\frac{\pi}{2},\pi,\frac{3\pi}{2},2\pi$).
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $200\degr$ : entre $180\degr$ et $270\degr$ $\Rightarrow$ \textbf{quadrant III}.
+\item[\textbf{(b)}] \rep $85\degr$ : entre $0\degr$ et $90\degr$ $\Rightarrow$ \textbf{quadrant I}.
+\item[\textbf{(c)}] \rep $\dfrac{5\pi}{4}=225\degr$ : entre $180\degr$ et $270\degr$ $\Rightarrow$ \textbf{quadrant III}.
+\item[\textbf{(d)}] \rep $\dfrac{7\pi}{4}=315\degr$ : entre $270\degr$ et $360\degr$ $\Rightarrow$ \textbf{quadrant IV}.
+\item[\textbf{(e)}] \rep $\dfrac{2\pi}{3}=120\degr$ : entre $90\degr$ et $180\degr$ $\Rightarrow$ \textbf{quadrant II}.
+\end{itemize}
+
+\exo{Quel signe ?}
+On lit le quadrant, puis le tableau des signes ($\cos>0$ à droite, $\sin>0$ en haut, $\tg>0$ si
+$\sin$ et $\cos$ de même signe).
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $160\degr$ : quadrant II, $\cos<0$ donc $\cos160\degr$ est \textbf{négatif}.
+\item[\textbf{(b)}] \rep $250\degr$ : quadrant III, $\sin<0$ donc $\sin250\degr$ est \textbf{négatif}.
+\item[\textbf{(c)}] \rep $100\degr$ : quadrant II, $\sin>0$ et $\cos<0$ donc $\tg100\degr$ est \textbf{négatif}.
+\item[\textbf{(d)}] \rep $320\degr$ : quadrant IV, $\cos>0$ donc $\cos320\degr$ est \textbf{positif}.
+\item[\textbf{(e)}] \rep $40\degr$ : quadrant I, $\sin>0$ donc $\sin40\degr$ est \textbf{positif}.
+\end{itemize}
+
+\exo{Valeurs remarquables du premier quadrant}
+Lecture directe dans le tableau.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos\dfrac{\pi}{3}=\dfrac12$.
+\item[\textbf{(b)}] \rep $\sin\dfrac{\pi}{4}=\dfrac{\sqrt2}{2}$.
+\item[\textbf{(c)}] \rep $\tg\dfrac{\pi}{3}=\sqrt3$.
+\item[\textbf{(d)}] \rep $\sin\dfrac{\pi}{6}=\dfrac12$.
+\item[\textbf{(e)}] \rep $\cos\dfrac{\pi}{2}=0$.
+\end{itemize}
+
+\end{document}

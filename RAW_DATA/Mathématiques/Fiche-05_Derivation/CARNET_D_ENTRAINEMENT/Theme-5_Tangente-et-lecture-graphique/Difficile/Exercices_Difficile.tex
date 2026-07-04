@@ -1,0 +1,124 @@
+% ===== PRÉAMBULE COMMUN =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 5} — Tangente \& lecture graphique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Exercices --- Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Lecture graphique \& reconstitution}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Niveau Difficile \quad$\bullet$\quad 3 exercices avec sous-questions}
+\end{center}
+\vspace{2mm}
+
+\begin{exo}[1 --- Lecture graphique d'une cubique]
+On considère la fonction $f(x)=x^3-3x$, dont la courbe $\mathcal{C}_f$ est représentée ci-dessous. Elle monte, atteint un \textbf{maximum} en $x=-1$, descend jusqu'à un \textbf{minimum} en $x=1$, puis remonte.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=10.5cm,height=6.4cm,axis lines=middle,
+  xlabel={$x$},ylabel={$y$},xlabel style={right},ylabel style={above},
+  xmin=-2.4,xmax=2.4,ymin=-3.2,ymax=3.2,
+  xtick={-2,-1,0,1,2},ytick={-2,2},
+  grid=both,grid style={grille!55,very thin},tick label style={font=\scriptsize},
+]
+\addplot[courbe,very thick,domain=-2.05:2.05,samples=120]{x^3-3*x};
+\addplot[only marks,mark=*,mark size=1.8pt,black]coordinates{(-1,2)(1,-2)(0,0)};
+\node[anchor=south,font=\scriptsize] at (axis cs:-1,2){max};
+\node[anchor=north,font=\scriptsize] at (axis cs:1,-2){min};
+\node[anchor=south west,font=\scriptsize] at (axis cs:0,0){inflexion};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Répondre par \textbf{vrai/faux} en \textbf{justifiant} par la lecture graphique.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=2pt]
+\item Donner le \textbf{signe de $f'$} sur chacun des intervalles $]-\infty;-1[$, $]-1;1[$ et $]1;+\infty[$.
+\item Que vaut $f'(-1)$ et $f'(1)$ ? Justifier.
+\item Où a-t-on $f''>0$ et où a-t-on $f''<0$ ? En déduire l'abscisse du \textbf{point d'inflexion}.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[2 --- Reconnaître la courbe de $f'$]
+Soit $f$ une fonction \textbf{cubique} (de la forme $ax^3+bx^2+cx+d$) qui admet un \textbf{maximum} en $x=0$ et un \textbf{minimum} en $x=2$.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=2pt]
+\item Que valent $f'(0)$ et $f'(2)$ ?
+\item Déterminer le \textbf{signe de $f'$} avant $0$, entre $0$ et $2$, puis après $2$.
+\item En déduire que la courbe de $f'$ est une \textbf{parabole tournée vers le haut} passant par les points $(0;0)$ et $(2;0)$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[3 --- Reconstituer les paramètres]
+Soit $f(x)=ax^2+bx+c$ (avec $a\neq 0$). On sait que :
+\begin{itemize}[leftmargin=7mm,itemsep=1pt]
+\item[(i)] la courbe $\mathcal{C}_f$ passe par le point $(0;2)$ ;
+\item[(ii)] la tangente en $x=1$ est \textbf{horizontale} ;
+\item[(iii)] $f(1)=0$.
+\end{itemize}
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=2pt]
+\item Traduire chacune des trois conditions (i), (ii), (iii) par une équation portant sur $a$, $b$, $c$.
+\item Résoudre le système obtenu.
+\item Donner l'expression de $f$ et la factoriser.
+\end{enumerate}
+\end{exo}
+
+\end{document}

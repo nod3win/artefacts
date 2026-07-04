@@ -1,0 +1,162 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 3 : Trigonométrie
+%  Thème 2 — Angles associés
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.markings}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{sincol}{RGB}{205,40,55}
+\definecolor{coscol}{RGB}{20,110,200}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Piège à éviter}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\heading}[1]{\smallskip\noindent{\large\bfseries\color{primarydark}#1}\par\smallskip}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 2 — Angles associés}\\[2pt]
+{\color{primarydark}\textsc{Carnet d'entraînement — Fiche 3 : Trigonométrie \quad•\quad Tutoriel}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+Deux angles sont \textbf{associés} lorsque leurs points sur le cercle sont \textbf{symétriques} (par un
+axe ou par le centre) : leurs nombres trigonométriques sont alors les mêmes \emph{au signe près}, ou
+\emph{échangés} ($\sin\leftrightarrow\cos$). Objectif : \textbf{ramener n'importe quel angle à un angle
+connu} du premier quadrant.
+
+\heading{1. Les cinq familles à connaître}
+Dans tout ce qui suit, $\alpha$ est un angle \emph{quelconque}.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|>{\columncolor{primary!10}}l|c|c|c|c|}
+\hline
+\rowcolor{primary!20}
+\textbf{Famille (symétrie)} & \textbf{angle} & $\cos$ & $\sin$ & $\tg$\\
+\hline
+Opposés \emph{(axe des cos)} & $-\alpha$ & $\cos\alpha$ & $-\sin\alpha$ & $-\tg\alpha$\\
+\hline
+Supplémentaires \emph{(axe des sin)} & $\pi-\alpha$ & $-\cos\alpha$ & $\sin\alpha$ & $-\tg\alpha$\\
+\hline
+Anti-suppl. \emph{(centre $O$)} & $\pi+\alpha$ & $-\cos\alpha$ & $-\sin\alpha$ & $\tg\alpha$\\
+\hline
+Complémentaires \emph{(droite $y=x$)} & $\frac{\pi}{2}-\alpha$ & $\sin\alpha$ & $\cos\alpha$ & $\cotg\alpha$\\
+\hline
+Anti-complém. & $\frac{\pi}{2}+\alpha$ & $-\sin\alpha$ & $\cos\alpha$ & $-\cotg\alpha$\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{idee}[deux réflexes qui résument tout]
+$\bullet$ \textbf{Autour de $\pi$} (c'est-à-dire $-\alpha,\ \pi-\alpha,\ \pi+\alpha$) : la
+\emph{fonction ne change pas} ($\cos$ reste $\cos$, $\sin$ reste $\sin$), seul le \textbf{signe} peut
+changer.\\
+$\bullet$ \textbf{Autour de $\frac{\pi}{2}$} (c'est-à-dire $\frac{\pi}{2}\pm\alpha$) : la fonction
+\emph{s'échange} ($\sin\leftrightarrow\cos$, $\tg\leftrightarrow\cotg$), et le signe peut changer.\\
+Pour le signe : place $\alpha$ « petit et positif » et regarde le quadrant de l'angle associé.
+\end{idee}
+
+\heading{2. Lire une symétrie sur le cercle}
+Ci-dessous : les \textbf{opposés} $\alpha$ et $-\alpha$ (miroir par l'axe horizontal : même $\cos$,
+$\sin$ opposé) et les \textbf{supplémentaires} $\alpha$ et $\pi-\alpha$ (miroir par l'axe vertical :
+même $\sin$, $\cos$ opposé).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35,line cap=round,>=Stealth]
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.35,0)--(1.4,0) node[right]{\scriptsize$\cos$};
+  \draw[->,black!70] (0,-1.35)--(0,1.4) node[above]{\scriptsize$\sin$};
+  % alpha au quadrant I
+  \draw[primarydark,line width=1pt] (0,0)--(50:1);
+  \fill[primarydark] (50:1) circle (0.028) node[above right]{\scriptsize$\alpha$};
+  % supplementaire pi - alpha (quadrant II)
+  \draw[coscol,line width=1pt] (0,0)--(130:1);
+  \fill[coscol] (130:1) circle (0.028) node[above left]{\scriptsize$\pi-\alpha$};
+  % oppose -alpha (quadrant IV)
+  \draw[excol,line width=1pt] (0,0)--(-50:1);
+  \fill[excol] (-50:1) circle (0.028) node[below right]{\scriptsize$-\alpha$};
+  % projections
+  \draw[black!30,dashed] (50:1)--(-50:1);
+  \draw[black!30,dashed] (50:1)--(130:1);
+  \fill (0,0) circle (0.02);
+\end{tikzpicture}
+\end{center}
+
+\begin{exemple}[même sinus, même tangente]
+Deux supplémentaires ont le même sinus : $\sin150\degr=\sin(180\degr-30\degr)=\sin30\degr=\dfrac12$.
+Deux anti-supplémentaires ont la même tangente :
+$\tg210\degr=\tg(180\degr+30\degr)=\tg30\degr=\dfrac{\sqrt3}{3}$ (période $\pi$).
+\end{exemple}
+
+\heading{3. Ramener n'importe quel angle au premier quadrant}
+\begin{methode}[réduction d'un angle quelconque]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Un tour} : ajoute/retranche $2\pi$ (ou $360\degr$) pour tomber dans $[0;2\pi[$.
+  \item \textbf{Quadrant $\Rightarrow$ signe} : repère le quadrant, il donne le signe du résultat.
+  \item \textbf{Angle de référence} : écris l'angle sous la forme $\pi\pm\beta$, \ $-\beta$ \ ou
+        \ $\frac{\pi}{2}\pm\beta$ avec $\beta$ \emph{aigu} (le référent du 1\textsuperscript{er} quadrant).
+  \item \textbf{Applique la famille} correspondante, puis recolle le signe de l'étape 2.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[valeur numérique et expression littérale]
+$\dfrac{2\pi}{3}=\pi-\dfrac{\pi}{3}$ \emph{(supplémentaires)} $\Rightarrow
+\cos\dfrac{2\pi}{3}=-\cos\dfrac{\pi}{3}=-\dfrac12$ (cohérent : $120\degr$ est au quadrant II, où
+$\cos<0$).\quad
+De même $\cos\!\left(\dfrac{\pi}{2}+\alpha\right)=-\sin\alpha$ \emph{(anti-complém.)} et
+$\dfrac{\sin(\pi-\alpha)}{\cos(-\alpha)}=\dfrac{\sin\alpha}{\cos\alpha}=\tg\alpha$.
+\end{exemple}
+
+\begin{piege}[les trois erreurs qui coûtent des points]
+$\bullet$ Confondre \emph{supplémentaires} ($\pi-\alpha$, même $\sin$) et \emph{anti-supplémentaires}
+($\pi+\alpha$, même $\tg$).\quad
+$\bullet$ Oublier que $\frac{\pi}{2}\pm\alpha$ \textbf{échange} $\sin$ et $\cos$ (ne pas laisser $\cos$
+donner un $\cos$).\quad
+$\bullet$ Se tromper de signe : dans le doute, prends $\alpha=30\degr$ et vérifie numériquement.
+\end{piege}
+
+\end{document}

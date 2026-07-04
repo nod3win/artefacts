@@ -1,0 +1,105 @@
+% =====================================================================
+%  Thème 2 — Angles associés — NIVEAU MOYEN
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 2 — Angles associés}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} enchaîner \emph{deux} étapes — reconnaître la famille d'angles associés, puis
+conclure (valeur exacte ou expression simplifiée). \textbf{Sans calculatrice.} Nomme la famille utilisée.
+\end{consigne}
+
+\exo{Réduire, puis évaluer}
+Écris l'angle sous la forme $\pi\pm\beta$, $\frac{\pi}{2}\pm\beta$ ou $-\beta$ avec $\beta$ remarquable,
+puis donne la valeur exacte.
+\[
+\textbf{(a)}\ \sin 210\degr \qquad
+\textbf{(b)}\ \cos(-120\degr) \qquad
+\textbf{(c)}\ \tg 225\degr \qquad
+\textbf{(d)}\ \cos 135\degr \qquad
+\textbf{(e)}\ \sin\frac{5\pi}{6}
+\]
+
+\exo{Simplifier une expression littérale}
+Simplifie chaque expression le plus possible (le résultat est un nombre, $\pm\sin\alpha$, $\pm\cos\alpha$\dots).
+\[
+\textbf{(a)}\ \cos\!\left(\tfrac{\pi}{2}+\alpha\right)+\sin(\pi-\alpha) \qquad
+\textbf{(b)}\ \sin(-\alpha)+\sin(\pi+\alpha)
+\]
+\[
+\textbf{(c)}\ \dfrac{\tg(\pi+\alpha)}{\tg(-\alpha)} \qquad
+\textbf{(d)}\ \cos(\pi-\alpha)+\cos(-\alpha)
+\]
+
+\exo{Lesquelles valent $\sin 5\degr$ ?}
+On pose $\alpha=5\degr$ (angle du 1\textsuperscript{er} quadrant). Parmi les expressions suivantes,
+détermine \emph{lesquelles} sont égales à $\sin 5\degr$, en justifiant par la famille d'angles.
+\[
+\textbf{(a)}\ \sin 175\degr \qquad
+\textbf{(b)}\ -\cos 95\degr \qquad
+\textbf{(c)}\ \sin(-5\degr) \qquad
+\textbf{(d)}\ -\sin 185\degr \qquad
+\textbf{(e)}\ \cos(-85\degr)
+\]
+
+\exo{Lesquelles valent $\tg 10\degr$ ?}
+On pose $\alpha=10\degr$. Détermine lesquelles de ces expressions sont égales à $\tg 10\degr$.
+\[
+\textbf{(a)}\ \tg 190\degr \qquad
+\textbf{(b)}\ \cotg 80\degr \qquad
+\textbf{(c)}\ \tg 170\degr \qquad
+\textbf{(d)}\ -\tg(-10\degr)
+\]
+
+\exo{Vrai ou Faux}
+Justifie brièvement (nomme la bonne famille).
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=1pt]
+\item $5\degr$ et $175\degr$ sont anti-supplémentaires.
+\item $5\degr$ et $85\degr$ sont complémentaires.
+\item $\cos 100\degr=-\sin 10\degr$.
+\item $\sin 250\degr=\sin 70\degr$.
+\end{enumerate}
+
+\end{document}

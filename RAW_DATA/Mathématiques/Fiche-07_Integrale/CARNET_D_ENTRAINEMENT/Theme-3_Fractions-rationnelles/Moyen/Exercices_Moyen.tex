@@ -1,0 +1,81 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Fractions rationnelles}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\begin{document}
+\section*{Thème 3 — Fractions rationnelles \quad\textbullet\quad Niveau Moyen}
+
+\begin{center}\itshape
+Numérateur non constant, ou dénominateur à factoriser d'abord.\\
+Pour chaque exercice : décomposer, puis donner une primitive complète (avec $\ln$).
+\end{center}
+
+\begin{exo}[1]
+Calculer $\displaystyle\int \frac{2x}{(x+1)(x+3)}\,\dd x$.
+\end{exo}
+
+\begin{exo}[2]
+Calculer $\displaystyle\int \frac{2x-1}{(x+2)(x-3)}\,\dd x$.
+\end{exo}
+
+\begin{exo}[3]
+Le dénominateur n'est pas factorisé. Factoriser $x^2-x-6$, puis calculer
+$\displaystyle\int \frac{x+7}{x^2-x-6}\,\dd x$.
+\end{exo}
+
+\begin{exo}[4]
+Factoriser $x^2-4$, puis calculer
+$\displaystyle\int \frac{x}{x^2-4}\,\dd x$.
+Simplifier le résultat en un seul logarithme.
+\end{exo}
+
+\begin{exo}[5]
+Factoriser $x^2+x-2$, puis calculer
+$\displaystyle\int \frac{3x+1}{x^2+x-2}\,\dd x$.
+\end{exo}
+
+\end{document}

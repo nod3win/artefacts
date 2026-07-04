@@ -1,0 +1,119 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+% Ne modifier QUE :
+%   - les deux lignes \fancyhead[L] et \fancyhead[R]
+%   - le bloc titre \begin{center}...\end{center} juste après \begin{document}
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 1} — Nombre dérivé \& taux d'accroissement}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Exercices — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Exercices — Niveau Difficile}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Racine, quotient, mouvement et point anguleux : la définition jusqu'au bout}
+\end{center}
+\vspace{2mm}
+
+\begin{exo}[1 --- fonction racine]
+Soit $f(x)=\sqrt{x}$ avec $x_0>0$.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=1pt]
+  \item Écrire le taux d'accroissement $\tau(h)$.
+  \item Multiplier numérateur et dénominateur par la quantité conjuguée
+        $\sqrt{x_0+h}+\sqrt{x_0}$.
+  \item En déduire $\ds f'(x_0)=\frac{1}{2\sqrt{x_0}}$.
+  \item Calculer $f'(4)$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[2 --- mobile MRUA]
+Un mobile a pour position $y=f(x)=\tfrac{1}{2}x^2+2x$ (vitesse initiale $2$~m/s,
+accélération $1$~m/s$^2$).
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=1pt]
+  \item Écrire le taux d'accroissement $\tau(h)$.
+  \item Développer et simplifier.
+  \item En déduire $f'(x_0)=x_0+2$.
+  \item Calculer la vitesse instantanée à l'instant $t=3$~s.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[3 --- fonction homographique]
+Soit $f(x)=\dfrac{1}{x+1}$ avec $x_0\neq -1$.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=1pt]
+  \item Écrire le taux d'accroissement $\tau(h)$.
+  \item Réduire le numérateur au même dénominateur.
+  \item En déduire $\ds f'(x_0)=-\frac{1}{(x_0+1)^2}$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[4 --- valeur absolue, point anguleux]
+Soit $f(x)=|x|$ que l'on étudie en $x_0=0$.
+\begin{enumerate}[label=\alph*),leftmargin=7mm,itemsep=1pt]
+  \item Calculer le taux d'accroissement $\tau(h)=\dfrac{f(0+h)-f(0)}{h}$
+        d'abord pour $h>0$, puis pour $h<0$.
+  \item Que valent les limites de $\tau(h)$ à droite ($h\to 0^+$) et à gauche
+        ($h\to 0^-$) ?
+  \item Conclure : $f$ est-elle dérivable en $0$ ? Interpréter géométriquement.
+\end{enumerate}
+\end{exo}
+
+\end{document}

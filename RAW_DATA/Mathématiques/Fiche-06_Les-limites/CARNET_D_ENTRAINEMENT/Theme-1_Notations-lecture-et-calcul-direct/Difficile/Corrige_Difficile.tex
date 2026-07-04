@@ -1,0 +1,98 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 1 — CORRIGÉ — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Corrigé Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Notations, lecture \& calcul direct}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Difficile}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[une fonction à deux paramètres]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item À gauche ($x<2$) : $f(x)=ax+1$, donc $\displaystyle\lim_{x\to 2^{-}} f(x)=2a+1$.\\
+        À droite ($x>2$) : $f(x)=x^2+b$, donc $\displaystyle\lim_{x\to 2^{+}} f(x)=4+b$.
+  \item $f$ \emph{possède une limite} en $2$ ssi les deux limites latérales sont égales :
+        \[ 2a+1=4+b\quad\Longleftrightarrow\quad \boxed{b=2a-3}. \]
+  \item Pour la \emph{continuité} en $2$, il faut de plus que cette limite commune soit égale à $f(2)=3$ :
+        \[ 2a+1=3\ \text{(et)}\ 4+b=3. \]
+  \item De $2a+1=3$ on tire $a=1$ ; de $4+b=3$ on tire $b=-1$. (Ces valeurs vérifient bien $b=2a-3=-1$.)
+        \[ \boxed{(a,b)=(1,-1)} \]
+        est l'unique paire rendant $f$ continue en $2$. Exemple : $f(x)=x+1$ pour $x<2$, $f(2)=3$,
+        $f(x)=x^2-1$ pour $x>2$ ; on a alors $\lim_{x\to2^\pm} f=3=f(2)$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[lecture graphique complète]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Aux deux bouts la courbe colle à la droite $y=1$ :
+        $\displaystyle\lim_{x\to +\infty} f(x)=\lim_{x\to -\infty} f(x)=1$. La droite $y=1$ est une
+        \textbf{asymptote horizontale}.
+  \item À gauche de $2$, la branche plonge : $\displaystyle\lim_{x\to 2^{-}} f(x)=-\infty$. La droite
+        $x=2$ est donc une \textbf{asymptote verticale}.
+  \item Le rond ouvert est en $(2\,;3)$, donc $\displaystyle\lim_{x\to 2^{+}} f(x)=3$ ; le rond plein est
+        en $(2\,;0)$, donc $f(2)=0$.
+  \item Les limites latérales en $2$ diffèrent ($-\infty$ à gauche, $3$ à droite) : $f$ \textbf{n'a pas de
+        limite} en $2$ et n'est donc pas continue. De plus, à droite $\lim_{x\to 2^{+}} f(x)=3\neq f(2)=0$ :
+        $f$ \textbf{n'est pas continue à droite} non plus. (La valeur $f(2)=0$ est un point isolé.)
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[mise en situation : un tarif par paliers]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item À gauche ($t\leq 20$) : $M(t)=30$, donc $\displaystyle\lim_{t\to 20^{-}} M(t)=30$.\\
+        À droite ($t>20$) : $M(t)=30+2(t-20)$, donc $\displaystyle\lim_{t\to 20^{+}} M(t)=30+2(20-20)=30$.
+  \item Les deux limites valent $30$ et $M(20)=30$ : \textbf{$M$ est continue en $20$}. Concrètement, le tarif
+        \emph{ne saute pas} : à $20$ minutes on paie $30$\,€, et juste après le montant augmente
+        continûment (pas de bond brutal).
+  \item Avec $35+2(t-20)$ pour $t>20$ : $\displaystyle\lim_{t\to 20^{+}} M(t)=35$ tandis que
+        $\displaystyle\lim_{t\to 20^{-}} M(t)=30$. Les limites latérales diffèrent : $M$ serait
+        \textbf{discontinue} en $20$, avec un \textbf{saut de $35-30=5$\,€} (le prix bondirait de $5$\,€
+        dès qu'on dépasse $20$ minutes).
+\end{enumerate}
+\end{correction}
+
+\end{document}

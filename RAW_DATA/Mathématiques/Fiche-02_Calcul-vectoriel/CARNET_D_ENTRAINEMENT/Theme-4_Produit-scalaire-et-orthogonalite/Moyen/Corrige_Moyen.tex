@@ -1,0 +1,82 @@
+% =====================================================================
+%  Thème 4 — Produit scalaire et orthogonalité — MOYEN — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Moyen — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Produit scalaire et orthogonalité — Corrigé Moyen}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec u\cdot\vec v=3\times2+y\times6=6+6y=0 \Rightarrow y=-1$.
+  \item $x\times2+4\times(-1)=2x-4=0 \Rightarrow x=2$.
+  \item $m\times m+2\times(-8)=m^2-16=0 \Rightarrow m=4 \text{ ou } m=-4$.
+\end{enumerate}
+\rep « Orthogonaux » se traduit par « produit scalaire nul » : on pose $xx'+yy'=0$ et on résout.
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}\,(3;1)$ et $\vc{AC}\,(1;4)$.
+  \item $\vc{AB}\cdot\vc{AC}=3\times1+1\times4=3+4=7>0$ : l'angle $\widehat{BAC}$ est \textbf{aigu}.
+\end{enumerate}
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $d$ : $a=2,b=-3\Rightarrow$ vecteur directeur $\vec u\,(3;2)$.\\
+        $d'$ : $a=3,b=2\Rightarrow$ vecteur directeur $\vec u'\,(-2;3)$.
+  \item $\vec u\cdot\vec u'=3\times(-2)+2\times3=-6+6=0$ : les droites $d$ et $d'$ sont
+        \textbf{perpendiculaires}.
+\end{enumerate}
+\rep On teste la perpendicularité de deux droites par le produit scalaire de leurs vecteurs directeurs.
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec u\cdot\vec v=2\times1+3\times(-1)=2-3=-1$ ; \quad
+        $\vec w\cdot\vec v=4\times1+0\times(-1)=4$.
+  \item $(2\vec u)\cdot\vec v=2(\vec u\cdot\vec v)=2\times(-1)=-2$.
+        Direct : $2\vec u\,(4;6)$, $(4;6)\cdot(1;-1)=4-6=-2$. \checkmark\\
+        $(\vec u+\vec w)\cdot\vec v=\vec u\cdot\vec v+\vec w\cdot\vec v=-1+4=3$.
+        Direct : $\vec u+\vec w\,(6;3)$, $(6;3)\cdot(1;-1)=6-3=3$. \checkmark
+\end{enumerate}
+\rep La linéarité permet de « distribuer » le produit scalaire, comme une multiplication.
+
+\cor{5}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}\,(2;0)$, $\vc{AD}\,(0;2)$ : $\vc{AB}\cdot\vc{AD}=2\times0+0\times2=0$. Les côtés
+        $[AB]$ et $[AD]$ sont \textbf{perpendiculaires} (angle droit du carré).
+  \item $\vc{AC}\,(2;2)$ : $\vc{AB}\cdot\vc{AC}=2\times2+0\times2=4$.
+  \item $\vc{BD}\,(0-2;2-0)=(-2;2)$ : $\vc{AC}\cdot\vc{BD}=2\times(-2)+2\times2=-4+4=0$.
+        Les diagonales $[AC]$ et $[BD]$ du carré sont \textbf{perpendiculaires}.
+\end{enumerate}
+\rep Dans un carré, côtés adjacents et diagonales sont perpendiculaires : le produit scalaire le
+confirme numériquement.
+
+\end{document}

@@ -1,0 +1,148 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{curveA}{RGB}{0,90,200}
+\definecolor{curveB}{RGB}{210,30,40}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 1} — Puissances, racines et exposants}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 1 — Puissances, racines et exposants}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Tutoriel — la mécanique à maîtriser avant les exercices}
+\end{center}
+
+\vspace{2mm}
+\noindent Tout le calcul algébrique repose sur une poignée de règles sur les exposants. Les voici,
+avec l'intuition qui permet de ne \emph{jamais} les confondre.
+
+\begin{cle}[les quatre règles de base des exposants]
+Pour des bases $a,b\in\R_0$ (non nulles) et des exposants $n,m\in\Z$ :
+\[ a^{n}\times a^{m}=a^{n+m}\ ;\qquad \frac{a^{n}}{a^{m}}=a^{n-m}\ ;\qquad
+   a^{n}\times b^{n}=(ab)^{n}\ ;\qquad \bigl(a^{n}\bigr)^{m}=a^{nm}. \]
+\textbf{Intuition :} même base, on \emph{multiplie} $\Rightarrow$ on \emph{additionne} les exposants ;
+on \emph{divise} $\Rightarrow$ on \emph{soustrait}. Une \emph{puissance de puissance} $\Rightarrow$ on
+\emph{multiplie} les exposants. Même exposant $\Rightarrow$ on peut regrouper les bases.
+\end{cle}
+
+\begin{cle}[exposant nul, négatif, fractionnaire]
+\[ a^{0}=1\quad(a\neq 0);\qquad a^{-n}=\frac{1}{a^{n}};\qquad
+   \sqrt[n]{c}=c^{\frac1n}\quad\text{et}\quad \sqrt[n]{c^{\,p}}=c^{\frac pn}\quad(c>0). \]
+Un exposant négatif veut dire « \emph{passer à l'inverse} » ; une racine n'est qu'un exposant
+fractionnaire. C'est la clé pour tout ramener à une seule forme $c^{k}$.
+\end{cle}
+
+\begin{exemplebox}[transformer, étape par étape]
+\begin{align*}
+ \frac{a^{5}}{a^{2}}&=a^{5-2}=a^{3}
+   &\text{(quotient, même base $\to$ soustraction)}\\
+ \bigl(2^{x}\bigr)^{3}&=2^{3x}
+   &\text{(puissance de puissance $\to$ produit)}\\
+ \sqrt[3]{c^{6}}&=c^{6/3}=c^{2}
+   &\text{(racine $\to$ exposant fractionnaire)}\\
+ a^{-m}\times b^{m}&=\frac{b^{m}}{a^{m}}=\Bigl(\frac{b}{a}\Bigr)^{m}
+   &\text{(inverse, puis même exposant $\to$ quotient)}
+\end{align*}
+\end{exemplebox}
+
+\begin{piege}[le signe et le parenthésage : $(-2)^2 \neq -2^2$]
+Le « $-$ » ne se comporte pas de la même façon selon qu'il est \emph{dans} la base ou \emph{devant} :
+\[ (-2)^{2}=(-2)\times(-2)=+4,\qquad\text{mais}\qquad -2^{2}=-(2\times 2)=-4. \]
+Règle de parité (pour $a>0$) : $(-a)^{2n}=+a^{2n}$ (exposant \emph{pair}), $(-a)^{2n+1}=-a^{2n+1}$
+(exposant \emph{impair}). Autre piège : pour tout réel $A$, $\ \sqrt{A^{2}}=|A|$, \emph{pas} $A$.
+\end{piege}
+
+\begin{methode}[simplifier une expression à exposants]
+\begin{enumerate}[leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item convertir toutes les racines en exposants fractionnaires ;
+  \item empiler de l'intérieur vers l'extérieur avec $(a^{n})^{m}=a^{nm}$ ;
+  \item regrouper : \emph{multiplier} les exposants emboîtés, \emph{additionner} ceux d'un même produit ;
+  \item simplifier la fraction d'exposants finale.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[racines emboîtées]
+Pour $c>0$ et $n\in\N_0$ : $\ \sqrt[n]{\sqrt[n]{c^{\,2n^{2}}}}
+=\Bigl(\bigl(c^{2n^{2}}\bigr)^{1/n}\Bigr)^{1/n}
+=\bigl(c^{2n^{2}}\bigr)^{1/n^{2}}=c^{\,2n^{2}/n^{2}}=c^{2}.$
+Tout le « bruit » en $n$ se simplifie : le résultat ne dépend plus de $n$.
+\end{exemplebox}
+
+\noindent\textbf{La fonction exponentielle $x\mapsto a^{x}$.} On fixe la base $a>0$ ($a\neq1$) et on fait
+varier l'exposant. Le comportement dépend de la position de $a$ par rapport à $1$.
+
+\begin{minipage}{0.52\textwidth}
+\begin{cle}[monotonie et injectivité]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item $a>1$ : $x\mapsto a^{x}$ est \emph{croissante} ;
+  \item $0<a<1$ : elle est \emph{décroissante} ;
+  \item dans tous les cas $a^{x_1}=a^{x_2}\Rightarrow x_1=x_2$.
+\end{itemize}
+\end{cle}
+\end{minipage}\hfill
+\begin{minipage}{0.44\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=6.4cm,height=4.4cm,axis lines=middle,
+  xmin=-2.6,xmax=2.6,ymin=-0.3,ymax=4.4,xtick=\empty,ytick={1},
+  yticklabels={$1$},xlabel={\scriptsize$x$}]
+ \addplot[curveA,line width=1.2pt,domain=-2.4:1.45,samples=60]{exp(x*0.6931)};
+ \addplot[curveB,line width=1.2pt,domain=-1.45:2.4,samples=60]{exp(-x*0.6931)};
+ \addplot[black!40,dashed,domain=-2.6:2.6]{1};
+ \node[curveA,font=\scriptsize] at (axis cs:1.35,3.6){$a=2$};
+ \node[curveB,font=\scriptsize] at (axis cs:-1.35,3.7){$a=\tfrac12$};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\begin{methode}[résoudre une équation exponentielle $a^{u(x)}=a^{v(x)}$]
+Puisque l'exponentielle est injective : ramener les deux membres à \emph{une même base} $a$, puis
+égaler les exposants $u(x)=v(x)$ et résoudre. Pour une \emph{inéquation}, on garde le sens si $a>1$ et
+on \emph{inverse} le sens si $0<a<1$.
+\end{methode}
+
+\begin{exemplebox}[une équation exponentielle]
+$\ds\Bigl(\frac{2^{2x+1}}{2^{x}}\Bigr)^{3}=1$. On simplifie l'intérieur : $\frac{2^{2x+1}}{2^{x}}=2^{x+1}$,
+donc $\bigl(2^{x+1}\bigr)^{3}=2^{3x+3}=2^{0}\Rightarrow 3x+3=0\Rightarrow x=-1$. Ainsi $S=\{-1\}$.
+\end{exemplebox}
+
+\end{document}

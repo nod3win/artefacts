@@ -1,0 +1,85 @@
+% =====================================================================
+%  Thème 5 — EXERCICES — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 5 — L'Hospital \& limites trigonométriques}\\[2pt]
+{\large\color{primary}Exercices — Niveau Difficile}
+\end{center}
+\vspace{4pt}
+{\small\itshape Niveau concours : combinaison fine de limites remarquables, deux méthodes pour un même
+résultat, et une mise en situation avec l'Hospital répété.}
+\vspace{6pt}
+
+\begin{exercice}[combiner trois limites de référence]
+On veut $\displaystyle\lim_{x\to 0}\frac{\tan x-\sin x}{x^3}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Montrer que $\tan x-\sin x=\dfrac{\sin x\,(1-\cos x)}{\cos x}$.
+  \item En déduire l'écriture $\dfrac{\tan x-\sin x}{x^3}=\dfrac{\sin x}{x}\cdot\dfrac{1-\cos x}{x^2}\cdot\dfrac{1}{\cos x}$.
+  \item Sachant $\dfrac{\sin x}{x}\to 1$, $\dfrac{1-\cos x}{x^2}\to\dfrac12$ et $\dfrac{1}{\cos x}\to 1$,
+        conclure la valeur de la limite.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[deux méthodes pour un quotient de sinus]
+On veut $\displaystyle\lim_{x\to 0}\frac{\sin 5x}{\sin 3x}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Vérifier que la forme est $\frac00$.
+  \item \textbf{Méthode 1 (limites remarquables) :} écrire
+        $\dfrac{\sin 5x}{\sin 3x}=\dfrac{\sin 5x}{5x}\cdot\dfrac{3x}{\sin 3x}\cdot\dfrac{5x}{3x}$ et conclure.
+  \item \textbf{Méthode 2 (l'Hospital) :} dériver haut et bas, puis conclure. Vérifier qu'on retrouve le
+        même résultat.
+  \item Généraliser : que vaut $\displaystyle\lim_{x\to 0}\frac{\sin(ax)}{\sin(bx)}$ pour $a,b\neq 0$ ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[mise en situation : erreur de l'approximation des petits angles]
+En physique, pour de petits angles $\theta$ (en radians), on approxime $\sin\theta\approx\theta$
+(pendule, optique\dots). On étudie l'erreur relative via
+\[ E(\theta)=\frac{\theta-\sin\theta}{\theta^3}. \]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Justifier d'abord que $\displaystyle\lim_{\theta\to 0}\frac{\sin\theta}{\theta}=1$ (ce qui légitime $\sin\theta\approx\theta$).
+  \item Montrer que $E(\theta)$ est de la forme $\frac00$, puis appliquer la règle de l'Hospital
+        \emph{trois fois} pour calculer $\displaystyle\lim_{\theta\to 0} E(\theta)$.
+  \item En déduire que, pour $\theta$ petit, $\theta-\sin\theta\approx \dfrac{\theta^3}{6}$. L'erreur
+        commise en écrivant $\sin\theta\approx\theta$ est-elle « petite » devant $\theta$ ? Justifier.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

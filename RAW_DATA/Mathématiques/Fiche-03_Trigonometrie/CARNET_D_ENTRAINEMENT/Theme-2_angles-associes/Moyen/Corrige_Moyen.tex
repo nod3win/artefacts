@@ -1,0 +1,109 @@
+% =====================================================================
+%  Thème 2 — Angles associés — NIVEAU MOYEN
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 2 — Angles associés}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Réduire, puis évaluer}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $210\degr=180\degr+30\degr$ \emph{(anti-supplémentaires)} :
+$\sin210\degr=-\sin30\degr=-\dfrac12$.
+\item[\textbf{(b)}] \rep $\cos(-120\degr)=\cos120\degr$ \emph{(opposés)} ; puis $120\degr=180\degr-60\degr$
+\emph{(supplémentaires)} : $\cos120\degr=-\cos60\degr=-\dfrac12$.
+\item[\textbf{(c)}] \rep $225\degr=180\degr+45\degr$ \emph{(anti-supplémentaires)} :
+$\tg225\degr=\tg45\degr=1$.
+\item[\textbf{(d)}] \rep $135\degr=180\degr-45\degr$ \emph{(supplémentaires)} :
+$\cos135\degr=-\cos45\degr=-\dfrac{\sqrt2}{2}$.
+\item[\textbf{(e)}] \rep $\dfrac{5\pi}{6}=\pi-\dfrac{\pi}{6}$ \emph{(supplémentaires)} :
+$\sin\dfrac{5\pi}{6}=\sin\dfrac{\pi}{6}=\dfrac12$.
+\end{itemize}
+
+\exo{Simplifier une expression littérale}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\cos\!\left(\dfrac{\pi}{2}+\alpha\right)=-\sin\alpha$ \emph{(anti-complém.)} et
+$\sin(\pi-\alpha)=\sin\alpha$ \emph{(supplém.)}, donc la somme vaut
+$-\sin\alpha+\sin\alpha=\mathbf{0}$.
+\item[\textbf{(b)}] \rep $\sin(-\alpha)=-\sin\alpha$ \emph{(opposés)} et $\sin(\pi+\alpha)=-\sin\alpha$
+\emph{(anti-supplém.)}, donc la somme vaut $-\sin\alpha-\sin\alpha=\mathbf{-2\sin\alpha}$.
+\item[\textbf{(c)}] \rep $\tg(\pi+\alpha)=\tg\alpha$ \emph{(anti-supplém.)} et $\tg(-\alpha)=-\tg\alpha$
+\emph{(opposés)}, donc $\dfrac{\tg\alpha}{-\tg\alpha}=\mathbf{-1}$.
+\item[\textbf{(d)}] \rep $\cos(\pi-\alpha)=-\cos\alpha$ \emph{(supplém.)} et $\cos(-\alpha)=\cos\alpha$
+\emph{(opposés)}, donc $-\cos\alpha+\cos\alpha=\mathbf{0}$.
+\end{itemize}
+
+\exo{Lesquelles valent $\sin 5\degr$ ?}
+On ramène chaque expression à $\sin5\degr$ ou $-\sin5\degr$.
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\sin175\degr=\sin(180\degr-5\degr)=\sin5\degr$ \emph{(supplém.)}. \textbf{Oui.}
+\item[\textbf{(b)}] \rep $-\cos95\degr=-\cos(90\degr+5\degr)=-(-\sin5\degr)=\sin5\degr$
+\emph{(anti-complém.)}. \textbf{Oui.}
+\item[\textbf{(c)}] \rep $\sin(-5\degr)=-\sin5\degr$ \emph{(opposés)}. \textbf{Non.}
+\item[\textbf{(d)}] \rep $-\sin185\degr=-\sin(180\degr+5\degr)=-(-\sin5\degr)=\sin5\degr$
+\emph{(anti-supplém.)}. \textbf{Oui.}
+\item[\textbf{(e)}] \rep $\cos(-85\degr)=\cos85\degr=\cos(90\degr-5\degr)=\sin5\degr$
+\emph{(opposés puis complém.)}. \textbf{Oui.}
+\end{itemize}
+Bilan : (a), (b), (d) et (e) valent $\sin5\degr$ ; seule (c) est différente.
+
+\exo{Lesquelles valent $\tg 10\degr$ ?}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\tg190\degr=\tg(180\degr+10\degr)=\tg10\degr$ \emph{(anti-supplém., période $\pi$)}. \textbf{Oui.}
+\item[\textbf{(b)}] \rep $\cotg80\degr=\tg(90\degr-80\degr)=\tg10\degr$ \emph{(complém. : $\cotg\alpha=\tg(90\degr-\alpha)$)}. \textbf{Oui.}
+\item[\textbf{(c)}] \rep $\tg170\degr=\tg(180\degr-10\degr)=-\tg10\degr$ \emph{(supplém.)}. \textbf{Non.}
+\item[\textbf{(d)}] \rep $-\tg(-10\degr)=-(-\tg10\degr)=\tg10\degr$ \emph{(opposés)}. \textbf{Oui.}
+\end{itemize}
+Bilan : (a), (b) et (d) ; (c) vaut $-\tg10\degr$.
+
+\exo{Vrai ou Faux}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep \textbf{Faux} : $5\degr+175\degr=180\degr$, ils sont \emph{supplémentaires}
+(anti-supplémentaires signifierait une différence de $180\degr$).
+\item[\textbf{(b)}] \rep \textbf{Vrai} : $5\degr+85\degr=90\degr$, ce sont des complémentaires.
+\item[\textbf{(c)}] \rep \textbf{Vrai} : $\cos100\degr=\cos(90\degr+10\degr)=-\sin10\degr$
+\emph{(anti-complém.)}.
+\item[\textbf{(d)}] \rep \textbf{Faux} : $250\degr=180\degr+70\degr$, donc
+$\sin250\degr=-\sin70\degr$ \emph{(anti-supplém.)}, et non $+\sin70\degr$.
+\end{itemize}
+
+\end{document}

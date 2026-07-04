@@ -1,0 +1,129 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 3 — Limites à l'infini par le terme dominant
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\tikzset{axe/.style={->,>=Stealth,thick,black!75},
+  courbe/.style={line width=1.1pt,curvecol},asy/.style={dashed,black!55,line width=0.8pt}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titlespacing{\section}{0pt}{6pt}{3pt}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large Thème 3 — Limites à l'infini : le terme dominant}]
+\textbf{Mécanique travaillée :} calculer $\displaystyle\lim_{x\to\pm\infty}$ d'un \emph{polynôme} ou
+d'une \emph{fonction rationnelle}. L'idée unique : à l'infini, \textbf{seul le terme de plus haut
+degré compte}. C'est aussi la façon de lever la forme indéterminée $\frac{\infty}{\infty}$.
+\end{tcolorbox}
+
+\section{1. Polynôme : le terme de plus haut degré gagne}
+
+\begin{idee}[limite d'un polynôme en $\pm\infty$]
+Pour $P(x)=a_n x^n+\dots+a_0$ (avec $a_n\neq 0$) :
+\[ \boxed{\ \lim_{x\to\pm\infty} P(x)=\lim_{x\to\pm\infty} a_n x^n\ } \]
+Les termes de degré inférieur deviennent \emph{négligeables} devant $a_n x^n$.
+\end{idee}
+
+Le résultat combine trois éléments : le \emph{signe} de $a_n$, la \emph{parité} de $n$ et le
+\emph{côté} ($+\infty$ ou $-\infty$). On retient :
+\[ x^{\text{pair}}\xrightarrow[x\to-\infty]{}+\infty,\qquad x^{\text{impair}}\xrightarrow[x\to-\infty]{}-\infty,\qquad x^{n}\xrightarrow[x\to+\infty]{}+\infty. \]
+
+\begin{exemple}[polynômes]
+\[ \lim_{x\to+\infty}(x^4+3x^3-2x+5)=\lim_{x\to+\infty}x^4=+\infty, \]
+\[ \lim_{x\to-\infty}\Bigl(-\tfrac13 x^5-3x+2\Bigr)=\lim_{x\to-\infty}\Bigl(-\tfrac13 x^5\Bigr)
+   =-\tfrac13\times(-\infty)=+\infty. \]
+\end{exemple}
+
+\section{2. Fonction rationnelle : rapport des termes dominants}
+
+\begin{idee}[limite d'une rationnelle en $\pm\infty$]
+\[ \boxed{\ \lim_{x\to\pm\infty}\frac{a_n x^n+\dots}{b_m x^m+\dots}=\lim_{x\to\pm\infty}\frac{a_n x^n}{b_m x^m}=\lim_{x\to\pm\infty}\frac{a_n}{b_m}\,x^{\,n-m}\ } \]
+\end{idee}
+
+\begin{methode}[comparer les degrés]
+Après simplification en $\dfrac{a_n}{b_m}x^{\,n-m}$, on lit le résultat selon $n$ (degré du haut) et
+$m$ (degré du bas) :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item $n>m$ : limite \textbf{infinie} (signe donné par $\frac{a_n}{b_m}$ et la parité de $n-m$) ;
+  \item $n=m$ : limite \textbf{finie} $=\dfrac{a_n}{b_m}$ \ (asymptote horizontale $y=\frac{a_n}{b_m}$) ;
+  \item $n<m$ : limite \textbf{nulle} ($0$).
+\end{itemize}
+\end{methode}
+
+\begin{exemple}[les trois cas]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=3pt]
+  \item $n=m$ : $\displaystyle\lim_{x\to+\infty}\frac{x^4+3x^3-2x+5}{3x^4+1}=\lim_{x\to+\infty}\frac{x^4}{3x^4}=\frac13$ (asymptote horizontale $y=\tfrac13$).
+  \item $n>m$ : $\displaystyle\lim_{x\to+\infty}\frac{x^4+\dots}{-3x^2+1}=\lim_{x\to+\infty}\frac{x^4}{-3x^2}=\lim_{x\to+\infty}\frac{x^2}{-3}=-\infty$.
+  \item $n<m$ : $\displaystyle\lim_{x\to-\infty}\frac{x^4+\dots}{-3x^5+1}=\lim_{x\to-\infty}\frac{x^4}{-3x^5}=\lim_{x\to-\infty}\frac{1}{-3x}=0$.
+\end{itemize}
+\end{exemple}
+
+\begin{attention}[c'est une forme indéterminée déguisée]
+Le remplacement direct donnerait $\dfrac{\infty}{\infty}$ (indéterminée) : la règle du terme dominant
+est précisément la technique qui \emph{lève} cette indétermination. Pour un polynôme,
+$\infty-\infty$ se lève de même en gardant le terme dominant.
+\end{attention}
+
+\begin{astuce}[justification par mise en facteur]
+On factorise en haut et en bas par la plus haute puissance : $P(x)=a_n x^n\bigl(1+\frac{a_{n-1}}{a_n x}+\dots\bigr)$.
+La parenthèse tend vers $1$ (chaque $\frac{\cdot}{x^k}\to 0$), ce qui \emph{prouve} que seul $a_n x^n$
+compte. C'est le raisonnement rigoureux derrière la règle rapide.
+\end{astuce}
+
+\end{document}

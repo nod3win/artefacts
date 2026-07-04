@@ -1,0 +1,144 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 2 : Calcul vectoriel
+%  Thème 4 — Produit scalaire et orthogonalité — TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,angles,quotes}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{ideecol}{RGB}{120,94,200}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{vecu}{RGB}{20,20,20}
+\definecolor{vecv}{RGB}{0,110,200}
+\definecolor{vecw}{RGB}{198,93,9}
+\definecolor{axiscol}{RGB}{90,90,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire ?}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=ideecol!6,colframe=ideecol,
+  title={\textsc{Intuition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{rappel}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 4 — Produit scalaire et orthogonalité}\\[2pt]
+{\color{primary}\rule{0.66\linewidth}{1.2pt}}\\[4pt]
+{\small\itshape Une opération entre deux vecteurs dont le résultat est un \emph{nombre} — et le test
+imparable de la perpendicularité.}
+\end{center}
+\vspace{1mm}
+
+\begin{rappel}[les deux visages du produit scalaire]
+Pour $\vec u\,(x;y)$ et $\vec v\,(x';y')$ :
+\[
+  \boxed{\;\vec u\cdot\vec v=x x'+y y'\;}\ \text{(analytique)}
+  \qquad\qquad
+  \boxed{\;\vec u\cdot\vec v=\norm{\vec u}\,\norm{\vec v}\,\cos(\vec u,\vec v)\;}\ \text{(géométrique)}
+\]
+Le résultat est un \textbf{réel} (positif, négatif ou nul), \emph{pas} un vecteur.
+\end{rappel}
+
+\begin{rappel}[propriétés à connaître]
+\[
+  \vec u\cdot\vec v=\vec v\cdot\vec u\ \text{(symétrie)},\qquad
+  \vec u\cdot\vec u=\norm{\vec u}^2\ \text{(carré scalaire)},
+\]
+\[
+  (k\vec u)\cdot\vec v=k(\vec u\cdot\vec v),\qquad
+  (\vec u+\vec w)\cdot\vec v=\vec u\cdot\vec v+\vec w\cdot\vec v\ \text{(linéarité)}.
+\]
+\end{rappel}
+
+\begin{idee}[le critère d'orthogonalité, LE réflexe du thème]
+Deux vecteurs \emph{non nuls} sont \textbf{orthogonaux (perpendiculaires)} si et seulement si leur
+produit scalaire est \textbf{nul} :
+\[
+  \boxed{\;\vec u\perp\vec v \iff \vec u\cdot\vec v=0 \iff x x'+y y'=0\;}
+\]
+C'est le test le plus rapide pour la perpendicularité : on calcule $xx'+yy'$ et on regarde s'il vaut
+$0$ — pas besoin de l'angle. Le \emph{signe} renseigne d'ailleurs sur l'angle :
+$\vec u\cdot\vec v>0$ (angle aigu), $=0$ (droit), $<0$ (angle obtus).
+\end{idee}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (O) at (0,0);
+  \draw[->,>=Stealth,line width=1.3pt,vecu] (O)--(2.4,1.2) node[right,font=\small]{$\vec u\,(2;1)$};
+  \draw[->,>=Stealth,line width=1.3pt,vecv] (O)--(-1.2,2.4) node[above left,font=\small,vecv]{$\vec v\,(-1;2)$};
+  % petit carré d'angle droit à l'origine
+  \draw[line width=0.6pt] ($(O)+(0.313,0.156)$) -- ($(O)+(0.313-0.156,0.156+0.313)$)
+        -- ($(O)+(-0.156,0.313)$);
+  \fill (O) circle (1.4pt);
+  \node[font=\footnotesize,align=left] at (4.2,0.6)
+    {$\vec u\cdot\vec v=2\times(-1)+1\times2=0$\\[1pt]$\Rightarrow\ \vec u\perp\vec v$};
+\end{tikzpicture}\\[1pt]
+{\footnotesize\itshape Le produit scalaire est nul : les deux vecteurs sont perpendiculaires.}
+\end{center}
+
+\begin{methode}[tester si deux droites sont perpendiculaires]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item Trouver un \textbf{vecteur directeur} de chaque droite ($\vc{AB}$ si elle passe par $A$ et $B$,
+        ou $(-b;a)$ à partir de $ax+by+c=0$).
+  \item Calculer le \textbf{produit scalaire} des deux vecteurs directeurs.
+  \item S'il est \textbf{nul}, les droites sont perpendiculaires. (De façon équivalente : $m\times m'=-1$.)
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[calcul et orthogonalité]
+$\vec u\,(3;2)$ et $\vec v\,(-2;3)$ : $\vec u\cdot\vec v=3\times(-2)+2\times3=-6+6=0$. Les vecteurs sont
+\textbf{orthogonaux}.\\
+$\vec a\,(1;4)$ et $\vec b\,(2;3)$ : $\vec a\cdot\vec b=2+12=14>0$ : angle \emph{aigu}, non orthogonaux.
+\end{exemple}
+
+\begin{exemple}[carré scalaire]
+$\vec u\,(3;4)$ : $\vec u\cdot\vec u=3^2+4^2=25=\norm{\vec u}^2$, ce qui redonne $\norm{\vec u}=5$.
+Le produit scalaire d'un vecteur par lui-même est le carré de sa norme.
+\end{exemple}
+
+\begin{exemple}[une application : le travail d'une force]
+Une force $\vec F\,(6;8)$ (en newtons) déplace un objet selon $\vec d\,(3;0)$ (en mètres). Le
+\emph{travail} est $W=\vec F\cdot\vec d=6\times3+8\times0=18$ joules. Si le déplacement était
+perpendiculaire à la force, le travail serait \emph{nul}.
+\end{exemple}
+
+\begin{piege}[à ne pas confondre]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item Produit scalaire $=xx'+yy'$ (on \emph{additionne}). Colinéarité $=xy'-x'y$ (on soustrait,
+        \emph{en croix}). Deux formules différentes !
+  \item Le résultat d'un produit scalaire est un \textbf{nombre}, jamais un vecteur.
+  \item $\vec u\cdot\vec v=0$ signifie \textbf{perpendiculaires}, pas « colinéaires » ni « vecteur nul ».
+\end{itemize}
+\end{piege}
+
+\end{document}

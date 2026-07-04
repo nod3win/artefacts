@@ -1,0 +1,158 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 3 : Trigonométrie
+%  Thème 4 — Équations trigonométriques
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.markings}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{sincol}{RGB}{205,40,55}
+\definecolor{coscol}{RGB}{20,110,200}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Piège à éviter}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\heading}[1]{\medskip\noindent{\large\bfseries\color{primarydark}#1}\par\smallskip}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 4 — Équations trigonométriques}\\[2pt]
+{\color{primarydark}\textsc{Carnet d'entraînement — Fiche 3 : Trigonométrie \quad•\quad Tutoriel}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+Résoudre une équation trigonométrique, c'est trouver \textbf{tous} les angles $x$ vérifiant une
+égalité comme $\cos x=\frac12$. La trigonométrie étant \textbf{périodique}, il y a une infinité de
+solutions : on les décrit par des \textbf{familles} avec un entier $k\in\Z$. Tout repose sur trois
+équivalences à connaître par cœur.
+
+\heading{1. Les trois équivalences fondamentales ($k\in\Z$)}
+
+\begin{idee}[deux angles ont même sinus / cosinus / tangente]
+\[
+\boxed{\;\sin a=\sin b\;}\Longleftrightarrow\;
+a=b+2k\pi\ \ \text{\small(égaux)}\quad\text{ou}\quad a=\pi-b+2k\pi\ \ \text{\small(supplémentaires)}
+\]
+\[
+\boxed{\;\cos a=\cos b\;}\Longleftrightarrow\;
+a=b+2k\pi\quad\text{ou}\quad a=-b+2k\pi\qquad\text{c.-à-d.}\quad a=\pm b+2k\pi\ \ \text{\small(opposés)}
+\]
+\[
+\boxed{\;\tg a=\tg b\;}\Longleftrightarrow\;
+a=b+k\pi\qquad\text{\small(période $\pi$ : ni $k\pi\ldots$ non, ni $2k\pi$ !)}
+\]
+\end{idee}
+
+Le point délicat est la \textbf{période} : $\sin$ et $\cos$ se répètent tous les $2\pi$ (d'où le
+$2k\pi$), tandis que la tangente se répète tous les $\pi$ (d'où le $k\pi$, sans le~$2$).
+
+\heading{2. La méthode en 4 étapes}
+
+\begin{methode}[résoudre une équation trigonométrique]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Isoler} le nombre trigonométrique : ramener à $\cos x=v$, $\sin x=v$ ou $\tg x=v$.
+  \item \textbf{Reconnaître} $v$ comme le $\sin$/$\cos$/$\tg$ d'un \emph{angle de référence} remarquable.
+        Gérer le \textbf{signe} avec les angles associés (un cosinus négatif $\to$ quadrants II/III,
+        un sinus négatif $\to$ quadrants III/IV\ldots).
+  \item \textbf{Écrire les familles} de solutions avec l'équivalence adaptée et le bon $+2k\pi$ ou $+k\pi$.
+  \item Si un \textbf{intervalle} (ou un quadrant) est imposé : donner à $k$ les valeurs entières
+        $\ldots,-1,0,1,2,\ldots$ et ne garder que les solutions qui tombent dedans.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$2\cos x=1$ dans $\mathbb{R}$]
+On isole : $\cos x=\dfrac12=\cos\dfrac{\pi}{3}$. L'équivalence du cosinus donne
+$x=\pm\dfrac{\pi}{3}+2k\pi$. Donc
+$S=\left\{\dfrac{\pi}{3}+2k\pi\,;\ -\dfrac{\pi}{3}+2k\pi \ \middle|\ k\in\Z\right\}$.
+\end{exemple}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.55,line cap=round,>=Stealth]
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.25,0)--(1.35,0) node[right]{\scriptsize$\cos$};
+  \draw[->,black!70] (0,-1.25)--(0,1.3) node[above]{\scriptsize$\sin$};
+  \draw[coscol,thick,dashed] (0.5,-1.02)--(0.5,1.02);
+  \fill[primarydark] (60:1) circle (0.035);
+  \fill[primarydark] (-60:1) circle (0.035);
+  \draw[primarydark,thick] (0,0)--(60:1);
+  \draw[primarydark,thick] (0,0)--(-60:1);
+  \node[primarydark,font=\scriptsize,above right] at (60:1) {$\tfrac{\pi}{3}$};
+  \node[primarydark,font=\scriptsize,below right] at (-60:1) {$-\tfrac{\pi}{3}$};
+  \fill (0,0) circle (0.02);
+\end{tikzpicture}\qquad
+\parbox[c]{6.2cm}{\scriptsize Pour $\cos x=v$, les deux solutions sont \textbf{symétriques par
+rapport à l'axe horizontal} ($x$ et $-x$) : d'où le $\pm$ dans $x=\pm\frac{\pi}{3}+2k\pi$.}
+\end{center}
+
+\heading{3. Sélectionner dans un intervalle}
+\emph{Exemple —} $\tg x=1$ dans $[0;2\pi[$ : $\tg x=\tg\dfrac{\pi}{4}$ donne $x=\dfrac{\pi}{4}+k\pi$
+(période $\pi$). On teste les entiers : $k=0\Rightarrow \dfrac{\pi}{4}$ ;
+$k=1\Rightarrow \dfrac{5\pi}{4}$ ; $k=2\Rightarrow \dfrac{9\pi}{4}\notin[0;2\pi[$. Donc
+$S=\left\{\dfrac{\pi}{4}\,;\,\dfrac{5\pi}{4}\right\}$.
+
+\heading{4. Le piège de l'angle double}
+
+\begin{piege}[$\sin(2x)=v$ : écrire les familles \emph{avant} de diviser par $2$]
+Pour une équation en $2x$ (ou $3x$\ldots), on résout d'abord \textbf{en $2x$}, puis on divise
+\textbf{chaque famille} par $2$. Diviser transforme le $2k\pi$ en $k\pi$ : si on divise trop tôt (ou
+si on oublie le $+2k\pi$), on \textbf{perd la moitié des solutions}.
+\[
+\sin(2x)=\tfrac12 \Rightarrow 2x=\tfrac{\pi}{6}+2k\pi \ \text{ou}\ 2x=\tfrac{5\pi}{6}+2k\pi
+\ \Rightarrow\ x=\tfrac{\pi}{12}+k\pi \ \text{ou}\ x=\tfrac{5\pi}{12}+k\pi.
+\]
+On voit apparaître un $+k\pi$ (et non $+2k\pi$) : c'est lui qui, dans $[0;2\pi[$, fournit
+\emph{quatre} solutions au lieu de deux.
+\end{piege}
+
+\heading{5. Équation linéaire $a\sin x+b\cos x=0$}
+On la ramène à une \textbf{tangente} en divisant par $\cos x$ (licite car $\cos x=0$ donnerait
+$\sin x=0$, impossible). Ainsi $\sin x-\sqrt3\,\cos x=0\Leftrightarrow \tg x=\sqrt3=\tg\dfrac{\pi}{3}$,
+d'où $x=\dfrac{\pi}{3}+k\pi$.
+
+\smallskip
+\textbf{Toujours conclure} en écrivant explicitement $S=\{\dots\}$ : dans $\mathbb{R}$, garde le
+« $+2k\pi$ » / « $+k\pi$ » ($k\in\Z$) ; sur un intervalle, liste les valeurs exactes.
+
+\end{document}

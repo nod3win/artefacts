@@ -1,0 +1,124 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 1 — EXERCICES — Niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  courbe/.style={line width=1.1pt,curvecol},
+  asy/.style={dashed,black!55,line width=0.8pt},
+  proj/.style={dashed,black!55,line width=0.6pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+  ptouvert/.style={circle,draw,fill=white,inner sep=1.1pt,line width=0.7pt},
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Notations, lecture \& calcul direct}\\[2pt]
+{\large\color{primary}Exercices — Niveau Facile}
+\end{center}
+\vspace{4pt}
+{\small\itshape Objectif : lire une notation de limite et calculer une limite par remplacement direct
+quand la fonction est définie. On travaille \textbf{une} mécanique à la fois.}
+\vspace{6pt}
+
+\begin{exercice}[calcul direct par remplacement]
+Toutes ces fonctions sont définies au point visé. Calculer chaque limite en remplaçant $x$ par la cible.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 2}\bigl(3x^2-x+4\bigr)$
+  \item $\displaystyle\lim_{x\to -1}\frac{2x+5}{x^2+3}$
+  \item $\displaystyle\lim_{x\to 4}\bigl(\sqrt{x}+x\bigr)$
+  \item $\displaystyle\lim_{x\to 0}\bigl(x^3+2x-7\bigr)$
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[lire et écrire une notation]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Traduire en une phrase : $\displaystyle\lim_{x\to +\infty} f(x)=3$.
+  \item Traduire en une phrase : $\displaystyle\lim_{x\to 2^{-}} f(x)=-\infty$.
+  \item Écrire avec le symbole $\lim$ : « lorsque $x$ se rapproche de $5$ par la droite, $g(x)$ tend vers $0$ ».
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[limites à gauche et à droite d'une fonction par morceaux]
+Soit $f$ définie par
+\[ f(x)=\begin{cases} x+1 & \text{si } x<2,\\[2pt] 3x-2 & \text{si } x\geq 2.\end{cases} \]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Calculer $\displaystyle\lim_{x\to 2^{-}} f(x)$ (on utilise le morceau valable pour $x<2$).
+  \item Calculer $\displaystyle\lim_{x\to 2^{+}} f(x)$ (on utilise le morceau valable pour $x\geq 2$).
+  \item Les deux résultats sont-ils égaux ? $f$ a-t-elle une limite (globale) en $2$ ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[lecture graphique]
+La courbe de $f$ est donnée ci-dessous. Lire graphiquement les limites demandées.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\begin{axis}[width=10cm,height=5.6cm,axis lines=middle,xlabel={$x$},ylabel={$y$},
+   xmin=-5.5,xmax=5.6,ymin=-1.2,ymax=3.4,xtick={-4,-2,2,4},ytick={1,2,3},
+   tick label style={font=\scriptsize}]
+  % courbe : 2 - 2/(x^2+1)  -> tend vers 2 en +-infini, vaut 0 en 0
+  \addplot[courbe,domain=-5.4:5.4,samples=120]{2-2/(x^2+1)};
+  \draw[asy,primary](axis cs:-5.5,2)--(axis cs:5.6,2);
+  \node[primary,font=\scriptsize,anchor=south west] at (axis cs:-5.3,2.05){$y=2$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to +\infty} f(x)=\ ?$ \qquad
+  \item $\displaystyle\lim_{x\to -\infty} f(x)=\ ?$ \qquad
+  \item $\displaystyle\lim_{x\to 0} f(x)=\ ?$
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[vérifier une continuité]
+Soit $g(x)=\dfrac{x^2-1}{x+3}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Le point $x_0=1$ appartient-il au domaine de $g$ ? (le dénominateur s'annule-t-il ?)
+  \item Calculer $\displaystyle\lim_{x\to 1} g(x)$ et la valeur $g(1)$.
+  \item En déduire si $g$ est continue en $1$ (comparer la limite et $g(1)$).
+\end{enumerate}
+\end{exercice}
+
+\end{document}

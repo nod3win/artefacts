@@ -1,0 +1,105 @@
+% =====================================================================
+%  Thème 3 — Relation fondamentale & formules d'addition — NIVEAU DIFFICILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 3 — Relation fondamentale \& formules d'addition}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} enchaîner \emph{relation fondamentale $\to$ duplication $\to$ addition} sur une même
+donnée, et démontrer proprement une formule. Les sous-questions se construisent : chaque réponse sert à
+la suivante. \textbf{Sans calculatrice}, valeurs \emph{exactes}.
+\end{consigne}
+
+\exo{La chaîne complète}
+On suppose $\sin\alpha=\dfrac{1}{3}$ et $\alpha$ au \textbf{quadrant I}.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Calcule $\cos\alpha$ (valeur exacte, signe justifié par le quadrant).
+\item En déduire $\sin2\alpha$ et $\cos2\alpha$.
+\item Calcule $\sin\!\Big(2\alpha-\dfrac{\pi}{3}\Big)$.
+\item Calcule $\cos\!\Big(2\alpha+\dfrac{\pi}{3}\Big)$.
+\end{enumerate}
+
+\exo{Démontrer les formules de l'angle double}
+On part uniquement de $\cos(a+b)=\cos a\cos b-\sin a\sin b$ et de $\cos^2a+\sin^2a=1$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item En posant $b=a$, démontre que $\cos2a=\cos^2a-\sin^2a$.
+\item En déduire les deux autres écritures : $\cos2a=2\cos^2a-1$ et $\cos2a=1-2\sin^2a$.
+\item En déduire la formule de linéarisation $\sin^2x=\dfrac{1-\cos2x}{2}$.
+\end{enumerate}
+
+\exo{Point sur le cercle et angle double}
+Sur le cercle trigonométrique, le point $M$ correspond à l'angle $\alpha$ situé au \textbf{quadrant II},
+et l'on sait que $\tg\alpha=-\dfrac{3}{2}$.
+\begin{center}
+\begin{tikzpicture}[scale=1.7,line cap=round,>=Stealth]
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.3,0)--(1.35,0) node[right]{\scriptsize$\cos$};
+  \draw[->,black!70] (0,-1.3)--(0,1.35) node[above]{\scriptsize$\sin$};
+  \coordinate (M) at (146.3:1);
+  \draw[primarydark,thick] (0,0)--(M);
+  \fill[primarydark] (M) circle (0.028) node[above left]{\scriptsize$M(\alpha)$};
+  \draw[primarydark,->] (0.28,0) arc (0:146.3:0.28);
+  \fill (0,0) circle (0.02) node[below right]{\scriptsize$O$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item À l'aide de $1+\tg^2\alpha=\dfrac{1}{\cos^2\alpha}$, détermine $\cos\alpha$ puis $\sin\alpha$
+(coordonnées exactes de $M$).
+\item Calcule $\sin2\alpha$ et $\cos2\alpha$.
+\item Calcule $\tg2\alpha$ de deux façons (par $\dfrac{\sin2\alpha}{\cos2\alpha}$ et par la formule
+$\tg2\alpha=\dfrac{2\tg\alpha}{1-\tg^2\alpha}$) et vérifie qu'elles coïncident.
+\end{enumerate}
+
+\exo{Une formule de l'angle triple}
+On veut établir que, pour tout angle $a$, $\ \sin3a=3\sin a-4\sin^3a$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Écris $\sin3a=\sin(2a+a)$ et développe avec la formule d'addition.
+\item Remplace $\sin2a$ et $\cos2a$ par leurs expressions, puis utilise $\cos^2a=1-\sin^2a$ pour
+conclure.
+\item Application : sachant $\sin a=\dfrac12$ (soit $a=30\degr$), vérifie que la formule redonne bien
+$\sin90\degr=1$.
+\end{enumerate}
+
+\end{document}

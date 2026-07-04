@@ -1,0 +1,83 @@
+% =====================================================================
+%  Thème 4 — Équations trigonométriques — NIVEAU MOYEN
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 4 — Équations trigonométriques}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} gérer les \textbf{valeurs négatives} (choix du bon angle de référence et du bon
+quadrant), isoler le nombre trigonométrique dans une équation du type $a\cdot\sin x+b=0$, et
+\textbf{sélectionner} les solutions imposées par un intervalle ou un quadrant. \textbf{Sans
+calculatrice}, valeurs exactes, conclure par $S$.
+\end{consigne}
+
+\exo{Valeurs négatives}
+Résous dans $\mathbb{R}$ :
+\[
+\textbf{(a)}\ \cos x=-\frac12 \qquad\qquad
+\textbf{(b)}\ \sin x=-\frac{\sqrt3}{2}.
+\]
+
+\exo{Isoler puis sélectionner (cosinus)}
+On considère l'équation $2\cos x+1=0$, avec $x$ situé dans le \textbf{2\textsuperscript{e} quadrant}.
+Résous-la et donne la (les) solution(s) retenue(s).
+
+\exo{Isoler puis sélectionner (sinus)}
+On considère l'équation $2\sin x-\sqrt3=0$, avec $x$ situé dans le \textbf{2\textsuperscript{e}
+quadrant}. Résous-la et donne la (les) solution(s) retenue(s).
+
+\exo{Sélection sur un intervalle (tangente)}
+Résous dans $[0\,;\,2\pi[$ :
+\[
+\tg x=-1 .
+\]
+
+\exo{Sélection sur un intervalle (sinus)}
+Résous dans $[0\,;\,2\pi[$ :
+\[
+\sin x=-\frac12 .
+\]
+
+\end{document}

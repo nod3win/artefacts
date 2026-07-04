@@ -1,0 +1,99 @@
+% =====================================================================
+%  Thème 3 — Relation fondamentale & formules d'addition — NIVEAU FACILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 3 — Relation fondamentale \& formules d'addition}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} appliquer directement la relation fondamentale, les trois écritures de $\cos2a$ et
+une formule d'addition sur des angles remarquables. \textbf{Sans calculatrice}, valeurs
+\emph{exactes}. Quand un signe $\pm$ apparaît, le quadrant est toujours précisé.
+\end{consigne}
+
+\exo{La relation fondamentale de tête}
+On donne $\cos\alpha$ ; calcule $\sin^2\alpha$ à l'aide de $\cos^2\alpha+\sin^2\alpha=1$.
+\[
+\textbf{(a)}\ \cos\alpha=\frac{3}{5} \qquad
+\textbf{(b)}\ \cos\alpha=\frac{\sqrt3}{2} \qquad
+\textbf{(c)}\ \cos\alpha=\frac{1}{3} \qquad
+\textbf{(d)}\ \cos\alpha=0
+\]
+
+\exo{Le signe décidé par le quadrant}
+Détermine $\cos\alpha$ (valeur exacte, signe compris).
+\[
+\textbf{(a)}\ \sin\alpha=\frac{4}{5},\ \text{quadrant I} \qquad
+\textbf{(b)}\ \sin\alpha=\frac{1}{2},\ \text{quadrant II} \qquad
+\textbf{(c)}\ \sin\alpha=-\frac{\sqrt2}{2},\ \text{quadrant III}
+\]
+
+\exo{Reconnaître les trois visages de $\cos 2a$}
+Complète chaque égalité par la bonne expression ($\cos^2a-\sin^2a$, \ $2\cos^2a-1$ \ ou \ $1-2\sin^2a$).
+\[
+\textbf{(a)}\ \cos2a=\ldots\ \text{(avec seulement }\cos a) \qquad
+\textbf{(b)}\ \cos2a=\ldots\ \text{(avec seulement }\sin a)
+\]
+\[
+\textbf{(c)}\ \text{Écris }\sin2a\text{ en fonction de }\sin a\text{ et }\cos a.
+\]
+
+\exo{Une addition sur des angles connus}
+En utilisant $\cos(a+b)=\cos a\cos b-\sin a\sin b$, calcule (les deux angles sont remarquables).
+\[
+\textbf{(a)}\ \cos\!\Big(\frac{\pi}{3}+\frac{\pi}{6}\Big) \qquad
+\textbf{(b)}\ \sin\!\Big(\frac{\pi}{4}+\frac{\pi}{4}\Big) \qquad
+\textbf{(c)}\ \cos\!\Big(\frac{\pi}{2}+\frac{\pi}{3}\Big)
+\]
+
+\exo{Linéariser}
+À l'aide de $\cos^2x=\dfrac{1+\cos2x}{2}$ et $\sin^2x=\dfrac{1-\cos2x}{2}$, exprime en fonction de
+$\cos2x$ (sans carré).
+\[
+\textbf{(a)}\ \cos^2x \qquad
+\textbf{(b)}\ \sin^2x \qquad
+\textbf{(c)}\ \cos^2x-\sin^2x
+\]
+
+\end{document}

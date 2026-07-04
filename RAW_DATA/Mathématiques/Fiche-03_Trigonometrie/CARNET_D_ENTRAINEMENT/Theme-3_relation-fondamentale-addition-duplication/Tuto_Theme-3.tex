@@ -1,0 +1,184 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 3 : Trigonométrie
+%  Thème 3 — Relation fondamentale & formules d'addition/duplication
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.markings}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{sincol}{RGB}{205,40,55}
+\definecolor{coscol}{RGB}{20,110,200}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Piège à éviter}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\heading}[1]{\medskip\noindent{\large\bfseries\color{primarydark}#1}\par\smallskip}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 3 — Relation fondamentale \& formules d'addition}\\[2pt]
+{\color{primarydark}\textsc{Carnet d'entraînement — Fiche 3 : Trigonométrie \quad•\quad Tutoriel}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+Ce thème apprend à \textbf{calculer} : à partir d'\emph{un} nombre trigonométrique connu, retrouver les
+autres (relation fondamentale) ; et à obtenir des valeurs exactes d'angles non remarquables en les
+\textbf{décomposant} (formules d'addition et de duplication). Un rappel des valeurs remarquables :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|>{\columncolor{primary!12}}c|c|c|c|c|c|}
+\hline
+\rowcolor{primary!20}
+$\alpha$ & $0$ & $\frac{\pi}{6}\,(30\degr)$ & $\frac{\pi}{4}\,(45\degr)$ & $\frac{\pi}{3}\,(60\degr)$ & $\frac{\pi}{2}\,(90\degr)$\\
+\hline
+$\sin\alpha$ & $0$ & $\frac{1}{2}$ & $\frac{\sqrt2}{2}$ & $\frac{\sqrt3}{2}$ & $1$\\ \hline
+$\cos\alpha$ & $1$ & $\frac{\sqrt3}{2}$ & $\frac{\sqrt2}{2}$ & $\frac{1}{2}$ & $0$\\ \hline
+$\tg\alpha$ & $0$ & $\frac{\sqrt3}{3}$ & $1$ & $\sqrt3$ & $\nexists$\\
+\hline
+\end{tabular}
+\end{center}
+
+\heading{A. La relation fondamentale}
+Comme un point du cercle vérifie $x^2+y^2=1$ avec $x=\cos\alpha$, $y=\sin\alpha$ :
+\[
+\boxed{\;\cos^2\alpha+\sin^2\alpha=1\;}\qquad\Longrightarrow\qquad
+\sin\alpha=\pm\sqrt{1-\cos^2\alpha},\qquad \cos\alpha=\pm\sqrt{1-\sin^2\alpha}.
+\]
+En divisant cette égalité par $\cos^2\alpha$, puis par $\sin^2\alpha$, on obtient deux relations pour la
+tangente et la cotangente :
+\[
+1+\tg^2\alpha=\dfrac{1}{\cos^2\alpha},\qquad\qquad 1+\cotg^2\alpha=\dfrac{1}{\sin^2\alpha}.
+\]
+
+\begin{minipage}{0.60\textwidth}
+\begin{idee}[le signe $\pm$ se règle avec le quadrant]
+La racine carrée seule ne donne que la \emph{grandeur}. C'est le \textbf{quadrant} qui fixe le
+\textbf{signe} : $\cos>0$ à droite (I, IV), $\sin>0$ en haut (I, II). Toujours l'écrire avant de
+conclure --- c'est l'erreur la plus fréquente.
+\end{idee}
+\end{minipage}\hfill
+\begin{minipage}{0.36\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0,line cap=round,>=Stealth]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (3.2,0);
+  \coordinate (C) at (3.2,1.9);
+  \draw[primary,line width=1pt] (A)--(B)--(C)--cycle;
+  \draw[black!55] (2.9,0) |-(3.2,0.3);
+  \node[below] at (1.6,-0.05) {\scriptsize adjacent};
+  \node[right] at (3.2,0.95) {\scriptsize opposé};
+  \node[above left] at (1.7,1.05) {\scriptsize hypoténuse};
+  \pic[draw=primarydark,angle radius=8mm,"\scriptsize$\alpha$"]{angle=B--A--C};
+\end{tikzpicture}\\[1mm]
+{\scriptsize$\cos\alpha=\frac{\text{adj}}{\text{hyp}},\ \sin\alpha=\frac{\text{opp}}{\text{hyp}},\ \tg\alpha=\frac{\text{opp}}{\text{adj}}$}
+\end{minipage}
+
+\begin{methode}[un nombre connu $+$ le quadrant $\Rightarrow$ les autres]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item Choisir la bonne relation : $\cos^2+\sin^2=1$ si on part de $\cos$ ou $\sin$ ;
+        $1+\tg^2=\frac{1}{\cos^2}$ si on part de la tangente.
+  \item Isoler le carré, prendre la racine : on obtient la \textbf{grandeur} ($\pm$).
+  \item Fixer le \textbf{signe} d'après le quadrant donné.
+  \item En déduire les autres par $\tg\alpha=\frac{\sin\alpha}{\cos\alpha}$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\sin\alpha=-\tfrac15$, quadrant IV]
+$\cos^2\alpha=1-\frac{1}{25}=\frac{24}{25}$. Au quadrant IV $\cos>0$ :
+$\cos\alpha=+\frac{\sqrt{24}}{5}=\frac{2\sqrt6}{5}$. Puis
+$\tg\alpha=\dfrac{-1/5}{2\sqrt6/5}=-\dfrac{1}{2\sqrt6}=-\dfrac{\sqrt6}{12}$.
+\end{exemple}
+
+\heading{B. Formules d'addition}
+\[
+\cos(a\pm b)=\cos a\cos b\mp\sin a\sin b,\qquad
+\sin(a\pm b)=\sin a\cos b\pm\cos a\sin b,\qquad
+\tg(a\pm b)=\dfrac{\tg a\pm\tg b}{1\mp\tg a\,\tg b}.
+\]
+Mémo des signes : pour le \textbf{cosinus} le signe est \emph{opposé} à celui de l'opération ; pour le
+\textbf{sinus} il est \emph{identique}.
+
+\begin{methode}[valeur exacte d'un angle non remarquable]
+Écrire l'angle comme \textbf{somme ou différence} de deux angles remarquables
+($15\degr=45\degr-30\degr$, $75\degr=45\degr+30\degr$, $105\degr=60\degr+45\degr$), puis appliquer la
+formule et lire le tableau.
+\end{methode}
+
+\begin{exemple}[$\cos15\degr$]
+$\cos15\degr=\cos(45\degr-30\degr)=\cos45\degr\cos30\degr+\sin45\degr\sin30\degr
+=\frac{\sqrt2}{2}\cdot\frac{\sqrt3}{2}+\frac{\sqrt2}{2}\cdot\frac12=\dfrac{\sqrt6+\sqrt2}{4}.$
+De même $\tg15\degr=\dfrac{\tg45\degr-\tg30\degr}{1+\tg45\degr\tg30\degr}=2-\sqrt3.$
+\end{exemple}
+
+\begin{piege}[le cosinus n'est pas linéaire]
+$\cos(a+b)\neq\cos a+\cos b$ et $\sin(a+b)\neq\sin a+\sin b$. Ainsi
+$\cos(60\degr+60\degr)=\cos120\degr=-\frac12$, alors que $\cos60\degr+\cos60\degr=1$ : totalement
+différent. On \textbf{doit} passer par la formule.
+\end{piege}
+
+\heading{C. Formules de duplication (angle double)}
+En posant $b=a$ dans les formules d'addition :
+\[
+\sin2a=2\sin a\cos a,\qquad
+\cos2a=\cos^2a-\sin^2a=2\cos^2a-1=1-2\sin^2a,\qquad
+\tg2a=\dfrac{2\tg a}{1-\tg^2a}.
+\]
+Lues à l'envers, les deux dernières donnent la \textbf{linéarisation} (baisser le carré) :
+\[
+\cos^2 x=\dfrac{1+\cos2x}{2},\qquad\qquad \sin^2 x=\dfrac{1-\cos2x}{2}.
+\]
+
+\begin{exemple}[chaîne complète : $\sin\alpha=\tfrac13$, $\alpha$ au quadrant I]
+$\cos\alpha=+\sqrt{1-\frac19}=\frac{2\sqrt2}{3}$. Puis
+$\sin2\alpha=2\cdot\frac13\cdot\frac{2\sqrt2}{3}=\frac{4\sqrt2}{9}$ et
+$\cos2\alpha=1-2\cdot\frac19=\frac79$. Enfin, par addition,
+\[
+\sin\!\Big(2\alpha-\tfrac{\pi}{3}\Big)=\sin2\alpha\cos\tfrac{\pi}{3}-\cos2\alpha\sin\tfrac{\pi}{3}
+=\frac{4\sqrt2}{9}\cdot\frac12-\frac79\cdot\frac{\sqrt3}{2}=\dfrac{4\sqrt2-7\sqrt3}{18}.
+\]
+\end{exemple}
+
+\end{document}

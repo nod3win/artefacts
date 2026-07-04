@@ -1,0 +1,90 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 3} — Factorisation et résolution}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Facile — Exercices}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}\\[3pt]
+{\small\itshape Une seule mécanique à la fois. Aucune calculatrice.}
+\end{center}
+\vspace{1mm}
+
+\begin{exo}[mise en évidence d'un facteur commun]
+Factorise en sortant le facteur commun :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $2x^{2}-3x$ \qquad
+  \item $6x^{3}+9x^{2}$ \qquad
+  \item $5x^{2}+10x$ \qquad
+  \item $4x^{3}-8x$ \qquad
+  \item $x^{2}y+xy^{2}$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[différence de deux carrés]
+Factorise à l'aide de $A^{2}-B^{2}=(A-B)(A+B)$ :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $x^{2}-9$ \qquad
+  \item $4x^{2}-25$ \qquad
+  \item $x^{2}-1$ \qquad
+  \item $9-x^{2}$ \qquad
+  \item $16x^{2}-1$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[carré parfait]
+Reconnais le carré et factorise ($A^{2}\pm2AB+B^{2}=(A\pm B)^{2}$) :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $x^{2}+6x+9$ \qquad
+  \item $x^{2}-4x+4$ \qquad
+  \item $9x^{2}+6x+1$ \qquad
+  \item $x^{2}-10x+25$ \qquad
+  \item $4x^{2}+4x+1$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[discriminant et racines du trinôme]
+Calcule le discriminant $\Delta$, précise le nombre de racines, puis donne-les :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $x^{2}-3x+2=0$ \qquad
+  \item $x^{2}-5x+6=0$ \qquad
+  \item $x^{2}-2x+1=0$ \qquad
+  \item $x^{2}+x+1=0$
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[règle du produit nul]
+Résous dans $\R$ (un produit est nul si un facteur est nul) :
+\begin{enumerate}[label=\alph*),leftmargin=2em,topsep=1pt,itemsep=1pt]
+  \item $(x-1)(x+3)=0$ \qquad
+  \item $x(2x-1)=0$ \qquad
+  \item $(x-2)^{2}=0$ \qquad
+  \item $(2x+5)(x-4)=0$ \qquad
+  \item $3x(x+7)=0$
+\end{enumerate}
+\end{exo}
+
+\end{document}

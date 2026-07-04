@@ -1,0 +1,168 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,patterns,backgrounds,shapes.geometric,decorations.pathreplacing,decorations.markings}
+\usepackage[a4paper,margin=2.15cm,headheight=26pt,headsep=12pt]{geometry}
+\usepackage{titlesec}
+
+% ---------------- Palette ----------------
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{barcol}{RGB}{0,151,169}
+\definecolor{barcold}{RGB}{0,110,124}
+\definecolor{modecol}{RGB}{200,55,55}
+\definecolor{meancol}{RGB}{0,90,200}
+\definecolor{medcol}{RGB}{160,90,190}
+\definecolor{quartcol}{RGB}{0,135,90}
+\definecolor{ogivecol}{RGB}{176,74,0}
+
+% ---------------- Boîtes ----------------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+  fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox{definition}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{propriete}[1][]{boxbase,colback=thmcol!7,colframe=thmcol,
+  title={\textsc{Propriété}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% Boîte "exercice" et "corrigé" (titre libre passé en argument)
+\newtcolorbox{exobox}[1]{boxbase,colback=primary!4,colframe=primary,
+  before skip=8pt,after skip=8pt,title={#1}}
+\newtcolorbox{corbox}[1]{boxbase,colback=excol!5,colframe=excol!85!black,
+  before skip=8pt,after skip=8pt,title={#1}}
+
+% ---------------- En-tête ----------------
+\newcommand{\docpart}[1]{\def\thedocpart{#1}}
+\docpart{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Statistiques descriptives}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{\thedocpart}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\setlist{topsep=2pt,itemsep=1.5pt,parsep=0pt}
+
+% Bandeau de titre du document
+\newcommand{\bandeau}[2]{%
+\begin{tcolorbox}[boxbase,colback=primary,colframe=primarydark,halign=center,
+   before skip=2pt,after skip=12pt]
+{\LARGE\bfseries\color{white} #1}\\[3pt]{\normalsize\color{white} #2}
+\end{tcolorbox}}
+
+\newcommand{\ecm}{\sigma_m}
+\newcommand{\ect}{\sigma}
+\newcommand{\med}{M\!e}
+\docpart{Tutoriel — Thème 2}
+\begin{document}
+\bandeau{Thème 2 — Mode et moyenne}{Valeur la plus fréquente et moyenne pondérée}
+
+\noindent\textbf{But du thème.} Deux indicateurs de \emph{position} (le « centre » d'une série) :
+le \textbf{mode}, qui se lit sans calcul, et la \textbf{moyenne}, qui se calcule toujours de la même
+façon — une \emph{moyenne pondérée}. Ce thème automatise ces deux gestes et la propriété de
+\textbf{linéarité} de la moyenne (très rentable au concours).
+
+\section{Le mode : la valeur la plus fréquente}
+
+\begin{definition}[mode $M$]
+Le \textbf{mode} est la modalité (ou la classe) dont l'\textbf{effectif $n_i$ est le plus grand}.
+On le lit directement dans la colonne des effectifs : aucun calcul. Attention, le mode est une
+\emph{valeur} (ou une classe), pas un effectif.
+\end{definition}
+
+\begin{exemple}[lecture du mode]
+Notes : $2$ ($15$ élèves), $5$ ($10$ élèves), $8$ ($5$ élèves). Le plus grand effectif est $15$,
+donc $M=2$ (et surtout pas $M=15$). Sur des classes, si $[85,95[$ a l'effectif maximal, alors
+$M=[85,95[$ (ou $M=90$, son centre).
+\end{exemple}
+
+\section{La moyenne arithmétique pondérée}
+
+\begin{formule}[moyenne d'une série regroupée]
+\[
+\boxed{\;m=\frac{1}{N}\sum_{i=1}^{k} n_i\,x_i=\frac{n_1x_1+n_2x_2+\cdots+n_kx_k}{N}\;}
+\]
+$x_i$ : centre de classe (ou valeur si discret) ; $n_i$ : effectif (le « poids ») ; $N=\sum n_i$.
+\textbf{Unité :} celle du caractère. On multiplie \emph{toujours} chaque valeur par son effectif :
+c'est une moyenne \textbf{pondérée}, pas une moyenne « simple » des $x_i$.
+\end{formule}
+
+\begin{methode}[calculer une moyenne en 3 gestes]
+\begin{enumerate}
+  \item Dresser la colonne des produits $n_i x_i$ (valeur $\times$ effectif).
+  \item Additionner cette colonne : on obtient $\sum n_i x_i$.
+  \item Diviser par $N$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[moyenne pondérée]
+Notes $2$ ($15$), $5$ ($10$), $8$ ($5$), $N=30$ :
+\[
+m=\frac{15\times2+10\times5+5\times8}{30}=\frac{30+50+40}{30}=\frac{120}{30}=\mathbf{4}.
+\]
+La note $2$, très fréquente, « tire » la moyenne vers le bas : c'est tout l'effet des poids.
+\end{exemple}
+
+\section{La moyenne est linéaire : le réflexe qui fait gagner du temps}
+
+\begin{propriete}[effet d'un changement d'échelle]
+Si l'on transforme chaque valeur par $x_i\mapsto \alpha x_i+\beta$, alors la moyenne devient
+\[
+\boxed{\,m'=\alpha\,m+\beta\,.}
+\]
+Cas particuliers : ajouter $\beta$ à toutes les valeurs ajoute $\beta$ à la moyenne ;
+multiplier toutes les valeurs par $\alpha$ multiplie la moyenne par $\alpha$.
+\end{propriete}
+
+\begin{exemple}[atteindre une moyenne cible]
+Série de moyenne $m=4/10$. On veut une moyenne de $5$. En ajoutant $1$ point à chaque note
+($\alpha=1,\ \beta=1$) : $m'=1\times4+1=5$. \checkmark\;
+En \emph{doublant} chaque note ($\alpha=2,\ \beta=0$) on obtiendrait $m'=2\times4=8$.
+\end{exemple}
+
+\begin{remarque}[repérer le mode et la moyenne « à la main »]
+La moyenne peut tomber \emph{entre} deux valeurs (ex.\ $4{,}0$ n'est la note de personne) : c'est
+normal, c'est un résumé, pas une valeur observée. Le mode, lui, est \emph{toujours} une valeur
+réellement présente (celle du plus grand bâton / de la plus haute barre).
+\end{remarque}
+
+\begin{attention}[ne pas oublier de pondérer]
+L'erreur nº1 : faire $\dfrac{2+5+8}{3}=5$ au lieu de la moyenne pondérée $4$. Tant qu'il y a des
+effectifs (ou des classes), \textbf{on pondère}. La moyenne « simple » ne vaut que si tous les
+effectifs sont égaux à $1$.
+\end{attention}
+\end{document}

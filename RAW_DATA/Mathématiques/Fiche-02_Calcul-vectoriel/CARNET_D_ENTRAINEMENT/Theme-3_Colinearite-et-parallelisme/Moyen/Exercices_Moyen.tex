@@ -1,0 +1,76 @@
+% =====================================================================
+%  Thème 3 — Colinéarité et parallélisme — Niveau MOYEN — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Moyen — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Colinéarité et parallélisme — Niveau Moyen}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : remonter d'une condition de colinéarité vers une inconnue, tester
+l'alignement avec un paramètre, et décider du parallélisme de deux droites.}
+\vspace{2mm}
+
+\exo{1} \textbf{Trouver une composante inconnue.}
+Déterminer la (ou les) valeur(s) rendant les deux vecteurs colinéaires.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec u\,(2;3)$ et $\vec v\,(6;y)$.
+  \item $\vec u\,(4;-1)$ et $\vec v\,(x;2)$.
+  \item $\vec u\,(3;x)$ et $\vec v\,(x;12)$.
+\end{enumerate}
+
+\exo{2} \textbf{Alignement avec un paramètre.}
+On donne $A\,(1;2)$, $B\,(3;m)$ et $C\,(5;8)$, où $m$ est un réel.
+Déterminer $m$ pour que $A$, $B$, $C$ soient alignés.
+
+\exo{3} \textbf{Parallélisme de droites par leurs équations.}
+On considère
+\[
+  d:\ 2x-3y+1=0,\qquad d':\ 4x-6y+7=0,\qquad d'':\ x+y-2=0.
+\]
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Donner un vecteur directeur de chacune des trois droites.
+  \item Quelles droites sont parallèles entre elles ?
+  \item Les droites $d$ et $d'$ sont-elles confondues ou strictement parallèles ? Justifier.
+\end{enumerate}
+
+\exo{4} \textbf{Parallélisme de droites par des points.}
+On donne $A\,(0;1)$, $B\,(2;5)$, $C\,(1;0)$ et $D\,(3;4)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Donner un vecteur directeur de $(AB)$ et de $(CD)$.
+  \item Les droites $(AB)$ et $(CD)$ sont-elles parallèles ?
+  \item Sont-elles confondues (i.e.\ $C$ appartient-il à $(AB)$) ou strictement parallèles ?
+\end{enumerate}
+
+\exo{5} \textbf{Construire une droite parallèle.}
+Soit $d$ la droite passant par $A\,(2;1)$ et $B\,(5;7)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Donner un vecteur directeur de $d$ et sa pente.
+  \item Déterminer l'équation réduite de la droite $d'$ parallèle à $d$ et passant par l'origine.
+\end{enumerate}
+
+\end{document}

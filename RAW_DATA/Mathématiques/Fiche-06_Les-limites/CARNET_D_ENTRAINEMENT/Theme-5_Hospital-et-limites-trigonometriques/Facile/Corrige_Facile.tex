@@ -1,0 +1,86 @@
+% =====================================================================
+%  Thème 5 — CORRIGÉ — Niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Corrigé Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 5 — L'Hospital \& limites trigonométriques}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Facile}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[l'Hospital est-il applicable ?]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\dfrac{\sin 0}{0}=\dfrac00$ : \textbf{indéterminée} (l'Hospital applicable).
+  \item $\dfrac{\cos 0}{0+1}=\dfrac{1}{1}=1$ : forme \textbf{déterminée}, limite $=1$ (pas d'Hospital).
+  \item $\dfrac{+\infty}{+\infty}$ : \textbf{indéterminée} (l'Hospital applicable).
+  \item $\dfrac{4}{1}=4$ : forme \textbf{déterminée}, limite $=4$ (pas d'Hospital).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[l'Hospital, une fois]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{e^x-1}{x}=\lim_{x\to 0}\frac{(e^x-1)'}{(x)'}=\lim_{x\to0}\frac{e^x}{1}=e^0=1$.
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}=\lim_{x\to 0}\frac{\cos x}{1}=\cos 0=1$.
+  \item $\displaystyle\lim_{x\to 1}\frac{\ln x}{x-1}=\lim_{x\to 1}\frac{1/x}{1}=\frac{1}{1}=1$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[limites trigonométriques directes]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}=1$.
+  \item $\displaystyle\lim_{x\to 0}\frac{\tan x}{x}=1$.
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin 2x}{2x}=1$ (poser $u=2x\to 0$ : $\frac{\sin u}{u}\to 1$).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[reconstituer $\frac{\sin(\square)}{\square}$]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\frac{\sin 2x}{3x}=\frac{\sin 2x}{2x}\times\frac{2x}{3x}=\frac{\sin 2x}{2x}\times\frac23\xrightarrow[x\to0]{}1\times\frac23=\frac23$.
+  \item $\displaystyle\frac{\sin 3x}{x}=\frac{\sin 3x}{3x}\times 3\xrightarrow[x\to0]{}1\times 3=3$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[l'Hospital sur un quotient polynomial]
+Forme $\frac{1-1}{1-1}=\frac00$. Par l'Hospital :
+\[ \lim_{x\to 1}\frac{x^2-1}{x-1}=\lim_{x\to 1}\frac{2x}{1}=2. \]
+Vérification par factorisation : $\dfrac{x^2-1}{x-1}=\dfrac{(x-1)(x+1)}{x-1}=x+1\xrightarrow[x\to1]{}2$. \checkmark
+\end{correction}
+
+\end{document}

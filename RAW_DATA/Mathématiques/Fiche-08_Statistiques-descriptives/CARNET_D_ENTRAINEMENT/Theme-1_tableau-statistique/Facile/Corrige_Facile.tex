@@ -1,0 +1,132 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,patterns,backgrounds,shapes.geometric,decorations.pathreplacing,decorations.markings}
+\usepackage[a4paper,margin=2.15cm,headheight=26pt,headsep=12pt]{geometry}
+\usepackage{titlesec}
+
+% ---------------- Palette ----------------
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{barcol}{RGB}{0,151,169}
+\definecolor{barcold}{RGB}{0,110,124}
+\definecolor{modecol}{RGB}{200,55,55}
+\definecolor{meancol}{RGB}{0,90,200}
+\definecolor{medcol}{RGB}{160,90,190}
+\definecolor{quartcol}{RGB}{0,135,90}
+\definecolor{ogivecol}{RGB}{176,74,0}
+
+% ---------------- Boîtes ----------------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+  fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox{definition}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{propriete}[1][]{boxbase,colback=thmcol!7,colframe=thmcol,
+  title={\textsc{Propriété}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% Boîte "exercice" et "corrigé" (titre libre passé en argument)
+\newtcolorbox{exobox}[1]{boxbase,colback=primary!4,colframe=primary,
+  before skip=8pt,after skip=8pt,title={#1}}
+\newtcolorbox{corbox}[1]{boxbase,colback=excol!5,colframe=excol!85!black,
+  before skip=8pt,after skip=8pt,title={#1}}
+
+% ---------------- En-tête ----------------
+\newcommand{\docpart}[1]{\def\thedocpart{#1}}
+\docpart{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Statistiques descriptives}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{\thedocpart}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\setlist{topsep=2pt,itemsep=1.5pt,parsep=0pt}
+
+% Bandeau de titre du document
+\newcommand{\bandeau}[2]{%
+\begin{tcolorbox}[boxbase,colback=primary,colframe=primarydark,halign=center,
+   before skip=2pt,after skip=12pt]
+{\LARGE\bfseries\color{white} #1}\\[3pt]{\normalsize\color{white} #2}
+\end{tcolorbox}}
+
+\newcommand{\ecm}{\sigma_m}
+\newcommand{\ect}{\sigma}
+\newcommand{\med}{M\!e}
+\docpart{Facile — Corrigé — Thème 1}
+\begin{document}
+\bandeau{Thème 1 — Le tableau statistique}{Niveau Facile — corrigé}
+
+\begin{corbox}{Corrigé 1 — Centre de classe}
+On applique $x_i=\dfrac{a+b}{2}$ (milieu de l'intervalle).
+\[
+\text{(a) } \frac{55+65}{2}=\mathbf{60}\quad
+\text{(b) } \frac{100+110}{2}=\mathbf{105}\quad
+\text{(c) } \frac{0+4}{2}=\mathbf{2}\quad
+\text{(d) } \frac{12{,}5+17{,}5}{2}=\mathbf{15}.
+\]
+\end{corbox}
+
+\begin{corbox}{Corrigé 2 — Effectif total}
+On additionne toute la colonne :
+\[ N=3+7+12+15+8+5=\mathbf{50}. \]
+\end{corbox}
+
+\begin{corbox}{Corrigé 3 — Fréquence}
+\[ f_i=\frac{n_i}{N}=\frac{18}{50}=\mathbf{0{,}36}\ =\ \mathbf{36\,\%}. \]
+\emph{Lecture :} $36\,\%$ des individus appartiennent à cette classe.
+\end{corbox}
+
+\begin{corbox}{Corrigé 4 — Effectifs cumulés}
+On additionne de proche en proche : $6$ ; $6+11=17$ ; $17+9=26$ ; $26+4=30$.
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$n_i$ & 6 & 11 & 9 & 4 \\\hline
+$n_c$ & 6 & 17 & 26 & \textbf{30} \\\hline
+\end{tabular}
+\end{center}
+La dernière case vaut $\mathbf{30}$ : c'est l'effectif total $N=6+11+9+4=30$. La dernière valeur
+cumulée doit \emph{toujours} être égale à $N$ (contrôle).
+\end{corbox}
+
+\begin{corbox}{Corrigé 5 — Retrouver un effectif}
+On inverse $f_i=\dfrac{n_i}{N}$ en $n_i=f_i\times N$ :
+\[ n_i=0{,}15\times 200=\mathbf{30\ \text{patients}}. \]
+\end{corbox}
+\end{document}

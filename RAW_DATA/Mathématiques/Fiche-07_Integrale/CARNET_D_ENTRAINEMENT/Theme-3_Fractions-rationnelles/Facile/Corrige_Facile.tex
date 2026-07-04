@@ -1,0 +1,107 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Fractions rationnelles}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\begin{document}
+\section*{Thème 3 — Fractions rationnelles \quad\textbullet\quad Corrigé Facile}
+
+\begin{corr}[1]
+$\dfrac{2}{(x-1)(x+3)}=\dfrac{A}{x-1}+\dfrac{B}{x+3}$. Astuce «\,multiplier–évaluer\,» :
+$A=\left.\dfrac{2}{x+3}\right|_{x=1}=\dfrac24=\tfrac12$,
+$B=\left.\dfrac{2}{x-1}\right|_{x=-3}=\dfrac{2}{-4}=-\tfrac12$.
+\emph{Contrôle :} $\tfrac12(x+3)-\tfrac12(x-1)=\tfrac12\cdot4=2$ \checkmark. Donc
+\[
+\int \frac{2}{(x-1)(x+3)}\,\dd x
+=\frac12\ln|x-1|-\frac12\ln|x+3|+C.
+\]
+\end{corr}
+
+\begin{corr}[2]
+$\dfrac{1}{(x-2)(x-4)}=\dfrac{A}{x-2}+\dfrac{B}{x-4}$.
+$A=\left.\dfrac{1}{x-4}\right|_{x=2}=\dfrac{1}{-2}=-\tfrac12$,
+$B=\left.\dfrac{1}{x-2}\right|_{x=4}=\dfrac12$.
+\emph{Contrôle :} $-\tfrac12(x-4)+\tfrac12(x-2)=-\tfrac12x+2+\tfrac12x-1=1$ \checkmark. Donc
+\[
+\int \frac{1}{(x-2)(x-4)}\,\dd x
+=-\frac12\ln|x-2|+\frac12\ln|x-4|+C.
+\]
+\end{corr}
+
+\begin{corr}[3]
+$\dfrac{3}{(x+1)(x-2)}=\dfrac{A}{x+1}+\dfrac{B}{x-2}$.
+$A=\left.\dfrac{3}{x-2}\right|_{x=-1}=\dfrac{3}{-3}=-1$,
+$B=\left.\dfrac{3}{x+1}\right|_{x=2}=\dfrac{3}{3}=1$.
+\emph{Contrôle :} $-1(x-2)+1(x+1)=-x+2+x+1=3$ \checkmark. Donc
+\[
+\int \frac{3}{(x+1)(x-2)}\,\dd x
+=-\ln|x+1|+\ln|x-2|+C.
+\]
+\end{corr}
+
+\begin{corr}[4]
+$\dfrac{5}{(x-3)(x+2)}=\dfrac{A}{x-3}+\dfrac{B}{x+2}$.
+$A=\left.\dfrac{5}{x+2}\right|_{x=3}=\dfrac{5}{5}=1$,
+$B=\left.\dfrac{5}{x-3}\right|_{x=-2}=\dfrac{5}{-5}=-1$.
+\emph{Contrôle :} $1(x+2)-1(x-3)=5$ \checkmark. Donc
+\[
+\int \frac{5}{(x-3)(x+2)}\,\dd x
+=\ln|x-3|-\ln|x+2|+C.
+\]
+\end{corr}
+
+\begin{corr}[5]
+$\dfrac{4}{x(x-4)}=\dfrac{A}{x}+\dfrac{B}{x-4}$.
+$A=\left.\dfrac{4}{x-4}\right|_{x=0}=\dfrac{4}{-4}=-1$,
+$B=\left.\dfrac{4}{x}\right|_{x=4}=\dfrac{4}{4}=1$.
+\emph{Contrôle :} $-1(x-4)+1\cdot x=4$ \checkmark. Donc
+\[
+\int \frac{4}{x(x-4)}\,\dd x
+=-\ln|x|+\ln|x-4|+C.
+\]
+\end{corr}
+
+\end{document}

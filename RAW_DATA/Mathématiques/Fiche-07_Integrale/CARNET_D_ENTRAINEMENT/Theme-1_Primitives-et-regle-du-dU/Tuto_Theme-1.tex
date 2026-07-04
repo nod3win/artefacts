@@ -1,0 +1,135 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Primitives \& règle du dU}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+
+\section*{Tutoriel — Primitives usuelles et la règle du $\dd U$}
+
+On cherche ici des \textbf{intégrales indéfinies} : le résultat est une \emph{fonction}, et il se
+termine \textbf{toujours} par $+\,C$ (la constante d'intégration). Toute la mécanique consiste à
+reconnaître, dans l'intégrande, une brique $U(x)$ accompagnée de son différentiel
+$\dd U = U'(x)\,\dd x$, puis à appliquer une des six formes du formulaire.
+
+\begin{idee}[le seul réflexe à automatiser]
+Une primitive se \emph{vérifie} en la dérivant : si l'on retombe sur l'intégrande, c'est juste.
+Faites-le systématiquement — c'est le meilleur détecteur d'erreurs de signe et de coefficient.
+\end{idee}
+
+\begin{methode}[la règle du $\dd U$ en 4 gestes]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Repérer} la brique $U(x)$ : ce qui est \emph{à l'intérieur} d'une puissance, d'un
+        logarithme, d'un cosinus, d'une racine, d'une exponentielle\dots
+  \item \textbf{Calculer} $\dd U = U'(x)\,\dd x$.
+  \item \textbf{Comparer} $\dd U$ à ce qui est écrit. S'il ne manque qu'une \textbf{constante}, on
+        la compense en multipliant \emph{et} divisant par cette constante (linéarité). S'il manque
+        un facteur \emph{non constant}, la forme directe ne s'applique pas.
+  \item \textbf{Appliquer} la formule du tableau avec $U$ à la place de $x$, puis $+\,C$.
+\end{enumerate}
+\end{methode}
+
+\subsection*{Le tableau des six formes ($U=U(x)$, $\dd U=U'(x)\,\dd x$)}
+
+\renewcommand{\arraystretch}{1.7}
+\noindent\begin{center}
+\begin{tabular}{c l l}
+\hline
+\textbf{Forme} & \textbf{Intégrale} & \textbf{Primitive}\\
+\hline
+1 & $\displaystyle\int U^{\,n}\,\dd U\ (n\neq -1)$ & $\displaystyle\frac{U^{\,n+1}}{n+1}+C$ \\
+2 & $\displaystyle\int \frac{\dd U}{U}$ & $\displaystyle\ln|U|+C$ \\
+3 & $\displaystyle\int \sin U\,\dd U\,;\ \int \cos U\,\dd U$ & $\displaystyle-\cos U+C\,;\ \sin U+C$ \\
+4 & $\displaystyle\int \frac{\dd U}{\cos^2 U}\,;\ \int \frac{\dd U}{\sin^2 U}$ & $\displaystyle\tg U+C\,;\ -\cotg U+C$ \\
+5 & $\displaystyle\int \frac{\dd U}{\sqrt{1-U^2}}\,;\ \int \frac{\dd U}{1+U^2}$ & $\displaystyle\arcsin U+C\,;\ \arctan U+C$ \\
+6 & $\displaystyle\int a^{U}\,\dd U\ (a>0,\,a\neq1)$ & $\displaystyle\frac{a^{U}}{\ln a}+C\ \ (\int e^{U}\dd U=e^{U}+C)$ \\
+\hline
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1}
+
+\noindent Sans oublier la \textbf{linéarité} : $\displaystyle\int\bigl[f+g\bigr]\dd x=\int f\,\dd x+\int g\,\dd x$
+\quad et\quad $\displaystyle\int k\,f\,\dd x=k\int f\,\dd x$.
+
+\begin{attention}[les pièges qui coûtent des points]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Forme 1, cas $n=-1$ :} $\dfrac{U^{n+1}}{n+1}$ n'a aucun sens (division par $0$).
+        Une primitive de $1/U$ n'est pas une puissance : c'est $\ln|U|$ (forme 2).
+  \item \textbf{Forme 2, valeur absolue :} on écrit $\ln|U|$, jamais $\ln U$ tout court.
+        (On peut retirer $|\cdot|$ seulement si l'on sait que $U>0$, ex.\ $x^2+3$.)
+  \item \textbf{Signes :} un «\,$-$\,» devant $\cos$ (forme 3) et un «\,$-$\,» devant $\cotg$
+        (forme 4). On les retrouve via $(\cos)'=-\sin$ et $(\cotg)'=-1/\sin^2$.
+\end{itemize}
+\end{attention}
+
+\begin{idee}[l'astuce «\,multiplier-diviser\,»]
+Quand $\dd U$ diffère de l'intégrande par une simple \textbf{constante} $k$, on ne bloque pas : on
+insère $k$ et on compense par $\tfrac1k$ devant l'intégrale. Par exemple $\dd x=\tfrac1k\,\dd U$
+lorsque $U=kx+b$. C'est la recette universelle, valable pour les six formes.
+\end{idee}
+
+\begin{exemple}[compensation d'une constante — forme 1]
+Calculer $\displaystyle\int (2x+1)^4\,\dd x$. On pose $U=2x+1$, donc $\dd U=2\,\dd x$, soit
+$\dd x=\tfrac12\,\dd U$. Alors
+\[
+\int (2x+1)^4\,\dd x=\int U^4\cdot\tfrac12\,\dd U=\tfrac12\cdot\frac{U^5}{5}+C
+=\frac{(2x+1)^5}{10}+C.
+\]
+\textbf{Vérification :} $\Bigl[\tfrac{(2x+1)^5}{10}\Bigr]'=\tfrac{5(2x+1)^4\cdot 2}{10}=(2x+1)^4$. \checkmark
+\end{exemple}
+
+\begin{exemple}[le $\dd U$ «\,tout prêt\,» — forme 2]
+Calculer $\displaystyle\int \frac{2x}{x^2+3}\,\dd x$. On pose $U=x^2+3$, d'où $\dd U=2x\,\dd x$ :
+le numérateur \emph{est} exactement $\dd U$. Donc
+\[
+\int \frac{\dd U}{U}=\ln|U|+C=\ln(x^2+3)+C
+\]
+(la valeur absolue est inutile car $x^2+3>0$). \textbf{Vérification :}
+$\bigl[\ln(x^2+3)\bigr]'=\dfrac{2x}{x^2+3}$. \checkmark
+\end{exemple}
+
+\end{document}

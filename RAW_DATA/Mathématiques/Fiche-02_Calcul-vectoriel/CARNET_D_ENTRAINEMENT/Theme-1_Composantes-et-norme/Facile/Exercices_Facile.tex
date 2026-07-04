@@ -1,0 +1,92 @@
+% =====================================================================
+%  Thème 1 — Composantes et norme — Niveau FACILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{axiscol}{RGB}{90,90,90}
+\definecolor{gridcol}{RGB}{210,210,210}
+\definecolor{vecu}{RGB}{20,20,20}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Facile — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Composantes et norme — Niveau Facile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : automatiser le calcul « extrémité moins origine » et la formule de la norme
+sur des nombres simples. Laissez les normes sous forme exacte.}
+\vspace{2mm}
+
+\exo{1} \textbf{Composantes « extrémité moins origine ».}
+Dans un repère, on donne plusieurs couples de points. Calculer les composantes du vecteur demandé.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $A\,(1;2)$ et $B\,(4;6)$ : composantes de $\vc{AB}$.
+  \item $C\,(0;3)$ et $D\,(5;3)$ : composantes de $\vc{CD}$.
+  \item $E\,(2;7)$ et $F\,(2;1)$ : composantes de $\vc{EF}$.
+  \item $G\,(3;5)$ et $H\,(0;0)$ : composantes de $\vc{GH}$.
+\end{enumerate}
+
+\exo{2} \textbf{Norme à partir des composantes.}
+Calculer la norme de chacun des vecteurs suivants (donnés par leurs composantes).
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec{u}\,(3;4)$
+  \item $\vec{v}\,(6;8)$
+  \item $\vec{w}\,(5;0)$
+  \item $\vec{t}\,(2;3)$
+\end{enumerate}
+
+\exo{3} \textbf{Le calcul complet.}
+On donne $A\,(1;1)$ et $B\,(4;5)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Déterminer les composantes de $\vc{AB}$.
+  \item En déduire la norme $\norm{\vc{AB}}$ (forme exacte).
+\end{enumerate}
+
+\exo{4} \textbf{Lecture sur une figure.}
+Lire directement sur la figure les composantes des vecteurs $\vec{a}$ et $\vec{b}$, puis calculer leurs normes.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+  \draw[gridcol,very thin] (-0.4,-0.4) grid (6.4,4.4);
+  \draw[->,>=Stealth,axiscol] (-0.5,0)--(6.6,0) node[right,font=\footnotesize]{$x$};
+  \draw[->,>=Stealth,axiscol] (0,-0.5)--(0,4.6) node[above,font=\footnotesize]{$y$};
+  \foreach \x in {1,2,3,4,5,6} \node[font=\scriptsize,below,axiscol] at (\x,0){$\x$};
+  \foreach \y in {1,2,3,4} \node[font=\scriptsize,left,axiscol] at (0,\y){$\y$};
+  \draw[->,>=Stealth,line width=1.3pt,vecu] (1,1)--(4,1) node[midway,below,font=\small]{$\vec a$};
+  \draw[->,>=Stealth,line width=1.3pt,vecu] (1,1)--(1,4);
+  \node[font=\small] at (0.55,2.6){$\vec b$};
+  \fill (1,1) circle (1.8pt);
+\end{tikzpicture}
+\end{center}
+
+\exo{5} \textbf{Vecteur opposé.}
+On donne $A\,(2;5)$ et $B\,(7;1)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Calculer les composantes de $\vc{AB}$, puis celles de $\vc{BA}$.
+  \item Que remarque-t-on entre $\vc{AB}$ et $\vc{BA}$ ? Comparer $\norm{\vc{AB}}$ et $\norm{\vc{BA}}$.
+\end{enumerate}
+
+\end{document}

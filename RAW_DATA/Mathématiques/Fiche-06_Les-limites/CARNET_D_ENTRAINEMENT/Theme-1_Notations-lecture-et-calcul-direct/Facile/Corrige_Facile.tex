@@ -1,0 +1,104 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 1 — CORRIGÉ — Niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Corrigé Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Notations, lecture \& calcul direct}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Facile}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[calcul direct par remplacement]
+On remplace directement $x$ par la cible (les fonctions sont définies au point).
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 2}(3x^2-x+4)=3\cdot 4-2+4=12-2+4=\boxed{14}$.
+  \item $\displaystyle\lim_{x\to -1}\frac{2x+5}{x^2+3}=\frac{2(-1)+5}{(-1)^2+3}=\frac{3}{4}=\boxed{\tfrac34}$
+        \ (le dénominateur vaut $4\neq 0$).
+  \item $\displaystyle\lim_{x\to 4}(\sqrt{x}+x)=\sqrt{4}+4=2+4=\boxed{6}$.
+  \item $\displaystyle\lim_{x\to 0}(x^3+2x-7)=0+0-7=\boxed{-7}$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[lire et écrire une notation]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item « Lorsque $x$ devient de plus en plus grand (tend vers $+\infty$), $f(x)$ se rapproche de $3$. »
+        (Géométriquement : la droite $y=3$ est asymptote horizontale.)
+  \item « Lorsque $x$ se rapproche de $2$ \emph{par la gauche} (par valeurs inférieures à $2$), $f(x)$
+        devient de plus en plus grand en valeur négative, c.-à-d.\ tend vers $-\infty$. »
+  \item $\displaystyle\lim_{x\to 5^{+}} g(x)=0$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[limites latérales d'une fonction par morceaux]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item À gauche de $2$ on a $x<2$, donc $f(x)=x+1$ : $\displaystyle\lim_{x\to 2^{-}}f(x)=2+1=3$.
+  \item À droite (et en $2$) on a $x\geq 2$, donc $f(x)=3x-2$ : $\displaystyle\lim_{x\to 2^{+}}f(x)=3\cdot 2-2=4$.
+  \item Les deux limites latérales sont \emph{différentes} ($3\neq 4$) : \textbf{$f$ n'a pas de limite
+        (globale) en $2$}. (La courbe présente un saut de hauteur $1$.)
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[lecture graphique]
+La courbe se rapproche de la droite $y=2$ aux deux bouts, et passe par l'origine.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to +\infty} f(x)=2$.
+  \item $\displaystyle\lim_{x\to -\infty} f(x)=2$.
+  \item $\displaystyle\lim_{x\to 0} f(x)=0$ \ (la courbe passe par le point $(0,0)$, sans trou ni saut).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[vérifier une continuité]
+$g(x)=\dfrac{x^2-1}{x+3}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item En $x_0=1$, le dénominateur vaut $1+3=4\neq 0$ : donc $1\in D_g$ et $g$ est définie en $1$.
+  \item $\displaystyle\lim_{x\to 1} g(x)=\frac{1^2-1}{1+3}=\frac{0}{4}=0$, \quad et \quad
+        $g(1)=\dfrac{1-1}{1+3}=0$.
+  \item La limite ($0$) est égale à $g(1)$ ($0$) : \textbf{$g$ est continue en $1$}. (C'est le cas général
+        d'une fonction rationnelle en un point où le dénominateur ne s'annule pas.)
+\end{enumerate}
+\end{correction}
+
+\end{document}

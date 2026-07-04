@@ -1,0 +1,85 @@
+% =====================================================================
+%  Thème 4 — EXERCICES — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 4 — Radicaux : facteur dominant \& conjugué}\\[2pt]
+{\large\color{primary}Exercices — Niveau Difficile}
+\end{center}
+\vspace{4pt}
+{\small\itshape Niveau concours : étude aux deux infinis, double conjugué en un point, et une mise en
+situation géométrique.}
+\vspace{6pt}
+
+\begin{exercice}[une étude aux deux infinis]
+Soit $f(x)=\sqrt{x^2-2x+5}-x$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Montrer que $f$ est définie sur $\R$ (étudier le signe de $x^2-2x+5$).
+  \item En $+\infty$, la forme est $\infty-\infty$. Multiplier par le conjugué et montrer que
+        \[ f(x)=\frac{-2x+5}{\sqrt{x^2-2x+5}+x}. \]
+  \item En mettant $x$ en facteur au numérateur et au dénominateur (avec $|x|=x$ car $x>0$), calculer
+        $\displaystyle\lim_{x\to+\infty} f(x)$.
+  \item Étudier $\displaystyle\lim_{x\to-\infty} f(x)$. \emph{Indication : ici la forme n'est plus indéterminée
+        — quel est le signe de $-x$ ?}
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[double conjugué]
+Soit $g(x)=\dfrac{\sqrt{x+1}-2}{\sqrt{x-2}-1}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Donner les conditions d'existence et le domaine de $g$ (attention au dénominateur nul).
+  \item Vérifier qu'en $x=3$ la forme est $\frac00$.
+  \item Multiplier haut et bas par les \emph{deux} conjugués $\bigl(\sqrt{x+1}+2\bigr)$ et
+        $\bigl(\sqrt{x-2}+1\bigr)$, puis simplifier le facteur commun.
+  \item En déduire $\displaystyle\lim_{x\to 3} g(x)$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[mise en situation : écart entre deux distances]
+Sur un trajet, la distance réelle par la route (en km) entre un point de départ et un repère situé à
+l'abscisse $x>0$ est modélisée par $D(x)=\sqrt{x^2+40x}$, alors que la distance « à vol d'oiseau »
+vaut $x$. On pose l'écart $e(x)=D(x)-x$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Calculer $e(10)$ et $e(100)$ (valeurs approchées). L'écart semble-t-il croître sans limite ?
+  \item Calculer $\displaystyle\lim_{x\to+\infty} e(x)$ par le conjugué.
+  \item Interpréter : vers quelle valeur l'écart se stabilise-t-il pour les grands trajets ?
+\end{enumerate}
+\end{exercice}
+
+\end{document}

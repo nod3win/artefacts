@@ -1,0 +1,91 @@
+% =====================================================================
+%  Thème 5 — Angle et identités remarquables — DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Difficile — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Angle et identités remarquables — Corrigé Difficile}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\vec u\cdot\vec v=1\times\sqrt3+x\times1=\sqrt3+x$ ; $\norm{\vec u}=\sqrt{1+x^2}$ ;
+        $\norm{\vec v}=\sqrt{3+1}=2$.
+  \item $\cos30^\circ=\dfrac{\sqrt3}{2}=\dfrac{\sqrt3+x}{2\sqrt{1+x^2}}$. En multipliant par
+        $2\sqrt{1+x^2}$ : $\sqrt3\,\sqrt{1+x^2}=\sqrt3+x$, soit $\sqrt3+x=\sqrt3\,\sqrt{1+x^2}$.
+  \item On élève au carré (les deux membres sont positifs car $x>0$) :
+        \[
+          3+2\sqrt3\,x+x^2=3(1+x^2)=3+3x^2
+          \ \Longrightarrow\ 2\sqrt3\,x=2x^2
+          \ \Longrightarrow\ \sqrt3=x \quad(x\neq0).
+        \]
+        Donc $\boxed{x=\sqrt3}$. \emph{(Vérification : $\vec u\,(1;\sqrt3)$, $\vec v\,(\sqrt3;1)$ ont
+        même norme $2$ et $\vec u\cdot\vec v=2\sqrt3$, d'où $\cos\theta=\frac{2\sqrt3}{4}=\frac{\sqrt3}{2}$.)}
+\end{enumerate}
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\norm{\vec u}=\sqrt{a^2+a^2}=a\sqrt2$ ; \quad
+        $\norm{\vec v}=\sqrt{a^2+\tfrac{a^2}{9}}=\sqrt{a^2\cdot\tfrac{10}{9}}=\dfrac{a\sqrt{10}}{3}$
+        (car $a>0$).
+  \item $\vec u\cdot\vec v=a\times a+a\times\dfrac{a}{3}=a^2+\dfrac{a^2}{3}=\dfrac{4a^2}{3}$.
+  \item $\cos(\vec u,\vec v)=\dfrac{\tfrac{4a^2}{3}}{a\sqrt2\cdot\tfrac{a\sqrt{10}}{3}}
+        =\dfrac{\tfrac{4a^2}{3}}{\tfrac{a^2\sqrt{20}}{3}}=\dfrac{4}{\sqrt{20}}=\dfrac{4}{2\sqrt5}
+        =\dfrac{2}{\sqrt5}=\dfrac{2\sqrt5}{5}$. Tous les facteurs $a$ se simplifient : le cosinus
+        \textbf{ne dépend pas} de $a$.
+  \item $\cos\theta=\dfrac{2\sqrt5}{5}\approx0{,}894$, donc $\theta\approx26{,}6^\circ$.
+\end{enumerate}
+\rep Les normes sont \emph{linéaires} en $a$, le produit scalaire est en $a^2$ : dans le cosinus, le
+$a^2$ du numérateur et celui du dénominateur se simplifient.
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\norm{\vec u}^2=3^2+1^2=10$ ; $\norm{\vec v}^2=1^2+2^2=5$ ;
+        $\vec u\cdot\vec v=3\times1+1\times2=5$.
+  \item $\norm{\vec u+\vec v}^2=10+5+2\times5=25$ ; \quad
+        $\norm{\vec u-\vec v}^2=10+5-2\times5=5$.
+  \item $\norm{\vec u+\vec v}^2+\norm{\vec u-\vec v}^2=25+5=30$ et
+        $2\bigl(\norm{\vec u}^2+\norm{\vec v}^2\bigr)=2\,(10+5)=30$ : l'égalité est vérifiée.
+\end{enumerate}
+\rep L'\emph{égalité du parallélogramme} : la somme des carrés des diagonales vaut deux fois la somme
+des carrés des côtés. Les doubles produits $\pm2\,\vec u\cdot\vec v$ se compensent.
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\Alph*.},leftmargin=2.2em,itemsep=3pt]
+  \item \textbf{Vrai}. $\norm{\vec u}=\sqrt{2^2+(\sqrt5)^2}=\sqrt{4+5}=\sqrt9=3$.
+  \item \textbf{Vrai}. $\vec u\cdot\vec v=2\times(-4)+\sqrt5\times0=-8<0$.
+  \item \textbf{Vrai}. $\vec u-\vec v\,(2-(-4);\sqrt5-0)=(6;\sqrt5)$, donc
+        $\norm{\vec u-\vec v}^2=6^2+(\sqrt5)^2=36+5=41$.
+  \item \textbf{Faux}. Comme $\vec u\cdot\vec v=-8<0$, l'angle est \emph{obtus}, pas aigu.
+\end{enumerate}
+\rep Le signe du produit scalaire tranche immédiatement (D), et l'identité de la différence donne (C)
+sans calculer d'angle.
+
+\end{document}

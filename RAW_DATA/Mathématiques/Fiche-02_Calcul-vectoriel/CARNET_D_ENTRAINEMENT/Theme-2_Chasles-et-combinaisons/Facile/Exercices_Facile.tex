@@ -1,0 +1,80 @@
+% =====================================================================
+%  Thème 2 — Chasles et combinaisons — Niveau FACILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Facile — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Chasles et combinaisons — Niveau Facile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : appliquer $\vc{AB}+\vc{BC}=\vc{AC}$, reconnaître le vecteur nul et les
+opposés. On ne calcule pas de coordonnées : on manipule les lettres.}
+\vspace{2mm}
+
+\exo{1} \textbf{Compléter par la relation de Chasles.}
+Simplifier chaque somme en un seul vecteur.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}+\vc{BC}$
+  \item $\vc{MN}+\vc{NP}$
+  \item $\vc{RS}+\vc{ST}+\vc{TU}$
+  \item $\vc{EF}+\vc{FG}+\vc{GH}+\vc{HK}$
+\end{enumerate}
+
+\exo{2} \textbf{Vecteur nul et opposés.}
+Donner le résultat le plus simple de chaque expression.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}+\vc{BA}$
+  \item $\vc{AB}+\vc{BC}+\vc{CA}$
+  \item $-\vc{DE}$ (l'exprimer comme un vecteur à lettres inversées)
+  \item $\vc{PQ}+\vc{QP}+\vc{PQ}$
+\end{enumerate}
+
+\exo{3} \textbf{Transformer une soustraction.}
+Simplifier en utilisant $-\vc{XY}=\vc{YX}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}-\vc{CB}$
+  \item $\vc{AC}-\vc{AB}$
+  \item $\vc{MP}-\vc{MN}$
+\end{enumerate}
+
+\exo{4} \textbf{Choisir un point intermédiaire.}
+Dans chaque cas, décomposer le vecteur en passant par le point indiqué.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Écrire $\vc{AC}$ en passant par $B$.
+  \item Écrire $\vc{AD}$ en passant par $B$ puis $C$.
+  \item Écrire $\vc{MN}$ en passant par un point $O$ quelconque.
+\end{enumerate}
+
+\exo{5} \textbf{Parallélogramme.}
+$ABCD$ est un parallélogramme (sommets dans l'ordre). Compléter les égalités.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}=\vc{D\;?}$
+  \item $\vc{AD}=\vc{B\;?}$
+  \item $\vc{AB}+\vc{AD}=\vc{A\;?}$ (règle du parallélogramme)
+\end{enumerate}
+
+\end{document}

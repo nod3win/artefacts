@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Logarithmes}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Moyen — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[condenser]
+\[ \text{a) }\ln(xy);\quad \text{b) }\log_a\frac{x^{2}}{y};\quad \text{c) }\ln\sqrt{x};\quad
+   \text{d) }\log(5\times 2)=\log 10=1;\quad \text{e) }2\ln x=\ln(x^{2}). \]
+\end{corrige}
+
+\begin{corrige}[simplifier]
+\[ \text{a) }2+0=2;\quad \text{b) }\ln e^{1/2}=\tfrac12;\quad \text{c) }2a;\quad
+   \text{d) }3-(-1)=4;\quad \text{e) }5. \]
+\end{corrige}
+
+\begin{corrige}[carré parfait dans un log]
+\begin{align*}
+\text{a) }&\ln\bigl((e^{x}+1)^{2}\bigr)=2\ln(e^{x}+1);\\
+\text{b) }&\ln\bigl((x+3)^{2}\bigr)=2\ln(x+3)\quad(x>-3\Rightarrow x+3>0);\\
+\text{c) }&\log_{10}(100\,x^{2})=\log_{10}100+\log_{10}x^{2}=2+2\log_{10}x\quad(x>0).
+\end{align*}
+\end{corrige}
+
+\begin{corrige}[équations en exposant]
+\begin{align*}
+\text{a) }&2x=\ln 10\Rightarrow x=\tfrac{\ln 10}{2};\\
+\text{b) }&10^{5x}=\tfrac52\Rightarrow 5x=\log\tfrac52\Rightarrow x=\tfrac15(\log 5-\log 2);\\
+\text{c) }&x=\log_3 7=\tfrac{\ln 7}{\ln 3};\\
+\text{d) }&e^{x+1}=e^{x+2}\Rightarrow x+1=x+2\ \text{(impossible)}\Rightarrow S=\varnothing.
+\end{align*}
+\end{corrige}
+
+\begin{corrige}[inéquations logarithmiques]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item a) C.E. $x>1$ ; $\ln$ croissant $\Rightarrow x-1\geq 2\Rightarrow x\geq 3$. Donc $S=[3,+\infty[$.
+  \item b) C.E. $x>0$ ; $2x\leq 6\Rightarrow x\leq 3$. Avec la C.E. : $S=\,]0,3]$.
+  \item c) C.E. $x>-3$ ; $\log_{10}(x+3)>1=\log_{10}10\Rightarrow x+3>10\Rightarrow x>7$. Donc $S=\,]7,+\infty[$.
+\end{itemize}
+\end{corrige}
+
+\end{document}

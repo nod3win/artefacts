@@ -1,0 +1,81 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 1} — Puissances, racines et exposants}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Moyen — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[combiner plusieurs règles]
+\begin{align*}
+\text{a) }&\frac{a^{5}a^{-3}}{a^{2}}=a^{5-3-2}=a^{0}=1; &
+\text{b) }&(a^{2})^{3}a^{-4}=a^{6}a^{-4}=a^{2};\\
+\text{c) }&\frac{(a^{3})^{2}}{a^{-1}}=\frac{a^{6}}{a^{-1}}=a^{6-(-1)}=a^{7}; &
+\text{d) }&\Bigl(\frac{a^{-2}}{a^{3}}\Bigr)^{-1}=\bigl(a^{-5}\bigr)^{-1}=a^{5}.
+\end{align*}
+\end{corrige}
+
+\begin{corrige}[racines et exposants fractionnaires]
+\begin{align*}
+\text{a) }&\frac{c^{3/2}}{c^{1/4}}=c^{3/2-1/4}=c^{5/4}; &
+\text{b) }&c^{1/3}c^{1/6}=c^{2/6+1/6}=c^{1/2}=\sqrt{c};\\
+\text{c) }&\Bigl((c^{2n^{2}})^{1/n}\Bigr)^{1/n}=c^{2n^{2}/n^{2}}=c^{2}; &
+\text{d) }&(c^{1/2})^{6}c^{-2}=c^{3}c^{-2}=c^{1}=c.
+\end{align*}
+\end{corrige}
+
+\begin{corrige}[bases opposées et quotients]
+\[ \text{a) } a^{-m}b^{m}=\frac{b^{m}}{a^{m}}=\Bigl(\frac{b}{a}\Bigr)^{m};\quad
+   \text{b) } \Bigl(\frac{b}{a}\Bigr)^{3};\quad
+   \text{c) } 2^{-x}3^{x}=\Bigl(\frac{3}{2}\Bigr)^{x};\quad
+   \text{d) } a^{4}b^{-4}=\Bigl(\frac{a}{b}\Bigr)^{4}. \]
+\end{corrige}
+
+\begin{corrige}[ramener à une base commune]
+\begin{align*}
+\text{a) }&4^{x}=2^{2x}=2^{6}\Rightarrow 2x=6\Rightarrow x=3; &
+\text{b) }&2^{3x}=2^{x+4}\Rightarrow 3x=x+4\Rightarrow x=2;\\
+\text{c) }&3^{2x}=3^{-3}\Rightarrow 2x=-3\Rightarrow x=-\tfrac32; &
+\text{d) }&2^{2x+2}=2^{3}\Rightarrow 2x+2=3\Rightarrow x=\tfrac12.
+\end{align*}
+En c) on a utilisé $9^{x}=3^{2x}$ et $\tfrac{1}{27}=3^{-3}$ ; en d) $\tfrac{2^{2x+1}}{2^{x}}=2^{x+1}$ puis $8=2^{3}$.
+\end{corrige}
+
+\begin{corrige}[monotonie et inéquations]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item a) base $2>1$ (croissante) : $2^{x}<2^{5}\Leftrightarrow x<5$, soit $S=\,]-\infty,5[$.
+  \item b) base $\tfrac12<1$ (décroissante) : le sens \emph{s'inverse}, $x<3$, soit $S=\,]-\infty,3[$.
+  \item c) $2^{-1}<2^{0}<2^{1}<2^{3}$ (l'exposant croît, la fonction est croissante).
+  \item d) base $\tfrac13<1$ : $\bigl(\tfrac13\bigr)^{2x}\leq\bigl(\tfrac13\bigr)^{6}\Leftrightarrow 2x\geq 6\Leftrightarrow x\geq 3$, soit $S=[3,+\infty[$.
+\end{itemize}
+\end{corrige}
+
+\end{document}

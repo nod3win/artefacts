@@ -1,0 +1,123 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+% Ne modifier QUE :
+%   - les deux lignes \fancyhead[L] et \fancyhead[R]
+%   - le bloc titre \begin{center}...\end{center} juste après \begin{document}
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Formulaire de dérivation}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé --- Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Dérivées directes --- corrigé}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Niveau Facile --- constante, puissances, racines et inverses}
+\end{center}
+\vspace{2mm}
+
+\begin{corr}[1 --- dérivée d'une constante]
+$y=12$ est une constante, donc
+\[
+y'=0.
+\]
+\end{corr}
+
+\begin{corr}[2 --- puissances entières]
+Règle $(x^{n})'=n\,x^{n-1}$ et $(aU)'=aU'$ :
+\[
+y=x^{6}\ \Rightarrow\ y'=6\,x^{5};\qquad
+y=4x^{3}\ \Rightarrow\ y'=4\cdot 3\,x^{2}=12\,x^{2}.
+\]
+\end{corr}
+
+\begin{corr}[3 --- combinaison de puissances]
+On dérive terme à terme (règle de la somme et du multiple) :
+\[
+y=5x^{4}-3x^{2}+7x-9
+\ \Rightarrow\
+y'=5\cdot4x^{3}-3\cdot2x+7\cdot1-0=20x^{3}-6x+7.
+\]
+\end{corr}
+
+\begin{corr}[4 --- racines réécrites en puissances]
+\textbf{a)} $y=\sqrt{x}=x^{1/2}$, donc
+\[
+y'=\tfrac12\,x^{-1/2}=\frac{1}{2\,x^{1/2}}=\frac{1}{2\sqrt{x}}.
+\]
+\textbf{b)} $y=\sqrt[3]{x}=x^{1/3}$, donc
+\[
+y'=\tfrac13\,x^{-2/3}=\frac{1}{3\,x^{2/3}}=\frac{1}{3\sqrt[3]{x^{2}}}.
+\]
+\end{corr}
+
+\begin{corr}[5 --- inverses réécrits en puissances]
+\textbf{a)} $y=\dfrac{1}{x^{3}}=x^{-3}$, donc
+\[
+y'=-3\,x^{-4}=-\frac{3}{x^{4}}.
+\]
+\textbf{b)} $y=\dfrac{2}{x}=2x^{-1}$, donc
+\[
+y'=2\cdot(-1)\,x^{-2}=-2\,x^{-2}=-\frac{2}{x^{2}}.
+\]
+\end{corr}
+
+\end{document}

@@ -1,0 +1,155 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 2 : Calcul vectoriel
+%  Thème 1 — Composantes et norme d'un vecteur
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,angles,quotes,backgrounds}
+\pgfplotsset{compat=1.18}
+
+% ---------- couleurs ----------
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{ideecol}{RGB}{120,94,200}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{vecu}{RGB}{20,20,20}
+\definecolor{vecv}{RGB}{0,110,200}
+\definecolor{vecw}{RGB}{198,93,9}
+\definecolor{axiscol}{RGB}{90,90,90}
+\definecolor{gridcol}{RGB}{210,210,210}
+
+% ---------- boîtes ----------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire ?}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=ideecol!6,colframe=ideecol,
+  title={\textsc{Intuition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{rappel}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% ---------- en-tête ----------
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 1 — Composantes et norme d'un vecteur}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.2pt}}\\[4pt]
+{\small\itshape La mécanique de base de toute la fiche : passer des \emph{points} aux \emph{nombres}.}
+\end{center}
+
+\vspace{2mm}
+
+Tout le calcul vectoriel repose sur \textbf{une seule opération} : transformer deux points en un couple de
+nombres, les \textbf{composantes} du vecteur. Une fois ce réflexe acquis, normes, angles, colinéarité et
+produit scalaire deviennent de simples calculs. Ce thème installe donc le geste fondateur.
+
+\begin{rappel}[les deux formules du thème]
+Si $A\,(x_A\,;y_A)$ et $B\,(x_B\,;y_B)$ dans un repère, alors
+\[
+  \boxed{\;\vc{AB}\,\bigl(x_B-x_A\,;\,y_B-y_A\bigr)\;}
+  \qquad
+  \boxed{\;\norm{\vc{AB}}=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}\;}
+\]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item les \textbf{composantes} = « extrémité moins origine », coordonnée par coordonnée ;
+  \item la \textbf{norme} = longueur du vecteur, \emph{toujours} positive ou nulle.
+\end{itemize}
+\end{rappel}
+
+\begin{idee}[d'où vient la racine carrée ?]
+La norme n'est rien d'autre que le \textbf{théorème de Pythagore}. Les deux composantes
+$(x_B-x_A)$ et $(y_B-y_A)$ sont les deux côtés d'un triangle rectangle ; le vecteur $\vc{AB}$ en est
+l'hypoténuse. Sa longueur est donc la racine de la somme des carrés des deux côtés.
+\end{idee}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \draw[gridcol,very thin] (-0.4,-0.4) grid (5.4,4.4);
+  \draw[->,>=Stealth,axiscol] (-0.5,0)--(5.6,0) node[right,font=\footnotesize]{$x$};
+  \draw[->,>=Stealth,axiscol] (0,-0.5)--(0,4.6) node[above,font=\footnotesize]{$y$};
+  \coordinate (A) at (1,1); \coordinate (B) at (5,4);
+  \draw[->,>=Stealth,line width=1.3pt,vecu] (A)--(B) node[midway,above left=1pt,font=\small]{$\vc{AB}$};
+  \draw[dashed,vecv] (A)--(5,1) node[midway,below,font=\footnotesize,vecv]{$x_B-x_A=4$};
+  \draw[dashed,vecv] (5,1)--(B) node[midway,right,font=\footnotesize,vecv]{$y_B-y_A=3$};
+  \fill (A) circle (1.6pt) node[below left,font=\footnotesize]{$A\,(1;1)$};
+  \fill (B) circle (1.6pt) node[above right,font=\footnotesize]{$B\,(5;4)$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize\itshape Les composantes $(4;3)$ sont les côtés du triangle rectangle ; la norme
+$\norm{\vc{AB}}=\sqrt{4^2+3^2}=5$ en est l'hypoténuse.}
+\end{center}
+
+\begin{methode}[calculer les composantes puis la norme de $\vc{AB}$]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item Repérer clairement l'\textbf{origine} $A$ (départ de la flèche) et l'\textbf{extrémité} $B$.
+  \item Composantes : soustraire \emph{« B moins A »}, coordonnée par coordonnée : $(x_B-x_A\,;\,y_B-y_A)$.
+        Jamais l'inverse !
+  \item Norme : élever \emph{chaque composante} au carré, additionner, prendre la racine.
+  \item Laisser la norme sous forme \textbf{exacte} ($\sqrt{13}$, $2\sqrt5$…) sauf si une valeur
+        approchée est demandée.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[un calcul complet, pas à pas]
+Soit $A\,(-1;2)$ et $B\,(3;-1)$.
+
+\textbf{Composantes} (extrémité moins origine) :
+\[
+  \vc{AB}\,\bigl(3-(-1)\,;\,-1-2\bigr)=\vc{AB}\,(4;-3).
+\]
+\textbf{Norme} (Pythagore) :
+\[
+  \norm{\vc{AB}}=\sqrt{4^2+(-3)^2}=\sqrt{16+9}=\sqrt{25}=5.
+\]
+La première composante $+4$ se lit « $4$ vers la droite », la seconde $-3$ « $3$ vers le bas ».
+\end{exemple}
+
+\begin{exemple}[garder la forme exacte avec un radical]
+Soit $C\,(0;0)$ et $D\,(2;\sqrt5)$. Alors $\vc{CD}\,(2;\sqrt5)$ et
+\[
+  \norm{\vc{CD}}=\sqrt{2^2+(\sqrt5)^2}=\sqrt{4+5}=\sqrt9=3.
+\]
+On n'écrit pas $\sqrt5\approx2{,}24$ : on garde $(\sqrt5)^2=5$, c'est \emph{exact} et bien plus simple.
+\end{exemple}
+
+\begin{piege}[les erreurs qui coûtent des points]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Sens de la soustraction} : $\vc{AB}=(x_B-x_A;\dots)$, pas $(x_A-x_B;\dots)$. Inverser
+        donne le vecteur \emph{opposé} $\vc{BA}=-\vc{AB}$ (même longueur, sens contraire).
+  \item \textbf{Le carré d'un négatif est positif} : $(-3)^2=+9$, pas $-9$. La norme ne peut jamais
+        être négative.
+  \item $(\sqrt5)^2=5$ et non $5^2=25$. Un radical au carré « disparaît ».
+  \item Ne pas confondre les \emph{composantes} (un couple de nombres) et la \emph{norme}
+        (un seul nombre positif).
+  \item \textbf{Unité} : si les coordonnées sont en kilomètres, composantes \emph{et} norme sont en
+        kilomètres ; en mathématiques « pures », ce sont de simples nombres.
+\end{itemize}
+\end{piege}
+
+\end{document}

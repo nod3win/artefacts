@@ -1,0 +1,82 @@
+% =====================================================================
+%  Thème 2 — Chasles et combinaisons — Niveau MOYEN — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Moyen — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Chasles et combinaisons — Corrigé Moyen}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item On réordonne : $\vc{AB}+\vc{BC}+\vc{CD}=\vc{AD}$.
+  \item $\vc{AB}-\vc{AC}=\vc{AB}+\vc{CA}=\vc{CA}+\vc{AB}=\vc{CB}$.
+  \item $-\vc{DC}=\vc{CD}$, donc $\vc{AB}+\vc{BC}+\vc{CD}=\vc{AD}$.
+  \item $\vc{OA}-\vc{OB}=\vc{OA}+\vc{BO}=\vc{BO}+\vc{OA}=\vc{BA}$.
+\end{enumerate}
+\rep Règle express : $\vc{XA}-\vc{XB}=\vc{BA}$ (origine commune $X$ éliminée). Ex.\ b) et d).
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}=\vc{AO}+\vc{OB}=\vc{OB}-\vc{OA}$.
+  \item $\vc{CA}=\vc{OA}-\vc{OC}$.
+  \item $\vc{AB}+\vc{BC}=\vc{AC}=\vc{OC}-\vc{OA}$.
+\end{enumerate}
+\rep Tout vecteur $\vc{XY}$ s'écrit $\vc{OY}-\vc{OX}$ : c'est le passage aux \emph{vecteurs position}
+depuis l'origine $O$.
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $I$ milieu de $[AB]$ : $\vc{AI}=\dfrac12\,\vc{AB}$.
+  \item $\vc{IA}+\vc{IB}=\vec0$ : comme $I$ est le milieu, $\vc{IA}$ et $\vc{IB}$ sont opposés
+        (même longueur, sens contraires).
+  \item $\vc{OI}=\vc{OA}+\vc{AI}=\vc{OA}+\dfrac12\vc{AB}=\vc{OA}+\dfrac12(\vc{OB}-\vc{OA})
+        =\dfrac12\vc{OA}+\dfrac12\vc{OB}=\dfrac12(\vc{OA}+\vc{OB})$.
+\end{enumerate}
+\rep La formule $\vc{OI}=\frac12(\vc{OA}+\vc{OB})$ traduit « le milieu est la moyenne des deux points ».
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AC}=\vc{AB}+\vc{AD}=\vec u+\vec v$ (règle du parallélogramme).
+  \item $\vc{BD}=\vc{BA}+\vc{AD}=-\vc{AB}+\vc{AD}=\vec v-\vec u$.
+\end{enumerate}
+\rep Une diagonale est la \emph{somme} des côtés issus du même sommet, l'autre en est la
+\emph{différence}.
+
+\cor{5}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $I$ milieu de $[BC]$ : $\vc{BI}=\dfrac12\vc{BC}$. Or $\vc{BC}=\vc{AD}=\vec v$ (côtés opposés),
+        donc $\vc{BI}=\dfrac12\vec v$.
+  \item $\vc{AI}=\vc{AB}+\vc{BI}=\vec u+\dfrac12\vec v$.
+\end{enumerate}
+\rep On décompose le trajet $A\to I$ en $A\to B$ puis $B\to I$, puis on remplace chaque morceau par
+$\vec u$ ou $\vec v$.
+
+\end{document}

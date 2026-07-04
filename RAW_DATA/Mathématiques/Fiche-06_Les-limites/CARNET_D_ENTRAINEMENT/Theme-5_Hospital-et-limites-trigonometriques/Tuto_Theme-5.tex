@@ -1,0 +1,127 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 5 — Règle de l'Hospital & limites trigonométriques remarquables
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titlespacing{\section}{0pt}{6pt}{3pt}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large Thème 5 — Règle de l'Hospital \& limites trigonométriques}]
+\textbf{Mécanique travaillée :} lever les indéterminations $\frac00$ et $\frac{\infty}{\infty}$ en
+\emph{dérivant séparément} numérateur et dénominateur (règle de l'Hospital), et exploiter les
+\textbf{limites trigonométriques remarquables} $\frac{\sin x}{x}\to 1$, $\frac{\tan x}{x}\to 1$.
+\end{tcolorbox}
+
+\section{1. La règle de l'Hospital}
+
+\begin{idee}[dériver haut et bas séparément]
+Si $\displaystyle\lim_{x\to a}\frac{f(x)}{g(x)}$ est de la forme $\frac00$ ou $\frac{\infty}{\infty}$ (avec
+$f,g$ dérivables au voisinage de $a$), alors
+\[ \boxed{\ \lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}\ }\qquad(a\in\R\text{ ou }\pm\infty). \]
+\end{idee}
+
+\begin{attention}[ce n'est PAS la dérivée du quotient]
+On remplace $\dfrac fg$ par $\dfrac{f'}{g'}$ (dérivées \emph{séparées}), \textbf{jamais} par
+$\bigl(\frac fg\bigr)'$. Et la règle ne s'applique qu'à $\frac00$ ou $\frac{\infty}{\infty}$ :
+l'utiliser sur une forme déjà déterminée donne un résultat faux.
+\end{attention}
+
+\begin{astuce}[dérivées utiles (rappel Fiche 5)]
+$(x^n)'=n x^{n-1}$, \ $(\sin x)'=\cos x$, \ $(\cos x)'=-\sin x$, \ $(\tan x)'=\dfrac{1}{\cos^2 x}$, \
+$(e^x)'=e^x$, \ $(\ln x)'=\dfrac1x$.
+\end{astuce}
+
+\begin{exemple}[applications directes]
+\[ \lim_{x\to 0}\frac{e^x-1}{x}\overset{\frac00}{=}\lim_{x\to0}\frac{e^x}{1}=1,\qquad
+   \lim_{x\to 1}\frac{\ln x}{x-1}\overset{\frac00}{=}\lim_{x\to1}\frac{1/x}{1}=1. \]
+\end{exemple}
+
+\begin{methode}[appliquer l'Hospital]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1pt]
+  \item Vérifier que la forme est bien $\frac00$ ou $\frac{\infty}{\infty}$.
+  \item Dériver le numérateur et le dénominateur \emph{séparément}, puis calculer $\lim\frac{f'}{g'}$.
+  \item Si l'on retombe sur $\frac00$ ou $\frac{\infty}{\infty}$, \textbf{recommencer} (l'Hospital peut se répéter).
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[transformer $0\times\infty$, puis répéter l'Hospital]
+$0\times\infty$ se ramène à un quotient en mettant un facteur au dénominateur (sous forme d'inverse) :
+\[ \lim_{x\to 0^+} x\ln x=\lim_{x\to 0^+}\frac{\ln x}{1/x}\overset{\frac{\infty}{\infty}}{=}\lim_{x\to0^+}\frac{1/x}{-1/x^2}=\lim_{x\to0^+}(-x)=0. \]
+\[ \lim_{x\to+\infty}\frac{x^2+1}{e^{2x}+1}\overset{\frac{\infty}{\infty}}{=}\lim_{x\to+\infty}\frac{2x}{2e^{2x}}\overset{\frac{\infty}{\infty}}{=}\lim_{x\to+\infty}\frac{2}{4e^{2x}}=0. \]
+\end{exemple}
+
+\section{2. Limites trigonométriques remarquables}
+
+\begin{idee}[à mémoriser (angle en radians)]
+\[ \boxed{\ \lim_{x\to 0}\frac{\sin x}{x}=1\ }\qquad\qquad \boxed{\ \lim_{x\to 0}\frac{\tan x}{x}=1\ } \]
+Au voisinage de $0$ : $\sin x\approx x$ et $\tan x\approx x$ (approximation des petits angles).
+\end{idee}
+
+\begin{methode}[faire apparaître la forme $\frac{\sin(\square)}{\square}$]
+Pour $\dfrac{\sin(kx)}{\,\cdot\,}$, on multiplie/divise par $kx$ afin de reconstituer
+$\dfrac{\sin(kx)}{kx}\to 1$, puis on gère le facteur restant.
+\end{methode}
+
+\begin{exemple}[combiner les limites remarquables]
+\[ \frac{\sin 2x}{3x}=\underbrace{\frac{\sin 2x}{2x}}_{\to 1}\times\frac{2x}{3x}\xrightarrow[x\to0]{}1\times\frac23=\frac23, \]
+\[ \frac{\sin 2x}{\tan x}=\underbrace{\frac{\sin 2x}{2x}}_{\to 1}\times\underbrace{\frac{x}{\tan x}}_{\to 1}\times\frac{2x}{x}\xrightarrow[x\to0]{}1\times1\times2=2. \]
+\end{exemple}
+
+\begin{astuce}[une limite $=$ un nombre dérivé]
+$\displaystyle\lim_{x\to a}\frac{f(x)-f(a)}{x-a}=f'(a)$ : beaucoup de limites $\frac00$ \emph{sont}
+des nombres dérivés déguisés. Exemple : $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}=\lim_{x\to0}\frac{\sin x-\sin 0}{x-0}=\cos 0=1$.
+\end{astuce}
+
+\end{document}

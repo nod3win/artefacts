@@ -1,0 +1,114 @@
+% =====================================================================
+%  Thème 5 — Résolution des triangles — NIVEAU MOYEN
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 5 — Résolution des triangles}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{De l'aire au troisième côté}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep Les côtés qui encadrent $\hat C$ sont $a$ et $b$, donc
+   $\mathcal{A}=\dfrac12ab\sin\hat C$ :
+   \[
+   8\sqrt3=\frac12\cdot8\cdot b\cdot\sin60\degr=4b\cdot\frac{\sqrt3}{2}=2b\sqrt3
+   \ \Longrightarrow\ b=4.
+   \]
+\item[\textbf{(b)}] \rep $c=\overline{AB}$ est opposé à $\hat C$, donc $c^2=a^2+b^2-2ab\cos60\degr$ :
+   \[
+   c^2=64+16-2\cdot8\cdot4\cdot\tfrac12=80-32=48\ \Longrightarrow\ c=\sqrt{48}=4\sqrt3\approx6{,}93.
+   \]
+\end{itemize}
+
+\exo{Loi des sinus puis loi des cosinus}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\hat C=180\degr-\hat A-\hat B=180\degr-30\degr-30\degr=120\degr$.
+\item[\textbf{(b)}] \rep $\dfrac{\sin\hat A}{a}=\dfrac{\sin\hat B}{b}$ avec $\hat A=\hat B$, donc
+   $a=b$ : $b=5$. Le triangle est \textbf{isocèle} en $C$.
+\item[\textbf{(c)}] \rep Loi des cosinus ($\cos120\degr=-\tfrac12$) :
+   \[
+   c^2=a^2+b^2-2ab\cos120\degr=25+25-2\cdot25\cdot(-\tfrac12)=50+25=75\ \Longrightarrow\ c=5\sqrt3.
+   \]
+   Vérification par la loi des sinus :
+   $\dfrac{\sin120\degr}{5\sqrt3}=\dfrac{\sqrt3/2}{5\sqrt3}=\dfrac1{10}$ et
+   $\dfrac{\sin30\degr}{5}=\dfrac{1/2}{5}=\dfrac1{10}$ : cohérent.
+\end{itemize}
+
+\exo{Un triangle rectangle à résoudre entièrement}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep Rectangle en $A$ : pour l'angle $\hat B=60\degr$, $\overline{AB}=4$ est le côté
+   \emph{adjacent} et $\overline{AC}$ le côté \emph{opposé}.
+   \[
+   \tg60\degr=\frac{\overline{AC}}{\overline{AB}}\Rightarrow \overline{AC}=4\tg60\degr=4\sqrt3;
+   \qquad
+   \cos60\degr=\frac{\overline{AB}}{\overline{BC}}\Rightarrow \overline{BC}=\frac{4}{\cos60\degr}=\frac{4}{1/2}=8.
+   \]
+\item[\textbf{(b)}] \rep Pythagore : $\overline{AB}^2+\overline{AC}^2=16+48=64=8^2=\overline{BC}^2$ : correct.
+   Aire $=\dfrac12\,\overline{AB}\cdot\overline{AC}=\dfrac12\cdot4\cdot4\sqrt3=8\sqrt3$.
+\end{itemize}
+
+\exo{Reconnaître un angle à partir d'une relation entre côtés}
+On compare la relation donnée à la loi des cosinus $c^2=a^2+b^2-2ab\cos\hat C$.
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $-2ab\cos\hat C=-ab\Rightarrow\cos\hat C=\dfrac12\Rightarrow\hat C=60\degr$.
+\item[\textbf{(b)}] \rep $-2ab\cos\hat C=+ab\Rightarrow\cos\hat C=-\dfrac12\Rightarrow\hat C=120\degr$.
+\item[\textbf{(c)}] \rep Le plus grand angle est opposé au côté $13$ :
+   \[
+   \cos\hat C=\frac{7^2+8^2-13^2}{2\cdot7\cdot8}=\frac{49+64-169}{112}=\frac{-56}{112}=-\frac12
+   \Rightarrow \hat C=120\degr.
+   \]
+\end{itemize}
+
+\exo{Aire et diagonale d'un parallélogramme}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep Aire $=\overline{AB}\cdot\overline{AD}\cdot\sin\hat A
+   =6\cdot4\cdot\sin60\degr=24\cdot\dfrac{\sqrt3}{2}=12\sqrt3$.
+   (C'est le double de l'aire du triangle $ABD$.)
+\item[\textbf{(b)}] \rep Dans le triangle $ABD$, l'angle en $A$ vaut $60\degr$ et est compris entre
+   $\overline{AB}=6$ et $\overline{AD}=4$ :
+   \[
+   \overline{BD}^2=6^2+4^2-2\cdot6\cdot4\cdot\cos60\degr=36+16-48\cdot\tfrac12=52-24=28
+   \ \Longrightarrow\ \overline{BD}=2\sqrt7\approx5{,}29.
+   \]
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,82 @@
+% =====================================================================
+%  Thème 2 — Chasles et combinaisons — Niveau FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Facile — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Chasles et combinaisons — Corrigé Facile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}+\vc{BC}=\vc{AC}$.
+  \item $\vc{MN}+\vc{NP}=\vc{MP}$.
+  \item $\vc{RS}+\vc{ST}+\vc{TU}=\vc{RU}$.
+  \item $\vc{EF}+\vc{FG}+\vc{GH}+\vc{HK}=\vc{EK}$.
+\end{enumerate}
+\rep La lettre intermédiaire commune s'efface à chaque étape ; il reste la première et la dernière.
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}+\vc{BA}=\vc{AA}=\vec0$.
+  \item $\vc{AB}+\vc{BC}+\vc{CA}=\vc{AC}+\vc{CA}=\vc{AA}=\vec0$.
+  \item $-\vc{DE}=\vc{ED}$.
+  \item $\vc{PQ}+\vc{QP}+\vc{PQ}=\vec0+\vc{PQ}=\vc{PQ}$.
+\end{enumerate}
+\rep Un circuit fermé (on revient au point de départ) donne toujours le vecteur nul.
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}-\vc{CB}=\vc{AB}+\vc{BC}=\vc{AC}$.
+  \item $\vc{AC}-\vc{AB}=\vc{AC}+\vc{CA}\;$? Non : on écrit $-\vc{AB}=\vc{BA}$, donc
+        $\vc{AC}-\vc{AB}=\vc{BA}+\vc{AC}=\vc{BC}$.
+  \item $\vc{MP}-\vc{MN}=\vc{NM}+\vc{MP}=\vc{NP}$.
+\end{enumerate}
+\rep Règle utile : $\vc{XA}-\vc{XB}=\vc{BA}$ (les origines communes $X$ « disparaissent »,
+il reste \og{}extrémité de gauche moins celle de droite\fg{}). Ici b) : $\vc{AC}-\vc{AB}=\vc{BC}$.
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AC}=\vc{AB}+\vc{BC}$.
+  \item $\vc{AD}=\vc{AB}+\vc{BC}+\vc{CD}$.
+  \item $\vc{MN}=\vc{MO}+\vc{ON}$ (valable pour \emph{n'importe quel} point $O$).
+\end{enumerate}
+\rep On peut toujours \emph{insérer} un point : c'est Chasles lu de droite à gauche.
+
+\cor{5}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}=\vc{DC}$ (côtés opposés du parallélogramme).
+  \item $\vc{AD}=\vc{BC}$.
+  \item $\vc{AB}+\vc{AD}=\vc{AC}$ (diagonale issue de $A$).
+\end{enumerate}
+\rep Dans $ABCD$ pris dans l'ordre, les côtés opposés sont des vecteurs \emph{égaux} :
+$\vc{AB}=\vc{DC}$ et $\vc{AD}=\vc{BC}$.
+
+\end{document}

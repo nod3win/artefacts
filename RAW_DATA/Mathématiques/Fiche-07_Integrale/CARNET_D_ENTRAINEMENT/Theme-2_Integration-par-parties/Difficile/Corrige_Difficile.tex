@@ -1,0 +1,116 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Intégration par parties}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\begin{document}
+\section*{Niveau Difficile — Corrigé}
+
+\begin{corr}[1 — l'IPP qui « boucle »]
+\textbf{(a)} On garde \emph{toujours} $V'=e^x$ (donc $V=e^x$).
+
+\emph{Calcul de $I$} avec $U=\sin x$ ($U'=\cos x$) :
+\[
+I=\int e^{x}\sin x\,\dd x=e^{x}\sin x-\int e^{x}\cos x\,\dd x=e^{x}\sin x-J.
+\]
+\emph{Calcul de $J$} avec $U=\cos x$ ($U'=-\sin x$) :
+\[
+J=\int e^{x}\cos x\,\dd x=e^{x}\cos x-\int e^{x}(-\sin x)\,\dd x=e^{x}\cos x+I.
+\]
+
+\textbf{(b)} On substitue la 2\ieme{} relation dans la 1\iere{} :
+\[
+I=e^{x}\sin x-\bigl(e^{x}\cos x+I\bigr)\ \Longrightarrow\ 2I=e^{x}(\sin x-\cos x),
+\]
+d'où $\displaystyle \boxed{I=\tfrac12\,e^{x}(\sin x-\cos x)+C.}$ Puis
+$J=e^{x}\cos x+I=\boxed{\tfrac12\,e^{x}(\sin x+\cos x)+C.}$
+
+\textbf{(c)} Par linéarité, $\displaystyle\int e^{x}(\sin x+\cos x)\,\dd x=I+J=e^{x}\sin x+C.$
+\textbf{Interprétation :} on retrouve directement que $\bigl(e^{x}\sin x\bigr)'=e^{x}\sin x+e^{x}\cos x
+=e^{x}(\sin x+\cos x)$ : l'intégrande était exactement une dérivée de produit.
+\end{corr}
+
+\begin{corr}[2 — double IPP]
+$\displaystyle\int x^{2}\cos x\,\dd x$. \textbf{1\iere{} IPP :} $U=x^{2}$, $V'=\cos x$ ($U'=2x$, $V=\sin x$) :
+\[
+\int x^{2}\cos x\,\dd x=x^{2}\sin x-\int 2x\sin x\,\dd x=x^{2}\sin x-2\int x\sin x\,\dd x.
+\]
+Or $\displaystyle\int x\sin x\,\dd x=-x\cos x+\sin x$ (niveau Facile). Donc
+\[
+\int x^{2}\cos x\,\dd x=x^{2}\sin x-2(-x\cos x+\sin x)+C=\boxed{x^{2}\sin x+2x\cos x-2\sin x+C.}
+\]
+\textbf{Vérif.} $\bigl[x^{2}\sin x+2x\cos x-2\sin x\bigr]'
+=2x\sin x+x^{2}\cos x+2\cos x-2x\sin x-2\cos x=x^{2}\cos x$. \checkmark
+\end{corr}
+
+\begin{corr}[3 — IPP sur un intervalle]
+\textbf{(a)} $\displaystyle\int (x+1)e^{x}\,\dd x$ avec $U=x+1$, $V'=e^{x}$ ($U'=1$, $V=e^{x}$) :
+\[
+\int (x+1)e^{x}\,\dd x=(x+1)e^{x}-\int e^{x}\,\dd x=(x+1)e^{x}-e^{x}+C=x\,e^{x}+C.
+\]
+Une primitive est donc $F(x)=x\,e^{x}$. \textbf{Vérif.} $(x e^{x})'=e^{x}+x e^{x}=(x+1)e^{x}$. \checkmark
+
+\textbf{(b)} Par Newton--Leibniz,
+\[
+A=\int_{0}^{1}(x+1)e^{x}\,\dd x=\bigl[x\,e^{x}\bigr]_{0}^{1}=1\cdot e^{1}-0\cdot e^{0}=\boxed{e.}
+\]
+\end{corr}
+
+\begin{corr}[4 — une relation de récurrence]
+\textbf{(a)} Pour $n\geqslant 1$, IPP avec $U=x^{n}$, $V'=e^{x}$ ($U'=n x^{n-1}$, $V=e^{x}$) :
+\[
+I_{n}=\int x^{n}e^{x}\,\dd x=x^{n}e^{x}-\int n x^{n-1}e^{x}\,\dd x=\boxed{x^{n}e^{x}-n\,I_{n-1}.}
+\]
+
+\textbf{(b)} Avec $I_{0}=e^{x}+C$ :
+\begin{align*}
+I_{1}&=x e^{x}-1\cdot I_{0}=x e^{x}-e^{x}+C=(x-1)e^{x}+C,\\
+I_{2}&=x^{2}e^{x}-2 I_{1}=x^{2}e^{x}-2(x-1)e^{x}+C=(x^{2}-2x+2)\,e^{x}+C,\\
+I_{3}&=x^{3}e^{x}-3 I_{2}=x^{3}e^{x}-3(x^{2}-2x+2)e^{x}+C=(x^{3}-3x^{2}+6x-6)\,e^{x}+C.
+\end{align*}
+\textbf{Vérif.\ ($I_3$).} $\bigl[(x^{3}-3x^{2}+6x-6)e^{x}\bigr]'=(3x^{2}-6x+6)e^{x}+(x^{3}-3x^{2}+6x-6)e^{x}=x^{3}e^{x}$. \checkmark
+\end{corr}
+\end{document}

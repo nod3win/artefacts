@@ -1,0 +1,90 @@
+% =====================================================================
+%  Thème 5 — CORRIGÉ — Niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Corrigé Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 5 — L'Hospital \& limites trigonométriques}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Moyen}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[l'Hospital avec le cosinus]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item En $\frac{\pi}{2}$ : numérateur $\cos\frac{\pi}{2}=0$, dénominateur $\frac{\pi}{2}-\frac{\pi}{2}=0$ : forme $\frac00$.
+  \item $\displaystyle\lim_{x\to \frac{\pi}{2}}\frac{\cos x}{x-\frac{\pi}{2}}=\lim_{x\to\frac{\pi}{2}}\frac{-\sin x}{1}=-\sin\frac{\pi}{2}=-1$.
+        \emph{(C'est aussi le nombre dérivé de $\cos$ en $\frac{\pi}{2}$.)}
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[combinaison de limites remarquables]
+\[ \frac{\sin 2x}{\tan x}=\frac{\sin 2x}{2x}\times\frac{x}{\tan x}\times\frac{2x}{x}
+   =\underbrace{\frac{\sin 2x}{2x}}_{\to 1}\times\underbrace{\frac{x}{\tan x}}_{\to 1}\times 2
+   \xrightarrow[x\to0]{}1\times 1\times 2=2. \]
+\end{correction}
+
+\begin{correction}[transformer $0\times\infty$]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item En $0^{+}$ : $x\to 0$ et $\ln x\to-\infty$ : forme $0\times(-\infty)$, indéterminée (le produit
+        dépend de la « vitesse » relative des deux facteurs).
+  \item $\displaystyle x\ln x=\frac{\ln x}{1/x}$ (forme $\frac{-\infty}{+\infty}$). Par l'Hospital :
+        \[ \lim_{x\to 0^{+}}\frac{\ln x}{1/x}=\lim_{x\to 0^{+}}\frac{1/x}{-1/x^2}=\lim_{x\to 0^{+}}(-x)=0. \]
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[l'Hospital deux fois]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Forme $\frac{1-1}{0}=\frac00$. Une fois : $\displaystyle\lim_{x\to 0}\frac{1-\cos x}{x^2}=\lim_{x\to 0}\frac{\sin x}{2x}$.
+  \item C'est encore $\frac00$. Seconde fois : $\displaystyle\lim_{x\to 0}\frac{\sin x}{2x}=\lim_{x\to 0}\frac{\cos x}{2}=\frac{\cos 0}{2}=\frac12$.
+        \emph{(On pouvait aussi conclure dès l'étape 1 : $\frac{\sin x}{2x}=\frac12\cdot\frac{\sin x}{x}\to\frac12$.)}
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[la même expression, deux points]
+$q(x)=\dfrac{e^x-1}{x}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\frac00$ : $\displaystyle\lim_{x\to 0}\frac{e^x-1}{x}=\lim_{x\to 0}\frac{e^x}{1}=1$.
+  \item $\frac{\infty}{\infty}$ : $\displaystyle\lim_{x\to+\infty}\frac{e^x-1}{x}=\lim_{x\to+\infty}\frac{e^x}{1}=+\infty$.
+  \item Près de $0$, $e^x-1\approx x$ (le rapport tend vers $1$) : les deux croissent « à la même vitesse ».
+        Mais à l'infini, $e^x$ l'emporte largement sur $x$ (le rapport explose) : \textbf{l'exponentielle croît
+        plus vite que toute puissance de $x$}.
+\end{enumerate}
+\end{correction}
+
+\end{document}

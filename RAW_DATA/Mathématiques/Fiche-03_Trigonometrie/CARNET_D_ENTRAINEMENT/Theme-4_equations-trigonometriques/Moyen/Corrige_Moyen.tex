@@ -1,0 +1,115 @@
+% =====================================================================
+%  Thème 4 — Équations trigonométriques — NIVEAU MOYEN
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 4 — Équations trigonométriques}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Valeurs négatives}
+\begin{itemize}[leftmargin=1.4em,itemsep=3pt]
+\item[\textbf{(a)}] \rep $\cos x=-\dfrac12$. Référence : $\cos\dfrac{\pi}{3}=\dfrac12$, et le signe
+$-$ place l'angle en quadrants II/III : $-\dfrac12=\cos\dfrac{2\pi}{3}$. Donc
+$\cos x=\cos\dfrac{2\pi}{3}$ et
+\[
+x=\frac{2\pi}{3}+2k\pi \ \text{ou}\ x=-\frac{2\pi}{3}+2k\pi,\ k\in\Z
+\ \Rightarrow\
+\boxed{\,S=\left\{\pm\tfrac{2\pi}{3}+2k\pi \ \middle|\ k\in\Z\right\}.}
+\]
+\item[\textbf{(b)}] \rep $\sin x=-\dfrac{\sqrt3}{2}$. Référence : $\sin\dfrac{\pi}{3}=\dfrac{\sqrt3}{2}$ ;
+le signe $-$ donne $-\dfrac{\sqrt3}{2}=\sin\!\left(-\dfrac{\pi}{3}\right)$. Donc
+$\sin x=\sin\!\left(-\dfrac{\pi}{3}\right)$ et
+\[
+x=-\frac{\pi}{3}+2k\pi \ \text{ou}\ x=\pi-\left(-\frac{\pi}{3}\right)+2k\pi=\frac{4\pi}{3}+2k\pi,\ k\in\Z.
+\]
+\[
+\boxed{\,S=\left\{-\tfrac{\pi}{3}+2k\pi\ ;\ \tfrac{4\pi}{3}+2k\pi \ \middle|\ k\in\Z\right\}.}
+\]
+\end{itemize}
+
+\exo{Isoler puis sélectionner (cosinus)}
+\rep \textbf{(1) Isoler :} $2\cos x+1=0\Leftrightarrow \cos x=-\dfrac12$.
+\textbf{(2) Reconnaître :} $-\dfrac12=\cos\dfrac{2\pi}{3}$.
+\textbf{(3) Familles :} $x=\dfrac{2\pi}{3}+2k\pi$ ou $x=-\dfrac{2\pi}{3}+2k\pi$.
+\textbf{(4) Sélection :} le 2\textsuperscript{e} quadrant, c'est $x\in\left]\dfrac{\pi}{2}\,;\,\pi\right[$.
+La valeur $\dfrac{2\pi}{3}\ (=120\degr)$ y est ; $-\dfrac{2\pi}{3}\equiv\dfrac{4\pi}{3}\ (=240\degr)$ est
+au quadrant III. On retient
+\[
+\boxed{\,x=\frac{2\pi}{3}.}
+\]
+
+\exo{Isoler puis sélectionner (sinus)}
+\rep \textbf{(1) Isoler :} $2\sin x-\sqrt3=0\Leftrightarrow \sin x=\dfrac{\sqrt3}{2}$.
+\textbf{(2) Reconnaître :} $\dfrac{\sqrt3}{2}=\sin\dfrac{\pi}{3}$.
+\textbf{(3) Familles :} $x=\dfrac{\pi}{3}+2k\pi$ ou $x=\pi-\dfrac{\pi}{3}+2k\pi=\dfrac{2\pi}{3}+2k\pi$.
+\textbf{(4) Sélection :} au 2\textsuperscript{e} quadrant $\left]\dfrac{\pi}{2}\,;\,\pi\right[$, seule
+$\dfrac{2\pi}{3}\ (=120\degr)$ convient ($\dfrac{\pi}{3}=60\degr$ est au quadrant I). On retient
+\[
+\boxed{\,x=\frac{2\pi}{3}.}
+\]
+
+\exo{Sélection sur un intervalle (tangente)}
+\rep $\tg x=-1$. Référence $\tg\dfrac{\pi}{4}=1$, donc $-1=\tg\!\left(-\dfrac{\pi}{4}\right)$ :
+famille (période $\pi$)
+\[
+x=-\frac{\pi}{4}+k\pi,\qquad k\in\Z.
+\]
+On teste dans $[0\,;\,2\pi[$ : $k=1\Rightarrow -\dfrac{\pi}{4}+\pi=\dfrac{3\pi}{4}$ ;
+$k=2\Rightarrow -\dfrac{\pi}{4}+2\pi=\dfrac{7\pi}{4}$ (et $k=0$ donne $-\frac{\pi}{4}<0$,
+$k=3$ dépasse $2\pi$). Donc
+\[
+\boxed{\,S=\left\{\frac{3\pi}{4}\,;\,\frac{7\pi}{4}\right\}.}
+\]
+
+\exo{Sélection sur un intervalle (sinus)}
+\rep $\sin x=-\dfrac12$. Référence $\sin\dfrac{\pi}{6}=\dfrac12$, donc
+$-\dfrac12=\sin\!\left(-\dfrac{\pi}{6}\right)$ : familles
+\[
+x=-\frac{\pi}{6}+2k\pi \ \text{ou}\ x=\pi-\left(-\frac{\pi}{6}\right)+2k\pi=\frac{7\pi}{6}+2k\pi.
+\]
+Dans $[0\,;\,2\pi[$ : la première donne $-\dfrac{\pi}{6}+2\pi=\dfrac{11\pi}{6}$ ; la seconde donne
+$\dfrac{7\pi}{6}$. Donc
+\[
+\boxed{\,S=\left\{\frac{7\pi}{6}\,;\,\frac{11\pi}{6}\right\}.}
+\]
+
+\end{document}

@@ -1,0 +1,194 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,patterns,backgrounds,shapes.geometric,decorations.pathreplacing,decorations.markings}
+\usepackage[a4paper,margin=2.15cm,headheight=26pt,headsep=12pt]{geometry}
+\usepackage{titlesec}
+
+% ---------------- Palette ----------------
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{barcol}{RGB}{0,151,169}
+\definecolor{barcold}{RGB}{0,110,124}
+\definecolor{modecol}{RGB}{200,55,55}
+\definecolor{meancol}{RGB}{0,90,200}
+\definecolor{medcol}{RGB}{160,90,190}
+\definecolor{quartcol}{RGB}{0,135,90}
+\definecolor{ogivecol}{RGB}{176,74,0}
+
+% ---------------- Boîtes ----------------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+  fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox{definition}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{propriete}[1][]{boxbase,colback=thmcol!7,colframe=thmcol,
+  title={\textsc{Propriété}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% Boîte "exercice" et "corrigé" (titre libre passé en argument)
+\newtcolorbox{exobox}[1]{boxbase,colback=primary!4,colframe=primary,
+  before skip=8pt,after skip=8pt,title={#1}}
+\newtcolorbox{corbox}[1]{boxbase,colback=excol!5,colframe=excol!85!black,
+  before skip=8pt,after skip=8pt,title={#1}}
+
+% ---------------- En-tête ----------------
+\newcommand{\docpart}[1]{\def\thedocpart{#1}}
+\docpart{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Statistiques descriptives}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{\thedocpart}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\setlist{topsep=2pt,itemsep=1.5pt,parsep=0pt}
+
+% Bandeau de titre du document
+\newcommand{\bandeau}[2]{%
+\begin{tcolorbox}[boxbase,colback=primary,colframe=primarydark,halign=center,
+   before skip=2pt,after skip=12pt]
+{\LARGE\bfseries\color{white} #1}\\[3pt]{\normalsize\color{white} #2}
+\end{tcolorbox}}
+
+\newcommand{\ecm}{\sigma_m}
+\newcommand{\ect}{\sigma}
+\newcommand{\med}{M\!e}
+\docpart{Tutoriel — Thème 5}
+\begin{document}
+\bandeau{Thème 5 — Représentations graphiques}{Bâtons, histogramme, ogive et boîte à moustaches}
+
+\noindent\textbf{But du thème.} Un graphique dit d'un coup d'œil ce qu'un tableau cache. Le bon
+graphique dépend du \textbf{type de caractère}. Ce thème entraîne à \emph{lire} et à \emph{choisir}
+la représentation, et surtout à \textbf{lire la médiane et les quartiles sur l'ogive}.
+
+\section{Discret $\rightarrow$ diagramme en bâtons ; continu $\rightarrow$ histogramme}
+
+\begin{minipage}{0.48\textwidth}
+\centering
+\textbf{\small Diagramme en bâtons (discret)}\\[2pt]
+\begin{tikzpicture}[scale=0.72]
+  \draw[->,>=Stealth] (0,0)--(0,3.6) node[above,font=\scriptsize]{$n_i$};
+  \draw[->,>=Stealth] (0,0)--(6,0) node[right,font=\scriptsize]{note};
+  \foreach \y/\v in {1/5,2/10,3/15}{\draw[black!12] (0,\y)--(5.6,\y);
+     \draw (0,\y)--(-0.06,\y) node[left,font=\tiny]{\v};}
+  \foreach \x/\h/\v in {1/3/2,3/2/5,5/1/8}{
+     \draw[barcol,line width=3pt] (\x,0)--(\x,\h);
+     \fill[barcol] (\x,\h) circle (2pt);
+     \node[below,font=\tiny] at (\x,0){\v};}
+\end{tikzpicture}\\[1pt]
+{\scriptsize bâtons \emph{séparés} : rien entre deux entiers.}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\textbf{\small Histogramme (continu)}\\[2pt]
+\begin{tikzpicture}[scale=0.72]
+  \draw[->,>=Stealth] (0,0)--(0,3.6) node[above,font=\scriptsize]{$n_i$};
+  \draw[->,>=Stealth] (0,0)--(6,0) node[right,font=\scriptsize]{taille};
+  \foreach \y/\v in {1/5,2/10,3/15}{\draw[black!12] (0,\y)--(5.6,\y);
+     \draw (0,\y)--(-0.06,\y) node[left,font=\tiny]{\v};}
+  \foreach \x/\h/\c in {0/1.2/barcol,1/2.0/barcol,2/3.0/modecol,3/1.8/barcol,4/1.0/barcol}{
+     \fill[\c,opacity=0.85] (\x+0.15,0) rectangle (\x+1.15,\h);
+     \draw[\c!70!black] (\x+0.15,0) rectangle (\x+1.15,\h);}
+\end{tikzpicture}\\[1pt]
+{\scriptsize barres \emph{collées} : la plus haute = classe modale.}
+\end{minipage}
+
+\begin{propriete}[le graphique dépend du caractère]
+Caractère \textbf{discret} $\rightarrow$ bâtons séparés (hauteur $\propto n_i$).
+Caractère \textbf{continu} (classes) $\rightarrow$ histogramme (barres jointives).
+Dans les deux cas, la plus grande hauteur repère le \textbf{mode}.
+\end{propriete}
+
+\section{L'ogive : lire la médiane et les quartiles}
+
+L'\textbf{ogive} (polygone des fréquences cumulées) relie les points
+$(\text{borne supérieure de classe},\ f_c)$. On y lit $\med$, $Q_1$, $Q_3$ par lecture horizontale.
+
+\begin{minipage}{0.52\textwidth}
+\begin{methode}[lire une valeur sur l'ogive]
+\begin{enumerate}
+  \item Repérer l'ordonnée voulue : $0{,}50$ (médiane), $0{,}25$ ($Q_1$), $0{,}75$ ($Q_3$).
+  \item Aller horizontalement jusqu'à la courbe.
+  \item Descendre verticalement : on lit la valeur sur l'axe.
+\end{enumerate}
+\end{methode}
+\end{minipage}\hfill
+\begin{minipage}{0.44\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->,>=Stealth] (0,0)--(6.2,0) node[below right,font=\tiny]{valeur};
+  \draw[->,>=Stealth] (0,0)--(0,4.6) node[left,font=\tiny]{$f_c$};
+  \foreach \y/\v in {1/0{,}25,2/0{,}50,3/0{,}75,4/1{,}00}{
+     \draw[black!12] (0,\y)--(5.8,\y); \draw (0,\y)--(-0.06,\y) node[left,font=\tiny]{\v};}
+  \draw[ogivecol,line width=1.1pt] (0,0)--(1,0.5)--(2,1.4)--(3,2.8)--(4,3.7)--(5,4);
+  \foreach \x/\y in {1/0.5,2/1.4,3/2.8,4/3.7,5/4} \fill[ogivecol] (\x,\y) circle (1.3pt);
+  \draw[medcol,dashed,line width=0.8pt] (0,2)--(2.6,2)--(2.6,0);
+  \node[medcol,font=\tiny,below] at (2.6,0){$\med$};
+\end{tikzpicture}
+\end{minipage}
+
+\section{La boîte à moustaches : le résumé en cinq nombres}
+
+\begin{minipage}{0.44\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.62]
+  \draw[->,>=Stealth] (0,0)--(9.5,0) node[right,font=\tiny]{valeur};
+  \draw[line width=0.9pt] (0.6,0.6)--(2.6,0.6);
+  \draw[line width=0.9pt] (6.6,0.6)--(8.4,0.6);
+  \draw[line width=0.9pt] (0.6,0.35)--(0.6,0.85);
+  \draw[line width=0.9pt] (8.4,0.35)--(8.4,0.85);
+  \fill[primary!20,draw=primary,line width=0.9pt] (2.6,0.2) rectangle (6.6,1.0);
+  \draw[medcol,line width=1.3pt] (4.4,0.2)--(4.4,1.0);
+  \node[font=\tiny,below=3pt] at (0.6,0){$x_{\min}$};
+  \node[font=\tiny,above] at (2.6,1.0){$Q_1$};
+  \node[font=\tiny,above] at (4.4,1.0){$\med$};
+  \node[font=\tiny,above] at (6.6,1.0){$Q_3$};
+  \node[font=\tiny,below=3pt] at (8.4,0){$x_{\max}$};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.52\textwidth}
+La \textbf{boîte à moustaches} résume la série par $x_{\min},Q_1,\med,Q_3,x_{\max}$. La largeur de
+la boîte est l'écart interquartile $Q_3-Q_1$ (les $50\,\%$ centraux) ; les « moustaches » vont
+jusqu'aux extrêmes.
+\end{minipage}
+
+\begin{remarque}[diagramme circulaire]
+Pour un caractère \textbf{qualitatif} (groupe sanguin, moyen de transport\ldots) on utilise souvent
+un \textbf{diagramme circulaire} : chaque modalité occupe un secteur d'angle
+$\theta_i=f_i\times360^\circ$. Un secteur de $50\,\%$ occupe un demi-disque ($180^\circ$).
+\end{remarque}
+\end{document}

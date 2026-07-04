@@ -1,0 +1,200 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 3 : Trigonométrie
+%  Thème 1 — Conversions d'angles & cercle trigonométrique
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.markings}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{sincol}{RGB}{205,40,55}
+\definecolor{coscol}{RGB}{20,110,200}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Piège à éviter}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\heading}[1]{\medskip\noindent{\large\bfseries\color{primarydark}#1}\par\smallskip}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 1 — Conversions \& cercle trigonométrique}\\[2pt]
+{\color{primarydark}\textsc{Carnet d'entraînement — Fiche 3 : Trigonométrie \quad•\quad Tutoriel}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+Ce thème installe les \textbf{réflexes de base} de la trigonométrie : convertir un angle, le placer
+sur le cercle, lire son \textbf{quadrant}, le \textbf{signe} de ses nombres trigonométriques et ses
+\textbf{valeurs remarquables}. Ces gestes reviennent dans presque tous les QCM : rendez-les
+\emph{automatiques}.
+
+\heading{1. Convertir degrés $\leftrightarrow$ radians}
+Un demi-tour vaut $180\degr$ \emph{ou} $\pi$ radians. Tout part de cette égalité, résumée par la
+règle de trois :
+\[
+\boxed{\;\dfrac{\alpha_{\text{deg}}}{180}=\dfrac{\alpha_{\text{rad}}}{\pi}\;}
+\qquad\Longrightarrow\qquad
+\alpha_{\text{rad}}=\alpha_{\text{deg}}\times\dfrac{\pi}{180},
+\qquad
+\alpha_{\text{deg}}=\alpha_{\text{rad}}\times\dfrac{180}{\pi}.
+\]
+
+\begin{exemple}[le $\pi$ se simplifie toujours]
+$30\degr = 30\times\dfrac{\pi}{180}=\dfrac{\pi}{6}$ \ ;\qquad
+$\dfrac{3\pi}{4}=\dfrac{3\pi}{4}\times\dfrac{180}{\pi}=\dfrac{3\times180}{4}=135\degr$.
+Si le $\pi$ ne se simplifie pas, c'est le signe d'une erreur.
+\end{exemple}
+
+Les conversions à connaître par cœur (elles reviennent partout) :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\rowcolor{primary!12}
+\textbf{deg} & $0\degr$ & $30\degr$ & $45\degr$ & $60\degr$ & $90\degr$ & $180\degr$ & $270\degr$ & $360\degr$\\
+\hline
+\textbf{rad} & $0$ & $\frac{\pi}{6}$ & $\frac{\pi}{4}$ & $\frac{\pi}{3}$ & $\frac{\pi}{2}$ & $\pi$ & $\frac{3\pi}{2}$ & $2\pi$\\
+\hline
+\end{tabular}
+\end{center}
+
+\heading{2. Le cercle, les quadrants et le sens trigonométrique}
+Le \textbf{cercle trigonométrique} a pour centre $O$ et pour rayon $1$. On tourne dans le
+\textbf{sens trigonométrique} (inverse des aiguilles d'une montre = sens positif). Les deux axes le
+découpent en quatre \textbf{quadrants} :
+\[
+\text{I : } 0\to\tfrac{\pi}{2}\quad|\quad
+\text{II : } \tfrac{\pi}{2}\to\pi\quad|\quad
+\text{III : } \pi\to\tfrac{3\pi}{2}\quad|\quad
+\text{IV : } \tfrac{3\pi}{2}\to2\pi.
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=2.1,line cap=round,>=Stealth]
+  \fill[primary!7] (0,0)--(1,0) arc(0:90:1)--cycle;
+  \fill[primary!13] (0,0)--(0,1) arc(90:180:1)--cycle;
+  \fill[primary!7] (0,0)--(-1,0) arc(180:270:1)--cycle;
+  \fill[primary!13] (0,0)--(0,-1) arc(270:360:1)--cycle;
+  \draw[primary,line width=1.1pt] (0,0) circle (1);
+  \draw[->,black!75] (-1.3,0)--(1.45,0) node[right]{\scriptsize$x=\cos$};
+  \draw[->,black!75] (0,-1.3)--(0,1.4) node[above]{\scriptsize$y=\sin$};
+  \draw[->,thick,primarydark] (1.15,0.28) arc (14:150:1.18);
+  \node[primarydark] at (1.1,0.82) {\scriptsize sens $+$};
+  \node[primarydark,font=\bfseries] at (45:0.55) {I};
+  \node[primarydark,font=\bfseries] at (135:0.55) {II};
+  \node[primarydark,font=\bfseries] at (225:0.55) {III};
+  \node[primarydark,font=\bfseries] at (315:0.55) {IV};
+  \foreach \a/\d in {0/0\degr,90/90\degr,180/180\degr,270/270\degr}
+     \node[black!70,font=\scriptsize] at (\a:1.2) {$\d$};
+  \fill (0,0) circle (0.02);
+\end{tikzpicture}
+\end{center}
+
+\begin{idee}[un point du cercle porte cos et sin]
+Au point $P$ associé à l'angle $\alpha$ : $P=(\cos\alpha\,;\,\sin\alpha)$. Donc \textbf{le cosinus se
+lit horizontalement} (abscisse) et \textbf{le sinus verticalement} (ordonnée). Comme le rayon vaut
+$1$ : $-1\le\cos\alpha\le1$ et $-1\le\sin\alpha\le1$.
+\end{idee}
+
+\heading{3. Signe selon le quadrant}
+On lit le signe directement sur le cercle : $\cos$ (horizontal) est positif \emph{à droite},
+$\sin$ (vertical) positif \emph{en haut}. La tangente $\tg\alpha=\frac{\sin\alpha}{\cos\alpha}$ est
+positive quand $\sin$ et $\cos$ ont le \emph{même} signe.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\rowcolor{primary!15}
+\textbf{Quadrant} & I & II & III & IV\\
+\hline
+$\cos$ & $+$ & $-$ & $-$ & $+$\\ \hline
+$\sin$ & $+$ & $+$ & $-$ & $-$\\ \hline
+$\tg,\ \cotg$ & $+$ & $-$ & $+$ & $-$\\
+\hline
+\end{tabular}
+\end{center}
+
+\heading{4. Valeurs remarquables du premier quadrant}
+Astuce du sinus : écris $\dfrac{\sqrt0}{2},\dfrac{\sqrt1}{2},\dfrac{\sqrt2}{2},\dfrac{\sqrt3}{2},
+\dfrac{\sqrt4}{2}$. Le cosinus est la \emph{même liste à l'envers}.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|>{\columncolor{primary!12}}c|c|c|c|c|c|}
+\hline
+\rowcolor{primary!20}
+$\alpha$ & $0$ & $\frac{\pi}{6}\,(30\degr)$ & $\frac{\pi}{4}\,(45\degr)$ & $\frac{\pi}{3}\,(60\degr)$ & $\frac{\pi}{2}\,(90\degr)$\\
+\hline
+$\sin\alpha$ & $0$ & $\frac{1}{2}$ & $\frac{\sqrt2}{2}$ & $\frac{\sqrt3}{2}$ & $1$\\
+\hline
+$\cos\alpha$ & $1$ & $\frac{\sqrt3}{2}$ & $\frac{\sqrt2}{2}$ & $\frac{1}{2}$ & $0$\\
+\hline
+$\tg\alpha$ & $0$ & $\frac{\sqrt3}{3}$ & $1$ & $\sqrt3$ & $\nexists$\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{methode}[lire un nombre trigonométrique d'un angle quelconque]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=1pt]
+  \item Ramener l'angle dans $[0\degr;360\degr[$ en ajoutant/retranchant des tours ($\pm360\degr$).
+  \item Repérer le \textbf{quadrant} $\Rightarrow$ en déduire le \textbf{signe}.
+  \item Trouver l'angle de référence (angle aigu avec l'axe horizontal) et lire sa valeur au tableau.
+  \item Recoller le signe de l'étape 2.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\cos120\degr$]
+$120\degr$ est au quadrant II ($\cos<0$). Référence : $180\degr-120\degr=60\degr$, et
+$\cos60\degr=\frac12$. Donc $\cos120\degr=-\frac12$.
+\end{exemple}
+
+\begin{piege}[erreurs classiques]
+$\bullet$ Oublier de simplifier le $\pi$ dans une conversion.\quad
+$\bullet$ Confondre les lignes $\sin$ et $\cos$ (le sinus \emph{monte} de $0$ à $1$, le cosinus
+\emph{descend} de $1$ à $0$).\quad
+$\bullet$ Donner un signe $+$ à un cosinus du quadrant II ou III.
+\end{piege}
+
+\end{document}

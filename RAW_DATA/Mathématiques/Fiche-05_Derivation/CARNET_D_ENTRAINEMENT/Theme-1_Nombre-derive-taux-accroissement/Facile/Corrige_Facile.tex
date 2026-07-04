@@ -1,0 +1,129 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+% Ne modifier QUE :
+%   - les deux lignes \fancyhead[L] et \fancyhead[R]
+%   - le bloc titre \begin{center}...\end{center} juste après \begin{document}
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 1} — Nombre dérivé \& taux d'accroissement}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Corrigé — Niveau Facile}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Taux d'accroissement : variation moyenne \& pente de la sécante}
+\end{center}
+\vspace{2mm}
+
+\begin{corr}[1 --- $f(x)=x^2$ entre $x_0=2$ et $2+h$]
+On applique la définition avec $x_0=2$ :
+\[
+\tau(h)=\frac{f(2+h)-f(2)}{h}=\frac{(2+h)^2-2^2}{h}.
+\]
+On développe le numérateur : $(2+h)^2-4=4+4h+h^2-4=4h+h^2=h(4+h)$. D'où
+\[
+\tau(h)=\frac{h(4+h)}{h}=\boxed{4+h}\qquad(h\neq 0).
+\]
+\end{corr}
+
+\begin{corr}[2 --- $f(x)=3x+1$ en $x_0$ quelconque]
+\[
+\tau(h)=\frac{f(x_0+h)-f(x_0)}{h}
+=\frac{\big(3(x_0+h)+1\big)-\big(3x_0+1\big)}{h}.
+\]
+Le numérateur vaut $3x_0+3h+1-3x_0-1=3h$, donc
+\[
+\tau(h)=\frac{3h}{h}=\boxed{3}.
+\]
+Le taux est \textbf{constant}, égal à $3$ : c'est normal, la courbe est une droite de
+pente $3$, toutes ses sécantes ont la même pente.
+\end{corr}
+
+\begin{corr}[3 --- $f(x)=x^2-x$ entre $x_0=1$ et $1+h$]
+\[
+\tau(h)=\frac{f(1+h)-f(1)}{h}
+=\frac{\big[(1+h)^2-(1+h)\big]-\big[1^2-1\big]}{h}.
+\]
+Or $f(1)=1-1=0$ et $(1+h)^2-(1+h)=1+2h+h^2-1-h=h+h^2=h(1+h)$. Donc
+\[
+\tau(h)=\frac{h(1+h)}{h}=\boxed{1+h}\qquad(h\neq 0).
+\]
+\end{corr}
+
+\begin{corr}[4 --- vitesse moyenne, $y=f(x)=x^2$]
+La vitesse moyenne entre $t=2$~s et $t=5$~s est le taux d'accroissement entre ces deux
+instants :
+\[
+v_{\text{moy}}=\frac{f(5)-f(2)}{5-2}=\frac{5^2-2^2}{3}=\frac{25-4}{3}=\frac{21}{3}
+=\boxed{7\ \text{m/s}}.
+\]
+\end{corr}
+
+\begin{corr}[5 --- pente de la sécante $(AB)$]
+La pente de la droite passant par $A(1\,;2)$ et $B(4\,;8)$ est le rapport de la variation
+des ordonnées sur celle des abscisses :
+\[
+\text{pente}=\frac{y_B-y_A}{x_B-x_A}=\frac{8-2}{4-1}=\frac{6}{3}=\boxed{2}.
+\]
+\end{corr}
+
+\end{document}

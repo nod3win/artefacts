@@ -1,0 +1,90 @@
+% =====================================================================
+%  Thème 4 — Équations trigonométriques — NIVEAU DIFFICILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 4 — Équations trigonométriques}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} traiter l'\textbf{angle double} (écrire les familles \emph{en $2x$} puis diviser
+par $2$ — sans perdre de solution), ramener une \textbf{équation linéaire} $a\sin x+b\cos x=0$ à une
+tangente, et appliquer tout cela à une \textbf{situation périodique}. Les sous-questions
+s'enchaînent. \textbf{Sans calculatrice}, valeurs exactes, conclure par $S$.
+\end{consigne}
+
+\exo{Angle double — le sinus}
+On veut résoudre $2\sin(2x)=1$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Isole $\sin(2x)$, puis écris les \textbf{deux familles} de solutions \emph{pour l'angle $2x$}.
+\item Divise par $2$ pour obtenir les familles en $x$. Que devient le « $+2k\pi$ » ?
+\item Donne toutes les solutions dans $[0\,;\,2\pi[$.
+\end{enumerate}
+
+\exo{Angle double — la tangente}
+On veut résoudre $\tg(2x)=1$ dans $[0\,;\,2\pi[$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Écris la famille de solutions \emph{pour $2x$}, puis divise par $2$ pour obtenir $x$.
+\item Combien attends-tu de solutions dans $[0\,;\,2\pi[$~? Donne-les toutes.
+\end{enumerate}
+
+\exo{Équation linéaire ramenée à une tangente}
+On considère $\sin x-\sqrt3\,\cos x=0$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Explique pourquoi $\cos x=0$ ne peut pas être solution.
+\item En divisant par $\cos x$, ramène l'équation à une équation en $\tg x$, puis résous dans $\mathbb{R}$.
+\item Donne les solutions appartenant à $[0\,;\,2\pi[$.
+\end{enumerate}
+
+\exo{Mise en situation périodique — deux roues}
+La hauteur (comptée à partir de l'axe, unité arbitraire) d'un point d'une roue en fonction de sa
+position angulaire $x\in[0\,;\,2\pi[$ est modélisée par $h(x)=\sin x$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Pour quelles positions $x$ la hauteur vaut-elle $\dfrac12$~?
+\item Pour quelles positions $x$ la hauteur vaut-elle $-\dfrac{\sqrt2}{2}$~?
+\item Une seconde roue tourne \emph{deux fois plus vite} : sa hauteur est $g(x)=\sin(2x)$, toujours
+pour $x\in[0\,;\,2\pi[$. Pour quelles positions $x$ vaut-elle $\dfrac{\sqrt2}{2}$~?
+(Attention à l'angle double.)
+\end{enumerate}
+
+\end{document}

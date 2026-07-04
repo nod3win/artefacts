@@ -1,0 +1,112 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,colortbl}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 3} — Factorisation et résolution}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 3 — Factorisation et résolution}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Tutoriel — la mécanique à maîtriser avant les exercices}
+\end{center}
+
+\vspace{1mm}
+\noindent \textbf{Factoriser}, c'est récrire une somme en \emph{produit}. Le but : un produit est nul
+si et seulement si un facteur est nul, ce qui casse une équation compliquée en équations simples.
+
+\begin{cle}[la règle du produit nul, moteur de tout]
+\[ F\times G=0 \iff F=0\ \text{ou}\ G=0. \]
+C'est pourquoi on cherche \emph{toujours} à factoriser avant de résoudre une équation.
+\end{cle}
+
+\begin{cle}[les trois outils de factorisation]
+\begin{enumerate}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Mise en évidence} : sortir un facteur commun. $\ 2x^{2}-3x=x(2x-3)$.
+  \item \textbf{Produits remarquables} :
+  \[ A^{2}-B^{2}=(A-B)(A+B);\quad A^{2}\pm 2AB+B^{2}=(A\pm B)^{2}. \]
+  \item \textbf{Trinôme du second degré} : si $\Delta=B^{2}-4AC>0$,
+  \[ Ax^{2}+Bx+C=A(x-x_1)(x-x_2),\quad x_{1,2}=\frac{-B\pm\sqrt{\Delta}}{2A}. \]
+  Si $\Delta=0$ : racine double $x_1=\tfrac{-B}{2A}$. Si $\Delta<0$ : pas de racine réelle.
+\end{enumerate}
+\end{cle}
+
+\begin{piege}[le discriminant décide sans tout calculer]
+Le \emph{signe} de $\Delta=B^{2}-4AC$ donne le nombre de racines réelles : $\Delta>0\Rightarrow$ deux,
+$\Delta=0\Rightarrow$ une (double), $\Delta<0\Rightarrow$ aucune. Très utile pour les questions « combien
+de solutions~? » sans résoudre.
+\end{piege}
+
+\begin{methode}[factoriser un polynôme de degré $\geq 3$ : schéma de Horner]
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=0.5pt]
+  \item aligner les coefficients (mettre $0$ pour une puissance manquante) ;
+  \item trouver une racine évidente $a$ (souvent $\pm1,\pm2$) telle que $P(a)=0$ ;
+  \item abaisser le 1\textsuperscript{er} coefficient, puis « $\times a$ + coefficient suivant » de proche en proche ;
+  \item les sommes obtenues (sauf la dernière) sont les coefficients de $Q(x)$ ; la dernière est le \emph{reste} (=$0$).
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[Horner sur $P(x)=x^{3}-x^{2}+2x-2$, racine $a=1$]
+\begin{center}\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c|cccc}
+ & $1$ & $-1$ & $2$ & $-2$\\
+$a=1$ & & $1$ & $0$ & $2$\\ \hline
+ & $1$ & $0$ & $2$ & $\mathbf{0}$ (reste)
+\end{tabular}
+\end{center}
+On lit $Q(x)=x^{2}+2$, donc $P(x)=(x-1)(x^{2}+2)$.
+\end{exemplebox}
+
+\begin{methode}[simplifier une fraction, résoudre une inéquation]
+\textbf{Fraction} $\tfrac{P(x)}{Q(x)}$ : (1) C.E. — annuler $Q$ et l'exclure ; (2) factoriser $P$ et $Q$ ;
+(3) simplifier les facteurs communs.\\
+\textbf{Inéquation} produit/quotient : factoriser en facteurs du 1\textsuperscript{er} degré, puis dresser
+un \textbf{tableau de signes} (chaque facteur $x-r$ est $-$ avant $r$, $+$ après ; on multiplie les
+signes colonne par colonne).
+\end{methode}
+
+\begin{exemplebox}[tableau de signes de $\tfrac{(x-1)(2x-3)}{x+1}$]
+Valeurs critiques $-1$ (interdite), $1$, $\tfrac32$.
+\begin{center}\renewcommand{\arraystretch}{1.2}\small
+\begin{tabular}{c|ccccc}
+$x$ & $-\infty$ & $-1$ & $1$ & $\tfrac32$ & $+\infty$\\ \hline
+$\tfrac{(x-1)(2x-3)}{x+1}$ & $-$ & $\nexists$ $+$ & $0$ $-$ & $0$ $+$ &
+\end{tabular}
+\end{center}
+Donc $\tfrac{(x-1)(2x-3)}{x+1}>0$ sur $S=\,]-1,1[\cup\,]\tfrac32,+\infty[$.
+\end{exemplebox}
+
+\end{document}

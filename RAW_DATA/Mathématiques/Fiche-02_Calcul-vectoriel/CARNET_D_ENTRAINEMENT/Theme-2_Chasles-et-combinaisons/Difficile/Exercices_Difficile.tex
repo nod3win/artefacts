@@ -1,0 +1,84 @@
+% =====================================================================
+%  Thème 2 — Chasles et combinaisons — Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{vecu}{RGB}{20,20,20}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Difficile — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Chasles et combinaisons — Niveau Difficile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : simplifier une longue chaîne à l'aide des équipollences d'une grille, et
+exprimer un vecteur comme combinaison linéaire dans un parallélogramme (style concours).}
+\vspace{2mm}
+
+\exo{1} \textbf{Chaîne de vecteurs sur une grille.}
+On considère la grille de points ci-dessous : les points du haut sont $A,B,C,D$ et ceux du bas
+$E,F,G,H$, régulièrement espacés. On rappelle que deux \og{}flèches\fg{} parallèles, de même longueur et
+de même sens sont \emph{équipollentes} (elles représentent le même vecteur).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35]
+  \foreach \x in {0,1,2,3}{\draw[black!25] (\x,0)--(\x,1);}
+  \draw[black!25] (0,0)--(3,0); \draw[black!25] (0,1)--(3,1);
+  \foreach \p/\x in {A/0,B/1,C/2,D/3}{\fill (\x,1) circle (1.5pt); \node[above,font=\small] at (\x,1){$\p$};}
+  \foreach \p/\x in {E/0,F/1,G/2,H/3}{\fill (\x,0) circle (1.5pt); \node[below,font=\small] at (\x,0){$\p$};}
+\end{tikzpicture}
+\end{center}
+
+On pose $\vec w=\vc{AB}+\vc{BF}+\vc{FG}-\vc{EF}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Justifier que $\vc{FG}=\vc{EF}$ (équipollence sur la rangée du bas). Que vaut alors
+        $\vc{FG}-\vc{EF}$ ?
+  \item Simplifier $\vc{AB}+\vc{BF}$ par la relation de Chasles.
+  \item En déduire $\vec w$ sous la forme d'un unique vecteur $\vc{XY}$ de la grille.
+\end{enumerate}
+
+\exo{2} \textbf{Combinaison linéaire dans un parallélogramme (type concours).}
+$PQRS$ est un parallélogramme (sommets dans l'ordre). On note $M$ le milieu de $[PS]$ et $N$ le milieu
+de $[PQ]$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Exprimer $\vc{MN}$ en fonction de $\vc{PQ}$ et $\vc{PS}$.
+        \emph{(Indication : passer par $P$ : $\vc{MN}=\vc{MP}+\vc{PN}$.)}
+  \item Justifier que $\vc{PQ}=-\vc{RS}$ (côtés opposés du parallélogramme).
+  \item En déduire l'expression de $2\,\vc{MN}$ comme combinaison linéaire de $\vc{PS}$ et $\vc{RS}$.
+\end{enumerate}
+
+\exo{3} \textbf{Quatrième sommet et centre d'un parallélogramme.}
+Dans un repère orthonormé, on donne $A\,(1;2)$, $B\,(5;3)$ et $C\,(6;7)$. On veut compléter le
+parallélogramme $ABCD$ (sommets dans l'ordre).
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Traduire la condition « $ABCD$ parallélogramme » par une égalité vectorielle reliant $\vc{AB}$
+        et $\vc{DC}$, puis en déduire les coordonnées de $D$.
+  \item Vérifier le résultat en contrôlant que $\vc{AD}=\vc{BC}$.
+  \item Déterminer les coordonnées du centre $I$ du parallélogramme (point d'intersection des
+        diagonales).
+\end{enumerate}
+
+\end{document}

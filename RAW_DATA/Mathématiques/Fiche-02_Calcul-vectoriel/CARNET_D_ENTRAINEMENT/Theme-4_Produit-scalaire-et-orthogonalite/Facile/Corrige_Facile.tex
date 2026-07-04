@@ -1,0 +1,75 @@
+% =====================================================================
+%  Thème 4 — Produit scalaire et orthogonalité — FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Facile — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Produit scalaire et orthogonalité — Corrigé Facile}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $3\times1+2\times4=3+8=11$.
+  \item $5\times2+(-1)\times3=10-3=7$.
+  \item $(-2)\times3+4\times(-1)=-6-4=-10$.
+  \item $2\times0+0\times5=0$.
+\end{enumerate}
+\rep On multiplie les premières composantes ensemble, puis les secondes, et on additionne.
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $3\times(-2)+2\times3=-6+6=0$ : \textbf{orthogonaux}.
+  \item $1\times2+4\times3=2+12=14\neq0$ : \textbf{non} orthogonaux.
+  \item $6\times1+(-3)\times2=6-6=0$ : \textbf{orthogonaux}.
+\end{enumerate}
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec u\cdot\vec u=3^2+4^2=9+16=25$, donc $\norm{\vec u}=\sqrt{25}=5$.
+  \item $\vec u\cdot\vec u=1^2+(-2)^2=1+4=5$, donc $\norm{\vec u}=\sqrt5$.
+\end{enumerate}
+\rep $\vec u\cdot\vec u=\norm{\vec u}^2$ : la norme est la racine du carré scalaire.
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $2\times3+1\times4=10>0$ : angle \textbf{aigu}.
+  \item $2\times(-3)+1\times1=-5<0$ : angle \textbf{obtus}.
+  \item $1\times2+2\times(-1)=0$ : angle \textbf{droit} (vecteurs perpendiculaires).
+\end{enumerate}
+\rep Le signe du produit scalaire suffit : $+$ aigu, $0$ droit, $-$ obtus.
+
+\cor{5}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $1\times2+2\times(-1)=0$ : les droites sont \textbf{perpendiculaires}.
+  \item $3\times1+1\times3=6\neq0$ : les droites ne sont \textbf{pas} perpendiculaires.
+\end{enumerate}
+\rep Deux droites sont perpendiculaires ssi le produit scalaire de leurs vecteurs directeurs est nul.
+
+\end{document}

@@ -1,0 +1,79 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\euro}{\texteuro}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Systèmes d'équations}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Difficile — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[cafétéria — pivot de Gauss]
+\textbf{a)} $\ds\begin{cases} 2x+y+z=11\ (L_1)\\ x+2y+z=12\ (L_2)\\ x+y+2z=13\ (L_3)\end{cases}$
+
+\smallskip
+\textbf{b)} On élimine $x$ : $2L_2-L_1$ donne $3y+z=13$ ; $2L_3-L_1$ donne $y+3z=15$. Puis, de
+$3y+z=13$ et $y+3z=15$, on fait $3\times(y+3z)-(3y+z)$ : $8z=45-13=32\Rightarrow z=4$. Alors
+$y=15-3(4)=3$, et $L_1$ : $2x+3+4=11\Rightarrow x=2$.
+
+\smallskip
+\textbf{c)} Café $=2$~\euro, croissant $=3$~\euro, jus $=4$~\euro. Vérification sur $L_3$ :
+$2+3+2(4)=13$~\euro \checkmark. \emph{(Astuce : en additionnant les trois lignes on obtient
+$4(x+y+z)=36$, soit $x+y+z=9$, d'où $x,y,z$ immédiatement.)}
+\end{corrige}
+
+\begin{corrige}[système avec paramètre]
+\textbf{a)} En combinant, $a\times$(1)$-$(2) élimine $y$ : $(a^{2}-1)x=a-1$. Si $a^{2}-1\neq0$
+(c.-à-d. $a\neq1$ et $a\neq-1$), on peut diviser : $x=\dfrac{a-1}{a^{2}-1}=\dfrac{1}{a+1}$. Par symétrie
+$y=\dfrac{1}{a+1}$. \textbf{Solution unique} $\Bigl(\dfrac{1}{a+1}\,;\dfrac{1}{a+1}\Bigr)$ pour $a\neq\pm1$.
+
+\smallskip
+\textbf{b)} $a=1$ : les deux équations deviennent $x+y=1$ : une seule équation, donc une \textbf{infinité}
+de solutions (tous les points de la droite $x+y=1$).
+
+\smallskip
+\textbf{c)} $a=-1$ : le système est $\begin{cases}-x+y=1\\ x-y=1\end{cases}$. En additionnant : $0=2$,
+impossible : \textbf{aucune} solution (droites parallèles distinctes).
+\end{corrige}
+
+\begin{corrige}[trois notes d'examen]
+\textbf{a)} Une moyenne de quatre notes $=\tfrac{\text{somme}}{4}$ :
+\[ \frac{x+y+z+x}{4}=10,\quad \frac{x+y+z+y}{4}=12,\quad \frac{x+y+z+z}{4}=14, \]
+soit, en multipliant par $4$ : $\ 2x+y+z=40,\quad x+2y+z=48,\quad x+y+2z=56.$
+
+\smallskip
+\textbf{b)} Avec $S=x+y+z$, ces équations s'écrivent $S+x=40$, $S+y=48$, $S+z=56$. En additionnant :
+$3S+(x+y+z)=144$, soit $4S=144\Rightarrow S=36$. Donc $x=40-36=4$, $y=48-36=12$, $z=56-36=20$.
+
+\smallskip
+\textbf{c)} Les trois notes, dans l'ordre, sont $\boxed{4,\ 12,\ 20}$.
+\end{corrige}
+
+\end{document}

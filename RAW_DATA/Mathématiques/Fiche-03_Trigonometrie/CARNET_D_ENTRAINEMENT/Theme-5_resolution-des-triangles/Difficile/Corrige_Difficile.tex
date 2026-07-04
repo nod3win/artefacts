@@ -1,0 +1,107 @@
+% =====================================================================
+%  Thème 5 — Résolution des triangles — NIVEAU DIFFICILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 5 — Résolution des triangles}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Un terrain triangulaire}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\overline{BC}$ est opposé à $\hat A$, encadré par $\overline{AB}$ et
+   $\overline{AC}$. Avec $\cos120\degr=-\tfrac12$ :
+   \[
+   \overline{BC}^2=6^2+6^2-2\cdot6\cdot6\cos120\degr=72-72\cdot(-\tfrac12)=72+36=108
+   \ \Longrightarrow\ \overline{BC}=6\sqrt3.
+   \]
+\item[\textbf{(b)}] \rep $\mathcal{A}=\dfrac12\,\overline{AB}\cdot\overline{AC}\cdot\sin\hat A
+   =\dfrac12\cdot6\cdot6\cdot\sin120\degr=18\cdot\dfrac{\sqrt3}{2}=9\sqrt3$.
+\item[\textbf{(c)}] \rep Le triangle étant isocèle en $A$, $\hat B=\hat C$, et
+   $\hat B+\hat C=180\degr-120\degr=60\degr$, donc $\hat B=\hat C=30\degr$.
+   Vérification (loi des sinus) : $\dfrac{\sin\hat B}{\overline{AC}}=\dfrac{\sin30\degr}{6}=\dfrac1{12}$
+   et $\dfrac{\sin\hat A}{\overline{BC}}=\dfrac{\sin120\degr}{6\sqrt3}=\dfrac{\sqrt3/2}{6\sqrt3}=\dfrac1{12}$ : cohérent.
+\item[\textbf{(d)}] \rep $\mathcal{A}=\dfrac12\,\overline{BC}\cdot h$, donc
+   $h=\dfrac{2\mathcal{A}}{\overline{BC}}=\dfrac{2\cdot9\sqrt3}{6\sqrt3}=\dfrac{18\sqrt3}{6\sqrt3}=3$
+   (soit $30$ m).
+\end{itemize}
+
+\exo{La largeur d'une rivière}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\hat C=180\degr-45\degr-45\degr=90\degr$.
+\item[\textbf{(b)}] \rep $\overline{AB}=100$ est opposé à $\hat C=90\degr$. Par la loi des sinus,
+   $\overline{AC}$ (opposé à $\hat B=45\degr$) et $\overline{BC}$ (opposé à $\hat A=45\degr$) valent
+   \[
+   \overline{AC}=\overline{BC}=100\cdot\frac{\sin45\degr}{\sin90\degr}
+   =100\cdot\frac{\sqrt2/2}{1}=50\sqrt2\approx70{,}7\text{ m}.
+   \]
+\item[\textbf{(c)}] \rep $\overline{AC}^2+\overline{BC}^2=(50\sqrt2)^2+(50\sqrt2)^2=5000+5000=10000=100^2
+   =\overline{AB}^2$ : le triangle est bien rectangle en $C$.
+\item[\textbf{(d)}] \rep Aire $=\dfrac12\,\overline{AC}\cdot\overline{BC}\cdot\sin\hat C
+   =\dfrac12\cdot50\sqrt2\cdot50\sqrt2\cdot1=\dfrac12\cdot5000=2500$ m$^2$.
+   Or aire $=\dfrac12\,\overline{AB}\cdot(\text{largeur})$, d'où
+   largeur $=\dfrac{2\cdot2500}{100}=50$ m.
+\end{itemize}
+
+\exo{Résolution complète d'un triangle}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep Les côtés encadrant $\hat C$ sont $a$ et $b$ :
+   \[
+   \mathcal{A}=\frac12ab\sin\hat C\Rightarrow 18\sqrt3=\frac12\cdot12\cdot b\cdot\frac{\sqrt3}{2}
+   =3b\sqrt3\ \Longrightarrow\ b=6.
+   \]
+\item[\textbf{(b)}] \rep $c=\overline{AB}$ opposé à $\hat C$ :
+   \[
+   c^2=a^2+b^2-2ab\cos60\degr=144+36-2\cdot72\cdot\tfrac12=180-72=108\ \Longrightarrow\ c=6\sqrt3.
+   \]
+\item[\textbf{(c)}] \rep Loi des sinus : $\dfrac{\sin\hat B}{b}=\dfrac{\sin\hat C}{c}$, donc
+   \[
+   \sin\hat B=b\cdot\frac{\sin\hat C}{c}=6\cdot\frac{\sin60\degr}{6\sqrt3}
+   =6\cdot\frac{\sqrt3/2}{6\sqrt3}=\frac12\ \Longrightarrow\ \hat B=30\degr.
+   \]
+   Puis $\hat A=180\degr-60\degr-30\degr=90\degr$.
+\item[\textbf{(d)}] \rep Comme $\hat A=90\degr$, le triangle est \textbf{rectangle en $A$}.
+   Vérification par Pythagore ($a=\overline{BC}=12$ est l'hypoténuse) :
+   $b^2+c^2=36+108=144=12^2=a^2$. Enfin, la hauteur issue de $A$ vérifie
+   $\mathcal{A}=\dfrac12\,a\cdot h$, donc $h=\dfrac{2\cdot18\sqrt3}{12}=3\sqrt3\approx5{,}20$.
+\end{itemize}
+
+\end{document}

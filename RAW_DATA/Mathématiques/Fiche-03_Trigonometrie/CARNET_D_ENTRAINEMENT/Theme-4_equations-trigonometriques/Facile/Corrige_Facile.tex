@@ -1,0 +1,96 @@
+% =====================================================================
+%  Thème 4 — Équations trigonométriques — NIVEAU FACILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 4 — Équations trigonométriques}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Une équation en cosinus}
+\rep On reconnaît $\dfrac12=\cos\dfrac{\pi}{3}$, donc $\cos x=\cos\dfrac{\pi}{3}$.
+L'équivalence du cosinus ($\cos a=\cos b\Leftrightarrow a=\pm b+2k\pi$) donne les deux familles
+\[
+x=\frac{\pi}{3}+2k\pi \qquad\text{ou}\qquad x=-\frac{\pi}{3}+2k\pi,\qquad k\in\Z.
+\]
+\[
+\boxed{\,S=\left\{\tfrac{\pi}{3}+2k\pi\ ;\ -\tfrac{\pi}{3}+2k\pi \ \middle|\ k\in\Z\right\}.}
+\]
+
+\exo{Une équation en sinus}
+\rep Ici $\dfrac{\sqrt2}{2}=\sin\dfrac{\pi}{4}$, donc $\sin x=\sin\dfrac{\pi}{4}$.
+L'équivalence du sinus ($\sin a=\sin b\Leftrightarrow a=b+2k\pi$ ou $a=\pi-b+2k\pi$) donne
+\[
+x=\frac{\pi}{4}+2k\pi \qquad\text{ou}\qquad x=\pi-\frac{\pi}{4}+2k\pi=\frac{3\pi}{4}+2k\pi,\qquad k\in\Z.
+\]
+\[
+\boxed{\,S=\left\{\tfrac{\pi}{4}+2k\pi\ ;\ \tfrac{3\pi}{4}+2k\pi \ \middle|\ k\in\Z\right\}.}
+\]
+
+\exo{Une équation en tangente}
+\rep $1=\tg\dfrac{\pi}{4}$, donc $\tg x=\tg\dfrac{\pi}{4}$. La tangente est de \textbf{période $\pi$}
+($\tg a=\tg b\Leftrightarrow a=b+k\pi$) : une seule famille, avec un $+k\pi$ (pas $+2k\pi$).
+\[
+x=\frac{\pi}{4}+k\pi,\qquad k\in\Z.
+\qquad\Longrightarrow\qquad
+\boxed{\,S=\left\{\tfrac{\pi}{4}+k\pi \ \middle|\ k\in\Z\right\}.}
+\]
+
+\exo{Un cosinus nul}
+\rep $0=\cos\dfrac{\pi}{2}$, donc $\cos x=\pm\dfrac{\pi}{2}+2k\pi$. Les deux familles
+$\dfrac{\pi}{2}+2k\pi$ et $-\dfrac{\pi}{2}+2k\pi$ se regroupent en une seule (les angles $\frac{\pi}{2}$
+et $-\frac{\pi}{2}$ sont diamétralement opposés, espacés de $\pi$) :
+\[
+x=\frac{\pi}{2}+k\pi,\qquad k\in\Z.
+\qquad\Longrightarrow\qquad
+\boxed{\,S=\left\{\tfrac{\pi}{2}+k\pi \ \middle|\ k\in\Z\right\}.}
+\]
+
+\exo{Encore un sinus}
+\rep $\dfrac{\sqrt3}{2}=\sin\dfrac{\pi}{3}$, donc $\sin x=\sin\dfrac{\pi}{3}$ :
+\[
+x=\frac{\pi}{3}+2k\pi \qquad\text{ou}\qquad x=\pi-\frac{\pi}{3}+2k\pi=\frac{2\pi}{3}+2k\pi,\qquad k\in\Z.
+\]
+\[
+\boxed{\,S=\left\{\tfrac{\pi}{3}+2k\pi\ ;\ \tfrac{2\pi}{3}+2k\pi \ \middle|\ k\in\Z\right\}.}
+\]
+
+\end{document}

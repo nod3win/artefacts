@@ -1,0 +1,136 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+% Ne modifier QUE :
+%   - les deux lignes \fancyhead[L] et \fancyhead[R]
+%   - le bloc titre \begin{center}...\end{center} juste après \begin{document}
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Formulaire de dérivation}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé --- Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Produit et quotient guidés --- corrigé}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Niveau Difficile --- avec réduction et vérification}
+\end{center}
+\vspace{2mm}
+
+\begin{corr}[1 --- produit avec racine et réduction]
+\textbf{a)} $U=x^{2}-1$ et $V=\sqrt{x}=x^{1/2}$, donc $U'=2x$ et $V'=\dfrac{1}{2\sqrt{x}}$.\\[2pt]
+\textbf{b)} Règle du produit :
+\[
+y'=U'V+UV'=2x\sqrt{x}+(x^{2}-1)\cdot\frac{1}{2\sqrt{x}}
+=2x\sqrt{x}+\frac{x^{2}-1}{2\sqrt{x}}.
+\]
+\textbf{c)} On réduit au même dénominateur $2\sqrt{x}$, en écrivant $2x\sqrt{x}=\dfrac{2x\sqrt{x}\cdot 2\sqrt{x}}{2\sqrt{x}}=\dfrac{4x^{2}}{2\sqrt{x}}$ (car $\sqrt{x}\cdot\sqrt{x}=x$) :
+\[
+y'=\frac{4x^{2}}{2\sqrt{x}}+\frac{x^{2}-1}{2\sqrt{x}}
+=\frac{4x^{2}+x^{2}-1}{2\sqrt{x}}=\frac{5x^{2}-1}{2\sqrt{x}}.
+\]
+\end{corr}
+
+\begin{corr}[2 --- quotient avec développement]
+\textbf{a)} $U=x^{2}+2x$ et $V=x^{2}+1$, donc $U'=2x+2$ et $V'=2x$.\\[2pt]
+\textbf{b)} Règle du quotient :
+\[
+y'=\frac{U'V-UV'}{V^{2}}
+=\frac{(2x+2)(x^{2}+1)-(x^{2}+2x)(2x)}{(x^{2}+1)^{2}}.
+\]
+\textbf{c)} On développe le numérateur :
+\[
+(2x+2)(x^{2}+1)=2x^{3}+2x^{2}+2x+2,\qquad (x^{2}+2x)(2x)=2x^{3}+4x^{2},
+\]
+\[
+\text{numérateur}=2x^{3}+2x^{2}+2x+2-2x^{3}-4x^{2}=-2x^{2}+2x+2,
+\]
+d'où
+\[
+y'=\frac{-2x^{2}+2x+2}{(x^{2}+1)^{2}}.
+\]
+\end{corr}
+
+\begin{corr}[3 --- quotient affine à simplifier]
+\textbf{a)} $U=3x-2$ et $V=2x+1$, donc $U'=3$ et $V'=2$ :
+\[
+y'=\frac{U'V-UV'}{V^{2}}=\frac{3\,(2x+1)-(3x-2)\cdot 2}{(2x+1)^{2}}.
+\]
+\textbf{b)} On simplifie le numérateur :
+\[
+3(2x+1)-2(3x-2)=6x+3-6x+4=7,
+\qquad\text{donc}\qquad
+y'=\frac{7}{(2x+1)^{2}}.
+\]
+\end{corr}
+
+\begin{corr}[4 --- produit vs développement]
+\textbf{a)} \emph{Par le produit :} $U=x$ et $V=x^{2}-4$, donc $U'=1$ et $V'=2x$ :
+\[
+y'=U'V+UV'=(x^{2}-4)+x\cdot 2x=x^{2}-4+2x^{2}=3x^{2}-4.
+\]
+\textbf{b)} \emph{Après développement :} $y=x(x^{2}-4)=x^{3}-4x$, donc
+\[
+y'=3x^{2}-4.
+\]
+\textbf{c)} Les deux méthodes donnent le même résultat $3x^{2}-4$ : cohérence confirmée. \checkmark
+\end{corr}
+
+\end{document}

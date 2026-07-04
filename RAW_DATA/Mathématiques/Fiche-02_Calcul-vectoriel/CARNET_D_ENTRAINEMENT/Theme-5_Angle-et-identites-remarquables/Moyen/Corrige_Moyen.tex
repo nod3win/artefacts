@@ -1,0 +1,82 @@
+% =====================================================================
+%  Thème 5 — Angle et identités remarquables — MOYEN — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Moyen — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Angle et identités remarquables — Corrigé Moyen}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec u\cdot\vec v=1\times4+2\times0=4$ ; $\norm{\vec u}=\sqrt{1+4}=\sqrt5$ ;
+        $\norm{\vec v}=\sqrt{16}=4$.
+  \item $\cos\theta=\dfrac{4}{\sqrt5\times4}=\dfrac{1}{\sqrt5}=\dfrac{\sqrt5}{5}\approx0{,}447$, donc
+        $\theta=\arccos\!\bigl(\tfrac{\sqrt5}{5}\bigr)\approx 63{,}4^\circ$.
+\end{enumerate}
+
+\cor{2}
+$\vec u\cdot\vec v=0\times2+2\times2\sqrt3=4\sqrt3$ ; $\norm{\vec u}=2$ ;
+$\norm{\vec v}=\sqrt{2^2+(2\sqrt3)^2}=\sqrt{4+12}=4$. Donc
+\[
+  \cos\theta=\frac{4\sqrt3}{2\times4}=\frac{4\sqrt3}{8}=\frac{\sqrt3}{2}\ \Longrightarrow\
+  \theta=30^\circ.
+\]
+\rep Quand le cosinus vaut $\tfrac{\sqrt3}{2}$, l'angle est \emph{exactement} $30^\circ$ : pas besoin
+de calculatrice.
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec u+\vec v\,(3;4)$, $\norm{\vec u+\vec v}=\sqrt{9+16}=\sqrt{25}=5$.
+  \item $\norm{\vec u}^2=5$, $\norm{\vec v}^2=10$, $\vec u\cdot\vec v=2\times1+1\times3=5$, donc
+        $\norm{\vec u+\vec v}^2=5+10+2\times5=25$ : on retrouve $5$.
+\end{enumerate}
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $37=9+16+2\,\vec u\cdot\vec v \Rightarrow 2\,\vec u\cdot\vec v=37-25=12 \Rightarrow
+        \vec u\cdot\vec v=6$.
+  \item $\cos(\vec u,\vec v)=\dfrac{\vec u\cdot\vec v}{\norm{\vec u}\,\norm{\vec v}}
+        =\dfrac{6}{3\times4}=\dfrac12$, donc l'angle vaut $60^\circ$.
+\end{enumerate}
+\rep L'identité remarquable permet de trouver $\vec u\cdot\vec v$ \emph{sans connaître les composantes},
+à partir des seules normes.
+
+\cor{5}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}\,(3;1)$, $\vc{AC}\,(1;4)$ ; $\vc{AB}\cdot\vc{AC}=3\times1+1\times4=7$ ;
+        $\norm{\vc{AB}}=\sqrt{10}$, $\norm{\vc{AC}}=\sqrt{17}$.
+  \item $\cos\widehat{BAC}=\dfrac{7}{\sqrt{10}\,\sqrt{17}}=\dfrac{7}{\sqrt{170}}\approx0{,}537$, donc
+        $\widehat{BAC}\approx 57{,}5^\circ$.
+\end{enumerate}
+\rep Un angle géométrique $\widehat{BAC}$ est l'angle entre les vecteurs $\vc{AB}$ et $\vc{AC}$ (tous
+deux issus de $A$).
+
+\end{document}

@@ -1,0 +1,159 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Variations, extremums \& concavité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé --- Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Variations, extremums \& concavité}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Corrigé détaillé --- Niveau Facile}
+\end{center}
+\vspace{2mm}
+
+\begin{corr}[1 --- $f(x)=x^2-4x+3$]
+$f'(x)=2x-4$. \quad $f'(x)=0 \iff 2x-4=0 \iff x=2$.\\
+Signe : $f'(x)=2(x-2)$ est du signe de $x-2$ : négatif avant $2$, positif après.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (7,1.6);
+\draw[thick] (0,0.8) -- (7,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f'(x)$};
+\node at (1.9,1.2) {$-\infty$}; \node at (4.0,1.2) {$2$}; \node at (6.6,1.2) {$+\infty$};
+\node[moins] at (2.8,0.4) {$-$}; \node at (4.0,0.4) {$0$}; \node[plus] at (5.4,0.4) {$+$};
+\end{tikzpicture}
+\end{center}
+$f'$ passe de $-$ à $+$ : \textbf{minimum} en $x=2$, $\ f(2)=4-8+3=\mathbf{-1}$.
+\end{corr}
+
+\begin{corr}[2 --- $f(x)=-x^2+2x$]
+$f'(x)=-2x+2=-2(x-1)$. \quad $f'(x)=0 \iff x=1$.\\
+Signe de $-2(x-1)$ : positif avant $1$, négatif après.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (7,1.6);
+\draw[thick] (0,0.8) -- (7,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f'(x)$};
+\node at (1.9,1.2) {$-\infty$}; \node at (4.0,1.2) {$1$}; \node at (6.6,1.2) {$+\infty$};
+\node[plus] at (2.8,0.4) {$+$}; \node at (4.0,0.4) {$0$}; \node[moins] at (5.4,0.4) {$-$};
+\end{tikzpicture}
+\end{center}
+$f'$ passe de $+$ à $-$ : \textbf{maximum} en $x=1$, $\ f(1)=-1+2=\mathbf{1}$.
+\end{corr}
+
+\begin{corr}[3 --- $f(x)=x^3-3x$]
+$f'(x)=3x^2-3=3(x^2-1)=3(x-1)(x+1)$. \quad Racines : $x=-1$ et $x=1$.\\
+Signe du produit $(x-1)(x+1)$ (parabole $\smile$) : positif à l'extérieur, négatif entre $-1$ et $1$.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (8,1.6);
+\draw[thick] (0,0.8) -- (8,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f'(x)$};
+\node at (1.9,1.2) {$-\infty$}; \node at (3.6,1.2) {$-1$}; \node at (5.6,1.2) {$1$}; \node at (7.5,1.2) {$+\infty$};
+\node[plus] at (2.7,0.4) {$+$}; \node at (3.6,0.4) {$0$}; \node[moins] at (4.6,0.4) {$-$};
+\node at (5.6,0.4) {$0$}; \node[plus] at (6.6,0.4) {$+$};
+\end{tikzpicture}
+\end{center}
+$f'$ change de signe en $-1$ ($+\to-$ : \textbf{maximum}) et en $1$ ($-\to+$ : \textbf{minimum}).
+\end{corr}
+
+\begin{corr}[4 --- $f(x)=x^4-2x^2$]
+$f'(x)=4x^3-4x=4x(x^2-1)=4x(x-1)(x+1)$. \quad Racines : $x=-1$, $x=0$, $x=1$.\\
+Règle des signes du produit de trois facteurs (change de signe à chaque racine simple) :
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (9,1.6);
+\draw[thick] (0,0.8) -- (9,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f'(x)$};
+\node at (1.9,1.2) {$-\infty$}; \node at (3.4,1.2) {$-1$}; \node at (5.0,1.2) {$0$};
+\node at (6.6,1.2) {$1$}; \node at (8.4,1.2) {$+\infty$};
+\node[moins] at (2.6,0.4) {$-$}; \node at (3.4,0.4) {$0$}; \node[plus] at (4.2,0.4) {$+$};
+\node at (5.0,0.4) {$0$}; \node[moins] at (5.8,0.4) {$-$}; \node at (6.6,0.4) {$0$};
+\node[plus] at (7.5,0.4) {$+$};
+\end{tikzpicture}
+\end{center}
+Trois valeurs critiques, avec changement de signe à chacune : minimum en $-1$, maximum en $0$, minimum en $1$.
+\end{corr}
+
+\begin{corr}[5 --- $f(x)=x^3$]
+$f'(x)=3x^2$. Comme un carré, $x^2\geq 0$, donc $f'(x)=3x^2\geq 0$ pour tout $x$ : $f$ est croissante partout.
+De plus $f'(x)=0 \iff x=0$, mais $f'$ reste \textbf{positive} de part et d'autre de $0$ (pas de changement de signe).
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (7,1.6);
+\draw[thick] (0,0.8) -- (7,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f'(x)$};
+\node at (1.9,1.2) {$-\infty$}; \node at (4.0,1.2) {$0$}; \node at (6.6,1.2) {$+\infty$};
+\node[plus] at (2.8,0.4) {$+$}; \node at (4.0,0.4) {$0$}; \node[plus] at (5.4,0.4) {$+$};
+\end{tikzpicture}
+\end{center}
+Pas de changement de signe $\Rightarrow$ \textbf{aucun extremum}. En $x=0$ la tangente est horizontale
+mais la courbe traverse : c'est un \textbf{point d'inflexion à tangente horizontale}.
+\end{corr}
+
+\end{document}

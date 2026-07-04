@@ -1,0 +1,183 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+% Ne modifier QUE :
+%   - les deux lignes \fancyhead[L] et \fancyhead[R]
+%   - le bloc titre \begin{center}...\end{center} juste après \begin{document}
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 1} — Nombre dérivé \& taux d'accroissement}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Nombre dérivé \& taux d'accroissement}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape De la pente de la sécante à la pente de la tangente : tout par la définition}
+\end{center}
+\vspace{2mm}
+
+\section*{1. Le taux d'accroissement : une variation moyenne}
+
+Soit $f$ une fonction et $x_0$ un point de son domaine. Quand on part de $x_0$ et qu'on
+avance d'un petit pas $h$ (avec $h\neq 0$), la fonction passe de $f(x_0)$ à $f(x_0+h)$.
+Le \textbf{taux d'accroissement} de $f$ entre $x_0$ et $x_0+h$ mesure la variation
+\emph{moyenne} de $f$ sur cet intervalle :
+\[
+\tau(h)=\frac{f(x_0+h)-f(x_0)}{h}
+=\frac{\text{variation de la fonction}}{\text{variation de la variable}}.
+\]
+
+\begin{cle}[trois lectures d'un même nombre]
+Le taux d'accroissement $\tau(h)$ se lit de trois façons équivalentes :
+\begin{itemize}[leftmargin=6mm,itemsep=1pt]
+  \item \textbf{Variation moyenne} de $f$ entre $x_0$ et $x_0+h$ ;
+  \item \textbf{Pente de la sécante} passant par les points $A\big(x_0;f(x_0)\big)$ et
+        $B\big(x_0+h;f(x_0+h)\big)$ ;
+  \item \textbf{Vitesse moyenne} si $f(x)$ représente une position au temps $x$.
+\end{itemize}
+\end{cle}
+
+\section*{2. Passage à la limite : le nombre dérivé}
+
+Faisons maintenant tendre le pas $h$ vers $0$ : le point $B$ glisse le long de la courbe
+et se rapproche de $A$. La sécante $(AB)$ pivote et tend vers une position limite : la
+\textbf{tangente} à la courbe au point $A$. La pente de cette tangente est le
+\textbf{nombre dérivé} de $f$ en $x_0$ :
+\[
+\boxed{\,f'(x_0)=\limh \tau(h)=\limh \frac{f(x_0+h)-f(x_0)}{h}\,}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Latex]
+  \def\a{1.1}   % x0
+  \def\b{2.7}   % x0+h
+  % axes
+  \draw[->,gray!70] (-0.3,0)--(4.2,0) node[right]{\small $x$};
+  \draw[->,gray!70] (0,-0.3)--(0,3.7) node[above]{\small $y$};
+  % courbe f(x)=0.45 x^2
+  \draw[courbe,very thick,domain=-0.2:3.05,smooth,samples=80]
+        plot (\x,{0.45*\x*\x});
+  \node[courbe] at (3.15,2.9) {\small $\mathcal{C}_f$};
+  % points A et B
+  \coordinate (A) at (\a,{0.45*\a*\a});
+  \coordinate (B) at (\b,{0.45*\b*\b});
+  % secante (AB) prolongee
+  \draw[primary,thick,shorten >=-1.3cm,shorten <=-1.3cm] (A)--(B);
+  % tangente en A : pente 2*0.45*a = 0.9*a
+  \draw[tang,very thick,shorten >=-1.4cm,shorten <=-1.2cm]
+        (A)++(-1,{-0.9*\a}) -- ++(3,{0.9*\a*3});
+  % triangle des accroissements
+  \draw[dashed,gray] (A)--(\b,{0.45*\a*\a}) node[midway,below,font=\scriptsize]{$h$};
+  \draw[dashed,gray] (\b,{0.45*\a*\a})--(B)
+        node[midway,right,font=\scriptsize]{$f(x_0{+}h){-}f(x_0)$};
+  % points
+  \fill[primarydark] (A) circle (1.6pt) node[above left,font=\scriptsize]{$A$};
+  \fill[primarydark] (B) circle (1.6pt) node[above left,font=\scriptsize]{$B$};
+  % abscisses
+  \draw[gray!70] (\a,0.05)--(\a,-0.05) node[below,font=\scriptsize]{$x_0$};
+  \draw[gray!70] (\b,0.05)--(\b,-0.05) node[below,font=\scriptsize]{$x_0{+}h$};
+  % legendes
+  \node[primary,font=\scriptsize] at (3.55,1.15) {sécante};
+  \node[tang,font=\scriptsize] at (2.75,0.15) {tangente};
+\end{tikzpicture}
+\end{center}
+
+\noindent Quand $h\to 0$ : la sécante (rouge) bascule vers la tangente (verte), et la
+variation moyenne $\tau(h)$ devient la \textbf{variation instantanée} $f'(x_0)$.
+
+\begin{cle}[du moyen à l'instantané]
+$f'(x_0)$ est à la fois la \textbf{pente de la tangente} en $A$, la \textbf{variation
+instantanée} de $f$ en $x_0$, et la \textbf{vitesse instantanée} à l'instant $x_0$ si
+$f$ est une position.
+\end{cle}
+
+\begin{methode}[calculer $f'(x_0)$ par la définition, en 4 étapes]
+\begin{enumerate}[leftmargin=7mm,itemsep=1pt]
+  \item \textbf{Écrire} le taux d'accroissement $\ds\tau(h)=\frac{f(x_0+h)-f(x_0)}{h}$.
+  \item \textbf{Développer et simplifier le numérateur} $f(x_0+h)-f(x_0)$ (le terme
+        constant $f(x_0)$ doit disparaître, laissant $h$ en facteur).
+  \item \textbf{Simplifier par $h$} (on a le droit car $h\neq 0$).
+  \item \textbf{Faire tendre $h\to 0$} : la limite obtenue est $f'(x_0)$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[la fonction carré $f(x)=x^2$]
+\textbf{Étape 1.} $\ds \tau(h)=\frac{f(x_0+h)-f(x_0)}{h}=\frac{(x_0+h)^2-x_0^2}{h}$.\\[2pt]
+\textbf{Étape 2.} On développe le numérateur :
+\[
+(x_0+h)^2-x_0^2=x_0^2+2x_0h+h^2-x_0^2=2x_0h+h^2=h(2x_0+h).
+\]
+\textbf{Étape 3.} On simplifie par $h$ (licite car $h\neq0$) :
+$\ds \tau(h)=\frac{h(2x_0+h)}{h}=2x_0+h$.\\[2pt]
+\textbf{Étape 4.} On passe à la limite :
+\[
+f'(x_0)=\limh (2x_0+h)=2x_0.
+\]
+Ainsi la pente de la tangente à la parabole au point d'abscisse $x_0$ vaut $2x_0$.
+\end{exemplebox}
+
+\begin{piege}
+On ne remplace \emph{jamais} $h$ par $0$ dès l'étape 1 : on obtiendrait
+$\frac{0}{0}$, forme indéterminée. Il faut d'abord \textbf{simplifier par $h$}
+au numérateur, \emph{puis} seulement faire $h\to 0$.
+\end{piege}
+
+\end{document}

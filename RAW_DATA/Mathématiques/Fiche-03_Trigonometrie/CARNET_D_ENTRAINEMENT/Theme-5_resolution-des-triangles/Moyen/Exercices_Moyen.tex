@@ -1,0 +1,94 @@
+% =====================================================================
+%  Thème 5 — Résolution des triangles — NIVEAU MOYEN
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 5 — Résolution des triangles}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} enchaîner \emph{deux} étapes (aire, loi des sinus, loi des cosinus, SOH-CAH-TOA)
+et identifier un angle à partir d'une relation entre côtés. \textbf{Sans calculatrice}, valeurs
+\emph{exactes}. Convention : $a=\overline{BC}$, $b=\overline{CA}$, $c=\overline{AB}$.
+\end{consigne}
+
+\exo{De l'aire au troisième côté}
+Dans le triangle $ABC$, on sait que $\hat C=60\degr$, $a=\overline{BC}=8$ et l'aire vaut
+$\mathcal{A}=8\sqrt3$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item À l'aide de la formule de l'aire, détermine le côté $b=\overline{CA}$.
+\item En déduis $c=\overline{AB}$ par la loi des cosinus.
+\end{enumerate}
+
+\exo{Loi des sinus puis loi des cosinus}
+Un triangle $ABC$ vérifie $\hat A=\hat B=30\degr$ et $a=\overline{BC}=5$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Calcule l'angle $\hat C$.
+\item Détermine le côté $b=\overline{CA}$ (loi des sinus). Que peux-tu dire du triangle ?
+\item Calcule $c=\overline{AB}$ par la loi des cosinus, puis vérifie le résultat avec la loi des sinus.
+\end{enumerate}
+
+\exo{Un triangle rectangle à résoudre entièrement}
+Le triangle $ABC$ est rectangle en $A$ ; on donne $\hat B=60\degr$ et $c=\overline{AB}=4$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Calcule le côté $\overline{AC}$ (SOH-CAH-TOA) puis l'hypoténuse $\overline{BC}$.
+\item Vérifie ta réponse avec le théorème de Pythagore, puis calcule l'aire du triangle.
+\end{enumerate}
+
+\exo{Reconnaître un angle à partir d'une relation entre côtés}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Un triangle vérifie $c^2=a^2+b^2-ab$. Que vaut l'angle $\hat C$ ?
+\item Un triangle vérifie $c^2=a^2+b^2+ab$. Que vaut l'angle $\hat C$ ?
+\item Les côtés d'un triangle mesurent $7$, $8$ et $13$. Calcule son plus grand angle
+      (il est opposé au plus grand côté).
+\end{enumerate}
+
+\exo{Aire et diagonale d'un parallélogramme}
+$ABCD$ est un parallélogramme avec $\overline{AB}=6$, $\overline{AD}=4$ et l'angle $\hat A=60\degr$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Calcule l'aire du parallélogramme (rappel : aire $=$ produit de deux côtés adjacents
+      $\times\sin$ de l'angle entre eux).
+\item Calcule la longueur de la diagonale $\overline{BD}$ (loi des cosinus dans le triangle $ABD$).
+\end{enumerate}
+
+\end{document}

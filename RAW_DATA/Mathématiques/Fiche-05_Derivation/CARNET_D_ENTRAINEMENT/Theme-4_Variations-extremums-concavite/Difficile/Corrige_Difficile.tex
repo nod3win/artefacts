@@ -1,0 +1,182 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Variations, extremums \& concavité}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé --- Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Variations, extremums \& concavité}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Corrigé détaillé --- Niveau Difficile}
+\end{center}
+\vspace{2mm}
+
+\begin{corr}[1 --- $f(x)=x^3-3x^2+2$]
+\textbf{a)} $f'(x)=3x^2-6x=3x(x-2)$, racines $0$ et $2$. Signe de $x(x-2)$ ($\smile$) :
+$+$ dehors, $-$ dedans. $f(0)=2$, \ $f(2)=8-12+2=-2$.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (8.4,2.4);
+\draw[thick] (0,1.6) -- (8.4,1.6);
+\draw[thick] (0,0.8) -- (8.4,0.8);
+\draw[thick] (1.4,0) -- (1.4,2.4);
+\node at (0.7,2.0) {$x$}; \node at (0.7,1.2) {$f'(x)$}; \node at (0.7,0.4) {$f$};
+\node at (1.9,2.0) {$-\infty$}; \node at (4.0,2.0) {$0$}; \node at (6.0,2.0) {$2$}; \node at (7.9,2.0) {$+\infty$};
+\node[plus] at (2.9,1.2) {$+$}; \node at (4.0,1.2) {$0$}; \node[moins] at (5.0,1.2) {$-$};
+\node at (6.0,1.2) {$0$}; \node[plus] at (7.1,1.2) {$+$};
+\draw[->,thick,tang] (1.9,0.15) -- (3.8,0.65);
+\draw[->,thick,tang] (4.2,0.65) -- (5.8,0.15);
+\draw[->,thick,tang] (6.2,0.15) -- (7.9,0.65);
+\node at (4.0,0.72) {\footnotesize $2$}; \node at (6.0,0.12) {\footnotesize $-2$};
+\end{tikzpicture}
+\end{center}
+Maximum $f(0)=2$ ; minimum $f(2)=-2$.\\[2mm]
+\textbf{b)} $f''(x)=6x-6=6(x-1)$. $f''(x)<0$ pour $x<1$ (concave, cloche $\frown$) ;
+$f''(x)>0$ pour $x>1$ (convexe, bol $\smile$).
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (7.6,1.6);
+\draw[thick] (0,0.8) -- (7.6,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f''(x)$};
+\node at (2.0,1.2) {$-\infty$}; \node at (4.2,1.2) {$1$}; \node at (7.0,1.2) {$+\infty$};
+\node[moins] at (3.1,0.4) {$-$}; \node at (4.2,0.4) {$0$}; \node[plus] at (5.6,0.4) {$+$};
+\end{tikzpicture}
+\end{center}
+\textbf{c)} $f''$ \textbf{change de signe} en $x=1$ $\Rightarrow$ \textbf{point d'inflexion}.
+$f(1)=1-3+2=\mathbf{0}$. L'inflexion est le point $(1,0)$.
+\end{corr}
+
+\begin{corr}[2 --- $f(x)=x^4-6x^2$]
+\textbf{a)} $f'(x)=4x^3-12x=4x(x^2-3)=4x(x-\sqrt3)(x+\sqrt3)$, racines $-\sqrt3,\,0,\,\sqrt3$.
+Trois racines simples : $f'$ change de signe à chacune. $f(0)=0$, \ $f(\pm\sqrt3)=9-18=-9$.
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (9.4,2.4);
+\draw[thick] (0,1.6) -- (9.4,1.6);
+\draw[thick] (0,0.8) -- (9.4,0.8);
+\draw[thick] (1.6,0) -- (1.6,2.4);
+\node at (0.8,2.0) {$x$}; \node at (0.8,1.2) {$f'(x)$}; \node at (0.8,0.4) {$f$};
+\node at (2.1,2.0) {$-\infty$}; \node at (3.6,2.0) {$-\sqrt3$}; \node at (5.4,2.0) {$0$};
+\node at (7.2,2.0) {$\sqrt3$}; \node at (8.9,2.0) {$+\infty$};
+\node[moins] at (2.85,1.2) {$-$}; \node at (3.6,1.2) {$0$}; \node[plus] at (4.5,1.2) {$+$};
+\node at (5.4,1.2) {$0$}; \node[moins] at (6.3,1.2) {$-$}; \node at (7.2,1.2) {$0$}; \node[plus] at (8.1,1.2) {$+$};
+\draw[->,thick,tang] (2.1,0.6) -- (3.4,0.2);
+\draw[->,thick,tang] (3.8,0.2) -- (5.2,0.6);
+\draw[->,thick,tang] (5.6,0.6) -- (7.0,0.2);
+\draw[->,thick,tang] (7.4,0.2) -- (8.9,0.6);
+\node at (3.6,0.12) {\footnotesize $-9$}; \node at (5.4,0.72) {\footnotesize $0$}; \node at (7.2,0.12) {\footnotesize $-9$};
+\end{tikzpicture}
+\end{center}
+Minimums en $\pm\sqrt3$ ($f=-9$), maximum local en $0$ ($f=0$).\\[2mm]
+\textbf{b)} $f''(x)=12x^2-12=12(x^2-1)=12(x-1)(x+1)$, racines $-1$ et $1$.\\[1mm]
+\textbf{c)} Signe de $(x-1)(x+1)$ ($\smile$) :
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (8.4,1.6);
+\draw[thick] (0,0.8) -- (8.4,0.8);
+\draw[thick] (1.4,0) -- (1.4,1.6);
+\node at (0.7,1.2) {$x$}; \node at (0.7,0.4) {$f''(x)$};
+\node at (1.9,1.2) {$-\infty$}; \node at (4.0,1.2) {$-1$}; \node at (6.0,1.2) {$1$}; \node at (7.9,1.2) {$+\infty$};
+\node[plus] at (2.9,0.4) {$+$}; \node at (4.0,0.4) {$0$}; \node[moins] at (5.0,0.4) {$-$};
+\node at (6.0,0.4) {$0$}; \node[plus] at (7.1,0.4) {$+$};
+\end{tikzpicture}
+\end{center}
+$f''$ change de signe en $-1$ et en $1$ : \textbf{deux points d'inflexion}, en $x=-1$ et $x=1$
+(avec $f(\pm1)=1-6=-5$). Concavité : \textbf{vers le haut} ($x<-1$), \textbf{vers le bas} ($-1<x<1$),
+\textbf{vers le haut} ($x>1$).
+\end{corr}
+
+\begin{corr}[3 --- $f(x)=x-3\ln|x+2|$]
+\textbf{a)} $\ln|x+2|$ exige $x+2\neq 0$, soit $x\neq -2$. \quad Domaine : $\boxed{\R\setminus\{-2\}}$.\\[2mm]
+\textbf{b)} $\big(\ln|x+2|\big)'=\dfrac{1}{x+2}$, donc
+\[
+f'(x)=1-\frac{3}{x+2}=\frac{(x+2)-3}{x+2}=\frac{x-1}{x+2}.
+\]
+\textbf{c)} Signe de $\dfrac{x-1}{x+2}$ : numérateur nul en $1$, dénominateur nul (interdit) en $-2$.
+Règle des signes du quotient :
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) rectangle (9,2.4);
+\draw[thick] (0,1.6) -- (9,1.6);
+\draw[thick] (0,0.8) -- (9,0.8);
+\draw[thick] (1.6,0) -- (1.6,2.4);
+\node at (0.8,2.0) {$x$}; \node at (0.8,1.2) {$f'(x)$}; \node at (0.8,0.4) {$f$};
+\node at (2.1,2.0) {$-\infty$}; \node at (4.2,2.0) {$-2$}; \node at (6.4,2.0) {$1$}; \node at (8.4,2.0) {$+\infty$};
+\node[plus] at (3.1,1.2) {$+$};
+\draw[thick] (4.15,0.8) -- (4.15,1.6); \draw[thick] (4.3,0.8) -- (4.3,1.6);
+\node[moins] at (5.3,1.2) {$-$}; \node at (6.4,1.2) {$0$}; \node[plus] at (7.4,1.2) {$+$};
+\draw[->,thick,tang] (2.1,0.6) -- (4.0,0.2);
+\draw[->,thick,tang] (4.45,0.6) -- (6.2,0.2);
+\draw[->,thick,tang] (6.6,0.2) -- (8.4,0.6);
+\node at (6.4,0.12) {\footnotesize min};
+\end{tikzpicture}
+\end{center}
+(Double barre en $-2$ : valeur interdite.) Sur $]-2,1[$ $f$ décroît, sur $]1,+\infty[$ elle croît :
+$f'$ passe de $-$ à $+$ en $x=1$ $\Rightarrow$ \textbf{minimum local} en $x=1$, $f(1)=1-3\ln 3$.\\[2mm]
+\textbf{d)} $f'(x)=\dfrac{x-1}{x+2}$, dérivée du quotient : $\dfrac{1\cdot(x+2)-(x-1)\cdot1}{(x+2)^2}=\dfrac{3}{(x+2)^2}$.
+Donc $f''(x)=\dfrac{3}{(x+2)^2}>0$ sur tout le domaine : \textbf{concavité toujours vers le haut}
+(convexe). $f''$ ne s'annule jamais et ne change pas de signe : \textbf{aucun point d'inflexion}.
+\end{corr}
+
+\end{document}

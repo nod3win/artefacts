@@ -1,0 +1,112 @@
+% =====================================================================
+%  Thème 2 — Angles associés — NIVEAU DIFFICILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 2 — Angles associés}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} enchaîner \emph{plusieurs} symétries, prouver qu'une expression littérale se
+simplifie, et décider quelles écritures représentent un même nombre. \textbf{Sans calculatrice},
+valeurs exactes. Justifie par la famille utilisée.
+\end{consigne}
+
+\exo{Un angle, deux chemins}
+On veut calculer $\cos\dfrac{5\pi}{6}$ et $\sin\dfrac{5\pi}{6}$ de deux façons.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Écris $\dfrac{5\pi}{6}$ comme le \emph{supplémentaire} d'un angle remarquable, et déduis-en
+$\cos\dfrac{5\pi}{6}$.
+\item Écris maintenant $\dfrac{5\pi}{6}$ sous la forme $\dfrac{\pi}{2}+\beta$, et recalcule
+$\cos\dfrac{5\pi}{6}$ par les \emph{anti-complémentaires}.
+\item Les deux résultats coïncident-ils ? Conclus.
+\item Reprends les deux méthodes pour obtenir $\sin\dfrac{5\pi}{6}$.
+\end{enumerate}
+
+\exo{Prouver une simplification}
+Simplifie chaque expression (le résultat est un nombre, ou $\pm\sin\alpha$, $\pm\cos\alpha$).
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item $A=\sin(\pi-\alpha)+\sin(\pi+\alpha)$.
+\item $B=\cos(\pi+\alpha)-\cos(-\alpha)$.
+\item $C=\tg(\pi-\alpha)+\tg(\pi+\alpha)$.
+\item $D=\bigl[\sin(\tfrac{\pi}{2}+\alpha)\bigr]^2+\bigl[\sin(\pi-\alpha)\bigr]^2$.
+\end{enumerate}
+
+\exo{Quatre points associés}
+Sur le cercle, $M$ est le point d'angle $\alpha$ (avec $\alpha$ aigu). On note $a=\cos\alpha$ et
+$b=\sin\alpha$, de sorte que $M=(a\,;\,b)$. On place aussi $N$ (angle $\pi-\alpha$), $P$ (angle
+$-\alpha$) et $Q$ (angle $\pi+\alpha$).
+\begin{center}
+\begin{tikzpicture}[scale=1.9,line cap=round,>=Stealth]
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.35,0)--(1.4,0) node[right]{\scriptsize$\cos$};
+  \draw[->,black!70] (0,-1.35)--(0,1.4) node[above]{\scriptsize$\sin$};
+  \fill[primarydark] (40:1) circle (0.028) node[above right]{\scriptsize$M$};
+  \fill[primarydark] (140:1) circle (0.028) node[above left]{\scriptsize$N$};
+  \fill[primarydark] (-40:1) circle (0.028) node[below right]{\scriptsize$P$};
+  \fill[primarydark] (220:1) circle (0.028) node[below left]{\scriptsize$Q$};
+  \draw[black!30,dashed] (140:1)--(40:1)--(-40:1);
+  \draw[black!30,dashed] (40:1)--(220:1);
+  \fill (0,0) circle (0.02);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Exprime les coordonnées de $N$, $P$ et $Q$ en fonction de $a$ et $b$.
+\item Parmi $M,N,P,Q$, lesquels ont la même \emph{ordonnée} (même sinus) ? la même \emph{abscisse}
+(même cosinus) ?
+\item Quels sont les deux points symétriques par rapport au \emph{centre} $O$ ?
+\item Application : $\alpha=\dfrac{\pi}{6}$. Donne les coordonnées exactes de $M,N,P,Q$.
+\end{enumerate}
+
+\exo{Toutes les écritures d'un même nombre}
+Détermine \emph{lesquelles} des expressions suivantes sont égales à $\dfrac12$. Justifie chacune par la
+famille d'angles associés.
+\[
+\textbf{(a)}\ \sin\frac{5\pi}{6} \qquad
+\textbf{(b)}\ \cos\frac{2\pi}{3} \qquad
+\textbf{(c)}\ -\sin\!\left(-\frac{\pi}{6}\right) \qquad
+\textbf{(d)}\ \sin\!\left(\frac{\pi}{2}+\frac{\pi}{3}\right) \qquad
+\textbf{(e)}\ -\cos\frac{2\pi}{3}
+\]
+
+\end{document}

@@ -1,0 +1,64 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Logarithmes}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Difficile — Exercices}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}\\[3pt]
+{\small\itshape Niveau concours. Les sous-questions construisent la difficulté pas à pas.}
+\end{center}
+\vspace{1mm}
+
+\begin{exo}[manipuler un logarithme d'expression composée]
+Soit $a,b,c$ trois réels strictement positifs et $\ds R=\frac{a^{2}b}{c}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=1pt,itemsep=2pt]
+  \item Exprime $\ln R$ en fonction de $\ln a$, $\ln b$ et $\ln c$.
+  \item Montre que $\ln R-\ln b=2\ln a-\ln c$.
+  \item Simplifie $\ln(Rc)-2\ln a$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[un carré parfait caché dans un logarithme]
+On considère la fonction $f$ définie sur $\R$ par $f(x)=\ln\bigl(2e^{x}+1+e^{2x}\bigr)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=1pt,itemsep=2pt]
+  \item Montre que l'argument du logarithme est un carré parfait, et factorise-le.
+  \item Déduis-en que $f(x)=2\ln\bigl(1+e^{x}\bigr)$.
+  \item En factorisant $e^{x}$ à l'intérieur de $1+e^{x}$, montre que $f(x)=2\bigl[x+\ln\bigl(1+e^{-x}\bigr)\bigr]$.
+\end{enumerate}
+\end{exo}
+
+\begin{exo}[mise en situation : croissance exponentielle]
+Une culture de cellules croît de façon exponentielle : le nombre de cellules \emph{double tous les
+$20$~jours}. On note $N_0$ le nombre initial et $N(t)$ le nombre après $t$ jours.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2.2em,topsep=1pt,itemsep=2pt]
+  \item Justifie que l'on peut écrire $\ds N(t)=N_0\times 2^{\,t/20}$.
+  \item Après combien de jours le nombre de cellules est-il \emph{multiplié par $8$}~? (Ramène à une même base, sans logarithme.)
+  \item On veut maintenant multiplier le nombre initial par $10$. Exprime le temps $t$ nécessaire à l'aide d'un logarithme. Donne aussi le facteur par lequel la population est multipliée \emph{en un seul jour}, sous la forme d'une puissance de $2$.
+\end{enumerate}
+\end{exo}
+
+\end{document}

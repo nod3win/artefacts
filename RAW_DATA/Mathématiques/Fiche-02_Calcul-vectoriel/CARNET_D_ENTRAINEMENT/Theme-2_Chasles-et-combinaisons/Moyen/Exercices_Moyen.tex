@@ -1,0 +1,78 @@
+% =====================================================================
+%  Thème 2 — Chasles et combinaisons — Niveau MOYEN — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Moyen — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Chasles et combinaisons — Niveau Moyen}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : réordonner et transformer avant d'appliquer Chasles ; introduire un point,
+manipuler des milieux et des combinaisons linéaires.}
+\vspace{2mm}
+
+\exo{1} \textbf{Simplifier en un seul vecteur.}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}+\vc{CD}+\vc{BC}$
+  \item $\vc{AB}-\vc{AC}$
+  \item $\vc{AB}+\vc{BC}-\vc{DC}$
+  \item $\vc{OA}-\vc{OB}$
+\end{enumerate}
+
+\exo{2} \textbf{Introduire un point $O$.}
+Soit $O$ un point quelconque du plan. Exprimer les vecteurs suivants uniquement à l'aide de
+$\vc{OA}$, $\vc{OB}$ et $\vc{OC}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}$
+  \item $\vc{CA}$
+  \item $\vc{AB}+\vc{BC}$
+\end{enumerate}
+
+\exo{3} \textbf{Milieu.}
+$I$ est le milieu du segment $[AB]$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Exprimer $\vc{AI}$ en fonction de $\vc{AB}$.
+  \item Que vaut $\vc{IA}+\vc{IB}$ ? Justifier.
+  \item Montrer que, pour tout point $O$, $\vc{OI}=\dfrac12\bigl(\vc{OA}+\vc{OB}\bigr)$.
+\end{enumerate}
+
+\exo{4} \textbf{Diagonales d'un parallélogramme.}
+$ABCD$ est un parallélogramme. On pose $\vec u=\vc{AB}$ et $\vec v=\vc{AD}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Exprimer la diagonale $\vc{AC}$ en fonction de $\vec u$ et $\vec v$.
+  \item Exprimer la diagonale $\vc{BD}$ en fonction de $\vec u$ et $\vec v$.
+\end{enumerate}
+
+\exo{5} \textbf{Combinaison linéaire avec un milieu.}
+$ABCD$ est un parallélogramme et $I$ est le milieu du côté $[BC]$. On pose $\vec u=\vc{AB}$ et
+$\vec v=\vc{AD}$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Exprimer $\vc{BI}$ en fonction de $\vec v$.
+  \item En déduire $\vc{AI}$ comme combinaison linéaire de $\vec u$ et $\vec v$.
+\end{enumerate}
+
+\end{document}

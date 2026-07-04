@@ -1,0 +1,101 @@
+% =====================================================================
+%  Thème 5 — Résolution des triangles — NIVEAU FACILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 5 — Résolution des triangles}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Calculer une aire ($\mathcal{A}=\tfrac12\,ab\sin\hat C$)}
+On multiplie les deux côtés donnés par le sinus de l'angle compris, divisé par $2$.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\mathcal{A}=\dfrac12\cdot6\cdot8\cdot\sin30\degr=24\cdot\dfrac12=12$.
+\item[\textbf{(b)}] \rep $\mathcal{A}=\dfrac12\cdot5\cdot4\cdot\sin90\degr=10\cdot1=10$.
+\item[\textbf{(c)}] \rep $\mathcal{A}=\dfrac12\cdot10\cdot6\cdot\sin60\degr=30\cdot\dfrac{\sqrt3}{2}=15\sqrt3$.
+\item[\textbf{(d)}] \rep $\mathcal{A}=\dfrac12\cdot8\cdot8\cdot\sin45\degr=32\cdot\dfrac{\sqrt2}{2}=16\sqrt2$.
+\item[\textbf{(e)}] \rep $\mathcal{A}=\dfrac12\cdot3\cdot4\cdot\sin120\degr=6\cdot\dfrac{\sqrt3}{2}=3\sqrt3$
+  (rappel $\sin120\degr=\sin60\degr=\tfrac{\sqrt3}{2}$).
+\end{itemize}
+
+\exo{Trouver le 3\textsuperscript{e} côté (loi des cosinus)}
+On applique $c^2=a^2+b^2-2ab\cos\hat C$.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $c^2=25+64-2\cdot40\cdot\cos60\degr=89-80\cdot\tfrac12=89-40=49$, donc $c=7$.
+\item[\textbf{(b)}] \rep $\cos120\degr=-\tfrac12$ : $c^2=9+25-2\cdot15\cdot(-\tfrac12)=34+15=49$, donc $c=7$.
+\item[\textbf{(c)}] \rep $\cos90\degr=0$ : $c^2=36+64=100$, donc $c=10$ (c'est Pythagore).
+\item[\textbf{(d)}] \rep $c^2=4+9-2\cdot6\cdot\tfrac12=13-6=7$, donc $c=\sqrt7$.
+\end{itemize}
+
+\exo{Trouver un côté manquant (loi des sinus)}
+On isole le côté cherché : le côté est proportionnel au sinus de l'angle opposé.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\dfrac{\sin30\degr}{6}=\dfrac{\sin90\degr}{b}\Rightarrow
+   b=6\cdot\dfrac{\sin90\degr}{\sin30\degr}=6\cdot\dfrac{1}{1/2}=12$.
+\item[\textbf{(b)}] \rep $\dfrac{\sin30\degr}{5}=\dfrac{\sin45\degr}{c}\Rightarrow
+   c=5\cdot\dfrac{\sin45\degr}{\sin30\degr}=5\cdot\dfrac{\sqrt2/2}{1/2}=5\sqrt2$.
+\item[\textbf{(c)}] \rep $\dfrac{\sin60\degr}{3}=\dfrac{\sin90\degr}{b}\Rightarrow
+   b=3\cdot\dfrac{1}{\sqrt3/2}=\dfrac{6}{\sqrt3}=2\sqrt3$.
+\end{itemize}
+
+\exo{Retrouver un angle à partir des trois côtés}
+On calcule $\cos\hat C=\dfrac{a^2+b^2-c^2}{2ab}$ et on lit l'angle remarquable.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos\hat C=\dfrac{9+25-49}{2\cdot15}=\dfrac{-15}{30}=-\dfrac12
+   \Rightarrow \hat C=120\degr$.
+\item[\textbf{(b)}] \rep $\cos\hat C=\dfrac{25+64-49}{2\cdot40}=\dfrac{40}{80}=\dfrac12
+   \Rightarrow \hat C=60\degr$.
+\item[\textbf{(c)}] \rep $\cos\hat C=\dfrac{36+64-100}{2\cdot48}=\dfrac{0}{96}=0
+   \Rightarrow \hat C=90\degr$ (triangle rectangle).
+\item[\textbf{(d)}] \rep $\cos\hat C=\dfrac{4+9-7}{2\cdot6}=\dfrac{6}{12}=\dfrac12
+   \Rightarrow \hat C=60\degr$.
+\end{itemize}
+
+\exo{Le triangle rectangle (SOH-CAH-TOA et Pythagore)}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep Côté opposé $=\text{hyp}\times\sin60\degr=6\cdot\dfrac{\sqrt3}{2}=3\sqrt3$ ;
+   côté adjacent $=\text{hyp}\times\cos60\degr=6\cdot\dfrac12=3$.
+\item[\textbf{(b)}] \rep Par Pythagore, hypoténuse $=\sqrt{5^2+5^2}=\sqrt{50}=5\sqrt2$. Le triangle
+   étant isocèle, ses deux angles aigus sont égaux et de somme $90\degr$, donc chacun vaut $45\degr$.
+\item[\textbf{(c)}] \rep Hypoténuse $=\sqrt{5^2+12^2}=\sqrt{25+144}=\sqrt{169}=13$.
+\end{itemize}
+
+\end{document}

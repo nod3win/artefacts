@@ -1,0 +1,94 @@
+% =====================================================================
+%  Thème 2 — Angles associés — NIVEAU FACILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 2 — Angles associés}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Opposés ($-\alpha$)}
+Symétrie par l'axe des cosinus : $\cos$ est \emph{pair}, $\sin$ et $\tg$ sont \emph{impaires}.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos(-\alpha)=\cos\alpha$.
+\item[\textbf{(b)}] \rep $\sin(-\alpha)=-\sin\alpha$.
+\item[\textbf{(c)}] \rep $\tg(-\alpha)=-\tg\alpha$.
+\item[\textbf{(d)}] \rep $\sin(-\alpha)+\sin\alpha=-\sin\alpha+\sin\alpha=0$.
+\end{itemize}
+
+\exo{Supplémentaires ($\pi-\alpha$)}
+Symétrie par l'axe des sinus : même $\sin$, $\cos$ et $\tg$ changent de signe.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\sin(\pi-\alpha)=\sin\alpha$.
+\item[\textbf{(b)}] \rep $\cos(\pi-\alpha)=-\cos\alpha$.
+\item[\textbf{(c)}] \rep $\tg(\pi-\alpha)=-\tg\alpha$.
+\item[\textbf{(d)}] \rep $\sin\!\left(\pi-\dfrac{\pi}{6}\right)=\sin\dfrac{\pi}{6}=\dfrac12$
+(deux angles supplémentaires ont le même sinus).
+\end{itemize}
+
+\exo{Anti-supplémentaires ($\pi+\alpha$)}
+Symétrie centrale (par $O$) : $\cos$ et $\sin$ changent de signe, la $\tg$ est inchangée (période $\pi$).
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos(\pi+\alpha)=-\cos\alpha$.
+\item[\textbf{(b)}] \rep $\sin(\pi+\alpha)=-\sin\alpha$.
+\item[\textbf{(c)}] \rep $\tg(\pi+\alpha)=\tg\alpha$.
+\item[\textbf{(d)}] \rep $\tg\!\left(\pi+\dfrac{\pi}{4}\right)=\tg\dfrac{\pi}{4}=1$.
+\end{itemize}
+
+\exo{Complémentaires et anti-complémentaires ($\frac{\pi}{2}\pm\alpha$)}
+Autour de $\frac{\pi}{2}$, les fonctions $\sin$ et $\cos$ \textbf{s'échangent}.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\sin\!\left(\dfrac{\pi}{2}-\alpha\right)=\cos\alpha$ \emph{(complémentaires)}.
+\item[\textbf{(b)}] \rep $\cos\!\left(\dfrac{\pi}{2}-\alpha\right)=\sin\alpha$ \emph{(complémentaires)}.
+\item[\textbf{(c)}] \rep $\cos\!\left(\dfrac{\pi}{2}+\alpha\right)=-\sin\alpha$ \emph{(anti-complémentaires)}.
+\item[\textbf{(d)}] \rep $\sin\!\left(\dfrac{\pi}{2}+\alpha\right)=\cos\alpha$ \emph{(anti-complémentaires)}.
+\end{itemize}
+
+\exo{Reconnaître la nature de deux angles}
+On compare la somme (ou la différence) des deux angles à $90\degr$, $180\degr$, $0\degr$.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $30\degr+150\degr=180\degr$ : \textbf{supplémentaires}.
+\item[\textbf{(b)}] \rep $40\degr+50\degr=90\degr$ : \textbf{complémentaires}.
+\item[\textbf{(c)}] \rep $70\degr$ et $-70\degr$ sont \textbf{opposés} (somme nulle).
+\item[\textbf{(d)}] \rep $200\degr=180\degr+20\degr$ : \textbf{anti-supplémentaires}.
+\end{itemize}
+
+\end{document}

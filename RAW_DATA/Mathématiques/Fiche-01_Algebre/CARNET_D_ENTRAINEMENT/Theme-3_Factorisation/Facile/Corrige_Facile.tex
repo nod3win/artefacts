@@ -1,0 +1,66 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 3} — Factorisation et résolution}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Facile — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[mise en évidence]
+\[ \text{a) }x(2x-3);\quad \text{b) }3x^{2}(2x+3);\quad \text{c) }5x(x+2);\quad
+   \text{d) }4x(x^{2}-2);\quad \text{e) }xy(x+y). \]
+\end{corrige}
+
+\begin{corrige}[différence de carrés]
+\[ \text{a) }(x-3)(x+3);\ \text{b) }(2x-5)(2x+5);\ \text{c) }(x-1)(x+1);\ \text{d) }(3-x)(3+x);\ \text{e) }(4x-1)(4x+1). \]
+\end{corrige}
+
+\begin{corrige}[carré parfait]
+\[ \text{a) }(x+3)^{2};\quad \text{b) }(x-2)^{2};\quad \text{c) }(3x+1)^{2};\quad
+   \text{d) }(x-5)^{2};\quad \text{e) }(2x+1)^{2}. \]
+\end{corrige}
+
+\begin{corrige}[discriminant et racines]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item a) $\Delta=9-8=1>0$, deux racines : $x=\tfrac{3\pm1}{2}$, soit $x=2$ et $x=1$.
+  \item b) $\Delta=25-24=1>0$, deux racines : $x=\tfrac{5\pm1}{2}$, soit $x=3$ et $x=2$.
+  \item c) $\Delta=4-4=0$, racine double $x=\tfrac{2}{2}=1$.
+  \item d) $\Delta=1-4=-3<0$, aucune racine réelle.
+\end{itemize}
+\end{corrige}
+
+\begin{corrige}[produit nul]
+\begin{align*}
+&\text{a) }x=1\ \text{ou}\ x=-3; &&\text{b) }x=0\ \text{ou}\ x=\tfrac12; &&\text{c) }x=2\ \text{(double)};\\
+&\text{d) }x=-\tfrac52\ \text{ou}\ x=4; &&\text{e) }x=0\ \text{ou}\ x=-7. &&
+\end{align*}
+\end{corrige}
+
+\end{document}

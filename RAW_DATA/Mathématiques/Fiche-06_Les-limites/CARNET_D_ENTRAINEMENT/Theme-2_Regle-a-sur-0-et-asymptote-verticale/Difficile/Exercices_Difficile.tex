@@ -1,0 +1,114 @@
+% =====================================================================
+%  Thème 2 — EXERCICES — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\tikzset{axe/.style={->,>=Stealth,thick,black!75},
+  courbe/.style={line width=1.1pt,curvecol},asy/.style={dashed,black!55,line width=0.8pt}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 2 — Règle $\dfrac{a}{0^{\pm}}$ \& asymptote verticale}\\[2pt]
+{\large\color{primary}Exercices — Niveau Difficile}
+\end{center}
+\vspace{4pt}
+{\small\itshape Niveau concours : deux points interdits, contraste carré/simple, et une mise en
+situation. On construit un tableau de signes complet.}
+\vspace{6pt}
+
+\begin{exercice}[deux asymptotes verticales]
+Soit $f(x)=\dfrac{x+5}{x^2-x-6}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Factoriser $x^2-x-6$ et donner le domaine $D_f$.
+  \item Dresser le tableau de signes du dénominateur sur $\R$.
+  \item Étudier les limites latérales en $x=3$ : $\displaystyle\lim_{x\to 3^{-}} f$ et $\displaystyle\lim_{x\to 3^{+}} f$.
+  \item Étudier les limites latérales en $x=-2$.
+  \item Conclure : combien d'asymptotes verticales ? Donner leurs équations.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[contraste : multiplicité paire ou impaire]
+On compare deux fonctions en $x=1$ :
+\[ f(x)=\frac{3}{x-1}\qquad\text{et}\qquad g(x)=\frac{3}{(x-1)^2}. \]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Calculer $\displaystyle\lim_{x\to 1^{-}} f$ et $\displaystyle\lim_{x\to 1^{+}} f$. $f$ a-t-elle une limite en $1$ ?
+  \item Calculer $\displaystyle\lim_{x\to 1^{-}} g$ et $\displaystyle\lim_{x\to 1^{+}} g$. $g$ a-t-elle une limite en $1$ ?
+  \item Expliquer, à l'aide du signe du dénominateur, pourquoi $g$ a une limite globale mais pas $f$.
+  \item Associer chaque fonction à l'une des deux allures ci-dessous près de l'asymptote $x=1$.
+\end{enumerate}
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+% allure A : type 3/(x-1) (change de signe)
+\begin{scope}
+  \draw[axe](-0.3,0)--(4,0) node[right]{\scriptsize$x$};
+  \draw[axe](0,-2.4)--(0,2.6) node[above]{\scriptsize$y$};
+  \draw[asy](2,-2.4)--(2,2.6);
+  \draw[courbe,domain=0.2:1.72,samples=60] plot(\x,{0.9/(\x-2)});
+  \draw[courbe,domain=2.28:3.8,samples=60] plot(\x,{0.9/(\x-2)});
+  \node[font=\scriptsize] at (2,-2.8){Allure A};
+\end{scope}
+% allure B : type 3/(x-1)^2 (meme signe, +inf des deux cotes)
+\begin{scope}[xshift=6cm]
+  \draw[axe](-0.3,0)--(4,0) node[right]{\scriptsize$x$};
+  \draw[axe](0,-0.4)--(0,2.8) node[above]{\scriptsize$y$};
+  \draw[asy](2,-0.4)--(2,2.8);
+  \draw[courbe,domain=0.9:1.72,samples=60] plot(\x,{0.35/(\x-2)^2});
+  \draw[courbe,domain=2.28:3.1,samples=60] plot(\x,{0.35/(\x-2)^2});
+  \node[font=\scriptsize] at (2,-0.8){Allure B};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{exercice}
+
+\begin{exercice}[mise en situation : dilution qui s'emballe]
+En pharmacologie, la concentration (en mg/L) d'un principe actif dans une cuve est modélisée, sur
+$[0\,;5[$ (temps $t$ en heures), par
+\[ C(t)=\frac{20}{5-t}. \]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Calculer $C(0)$, $C(3)$ et $C(4{,}9)$. Que constate-t-on quand $t$ approche $5$ ?
+  \item Calculer $\displaystyle\lim_{t\to 5^{-}} C(t)$ à l'aide de la règle $\frac{a}{0^{\pm}}$.
+  \item Interpréter : que traduit cette asymptote verticale $t=5$ pour le modèle ? Est-il réaliste
+        au-delà de $t=5$ ?
+\end{enumerate}
+\end{exercice}
+
+\end{document}

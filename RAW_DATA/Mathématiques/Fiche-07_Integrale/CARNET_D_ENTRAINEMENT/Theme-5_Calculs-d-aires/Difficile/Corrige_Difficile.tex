@@ -1,0 +1,179 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Calculs d'aires}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+
+\section*{Corrigé — Difficile : aire entre deux courbes}
+
+\begin{corr}[D1]
+\textbf{a) Intersections.} $f(x)=g(x)\Leftrightarrow x^2-4x+3=-x^2+4x-3\Leftrightarrow 2x^2-8x+6=0
+\Leftrightarrow x^2-4x+3=0\Leftrightarrow (x-1)(x-3)=0$. Bornes : $a=1$, $b=3$.
+
+\textbf{b) Ordre.} En $x=2$ : $f(2)=4-8+3=-1$ et $g(2)=-4+8-3=1$. Donc $g\geqslant f$ sur $[1,3]$ :
+la courbe supérieure est $\mathcal{C}_g$.
+
+\textbf{c) Intégrale.}
+\[
+\mathcal{A}=\int_1^3\bigl(g(x)-f(x)\bigr)\,\dd x
+=\int_1^3\bigl(-2x^2+8x-6\bigr)\,\dd x.
+\]
+
+\textbf{d) Calcul.}
+\[
+\mathcal{A}=\left[-\frac{2x^3}{3}+4x^2-6x\right]_1^3
+=\bigl(-18+36-18\bigr)-\left(-\frac{2}{3}+4-6\right)=0-\left(-\frac{8}{3}\right)
+=\boxed{\,\frac{8}{3}\ua\approx 2{,}67\ \text{u.a.}}
+\]
+Résultat positif : cohérent. \checkmark
+\end{corr}
+
+\begin{corr}[D2]
+\textbf{a) Intersections.} $x^2-4x+3=x-1\Leftrightarrow x^2-5x+4=0\Leftrightarrow (x-1)(x-4)=0$.
+Bornes : $a=1$, $b=4$.
+
+\textbf{b) Ordre.} En $x=2$ : $f(2)=-1$ et $g(2)=1$. La droite est au-dessus : $f_{\text{sup}}=g$.
+
+\textbf{c) Calcul.}
+\[
+\mathcal{A}=\int_1^4\bigl[(x-1)-(x^2-4x+3)\bigr]\,\dd x=\int_1^4\bigl(-x^2+5x-4\bigr)\,\dd x
+=\left[-\frac{x^3}{3}+\frac{5x^2}{2}-4x\right]_1^4.
+\]
+En $x=4$ : $-\dfrac{64}{3}+40-16=-\dfrac{64}{3}+24=\dfrac{8}{3}$. \quad
+En $x=1$ : $-\dfrac{1}{3}+\dfrac{5}{2}-4=-\dfrac{11}{6}$.
+\[
+\mathcal{A}=\frac{8}{3}-\left(-\frac{11}{6}\right)=\frac{16}{6}+\frac{11}{6}=\frac{27}{6}
+=\boxed{\,\frac{9}{2}\ua=4{,}5\ \text{u.a.}}
+\]
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=9.2cm,height=4.8cm,axis lines=middle,
+      xmin=-0.3,xmax=5,ymin=-1.6,ymax=3.6,xtick={1,4},ytick=\empty,
+      xlabel={$x$},ylabel={$y$},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=0.2:4.6,samples=80,courbe]{x^2-4*x+3};
+    \addplot[domain=0:4.8,samples=40,courbe2]{x-1};
+    \addplot[name path=G,domain=1:4,samples=50,draw=none,forget plot]{x-1};
+    \addplot[name path=F,domain=1:4,samples=50,draw=none,forget plot]{x^2-4*x+3};
+    \addplot[areacol!40] fill between[of=G and F];
+    \node[primary] at (axis cs:4.5,3.1){$f$};
+    \node at (axis cs:2.4,0.2){$\mathcal{A}$};
+    \node[areacol2!90!black] at (axis cs:0.55,-0.9){$g$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\end{corr}
+
+\begin{corr}[D3]
+\textbf{a) Intersections.} $x^2-4x=2x-x^2\Leftrightarrow 2x^2-6x=0\Leftrightarrow 2x(x-3)=0$.
+Bornes : $a=0$, $b=3$.
+
+\textbf{b) Ordre.} En $x=1$ : $f(1)=1-4=-3$ et $g(1)=2-1=1$. Donc $g\geqslant f$ : la courbe
+supérieure est $\mathcal{C}_g$.
+
+\textbf{c) Calcul.}
+\[
+\mathcal{A}=\int_0^3\bigl[(2x-x^2)-(x^2-4x)\bigr]\,\dd x=\int_0^3\bigl(-2x^2+6x\bigr)\,\dd x
+=\left[-\frac{2x^3}{3}+3x^2\right]_0^3=\bigl(-18+27\bigr)-0=\boxed{\,9\ua.\,}
+\]
+Résultat positif. \checkmark
+\end{corr}
+
+\begin{corr}[D4]
+\textbf{a) Intersections.} $x^2=x\Leftrightarrow x^2-x=0\Leftrightarrow x(x-1)=0$, donc $x=0$ et
+$x=1$. Le point $x=1$ est \emph{à l'intérieur} de $[0,2]$ : l'ordre des courbes va changer.
+
+\textbf{b) Ordre.}
+\begin{itemize}[leftmargin=1.6em,topsep=1pt]
+  \item Sur $[0,1]$ : en $x=\tfrac12$, $g=\tfrac12$ et $f=\tfrac14$, donc $g\geqslant f$ ($x\geqslant x^2$).
+  \item Sur $[1,2]$ : en $x=\tfrac32$, $f=\tfrac94$ et $g=\tfrac32$, donc $f\geqslant g$.
+\end{itemize}
+On \textbf{coupe} donc en $x=1$ et on somme les deux aires.
+
+\textbf{c) Calcul.}
+\[
+\mathcal{A}_1=\int_0^1\bigl(x-x^2\bigr)\,\dd x=\left[\frac{x^2}{2}-\frac{x^3}{3}\right]_0^1
+=\frac{1}{2}-\frac{1}{3}=\frac{1}{6};
+\]
+\[
+\mathcal{A}_2=\int_1^2\bigl(x^2-x\bigr)\,\dd x=\left[\frac{x^3}{3}-\frac{x^2}{2}\right]_1^2
+=\left(\frac{8}{3}-2\right)-\left(\frac{1}{3}-\frac{1}{2}\right)=\frac{2}{3}+\frac{1}{6}=\frac{5}{6}.
+\]
+\[
+\mathcal{A}=\mathcal{A}_1+\mathcal{A}_2=\frac{1}{6}+\frac{5}{6}=\boxed{\,1\ua.\,}
+\]
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=8.8cm,height=4.8cm,axis lines=middle,
+      xmin=-0.3,xmax=2.4,ymin=-0.4,ymax=4.4,xtick={0,1,2},ytick=\empty,
+      xlabel={$x$},ylabel={$y$},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=-0.1:2.1,samples=70,courbe]{x^2};
+    \addplot[domain=-0.1:2.3,samples=40,courbe2]{x};
+    \addplot[name path=G1,domain=0:1,samples=40,draw=none,forget plot]{x};
+    \addplot[name path=F1,domain=0:1,samples=40,draw=none,forget plot]{x^2};
+    \addplot[name path=F2,domain=1:2,samples=40,draw=none,forget plot]{x^2};
+    \addplot[name path=G2,domain=1:2,samples=40,draw=none,forget plot]{x};
+    \addplot[areacol!45] fill between[of=G1 and F1];
+    \addplot[areacol2!45] fill between[of=F2 and G2];
+    \node at (axis cs:0.6,0.32){$\mathcal{A}_1$};
+    \node at (axis cs:1.6,1.9){$\mathcal{A}_2$};
+    \node[primary] at (axis cs:1.75,3.8){$f:x^2$};
+    \node[areacol2!90!black] at (axis cs:2.25,1.7){$g:x$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\end{corr}
+
+\end{document}

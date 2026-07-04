@@ -1,0 +1,106 @@
+% =====================================================================
+%  Thème 1 — Conversions & cercle trigonométrique — NIVEAU FACILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 1 — Conversions \& cercle trigonométrique}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} rendre automatiques les conversions, la lecture des quadrants, des signes et des
+valeurs remarquables. \textbf{Tout se fait sans calculatrice.} Donne des valeurs \emph{exactes}
+(fractions, $\sqrt{\ }$, $\pi$).
+\end{consigne}
+
+\exo{Des degrés vers les radians}
+Convertis chaque angle en radians, sous forme d'une fraction de $\pi$ simplifiée.
+\[
+\textbf{(a)}\ 45\degr \qquad
+\textbf{(b)}\ 90\degr \qquad
+\textbf{(c)}\ 150\degr \qquad
+\textbf{(d)}\ 210\degr \qquad
+\textbf{(e)}\ 300\degr
+\]
+
+\exo{Des radians vers les degrés}
+Convertis chaque angle en degrés.
+\[
+\textbf{(a)}\ \frac{\pi}{6} \qquad
+\textbf{(b)}\ \frac{3\pi}{4} \qquad
+\textbf{(c)}\ \frac{5\pi}{3} \qquad
+\textbf{(d)}\ \frac{7\pi}{6} \qquad
+\textbf{(e)}\ 2\pi
+\]
+
+\exo{Dans quel quadrant ?}
+Indique le quadrant (I, II, III ou IV) auquel appartient chaque angle.
+\[
+\textbf{(a)}\ 200\degr \qquad
+\textbf{(b)}\ 85\degr \qquad
+\textbf{(c)}\ \frac{5\pi}{4} \qquad
+\textbf{(d)}\ \frac{7\pi}{4} \qquad
+\textbf{(e)}\ \frac{2\pi}{3}
+\]
+
+\exo{Quel signe ? (sans calculer la valeur)}
+Pour chaque nombre trigonométrique, donne uniquement son \textbf{signe} ($+$ ou $-$) en te servant du
+quadrant.
+\[
+\textbf{(a)}\ \cos 160\degr \qquad
+\textbf{(b)}\ \sin 250\degr \qquad
+\textbf{(c)}\ \tg 100\degr \qquad
+\textbf{(d)}\ \cos 320\degr \qquad
+\textbf{(e)}\ \sin 40\degr
+\]
+
+\exo{Valeurs remarquables du premier quadrant}
+Donne la valeur exacte, en t'aidant du tableau des valeurs remarquables.
+\[
+\textbf{(a)}\ \cos\frac{\pi}{3} \qquad
+\textbf{(b)}\ \sin\frac{\pi}{4} \qquad
+\textbf{(c)}\ \tg\frac{\pi}{3} \qquad
+\textbf{(d)}\ \sin\frac{\pi}{6} \qquad
+\textbf{(e)}\ \cos\frac{\pi}{2}
+\]
+
+\end{document}

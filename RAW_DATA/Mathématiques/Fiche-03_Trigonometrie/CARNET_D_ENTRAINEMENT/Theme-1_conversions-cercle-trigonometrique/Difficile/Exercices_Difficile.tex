@@ -1,0 +1,96 @@
+% =====================================================================
+%  Thème 1 — Conversions & cercle trigonométrique — NIVEAU DIFFICILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 1 — Conversions \& cercle trigonométrique}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} mener la chaîne complète \emph{réduction $\to$ quadrant $\to$ signe $\to$
+référence $\to$ valeur} sur des angles « pénibles », et l'appliquer à une situation concrète.
+Les sous-questions (a, b, c\dots) se construisent : chaque réponse sert à la suivante.
+\end{consigne}
+
+\exo{Le grand angle négatif}
+On pose $\alpha=-\dfrac{25\pi}{6}$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Ramène $\alpha$ à un angle $\beta\in[0;2\pi[$ ayant les mêmes nombres trigonométriques.
+\item Convertis $\beta$ en degrés et précise son quadrant.
+\item Déduis le signe de $\cos\beta$, $\sin\beta$ et $\tg\beta$.
+\item Donne l'angle de référence, puis les valeurs exactes de $\cos\alpha$, $\sin\alpha$ et $\tg\alpha$.
+\end{enumerate}
+
+\exo{Mise en situation : la grande roue}
+Une nacelle d'une grande roue est repérée par un point $M$ sur un cercle de rayon $1$ (unité : dizaines
+de mètres), de centre $O$. Au départ, $M$ est à l'extrême droite (angle $0$). La roue tourne dans le
+sens trigonométrique.
+\begin{center}
+\begin{tikzpicture}[scale=1.7,line cap=round,>=Stealth]
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.3,0)--(1.35,0) node[right]{\scriptsize$x$};
+  \draw[->,black!70] (0,-1.3)--(0,1.35) node[above]{\scriptsize$y$};
+  \fill[black!70] (0:1) circle (0.03) node[right]{\scriptsize départ};
+  \draw[->,thick,primarydark] (1.12,0.24) arc (12:120:1.14);
+  \fill (0,0) circle (0.02) node[below left]{\scriptsize$O$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item La roue tourne de $210\degr$. Exprime cet angle en radians.
+\item Dans quel quadrant se trouve alors $M$ ? Sa hauteur (ordonnée) est-elle positive ou négative ?
+\item Donne les coordonnées exactes $(x\,;\,y)$ de $M$.
+\item La roue continue et fait au total $\dfrac{3}{4}$ de tour \emph{de plus} (depuis la position de la
+question a, soit $210\degr+270\degr$). Donne le nouvel angle ramené dans $[0\degr;360\degr[$ et les
+nouvelles coordonnées de $M$.
+\end{enumerate}
+
+\exo{Retrouver un angle à partir d'une valeur}
+Dans tout l'exercice, on cherche des angles dans $[0;2\pi[$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Détermine \emph{tous} les angles $x\in[0;2\pi[$ tels que $\cos x=-\dfrac12$.
+\item Détermine \emph{tous} les angles $x\in[0;2\pi[$ tels que $\sin x=\dfrac{\sqrt2}{2}$.
+\item Existe-t-il un angle tel que $\cos x=\dfrac32$ ? Justifie.
+\item Place sur un cercle trigonométrique les solutions trouvées en (a) et (b).
+\end{enumerate}
+
+\end{document}

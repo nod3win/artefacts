@@ -1,0 +1,78 @@
+% =====================================================================
+%  Thème 3 — Colinéarité et parallélisme — Niveau FACILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Facile — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Colinéarité et parallélisme — Corrigé Facile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec v=(6;9)=3\,(2;3)=3\vec u$ : colinéaires, $k=3$.
+  \item $\vec v=(-3;6)=-3\,(1;-2)=-3\vec u$ : colinéaires, $k=-3$.
+  \item $\vec v=(4;5)$ : il faudrait $4=2k$ (donc $k=2$) \emph{et} $5=3k$ (donc $k=\frac53$).
+        Impossible : \textbf{non} colinéaires.
+\end{enumerate}
+\rep Deux vecteurs sont colinéaires si \emph{un seul et même} $k$ marche pour les deux composantes.
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $3\times8-6\times4=24-24=0$ : \textbf{colinéaires}.
+  \item $1\times5-3\times2=5-6=-1\neq0$ : \textbf{non} colinéaires.
+  \item $(-2)\times(-10)-4\times5=20-20=0$ : \textbf{colinéaires}.
+\end{enumerate}
+\rep Le déterminant se calcule « en croix » : $x\cdot y'$ moins $x'\cdot y$.
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vc{AB}\,(2;1)$, $\vc{AC}\,(6;3)$ ; déterminant $=2\times3-6\times1=0$ : $A,B,C$ \textbf{alignés}.
+  \item $\vc{AB}\,(2;3)$, $\vc{AC}\,(4;5)$ ; déterminant $=2\times5-4\times3=10-12=-2\neq0$ :
+        \textbf{non} alignés (vrai triangle).
+\end{enumerate}
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $a=2,\,b=3$ : $\vec u\,(-3;2)$.
+  \item $a=1,\,b=-4$ : $\vec u\,(4;1)$.
+  \item $y=2x+1 \Rightarrow 2x-y+1=0$, donc $a=2,\,b=-1$ : $\vec u\,(1;2)$.
+\end{enumerate}
+\rep On lit $a$ et $b$ dans $ax+by+c=0$, puis $\vec u\,(-b;a)$.
+
+\cor{5}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $m=\dfrac{y_B-y_A}{x_B-x_A}=\dfrac{8-2}{4-1}=\dfrac63=2$.
+  \item $\vec u\,(3;6)$ : $m=\dfrac{6}{3}=2$.
+  \item $3x+2y-6=0$ : $m=-\dfrac{a}{b}=-\dfrac{3}{2}$.
+\end{enumerate}
+\rep La pente est « variation de $y$ sur variation de $x$ », soit $\frac{y_B-y_A}{x_B-x_A}$ ou, à partir
+d'un vecteur directeur $(u_1;u_2)$, le rapport $\frac{u_2}{u_1}$.
+
+\end{document}

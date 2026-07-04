@@ -1,0 +1,130 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{curveA}{RGB}{0,90,200}
+\definecolor{curveB}{RGB}{210,30,40}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Logarithmes}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 2 — Logarithmes}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Tutoriel — la mécanique à maîtriser avant les exercices}
+\end{center}
+
+\vspace{2mm}
+\noindent Le logarithme est la \textbf{fonction réciproque} de l'exponentielle : il retrouve
+\emph{l'exposant} à partir du nombre. C'est l'outil pour résoudre toute équation où l'inconnue est
+« en exposant ».
+
+\begin{cle}[définition : un logarithme est un exposant]
+Pour une base $a>0$, $a\neq1$, et un argument $x>0$ :
+\[ \boxed{\ \log_a x = y \iff x=a^{y}\ } \]
+$\log_a x$ est « l'exposant qu'il faut donner à $a$ pour obtenir $x$ ». On \emph{ne prend jamais} le
+logarithme d'un nombre négatif ou nul. Deux bases ont un nom propre :
+$\log x=\log_{10}x$ (décimal) et $\ln x=\log_e x$ (népérien, $e\approx2{,}718$).
+\end{cle}
+
+\begin{cle}[les trois propriétés fondamentales]
+Pour $x,y>0$, $a>0$ ($a\neq1$), $n\in\Z$ :
+\[ \log_a(xy)=\log_a x+\log_a y\ ;\quad
+   \log_a\!\Bigl(\frac{x}{y}\Bigr)=\log_a x-\log_a y\ ;\quad
+   \log_a\!\bigl(x^{n}\bigr)=n\,\log_a x. \]
+\textbf{Idée :} le log \emph{abaisse} d'un cran : produit $\to$ somme, quotient $\to$ différence,
+puissance $\to$ produit. C'est ce qui fait « descendre » une inconnue en exposant.
+\end{cle}
+
+\begin{cle}[valeurs remarquables et changement de base]
+\[ \log_a 1=0\ ;\qquad \log_a a=1\ ;\qquad
+   \log_a x=\frac{\log_b x}{\log_b a}\ ;\qquad \log_{a^{n}} x=\frac1n\,\log_a x. \]
+En particulier $\ln 1=0$, $\ln e=1$, $\log 10=1$, et $\ln 10\approx 2{,}30$.
+\end{cle}
+
+\begin{piege}[ne pas confondre $\ln^{2}x$, $\ln x^{2}$ et $\ln(\ln x)$]
+\[ \ln^{2}x=(\ln x)^{2}\ \text{(le log, au carré)}\qquad\neq\qquad \ln x^{2}=2\ln x\ \text{(propriété du log d'un carré)}. \]
+Erreur classique aux concours : écrire $\ln^{2}x=2\ln x$. Faux ! Seul $\ln(x^{2})=2\ln x$.
+\end{piege}
+
+\begin{minipage}{0.54\textwidth}
+\begin{exemplebox}[calculs directs]
+\begin{align*}
+\log_a\sqrt[n]{x}&=\tfrac1n\log_a x; & \log_a\tfrac1x&=-\log_a x;\\
+\ln e^{2}&=2\ln e=2; & \log_{10}10^{2a}&=2a;\\
+\ln 0{,}1&=\ln\tfrac{1}{10}=-\ln 10. &&
+\end{align*}
+\end{exemplebox}
+\end{minipage}\hfill
+\begin{minipage}{0.42\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=6.1cm,height=4.6cm,axis lines=middle,
+ xmin=-2.4,xmax=3.6,ymin=-2.4,ymax=3.6,xtick=\empty,ytick=\empty,
+ xlabel={\scriptsize$x$},ylabel={\scriptsize$y$}]
+ \addplot[curveA,line width=1.1pt,domain=-2.2:1.2,samples=50]{exp(x)};
+ \addplot[curveB,line width=1.1pt,domain=0.06:3.4,samples=60]{ln(x)};
+ \addplot[black!40,dashed,domain=-2.2:3.4]{x};
+ \node[curveA,font=\scriptsize] at (axis cs:1.2,3.0){$e^{x}$};
+ \node[curveB,font=\scriptsize] at (axis cs:3.0,1.35){$\ln x$};
+\end{axis}
+\end{tikzpicture}\\[-1mm]
+{\scriptsize $\ln$ est le symétrique de $\exp$ par $y=x$.}
+\end{minipage}
+
+\begin{cle}[monotonie]
+Pour $a>1$, $\log_a$ est \emph{croissant} : $\log_a x\geq\log_a y\iff x\geq y$. Pour $0<a<1$, il est
+\emph{décroissant} : l'inégalité \emph{change de sens}. C'est essentiel pour les inéquations.
+\end{cle}
+
+\begin{methode}[résoudre une équation « en exposant » ou logarithmique]
+\begin{enumerate}[leftmargin=1.8em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Domaine d'abord (C.E.)} : tout argument de log doit être $>0$.
+  \item inconnue \emph{en exposant} : appliquer $\ln$ aux deux membres, puis $\ln(a^{u})=u\ln a$ ;
+  \item inconnue \emph{dans un log} : repasser à l'exponentiel, $\log_a u=v\iff u=a^{v}$ ;
+  \item résoudre, puis \textbf{vérifier} que les solutions respectent la C.E.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[deux résolutions types]
+\textbf{(1)} $e^{2x}=10\Rightarrow \ln e^{2x}=\ln 10\Rightarrow 2x=\ln 10\Rightarrow x=\tfrac{\ln 10}{2}.$\\
+\textbf{(2)} $\ln(x-1)\geq\ln 2$. C.E. : $x>1$. $\ln$ croissant $\Rightarrow x-1\geq 2\Rightarrow x\geq 3$.
+Avec la C.E. : $S=[3,+\infty[$.
+\end{exemplebox}
+
+\end{document}

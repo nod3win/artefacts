@@ -1,0 +1,70 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 2} — Logarithmes}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Difficile — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[logarithme d'expression composée]
+\textbf{a)} Avec les trois propriétés (produit, quotient, puissance) :
+\[ \ln R=\ln\frac{a^{2}b}{c}=\ln(a^{2}b)-\ln c=2\ln a+\ln b-\ln c. \]
+\textbf{b)} $\ln R-\ln b=(2\ln a+\ln b-\ln c)-\ln b=2\ln a-\ln c.$ \\
+\textbf{c)} $\ln(Rc)-2\ln a=\ln\!\Bigl(\tfrac{a^{2}b}{c}\cdot c\Bigr)-2\ln a=\ln(a^{2}b)-2\ln a
+=2\ln a+\ln b-2\ln a=\ln b.$
+\end{corrige}
+
+\begin{corrige}[carré parfait dans un logarithme]
+\textbf{a)} On réordonne : $2e^{x}+1+e^{2x}=e^{2x}+2e^{x}+1=(e^{x})^{2}+2\cdot e^{x}\cdot 1+1^{2}=(e^{x}+1)^{2}$.
+
+\smallskip
+\textbf{b)} Donc $f(x)=\ln\bigl((e^{x}+1)^{2}\bigr)=2\ln(e^{x}+1)=2\ln(1+e^{x})$
+(l'argument $e^{x}+1>0$, tout est défini).
+
+\smallskip
+\textbf{c)} On factorise $e^{x}$ : $1+e^{x}=e^{x}\bigl(e^{-x}+1\bigr)$. Alors
+\[ \ln(1+e^{x})=\ln e^{x}+\ln(1+e^{-x})=x+\ln(1+e^{-x}), \]
+d'où $f(x)=2\ln(1+e^{x})=2\bigl[x+\ln(1+e^{-x})\bigr]$.
+\end{corrige}
+
+\begin{corrige}[croissance exponentielle]
+\textbf{a)} En $t$ jours, le nombre de « doublements » est $\tfrac{t}{20}$ ; chaque doublement multiplie
+par $2$, donc $N(t)=N_0\cdot 2^{\,t/20}$.
+
+\smallskip
+\textbf{b)} $N(t)=8N_0\Leftrightarrow 2^{t/20}=8=2^{3}\Leftrightarrow \tfrac{t}{20}=3\Leftrightarrow t=60$~jours.
+
+\smallskip
+\textbf{c)} $N(t)=10N_0\Leftrightarrow 2^{t/20}=10\Leftrightarrow \tfrac{t}{20}=\log_2 10
+\Leftrightarrow t=20\log_2 10=\dfrac{20\ln 10}{\ln 2}$ (soit environ $66{,}4$~jours).
+En un seul jour, le facteur est $\dfrac{N(t+1)}{N(t)}=\dfrac{2^{(t+1)/20}}{2^{t/20}}=2^{1/20}$.
+\end{corrige}
+
+\end{document}

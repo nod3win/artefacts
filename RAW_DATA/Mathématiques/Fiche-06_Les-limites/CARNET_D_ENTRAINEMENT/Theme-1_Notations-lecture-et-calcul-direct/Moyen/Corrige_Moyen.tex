@@ -1,0 +1,105 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 1 — CORRIGÉ — Niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Corrigé Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Notations, lecture \& calcul direct}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Moyen}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[calcul direct avec fonctions usuelles]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}(e^{x}+3\cos x)=e^{0}+3\cos 0=1+3=\boxed{4}$.
+  \item $\displaystyle\lim_{x\to 1}\frac{\ln x+2}{x+1}=\frac{\ln 1+2}{1+1}=\frac{0+2}{2}=\boxed{1}$.
+  \item $\displaystyle\lim_{x\to \frac{\pi}{2}}(2\sin x-x)=2\sin\tfrac{\pi}{2}-\tfrac{\pi}{2}=2-\tfrac{\pi}{2}=\boxed{2-\tfrac{\pi}{2}}\approx 0{,}43$.
+  \item $\displaystyle\lim_{x\to 9}\frac{\sqrt{x}-1}{x-5}=\frac{\sqrt{9}-1}{9-5}=\frac{3-1}{4}=\frac{2}{4}=\boxed{\tfrac12}$
+        (le dénominateur vaut $4\neq 0$).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[raccord de deux morceaux]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item À gauche $x\leq 1$ : $f(x)=x^2+1$, donc $\displaystyle\lim_{x\to 1^{-}} f(x)=1^2+1=2$.\\
+        À droite $x>1$ : $f(x)=4x-2$, donc $\displaystyle\lim_{x\to 1^{+}} f(x)=4\cdot 1-2=2$.
+  \item Les deux limites latérales sont \emph{égales} à $2$ : $f$ possède la limite $\displaystyle\lim_{x\to 1} f(x)=2$.
+  \item $f(1)$ se calcule avec le morceau $x\leq 1$ : $f(1)=1^2+1=2$. Comme
+        $\displaystyle\lim_{x\to 1} f(x)=2=f(1)$, \textbf{$f$ est continue en $1$}.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[ajuster un paramètre pour la continuité]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item À gauche $x<3$ : $f(x)=2x+k$, donc $\displaystyle\lim_{x\to 3^{-}} f(x)=6+k$.\\
+        À droite $x\geq 3$ : $f(x)=x^2$, donc $\displaystyle\lim_{x\to 3^{+}} f(x)=9$ ; de plus $f(3)=9$.
+  \item $f$ est continue en $3$ ssi limite à gauche $=$ limite à droite $=f(3)$, soit
+        $6+k=9$, donc $\boxed{k=3}$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[lecture graphique fine]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item La branche de gauche arrive au niveau $2$ : $\displaystyle\lim_{x\to 1^{-}} f(x)=2$.
+        La branche de droite part du niveau $0{,}8$ : $\displaystyle\lim_{x\to 1^{+}} f(x)=0{,}8$.
+  \item Le rond plein est placé en $(1\,;0{,}8)$, donc $f(1)=0{,}8$.
+  \item Les deux limites latérales diffèrent ($2\neq 0{,}8$) : $f$ n'a pas de limite en $1$, donc
+        \textbf{n'est pas continue} en $1$. En revanche, à droite $\displaystyle\lim_{x\to 1^{+}} f(x)=0{,}8=f(1)$ :
+        \textbf{$f$ est continue à droite} en $1$ (mais pas à gauche).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[vrai / faux justifié]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item \textbf{Faux.} L'égalité des limites latérales garantit seulement que la \emph{limite existe} ; il faut
+        \emph{en plus} que cette limite vaille $f(x_0)$ (et que $x_0\in D_f$) pour la continuité.
+  \item \textbf{Vrai.} Par exemple $f(x)=\dfrac{x^2-1}{x-1}$ n'est pas définie en $1$, mais tend vers $2$ en $1$.
+        La limite décrit une tendance, pas une valeur au point.
+  \item \textbf{Vrai.} C'est exactement la définition de la continuité en $x_0$ :
+        $\displaystyle\lim_{x\to x_0} f(x)=f(x_0)$.
+\end{enumerate}
+\end{correction}
+
+\end{document}

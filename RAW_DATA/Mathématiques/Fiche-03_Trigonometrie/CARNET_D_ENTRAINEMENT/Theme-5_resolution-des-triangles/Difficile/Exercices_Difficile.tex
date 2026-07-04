@@ -1,0 +1,123 @@
+% =====================================================================
+%  Thème 5 — Résolution des triangles — NIVEAU DIFFICILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{remarkcol}{RGB}{200,120,0}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 5 — Résolution des triangles}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} résoudre un triangle \emph{complet} dans une situation concrète, en enchaînant
+aire, loi des sinus et loi des cosinus, et en choisissant à chaque étape le bon outil. Les
+sous-questions se construisent : chaque réponse sert à la suivante. \textbf{Sans calculatrice},
+valeurs \emph{exactes} (une valeur approchée finale est tolérée en complément).
+\end{consigne}
+
+\exo{Un terrain triangulaire}
+Un terrain a la forme d'un triangle $ABC$ isocèle avec $\overline{AB}=\overline{AC}=6$ (en dizaines de
+mètres) et un angle au sommet $\hat A=120\degr$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth,line cap=round]
+  \coordinate (A) at (0,2);
+  \coordinate (B) at (-3.46,0);
+  \coordinate (C) at (3.46,0);
+  \coordinate (H) at (0,0);
+  \draw[primary,line width=1.2pt] (A)--(B)--(C)--cycle;
+  \draw[remarkcol,dashed,line width=0.8pt] (A)--(H) node[midway,right,font=\scriptsize]{$h$};
+  \draw[black!70] (H)++(0,0.24)--++(0.24,0)--++(0,-0.24);
+  \fill (A) circle (1.6pt) node[above]{$A$};
+  \fill (B) circle (1.6pt) node[below left]{$B$};
+  \fill (C) circle (1.6pt) node[below right]{$C$};
+  \node[font=\small] at (-2.1,1.35) {$6$};
+  \node[font=\small] at (2.1,1.35) {$6$};
+  \node[primarydark,font=\small] at (0,2.35) {$120\degr$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Calcule la longueur du côté $\overline{BC}$ (loi des cosinus).
+\item Calcule l'aire du terrain.
+\item Détermine les angles $\hat B$ et $\hat C$ (deux méthodes possibles : somme des angles, ou loi des sinus).
+\item Déduis-en la hauteur $h$ issue de $A$ (utilise l'aire et la base $\overline{BC}$).
+\end{enumerate}
+
+\exo{La largeur d'une rivière}
+Pour mesurer la largeur d'une rivière, un géomètre repère un arbre $C$ sur la rive d'en face. Il place
+deux jalons $A$ et $B$ sur sa propre rive, distants de $\overline{AB}=100$ m. Il mesure les angles de
+visée $\widehat{CAB}=45\degr$ et $\widehat{CBA}=45\degr$.
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth,line cap=round]
+  \coordinate (A) at (-2.5,0);
+  \coordinate (B) at (2.5,0);
+  \coordinate (C) at (0,2.5);
+  \coordinate (H) at (0,0);
+  \fill[blue!7] (-3.2,0) rectangle (3.2,0.9);
+  \draw[primary,line width=1.2pt] (A)--(B)--(C)--cycle;
+  \draw[remarkcol,dashed,line width=0.8pt] (C)--(H) node[midway,right,font=\scriptsize]{largeur};
+  \draw[black!70] (H)++(0,0.24)--++(0.24,0)--++(0,-0.24);
+  \fill (A) circle (1.6pt) node[below left]{$A$};
+  \fill (B) circle (1.6pt) node[below right]{$B$};
+  \fill (C) circle (1.6pt) node[above]{$C$ (arbre)};
+  \node[font=\small] at (0,-0.3) {$100$ m};
+  \node[primarydark,font=\scriptsize] at (-1.85,0.25) {$45\degr$};
+  \node[primarydark,font=\scriptsize] at (1.85,0.25) {$45\degr$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Que vaut l'angle $\hat C$ ?
+\item Calcule les distances $\overline{AC}$ et $\overline{BC}$ (loi des sinus).
+\item Vérifie, à l'aide du théorème de Pythagore, la relation $\overline{AC}^2+\overline{BC}^2=\overline{AB}^2$.
+\item La largeur de la rivière est la distance de $C$ à la droite $(AB)$. Calcule-la (utilise l'aire du triangle).
+\end{enumerate}
+
+\exo{Résolution complète d'un triangle}
+Dans le triangle $ABC$, on donne $\hat C=60\degr$, $a=\overline{BC}=12$ et l'aire $\mathcal{A}=18\sqrt3$.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item Détermine le côté $b=\overline{CA}$ à partir de l'aire.
+\item Calcule le côté $c=\overline{AB}$ (loi des cosinus).
+\item Détermine l'angle $\hat B$ (loi des sinus), puis l'angle $\hat A$.
+\item Que peux-tu conclure sur la nature du triangle ? Vérifie ta conclusion par le théorème de
+      Pythagore, puis donne la hauteur issue de $A$.
+\end{enumerate}
+
+\end{document}

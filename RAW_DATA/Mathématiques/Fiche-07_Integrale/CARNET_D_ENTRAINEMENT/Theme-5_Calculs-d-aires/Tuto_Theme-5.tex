@@ -1,0 +1,203 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Calculs d'aires}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+
+\section*{Tuto — Thème 5 : Calculs d'aires planes}
+
+\begin{idee}[la règle d'or : aire $\neq$ intégrale]
+Une \textbf{aire} est toujours un nombre \textbf{positif}. L'\textbf{intégrale}
+$\int_a^b f(x)\,\dd x$, elle, est une \textbf{aire algébrique} : elle compte
+\emph{positivement} ce qui est au-dessus de l'axe et \emph{négativement} ce qui est en dessous.
+Calculer une aire, c'est donc d'abord \textbf{regarder le signe} de la fonction (ou l'ordre des
+courbes), puis choisir la bonne intégrale, avec des \textbf{valeurs absolues} si besoin.
+\end{idee}
+
+\subsection*{Les quatre cas à reconnaître}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=6.1cm,height=4.2cm,axis lines=middle,
+      xmin=-0.4,xmax=3.4,ymin=-0.5,ymax=2.4,xtick={0.6,2.8},xticklabels={$a$,$b$},
+      ytick=\empty,xlabel={$x$},ylabel={$y$},title={\footnotesize\textbf{Cas 1} — $f\geqslant 0$},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=-0.2:3.3,samples=60,courbe]{0.35*x^2+0.4};
+    \addplot[name path=F,domain=0.6:2.8,samples=40,draw=none,forget plot]{0.35*x^2+0.4};
+    \path[name path=b1] (axis cs:0.6,0)--(axis cs:2.8,0);
+    \addplot[areacol!45] fill between[of=F and b1];
+    \node at (axis cs:1.7,0.7){$\mathcal{A}$};
+  \end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+  \begin{axis}[width=6.1cm,height=4.2cm,axis lines=middle,
+      xmin=-0.4,xmax=3.4,ymin=-2.4,ymax=0.6,xtick={0.6,2.8},xticklabels={$a$,$b$},
+      ytick=\empty,xlabel={$x$},ylabel={$y$},title={\footnotesize\textbf{Cas 2} — $f\leqslant 0$},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=-0.2:3.3,samples=60,courbe]{-0.35*x^2-0.4};
+    \addplot[name path=F,domain=0.6:2.8,samples=40,draw=none,forget plot]{-0.35*x^2-0.4};
+    \path[name path=b2] (axis cs:0.6,0)--(axis cs:2.8,0);
+    \addplot[areacol2!45] fill between[of=F and b2];
+    \node at (axis cs:1.7,-0.75){$\mathcal{A}$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=6.1cm,height=4.2cm,axis lines=middle,
+      xmin=-0.6,xmax=3.6,ymin=-1.6,ymax=1.6,xtick={0,1.5,3},xticklabels={$a$,,$c$},
+      ytick=\empty,xlabel={$x$},ylabel={$y$},title={\footnotesize\textbf{Cas 3} — change de signe},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=-0.4:3.4,samples=70,courbe]{0.9*(x-1.5)};
+    \addplot[name path=F1,domain=0:1.5,samples=30,draw=none,forget plot]{0.9*(x-1.5)};
+    \addplot[name path=F2,domain=1.5:3,samples=30,draw=none,forget plot]{0.9*(x-1.5)};
+    \path[name path=z1] (axis cs:0,0)--(axis cs:1.5,0);
+    \path[name path=z2] (axis cs:1.5,0)--(axis cs:3,0);
+    \addplot[areacol2!45] fill between[of=F1 and z1];
+    \addplot[areacol!45] fill between[of=F2 and z2];
+    \node[font=\footnotesize] at (axis cs:0.75,-0.55){$\mathcal{A}_1$};
+    \node[font=\footnotesize] at (axis cs:2.25,0.55){$\mathcal{A}_2$};
+  \end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+  \begin{axis}[width=6.1cm,height=4.2cm,axis lines=middle,
+      xmin=-0.6,xmax=3.6,ymin=-0.5,ymax=3.2,xtick={0.5,2.5},xticklabels={$a$,$b$},
+      ytick=\empty,xlabel={$x$},ylabel={$y$},title={\footnotesize\textbf{Cas 4} — entre 2 courbes},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=-0.4:3.4,samples=60,courbe]{0.35*x^2+0.3};
+    \addplot[domain=-0.4:3.4,samples=60,courbe2]{2.6-0.25*x};
+    \addplot[name path=G,domain=0.5:2.5,samples=40,draw=none,forget plot]{2.6-0.25*x};
+    \addplot[name path=F,domain=0.5:2.5,samples=40,draw=none,forget plot]{0.35*x^2+0.3};
+    \addplot[areacol!40] fill between[of=G and F];
+    \node at (axis cs:1.5,1.5){$\mathcal{A}$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|l}
+\textbf{Cas} & \textbf{Situation} & \textbf{Formule de l'aire}\\ \hline
+1 & $f\geqslant 0$ sur $[a,b]$ & $\displaystyle \mathcal{A}=\int_a^b f(x)\,\dd x$\\
+2 & $f\leqslant 0$ sur $[a,b]$ & $\displaystyle \mathcal{A}=\left|\int_a^b f(x)\,\dd x\right|$\\
+3 & $f$ change de signe en $b\in[a,c]$ & $\displaystyle \mathcal{A}=\left|\int_a^b f\right|+\left|\int_b^c f\right|$ \emph{(couper aux racines)}\\
+4 & aire entre $\mathcal{C}_f$ et $\mathcal{C}_g$ & $\displaystyle \mathcal{A}=\int_a^b\bigl(f_{\text{sup}}-f_{\text{inf}}\bigr)\,\dd x$\quad(bornes : $f=g$)\\
+\end{tabular}
+\end{center}
+
+\begin{methode}[la procédure, dans l'ordre, à chaque fois]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1.5pt]
+  \item \textbf{Tracer} (même à main levée) la ou les courbes et l'axe pour voir la zone.
+  \item \textbf{Bornes} : racines de $f(x)=0$ (aire sous une courbe) ou solutions de $f(x)=g(x)$
+        (aire entre deux courbes).
+  \item \textbf{Signe / ordre} sur chaque morceau ; \emph{couper} aux racines si le signe (ou l'ordre) change.
+  \item \textbf{Bonne intégrale} : $\int(\text{haut}-\text{bas})$, valeur absolue là où c'est négatif.
+  \item \textbf{Calculer} la primitive, appliquer Newton--Leibniz. Résultat en \textbf{u.a.}
+  \item \textbf{Vérifier} que le résultat est \textbf{positif}.
+\end{enumerate}
+\end{methode}
+
+\begin{attention}[ne jamais annoncer une aire négative]
+Si votre intégrale vaut $-\tfrac{4}{3}$, l'\textbf{aire} vaut $+\tfrac{4}{3}\ua$. Un signe négatif à
+la fin signale un oubli de valeur absolue ou une inversion haut/bas.
+\end{attention}
+
+\subsection*{Exemple déroulé — aire entre une parabole et une droite}
+
+\begin{exemple}[aire entre $f(x)=x^2$ et $g(x)=2x+3$]
+On cherche l'aire de la portion de plan comprise entre la parabole $\mathcal{C}_f$ et la
+droite $\mathcal{C}_g$.
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=9.2cm,height=5.2cm,axis lines=middle,
+      xmin=-2.3,xmax=3.8,ymin=-0.8,ymax=9.6,xtick={-1,3},xticklabels={$-1$,$3$},
+      ytick={3,9},xlabel={$x$},ylabel={$y$},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=-2.2:3.2,samples=80,courbe]{x^2};
+    \addplot[domain=-2.2:3.6,samples=60,courbe2]{2*x+3};
+    \addplot[name path=G,domain=-1:3,samples=50,draw=none,forget plot]{2*x+3};
+    \addplot[name path=F,domain=-1:3,samples=50,draw=none,forget plot]{x^2};
+    \addplot[areacol!40] fill between[of=G and F];
+    \draw[dvert] (axis cs:-1,0)--(axis cs:-1,1);
+    \draw[dvert] (axis cs:3,0)--(axis cs:3,9);
+    \node[primary] at (axis cs:2.7,7.6){$f:x^2$};
+    \node[areacol2!90!black] at (axis cs:-1.9,-0.2){$g:2x+3$};
+    \node at (axis cs:1,3){$\mathcal{A}$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\textbf{1. Bornes (intersections).} $f(x)=g(x)\Leftrightarrow x^2=2x+3\Leftrightarrow x^2-2x-3=0
+\Leftrightarrow (x-3)(x+1)=0$, d'où $a=-1$ et $b=3$.
+
+\textbf{2. Ordre des courbes.} En $x=0$ : $f(0)=0$ et $g(0)=3$, donc la droite est \emph{au-dessus} :
+$f_{\text{sup}}=g$, $f_{\text{inf}}=f$ sur $[-1,3]$.
+
+\textbf{3. Intégrale.}
+\[
+\mathcal{A}=\int_{-1}^{3}\bigl(2x+3-x^2\bigr)\,\dd x
+=\left[x^2+3x-\frac{x^3}{3}\right]_{-1}^{3}.
+\]
+\textbf{4. Calcul.}
+$\Bigl(9+9-9\Bigr)-\Bigl(1-3+\tfrac13\Bigr)=9-\bigl(-\tfrac{5}{3}\bigr)=9+\tfrac{5}{3}=\dfrac{32}{3}.$
+
+\[
+\boxed{\;\mathcal{A}=\dfrac{32}{3}\ \ua\approx 10{,}67\ \text{u.a.}\;}
+\]
+\textbf{5. Vérification.} Le résultat est positif : cohérent avec une aire. \checkmark
+\end{exemple}
+
+\end{document}

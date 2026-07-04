@@ -1,0 +1,155 @@
+% ===== PRÉAMBULE COMMUN — À COPIER TEL QUEL EN TÊTE DE CHAQUE FICHIER .tex =====
+% Ne modifier QUE :
+%   - les deux lignes \fancyhead[L] et \fancyhead[R]
+%   - le bloc titre \begin{center}...\end{center} juste après \begin{document}
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 3} — Fonctions composées}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Dériver une fonction composée}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape La règle de la chaîne — les « pelures d'oignon »}
+\end{center}
+\vspace{2mm}
+
+Une fonction \emph{composée} est une fonction \emph{emboîtée} dans une autre : $\sin(x^2)$, c'est
+la fonction sinus \textbf{appliquée à} $x^2$. On l'imagine comme un \textbf{oignon} : plusieurs
+\textbf{couches} superposées. Pour dériver, on épluche de l'extérieur vers l'intérieur.
+
+\begin{cle}[le principe des pelures d'oignon]
+On note $U$ la quantité \textbf{intérieure} (ce qui est « emballé »). On dérive la couche
+\textbf{externe} en gardant $U$ intact, \textbf{puis} on multiplie par $U'$, la dérivée de l'intérieur.
+Mini-formulaire :
+\[
+(U^n)'=nU^{\,n-1}U' \qquad (\sqrt{U})'=\frac{U'}{2\sqrt U} \qquad (e^{U})'=U'\,e^{U}
+\qquad (a^{U})'=U'\,a^{U}\ln a
+\]
+\[
+(\ln U)'=\frac{U'}{U} \qquad (\log_a U)'=\frac{U'}{U\ln a} \qquad
+(\sin U)'=U'\cos U \qquad (\cos U)'=-\,U'\sin U
+\]
+\[
+(\tg U)'=\frac{U'}{\cos^2 U} \qquad (\cotg U)'=-\frac{U'}{\sin^2 U} \qquad
+(\arctg U)'=\frac{U'}{1+U^2}
+\]
+\[
+(\arcsin U)'=\frac{U'}{\sqrt{1-U^2}} \qquad (\arccos U)'=-\frac{U'}{\sqrt{1-U^2}}
+\]
+Dans chaque formule, le facteur $U'$ est \textbf{la signature de la composée}.
+\end{cle}
+
+\begin{methode}[dériver une composée en 4 étapes]
+\begin{enumerate}[leftmargin=6mm,itemsep=1pt]
+\item \textbf{Repérer les couches} : quelle est la fonction \emph{externe} (celle du dessus) ?
+      Que contient-elle ? On pose $U=$ l'intérieur.
+\item \textbf{Dériver l'externe} avec la formule adaptée, \textbf{en gardant $U$ tel quel}.
+\item \textbf{Multiplier par $U'$} (dérivée de l'intérieur). S'il reste des couches dans $U$,
+      on recommence les étapes 1--3 sur $U$.
+\item \textbf{Assembler et simplifier} le produit obtenu.
+\end{enumerate}
+\end{methode}
+
+\begin{piege}[on oublie presque toujours le facteur $U'$ !]
+C'est l'erreur numéro un. On dérive l'enveloppe mais on oublie de multiplier par la dérivée
+de l'intérieur.
+\[
+(\sin x^2)' = 2x\cos x^2 \quad\text{et non}\quad \cos x^2 ;\qquad
+(f^2)' = 2f'f \quad\text{et non}\quad 2f.
+\]
+Réflexe : après avoir dérivé la couche externe, demande-toi toujours
+« \emph{et l'intérieur, quelle est sa dérivée ?} » — puis multiplie.
+\end{piege}
+
+\begin{exemplebox}[$y=\sin(x^2)$]
+Couche externe : le sinus. Intérieur : $U=x^2$, donc $U'=2x$.\\
+Formule $(\sin U)'=U'\cos U$ :
+\[
+y' = \underbrace{2x}_{U'}\cdot \underbrace{\cos(x^2)}_{\cos U} = 2x\cos(x^2).
+\]
+\end{exemplebox}
+
+\begin{exemplebox}[$y=\sqrt{x^2+1}$]
+Couche externe : la racine. Intérieur : $U=x^2+1$, donc $U'=2x$.\\
+Formule $(\sqrt U)'=\dfrac{U'}{2\sqrt U}$ :
+\[
+y' = \frac{2x}{2\sqrt{x^2+1}} = \frac{x}{\sqrt{x^2+1}}.
+\]
+\end{exemplebox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \foreach \i/\c/\lab in {0/defcol!12/{}, 1/methcol!14/{}, 2/excol!16/{}} {}
+  % pile de couches (oignon)
+  \draw[fill=defcol!10,draw=defcol,thick] (0,0) ellipse (3.1 and 0.85);
+  \node[defcol] at (0,-0.03) {\small couche externe : $\sin(\ \cdot\ )$};
+  \draw[fill=methcol!12,draw=methcol,thick] (0,0) ++(0,0) ellipse (2.0 and 0.55);
+  \node[methcol] at (0,0) {\small intérieur : $U=x^2$};
+  \draw[-{Stealth[length=3mm]},thick,primarydark] (3.4,0.4) to[out=30,in=90] (3.9,-0.1);
+  \node[primarydark,right,align=left] at (3.7,-0.55)
+     {\small dériver l'externe,\\[-1pt]\small puis $\times\,U'=2x$};
+\end{tikzpicture}
+\end{center}
+
+\end{document}

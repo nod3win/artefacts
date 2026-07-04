@@ -1,0 +1,92 @@
+% =====================================================================
+%  Thème 3 — Relation fondamentale & formules d'addition — NIVEAU MOYEN
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 3 — Relation fondamentale \& formules d'addition}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} à partir d'un seul nombre trigonométrique et du quadrant, retrouver les autres ;
+obtenir des valeurs exactes par addition ; calculer un angle double. \textbf{Sans calculatrice},
+valeurs \emph{exactes}, dénominateurs rationalisés.
+\end{consigne}
+
+\exo{Un sinus (ou cosinus) connu $\to$ le reste}
+Pour chaque cas, calcule les deux autres nombres trigonométriques ($\cos\alpha$, $\sin\alpha$ ou
+$\tg\alpha$), avec le bon signe.
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item $\sin\alpha=\dfrac{3}{5}$, \ $\alpha$ au quadrant II. \quad Calcule $\cos\alpha$ et $\tg\alpha$.
+\item $\sin\alpha=-\dfrac{1}{5}$, \ $\alpha$ au quadrant IV. \quad Calcule $\cos\alpha$ et $\tg\alpha$.
+\item $\cos\alpha=-\dfrac{2}{3}$, \ $\alpha$ au quadrant III. \quad Calcule $\sin\alpha$ et $\tg\alpha$.
+\end{enumerate}
+
+\exo{Partir de la tangente}
+On sait que $\tg\alpha=-\dfrac{3}{2}$ et que $\alpha$ appartient au quadrant II.
+En utilisant $1+\tg^2\alpha=\dfrac{1}{\cos^2\alpha}$, détermine $\cos\alpha$ puis $\sin\alpha$.
+
+\exo{Valeurs exactes par une différence ou une somme}
+Décompose chaque angle en somme/différence d'angles remarquables, puis calcule la valeur exacte.
+\[
+\textbf{(a)}\ \cos15\degr \qquad
+\textbf{(b)}\ \sin75\degr \qquad
+\textbf{(c)}\ \cos105\degr
+\]
+
+\exo{La tangente d'un angle non remarquable}
+À l'aide de $\tg(a\pm b)=\dfrac{\tg a\pm\tg b}{1\mp\tg a\,\tg b}$, calcule (résultat sans racine au
+dénominateur).
+\[
+\textbf{(a)}\ \tg15\degr=\tg(45\degr-30\degr) \qquad
+\textbf{(b)}\ \tg105\degr=\tg(60\degr+45\degr)
+\]
+
+\exo{Passer à l'angle double}
+\begin{enumerate}[label=\textbf{(\alph*)},leftmargin=2em,itemsep=2pt]
+\item $\sin\alpha=\dfrac{1}{3}$, $\alpha$ au quadrant I. Calcule $\cos\alpha$, puis $\sin2\alpha$ et
+$\cos2\alpha$.
+\item $\cos\alpha=-\dfrac{3}{5}$, $\alpha$ au quadrant II. Calcule $\sin\alpha$, puis $\sin2\alpha$ et
+$\cos2\alpha$.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,167 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,calc,patterns,backgrounds,shapes.geometric,decorations.pathreplacing,decorations.markings}
+\usepackage[a4paper,margin=2.15cm,headheight=26pt,headsep=12pt]{geometry}
+\usepackage{titlesec}
+
+% ---------------- Palette ----------------
+\definecolor{primary}{RGB}{0,151,169}
+\definecolor{primarydark}{RGB}{0,88,101}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+\definecolor{barcol}{RGB}{0,151,169}
+\definecolor{barcold}{RGB}{0,110,124}
+\definecolor{modecol}{RGB}{200,55,55}
+\definecolor{meancol}{RGB}{0,90,200}
+\definecolor{medcol}{RGB}{160,90,190}
+\definecolor{quartcol}{RGB}{0,135,90}
+\definecolor{ogivecol}{RGB}{176,74,0}
+
+% ---------------- Boîtes ----------------
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+  fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+
+\newtcolorbox{definition}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Définition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{propriete}[1][]{boxbase,colback=thmcol!7,colframe=thmcol,
+  title={\textsc{Propriété}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{formule}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{Formule}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+% Boîte "exercice" et "corrigé" (titre libre passé en argument)
+\newtcolorbox{exobox}[1]{boxbase,colback=primary!4,colframe=primary,
+  before skip=8pt,after skip=8pt,title={#1}}
+\newtcolorbox{corbox}[1]{boxbase,colback=excol!5,colframe=excol!85!black,
+  before skip=8pt,after skip=8pt,title={#1}}
+
+% ---------------- En-tête ----------------
+\newcommand{\docpart}[1]{\def\thedocpart{#1}}
+\docpart{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 8} — Statistiques descriptives}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{\thedocpart}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{primary}}{\thesubsection}{0.6em}{}
+\setlist{topsep=2pt,itemsep=1.5pt,parsep=0pt}
+
+% Bandeau de titre du document
+\newcommand{\bandeau}[2]{%
+\begin{tcolorbox}[boxbase,colback=primary,colframe=primarydark,halign=center,
+   before skip=2pt,after skip=12pt]
+{\LARGE\bfseries\color{white} #1}\\[3pt]{\normalsize\color{white} #2}
+\end{tcolorbox}}
+
+\newcommand{\ecm}{\sigma_m}
+\newcommand{\ect}{\sigma}
+\newcommand{\med}{M\!e}
+\docpart{Tutoriel — Thème 3}
+\begin{document}
+\bandeau{Thème 3 — Médiane et quartiles}{Le partage de l'effectif et l'interpolation linéaire}
+
+\noindent\textbf{But du thème.} La \textbf{médiane} coupe la série en deux moitiés égales ; les
+\textbf{quartiles} la coupent en quatre. Deux situations, deux techniques : la série \emph{discrète}
+(on trie et on compte) et la série \emph{en classes} (on interpole). L'interpolation linéaire est
+\emph{la} mécanique-signature de cette fiche : on la répète pour la médiane, $Q_1$ et $Q_3$.
+
+\section{Médiane d'une série discrète : trier puis compter}
+
+\begin{formule}[médiane de $n$ valeurs rangées par ordre croissant]
+\begin{itemize}
+  \item $n$ \textbf{impair} : la médiane est la valeur de rang $\dfrac{n+1}{2}$ ;
+  \item $n$ \textbf{pair} : la médiane est la moyenne des valeurs de rangs $\dfrac{n}{2}$ et
+        $\dfrac{n}{2}+1$.
+\end{itemize}
+\end{formule}
+
+\begin{attention}[réflexe nº1 : trier]
+Tant que la série n'est pas \textbf{rangée par ordre croissant}, la médiane n'a aucun sens.
+Le tri est toujours la première étape.
+\end{attention}
+
+\begin{exemple}[$n$ impair puis $n$ pair]
+$\{7,2,9,4,5\}$ trié donne $2,4,\underline{5},7,9$ : $n=5$ impair, rang $\tfrac{5+1}{2}=3$, d'où
+$\med=\mathbf{5}$.\\
+$\{2,4,5,7,9,10\}$ : $n=6$ pair, rangs $3$ et $4$, d'où $\med=\dfrac{5+7}{2}=\mathbf{6}$.
+\end{exemple}
+
+\section{Médiane d'une série en classes : l'interpolation linéaire}
+
+Avec des classes, on ne connaît plus les valeurs individuelles ; on suppose les individus
+\textbf{répartis uniformément} dans la classe qui contient le milieu de l'effectif.
+
+\begin{formule}[médiane par interpolation (triangles semblables)]
+\[
+\boxed{\;\med=a+\frac{r}{n_{\text{classe}}}\,(b-a)\;}\qquad r=\frac{N}{2}-n_c^{\text{préc}}
+\]
+\begin{itemize}
+  \item $[a,b[$ : la \textbf{classe médiane} = première classe dont l'effectif cumulé atteint/dépasse
+        $\tfrac{N}{2}$ ;
+  \item $n_{\text{classe}}$ : effectif de cette classe ; $n_c^{\text{préc}}$ : cumul de la classe
+        \emph{précédente} ;
+  \item $r$ : rang du $\left(\tfrac{N}{2}\right)^{\text{e}}$ individu \emph{à l'intérieur} de la classe.
+\end{itemize}
+\end{formule}
+
+\begin{methode}[4 étapes, valables aussi pour $Q_1$ et $Q_3$]
+\begin{enumerate}
+  \item \textbf{Rang visé} : $\tfrac{N}{2}$ (médiane), $\tfrac{N}{4}$ ($Q_1$), $\tfrac{3N}{4}$ ($Q_3$).
+  \item \textbf{Localiser la classe} avec les effectifs cumulés $n_c$.
+  \item \textbf{Rang intérieur} $r=(\text{rang visé})-n_c^{\text{préc}}$.
+  \item \textbf{Interpoler} : (valeur)$=a+\dfrac{r}{n_{\text{classe}}}(b-a)$.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[médiane par interpolation]
+Série ($N=66$) : cumuls $\ldots,30$ (classe $[85,95[$), puis $44$ (classe $[95,105[$).
+Rang visé $\tfrac{66}{2}=33$. La classe médiane est $[95,105[$ ($a=95,b=105,n_{\text{classe}}=14$),
+et $r=33-30=3$ :
+\[ \med=95+\frac{3}{14}\times(105-95)=95+\frac{30}{14}=95+2{,}14=\mathbf{97{,}14}. \]
+Interprétation : $50\,\%$ des individus sont sous $97{,}14$.
+\end{exemple}
+
+\section{Les quartiles}
+
+\begin{definition}[quartiles]
+$Q_1$ (rang $\tfrac{N}{4}$) : $25\,\%$ des données lui sont inférieures. $Q_3$ (rang $\tfrac{3N}{4}$) :
+$75\,\%$. Et $Q_2=\med$. L'\textbf{écart interquartile} $Q_3-Q_1$ mesure la dispersion des $50\,\%$
+« centraux », peu sensible aux extrêmes.
+\end{definition}
+
+\begin{remarque}[même moule pour tout]
+Médiane, $Q_1$, $Q_3$ : \emph{exactement} la même formule d'interpolation, seul le \textbf{rang visé}
+change ($\tfrac N2$, $\tfrac N4$, $\tfrac{3N}4$). Maîtriser un cas, c'est les maîtriser tous.
+\end{remarque}
+\end{document}

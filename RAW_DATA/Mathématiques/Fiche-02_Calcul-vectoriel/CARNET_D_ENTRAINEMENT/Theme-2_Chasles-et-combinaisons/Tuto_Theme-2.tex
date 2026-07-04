@@ -1,0 +1,135 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 2 : Calcul vectoriel
+%  Thème 2 — Relation de Chasles et combinaisons linéaires — TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{ideecol}{RGB}{120,94,200}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{vecu}{RGB}{20,20,20}
+\definecolor{vecv}{RGB}{0,110,200}
+\definecolor{vecw}{RGB}{198,93,9}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire ?}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=ideecol!6,colframe=ideecol,
+  title={\textsc{Intuition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{rappel}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 2 — Relation de Chasles et combinaisons linéaires}\\[2pt]
+{\color{primary}\rule{0.7\linewidth}{1.2pt}}\\[4pt]
+{\small\itshape Additionner des vecteurs « bout à bout » et simplifier une chaîne en un seul vecteur.}
+\end{center}
+\vspace{1mm}
+
+\begin{rappel}[la relation de Chasles et ses deux réflexes]
+\[
+  \boxed{\;\vc{AB}+\vc{BC}=\vc{AC}\;}\qquad\qquad
+  \boxed{\;\vc{AB}=-\vc{BA}\;}\qquad\qquad
+  \boxed{\;\vc{AA}=\vec 0\;}
+\]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Chasles} : quand l'extrémité d'un vecteur est l'origine du suivant, la lettre commune
+        « s'efface » : $\vc{A\underline{B}}+\vc{\underline{B}C}=\vc{AC}$.
+  \item \textbf{Opposé} : échanger les deux lettres change le signe. On s'en sert pour transformer
+        une soustraction en addition.
+  \item \textbf{Vecteur nul} : $\vc{AA}=\vec0$ ; il disparaît d'une somme.
+\end{itemize}
+\end{rappel}
+
+\begin{idee}[le principe « bout à bout »]
+Additionner des vecteurs, c'est enchaîner des déplacements : on va de $A$ à $B$, puis de $B$ à $C$…
+Le vecteur résultant relie \emph{l'origine du premier} à \emph{l'extrémité du dernier}. Tout l'art
+consiste à \textbf{réécrire} chaque terme (avec des opposés ou des équipollences) pour faire apparaître
+ces enchaînements.
+\end{idee}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (A) at (0,0); \coordinate (B) at (2.4,1.5); \coordinate (C) at (4.3,0.4);
+  \draw[->,>=Stealth,line width=1.2pt,vecu] (A)--(B) node[midway,above left,font=\small]{$\vc{AB}$};
+  \draw[->,>=Stealth,line width=1.2pt,vecu] (B)--(C) node[midway,above right,font=\small]{$\vc{BC}$};
+  \draw[->,>=Stealth,line width=1.3pt,vecw] (A)--(C) node[midway,below,font=\small,vecw]{$\vc{AC}=\vc{AB}+\vc{BC}$};
+  \foreach \P/\pos in {A/left,B/above,C/right}{\fill (\P) circle (1.5pt);}
+  \node[left,font=\small] at (A){$A$}; \node[above,font=\small] at (B){$B$}; \node[right,font=\small] at (C){$C$};
+\end{tikzpicture}
+\end{center}
+
+\begin{methode}[simplifier une somme de vecteurs]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item \textbf{Transformer les soustractions} : remplacer $-\vc{XY}$ par $+\vc{YX}$.
+  \item \textbf{Réordonner} pour créer des enchaînements bout à bout (extrémité $=$ origine suivante).
+  \item \textbf{Effacer les lettres intermédiaires} par Chasles : $\vc{A\underline{B}}+\vc{\underline{B}C}=\vc{AC}$.
+  \item \textbf{Faire disparaître} tout $\vc{AA}=\vec0$ qui apparaît.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[une chaîne à simplifier]
+Simplifions $\vec s=\vc{AB}+\vc{BC}+\vc{CD}$. Les termes sont déjà bout à bout :
+\[
+  \vc{AB}+\vc{BC}=\vc{AC},\qquad \vc{AC}+\vc{CD}=\vc{AD}.
+\]
+Donc $\vec s=\vc{AD}$.
+\end{exemple}
+
+\begin{exemple}[transformer une soustraction]
+Simplifions $\vec t=\vc{AB}-\vc{CB}$. On écrit $-\vc{CB}=\vc{BC}$, d'où
+\[
+  \vec t=\vc{AB}+\vc{BC}=\vc{AC}.
+\]
+\end{exemple}
+
+\begin{idee}[règle du parallélogramme et combinaisons linéaires]
+Quand deux vecteurs partent du \emph{même} point $A$, leur somme est la diagonale du parallélogramme :
+si $\vc{AB}+\vc{AD}=\vc{AC}$, alors $ABCD$ est un parallélogramme. Réciproquement, dans un
+parallélogramme $ABCD$ (sommets dans l'ordre), les côtés opposés donnent
+$\vc{AB}=\vc{DC}$ et $\vc{AD}=\vc{BC}$ : ce sont ces égalités qui permettent d'exprimer un vecteur
+comme \textbf{combinaison linéaire} $\alpha\,\vec u+\beta\,\vec v$ d'autres vecteurs.
+\end{idee}
+
+\begin{piege}[les fautes fréquentes]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item Chasles n'agit que si les vecteurs se \emph{touchent} : extrémité de l'un $=$ origine de l'autre.
+        Sinon, on transforme d'abord (opposé ou équipollence).
+  \item $\vc{AB}+\vc{CD}$ ne se simplifie pas tel quel (pas de lettre commune bien placée).
+  \item Ne pas oublier le signe : $-\vc{XY}=+\vc{YX}$ (on \emph{inverse} les lettres, on ne se contente
+        pas de changer le signe devant).
+\end{itemize}
+\end{piege}
+
+\end{document}

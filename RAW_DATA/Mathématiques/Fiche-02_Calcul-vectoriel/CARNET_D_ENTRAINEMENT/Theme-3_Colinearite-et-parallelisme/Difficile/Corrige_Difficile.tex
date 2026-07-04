@@ -1,0 +1,86 @@
+% =====================================================================
+%  Thème 3 — Colinéarité et parallélisme — Niveau DIFFICILE — Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{excol}{RGB}{0,135,90}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Difficile — Corrigé}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\cor}[1]{\medskip\noindent{\color{primarydark}\bfseries\large Corrigé #1.}\par\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Colinéarité et parallélisme — Corrigé Difficile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{2mm}
+
+\cor{1}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Déterminant de $\vec u\,(\sqrt3;1)$ et $\vec v\,(3;\sqrt3)$ :
+        $\sqrt3\times\sqrt3-3\times1=3-3=0$. Ils sont colinéaires. De plus
+        $\vec v=(3;\sqrt3)=\sqrt3\,(\sqrt3;1)=\sqrt3\,\vec u$, donc $k=\sqrt3$.
+  \item Déterminant de $\vec u\,(\sqrt3;1)$ et $\vec w\,(2;2\sqrt3)$ :
+        $\sqrt3\times2\sqrt3-2\times1=2\times3-2=6-2=4\neq0$. Donc $\vec w$ n'est \textbf{pas}
+        colinéaire à $\vec u$.
+\end{enumerate}
+\rep Avec des radicaux, on garde $\sqrt3\times\sqrt3=3$ : le déterminant redevient un nombre simple.
+
+\cor{2}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Déterminant $=m\times m-8\times2=m^2-16$.
+  \item Colinéaires $\iff m^2-16=0 \iff m^2=16 \iff m=4 \text{ ou } m=-4$.
+  \item Pour $m=4$ : $\vec u\,(4;2)$, $\vec v\,(8;4)=2\,\vec u$, donc $k=2$.\\
+        Pour $m=-4$ : $\vec u\,(-4;2)$, $\vec v\,(8;-4)=-2\,\vec u$, donc $k=-2$.
+\end{enumerate}
+\rep Une condition de colinéarité donne ici une équation du \emph{second degré} : deux valeurs de $m$.
+
+\cor{3}
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\vc{AB}\,(3;2)$ et $\vc{AC}\,(9;6)$. Déterminant $=3\times6-9\times2=18-18=0$ :
+        $A$, $B$, $C$ sont alignés.
+  \item $D\,(7;y_D)$ sur la droite $\iff \vc{AD}$ colinéaire à $\vc{AB}$. Or $\vc{AD}\,(6;\,y_D-1)$ et
+        $\vc{AB}\,(3;2)$ :
+        \[6\times2-3\times(y_D-1)=12-3y_D+3=15-3y_D=0 \Rightarrow y_D=5.\]
+        L'antenne est en $D\,(7;5)$.
+  \item $\vc{BD}\,(7-4;5-3)=(3;2)=\vc{AB}$ : $\vc{BD}$ est bien colinéaire à $\vc{AB}$ (ici même
+        vecteur), $D$ est donc sur la droite $(AB)$.
+\end{enumerate}
+\rep « Être sur la droite $(AB)$ » se traduit par « $\vc{AD}$ colinéaire à $\vc{AB}$ », c'est-à-dire
+déterminant nul.
+
+\cor{4}
+\begin{enumerate}[label=\textbf{\Alph*.},leftmargin=2.2em,itemsep=3pt]
+  \item \textbf{Vrai}. $\vc{AB}\,(1;2)$ et $\vc{AC}\,(-2;-4)=-2\,(1;2)=-2\,\vc{AB}$ : colinéaires, donc
+        $A$, $B$, $C$ alignés.
+  \item \textbf{Vrai}. $\vc{AB}\,(1;2)$ est un vecteur directeur de $(AB)$, et $\vec u\,(1;2)$ lui est
+        égal.
+  \item \textbf{Vrai}. Pour $d:\ 4x-2y+5=0$, $a=4$, $b=-2$, un vecteur directeur est
+        $(-b;a)=(2;4)=2\,(1;2)$, colinéaire à $\vc{AB}$ : $(AB)\parallel d$.
+  \item \textbf{Faux}. La droite $(AB)$ a pour équation $y=2x+3$, soit $2x-y+3=0$, ou encore
+        $4x-2y+6=0$. Elle diffère de $d$ ($4x-2y+5=0$) par la constante ($6\neq5$) : les droites sont
+        \emph{strictement parallèles}, pas confondues.
+\end{enumerate}
+\rep Parallèles \emph{et} un point commun $\Rightarrow$ confondues. Ici aucun point commun : parallèles
+strictes.
+
+\end{document}

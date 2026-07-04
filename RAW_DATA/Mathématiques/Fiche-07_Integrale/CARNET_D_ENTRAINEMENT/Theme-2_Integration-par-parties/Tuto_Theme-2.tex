@@ -1,0 +1,123 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Intégration par parties}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\begin{document}
+\section*{Tutoriel — L'intégration par parties (IPP)}
+
+Certaines fonctions n'ont \emph{aucune} primitive dans le formulaire du Thème~1 :
+$x\,e^x$, $x\cos x$, $\ln x$, $\arctan x$\dots\ Ce sont des \textbf{produits} (ou des fonctions
+« isolées » comme $\ln x$) que l'on intègre grâce à une seule technique universelle :
+l'\textbf{intégration par parties}. Elle n'est rien d'autre que la dérivée d'un produit lue à l'envers.
+
+\begin{idee}[la formule et d'où elle vient]
+On part de la dérivée d'un produit : $(UV)'=U'V+UV'$. En passant aux différentielles puis en
+intégrant, $\displaystyle\int \dd(UV)=\int V\,\dd U+\int U\,\dd V$, c'est-à-dire $UV=\int V\,\dd U+\int U\,\dd V$.
+En isolant la deuxième intégrale :
+\[
+\boxed{\;\int U\,\dd V \;=\; U\,V-\int V\,\dd U.\;}
+\]
+On choisit $U$ (qu'on va \textbf{dériver}) et $V'$ (qu'on va \textbf{intégrer}, avec $\dd V=V'\,\dd x$).
+Le pari : que la nouvelle intégrale $\int V\,\dd U$ soit \emph{plus simple} que celle de départ.
+\end{idee}
+
+\subsection*{Comment choisir $U$ et $V'$ ?}
+
+Tout le succès tient au bon choix. On prend pour $U$ (la fonction que l'on dérive) celle qui apparaît
+le plus à \textbf{gauche} dans l'ordre de priorité suivant — retenu par le mnémo \textbf{« L.I.A.T.E. »} :
+\[
+\underbrace{\text{L}}_{\ln,\ \log}\ >\
+\underbrace{\text{I}}_{\arcsin,\ \arctan}\ >\
+\underbrace{\text{A}}_{x^n,\ \text{polynômes}}\ >\
+\underbrace{\text{T}}_{\sin,\ \cos}\ >\
+\underbrace{\text{E}}_{e^x,\ a^x}.
+\]
+\textbf{Pourquoi cet ordre ?} Un polynôme \emph{dérivé} perd un degré (et finit par disparaître) ; un
+$\ln$ ou un $\arctan$ dérivé devient une fraction algébrique bien plus commode ; à l'inverse, $\sin$,
+$\cos$, $e^x$ s'\emph{intègrent} sans se compliquer, on les met donc en $V'$.
+
+\begin{methode}[dérouler une IPP en 4 gestes]
+\begin{enumerate}[leftmargin=1.8em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Choisir} $U$ (règle L.I.A.T.E.) et $V'$ (tout le reste) ; calculer $U'$ (donc $\dd U=U'\,\dd x$) et $V=\int V'\,\dd x$.
+  \item \textbf{Appliquer} $\displaystyle\int U\,\dd V=UV-\int V\,\dd U$.
+  \item \textbf{Simplifier} la nouvelle intégrale (parfois il faut une \emph{deuxième} IPP, ou résoudre une équation en $I$).
+  \item \textbf{Vérifier} en dérivant le résultat : on doit retomber sur l'intégrande.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[le cas d'école : $\displaystyle\int x\,e^x\,\dd x$]
+\textbf{Choix.} $U=x$ (algébrique, à dériver) et $V'=e^x$ (exponentielle, à intégrer), donc $U'=1$ et $V=e^x$.
+\[
+\int x\,e^x\,\dd x=U V-\int V\,\dd U=x\,e^x-\int e^x\cdot 1\,\dd x=x\,e^x-e^x+C=\boxed{(x-1)\,e^x+C.}
+\]
+\textbf{Vérification.} $\bigl[(x-1)e^x\bigr]'=e^x+(x-1)e^x=x\,e^x$. \checkmark\ Le produit de départ est devenu
+l'intégrale \emph{immédiate} $\int e^x\,\dd x$ : c'est tout l'intérêt d'avoir dérivé $x$ en $1$.
+\end{exemple}
+
+\begin{exemple}[$\ln x$, qui n'a pas de primitive « directe »]
+On écrit $\ln x=\underbrace{1}_{V'}\cdot\underbrace{\ln x}_{U}$ : ici $U=\ln x$ (priorité L !) et $V'=1$, donc
+$U'=\tfrac1x$ et $V=x$.
+\[
+\int \ln x\,\dd x=x\ln x-\int x\cdot\frac1x\,\dd x=x\ln x-\int 1\,\dd x=\boxed{x\ln x-x+C.}
+\]
+\textbf{Vérification.} $\bigl[x\ln x-x\bigr]'=\ln x+x\cdot\tfrac1x-1=\ln x$. \checkmark
+\end{exemple}
+
+\begin{remarque}[quand l'IPP « tourne en boucle »]
+Pour $\displaystyle I=\int e^x\sin x\,\dd x$, aucune IPP ne simplifie vraiment : deux IPP successives
+ramènent la même intégrale $I$. On obtient alors une \emph{équation} du type $I=(\ldots)-I$ que l'on
+\textbf{résout} pour trouver $I$. Reconnaître cette situation évite de tourner en rond (voir Difficile).
+\end{remarque}
+
+\begin{attention}[deux pièges classiques]
+\begin{itemize}[leftmargin=1.5em,topsep=1pt,itemsep=1pt]
+  \item \textbf{Le signe $-$} de la formule ($-\int V\,\dd U$) est oublié une fois sur deux : écrivez-le tout de suite.
+  \item \textbf{Le mauvais choix} $U\leftrightarrow V'$ complique l'intégrale au lieu de la simplifier. En cas de doute,
+        essayez ; si $\int V\,\dd U$ est \emph{pire} que l'intégrale de départ, inversez les rôles.
+\end{itemize}
+\end{attention}
+\end{document}

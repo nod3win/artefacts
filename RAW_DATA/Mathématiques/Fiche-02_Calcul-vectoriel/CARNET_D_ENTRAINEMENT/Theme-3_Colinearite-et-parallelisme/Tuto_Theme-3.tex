@@ -1,0 +1,126 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — Fiche 2 : Calcul vectoriel
+%  Thème 3 — Colinéarité, alignement et parallélisme — TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{ideecol}{RGB}{120,94,200}
+\definecolor{formulacol}{RGB}{198,93,9}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{vecu}{RGB}{20,20,20}
+\definecolor{vecv}{RGB}{0,110,200}
+\definecolor{axiscol}{RGB}{90,90,90}
+\definecolor{gridcol}{RGB}{210,210,210}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Comment faire ?}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=ideecol!6,colframe=ideecol,
+  title={\textsc{Intuition}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{rappel}[1][]{boxbase,colback=formulacol!7,colframe=formulacol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Thème 3 — Colinéarité, alignement et parallélisme}\\[2pt]
+{\color{primary}\rule{0.72\linewidth}{1.2pt}}\\[4pt]
+{\small\itshape Deux vecteurs ont-ils la même direction ? Trois points sont-ils alignés ?}
+\end{center}
+\vspace{1mm}
+
+\begin{rappel}[colinéarité et son test rapide]
+Deux vecteurs $\vec u$ et $\vec v$ (avec $\vec v\neq\vec0$) sont \textbf{colinéaires} s'il existe un réel
+$k$ tel que $\vec u=k\,\vec v$. Avec les composantes $\vec u\,(x;y)$ et $\vec v\,(x';y')$ :
+\[
+  \boxed{\;\vec u \text{ et } \vec v \text{ colinéaires} \iff xy'-x'y=0\;}
+\]
+Le nombre $xy'-x'y$ s'appelle le \textbf{déterminant} de $\vec u$ et $\vec v$.
+\end{rappel}
+
+\begin{idee}[colinéaire = même direction = « parallèle »]
+Deux vecteurs colinéaires pointent le long de la \emph{même droite} (dans le même sens si $k>0$,
+en sens contraire si $k<0$). Le déterminant mesure « l'aire » du parallélogramme construit sur
+$\vec u$ et $\vec v$ : elle est nulle exactement quand les deux vecteurs sont aplatis sur une même
+droite. D'où deux usages :
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item \textbf{Alignement} : $A,B,C$ alignés $\iff \vc{AB}$ et $\vc{AC}$ colinéaires ;
+  \item \textbf{Parallélisme} : deux droites sont parallèles $\iff$ leurs vecteurs directeurs sont
+        colinéaires ($\iff$ même pente $m=m'$).
+\end{itemize}
+\end{idee}
+
+\begin{rappel}[vecteur directeur et pente d'une droite $ax+by+c=0$]
+\[
+  \boxed{\;\text{vecteur directeur }\vec u\,(-b\,;\,a)\;}\qquad\qquad
+  \boxed{\;\text{pente }\;m=-\dfrac{a}{b}\ \ (b\neq0)\;}
+\]
+Un vecteur directeur « indique le long de quoi » la droite avance. Si la droite passe par $A$ et $B$,
+alors $\vc{AB}$ en est un vecteur directeur, et $m=\dfrac{y_B-y_A}{x_B-x_A}$.
+\end{rappel}
+
+\begin{methode}[montrer que $A$, $B$, $C$ sont alignés]
+\begin{enumerate}[leftmargin=1.7em,topsep=2pt,itemsep=2pt]
+  \item Calculer les composantes de $\vc{AB}$ et $\vc{AC}$ (« extrémité moins origine »).
+  \item Calculer le déterminant $x_{AB}\,y_{AC}-x_{AC}\,y_{AB}$.
+  \item S'il est \textbf{nul} : les vecteurs sont colinéaires, donc $A,B,C$ sont alignés.
+        Sinon, ils forment un vrai triangle.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[test de colinéarité par le déterminant]
+$\vec u\,(2;3)$ et $\vec v\,(6;9)$ : déterminant $=2\times9-6\times3=18-18=0$. Ils sont colinéaires
+(on a même $\vec v=3\vec u$).\\
+$\vec a\,(1;2)$ et $\vec b\,(3;5)$ : déterminant $=1\times5-3\times2=5-6=-1\neq0$. \emph{Non} colinéaires.
+\end{exemple}
+
+\begin{exemple}[alignement de trois points]
+$A\,(1;1)$, $B\,(3;2)$, $C\,(7;4)$. On calcule $\vc{AB}\,(2;1)$ et $\vc{AC}\,(6;3)$.
+Déterminant $=2\times3-6\times1=6-6=0$ : les points $A,B,C$ sont \textbf{alignés}.
+\end{exemple}
+
+\begin{exemple}[vecteur directeur et pente]
+Droite $d:\ 3x+2y-6=0$. Ici $a=3$, $b=2$, donc un vecteur directeur est $\vec u\,(-2;3)$ et la
+pente vaut $m=-\dfrac{3}{2}$. Toute droite parallèle à $d$ a la même pente $-\dfrac32$.
+\end{exemple}
+
+\begin{piege}[erreurs classiques]
+\begin{itemize}[leftmargin=1.5em,topsep=2pt,itemsep=1pt]
+  \item Le déterminant est $xy'-x'y$ (produits \emph{en croix}), pas $xx'-yy'$.
+  \item Vecteur directeur $=(-b\,;a)$ : on \emph{échange} $a$ et $b$ \emph{et} on met un signe moins
+        sur $b$. La pente est $-\frac{a}{b}$, définie seulement si $b\neq0$.
+  \item Colinéaires $\neq$ orthogonaux ! Colinéaires $\to$ même direction (Thème 3) ;
+        orthogonaux $\to$ produit scalaire nul (Thème 4).
+\end{itemize}
+\end{piege}
+
+\end{document}

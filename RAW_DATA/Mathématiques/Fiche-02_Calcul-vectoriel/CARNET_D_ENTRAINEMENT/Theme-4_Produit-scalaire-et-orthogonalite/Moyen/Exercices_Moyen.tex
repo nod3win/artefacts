@@ -1,0 +1,79 @@
+% =====================================================================
+%  Thème 4 — Produit scalaire et orthogonalité — MOYEN — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{axiscol}{RGB}{90,90,90}
+\definecolor{vecu}{RGB}{20,20,20}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Moyen — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Produit scalaire et orthogonalité — Niveau Moyen}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : imposer l'orthogonalité pour trouver une inconnue, calculer un produit
+scalaire à partir de points, utiliser la linéarité et exploiter une figure.}
+\vspace{2mm}
+
+\exo{1} \textbf{Trouver une composante par orthogonalité.}
+Déterminer la (ou les) valeur(s) rendant $\vec u$ et $\vec v$ orthogonaux.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item $\vec u\,(3;y)$ et $\vec v\,(2;6)$.
+  \item $\vec u\,(x;4)$ et $\vec v\,(2;-1)$.
+  \item $\vec u\,(m;2)$ et $\vec v\,(m;-8)$.
+\end{enumerate}
+
+\exo{2} \textbf{Produit scalaire à partir de points.}
+On donne $A\,(1;1)$, $B\,(4;2)$ et $C\,(2;5)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Calculer les composantes de $\vc{AB}$ et $\vc{AC}$.
+  \item Calculer $\vc{AB}\cdot\vc{AC}$. L'angle $\widehat{BAC}$ est-il aigu, droit ou obtus ?
+\end{enumerate}
+
+\exo{3} \textbf{Droites perpendiculaires par leurs équations.}
+On considère $d:\ 2x-3y+1=0$ et $d':\ 3x+2y-4=0$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Donner un vecteur directeur de $d$ et un vecteur directeur de $d'$.
+  \item Montrer que $d$ et $d'$ sont perpendiculaires.
+\end{enumerate}
+
+\exo{4} \textbf{Utiliser la linéarité.}
+On donne $\vec u\,(2;3)$, $\vec v\,(1;-1)$ et $\vec w\,(4;0)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Calculer $\vec u\cdot\vec v$ et $\vec w\cdot\vec v$.
+  \item En déduire $(2\vec u)\cdot\vec v$ puis $(\vec u+\vec w)\cdot\vec v$, et vérifier par un calcul direct.
+\end{enumerate}
+
+\exo{5} \textbf{Produit scalaire dans un carré.}
+$ABCD$ est le carré de sommets $A\,(0;0)$, $B\,(2;0)$, $C\,(2;2)$, $D\,(0;2)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=2pt]
+  \item Calculer $\vc{AB}\cdot\vc{AD}$. Que traduit ce résultat ?
+  \item Calculer $\vc{AB}\cdot\vc{AC}$.
+  \item Calculer $\vc{AC}\cdot\vc{BD}$ et interpréter géométriquement (diagonales du carré).
+\end{enumerate}
+
+\end{document}

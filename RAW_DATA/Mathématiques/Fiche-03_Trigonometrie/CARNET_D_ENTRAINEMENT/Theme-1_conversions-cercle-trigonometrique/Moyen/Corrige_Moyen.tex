@@ -1,0 +1,104 @@
+% =====================================================================
+%  Thème 1 — Conversions & cercle trigonométrique — NIVEAU MOYEN
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 1 — Conversions \& cercle trigonométrique}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Valeurs remarquables hors du premier quadrant}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $120\degr$, quadrant II ($\cos<0$), référence $180\degr-120\degr=60\degr$ :
+$\cos120\degr=-\cos60\degr=-\dfrac12$.
+\item[\textbf{(b)}] \rep $225\degr$, quadrant III ($\sin<0$), référence $225\degr-180\degr=45\degr$ :
+$\sin225\degr=-\sin45\degr=-\dfrac{\sqrt2}{2}$.
+\item[\textbf{(c)}] \rep $150\degr$, quadrant II ($\tg<0$), référence $30\degr$ :
+$\tg150\degr=-\tg30\degr=-\dfrac{\sqrt3}{3}$.
+\item[\textbf{(d)}] \rep $300\degr$, quadrant IV ($\cos>0$), référence $360\degr-300\degr=60\degr$ :
+$\cos300\degr=+\cos60\degr=\dfrac12$.
+\item[\textbf{(e)}] \rep $\dfrac{4\pi}{3}=240\degr$, quadrant III ($\sin<0$), référence $60\degr$ :
+$\sin\dfrac{4\pi}{3}=-\sin60\degr=-\dfrac{\sqrt3}{2}$.
+\end{itemize}
+
+\exo{Ramener dans un tour, puis évaluer}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $405\degr-360\degr=45\degr$ : $\cos405\degr=\cos45\degr=\dfrac{\sqrt2}{2}$.
+\item[\textbf{(b)}] \rep $\sin(-30\degr)$ : angle du quadrant IV ($\sin<0$), soit $-30\degr\equiv330\degr$ ;
+$\sin(-30\degr)=-\sin30\degr=-\dfrac12$.
+\item[\textbf{(c)}] \rep $390\degr-360\degr=30\degr$ : $\tg390\degr=\tg30\degr=\dfrac{\sqrt3}{3}$.
+\item[\textbf{(d)}] \rep $\dfrac{7\pi}{2}-2\pi=\dfrac{7\pi-4\pi}{2}=\dfrac{3\pi}{2}$ ($=270\degr$) :
+$\cos\dfrac{7\pi}{2}=\cos\dfrac{3\pi}{2}=0$.
+\item[\textbf{(e)}] \rep $\dfrac{13\pi}{6}-2\pi=\dfrac{13\pi-12\pi}{6}=\dfrac{\pi}{6}$ :
+$\sin\dfrac{13\pi}{6}=\sin\dfrac{\pi}{6}=\dfrac12$.
+\end{itemize}
+
+\exo{Lire un point sur le cercle}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $P$ est en haut à gauche : \textbf{quadrant II}.
+\item[\textbf{(b)}] \rep L'angle vaut $\alpha=135\degr=\dfrac{3\pi}{4}$.
+\item[\textbf{(c)}] \rep Référence $45\degr$ ; au quadrant II $\cos<0$ et $\sin>0$, donc
+$\cos\dfrac{3\pi}{4}=-\dfrac{\sqrt2}{2}$ et $\sin\dfrac{3\pi}{4}=+\dfrac{\sqrt2}{2}$ :
+\[
+P=\left(-\frac{\sqrt2}{2}\,;\,\frac{\sqrt2}{2}\right).
+\]
+\end{itemize}
+
+\exo{Signe imposé, quadrant à trouver}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\cos>0$ (quadrants I, IV) \emph{et} $\sin<0$ (III, IV) : commun $\Rightarrow$
+\textbf{quadrant IV}.
+\item[\textbf{(b)}] \rep $\tg<0$ quand $\sin$ et $\cos$ sont de signes contraires : \textbf{quadrants II et IV}.
+\item[\textbf{(c)}] \rep $\sin>0$ (I, II) \emph{et} $\cos<0$ (II, III) : commun $\Rightarrow$
+\textbf{quadrant II}.
+\end{itemize}
+
+\exo{Vrai ou Faux}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep \textbf{Vrai} : $\dfrac{5\pi}{6}\times\dfrac{180}{\pi}=\dfrac{5\times180}{6}=150\degr$.
+\item[\textbf{(b)}] \rep \textbf{Faux} : $\dfrac{3\pi}{4}=135\degr$ est au quadrant II, donc
+$\cos\dfrac{3\pi}{4}=-\dfrac{\sqrt2}{2}$ (négatif).
+\item[\textbf{(c)}] \rep \textbf{Vrai} : $-45\degr\equiv-45\degr+360\degr=315\degr$, qui est bien au
+quadrant IV comme $315\degr$.
+\item[\textbf{(d)}] \rep \textbf{Vrai} : $\tg180\degr=\dfrac{\sin180\degr}{\cos180\degr}=\dfrac{0}{-1}=0$.
+\end{itemize}
+
+\end{document}

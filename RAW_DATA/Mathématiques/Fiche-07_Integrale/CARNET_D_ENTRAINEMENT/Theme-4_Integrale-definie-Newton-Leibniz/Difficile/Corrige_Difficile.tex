@@ -1,0 +1,151 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Intégrale définie}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+
+\section*{Niveau Difficile — Corrigé détaillé}
+
+\begin{corr}[1 — comparer et encadrer sans (presque) calculer]
+\textbf{a)} Sur $[0,1]$, on a $0\leqslant x\leqslant 1$, donc $x^2\leqslant x$ (multiplier
+$x\leqslant 1$ par $x\geqslant 0$). Par la propriété de \textbf{croissance} de l'intégrale (mêmes
+bornes, $0<1$) :
+\[
+\int_0^1 x^2\,\dd x\leqslant\int_0^1 x\,\dd x.
+\]
+\textbf{Vérification} : $\displaystyle\int_0^1 x^2\,\dd x=\Bigl[\tfrac{x^3}{3}\Bigr]_0^1=\tfrac13$ et
+$\displaystyle\int_0^1 x\,\dd x=\Bigl[\tfrac{x^2}{2}\Bigr]_0^1=\tfrac12$ ; on a bien
+$\tfrac13\leqslant\tfrac12$. \checkmark
+
+\smallskip
+\textbf{b)} Sur $[1,2]$, $x\geqslant 1$ donc $\ln x\geqslant \ln 1=0$. La fonction est positive sur
+l'intervalle d'intégration (avec $1<2$) : par \textbf{positivité},
+$\displaystyle\int_1^2 \ln x\,\dd x\geqslant 0$. L'intégrale est donc \textbf{positive} (et même
+strictement positive car $\ln x>0$ sur $]1,2]$).
+
+\smallskip
+\textbf{c)} Sur $[0,1]$, $0\leqslant x^2\leqslant 1$, et comme l'exponentielle est croissante,
+$e^{0}\leqslant e^{x^2}\leqslant e^{1}$, soit $1\leqslant e^{x^2}\leqslant e$. On intègre cet
+encadrement sur $[0,1]$ (longueur $1$), par croissance :
+\[
+\int_0^1 1\,\dd x\leqslant\int_0^1 e^{x^2}\,\dd x\leqslant\int_0^1 e\,\dd x
+\;\Longleftrightarrow\;
+1\leqslant\int_0^1 e^{x^2}\,\dd x\leqslant e.
+\]
+(On n'a jamais eu besoin d'une primitive de $e^{x^2}$, qui n'est d'ailleurs pas élémentaire.)
+\end{corr}
+
+\begin{corr}[2 — combiner Chasles, inversion et linéarité]
+\textbf{a)} Chasles sur $[0,4]$ coupé en $1$ :
+\[
+\int_0^4 f=\int_0^1 f+\int_1^4 f=3+(-2)=\boxed{\,1\,}.
+\]
+\textbf{b)} Inversion des bornes : $\displaystyle\int_4^0 f=-\int_0^4 f=-1=\boxed{\,-1\,}.$
+
+\smallskip
+\textbf{c)} Linéarité (somme et constantes) :
+\[
+\int_0^4\bigl(2f+3g\bigr)=2\int_0^4 f+3\int_0^4 g=2\cdot 1+3\cdot 5=2+15=\boxed{\,17\,}.
+\]
+\textbf{d)} De même :
+\[
+\int_0^4\bigl(f-g\bigr)=\int_0^4 f-\int_0^4 g=1-5=\boxed{\,-4\,}.
+\]
+\end{corr}
+
+\begin{corr}[3 — intégrale définie par une IPP guidée]
+\textbf{a)} La règle de priorité place le \emph{logarithme} en $U$ : on pose $U=\ln x$ et
+$V'=x$. Alors
+\[
+U'=\frac1x,\qquad V=\int x\,\dd x=\frac{x^2}{2}.
+\]
+\textbf{b)} Formule d'IPP sur $[1,e]$ :
+\[
+E=\int_1^e x\ln x\,\dd x=\left[\frac{x^2}{2}\ln x\right]_1^e-\int_1^e \frac{x^2}{2}\cdot\frac1x\,\dd x
+=\left[\frac{x^2}{2}\ln x\right]_1^e-\frac12\int_1^e x\,\dd x.
+\]
+\textbf{c)} Terme tout intégré : $\left[\dfrac{x^2}{2}\ln x\right]_1^e
+=\dfrac{e^2}{2}\underbrace{\ln e}_{=1}-\dfrac{1}{2}\underbrace{\ln 1}_{=0}=\dfrac{e^2}{2}.$
+Intégrale restante : $\dfrac12\displaystyle\int_1^e x\,\dd x=\dfrac12\left[\dfrac{x^2}{2}\right]_1^e
+=\dfrac12\cdot\dfrac{e^2-1}{2}=\dfrac{e^2-1}{4}.$ Donc
+\[
+E=\frac{e^2}{2}-\frac{e^2-1}{4}=\frac{2e^2-(e^2-1)}{4}=\frac{e^2+1}{4}=\boxed{\,\frac{e^2+1}{4}\,}\approx 2{,}10\ua.
+\]
+\end{corr}
+
+\begin{corr}[4 — quand aire algébrique et aire géométrique diffèrent]
+\textbf{a)} Primitive $\dfrac{x^2}{2}-x$ :
+\[
+\int_0^2 (x-1)\,\dd x=\left[\frac{x^2}{2}-x\right]_0^2=(2-2)-(0-0)=0.
+\]
+Le résultat est \textbf{nul} : sur $[0,1]$ la fonction est négative, sur $[1,2]$ elle est positive,
+et les deux aires algébriques se \emph{compensent} exactement.
+
+\smallskip
+\textbf{b)} La racine de $f$ est $x=1$ ; $f\leqslant 0$ sur $[0,1]$ et $f\geqslant 0$ sur $[1,2]$, donc
+$|x-1|=1-x$ sur $[0,1]$ et $|x-1|=x-1$ sur $[1,2]$. Par Chasles :
+\[
+\int_0^2|x-1|\,\dd x=\int_0^1(1-x)\,\dd x+\int_1^2(x-1)\,\dd x.
+\]
+\[
+\int_0^1(1-x)\,\dd x=\left[x-\frac{x^2}{2}\right]_0^1=1-\frac12=\frac12,\qquad
+\int_1^2(x-1)\,\dd x=\left[\frac{x^2}{2}-x\right]_1^2=(2-2)-\Bigl(\frac12-1\Bigr)=\frac12.
+\]
+D'où $\displaystyle\int_0^2|x-1|\,\dd x=\frac12+\frac12=\boxed{\,1\,}\ua.$
+
+\smallskip
+\textbf{c)} On compare : $\Bigl|\displaystyle\int_0^2 f\Bigr|=|0|=0$ et
+$\displaystyle\int_0^2|f|=1$. L'inégalité $0\leqslant 1$ est bien vérifiée. \checkmark
+
+\emph{Interprétation.} $\int_0^2 f=0$ est l'aire \textbf{algébrique} (les portions au-dessus et
+au-dessous de l'axe se compensent), tandis que $\int_0^2|f|=1$ est l'aire \textbf{géométrique}
+totale (les deux triangles de la figure, chacun d'aire $\tfrac12$). L'écart entre les deux membres
+mesure exactement la partie « sous l'axe » comptée négativement dans la première intégrale.
+\end{corr}
+
+\end{document}

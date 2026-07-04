@@ -1,0 +1,118 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,positioning,calc,intersections,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{30,75,145}
+\definecolor{primarydark}{RGB}{20,50,100}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{thmcol}{RGB}{0,135,110}
+\definecolor{excol}{RGB}{0,130,85}
+\definecolor{remarkcol}{RGB}{120,70,180}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{methcol}{RGB}{85,85,100}
+\definecolor{areacol}{RGB}{120,160,230}
+\definecolor{areacol2}{RGB}{230,150,80}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ua}{\,\text{u.a.}}
+\newcommand{\tg}{\tan}\newcommand{\cotg}{\cot}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,title={\textsc{Comment faire}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!5,colframe=defcol,title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{remarque}[1][]{boxbase,colback=remarkcol!6,colframe=remarkcol,title={\textsc{Remarque}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback={primary!4},colframe=primary,title={\textsc{Exercice #1}}}
+\newtcolorbox{corr}[1][]{boxbase,colback={thmcol!5},colframe=thmcol,title={\textsc{Corrigé #1}}}
+\tikzset{axe/.style={->,>=Stealth,black!65,line width=0.7pt},courbe/.style={primary,line width=1.3pt},courbe2/.style={areacol2!90!black,line width=1.3pt},dvert/.style={gray,dashed,line width=0.7pt}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 7} — Intégrale d'une fonction continue}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Calculs d'aires}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+
+\begin{document}
+
+\section*{Corrigé — Facile : aire sous une courbe positive}
+
+\begin{corr}[F1]
+$f(x)=3x^2\geqslant 0$ sur $[0,2]$, donc $\mathcal{A}=\displaystyle\int_0^2 3x^2\,\dd x$. Une primitive
+de $3x^2$ est $x^3$ :
+\[
+\mathcal{A}=\bigl[x^3\bigr]_0^2=2^3-0=\boxed{\,8\ua.\,}
+\]
+\end{corr}
+
+\begin{corr}[F2]
+Sur $[0,4]$, $f(x)=x+1>0$. Donc
+\[
+\mathcal{A}=\int_0^4 (x+1)\,\dd x=\left[\frac{x^2}{2}+x\right]_0^4=\left(\frac{16}{2}+4\right)-0
+=8+4=\boxed{\,12\ua.\,}
+\]
+\end{corr}
+
+\begin{corr}[F3]
+\textbf{a)} $f(x)=0\Leftrightarrow 4-x^2=0\Leftrightarrow x^2=4\Leftrightarrow x=\pm 2$. Les bornes
+sont $a=-2$ et $b=2$.
+
+\textbf{b)} Sur $[-2,2]$, $4-x^2\geqslant 0$ (parabole tournée vers le bas, au-dessus de l'axe entre
+ses racines). Donc
+\[
+\mathcal{A}=\int_{-2}^{2}(4-x^2)\,\dd x=\left[4x-\frac{x^3}{3}\right]_{-2}^{2}
+=\left(8-\frac{8}{3}\right)-\left(-8+\frac{8}{3}\right)=\frac{16}{3}+\frac{16}{3}
+=\boxed{\,\frac{32}{3}\ua\approx 10{,}67\ \text{u.a.}}
+\]
+
+\smallskip
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[width=8.4cm,height=4.4cm,axis lines=middle,
+      xmin=-3,xmax=3,ymin=-0.8,ymax=4.8,xtick={-2,2},ytick={4},
+      xlabel={$x$},ylabel={$y$},
+      every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+      every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+    \addplot[domain=-2.7:2.7,samples=80,courbe]{4-x^2};
+    \addplot[name path=F,domain=-2:2,samples=50,draw=none,forget plot]{4-x^2};
+    \path[name path=b] (axis cs:-2,0)--(axis cs:2,0);
+    \addplot[areacol!45] fill between[of=F and b];
+    \node at (axis cs:0,1.4){$\mathcal{A}$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\end{corr}
+
+\begin{corr}[F4]
+$f(x)=x^2\geqslant 0$ sur $[1,3]$ :
+\[
+\mathcal{A}=\int_1^3 x^2\,\dd x=\left[\frac{x^3}{3}\right]_1^3=\frac{27}{3}-\frac{1}{3}
+=\frac{26}{3}=\boxed{\,\frac{26}{3}\ua\approx 8{,}67\ \text{u.a.}}
+\]
+\end{corr}
+
+\begin{corr}[F5]
+\textbf{a)} $9-x^2=0\Leftrightarrow x=\pm 3$.
+
+\textbf{b)} Sur $[-3,3]$, $9-x^2\geqslant 0$, donc
+\[
+\mathcal{A}=\int_{-3}^{3}(9-x^2)\,\dd x=\left[9x-\frac{x^3}{3}\right]_{-3}^{3}
+=\left(27-9\right)-\left(-27+9\right)=18+18=\boxed{\,36\ua.\,}
+\]
+\end{corr}
+
+\end{document}

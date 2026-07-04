@@ -1,0 +1,89 @@
+% =====================================================================
+%  Thème 5 — EXERCICES — Niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 5 — L'Hospital \& limites trigonométriques}\\[2pt]
+{\large\color{primary}Exercices — Niveau Facile}
+\end{center}
+\vspace{4pt}
+{\small\itshape But : reconnaître une forme $\frac00$ ou $\frac{\infty}{\infty}$, appliquer l'Hospital une
+fois, et utiliser $\frac{\sin x}{x}\to 1$, $\frac{\tan x}{x}\to 1$.}
+\vspace{6pt}
+
+\begin{exercice}[l'Hospital est-il applicable ?]
+Pour chaque limite, dire si la forme directe est $\frac00$, $\frac{\infty}{\infty}$, ou une forme
+\emph{déterminée} (auquel cas l'Hospital ne s'applique pas).
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}$ \qquad b) $\displaystyle\lim_{x\to 0}\frac{\cos x}{x+1}$
+  \item $\displaystyle\lim_{x\to+\infty}\frac{x}{e^x}$ \qquad d) $\displaystyle\lim_{x\to 2}\frac{x^2}{x-1}$
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[l'Hospital, une fois]
+Chaque forme est $\frac00$. Appliquer l'Hospital (dériver haut et bas séparément).
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{e^x-1}{x}$
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}$
+  \item $\displaystyle\lim_{x\to 1}\frac{\ln x}{x-1}$
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[limites trigonométriques directes]
+Donner la valeur (résultats de référence).
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin x}{x}$ \qquad b) $\displaystyle\lim_{x\to 0}\frac{\tan x}{x}$
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin 2x}{2x}$
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[reconstituer $\frac{\sin(\square)}{\square}$]
+Calculer en faisant apparaître une forme de référence.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin 2x}{3x}$
+  \item $\displaystyle\lim_{x\to 0}\frac{\sin 3x}{x}$
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[l'Hospital sur un quotient polynomial]
+La forme est $\frac00$. Calculer par l'Hospital, puis vérifier par factorisation.
+\[ \lim_{x\to 1}\frac{x^2-1}{x-1}. \]
+\end{exercice}
+
+\end{document}

@@ -1,0 +1,81 @@
+% =====================================================================
+%  Thème 1 — Composantes et norme — Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+\definecolor{axiscol}{RGB}{90,90,90}
+\definecolor{gridcol}{RGB}{210,210,210}
+\definecolor{vecu}{RGB}{20,20,20}
+\definecolor{vecw}{RGB}{198,93,9}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Difficile — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Composantes et norme — Niveau Difficile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : enchaîner plusieurs calculs de composantes et de normes dans des situations
+concrètes ou paramétrées, comme au concours. Les sous-questions montent en difficulté.}
+\vspace{2mm}
+
+\exo{1} \textbf{Mise en situation — le drone de secours.}
+Un drone décolle de la base $O\,(0;0)$ (coordonnées en kilomètres). Il rejoint successivement les
+points de passage $P_1\,(3;4)$, $P_2\,(3;9)$ puis $P_3\,(-1;12)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Calculer les composantes des trois trajets $\vc{OP_1}$, $\vc{P_1P_2}$, $\vc{P_2P_3}$,
+        et vérifier que chaque trajet mesure exactement $5$~km.
+  \item Déterminer les composantes du déplacement \emph{net} $\vc{OP_3}$ (de la base au point final),
+        puis sa norme (forme exacte, puis valeur approchée au dixième).
+  \item Comparer la \emph{distance totale parcourue} par le drone avec la distance \emph{à vol d'oiseau}
+        entre le départ et l'arrivée. Commenter.
+\end{enumerate}
+
+\exo{2} \textbf{Point équidistant sur un axe.}
+Dans un repère orthonormé, on donne $A\,(1;2)$ et $B\,(6;3)$. On cherche un point $M$ situé sur
+l'axe des abscisses, donc de la forme $M\,(x;0)$, qui soit à égale distance de $A$ et de $B$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Exprimer $MA^2$ et $MB^2$ en fonction de $x$.
+  \item Traduire la condition $MA=MB$ et en déduire la valeur de $x$.
+  \item Donner les coordonnées de $M$ et la distance commune $MA$ (forme exacte).
+\end{enumerate}
+
+\exo{3} \textbf{Normes avec radicaux.}
+Calculer la norme (forme exacte simplifiée) de chacun des vecteurs suivants.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item $\vec{u}\,\bigl(\sqrt3-1\,;\,\sqrt3+1\bigr)$.
+  \item $\vec{v}\,\bigl(1+\sqrt2\,;\,1-\sqrt2\bigr)$.
+\end{enumerate}
+
+\exo{4} \textbf{Vecteur dépendant d'un paramètre.}
+On donne $A\,(1;2)$ et $B\,(t\,;\,t+3)$, où $t$ est un réel.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Exprimer les composantes de $\vc{AB}$ en fonction de $t$.
+  \item Montrer que $\norm{\vc{AB}}^2=2t^2+2$.
+  \item Pour quelle valeur de $t$ la longueur $AB$ est-elle \emph{minimale} ? Que vaut alors $AB$ ?
+  \item Déterminer les valeurs de $t$ pour lesquelles $AB=\sqrt{10}$.
+\end{enumerate}
+
+\end{document}

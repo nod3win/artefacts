@@ -1,0 +1,123 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 1 — EXERCICES — Niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,intersections}
+\pgfplotsset{compat=1.18}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{curvecol}{RGB}{40,80,190}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{exercice}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\tikzset{
+  axe/.style={->,>=Stealth,thick,black!75},
+  courbe/.style={line width=1.1pt,curvecol},
+  asy/.style={dashed,black!55,line width=0.8pt},
+  proj/.style={dashed,black!55,line width=0.6pt},
+  pt/.style={circle,fill=black,inner sep=1.3pt},
+  ptouvert/.style={circle,draw,fill=white,inner sep=1.1pt,line width=0.7pt},
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 1 — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 1 — Notations, lecture \& calcul direct}\\[2pt]
+{\large\color{primary}Exercices — Niveau Moyen}
+\end{center}
+\vspace{4pt}
+{\small\itshape On combine remplacement direct, limites latérales et continuité. Toujours vérifier le
+domaine avant de remplacer.}
+\vspace{6pt}
+
+\begin{exercice}[calcul direct avec fonctions usuelles]
+Chaque point est visé dans le domaine. Calculer.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to 0}\bigl(e^{x}+3\cos x\bigr)$
+  \item $\displaystyle\lim_{x\to 1}\frac{\ln x + 2}{x+1}$
+  \item $\displaystyle\lim_{x\to \frac{\pi}{2}}\bigl(2\sin x - x\bigr)$
+  \item $\displaystyle\lim_{x\to 9}\frac{\sqrt{x}-1}{x-5}$
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[raccord de deux morceaux]
+Soit $f(x)=\begin{cases} x^2+1 & \text{si } x\leq 1,\\[2pt] 4x-2 & \text{si } x>1.\end{cases}$
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Calculer $\displaystyle\lim_{x\to 1^{-}} f(x)$ et $\displaystyle\lim_{x\to 1^{+}} f(x)$.
+  \item $f$ possède-t-elle une limite en $1$ ? Si oui, laquelle ?
+  \item $f$ est-elle continue en $1$ ? (comparer avec $f(1)$).
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[ajuster un paramètre pour la continuité]
+Soit $k$ un réel et $f(x)=\begin{cases} 2x+k & \text{si } x<3,\\[2pt] x^2 & \text{si } x\geq 3.\end{cases}$
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Exprimer $\displaystyle\lim_{x\to 3^{-}} f(x)$ en fonction de $k$, puis $\displaystyle\lim_{x\to 3^{+}} f(x)$.
+  \item Déterminer la valeur de $k$ pour que $f$ soit continue en $3$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[lecture graphique fine]
+La courbe de $f$ comporte un rond plein et un rond ouvert au voisinage de $x=1$.
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\begin{axis}[width=10cm,height=5.8cm,axis lines=middle,xlabel={$x$},ylabel={$y$},
+   xmin=-2.4,xmax=4.4,ymin=-0.6,ymax=3.6,xtick={-2,-1,1,2,3},ytick={1,2,3},
+   tick label style={font=\scriptsize}]
+  \addplot[courbe,domain=-2.2:1,samples=60]{0.5*x+1.5};   % branche gauche -> 2 en 1
+  \addplot[courbe,domain=1:4.2,samples=60]{0.4*(x-1)^2+0.8}; % branche droite depart 0.8
+  \node[pt,fill=curvecol] at (axis cs:1,0.8){};   % valeur f(1)=0.8 (plein)
+  \node[ptouvert] at (axis cs:1,2){};             % limite gauche 2 (ouvert)
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Lire $\displaystyle\lim_{x\to 1^{-}} f(x)$ et $\displaystyle\lim_{x\to 1^{+}} f(x)$.
+  \item Quelle est la valeur $f(1)$ (rond plein) ?
+  \item $f$ est-elle continue en $1$ ? à gauche ? à droite ? Justifier.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[vrai / faux justifié]
+Dire si chaque affirmation est vraie ou fausse, en une ligne de justification.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Si $\displaystyle\lim_{x\to x_0^{-}} f(x)=\lim_{x\to x_0^{+}} f(x)$, alors $f$ est continue en $x_0$.
+  \item Une fonction peut avoir une limite en $x_0$ sans être définie en $x_0$.
+  \item Si $f$ est continue en $x_0$, alors $\displaystyle\lim_{x\to x_0} f(x)=f(x_0)$.
+\end{enumerate}
+\end{exercice}
+
+\end{document}

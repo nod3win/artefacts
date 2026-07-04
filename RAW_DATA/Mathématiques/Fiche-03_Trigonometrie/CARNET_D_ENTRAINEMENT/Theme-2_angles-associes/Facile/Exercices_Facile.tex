@@ -1,0 +1,101 @@
+% =====================================================================
+%  Thème 2 — Angles associés — NIVEAU FACILE
+%  Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newtcolorbox{consigne}{enhanced,breakable,colback=primary!5,colframe=primary,
+  boxrule=0.8pt,arc=2pt,left=3mm,right=3mm,top=2mm,bottom=2mm}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 2 — Angles associés}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Exercices}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\begin{consigne}
+\textbf{Objectif :} appliquer \emph{une} famille d'angles associés à la fois. On simplifie une
+expression en fonction de $\cos\alpha,\ \sin\alpha$ ou $\tg\alpha$, ou on calcule une valeur exacte
+\textbf{sans calculatrice}. Nomme à chaque fois la famille utilisée.
+\end{consigne}
+
+\exo{Opposés ($-\alpha$)}
+Simplifie chaque expression en fonction de $\alpha$.
+\[
+\textbf{(a)}\ \cos(-\alpha) \qquad
+\textbf{(b)}\ \sin(-\alpha) \qquad
+\textbf{(c)}\ \tg(-\alpha) \qquad
+\textbf{(d)}\ \sin(-\alpha)+\sin\alpha
+\]
+
+\exo{Supplémentaires ($\pi-\alpha$)}
+Simplifie en fonction de $\alpha$, puis conclus la valeur numérique de (d).
+\[
+\textbf{(a)}\ \sin(\pi-\alpha) \qquad
+\textbf{(b)}\ \cos(\pi-\alpha) \qquad
+\textbf{(c)}\ \tg(\pi-\alpha) \qquad
+\textbf{(d)}\ \sin(\pi-\tfrac{\pi}{6})
+\]
+
+\exo{Anti-supplémentaires ($\pi+\alpha$)}
+Simplifie en fonction de $\alpha$.
+\[
+\textbf{(a)}\ \cos(\pi+\alpha) \qquad
+\textbf{(b)}\ \sin(\pi+\alpha) \qquad
+\textbf{(c)}\ \tg(\pi+\alpha) \qquad
+\textbf{(d)}\ \tg(\pi+\tfrac{\pi}{4})
+\]
+
+\exo{Complémentaires et anti-complémentaires ($\frac{\pi}{2}\pm\alpha$)}
+Simplifie en fonction de $\alpha$ (attention : $\sin$ et $\cos$ s'échangent).
+\[
+\textbf{(a)}\ \sin\!\left(\tfrac{\pi}{2}-\alpha\right) \qquad
+\textbf{(b)}\ \cos\!\left(\tfrac{\pi}{2}-\alpha\right) \qquad
+\textbf{(c)}\ \cos\!\left(\tfrac{\pi}{2}+\alpha\right) \qquad
+\textbf{(d)}\ \sin\!\left(\tfrac{\pi}{2}+\alpha\right)
+\]
+
+\exo{Reconnaître la nature de deux angles}
+Pour chaque couple, dis s'il s'agit d'angles \emph{opposés}, \emph{complémentaires},
+\emph{supplémentaires} ou \emph{anti-supplémentaires}.
+\[
+\textbf{(a)}\ 30\degr\ \text{et}\ 150\degr \qquad
+\textbf{(b)}\ 40\degr\ \text{et}\ 50\degr \qquad
+\textbf{(c)}\ 70\degr\ \text{et}\ -70\degr \qquad
+\textbf{(d)}\ 20\degr\ \text{et}\ 200\degr
+\]
+
+\end{document}

@@ -1,0 +1,92 @@
+% =====================================================================
+%  Thème 5 — CORRIGÉ — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Corrigé Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 5 — L'Hospital \& limites trigonométriques}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Difficile}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[combiner trois limites de référence]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\tan x-\sin x=\frac{\sin x}{\cos x}-\sin x=\frac{\sin x-\sin x\cos x}{\cos x}
+        =\frac{\sin x\,(1-\cos x)}{\cos x}$.
+  \item En divisant par $x^3=x\cdot x^2$ :
+        \[ \frac{\tan x-\sin x}{x^3}=\frac{\sin x\,(1-\cos x)}{x^3\cos x}
+        =\frac{\sin x}{x}\cdot\frac{1-\cos x}{x^2}\cdot\frac{1}{\cos x}. \]
+  \item Chaque facteur a une limite connue :
+        \[ \lim_{x\to 0}\frac{\tan x-\sin x}{x^3}=1\times\frac12\times 1=\frac12. \]
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[deux méthodes pour un quotient de sinus]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item En $0$ : $\sin 0=0$ en haut et en bas : forme $\frac00$.
+  \item \textbf{Méthode 1 :}
+        \[ \frac{\sin 5x}{\sin 3x}=\underbrace{\frac{\sin 5x}{5x}}_{\to 1}\cdot\underbrace{\frac{3x}{\sin 3x}}_{\to 1}\cdot\frac{5x}{3x}
+        \xrightarrow[x\to0]{}1\cdot 1\cdot\frac53=\frac53. \]
+  \item \textbf{Méthode 2 (l'Hospital) :} $\displaystyle\lim_{x\to 0}\frac{\sin 5x}{\sin 3x}=\lim_{x\to 0}\frac{5\cos 5x}{3\cos 3x}=\frac{5\cos 0}{3\cos 0}=\frac53$. Même résultat.
+  \item En général, par la même décomposition (ou l'Hospital) :
+        $\displaystyle\lim_{x\to 0}\frac{\sin(ax)}{\sin(bx)}=\frac{a}{b}$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[mise en situation : erreur de l'approximation des petits angles]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item C'est la limite trigonométrique remarquable $\displaystyle\lim_{\theta\to 0}\frac{\sin\theta}{\theta}=1$
+        (par l'Hospital : $\frac{\cos\theta}{1}\to\cos 0=1$). Donc $\sin\theta$ et $\theta$ sont
+        équivalents près de $0$, ce qui justifie $\sin\theta\approx\theta$.
+  \item En $0$ : $\theta-\sin\theta\to 0$ et $\theta^3\to 0$ : forme $\frac00$. On dérive trois fois :
+        \begin{align*}
+        \lim_{\theta\to 0}\frac{\theta-\sin\theta}{\theta^3}
+        &\overset{\frac00}{=}\lim_{\theta\to 0}\frac{1-\cos\theta}{3\theta^2}
+         \overset{\frac00}{=}\lim_{\theta\to 0}\frac{\sin\theta}{6\theta}\\
+        &\overset{\frac00}{=}\lim_{\theta\to 0}\frac{\cos\theta}{6}=\frac{\cos 0}{6}=\frac16.
+        \end{align*}
+  \item Puisque $\dfrac{\theta-\sin\theta}{\theta^3}\to\dfrac16$, on a $\theta-\sin\theta\approx\dfrac{\theta^3}{6}$
+        pour $\theta$ petit. L'erreur $\theta-\sin\theta$ est d'ordre $\theta^3$, donc
+        $\dfrac{\theta-\sin\theta}{\theta}\approx\dfrac{\theta^2}{6}\to 0$ : l'erreur est \textbf{négligeable
+        devant $\theta$} — l'approximation $\sin\theta\approx\theta$ est excellente pour les petits angles
+        (p.\,ex.\ pour $\theta=0{,}1$ rad, l'erreur relative vaut environ $\frac{0{,}01}{6}\approx 0{,}17\,\%$).
+\end{enumerate}
+\end{correction}
+
+\end{document}

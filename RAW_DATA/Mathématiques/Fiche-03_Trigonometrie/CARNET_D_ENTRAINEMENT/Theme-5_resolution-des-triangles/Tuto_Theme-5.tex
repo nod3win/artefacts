@@ -1,0 +1,172 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 3 : Trigonométrie
+%  Thème 5 — Résolution des triangles
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,decorations.markings}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{sincol}{RGB}{205,40,55}
+\definecolor{coscol}{RGB}{20,110,200}
+\definecolor{remarkcol}{RGB}{200,120,0}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\tcbset{
+  boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+     left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+     fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm},
+}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{L'essentiel}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!6,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!7,colframe=attncol,
+  title={\textsc{Piège à éviter}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\newcommand{\heading}[1]{\medskip\noindent{\large\bfseries\color{primarydark}#1}\par\smallskip}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 5 — Résolution des triangles}\\[2pt]
+{\color{primarydark}\textsc{Carnet d'entraînement — Fiche 3 : Trigonométrie \quad•\quad Tutoriel}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\emph{Résoudre un triangle}, c'est retrouver toutes ses longueurs et tous ses angles à partir de
+quelques données, grâce à trois outils : l'\textbf{aire}, la \textbf{loi des sinus} et la
+\textbf{loi des cosinus}. Le vrai réflexe n'est pas de les connaître, mais de \textbf{choisir le
+bon} selon les données. \textbf{Convention} : sommets $A,B,C$, côtés \emph{opposés}
+$a=\overline{BC}$, $b=\overline{CA}$, $c=\overline{AB}$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15,>=Stealth,line cap=round]
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (5.4,0);
+  \coordinate (A) at (1.7,2.6);
+  \coordinate (H) at (1.7,0);
+  \draw[primary,line width=1.2pt] (A)--(B)--(C)--cycle;
+  \draw[remarkcol,dashed,line width=0.8pt] (A)--(H) node[midway,right,font=\scriptsize]{$h$};
+  \draw[black!70] (H)++(0,0.26)--++(0.26,0)--++(0,-0.26);
+  \fill (A) circle (1.6pt) node[above]{$A$};
+  \fill (B) circle (1.6pt) node[below left]{$B$};
+  \fill (C) circle (1.6pt) node[below right]{$C$};
+  \node[font=\small] at (2.9,-0.32) {$a=\overline{BC}$};
+  \node[font=\small] at (3.9,1.45) {$b$};
+  \node[font=\small] at (0.55,1.45) {$c$};
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}[scale=1.15,>=Stealth,line cap=round]
+  \coordinate (O) at (0,0);
+  \coordinate (B) at (3.2,0);
+  \coordinate (A) at (3.2,2.1);
+  \draw[primary,line width=1.2pt] (O)--(B)--(A)--cycle;
+  \draw[black!70] (B)++(-0.28,0)--++(0,0.28)--++(0.28,0);
+  \fill (O) circle (1.6pt) node[below left]{$O$};
+  \fill (B) circle (1.6pt) node[below right]{$B$};
+  \fill (A) circle (1.6pt) node[above right]{$A$};
+  \node[font=\small] at (1.6,-0.3) {adjacent};
+  \node[font=\small,rotate=90] at (3.5,1.05) {opposé};
+  \node[font=\small,rotate=33] at (1.5,1.25) {hypoténuse};
+  \draw (0.75,0) arc (0:33:0.75); \node[font=\scriptsize] at (1.05,0.25) {$\alpha$};
+\end{tikzpicture}
+\end{center}
+{\centering\small\textcolor{primary}{À gauche} : triangle quelconque et sa hauteur $h$. \quad
+\textcolor{primary}{À droite} : triangle rectangle (SOH-CAH-TOA).\par}
+
+\heading{0. Rappel — le triangle rectangle (SOH-CAH-TOA)}
+Uniquement dans un triangle \textbf{rectangle}, pour l'angle aigu $\alpha$ :
+$\cos\alpha=\dfrac{\text{adj}}{\text{hyp}}$, \ $\sin\alpha=\dfrac{\text{opp}}{\text{hyp}}$, \
+$\tg\alpha=\dfrac{\text{opp}}{\text{adj}}$, \ et \textbf{Pythagore} :
+$\text{hyp}^2=\text{opp}^2+\text{adj}^2$.
+
+\heading{1. Aire d'un triangle quelconque}
+On multiplie les \textbf{deux côtés qui encadrent} un angle par le \textbf{sinus de cet angle}, le tout divisé par $2$ :
+\[
+\boxed{\;\mathcal{A}=\frac12\,a\,b\,\sin\hat C=\frac12\,b\,c\,\sin\hat A=\frac12\,a\,c\,\sin\hat B\;}
+\]
+« \emph{Demi-produit de deux côtés par le sinus de l'angle compris entre eux.} »
+
+\begin{exemple}[deux côtés $6$ et $8$, angle compris $30\degr$]
+$\mathcal{A}=\dfrac12\cdot6\cdot8\cdot\sin30\degr=\dfrac12\cdot48\cdot\dfrac12=12$ (unités d'aire).
+\end{exemple}
+
+\heading{2. Loi des sinus}
+\[
+\boxed{\;\frac{\sin\hat A}{a}=\frac{\sin\hat B}{b}=\frac{\sin\hat C}{c}\;}
+\]
+Le sinus d'un angle est \textbf{proportionnel au côté opposé}. On l'utilise dès qu'on connaît un
+\textbf{angle et son côté opposé} (le rapport est alors fixé), plus une autre donnée (un angle ou un côté).
+
+\heading{3. Loi des cosinus (théorème d'Al-Kashi)}
+\[
+\boxed{\;c^2=a^2+b^2-2ab\cos\hat C\;}
+\qquad\Longleftrightarrow\qquad
+\boxed{\;\cos\hat C=\frac{a^2+b^2-c^2}{2ab}\;}
+\]
+Le carré d'un côté $=$ somme des carrés des deux autres $-$ le double de leur produit par le cosinus
+de l'angle \textbf{compris entre eux}. Si $\hat C=90\degr$, alors $\cos\hat C=0$ et l'on retrouve
+\textbf{exactement Pythagore} $c^2=a^2+b^2$ : la loi des cosinus est Pythagore « corrigé » pour les
+triangles non rectangles.
+
+\begin{methode}[choisir le bon outil selon les données]
+\begin{itemize}[leftmargin=1.6em,topsep=2pt,itemsep=1pt]
+  \item \textbf{3 côtés} connus, on cherche un angle $\Rightarrow$ loi des \textbf{cosinus} réarrangée.
+  \item \textbf{2 côtés $+$ l'angle compris}, on cherche le 3\textsuperscript{e} côté $\Rightarrow$ loi des \textbf{cosinus}.
+  \item \textbf{1 côté $+$ 2 angles}, ou \textbf{1 angle avec son côté opposé} $\Rightarrow$ loi des \textbf{sinus}.
+  \item \textbf{aire} à partir de 2 côtés $+$ l'angle compris $\Rightarrow$ $\mathcal{A}=\tfrac12 ab\sin\hat C$.
+\end{itemize}
+\end{methode}
+
+\begin{exemple}[aire connue $\to$ un côté $\to$ loi des cosinus]
+Triangle $ABC$ : $\hat C=60\degr$, $a=\overline{BC}=10$ et $\mathcal{A}=\dfrac{25\sqrt3}{2}$. Les côtés
+encadrant $\hat C$ sont $a$ et $b$, donc $\mathcal{A}=\dfrac12ab\sin60\degr$ :
+\[
+\frac{25\sqrt3}{2}=\frac12\cdot10\cdot b\cdot\frac{\sqrt3}{2}=\frac{5b\sqrt3}{2}\ \Longrightarrow\ b=5.
+\]
+Puis $c=\overline{AB}$, opposé à $\hat C$, par la loi des cosinus :
+\[
+c^2=10^2+5^2-2\cdot10\cdot5\cdot\cos60\degr=125-50=75\ \Longrightarrow\ c=5\sqrt3\approx8{,}66.
+\]
+\end{exemple}
+
+\begin{piege}[erreurs classiques]
+$\bullet$ Utiliser SOH-CAH-TOA dans un triangle \emph{non} rectangle (interdit !).\quad
+$\bullet$ Multiplier les mauvais côtés : pour l'aire et la loi des cosinus, l'angle doit être
+\emph{compris entre} les deux côtés utilisés.\quad
+$\bullet$ Oublier le signe : pour un angle obtus ($120\degr$), $\cos120\degr=-\dfrac12$ est
+\emph{négatif}, donc $-2ab\cos\hat C$ \emph{s'ajoute}.
+\end{piege}
+
+\end{document}

@@ -1,0 +1,102 @@
+% =====================================================================
+%  Thème 2 — CORRIGÉ — Niveau MOYEN
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Corrigé Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 2 — Règle $\dfrac{a}{0^{\pm}}$ \& asymptote verticale}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Moyen}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[étude complète des deux côtés]
+$f(x)=\dfrac{3x-1}{x-2}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $D_f=\R\setminus\{2\}$. Numérateur en $2$ : $3\cdot 2-1=5\ (>0)$.
+  \item $x-2$ : négatif si $x<2$ ($\to 0^{-}$ à gauche), positif si $x>2$ ($\to 0^{+}$ à droite).
+  \item $\displaystyle\lim_{x\to 2^{-}} f(x)=\frac{5}{0^{-}}=-\infty$ ; \quad
+        $\displaystyle\lim_{x\to 2^{+}} f(x)=\frac{5}{0^{+}}=+\infty$.
+  \item Les côtés diffèrent : \textbf{pas de limite globale} en $2$. La droite $x=2$ est
+        \textbf{asymptote verticale}.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[dénominateur qui change de signe]
+$g(x)=\dfrac{4}{3-x}$, numérateur $4>0$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $3-x>0$ si $x<3$, $3-x<0$ si $x>3$ (change de signe en $3$).
+  \item $x\to 3^{-}$ : $3-x\to 0^{+}$, donc $\displaystyle\lim_{x\to 3^{-}} g(x)=\frac{4}{0^{+}}=+\infty$ ;\\
+        $x\to 3^{+}$ : $3-x\to 0^{-}$, donc $\displaystyle\lim_{x\to 3^{+}} g(x)=\frac{4}{0^{-}}=-\infty$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[dénominateur au carré]
+$h(x)=\dfrac{-2}{(x+1)^2}$, numérateur $-2<0$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $(x+1)^2>0$ pour tout $x\neq -1$, et $(x+1)^2\to 0^{+}$ quand $x\to -1$ (des deux côtés).
+  \item $\displaystyle\lim_{x\to -1^{-}} h(x)=\frac{-2}{0^{+}}=-\infty$ ; \quad
+        $\displaystyle\lim_{x\to -1^{+}} h(x)=\frac{-2}{0^{+}}=-\infty$.
+  \item Les deux côtés donnent le \emph{même} résultat : $h$ possède une limite en $-1$,
+        $\displaystyle\lim_{x\to -1} h(x)=-\infty$. (Asymptote verticale $x=-1$.)
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[dénominateur factorisé]
+$k(x)=\dfrac{5}{(x-1)(x-4)}$, numérateur $5>0$ ; étude en $4$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item En $4$, $x-1\to 3>0$ : le facteur $(x-1)$ est positif au voisinage de $4$.
+  \item Le signe de $(x-1)(x-4)$ est donc celui de $(x-4)$ : négatif à gauche de $4$ ($\to 0^{-}$),
+        positif à droite ($\to 0^{+}$).
+  \item $\displaystyle\lim_{x\to 4^{-}} k(x)=\frac{5}{0^{-}}=-\infty$ ; \quad
+        $\displaystyle\lim_{x\to 4^{+}} k(x)=\frac{5}{0^{+}}=+\infty$. (Asymptote verticale $x=4$.)
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[reconnaître le bon outil]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item En $3$ : $\dfrac{3+2}{3-1}=\dfrac{5}{2}$ : \textbf{forme déterminée}, résultat $\dfrac52$.
+  \item En $1^{+}$ : numérateur $\to 3\neq 0$, dénominateur $x-1\to 0^{+}$ : forme $\dfrac{3}{0^{+}}$,
+        donc $\displaystyle\lim_{x\to 1^{+}}\frac{x+2}{x-1}=+\infty$.
+  \item En $2$ : numérateur $x^2-4\to 0$ et dénominateur $x-2\to 0$ : forme $\dfrac{0}{0}$
+        \textbf{indéterminée} — on ne conclut pas ici (il faudrait factoriser : $\frac{x^2-4}{x-2}=x+2\to 4$,
+        voir thèmes 3/5).
+\end{enumerate}
+\end{correction}
+
+\end{document}

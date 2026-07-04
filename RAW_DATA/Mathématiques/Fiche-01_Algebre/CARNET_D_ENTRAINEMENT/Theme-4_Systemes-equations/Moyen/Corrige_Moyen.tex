@@ -1,0 +1,69 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\euro}{\texteuro}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Systèmes d'équations}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Moyen}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Moyen — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[combinaison]
+\textbf{a)} $3\times$(1)$+2\times$(2) élimine $y$ : $9x+6y+4x-6y=15+24\Rightarrow 13x=39\Rightarrow x=3$, puis
+$3(3)+2y=5\Rightarrow y=-2$. $S=\{(3\,;-2)\}$.\\
+\textbf{b)} De (2), $y=9-3x$ ; dans (1) : $5x-2(9-3x)=4\Rightarrow 11x=22\Rightarrow x=2$, puis $y=3$. $S=\{(2\,;3)\}$.
+\end{corrige}
+
+\begin{corrige}[chasser les fractions]
+\textbf{a)} $\times6$ dans (1) : $3x+2y=18$ ; avec $x=y+1$ : $3(y+1)+2y=18\Rightarrow 5y=15\Rightarrow y=3$, $x=4$. $S=\{(4\,;3)\}$.\\
+\textbf{b)} (1) donne $x+y=8$ ; $\times3$ dans (2) : $x-3y=-3$. Par soustraction $4y=11\Rightarrow y=\tfrac{11}{4}$,
+puis $x=8-\tfrac{11}{4}=\tfrac{21}{4}$. $S=\bigl\{(\tfrac{21}{4}\,;\tfrac{11}{4})\bigr\}$.
+\end{corrige}
+
+\begin{corrige}[pivot de Gauss]
+$L_2\leftarrow L_2-2L_1$ et $L_3\leftarrow L_3-L_1$ :
+\[ \begin{cases} x+y+z=6\\ -y-3z=-11\\ -2y+z=-1\end{cases} \]
+De la 2\textsuperscript{e} ligne, $y=11-3z$ ; on l'injecte dans la 3\textsuperscript{e} :
+$-2(11-3z)+z=-1\Rightarrow 7z=21\Rightarrow z=3$. Puis $y=11-9=2$ et $x=6-2-3=1$.
+\[ S=\{(1\,;2\,;3)\}. \]
+\end{corrige}
+
+\begin{corrige}[mise en système]
+Soit $x$ (resp. $y$) le nombre de millions vaccinés par $A$ (resp. $B$). L'énoncé donne
+\[ \begin{cases} x+y=20\\ y+4=3x\end{cases}\iff \begin{cases} x+y=20\\ 3x-y=4\end{cases} \]
+En additionnant : $4x=24\Rightarrow x=6$, donc $y=14$. La région $B$ a vacciné \textbf{14 millions} de personnes.
+\end{corrige}
+
+\begin{corrige}[résoudre puis exploiter]
+\textbf{a)} (1)$-$(2) : $x-y=-5$ ; (1)$+$(2) : $5x+5y=15\Rightarrow x+y=3$. On résout : $x=-1$, $y=4$. $S=\{(-1\,;4)\}$.\\
+\textbf{b)} $x^{2}-y^{2}=(x-y)(x+y)=(-5)(3)=-15$.
+\end{corrige}
+
+\end{document}

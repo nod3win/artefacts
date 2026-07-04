@@ -1,0 +1,101 @@
+% =====================================================================
+%  Thème 2 — CORRIGÉ — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 2 — Corrigé Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 2 — Règle $\dfrac{a}{0^{\pm}}$ \& asymptote verticale}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Difficile}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[deux asymptotes verticales]
+$f(x)=\dfrac{x+5}{x^2-x-6}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $x^2-x-6=(x-3)(x+2)$ (racines $3$ et $-2$). Donc $D_f=\R\setminus\{-2,\,3\}$.
+  \item Tableau de signes de $(x-3)(x+2)$ (parabole tournée vers le haut) :
+  \begin{center}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{c|ccccccc}
+  \toprule
+  $x$ & $-\infty$ & & $-2$ & & $3$ & & $+\infty$\\
+  \midrule
+  $(x-3)(x+2)$ & & $+$ & $0$ & $-$ & $0$ & $+$ & \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  \item En $3$ : numérateur $\to 3+5=8>0$. Le dénominateur passe de $-$ (à gauche, $\to 0^{-}$) à $+$
+        (à droite, $\to 0^{+}$) :
+        \[ \lim_{x\to 3^{-}} f=\frac{8}{0^{-}}=-\infty,\qquad \lim_{x\to 3^{+}} f=\frac{8}{0^{+}}=+\infty. \]
+  \item En $-2$ : numérateur $\to -2+5=3>0$. Le dénominateur passe de $+$ (à gauche, $\to 0^{+}$) à $-$
+        (à droite, $\to 0^{-}$) :
+        \[ \lim_{x\to -2^{-}} f=\frac{3}{0^{+}}=+\infty,\qquad \lim_{x\to -2^{+}} f=\frac{3}{0^{-}}=-\infty. \]
+  \item \textbf{Deux asymptotes verticales} : $x=-2$ et $x=3$. ($f$ n'a de limite (globale) ni en $-2$ ni en $3$.)
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[contraste : multiplicité paire ou impaire]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $f=\dfrac{3}{x-1}$ : $x\to 1^{-}\Rightarrow x-1\to 0^{-}$, donc $\dfrac{3}{0^{-}}=-\infty$ ;
+        $x\to 1^{+}\Rightarrow \dfrac{3}{0^{+}}=+\infty$. Côtés opposés : \textbf{pas de limite} en $1$.
+  \item $g=\dfrac{3}{(x-1)^2}$ : $(x-1)^2\to 0^{+}$ des deux côtés, donc
+        $\displaystyle\lim_{x\to 1^{-}} g=\lim_{x\to 1^{+}} g=\dfrac{3}{0^{+}}=+\infty$. $g$ a une
+        \textbf{limite globale} : $+\infty$.
+  \item Le dénominateur $x-1$ \emph{change de signe} en $1$ (puissance impaire) : les deux côtés donnent des
+        infinis opposés, d'où l'absence de limite. Le dénominateur $(x-1)^2$ \emph{garde} un signe
+        (puissance paire, toujours $>0$) : les deux côtés donnent le même infini, d'où une limite globale.
+  \item $f\leftrightarrow$ \textbf{Allure A} (une branche vers $-\infty$, l'autre vers $+\infty$) ;
+        $g\leftrightarrow$ \textbf{Allure B} (les deux branches vers $+\infty$).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[mise en situation : dilution qui s'emballe]
+$C(t)=\dfrac{20}{5-t}$ sur $[0\,;5[$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $C(0)=\dfrac{20}{5}=4$ ; \ $C(3)=\dfrac{20}{2}=10$ ; \ $C(4{,}9)=\dfrac{20}{0{,}1}=200$.
+        La concentration \emph{explose} à mesure que $t$ approche $5$.
+  \item $t\to 5^{-}$ : $5-t\to 0^{+}$ et le numérateur $20>0$, donc
+        $\displaystyle\lim_{t\to 5^{-}} C(t)=\frac{20}{0^{+}}=+\infty$.
+  \item La droite $t=5$ est une \textbf{asymptote verticale} : le modèle prévoit une concentration qui
+        tend vers l'infini en $t=5$. Ce n'est \emph{pas} réaliste physiquement (une concentration reste
+        bornée) : le modèle n'est valable que sur $[0\,;5[$ et cesse d'avoir un sens en $t=5$ et au-delà.
+\end{enumerate}
+\end{correction}
+
+\end{document}

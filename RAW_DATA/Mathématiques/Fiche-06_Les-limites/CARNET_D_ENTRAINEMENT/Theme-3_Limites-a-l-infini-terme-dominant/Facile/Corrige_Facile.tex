@@ -1,0 +1,89 @@
+% =====================================================================
+%  Thème 3 — CORRIGÉ — Niveau FACILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Corrigé Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 3 — Limites à l'infini : le terme dominant}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Facile}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[monômes à l'infini]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to+\infty} x^3=+\infty$.
+  \item $\displaystyle\lim_{x\to-\infty} x^3=-\infty$ (exposant impair : garde le signe de $x$).
+  \item $\displaystyle\lim_{x\to-\infty} x^4=+\infty$ (exposant pair : $(-\infty)^{\text{pair}}=+\infty$).
+  \item $\displaystyle\lim_{x\to-\infty} (-x^2)=-\bigl(+\infty\bigr)=-\infty$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[polynômes : garder le terme dominant]
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to+\infty}(2x^3-5x^2+7)=\lim_{x\to+\infty}2x^3=+\infty$.
+  \item $\displaystyle\lim_{x\to-\infty}(x^2+10x+1)=\lim_{x\to-\infty}x^2=+\infty$ (terme dominant $x^2$, pair).
+  \item $\displaystyle\lim_{x\to+\infty}(-4x^5+x)=\lim_{x\to+\infty}(-4x^5)=-4\times(+\infty)=-\infty$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[rationnelles : degrés égaux]
+Même degré $\Rightarrow$ limite $=$ rapport des coefficients dominants.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to+\infty}\frac{3x^2+1}{5x^2-x}=\lim_{x\to+\infty}\frac{3x^2}{5x^2}=\frac{3}{5}$.
+  \item $\displaystyle\lim_{x\to-\infty}\frac{-2x+7}{4x+3}=\lim_{x\to-\infty}\frac{-2x}{4x}=\frac{-2}{4}=-\frac12$.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[rationnelles : degré du bas plus grand]
+$n<m\Rightarrow$ limite nulle.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to+\infty}\frac{2x+1}{x^2+3}=\lim_{x\to+\infty}\frac{2x}{x^2}=\lim_{x\to+\infty}\frac{2}{x}=0$.
+  \item $\displaystyle\lim_{x\to-\infty}\frac{5}{x^3}=0$ (numérateur constant, dénominateur $\to-\infty$).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[rationnelles : degré du haut plus grand]
+$n>m\Rightarrow$ limite infinie ; le signe se lit sur $\frac{a_n}{b_m}x^{n-m}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $\displaystyle\lim_{x\to+\infty}\frac{x^3+1}{2x+1}=\lim_{x\to+\infty}\frac{x^3}{2x}=\lim_{x\to+\infty}\frac{x^2}{2}=+\infty$.
+  \item $\displaystyle\lim_{x\to+\infty}\frac{-x^4}{3x^2+1}=\lim_{x\to+\infty}\frac{-x^4}{3x^2}=\lim_{x\to+\infty}\frac{-x^2}{3}=-\infty$.
+\end{enumerate}
+\end{correction}
+
+\end{document}

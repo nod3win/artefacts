@@ -1,0 +1,104 @@
+% =====================================================================
+%  Thème 3 — Relation fondamentale & formules d'addition — NIVEAU MOYEN
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 3 — Relation fondamentale \& formules d'addition}\\[2pt]
+{\color{primarydark}\textsc{Niveau Moyen — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Un sinus (ou cosinus) connu $\to$ le reste}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\cos^2\alpha=1-\dfrac{9}{25}=\dfrac{16}{25}$. Quadrant II : $\cos<0$, donc
+$\cos\alpha=-\dfrac{4}{5}$. Puis $\tg\alpha=\dfrac{\sin\alpha}{\cos\alpha}=\dfrac{3/5}{-4/5}=-\dfrac{3}{4}$.
+\item[\textbf{(b)}] \rep $\cos^2\alpha=1-\dfrac{1}{25}=\dfrac{24}{25}$. Quadrant IV : $\cos>0$, donc
+$\cos\alpha=\dfrac{\sqrt{24}}{5}=\dfrac{2\sqrt6}{5}$. Puis
+$\tg\alpha=\dfrac{-1/5}{2\sqrt6/5}=-\dfrac{1}{2\sqrt6}=-\dfrac{\sqrt6}{12}$.
+\item[\textbf{(c)}] \rep $\sin^2\alpha=1-\dfrac{4}{9}=\dfrac{5}{9}$. Quadrant III : $\sin<0$, donc
+$\sin\alpha=-\dfrac{\sqrt5}{3}$. Puis $\tg\alpha=\dfrac{-\sqrt5/3}{-2/3}=\dfrac{\sqrt5}{2}$.
+\end{itemize}
+
+\exo{Partir de la tangente}
+\rep On applique $1+\tg^2\alpha=\dfrac{1}{\cos^2\alpha}$ :
+\[
+1+\Big(-\tfrac32\Big)^2=1+\tfrac94=\tfrac{13}{4}=\dfrac{1}{\cos^2\alpha}
+\quad\Longrightarrow\quad \cos^2\alpha=\dfrac{4}{13}.
+\]
+Quadrant II : $\cos<0$, donc $\cos\alpha=-\dfrac{2}{\sqrt{13}}=-\dfrac{2\sqrt{13}}{13}$.
+Ensuite $\sin\alpha=\tg\alpha\cdot\cos\alpha=\Big(-\tfrac32\Big)\Big(-\tfrac{2\sqrt{13}}{13}\Big)
+=\dfrac{3\sqrt{13}}{13}$ (bien positif au quadrant II).
+
+\exo{Valeurs exactes par une différence ou une somme}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\cos15\degr=\cos(45\degr-30\degr)=\cos45\degr\cos30\degr+\sin45\degr\sin30\degr
+=\dfrac{\sqrt2}{2}\cdot\dfrac{\sqrt3}{2}+\dfrac{\sqrt2}{2}\cdot\dfrac12=\dfrac{\sqrt6+\sqrt2}{4}$.
+\item[\textbf{(b)}] \rep $\sin75\degr=\sin(45\degr+30\degr)=\sin45\degr\cos30\degr+\cos45\degr\sin30\degr
+=\dfrac{\sqrt6+\sqrt2}{4}$ (même valeur, car $75\degr=90\degr-15\degr$).
+\item[\textbf{(c)}] \rep $\cos105\degr=\cos(60\degr+45\degr)=\cos60\degr\cos45\degr-\sin60\degr\sin45\degr
+=\dfrac12\cdot\dfrac{\sqrt2}{2}-\dfrac{\sqrt3}{2}\cdot\dfrac{\sqrt2}{2}=\dfrac{\sqrt2-\sqrt6}{4}$
+(négatif : $105\degr$ est au quadrant II).
+\end{itemize}
+
+\exo{La tangente d'un angle non remarquable}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\tg15\degr=\dfrac{\tg45\degr-\tg30\degr}{1+\tg45\degr\tg30\degr}
+=\dfrac{1-\frac{1}{\sqrt3}}{1+\frac{1}{\sqrt3}}=\dfrac{\sqrt3-1}{\sqrt3+1}
+=\dfrac{(\sqrt3-1)^2}{(\sqrt3+1)(\sqrt3-1)}=\dfrac{4-2\sqrt3}{2}=2-\sqrt3$.
+\item[\textbf{(b)}] \rep $\tg105\degr=\dfrac{\tg60\degr+\tg45\degr}{1-\tg60\degr\tg45\degr}
+=\dfrac{\sqrt3+1}{1-\sqrt3}=\dfrac{(\sqrt3+1)(1+\sqrt3)}{(1-\sqrt3)(1+\sqrt3)}
+=\dfrac{4+2\sqrt3}{-2}=-2-\sqrt3$.
+\end{itemize}
+
+\exo{Passer à l'angle double}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep Quadrant I : $\cos\alpha=+\sqrt{1-\frac19}=\dfrac{2\sqrt2}{3}$. Alors
+\[
+\sin2\alpha=2\sin\alpha\cos\alpha=2\cdot\tfrac13\cdot\tfrac{2\sqrt2}{3}=\dfrac{4\sqrt2}{9},\qquad
+\cos2\alpha=1-2\sin^2\alpha=1-\tfrac29=\dfrac{7}{9}.
+\]
+\item[\textbf{(b)}] \rep Quadrant II : $\sin\alpha=+\sqrt{1-\frac{9}{25}}=\dfrac{4}{5}$. Alors
+\[
+\sin2\alpha=2\cdot\tfrac45\cdot\big(-\tfrac35\big)=-\dfrac{24}{25},\qquad
+\cos2\alpha=2\cos^2\alpha-1=2\cdot\tfrac{9}{25}-1=-\dfrac{7}{25}.
+\]
+\end{itemize}
+
+\end{document}

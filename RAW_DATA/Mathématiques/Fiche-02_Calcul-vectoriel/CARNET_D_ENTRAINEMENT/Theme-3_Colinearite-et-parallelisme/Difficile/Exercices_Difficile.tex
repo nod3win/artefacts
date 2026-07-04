@@ -1,0 +1,74 @@
+% =====================================================================
+%  Thème 3 — Colinéarité et parallélisme — Niveau DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Difficile — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Colinéarité et parallélisme — Niveau Difficile}\\[2pt]
+{\color{primary}\rule{0.5\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : colinéarité avec des radicaux, résolution d'une condition paramétrée,
+alignement dans une situation concrète et synthèse « vrai / faux » de type concours.}
+\vspace{2mm}
+
+\exo{1} \textbf{Colinéarité avec des radicaux.}
+On pose $\vec u\,\bigl(\sqrt3\,;\,1\bigr)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Montrer, par le déterminant, que $\vec v\,\bigl(3\,;\,\sqrt3\bigr)$ est colinéaire à $\vec u$,
+        puis déterminer le réel $k$ tel que $\vec v=k\,\vec u$.
+  \item Le vecteur $\vec w\,\bigl(2\,;\,2\sqrt3\bigr)$ est-il colinéaire à $\vec u$ ? Justifier.
+\end{enumerate}
+
+\exo{2} \textbf{Condition de colinéarité paramétrée.}
+On considère $\vec u\,(m;2)$ et $\vec v\,(8;m)$, où $m$ est un réel.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Exprimer le déterminant de $\vec u$ et $\vec v$ en fonction de $m$.
+  \item Déterminer toutes les valeurs de $m$ pour lesquelles $\vec u$ et $\vec v$ sont colinéaires.
+  \item Pour chaque valeur trouvée, préciser le réel $k$ tel que $\vec v=k\,\vec u$.
+\end{enumerate}
+
+\exo{3} \textbf{Mise en situation — le réseau d'antennes.}
+Sur une carte (repère orthonormé, en kilomètres), trois antennes sont placées en
+$A\,(1;1)$, $B\,(4;3)$ et $C\,(10;7)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Montrer que les trois antennes $A$, $B$, $C$ sont alignées.
+  \item On veut installer une nouvelle antenne $D$ \emph{sur la même droite}, d'abscisse $x_D=7$.
+        Déterminer son ordonnée $y_D$.
+  \item Vérifier que $\vc{BD}$ est bien colinéaire à $\vc{AB}$.
+\end{enumerate}
+
+\exo{4} \textbf{Synthèse « vrai / faux » (type concours).}
+Dans un repère orthonormé, on donne $A\,(0;3)$, $B\,(1;5)$, $C\,(-2;-1)$ et la droite
+$d:\ 4x-2y+5=0$. Pour chaque affirmation, répondre par \textbf{Vrai} ou \textbf{Faux} en justifiant.
+\begin{enumerate}[label=\textbf{\Alph*.},leftmargin=2.2em,itemsep=3pt]
+  \item Les points $A$, $B$, $C$ sont alignés.
+  \item Le vecteur $\vec u\,(1;2)$ est un vecteur directeur de la droite $(AB)$.
+  \item Les droites $(AB)$ et $d$ sont parallèles.
+  \item Les droites $(AB)$ et $d$ sont confondues.
+\end{enumerate}
+
+\end{document}

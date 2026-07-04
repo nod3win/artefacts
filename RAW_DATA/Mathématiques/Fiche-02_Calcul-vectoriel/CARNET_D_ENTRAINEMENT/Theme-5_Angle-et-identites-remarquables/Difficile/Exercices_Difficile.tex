@@ -1,0 +1,76 @@
+% =====================================================================
+%  Thème 5 — Angle et identités remarquables — DIFFICILE — Exercices
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[a4paper,margin=2.1cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{222,70,80}
+\definecolor{primarydark}{RGB}{150,30,42}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 2} — Calcul vectoriel}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 5 — Difficile — Exercices}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\newcommand{\vc}[1]{\overrightarrow{#1}}
+\providecommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\exo}[1]{\medskip\noindent{\color{primary}\bfseries\large Exercice #1.}\par\nopagebreak\smallskip}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{primarydark}Angle et identités remarquables — Niveau Difficile}\\[2pt]
+{\color{primary}\rule{0.55\linewidth}{1.1pt}}
+\end{center}
+\vspace{1mm}
+{\small\itshape Objectif : remonter d'un angle imposé vers une inconnue, mener une étude paramétrée
+complète et conduire une synthèse « vrai / faux » de type concours.}
+\vspace{2mm}
+
+\exo{1} \textbf{Retrouver une inconnue à partir d'un angle.}
+Soit $\vec u\,(1;x)$ et $\vec v\,(\sqrt3;1)$, où $x$ est un réel \emph{strictement positif}.
+On veut que l'angle entre $\vec u$ et $\vec v$ vaille $30^\circ$ (soit $\tfrac{\pi}{6}$).
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Exprimer $\vec u\cdot\vec v$, $\norm{\vec u}$ et $\norm{\vec v}$.
+  \item Écrire l'équation $\cos30^\circ=\dfrac{\vec u\cdot\vec v}{\norm{\vec u}\,\norm{\vec v}}$
+        et l'amener à la forme $\sqrt3+x=\sqrt3\,\sqrt{1+x^2}$.
+  \item Résoudre (en élevant au carré) et déterminer $x$.
+\end{enumerate}
+
+\exo{2} \textbf{Étude paramétrée complète.}
+On donne $\vec u\,(a;a)$ et $\vec v\,\bigl(a;\tfrac{a}{3}\bigr)$, avec $a>0$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Calculer $\norm{\vec u}$ et $\norm{\vec v}$ en fonction de $a$.
+  \item Calculer $\vec u\cdot\vec v$ en fonction de $a$.
+  \item En déduire $\cos(\vec u,\vec v)$ et vérifier qu'il \emph{ne dépend pas} de $a$.
+  \item Donner une valeur approchée de l'angle (au dixième de degré).
+\end{enumerate}
+
+\exo{3} \textbf{Identités remarquables et loi du parallélogramme.}
+On donne $\vec u\,(3;1)$ et $\vec v\,(1;2)$.
+\begin{enumerate}[label=\textbf{\alph*)},leftmargin=2em,itemsep=3pt]
+  \item Calculer $\norm{\vec u}^2$, $\norm{\vec v}^2$ et $\vec u\cdot\vec v$.
+  \item À l'aide des identités remarquables, calculer $\norm{\vec u+\vec v}^2$ et $\norm{\vec u-\vec v}^2$.
+  \item Vérifier l'\emph{égalité du parallélogramme} :
+        $\norm{\vec u+\vec v}^2+\norm{\vec u-\vec v}^2=2\bigl(\norm{\vec u}^2+\norm{\vec v}^2\bigr)$.
+\end{enumerate}
+
+\exo{4} \textbf{Synthèse « vrai / faux » (type concours).}
+On donne $\vec u\,(2;\sqrt5)$ et $\vec v\,(-4;0)$. Répondre par \textbf{Vrai} ou \textbf{Faux} en
+justifiant.
+\begin{enumerate}[label=\textbf{\Alph*.},leftmargin=2.2em,itemsep=3pt]
+  \item $\norm{\vec u}=3$.
+  \item Le produit scalaire $\vec u\cdot\vec v$ est un nombre négatif.
+  \item $\norm{\vec u-\vec v}^2=41$.
+  \item L'angle entre $\vec u$ et $\vec v$ est aigu.
+\end{enumerate}
+
+\end{document}

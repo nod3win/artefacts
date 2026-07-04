@@ -1,0 +1,113 @@
+% =====================================================================
+%  Thème 1 — Conversions & cercle trigonométrique — NIVEAU DIFFICILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 1 — Conversions \& cercle trigonométrique}\\[2pt]
+{\color{primarydark}\textsc{Niveau Difficile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{Le grand angle négatif}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep On ajoute des tours entiers ($2\pi=\frac{12\pi}{6}$) jusqu'à tomber dans
+$[0;2\pi[$ :
+\[
+-\frac{25\pi}{6}+3\times 2\pi=-\frac{25\pi}{6}+\frac{36\pi}{6}=\frac{11\pi}{6}=\beta.
+\]
+\item[\textbf{(b)}] \rep $\beta=\dfrac{11\pi}{6}\times\dfrac{180}{\pi}=\dfrac{11\times180}{6}=330\degr$ :
+c'est le \textbf{quadrant IV}.
+\item[\textbf{(c)}] \rep Au quadrant IV : $\cos\beta>0$, $\sin\beta<0$, $\tg\beta<0$.
+\item[\textbf{(d)}] \rep Référence $360\degr-330\degr=30\degr$. Comme $\alpha$ et $\beta$ ont les
+mêmes nombres trigonométriques :
+\[
+\cos\alpha=+\cos30\degr=\frac{\sqrt3}{2},\quad
+\sin\alpha=-\sin30\degr=-\frac12,\quad
+\tg\alpha=-\tg30\degr=-\frac{\sqrt3}{3}.
+\]
+\end{itemize}
+
+\exo{Mise en situation : la grande roue}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $210\degr=210\times\dfrac{\pi}{180}=\dfrac{7\pi}{6}$.
+\item[\textbf{(b)}] \rep $210\degr$ est entre $180\degr$ et $270\degr$ : \textbf{quadrant III}.
+L'ordonnée $y=\sin$ y est \textbf{négative} (la nacelle est en bas).
+\item[\textbf{(c)}] \rep Référence $210\degr-180\degr=30\degr$, avec $\cos<0$ et $\sin<0$ :
+\[
+M=\bigl(\cos210\degr\,;\,\sin210\degr\bigr)=\left(-\frac{\sqrt3}{2}\,;\,-\frac12\right).
+\]
+\item[\textbf{(d)}] \rep Total $210\degr+270\degr=480\degr$, ramené : $480\degr-360\degr=120\degr$.
+$120\degr$ est au quadrant II ($\cos<0,\ \sin>0$), référence $60\degr$ :
+\[
+M=\bigl(\cos120\degr\,;\,\sin120\degr\bigr)=\left(-\frac12\,;\,\frac{\sqrt3}{2}\right).
+\]
+\end{itemize}
+
+\exo{Retrouver un angle à partir d'une valeur}
+\begin{itemize}[leftmargin=1.4em,itemsep=2pt]
+\item[\textbf{(a)}] \rep $\cos x=-\dfrac12$ : valeur négative $\Rightarrow$ quadrants II et III
+(référence $60\degr=\frac{\pi}{3}$). Donc
+$x=\pi-\dfrac{\pi}{3}=\dfrac{2\pi}{3}$ \ ou \ $x=\pi+\dfrac{\pi}{3}=\dfrac{4\pi}{3}$.
+\item[\textbf{(b)}] \rep $\sin x=\dfrac{\sqrt2}{2}$ : valeur positive $\Rightarrow$ quadrants I et II
+(référence $45\degr=\frac{\pi}{4}$). Donc
+$x=\dfrac{\pi}{4}$ \ ou \ $x=\pi-\dfrac{\pi}{4}=\dfrac{3\pi}{4}$.
+\item[\textbf{(c)}] \rep \textbf{Non} : le cosinus est toujours compris entre $-1$ et $1$, or
+$\dfrac32>1$. Aucune solution.
+\item[\textbf{(d)}] \rep Placement des quatre solutions :
+\begin{center}
+\begin{tikzpicture}[scale=1.9,line cap=round,>=Stealth]
+  \draw[primary,line width=1pt] (0,0) circle (1);
+  \draw[->,black!70] (-1.3,0)--(1.35,0) node[right]{\scriptsize$\cos$};
+  \draw[->,black!70] (0,-1.3)--(0,1.35) node[above]{\scriptsize$\sin$};
+  \foreach \a/\lab/\pos in {120/\frac{2\pi}{3}/{above left}, 240/\frac{4\pi}{3}/{below left},
+      45/\frac{\pi}{4}/{above right}, 135/\frac{3\pi}{4}/{above left}}{
+     \fill[primarydark] (\a:1) circle (0.028);
+  }
+  \node[primarydark,font=\scriptsize,above right] at (45:1) {$\frac{\pi}{4}$};
+  \node[primarydark,font=\scriptsize,above left] at (135:1) {$\frac{3\pi}{4}$};
+  \node[primarydark,font=\scriptsize,left] at (120:1) {$\frac{2\pi}{3}$};
+  \node[primarydark,font=\scriptsize,below left] at (240:1) {$\frac{4\pi}{3}$};
+  \draw[black!35,dashed] (-1,{-sin(60)})--(1,{-sin(60)});
+  \fill (0,0) circle (0.02);
+\end{tikzpicture}
+\end{center}
+\end{itemize}
+
+\end{document}

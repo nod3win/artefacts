@@ -1,0 +1,152 @@
+% ===== PRÉAMBULE COMMUN =====
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array,booktabs,colortbl}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,decorations.markings,intersections,backgrounds}
+\pgfplotsset{compat=1.18}
+
+\definecolor{primary}{RGB}{226,74,88}
+\definecolor{primarydark}{RGB}{150,28,42}
+\definecolor{methcol}{RGB}{40,90,150}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{thmcol}{RGB}{0,140,120}
+\definecolor{courbe}{RGB}{32,110,200}
+\definecolor{courbeder}{RGB}{210,70,40}
+\definecolor{tang}{RGB}{0,150,90}
+\definecolor{grille}{RGB}{200,205,215}
+\definecolor{plus}{RGB}{200,60,60}
+\definecolor{moins}{RGB}{30,90,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{piege}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exo}[1][]{boxbase,colback=primary!4,colframe=primary,
+  title={\textsc{Exercice}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+\newtcolorbox{corr}[1][]{boxbase,colback=thmcol!5,colframe=thmcol,
+  title={\textsc{Corrigé}\ifx\relax#1\relax\relax\else\textmd{~#1}\fi}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\tg}{\operatorname{tg}}
+\newcommand{\cotg}{\operatorname{cotg}}
+\newcommand{\arctg}{\operatorname{arctg}}
+\newcommand{\arccotg}{\operatorname{arccotg}}
+\newcommand{\limh}{\lim_{h\to 0}}
+
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 5} — Tangente \& lecture graphique}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé --- Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Corrigé --- Lecture graphique \& reconstitution}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Niveau Difficile \quad$\bullet$\quad 3 exercices}
+\end{center}
+\vspace{2mm}
+
+\begin{corr}[1 --- Lecture graphique de $f(x)=x^3-3x$]
+\textbf{a) Signe de $f'$.} $f'$ traduit le sens de variation.
+\begin{itemize}[leftmargin=6mm,itemsep=1pt]
+\item Sur $]-\infty;-1[$ la courbe \textbf{monte} $\Rightarrow f'>0$.
+\item Sur $]-1;1[$ la courbe \textbf{descend} $\Rightarrow f'<0$.
+\item Sur $]1;+\infty[$ la courbe \textbf{remonte} $\Rightarrow f'>0$.
+\end{itemize}
+Vérification analytique : $f'(x)=3x^2-3=3(x-1)(x+1)$, du signe attendu $(+,-,+)$.
+
+\smallskip
+\textbf{b) Valeurs $f'(-1)$ et $f'(1)$.} En $x=-1$ (maximum) et $x=1$ (minimum) la tangente est \textbf{horizontale}, donc
+\[
+f'(-1)=0\qquad\text{et}\qquad f'(1)=0.
+\]
+(On retrouve $f'(\pm 1)=3\cdot 1-3=0$.)
+
+\smallskip
+\textbf{c) Signe de $f''$ et point d'inflexion.} $f''(x)=6x$.
+\begin{itemize}[leftmargin=6mm,itemsep=1pt]
+\item Sur $]-\infty;0[$ : $f''<0$, la courbe est \textbf{concave} ($\smallfrown$).
+\item Sur $]0;+\infty[$ : $f''>0$, la courbe est \textbf{convexe} ($\smallsmile$).
+\end{itemize}
+$f''$ change de signe en $x=0$ : c'est le \textbf{point d'inflexion}, d'abscisse $\boxed{x=0}$ (point $(0;0)$).
+\end{corr}
+
+\begin{corr}[2 --- Reconnaître la courbe de $f'$]
+\textbf{a)} Un extremum donne une tangente horizontale, donc $f'=0$ en ce point :
+\[
+f'(0)=0\qquad\text{et}\qquad f'(2)=0.
+\]
+\textbf{b) Signe de $f'$.} Un \textbf{maximum} en $0$ : $f$ monte avant, descend après $\Rightarrow f'>0$ sur $]-\infty;0[$ puis $f'<0$ sur $]0;2[$. Un \textbf{minimum} en $2$ : $f$ descend avant, monte après $\Rightarrow f'<0$ sur $]0;2[$ (cohérent) puis $f'>0$ sur $]2;+\infty[$. Bilan : $(+,-,+)$.
+
+\smallskip
+\textbf{c)} $f$ est cubique donc $f'$ est un \textbf{polynôme du second degré} (une parabole). Elle s'annule en $0$ et $2$ (racines) : $f'(x)=k\,x(x-2)$. Comme $f'>0$ « à l'extérieur » des racines et $f'<0$ « entre » elles, la parabole est \textbf{tournée vers le haut} ($k>0$), et elle passe bien par $(0;0)$ et $(2;0)$.
+
+\smallskip
+\textbf{Illustration} avec l'exemple $f(x)=x^3-3x^2$ (alors $f'(x)=3x^2-6x=3x(x-2)$) :
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11cm,height=6.6cm,axis lines=middle,
+  xlabel={$x$},ylabel={$y$},xlabel style={right},ylabel style={above},
+  xmin=-1.4,xmax=3.4,ymin=-5.2,ymax=6.2,
+  xtick={-1,0,1,2,3},ytick={-4,-2,2,4},
+  grid=both,grid style={grille!55,very thin},tick label style={font=\scriptsize},
+  legend pos=north west,legend style={font=\scriptsize},
+]
+\addplot[courbe,very thick,domain=-1.15:3.15,samples=120]{x^3-3*x^2};
+\addlegendentry{$\mathcal{C}_f:\ f(x)=x^3-3x^2$}
+\addplot[courbeder,very thick,domain=-1.15:3.15,samples=100]{3*x^2-6*x};
+\addlegendentry{$\mathcal{C}_{f'}:\ f'(x)=3x(x-2)$}
+\addplot[only marks,mark=*,mark size=1.7pt,black]coordinates{(0,0)(2,0)};
+\node[anchor=south west,font=\scriptsize] at (axis cs:0,0){$0$};
+\node[anchor=north west,font=\scriptsize] at (axis cs:2,0){$2$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+La parabole rouge ($\mathcal{C}_{f'}$) est bien tournée vers le haut et coupe l'axe en $x=0$ et $x=2$, précisément là où $\mathcal{C}_f$ (bleue) présente son maximum et son minimum.
+\end{corr}
+
+\begin{corr}[3 --- Reconstituer $f(x)=ax^2+bx+c$]
+\textbf{a) Traduction des conditions.} On a $f(x)=ax^2+bx+c$ et $f'(x)=2ax+b$.
+\begin{itemize}[leftmargin=6mm,itemsep=1pt]
+\item[(i)] $\mathcal{C}_f$ passe par $(0;2)$ : $f(0)=2\Rightarrow c=2$.
+\item[(ii)] tangente horizontale en $x=1$ : $f'(1)=0\Rightarrow 2a+b=0$.
+\item[(iii)] $f(1)=0\Rightarrow a+b+c=0$.
+\end{itemize}
+\textbf{b) Résolution du système.} De (i) : $c=2$. On reporte dans (iii) : $a+b+2=0$, soit $a+b=-2$. Avec (ii) $b=-2a$ :
+\[
+a+(-2a)=-2\ \Longrightarrow\ -a=-2\ \Longrightarrow\ a=2,\quad b=-2a=-4,\quad c=2.
+\]
+\textbf{c) Expression et factorisation.}
+\[
+f(x)=2x^2-4x+2=2\,(x^2-2x+1)=\boxed{2\,(x-1)^2}.
+\]
+Contrôle : $f(0)=2$ \checkmark ; $f(1)=0$ \checkmark ; $f'(x)=4x-4$, $f'(1)=0$ \checkmark. La parabole a bien son sommet en $(1;0)$, où la tangente est horizontale.
+\end{corr}
+
+\end{document}

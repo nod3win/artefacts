@@ -1,0 +1,96 @@
+% =====================================================================
+%  Thème 3 — Relation fondamentale & formules d'addition — NIVEAU FACILE
+%  Corrigé
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc}
+
+\definecolor{primary}{RGB}{214,51,108}
+\definecolor{primarydark}{RGB}{140,20,64}
+\definecolor{excol}{RGB}{0,135,90}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\cotg}{cotg}
+\newcommand{\degr}{^{\circ}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcounter{exo}
+\newcommand{\exo}[1]{\medskip\refstepcounter{exo}%
+  \noindent{\large\bfseries\color{primarydark}Exercice \theexo}%
+  \ \textcolor{primary}{\textbullet}\ \textbf{#1}\par\nopagebreak\smallskip}
+\newcommand{\rep}{\textcolor{excol}{$\blacktriangleright$}\ }
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primary}Thème 3 — Relation fondamentale \& formules d'addition}\\[2pt]
+{\color{primarydark}\textsc{Niveau Facile — Corrigé détaillé}}
+\end{center}
+\hrule height 1pt
+\medskip
+
+\exo{La relation fondamentale de tête}
+On isole $\sin^2\alpha=1-\cos^2\alpha$.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\sin^2\alpha=1-\dfrac{9}{25}=\dfrac{16}{25}$.
+\item[\textbf{(b)}] \rep $\sin^2\alpha=1-\dfrac{3}{4}=\dfrac{1}{4}$.
+\item[\textbf{(c)}] \rep $\sin^2\alpha=1-\dfrac{1}{9}=\dfrac{8}{9}$.
+\item[\textbf{(d)}] \rep $\sin^2\alpha=1-0=1$ (l'angle est $\pm\frac{\pi}{2}$).
+\end{itemize}
+
+\exo{Le signe décidé par le quadrant}
+On calcule $\cos^2\alpha=1-\sin^2\alpha$, puis on choisit le signe avec le quadrant.
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos^2\alpha=1-\dfrac{16}{25}=\dfrac{9}{25}$. Quadrant I : $\cos>0$, donc
+$\cos\alpha=+\dfrac{3}{5}$.
+\item[\textbf{(b)}] \rep $\cos^2\alpha=1-\dfrac{1}{4}=\dfrac{3}{4}$. Quadrant II : $\cos<0$, donc
+$\cos\alpha=-\dfrac{\sqrt3}{2}$.
+\item[\textbf{(c)}] \rep $\cos^2\alpha=1-\dfrac{1}{2}=\dfrac{1}{2}$. Quadrant III : $\cos<0$, donc
+$\cos\alpha=-\dfrac{\sqrt2}{2}$.
+\end{itemize}
+
+\exo{Reconnaître les trois visages de $\cos 2a$}
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos2a=2\cos^2a-1$ (uniquement du cosinus).
+\item[\textbf{(b)}] \rep $\cos2a=1-2\sin^2a$ (uniquement du sinus).
+\item[\textbf{(c)}] \rep $\sin2a=2\sin a\cos a$.
+\end{itemize}
+
+\exo{Une addition sur des angles connus}
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos\!\Big(\dfrac{\pi}{3}+\dfrac{\pi}{6}\Big)
+=\dfrac12\cdot\dfrac{\sqrt3}{2}-\dfrac{\sqrt3}{2}\cdot\dfrac12=0$
+(c'est bien $\cos\frac{\pi}{2}=0$).
+\item[\textbf{(b)}] \rep $\sin\!\Big(\dfrac{\pi}{4}+\dfrac{\pi}{4}\Big)
+=\dfrac{\sqrt2}{2}\cdot\dfrac{\sqrt2}{2}+\dfrac{\sqrt2}{2}\cdot\dfrac{\sqrt2}{2}
+=\dfrac12+\dfrac12=1$ (c'est $\sin\frac{\pi}{2}=1$).
+\item[\textbf{(c)}] \rep $\cos\!\Big(\dfrac{\pi}{2}+\dfrac{\pi}{3}\Big)
+=\underbrace{\cos\tfrac{\pi}{2}}_{0}\cos\tfrac{\pi}{3}-\underbrace{\sin\tfrac{\pi}{2}}_{1}\sin\tfrac{\pi}{3}
+=-\dfrac{\sqrt3}{2}$.
+\end{itemize}
+
+\exo{Linéariser}
+\begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+\item[\textbf{(a)}] \rep $\cos^2x=\dfrac{1+\cos2x}{2}$.
+\item[\textbf{(b)}] \rep $\sin^2x=\dfrac{1-\cos2x}{2}$.
+\item[\textbf{(c)}] \rep $\cos^2x-\sin^2x=\dfrac{1+\cos2x}{2}-\dfrac{1-\cos2x}{2}=\cos2x$
+(on retrouve la définition de $\cos2x$).
+\end{itemize}
+
+\end{document}

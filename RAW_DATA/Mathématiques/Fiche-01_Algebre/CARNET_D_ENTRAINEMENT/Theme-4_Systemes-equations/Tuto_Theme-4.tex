@@ -1,0 +1,107 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{arrows.meta,calc}
+\pgfplotsset{compat=1.18}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{methcol}{RGB}{52,92,148}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{curveA}{RGB}{0,90,200}
+\definecolor{curveB}{RGB}{210,30,40}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox{cle}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{À retenir}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!7,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newtcolorbox{exemplebox}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Systèmes d'équations}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Thème 4 — Systèmes d'équations}\\[2pt]
+{\color{primary}\rule{0.5\textwidth}{1.2pt}}\\[4pt]
+{\small\itshape Tutoriel — la mécanique à maîtriser avant les exercices}
+\end{center}
+
+\vspace{1mm}
+\noindent Un \textbf{système} regroupe plusieurs équations à satisfaire \emph{simultanément}. Sa
+solution, c'est le jeu de valeurs qui convient à \emph{toutes} les équations à la fois.
+Géométriquement (2 inconnues), chaque équation est une droite et la solution est leur
+\textbf{point d'intersection}.
+
+\begin{minipage}{0.56\textwidth}
+\begin{cle}[deux méthodes à 2 inconnues]
+\textbf{Substitution} : isoler une inconnue dans une équation, la remplacer dans l'autre.\\[2pt]
+\textbf{Combinaison} : multiplier les équations pour rendre \emph{opposés} les coefficients d'une
+inconnue, puis additionner pour l'éliminer.
+\end{cle}
+\end{minipage}\hfill
+\begin{minipage}{0.4\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=5.6cm,height=4.4cm,axis lines=middle,
+ xmin=-0.5,xmax=8.5,ymin=-2.5,ymax=6,xtick=\empty,ytick=\empty,
+ xlabel={\scriptsize$x$},ylabel={\scriptsize$y$}]
+ \addplot[curveA,line width=1pt,domain=0:8.3]{(5-x)/2};
+ \addplot[curveB,line width=1pt,domain=3.8:8]{20-3*x};
+ \fill (axis cs:7,-1) circle (2pt);
+ \node[font=\scriptsize,anchor=south west] at (axis cs:6.2,-1){$(7,-1)$};
+\end{axis}
+\end{tikzpicture}\\[-1mm]
+{\scriptsize Intersection de $x+2y=5$ et $3x+y=20$.}
+\end{minipage}
+
+\begin{exemplebox}[le même système, par les deux méthodes]
+$\begin{cases} x+2y=5\\ 3x+y=20\end{cases}$\\[2pt]
+\textbf{Substitution :} $x=5-2y$, puis $3(5-2y)+y=20\Rightarrow 15-5y=20\Rightarrow y=-1$, d'où $x=7$.\\
+\textbf{Combinaison :} $3\times$(1)$-$(2) : $\ (3x+6y)-(3x+y)=15-20\Rightarrow 5y=-5\Rightarrow y=-1$, puis $x=7$.\\
+Dans les deux cas $S=\{(7\,;-1)\}$.
+\end{exemplebox}
+
+\begin{methode}[3 inconnues : le pivot de Gauss]
+On rend le système « triangulaire » en éliminant les inconnues une à une, par des opérations qui ne
+changent pas les solutions ($L_i\leftarrow L_i-k\,L_j$) :
+\begin{enumerate}[leftmargin=1.6em,topsep=1pt,itemsep=0.5pt]
+  \item garder $L_1$, s'en servir pour éliminer $x$ dans $L_2$ et $L_3$ ;
+  \item garder la nouvelle $L_2$, éliminer une 2\textsuperscript{e} inconnue dans $L_3$ ;
+  \item $L_3$ ne contient plus qu'une inconnue : on la calcule, puis on \emph{remonte}.
+\end{enumerate}
+\end{methode}
+
+\begin{exemplebox}[pivot de Gauss $3\times3$]
+$\begin{cases} x+2y+z=4\ (L_1)\\ 2x+y-z=5\ (L_2)\\ 3x+y+2z=3\ (L_3)\end{cases}$
+$\xrightarrow[L_3\leftarrow L_3-3L_1]{L_2\leftarrow L_2-2L_1}$
+$\begin{cases} x+2y+z=4\\ -3y-3z=-3\\ -5y-z=-9\end{cases}$\\[3pt]
+Puis $L_3\leftarrow L_2-3L_3$ donne $12y=24\Rightarrow y=2$ ; on remonte : $z=-1$ puis $x=1$.
+Donc $S=\{(1\,;2\,;-1)\}$.
+\end{exemplebox}
+
+\begin{methode}[traduire un énoncé en système]
+(1) \textbf{Nommer} les inconnues ; (2) \textbf{traduire} chaque phrase en une équation (« le triple de »,
+« augmenté de », « la somme »\dots) ; (3) \textbf{nettoyer} (chasser les fractions en multipliant) ;
+(4) \textbf{résoudre} et \textbf{interpréter} le résultat dans le contexte.
+\end{methode}
+
+\end{document}

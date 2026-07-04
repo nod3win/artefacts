@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{primary}{RGB}{222,49,99}
+\definecolor{primarydark}{RGB}{150,22,55}
+\definecolor{excol}{RGB}{0,135,90}
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+  left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,fonttitle=\bfseries,coltitle=white}}
+\newtcolorbox[auto counter]{corrige}[1][]{boxbase,colback=excol!4,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\euro}{\texteuro}
+\newcommand{\ds}{\displaystyle}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Thème 4} — Systèmes d'équations}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Corrigé — Facile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{primarydark} Niveau Facile — Corrigé}\\[2pt]
+{\color{primary}\rule{0.45\textwidth}{1.2pt}}
+\end{center}
+\vspace{1mm}
+
+\begin{corrige}[substitution]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item a) $2x+(x+1)=7\Rightarrow 3x=6\Rightarrow x=2$, puis $y=3$. $S=\{(2\,;3)\}$.
+  \item b) $2y+3y=10\Rightarrow y=2$, puis $x=4$. $S=\{(4\,;2)\}$.
+  \item c) $x+3=5\Rightarrow x=2$. $S=\{(2\,;3)\}$.
+\end{itemize}
+\end{corrige}
+
+\begin{corrige}[combinaison]
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item a) $(x+y)+(x-y)=6+2\Rightarrow 2x=8\Rightarrow x=4$, puis $y=2$. $S=\{(4\,;2)\}$.
+  \item b) $(2x+y)+(x-y)=7+2\Rightarrow 3x=9\Rightarrow x=3$, puis $y=1$. $S=\{(3\,;1)\}$.
+  \item c) $(3x+2y)+(3x-2y)=12+0\Rightarrow 6x=12\Rightarrow x=2$, puis $y=3$. $S=\{(2\,;3)\}$.
+\end{itemize}
+\end{corrige}
+
+\begin{corrige}[vérifier une solution]
+On remplace $(x\,;y)=(2\,;-1)$ :
+\begin{itemize}[leftmargin=1.4em,topsep=1pt,itemsep=1pt]
+  \item a) $2+(-1)=1$ \checkmark \ et $2-(-1)=3$ \checkmark : \textbf{oui}, c'est une solution.
+  \item b) $2(2)+(-1)=3$ \checkmark, mais $2+2(-1)=0\neq1$ : \textbf{non}.
+  \item c) $2+(-1)=1$ \checkmark, mais $3(2)-(-1)=7\neq5$ : \textbf{non}.
+\end{itemize}
+\end{corrige}
+
+\begin{corrige}[traduire en système]
+\[ \text{a) }\begin{cases} x+y=20\\ x-y=4\end{cases}\qquad
+   \text{b) }\begin{cases} x+y=5\\ 2x+y=7\end{cases}\qquad
+   \text{c) }\begin{cases} x=3y\\ x+y=16\end{cases} \]
+\end{corrige}
+
+\begin{corrige}[systèmes $2\times2$]
+\textbf{a)} $3\times$(1)$-$(2) : $5y=-5\Rightarrow y=-1$, puis $x=7$. $S=\{(7\,;-1)\}$.\\
+\textbf{b)} $x=y-1$ ; $2(y-1)+3y=8\Rightarrow 5y=10\Rightarrow y=2$, puis $x=1$. $S=\{(1\,;2)\}$.
+\end{corrige}
+
+\end{document}

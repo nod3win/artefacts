@@ -1,0 +1,128 @@
+% =====================================================================
+%  CARNET D'ENTRAÎNEMENT — FICHE 6 : Les limites
+%  Thème 4 — Radicaux : mise en facteur & binôme conjugué
+%  TUTORIEL
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{defcol}{RGB}{0,114,178}
+\definecolor{attncol}{RGB}{200,40,55}
+\definecolor{excol}{RGB}{0,135,90}
+\definecolor{methcol}{RGB}{90,90,100}
+\definecolor{remarkcol}{RGB}{120,94,200}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox{idee}[1][]{boxbase,colback=defcol!6,colframe=defcol,
+  title={\textsc{Idée clé}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{methode}[1][]{boxbase,colback=methcol!8,colframe=methcol,sharp corners,
+  title={\textsc{Méthode}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{exemple}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Exemple}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{attention}[1][]{boxbase,colback=attncol!6,colframe=attncol,
+  title={\textsc{Attention}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+\newtcolorbox{astuce}[1][]{boxbase,colback=remarkcol!7,colframe=remarkcol,
+  title={\textsc{Astuce}\ifx\relax#1\relax\relax\else\textmd{ : \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 4 — Tutoriel}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{primarydark}}{\thesection}{0.6em}{}
+\titlespacing{\section}{0pt}{6pt}{3pt}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{tcolorbox}[boxbase,colback=primary!12,colframe=primary,
+   title={\Large Thème 4 — Radicaux : facteur dominant \& binôme conjugué}]
+\textbf{Mécanique travaillée :} calculer une limite contenant des \emph{racines carrées}. Deux gestes :
+(1) \textbf{mettre le terme dominant en facteur} sous la racine, en se rappelant $\sqrt{x^2}=|x|$ ;
+(2) multiplier par l'\textbf{expression conjuguée} pour lever une indétermination $\infty-\infty$ ou
+$\frac00$ due à une différence de racines.
+\end{tcolorbox}
+
+\section{1. Sortir le terme dominant d'une racine : $\sqrt{x^2}=|x|$}
+
+\begin{idee}[la valeur absolue est incontournable]
+\[ \boxed{\ \sqrt{x^2}=|x|\ }\quad\text{avec}\quad |x|=\begin{cases} x & \text{si }x\geq 0\ (\text{côté }+\infty),\\ -x & \text{si }x<0\ (\text{côté }-\infty).\end{cases} \]
+\end{idee}
+
+\begin{methode}[radical à l'infini]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1pt]
+  \item Sous la racine, mettre en facteur la plus haute puissance (souvent $x^2$).
+  \item Sortir : $\sqrt{x^2\cdot(\dots)}=|x|\sqrt{\dots}$, puis remplacer $|x|$ par $x$ (en $+\infty$) ou $-x$ (en $-\infty$).
+  \item La parenthèse sous la racine tend vers $1$ : conclure.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[le rôle de $|x|$]
+$\sqrt{x^2-2x+5}=|x|\sqrt{1-\tfrac2x+\tfrac{5}{x^2}}\ \xrightarrow[x\to\pm\infty]{}\ |x|$.
+\[ \lim_{x\to+\infty}\sqrt{x^2-2x+5}=\lim_{x\to+\infty} x=+\infty,\qquad
+   \lim_{x\to-\infty}\sqrt{x^2-2x+5}=\lim_{x\to-\infty}(-x)=+\infty. \]
+\end{exemple}
+
+\section{2. Le binôme conjugué}
+
+\begin{idee}[faire disparaître les racines]
+\[ \boxed{\ \bigl(\sqrt{A}-\sqrt{B}\bigr)\bigl(\sqrt{A}+\sqrt{B}\bigr)=A-B\ } \]
+On multiplie \emph{haut et bas} par le conjugué de la partie qui pose problème : les racines
+disparaissent, l'indétermination se lève.
+\end{idee}
+
+\begin{methode}[lever $\infty-\infty$ ou $\frac00$ avec des racines]
+\begin{enumerate}[leftmargin=1.9em,topsep=2pt,itemsep=1pt]
+  \item Repérer la différence de racines responsable de l'indétermination.
+  \item Multiplier numérateur et dénominateur par son conjugué (on change le signe central).
+  \item Développer avec $A-B$ : les racines s'en vont. Simplifier, puis calculer la limite.
+\end{enumerate}
+\end{methode}
+
+\begin{exemple}[$\infty-\infty$ : $\displaystyle\lim_{x\to+\infty}\bigl(\sqrt{x+2}-\sqrt{x-2}\bigr)$]
+\[ \sqrt{x+2}-\sqrt{x-2}
+   =\frac{(x+2)-(x-2)}{\sqrt{x+2}+\sqrt{x-2}}=\frac{4}{\sqrt{x+2}+\sqrt{x-2}}\xrightarrow[x\to+\infty]{}\frac{4}{+\infty}=0. \]
+\end{exemple}
+
+\begin{exemple}[$\frac00$ : $\displaystyle\lim_{x\to 1}\frac{\sqrt{x+1}-\sqrt2}{x-1}$]
+\[ \frac{\sqrt{x+1}-\sqrt2}{x-1}
+  =\frac{(x+1)-2}{(x-1)\bigl(\sqrt{x+1}+\sqrt2\bigr)}
+  =\frac{x-1}{(x-1)\bigl(\sqrt{x+1}+\sqrt2\bigr)}
+  =\frac{1}{\sqrt{x+1}+\sqrt2}\xrightarrow[x\to1]{}\frac{1}{2\sqrt2}=\frac{\sqrt2}{4}. \]
+Le facteur $(x-1)$ se simplifie : l'indétermination est levée.
+\end{exemple}
+
+\begin{attention}[ne pas « distribuer » la racine]
+$\sqrt{a+b}\neq\sqrt{a}+\sqrt{b}$ et $\sqrt{x^2}\neq x$ (c'est $|x|$ !). Le côté $-\infty$ change le
+signe : oublier le $|x|$ y donne un signe faux.
+\end{attention}
+
+\begin{astuce}[différence $\sqrt{\text{polynôme}}-\text{polynôme}$]
+Pour $\sqrt{x^2+bx+c}-x$ (forme $\infty-\infty$ en $+\infty$), le conjugué est $\sqrt{x^2+bx+c}+x$ ;
+le numérateur devient $(x^2+bx+c)-x^2=bx+c$, et l'on conclut par le terme dominant. Résultat utile :
+$\displaystyle\lim_{x\to+\infty}\bigl(\sqrt{x^2+bx+c}-x\bigr)=\frac{b}{2}$.
+\end{astuce}
+
+\end{document}

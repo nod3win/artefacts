@@ -1,0 +1,85 @@
+% =====================================================================
+%  Thème 3 — CORRIGÉ — Niveau DIFFICILE
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{icomma}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,margin=2.2cm,headheight=26pt,headsep=10pt]{geometry}
+
+\definecolor{primary}{RGB}{223,87,99}
+\definecolor{primarydark}{RGB}{150,42,55}
+\definecolor{excol}{RGB}{0,135,90}
+
+\tcbset{boxbase/.style={enhanced,breakable,boxrule=0.9pt,arc=2.5pt,
+   left=3mm,right=3mm,top=2.3mm,bottom=2.3mm,
+   fonttitle=\bfseries,coltitle=white,toptitle=0.6mm,bottomtitle=0.6mm}}
+\newtcolorbox[auto counter]{correction}[1][]{boxbase,colback=excol!5,colframe=excol,
+  title={\textsc{Corrigé}~\thetcbcounter\ifx\relax#1\relax\relax\else\textmd{ --- \itshape #1}\fi}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{primarydark}{\textbf{Fiche 6} — Les limites}}
+\fancyhead[R]{\small\textcolor{primarydark}{\textsc{Thème 3 — Corrigé Difficile}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primary}\leaders\hrule height \headrulewidth\hfill}}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries\color{primarydark}Thème 3 — Limites à l'infini : le terme dominant}\\[2pt]
+{\large\color{excol}Corrigé — Niveau Difficile}
+\end{center}
+\vspace{6pt}
+
+\begin{correction}[une famille de fonctions rationnelles]
+$f_m(x)=\dfrac{m x^2+2x-1}{x^2+3}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Pour $m=4$ : $\displaystyle\lim_{x\to+\infty}\frac{4x^2+2x-1}{x^2+3}=\lim_{x\to+\infty}\frac{4x^2}{x^2}=4$.
+        Asymptote horizontale $y=4$.
+  \item Pour $m\neq 0$, degrés égaux : $\displaystyle\lim_{x\to+\infty} f_m(x)=\frac{m x^2}{x^2}=m$.
+  \item L'asymptote horizontale est $y=m$ ; on veut $y=2$, donc $\boxed{m=2}$.
+  \item Si $m=0$, le numérateur devient $2x-1$ (degré $1$), strictement inférieur au degré $2$ du
+        dénominateur : alors $\displaystyle\lim_{x\to+\infty} f_0(x)=\lim_{x\to+\infty}\frac{2x-1}{x^2+3}=0$.
+        \textbf{Oui}, $m=0$ convient.
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[réduire puis passer à la limite]
+$h(x)=\dfrac{x^2+1}{x-1}-x$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item Même dénominateur $x-1$ : $\displaystyle h(x)=\frac{x^2+1}{x-1}-\frac{x(x-1)}{x-1}=\frac{(x^2+1)-x(x-1)}{x-1}$.
+  \item Numérateur : $x^2+1-x^2+x=x+1$. Donc $\displaystyle h(x)=\frac{x+1}{x-1}$.
+  \item Degrés égaux ($1=1$) : $\displaystyle\lim_{x\to+\infty} h(x)=\lim_{x\to+\infty}\frac{x}{x}=1$, et de même
+        $\displaystyle\lim_{x\to-\infty} h(x)=1$.
+  \item La courbe admet l'\textbf{asymptote horizontale $y=1$} (des deux côtés).
+\end{enumerate}
+\end{correction}
+
+\begin{correction}[mise en situation : capacité d'accueil d'un milieu]
+$N(t)=\dfrac{500\,t}{t+20}$.
+\begin{enumerate}[label=\alph*),leftmargin=2em,itemsep=3pt]
+  \item $N(0)=0$ ; \ $N(20)=\dfrac{500\cdot 20}{40}=250$ ; \ $N(180)=\dfrac{500\cdot 180}{200}=450$ (milliers).
+  \item $\displaystyle\lim_{t\to+\infty} N(t)=\lim_{t\to+\infty}\frac{500\,t}{t}=500$.
+  \item La population se stabilise vers $500$ milliers d'individus : c'est la \textbf{capacité d'accueil}
+        (ou capacité limite) du milieu. La droite $y=500$ est une \textbf{asymptote horizontale}.
+  \item On écrit $N(t)=\dfrac{500(t+20)-500\cdot 20}{t+20}=500-\dfrac{10\,000}{t+20}<500$ pour tout $t\geq 0$.
+        La population reste \emph{toujours strictement inférieure} à $500$ milliers : elle ne dépassera
+        \textbf{jamais} $500\,000$ individus (elle s'en approche seulement).
+\end{enumerate}
+\end{correction}
+
+\end{document}
