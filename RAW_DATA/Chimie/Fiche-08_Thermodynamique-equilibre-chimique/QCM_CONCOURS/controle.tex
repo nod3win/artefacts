@@ -1,0 +1,225 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+
+\begin{center}
+{\Large\bfseries QCM type concours --- Chimie}\\[2pt]
+{\large Fiche 08 --- Thermodynamique et équilibre chimique}\\[2pt]
+{\itshape 10 questions, niveau concours difficile --- une seule réponse correcte par question.}
+\end{center}
+\vspace{6pt}\hrule\vspace{10pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q01 --- Loi de Hess (enthalpie de réaction)}\par
+On considère la combustion complète du méthane :
+\[ \ce{CH4(g) + 2 O2(g) -> CO2(g) + 2 H2O(l)}. \]
+Les enthalpies standard de formation, en \si{\kilo\joule\per\mol}, valent :
+\[ \Delta H_f^{\circ}(\ce{CH4})=-75,\qquad \Delta H_f^{\circ}(\ce{CO2})=-394,\qquad \Delta H_f^{\circ}(\ce{H2O},\ell)=-286. \]
+Quelle est l'enthalpie standard $\Delta H_r^{\circ}$ de cette réaction ?
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{-605}{\kilo\joule\per\mol}$
+\item $\qty{-966}{\kilo\joule\per\mol}$
+\item $\qty{-891}{\kilo\joule\per\mol}$
+\item $\qty{-1041}{\kilo\joule\per\mol}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Loi de Hess : $\Delta H_r^{\circ}=\big[\Delta H_f^{\circ}(\ce{CO2})+2\,\Delta H_f^{\circ}(\ce{H2O})\big]-\big[\Delta H_f^{\circ}(\ce{CH4})+2\,\Delta H_f^{\circ}(\ce{O2})\big]$. Le \ce{O2} est un corps pur simple : $\Delta H_f^{\circ}(\ce{O2})=0$. D'où $\Delta H_r^{\circ}=[-394+2(-286)]-[-75+0]=-966-(-75)=\qty{-891}{\kilo\joule\per\mol}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: a oublié le coefficient 2 devant \ce{H2O} : $-394-286+75=-605$.
+\item B: a oublié le terme du réactif $\Delta H_f^{\circ}(\ce{CH4})$ (somme des seuls produits) : $-966$.
+\item D: a additionné $\Delta H_f^{\circ}(\ce{CH4})$ au lieu de le soustraire (erreur de signe sur le réactif) : $-966-75=-1041$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q02 --- Calorimétrie avec changement d'état}\par
+Dans un calorimètre adiabatique de capacité thermique négligeable, on verse \qty{100}{\gram} de glace à \qty{0}{\celsius} dans \qty{400}{\gram} d'eau liquide à \qty{30}{\celsius}. On donne $c_{\text{eau}}=\qty{4.2}{\kilo\joule\per\kelvin\per\kilogram}$ et $L_{\text{fusion}}=\qty{336}{\kilo\joule\per\kilogram}$. Quelle est la température finale à l'équilibre ?
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{8}{\celsius}$
+\item $\qty{10}{\celsius}$
+\item $\qty{15}{\celsius}$
+\item $\qty{24}{\celsius}$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Chaleur libérée si l'eau (\qty{400}{\gram}) refroidit de \qty{30}{\celsius} à \qty{0}{\celsius} : $\num{0.400}\times\num{4.2}\times30=\qty{50.4}{\kilo\joule}$. Fondre toute la glace demande $\num{0.100}\times336=\qty{33.6}{\kilo\joule}$, inférieur à \qty{50.4}{\kilo\joule} : toute la glace fond. Bilan $\sum Q=0$ : $\num{0.400}\times\num{4.2}\times(30-T_f)=\num{0.100}\times336+\num{0.100}\times\num{4.2}\times T_f$, soit $50{,}4-1{,}68\,T_f=33{,}6+0{,}42\,T_f$, d'où $2{,}10\,T_f=16{,}8$ et $T_f=\qty{8}{\celsius}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: a fait fondre la glace mais oublié de réchauffer l'eau de fonte de \qty{0}{\celsius} à $T_f$ : $50{,}4-1{,}68\,T_f=33{,}6\Rightarrow T_f=\qty{10}{\celsius}$.
+\item C: a pris la moyenne des températures $(30+0)/2=\qty{15}{\celsius}$, en ignorant les masses et la chaleur latente.
+\item D: a oublié la chaleur latente de fusion (glace traitée comme de l'eau à \qty{0}{\celsius}) : $T_f=\qty{24}{\celsius}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q03 --- Entropie et sens de variation du désordre}\par
+Parmi les transformations suivantes, une seule s'accompagne d'une diminution d'entropie ($\Delta S<0$). Laquelle ?
+\begin{enumerate}[label=\Alph*)]
+\item $\ce{CaCO3(s) -> CaO(s) + CO2(g)}$
+\item $\ce{NaCl(s) -> Na+(aq) + Cl-(aq)}$
+\item $\ce{H2O(s) -> H2O(l)}$
+\item $\ce{2 NO2(g) -> N2O4(g)}$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+L'entropie mesure le désordre ; $\Delta S<0$ signifie que le désordre diminue. En D, on passe de \qty{2}{\mol} de gaz à \qty{1}{\mol} de gaz (dimérisation) : le nombre de molécules gazeuses diminue, donc $\Delta S<0$. Dans les trois autres cas le désordre augmente.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: la décomposition crée du gaz \ce{CO2} à partir d'un solide : le désordre augmente, $\Delta S>0$ (piège : se focaliser sur les solides \ce{CaO}).
+\item B: dissolution : les ions se dispersent dans l'eau, $\Delta S>0$ (piège : croire que « faire disparaître » le solide l'ordonne).
+\item C: fusion de la glace, solide $\to$ liquide : $\Delta S>0$ (piège : négliger le changement d'état).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q04 --- Constante d'équilibre et exposants stœchiométriques}\par
+À une température donnée, le système $\ce{N2(g) + 3 H2(g) <=> 2 NH3(g)}$ est à l'équilibre avec $[\ce{N2}]=\qty{0.20}{\mol\per\litre}$, $[\ce{H2}]=\qty{0.50}{\mol\per\litre}$ et $[\ce{NH3}]=\qty{0.40}{\mol\per\litre}$. Que vaut la constante d'équilibre $K$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $\num{4.0}$
+\item $\num{6.4}$
+\item $\num{1.6}$
+\item $\num{0.16}$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+$K=\dfrac{[\ce{NH3}]^2}{[\ce{N2}]\,[\ce{H2}]^3}=\dfrac{\num{0.40}^2}{\num{0.20}\times\num{0.50}^3}=\dfrac{\num{0.16}}{\num{0.20}\times\num{0.125}}=\dfrac{\num{0.16}}{\num{0.025}}=\num{6.4}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: a oublié les exposants (coefficients stœchiométriques) : $\num{0.40}/(\num{0.20}\times\num{0.50})=\num{4.0}$.
+\item C: a mis l'exposant 2 sur \ce{NH3} mais oublié l'exposant 3 sur \ce{H2} : $\num{0.16}/(\num{0.20}\times\num{0.50})=\num{1.6}$.
+\item D: a inversé $K$ (réactifs au numérateur) : $1/\num{6.4}=\num{0.16}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q05 --- Constante d'équilibre par tableau d'avancement}\par
+Dans un récipient fermé de volume \qty{2.0}{\litre}, on introduit \qty{4.0}{\mol} de \ce{N2O4}(g). À l'équilibre, la moitié du \ce{N2O4} initial s'est dissociée selon $\ce{N2O4(g) <=> 2 NO2(g)}$. Que vaut la constante d'équilibre $K$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $\num{2.0}$
+\item $\num{8.0}$
+\item $\num{4.0}$
+\item $\num{1.0}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+La moitié se dissocie : \qty{2.0}{\mol} de \ce{N2O4} réagit. Tableau d'avancement : $n(\ce{N2O4})_{\text{éq}}=4{,}0-2{,}0=\qty{2.0}{\mol}$ et $n(\ce{NO2})_{\text{éq}}=2\times2{,}0=\qty{4.0}{\mol}$. Comme $V=\qty{2.0}{\litre}$ : $[\ce{N2O4}]=\num{1.0}$ et $[\ce{NO2}]=\num{2.0}$ mol/L. D'où $K=\dfrac{[\ce{NO2}]^2}{[\ce{N2O4}]}=\dfrac{\num{2.0}^2}{\num{1.0}}=\num{4.0}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: a oublié l'exposant 2 sur \ce{NO2} : $\num{2.0}/\num{1.0}=\num{2.0}$.
+\item B: a utilisé les quantités de matière sans les diviser par le volume \qty{2.0}{\litre} : $\num{4.0}^2/\num{2.0}=\num{8.0}$.
+\item D: a oublié que \qty{1}{\mol} de \ce{N2O4} donne \qty{2}{\mol} de \ce{NO2} : $\num{1.0}^2/\num{1.0}=\num{1.0}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q06 --- Équilibre hétérogène : constante Kc}\par
+On introduit \qty{0.25}{\mol} d'hydrogénosulfure d'ammonium \ce{NH4HS} solide dans un récipient fermé de \qty{2.0}{\litre}, initialement vide. Il se décompose selon $\ce{NH4HS(s) <=> NH3(g) + H2S(g)}$. À l'équilibre, \qty{20}{\percent} du solide s'est décomposé. Que vaut la constante d'équilibre $K_c$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $\num{6.25e-3}$
+\item $\num{5.0e-2}$
+\item $\num{2.5e-3}$
+\item $\num{6.25e-4}$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Décomposé : $\num{0.20}\times\num{0.25}=\qty{0.05}{\mol}$, donc $n(\ce{NH3})=n(\ce{H2S})=\qty{0.05}{\mol}$ et $[\ce{NH3}]=[\ce{H2S}]=\num{0.05}/\num{2.0}=\qty{0.025}{\mol\per\litre}$. Le solide \ce{NH4HS} n'apparaît pas dans $K_c$ : $K_c=[\ce{NH3}]\,[\ce{H2S}]=\num{0.025}^2=\num{6.25e-4}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: a fait figurer le solide dans $K_c$ (division par sa « concentration » $\num{0.10}$) : $\num{6.25e-4}/\num{0.10}=\num{6.25e-3}$.
+\item B: a additionné les concentrations au lieu de les multiplier : $\num{0.025}+\num{0.025}=\num{5.0e-2}$.
+\item C: a utilisé les quantités de matière (\qty{0.05}{\mol}) sans les diviser par le volume : $\num{0.05}^2=\num{2.5e-3}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q07 --- Équilibre hétérogène : constante Kp et pressions}\par
+À une température donnée, l'hydrogénocarbonate de sodium solide se décompose selon
+\[ \ce{2 NaHCO3(s) <=> Na2CO3(s) + H2O(g) + CO2(g)}, \]
+avec $K_p=\num{0.36}$ (en atm\textsuperscript{2}). On chauffe du \ce{NaHCO3} dans une enceinte fermée initialement vide. Quelle est la pression totale à l'équilibre ?
+\begin{enumerate}[label=\Alph*)]
+\item $\num{0.36}$~atm
+\item $\num{1.2}$~atm
+\item $\num{0.60}$~atm
+\item $\num{0.72}$~atm
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Les deux solides n'apparaissent pas dans $K_p$. Partant du vide, la stœchiométrie impose $p(\ce{H2O})=p(\ce{CO2})=p$. Donc $K_p=p(\ce{H2O})\,p(\ce{CO2})=p^2=\num{0.36}$, soit $p=\sqrt{\num{0.36}}=\num{0.60}$~atm. La pression totale vaut $P_{\text{tot}}=p(\ce{H2O})+p(\ce{CO2})=2p=\num{1.2}$~atm.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: a confondu $K_p$ avec la pression totale : $\num{0.36}$~atm.
+\item C: a calculé $p=\num{0.60}$~atm mais oublié que $P_{\text{tot}}=p(\ce{H2O})+p(\ce{CO2})=2p$.
+\item D: n'a pas pris la racine carrée ($p=K_p=\num{0.36}$) puis a doublé : $2\times\num{0.36}=\num{0.72}$~atm.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q08 --- Loi de Le Chatelier (déplacement d'équilibre)}\par
+Le système $\ce{H2(g) + I2(g) <=> 2 HI(g)}$ est endothermique dans le sens direct ($\Delta H>0$) et évolue à volume constant. Parmi les opérations suivantes, laquelle déplace l'équilibre vers la formation de \ce{HI} ?
+\begin{enumerate}[label=\Alph*)]
+\item Augmenter la pression totale.
+\item Augmenter la température.
+\item Introduire un catalyseur.
+\item Abaisser la température.
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+La réaction directe est endothermique : d'après Le Chatelier, augmenter la température déplace l'équilibre dans le sens qui absorbe la chaleur, c'est-à-dire le sens direct (vers \ce{HI}).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: a appliqué l'effet de pression sans voir que le nombre de moles de gaz est identique des deux côtés ($2=2$) : la pression n'a aucun effet ici.
+\item C: croit qu'un catalyseur déplace l'équilibre ; il n'agit que sur la vitesse, pas sur la position (le rendement).
+\item D: sens inverse : pour une réaction endothermique, abaisser $T$ déplace l'équilibre vers la gauche (les réactifs).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q09 --- Quotient de réaction et sens d'évolution}\par
+À \qty{25}{\celsius}, la réaction $\ce{A(g) + B(g) <=> 2 C(g)}$ a pour constante d'équilibre $K=\num{4.0}$. Dans un récipient de \qty{1.0}{\litre}, on introduit \qty{1.0}{\mol} de \ce{A}, \qty{1.0}{\mol} de \ce{B} et \qty{4.0}{\mol} de \ce{C}. Dans quel sens le système évolue-t-il ?
+\begin{enumerate}[label=\Alph*)]
+\item Vers la gauche (sens inverse), car $Q>K$.
+\item Vers la droite (sens direct), car $Q<K$.
+\item Le système est déjà à l'équilibre, car $Q=K$.
+\item Vers la droite (sens direct), car $Q>K$.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Le quotient de réaction vaut $Q=\dfrac{[\ce{C}]^2}{[\ce{A}]\,[\ce{B}]}=\dfrac{\num{4.0}^2}{\num{1.0}\times\num{1.0}}=16$. Comme $Q=16>K=\num{4.0}$, le système est trop riche en produit \ce{C} : il évolue dans le sens inverse (sens 2), qui consomme \ce{C} pour reformer \ce{A} et \ce{B}, jusqu'à ce que $Q$ redescende à $K$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: a inversé l'expression de $Q$ (réactifs au numérateur) : $Q=1/16<K$, d'où la conclusion erronée « sens direct ».
+\item C: a oublié l'exposant 2 sur \ce{C} : $Q=\num{4.0}/(\num{1.0}\times\num{1.0})=\num{4.0}=K$, d'où « déjà à l'équilibre ».
+\item D: a bien trouvé $Q>K$ mais applique la règle à l'envers ($Q>K$ déplace vers les réactifs, pas vers les produits).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F08-Q10 --- Combinaison de constantes d'équilibre}\par
+À une même température, on connaît les constantes de deux équilibres :
+\[ (1)\ \ce{A(g) + B(g) <=> C(g)},\ K_1=6 \qquad\text{et}\qquad (2)\ \ce{E(g) <=> C(g) + D(g)},\ K_2=3. \]
+Que vaut la constante $K_3$ de l'équilibre global $\ce{A(g) + B(g) + D(g) <=> E(g)}$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $18$
+\item $9$
+\item $2$
+\item $\num{0.5}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Pour obtenir la réaction globale, on additionne (1) et l'\emph{inverse} de (2) : $\ce{C + D <=> E}$ de constante $1/K_2$. Le \ce{C} se simplifie et il reste $\ce{A + B + D <=> E}$, de constante $K_3=K_1\times\dfrac{1}{K_2}=\dfrac{6}{3}=2$. (Quand on combine des réactions, les constantes se \emph{multiplient} ; inverser une réaction \emph{inverse} sa constante.)\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: a multiplié $K_1\times K_2$ sans inverser $K_2$, alors que la réaction (2) est utilisée à l'envers : $6\times3=18$.
+\item B: a additionné les constantes ($K_1+K_2=9$), par analogie fautive avec la loi de Hess des enthalpies.
+\item D: a calculé $K_2/K_1=3/6=\num{0.5}$ au lieu de $K_1\times(1/K_2)$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\end{document}

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F03-Q01",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Équilibre de translation : suspension par deux câbles",
+    "difficulte": "concours",
+    "enonce": "Une enseigne de masse $m = \\qty{6.0}{\\kilogram}$ est suspendue, en équilibre, par deux câbles\nidentiques. Chaque câble fait un angle de \\ang{30} avec la \\textbf{verticale} (voir schéma). On prend\n$g = \\qty{10}{\\newton\\per\\kilogram}$. Quelle est l'intensité de la tension dans \\emph{chaque} câble ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[thick] (-2.2,2) -- (2.2,2);\n  \\fill[pattern=north east lines] (-2.2,2) rectangle (2.2,2.28);\n  \\coordinate (O) at (0,0);\n  \\coordinate (L) at (-1.155,2);\n  \\coordinate (R) at ( 1.155,2);\n  \\draw[blue,line width=1.1pt] (O) -- (L);\n  \\draw[blue,line width=1.1pt] (O) -- (R);\n  \\node[blue] at (-0.95,1.15) {$T$};\n  \\node[blue] at ( 0.95,1.15) {$T$};\n  \\draw[dashed,gray] (O) -- (0,2);\n  \\draw[gray] (0,0.75) arc (90:120:0.75);\n  \\node[gray,font=\\scriptsize] at (-0.42,1.0) {\\ang{30}};\n  \\draw[gray] (0,0.75) arc (90:60:0.75);\n  \\node[gray,font=\\scriptsize] at ( 0.42,1.0) {\\ang{30}};\n  \\fill[orange!30,draw=orange!70] (-0.45,-0.5) rectangle (0.45,0);\n  \\draw[orange,line width=1.2pt,->] (0,-0.5) -- (0,-1.6) node[below]{$\\vv G$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{34.6}{\\newton}$",
+      "$\\qty{30.0}{\\newton}$",
+      "$\\qty{60.0}{\\newton}$",
+      "$\\qty{69.3}{\\newton}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Le poids vaut $G = mg = 6{,}0\\times 10 = \\qty{60}{\\newton}$. Par symétrie, les deux câbles portent une\ntension identique $T$. La projection verticale de l'équilibre s'écrit $2\\,T\\cos\\ang{30} = G$, d'où\n$T = \\dfrac{G}{2\\cos\\ang{30}} = \\dfrac{60}{2\\times 0{,}866} \\approx \\qty{34.6}{\\newton}$.\\par",
+    "pieges": [
+      "B: on ignore l'inclinaison et on partage simplement le poids, $T = G/2 = \\qty{30.0}{\\newton}$.",
+      "C: on confond l'angle avec la verticale et l'horizontale (sinus au lieu de cosinus), $T = G/(2\\sin\\ang{30}) = \\qty{60.0}{\\newton}$.",
+      "D: on oublie le facteur $2$ (un seul câble supposé porter tout le poids projeté), $T = G/\\cos\\ang{30} = \\qty{69.3}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q02",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Équilibre de translation : frottement statique",
+    "difficulte": "concours",
+    "enonce": "Un bloc est posé, immobile, sur un sol horizontal. On le pousse horizontalement avec une force\nd'intensité \\qty{30}{\\newton} : le bloc \\emph{ne bouge pas}. Le frottement statique maximal que le sol\npeut développer vaut \\qty{50}{\\newton}. Quelle est l'intensité de la force de frottement réellement\nexercée par le sol sur le bloc ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[thick] (-2.6,0) -- (2.6,0);\n  \\fill[pattern=north east lines] (-2.6,-0.28) rectangle (2.6,0);\n  \\fill[gray!20,draw=black] (-0.5,0) rectangle (0.7,0.9);\n  \\draw[red,line width=1.2pt,->] (0.7,0.45) -- (1.9,0.45) node[right]{$\\vv F=\\qty{30}{\\newton}$};\n  \\draw[teal,line width=1.2pt,->] (-0.5,0.2) -- (-1.7,0.2) node[left]{$\\vv f$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{0}{\\newton}$",
+      "$\\qty{20}{\\newton}$",
+      "$\\qty{30}{\\newton}$",
+      "$\\qty{50}{\\newton}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Tant que le bloc reste immobile, il est en équilibre : le frottement \\emph{s'ajuste} pour compenser\nexactement la force appliquée, soit $f = \\qty{30}{\\newton}$. La valeur \\qty{50}{\\newton} n'est qu'un\n\\emph{maximum} ; comme $30 < 50$, le bloc ne glisse pas et le frottement vaut la force appliquée,\npas son maximum.\\par",
+    "pieges": [
+      "A: on croit qu'en l'absence de mouvement il n'y a aucun frottement, $f = \\qty{0}{\\newton}$.",
+      "B: on calcule la « marge » restante avant glissement, $50 - 30 = \\qty{20}{\\newton}$.",
+      "D: on prend systématiquement le frottement à sa valeur maximale, $f = \\qty{50}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q03",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Équilibre de translation à vitesse constante (plan incliné)",
+    "difficulte": "concours",
+    "enonce": "Un bloc de masse $m = \\qty{4.0}{\\kilogram}$ descend un plan incliné à \\ang{30} à \\textbf{vitesse\nconstante} (voir schéma). On prend $g = \\qty{10}{\\newton\\per\\kilogram}$. Quelle est l'intensité de la\nforce de frottement exercée par le plan sur le bloc ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[thick] (-3,0) -- (2,0) -- (2,2.887) -- cycle;\n  \\fill[pattern=north east lines] (-3,-0.25) rectangle (2,0);\n  \\draw (-2.1,0) arc (0:30:0.9);\n  \\node at (-1.72,0.22) {\\ang{30}};\n  \\begin{scope}[shift={(-0.25,1.588)},rotate=30]\n    \\fill[gray!25,draw=black] (-0.4,0) rectangle (0.4,0.5);\n  \\end{scope}\n  \\coordinate (C) at (-0.37,1.80);\n  \\draw[orange,line width=1.1pt,->] (C) -- ++(0,-1.5) node[below]{$\\vv G$};\n  \\draw[teal,line width=1.1pt,->]   (C) -- ++(30:1.5)  node[above right]{$\\vv f$};\n  \\draw[blue,line width=1.1pt,->]   (C) -- ++(120:1.3) node[above left]{$\\vv N$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{40.0}{\\newton}$",
+      "$\\qty{34.6}{\\newton}$",
+      "$\\qty{23.1}{\\newton}$",
+      "$\\qty{20.0}{\\newton}$"
+    ],
+    "reponse_index": 3,
+    "explication": "À vitesse constante, l'accélération est nulle, donc $\\sum\\vv F = \\vv 0$. Le long de la pente, le\nfrottement (dirigé vers le haut) équilibre la composante du poids parallèle au plan :\n$f = mg\\sin\\ang{30} = 4{,}0\\times 10\\times 0{,}5 = \\qty{20.0}{\\newton}$.\\par",
+    "pieges": [
+      "A: on oublie la projection et on prend tout le poids, $f = mg = \\qty{40.0}{\\newton}$.",
+      "B: on intervertit sinus et cosinus, $f = mg\\cos\\ang{30} = \\qty{34.6}{\\newton}$.",
+      "C: on utilise une tangente au lieu d'un sinus, $f = mg\\tan\\ang{30} = \\qty{23.1}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q04",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Principe d'action et de réaction",
+    "difficulte": "concours",
+    "enonce": "Un livre est immobile sur une table horizontale. Il subit son poids $\\vv G$ et la réaction normale\n$\\vv R$ de la table. Parmi les affirmations suivantes, laquelle est \\textbf{correcte} ?",
+    "options": [
+      "Le poids $\\vv G$ et la réaction $\\vv R$ forment un couple action--réaction au sens de la 3\\textsuperscript{e} loi de Newton.",
+      "Le poids $\\vv G$ et la réaction $\\vv R$ ont la même intensité parce que le livre est en équilibre.",
+      "La réaction $\\vv R$ est plus grande que le poids, car elle doit « soutenir » le livre.",
+      "Le livre étant immobile, la résultante des forces est non nulle mais dirigée vers le haut."
+    ],
+    "reponse_index": 1,
+    "explication": "Le livre est en équilibre de translation : $\\vv G + \\vv R = \\vv 0$, donc $R = G$. Cette égalité découle\nde l'\\emph{équilibre}, et non de la 3\\textsuperscript{e} loi. La réaction au poids du livre (action de la Terre) est,\nelle, la force que le livre exerce en retour sur la Terre — pas la réaction de la table.\\par",
+    "pieges": [
+      "A: on confond la paire de forces d'équilibre (sur un même corps) avec la paire action--réaction (sur deux corps différents).",
+      "C: on croit que la normale doit « dépasser » le poids pour empêcher la chute.",
+      "D: on croit qu'un corps immobile peut avoir une résultante de forces non nulle."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q05",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Composition de deux forces parallèles de même sens",
+    "difficulte": "concours",
+    "enonce": "Une barre rigide horizontale subit, en deux points $A$ et $B$ distants de \\qty{50}{\\centi\\metre}, deux\nforces parallèles de \\textbf{même sens} : $F_1 = \\qty{30}{\\newton}$ en $A$ et $F_2 = \\qty{20}{\\newton}$\nen $B$ (voir schéma). Quelles sont l'intensité et la position (mesurée depuis $A$) de leur résultante ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[gray,dashed] (-3.2,0) -- (3.2,0);\n  \\fill[gray!15,draw=gray!60] (-3,-0.12) rectangle (3,0.12);\n  \\fill (-2.5,0) circle (1.4pt) node[above=4pt]{$A$};\n  \\fill ( 2.5,0) circle (1.4pt) node[above=4pt]{$B$};\n  \\draw[blue,line width=1.3pt,->] (-2.5,0) -- (-2.5,2.0) node[above]{$\\vv F_1$};\n  \\draw[blue,line width=1.3pt,->] ( 2.5,0) -- ( 2.5,1.35) node[above]{$\\vv F_2$};\n  \\draw[<->,gray] (-2.5,-0.5) -- (2.5,-0.5) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{\\qty{50}{\\centi\\metre}};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$R = \\qty{50}{\\newton}$, appliquée à \\qty{20}{\\centi\\metre} de $A$",
+      "$R = \\qty{50}{\\newton}$, appliquée à \\qty{30}{\\centi\\metre} de $A$",
+      "$R = \\qty{10}{\\newton}$, appliquée à \\qty{20}{\\centi\\metre} de $A$",
+      "$R = \\qty{50}{\\newton}$, appliquée à \\qty{25}{\\centi\\metre} de $A$"
+    ],
+    "reponse_index": 0,
+    "explication": "Forces de même sens : les intensités s'ajoutent, $R = F_1 + F_2 = \\qty{50}{\\newton}$. Le point\nd'application $O$ vérifie $F_1\\,\\overline{AO} = F_2\\,\\overline{BO}$ avec $\\overline{AO}+\\overline{BO} = 50$.\nAlors $\\overline{AO} = \\overline{AB}\\times\\dfrac{F_2}{F_1+F_2} = 50\\times\\dfrac{20}{50} = \\qty{20}{\\centi\\metre}$\n(donc plus proche de la force la plus intense, $F_1$).\\par",
+    "pieges": [
+      "B: on inverse la règle et on rapproche $O$ de la plus petite force, $\\overline{AO} = \\qty{30}{\\centi\\metre}$.",
+      "C: on soustrait les intensités comme pour des sens opposés, $R = F_2 - F_1 = \\qty{10}{\\newton}$.",
+      "D: on place $O$ au milieu, en négligeant que les deux intensités diffèrent, à \\qty{25}{\\centi\\metre}."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q06",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Centre de gravité (barycentre)",
+    "difficulte": "concours",
+    "enonce": "Une tige rigide de masse négligeable, longue de \\qty{90}{\\centi\\metre}, porte trois masses ponctuelles :\n\\qty{1.0}{\\kilogram} à l'extrémité $A$ (origine), \\qty{2.0}{\\kilogram} à \\qty{30}{\\centi\\metre} de $A$ et\n\\qty{3.0}{\\kilogram} à l'extrémité opposée, à \\qty{90}{\\centi\\metre} de $A$ (voir schéma). À quelle\ndistance de $A$ se trouve le centre de gravité de l'ensemble ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\fill[gray!15,draw=gray!60] (0,-0.1) rectangle (6.3,0.1);\n  \\fill (0,0) circle (1.3pt) node[below=3pt]{$A$};\n  \\fill[orange!35,draw=orange!70] (-0.25,0.1) rectangle (0.25,0.6);\n  \\node[font=\\scriptsize] at (0,0.35) {1 kg};\n  \\fill[orange!35,draw=orange!70] (2.1-0.28,0.1) rectangle (2.1+0.28,0.72);\n  \\node[font=\\scriptsize] at (2.1,0.4) {2 kg};\n  \\fill[orange!35,draw=orange!70] (6.3-0.3,0.1) rectangle (6.3+0.3,0.85);\n  \\node[font=\\scriptsize] at (6.3,0.47) {3 kg};\n  \\draw[<->,gray] (0,-0.5) -- (2.1,-0.5) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{\\qty{30}{\\centi\\metre}};\n  \\draw[<->,gray] (0,-1.05) -- (6.3,-1.05) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{\\qty{90}{\\centi\\metre}};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{25}{\\centi\\metre}$",
+      "$\\qty{40}{\\centi\\metre}$",
+      "$\\qty{45}{\\centi\\metre}$",
+      "$\\qty{55}{\\centi\\metre}$"
+    ],
+    "reponse_index": 3,
+    "explication": "Le barycentre pondère chaque position par la masse correspondante :\n\\[ x_G = \\frac{1\\times 0 + 2\\times 30 + 3\\times 90}{1+2+3} = \\frac{330}{6} = \\qty{55}{\\centi\\metre}. \\]\nIl est bien décalé vers la masse la plus lourde (\\qty{3.0}{\\kilogram}).\\par",
+    "pieges": [
+      "A: on pondère à rebours (masses inversées), $\\dfrac{3\\times 0 + 2\\times 30 + 1\\times 90}{6} = \\qty{25}{\\centi\\metre}$.",
+      "B: on fait la moyenne des positions en ignorant les masses, $\\dfrac{0+30+90}{3} = \\qty{40}{\\centi\\metre}$.",
+      "C: on prend le milieu géométrique de la tige, \\qty{45}{\\centi\\metre}."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q07",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Moment d'une force et bras de levier",
+    "difficulte": "concours",
+    "enonce": "Une force \\textbf{horizontale} $\\vv F$ d'intensité \\qty{50}{\\newton} est appliquée au point $P$ d'une\npièce pouvant tourner autour de l'axe $O$. Le point $P$ est situé à \\qty{60}{\\centi\\metre}\nhorizontalement et \\qty{80}{\\centi\\metre} verticalement de $O$ (voir schéma). Quelle est l'intensité du\nmoment de $\\vv F$ par rapport à l'axe $O$ ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\coordinate (O) at (0,0);\n  \\coordinate (P) at (2.4,2.0);\n  \\fill (O) circle (1.6pt) node[below left]{$O$};\n  \\fill (P) circle (1.6pt) node[above right]{$P$};\n  \\draw[black,line width=1.4pt] (O) -- (P);\n  \\draw[gray,dashed] (O) -- (2.4,0) -- (P);\n  \\draw[<->,gray] (0,-0.45) -- (2.4,-0.45) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{\\qty{60}{\\centi\\metre}};\n  \\draw[<->,gray] (2.9,0) -- (2.9,2.0) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{\\qty{80}{\\centi\\metre}};\n  \\draw[red,line width=1.3pt,->] (P) -- ++(2.0,0) node[right]{$\\vv F$};\n  \\draw[red!50,dashed] (P) -- (-1.4,2.0);\n  \\draw[teal,line width=1pt,->] (O) -- (0,2.0);\n  \\node[teal,font=\\scriptsize,left] at (0,1.1) {bras $b$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{30}{\\newton\\metre}$",
+      "$\\qty{40}{\\newton\\metre}$",
+      "$\\qty{50}{\\newton\\metre}$",
+      "$\\qty{70}{\\newton\\metre}$"
+    ],
+    "reponse_index": 1,
+    "explication": "Le bras de levier est la distance \\emph{perpendiculaire} de $O$ à la ligne d'action de $\\vv F$. Comme\n$\\vv F$ est horizontale, sa ligne d'action est horizontale à la hauteur de $P$ ; la distance\nperpendiculaire vaut donc l'écart vertical $b = \\qty{80}{\\centi\\metre} = \\qty{0.80}{\\metre}$. Ainsi\n$\\mathcal{M} = F\\times b = 50\\times 0{,}80 = \\qty{40}{\\newton\\metre}$.\\par",
+    "pieges": [
+      "A: on prend l'écart horizontal comme bras, $50\\times 0{,}60 = \\qty{30}{\\newton\\metre}$.",
+      "C: on prend la distance $OP = \\qty{100}{\\centi\\metre}$ (jusqu'au point), $50\\times 1{,}00 = \\qty{50}{\\newton\\metre}$.",
+      "D: on additionne les deux écarts, $50\\times 1{,}40 = \\qty{70}{\\newton\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q08",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Moment d'un couple de forces",
+    "difficulte": "concours",
+    "enonce": "Deux forces parallèles, de même intensité \\qty{20}{\\newton} et de \\textbf{sens opposés}, s'appliquent\naux extrémités d'une barre ; leurs lignes d'action sont distantes de \\qty{30}{\\centi\\metre} (voir\nschéma). Elles forment un couple. Quelle est l'intensité du moment de ce couple ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[black,line width=1.4pt] (-1.5,0) -- (1.5,0);\n  \\fill (-1.5,0) circle (1.3pt);\n  \\fill ( 1.5,0) circle (1.3pt);\n  \\draw[red,line width=1.3pt,->] (-1.5,0) -- (-1.5,1.5) node[above]{$\\vv F$};\n  \\draw[red,line width=1.3pt,->] (1.5,0) -- (1.5,-1.5) node[below]{$\\vv F$};\n  \\draw[<->,gray] (-1.5,0.8) -- (1.5,0.8) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{$d=\\qty{30}{\\centi\\metre}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{0}{\\newton\\metre}$",
+      "$\\qty{3.0}{\\newton\\metre}$",
+      "$\\qty{6.0}{\\newton\\metre}$",
+      "$\\qty{12.0}{\\newton\\metre}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Le moment d'un couple vaut $\\mathcal{M} = F\\times d$, où $d$ est la distance \\emph{entre les deux lignes\nd'action}. Ici $\\mathcal{M} = 20\\times 0{,}30 = \\qty{6.0}{\\newton\\metre}$. La résultante est nulle, mais le\ncouple fait bel et bien tourner la barre.\\par",
+    "pieges": [
+      "A: on croit que $\\sum\\vv F = \\vv 0$ entraîne un moment nul, $\\mathcal{M} = \\qty{0}{\\newton\\metre}$.",
+      "B: on prend la moitié de la distance (bras depuis le centre), $20\\times 0{,}15 = \\qty{3.0}{\\newton\\metre}$.",
+      "D: on additionne d'abord les deux forces, $(20+20)\\times 0{,}30 = \\qty{12.0}{\\newton\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q09",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Équilibre de rotation : poutre sur deux appuis",
+    "difficulte": "concours",
+    "enonce": "Une poutre homogène $AC$ de longueur \\qty{2.0}{\\metre} et de poids \\qty{200}{\\newton} (appliqué en son\nmilieu) repose sur deux appuis $A$ et $C$. On pose une charge de \\qty{300}{\\newton} à \\qty{0.5}{\\metre}\nde $A$ (voir schéma). Quelle est la force supportée par l'appui $C$ ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[black,line width=1.6pt] (0,0) -- (5,0);\n  \\draw[fill=gray!25] (0,0) -- (-0.3,-0.5) -- (0.3,-0.5) -- cycle;\n  \\draw[fill=gray!25] (5,0) -- (4.7,-0.5) -- (5.3,-0.5) -- cycle;\n  \\node at (-0.5,-0.25) {$A$};\n  \\node at (5.5,-0.25) {$C$};\n  \\draw[orange,line width=1.2pt,->] (2.5,0) -- (2.5,-1.15) node[below]{\\footnotesize \\qty{200}{\\newton}};\n  \\draw[blue,line width=1.2pt,->] (1.25,1.0) -- (1.25,0) ;\n  \\node[blue,font=\\footnotesize,above] at (1.25,1.0) {\\qty{300}{\\newton}};\n  \\draw[<->,gray] (0,-0.85) -- (1.25,-0.85) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{\\qty{0.5}{\\metre}};\n  \\draw[<->,gray] (0,-1.7) -- (5,-1.7) node[midway,fill=white,inner sep=1pt,font=\\scriptsize]{\\qty{2.0}{\\metre}};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{175}{\\newton}$",
+      "$\\qty{75}{\\newton}$",
+      "$\\qty{250}{\\newton}$",
+      "$\\qty{325}{\\newton}$"
+    ],
+    "reponse_index": 0,
+    "explication": "On annule la somme des moments par rapport à $A$ (la réaction en $A$ a alors un bras nul) :\n$R_C\\times 2{,}0 = 200\\times 1{,}0 + 300\\times 0{,}5 = 200 + 150 = 350$, d'où\n$R_C = \\qty{175}{\\newton}$ (et $R_A = 500 - 175 = \\qty{325}{\\newton}$).\\par",
+    "pieges": [
+      "B: on oublie le poids de la poutre, $R_C = \\dfrac{300\\times 0{,}5}{2{,}0} = \\qty{75}{\\newton}$.",
+      "C: on répartit la charge totale également, $\\dfrac{200+300}{2} = \\qty{250}{\\newton}$.",
+      "D: on mesure la distance de la charge depuis $C$ ($1{,}5$ m) : on obtient en fait $R_A = \\qty{325}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F03-Q10",
+    "matiere": "Physique",
+    "fiche": "03",
+    "theme": "Équilibre d'un levier",
+    "difficulte": "concours",
+    "enonce": "Une barre rigide horizontale est en équilibre, en appui sur un pivot. Trois forces verticales s'y\nappliquent : $\\vv F_1$ (vers le bas) à l'extrémité gauche, $\\vv F_2$ (vers le haut) au niveau du pivot,\net $\\vv F_3$ (vers le bas) à l'extrémité droite (voir schéma). Laquelle a \\emph{nécessairement} la plus\ngrande intensité ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[black,line width=1.6pt] (-3,0) -- (3,0);\n  \\draw[fill=gray!25] (0,0) -- (-0.35,-0.6) -- (0.35,-0.6) -- cycle;\n  \\draw[blue,line width=1.3pt,->] (-2.6,0) -- (-2.6,-1.3) node[below]{$\\vv F_1$};\n  \\draw[blue,line width=1.3pt,->] (2.6,0) -- (2.6,-1.0) node[below]{$\\vv F_3$};\n  \\draw[red,line width=1.3pt,->] (0,0) -- (0,1.6) node[above]{$\\vv F_2$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\vv F_1$",
+      "$\\vv F_2$",
+      "$\\vv F_3$",
+      "On ne peut pas conclure sans connaître les distances au pivot."
+    ],
+    "reponse_index": 1,
+    "explication": "L'équilibre de translation impose $\\sum\\vv F = \\vv 0$. Les deux forces vers le bas sont équilibrées par\nla seule force vers le haut : $F_2 = F_1 + F_3$. Comme $F_1$ et $F_3$ sont positives, $F_2$ est\nstrictement supérieure à chacune : c'est nécessairement la plus grande, quelles que soient les\ndistances.\\par",
+    "pieges": [
+      "A: on croit que la force à l'extrémité (bras le plus long) est forcément la plus intense, $\\vv F_1$.",
+      "C: même erreur en faveur de $\\vv F_3$, l'autre force d'extrémité.",
+      "D: on pense qu'il faut les distances, alors que $\\sum\\vv F = \\vv 0$ suffit à conclure."
+    ]
+  }
+]

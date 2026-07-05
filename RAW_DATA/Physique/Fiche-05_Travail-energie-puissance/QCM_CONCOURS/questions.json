@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F05-Q01",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Travail d'une force constante",
+    "difficulte": "concours",
+    "enonce": "Un ouvrier tire une caisse sur un sol horizontal au moyen d'une corde qui fait un angle\n$\\alpha=\\ang{60}$ avec l'horizontale. L'intensité de la traction est $F=\\qty{100}{\\newton}$ et la\ncaisse avance de $d=\\qty{20}{\\metre}$. Quel est le travail de la force $\\vv F$ sur ce trajet ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1]\n  \\draw[black!70,line width=0.9pt] (-0.4,0)--(6.4,0);\n  \\foreach \\x in {-0.2,0.2,...,6.2} \\draw[black!45] (\\x,0)--(\\x-0.18,-0.2);\n  \\draw[fill=blue!12,draw=black!70,line width=0.7pt] (0.3,0) rectangle (1.5,0.9);\n  \\node at (0.9,0.45){\\small $m$};\n  \\draw[->,>=Stealth,line width=1.2pt,blue] (1.5,0.7)--++(60:2.1) node[above right]{$\\vv F$};\n  \\draw[->,>=Stealth,black!70] (2.15,0.7) arc (0:60:0.62);\n  \\node at (2.35,1.08){\\small $\\alpha$};\n  \\draw[<->,black!55] (0.3,-0.55)--(5.6,-0.55) node[midway,below]{\\small $d$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{500}{\\joule}",
+      "\\qty{1000}{\\joule}",
+      "\\qty{1730}{\\joule}",
+      "\\qty{2000}{\\joule}"
+    ],
+    "reponse_index": 1,
+    "explication": "Seule la composante de $\\vv F$ parallèle au déplacement travaille :\n$W=F\\,d\\cos\\alpha=100\\times20\\times\\cos\\ang{60}=100\\times20\\times0{,}5=\\qty{1000}{\\joule}$.\nLa caisse se déplaçant horizontalement, l'angle utilisé est bien celui de la corde avec le sol.",
+    "pieges": [
+      "A : facteur $\\tfrac12$ ajouté à tort (contamination par la formule de l'énergie cinétique), $\\tfrac12\\times100\\times20\\times0{,}5=\\qty{500}{\\joule}$.",
+      "C : $\\sin$ employé à la place de $\\cos$ (projection inversée), $100\\times20\\times\\sin\\ang{60}\\approx\\qty{1730}{\\joule}$.",
+      "D : angle négligé ($\\cos\\alpha$ pris égal à $1$), $F\\,d=100\\times20=\\qty{2000}{\\joule}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q02",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Puissance moyenne",
+    "difficulte": "concours",
+    "enonce": "Un monte-charge soulève à vitesse constante une charge de masse totale $m=\\qty{600}{\\kilogram}$\nsur une hauteur $h=\\qty{20}{\\metre}$ en une durée $\\Delta t=\\qty{16}{\\second}$. On prend\n$g=\\qty{10}{\\metre\\per\\second\\squared}$ et on néglige les frottements. Quelle est la puissance\nmoyenne développée par le moteur ?",
+    "options": [
+      "\\qty{0.75}{\\kilo\\watt}",
+      "\\qty{3.75}{\\kilo\\watt}",
+      "\\qty{7.5}{\\kilo\\watt}",
+      "\\qty{15}{\\kilo\\watt}"
+    ],
+    "reponse_index": 2,
+    "explication": "Le moteur fournit le travail $W=mgh=600\\times10\\times20=\\qty{120000}{\\joule}$, d'où\n$P=\\dfrac{W}{\\Delta t}=\\dfrac{120000}{16}=\\qty{7500}{\\watt}=\\qty{7.5}{\\kilo\\watt}$.",
+    "pieges": [
+      "A : $g$ oublié (masse confondue avec un poids), $P=\\dfrac{mh}{\\Delta t}=\\dfrac{600\\times20}{16}=\\qty{750}{\\watt}=\\qty{0.75}{\\kilo\\watt}$.",
+      "B : facteur $\\tfrac12$ ajouté à tort, $\\tfrac12\\times\\qty{7.5}{\\kilo\\watt}=\\qty{3.75}{\\kilo\\watt}$.",
+      "D : vitesse finale prise pour le double de la vitesse (moyenne), $P=mg\\,(2v)=6000\\times2{,}5=\\qty{15}{\\kilo\\watt}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q03",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Théorème de l'énergie cinétique (freinage)",
+    "difficulte": "concours",
+    "enonce": "Une voiture de masse $m=\\qty{1000}{\\kilogram}$ roule à $v_0=\\qty{72}{\\kilo\\metre\\per\\hour}$ sur une\nroute horizontale. Le conducteur freine ; le coefficient de frottement pneu--route vaut $\\mu=0{,}8$\net $g=\\qty{10}{\\metre\\per\\second\\squared}$. Sur quelle distance la voiture s'arrête-t-elle ?",
+    "options": [
+      "\\qty{25}{\\metre}",
+      "\\qty{20}{\\metre}",
+      "\\qty{50}{\\metre}",
+      "\\qty{324}{\\metre}"
+    ],
+    "reponse_index": 0,
+    "explication": "Le théorème de l'énergie cinétique entre le début du freinage et l'arrêt s'écrit\n$\\tfrac12 m v_0^2=\\mu m g\\,d$, soit $d=\\dfrac{v_0^2}{2\\mu g}$ (la masse se simplifie).\nAvec $v_0=\\qty{72}{\\kilo\\metre\\per\\hour}=\\qty{20}{\\metre\\per\\second}$ :\n$d=\\dfrac{20^2}{2\\times0{,}8\\times10}=\\dfrac{400}{16}=\\qty{25}{\\metre}$.",
+    "pieges": [
+      "B : $\\mu$ oublié, $d=\\dfrac{v_0^2}{2g}=\\dfrac{400}{20}=\\qty{20}{\\metre}$.",
+      "C : facteur $\\tfrac12$ oublié, $d=\\dfrac{v_0^2}{\\mu g}=\\dfrac{400}{8}=\\qty{50}{\\metre}$.",
+      "D : \\si{\\kilo\\metre\\per\\hour} non convertie ($v_0=72$ utilisé tel quel), $\\dfrac{72^2}{16}=\\qty{324}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q04",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Énergie cinétique et vitesse",
+    "difficulte": "concours",
+    "enonce": "À la vitesse $v_1=\\qty{40}{\\kilo\\metre\\per\\hour}$, la distance d'arrêt d'un véhicule (force de\nfreinage supposée constante) est $d_1=\\qty{8}{\\metre}$. Si la même voiture roule à\n$v_2=\\qty{100}{\\kilo\\metre\\per\\hour}$, sa distance d'arrêt devient :",
+    "options": [
+      "\\qty{20}{\\metre}",
+      "\\qty{25}{\\metre}",
+      "\\qty{50}{\\metre}",
+      "\\qty{125}{\\metre}"
+    ],
+    "reponse_index": 2,
+    "explication": "À force de freinage constante, $\\tfrac12 m v^2=F\\,d$ donne $d\\propto v^2$. Donc\n$d_2=d_1\\left(\\dfrac{v_2}{v_1}\\right)^2=8\\times\\left(\\dfrac{100}{40}\\right)^2=8\\times2{,}5^2=8\\times6{,}25=\\qty{50}{\\metre}$.",
+    "pieges": [
+      "A : dépendance prise linéaire $d\\propto v$ (carré oublié), $8\\times2{,}5=\\qty{20}{\\metre}$.",
+      "B : facteur $\\tfrac12$ ajouté à tort, $\\tfrac12\\times\\qty{50}{\\metre}=\\qty{25}{\\metre}$.",
+      "D : dépendance sur-évaluée $d\\propto v^3$, $8\\times2{,}5^3=8\\times15{,}625=\\qty{125}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q05",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Énergie potentielle élastique",
+    "difficulte": "concours",
+    "enonce": "On étire un ressort horizontal à partir de sa position détendue ($x_0=0$). La mesure de l'intensité\nde la force de rappel $F$ en fonction de l'élongation $\\Delta x$ donne la droite ci-dessous. Quelle\nénergie potentielle élastique le ressort emmagasine-t-il pour une élongation de $\\qty{10}{\\centi\\metre}$ ?\n\\begin{center}\n\\begin{tikzpicture}\n\\begin{axis}[width=8.6cm,height=4.8cm,\n   xlabel={\\small élongation $\\Delta x$ (\\si{\\centi\\metre})},\n   ylabel={\\small force $F$ (\\si{\\newton})},\n   xmin=0,xmax=12,ymin=0,ymax=2.6,axis lines=left,\n   xtick={0,2,4,6,8,10},ytick={0,0.5,1,1.5,2},\n   tick label style={font=\\footnotesize},label style={font=\\footnotesize}]\n  \\addplot[blue,line width=1.2pt,domain=0:12,samples=2]{0.2*x};\n  \\draw[dashed,black!55] (axis cs:10,0)--(axis cs:10,2)--(axis cs:0,2);\n  \\fill[red] (axis cs:10,2) circle (2.2pt);\n  \\node[anchor=south west] at (axis cs:4.4,0.95){\\small $F=k\\,\\Delta x$};\n\\end{axis}\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{0.10}{\\joule}",
+      "\\qty{0.20}{\\joule}",
+      "\\qty{1.0}{\\joule}",
+      "\\qty{1000}{\\joule}"
+    ],
+    "reponse_index": 0,
+    "explication": "La pente de la droite donne la raideur : $k=\\dfrac{F}{\\Delta x}=\\dfrac{\\qty{2}{\\newton}}{\\qty{0.10}{\\metre}}=\\qty{20}{\\newton\\per\\metre}$.\nL'énergie élastique (aire du triangle sous la droite) vaut\n$E_p=\\tfrac12 k x^2=\\tfrac12\\times20\\times(0{,}10)^2=\\qty{0.10}{\\joule}$.",
+    "pieges": [
+      "B : facteur $\\tfrac12$ oublié (aire du rectangle au lieu du triangle), $k x^2=20\\times0{,}01=\\qty{0.20}{\\joule}$.",
+      "C : élongation non élevée au carré, $\\tfrac12 k x=\\tfrac12\\times20\\times0{,}10=\\qty{1.0}{\\joule}$.",
+      "D : \\si{\\centi\\metre} non convertie en \\si{\\metre} ($x=10$ utilisé), $\\tfrac12\\times20\\times10^2=\\qty{1000}{\\joule}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q06",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Conservation de l'énergie mécanique (plan incliné)",
+    "difficulte": "concours",
+    "enonce": "Un objet part du repos et glisse \\emph{sans frottement} sur un plan incliné d'angle $\\ang{30}$ avec\nl'horizontale, sur une longueur $L=\\qty{10}{\\metre}$. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$.\nQuelle est la vitesse de l'objet en bas du plan ?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.5]\n  \\coordinate (B) at (0,0);\n  \\coordinate (A) at ({10*cos(30)},{10*sin(30)});\n  \\coordinate (F) at ({10*cos(30)},0);\n  \\draw[fill=blue!8,draw=black!70,line width=0.8pt] (B)--(A)--(F)--cycle;\n  \\foreach \\x in {0,0.7,...,8.4} \\draw[black!45] (\\x,0)--(\\x-0.28,-0.32);\n  \\draw[->,>=Stealth,black!70] (1.7,0) arc (0:30:1.7);\n  \\node at (2.5,0.55){\\small $\\ang{30}$};\n  \\shade[ball color=red] ($(A)+(-0.45,0.26)$) circle (0.34);\n  \\node[above] at ($(A)+(-0.4,0.6)$){\\small A ($v=0$)};\n  \\node[below right] at (B){\\small B};\n  \\draw[dashed,black!45] (A)--($(A)+(0.7,0)$);\n  \\draw[<->,dashed,black!55] ({10*cos(30)+0.7},0)--({10*cos(30)+0.7},{10*sin(30)}) node[midway,right]{\\small $h$};\n  \\node[rotate=30] at ({5*cos(30)-0.9},{5*sin(30)+0.55}){\\small $L=\\qty{10}{\\metre}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{7.1}{\\metre\\per\\second}",
+      "\\qty{10}{\\metre\\per\\second}",
+      "\\qty{13.2}{\\metre\\per\\second}",
+      "\\qty{14.1}{\\metre\\per\\second}"
+    ],
+    "reponse_index": 1,
+    "explication": "La réaction normale ne travaille pas ; sans frottement l'énergie mécanique se conserve :\n$\\tfrac12 m v^2=mgh$ avec la hauteur de descente $h=L\\sin\\ang{30}=10\\times0{,}5=\\qty{5}{\\metre}$.\nD'où $v=\\sqrt{2gh}=\\sqrt{2\\times10\\times5}=\\sqrt{100}=\\qty{10}{\\metre\\per\\second}$.",
+    "pieges": [
+      "A : facteur $2$ oublié, $v=\\sqrt{gh}=\\sqrt{50}\\approx\\qty{7.1}{\\metre\\per\\second}$.",
+      "C : $\\cos$ au lieu de $\\sin$ pour la hauteur ($h=L\\cos\\ang{30}$), $\\sqrt{2\\times10\\times8{,}66}\\approx\\qty{13.2}{\\metre\\per\\second}$.",
+      "D : hauteur confondue avec la longueur du plan ($h=L=\\qty{10}{\\metre}$), $\\sqrt{2\\times10\\times10}=\\sqrt{200}\\approx\\qty{14.1}{\\metre\\per\\second}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q07",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Conservation de l'énergie mécanique (lancer vertical)",
+    "difficulte": "concours",
+    "enonce": "On lance verticalement vers le haut, depuis le sol, un objet avec une vitesse initiale\n$v_0=\\qty{20}{\\metre\\per\\second}$ (résistance de l'air négligée, $g=\\qty{10}{\\metre\\per\\second\\squared}$).\nÀ quelle hauteur sa vitesse n'est-elle plus que la moitié de la vitesse initiale ($v=v_0/2$) ?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.7]\n  \\draw[black!70,line width=0.8pt] (-1,0)--(1,0);\n  \\foreach \\x in {-0.8,-0.4,...,0.8} \\draw[black!45] (\\x,0)--(\\x-0.2,-0.24);\n  \\draw[->,>=Stealth,black!55] (0,-0.1)--(0,4.4) node[right]{\\small altitude};\n  \\fill[red] (0,0) circle (0.13);\n  \\draw[->,>=Stealth,line width=1.2pt,teal] (0.02,0.15)--(0.02,1.35) node[right]{\\small $\\vv v_0$};\n  \\draw[dashed,black!45] (-0.7,2.4)--(0.9,2.4);\n  \\fill[red] (0,2.4) circle (0.13);\n  \\draw[->,>=Stealth,line width=1.1pt,teal] (0.02,2.55)--(0.02,3.15) node[right]{\\small $\\vv v_0/2$};\n  \\draw[<->,black!55] (-0.55,0)--(-0.55,2.4) node[midway,left]{\\small $h$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{5}{\\metre}",
+      "\\qty{10}{\\metre}",
+      "\\qty{20}{\\metre}",
+      "\\qty{15}{\\metre}"
+    ],
+    "reponse_index": 3,
+    "explication": "Conservation de l'énergie entre le sol et l'altitude $h$ : $\\tfrac12 v_0^2=\\tfrac12 v^2+gh$ avec\n$v=v_0/2$. Alors $gh=\\tfrac12 v_0^2-\\tfrac12\\left(\\tfrac{v_0}{2}\\right)^2=\\tfrac12 v_0^2\\left(1-\\tfrac14\\right)=\\tfrac38 v_0^2$,\nsoit $h=\\dfrac{3v_0^2}{8g}=\\dfrac{3\\times400}{80}=\\qty{15}{\\metre}$.",
+    "pieges": [
+      "A : seule l'énergie cinétique finale convertie, $h=\\dfrac{(v_0/2)^2}{2g}=\\dfrac{100}{20}=\\qty{5}{\\metre}$.",
+      "B : énergie cinétique supposée $\\propto v$ (demi-vitesse donc demi-hauteur maximale), $\\tfrac12\\times20=\\qty{10}{\\metre}$.",
+      "C : hauteur maximale calculée ($v=0$ au lieu de $v=v_0/2$), $\\dfrac{v_0^2}{2g}=\\qty{20}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q08",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Énergie dissipée par frottement",
+    "difficulte": "concours",
+    "enonce": "Une pierre de masse $m=\\qty{2}{\\kilogram}$ est lâchée sans vitesse initiale du haut d'un immeuble de\nhauteur $h=\\qty{20}{\\metre}$. À cause de la résistance de l'air, elle atteint le sol à la vitesse\n$v=\\qty{10}{\\metre\\per\\second}$ (au lieu de $\\sqrt{2gh}$). On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$.\nQuelle énergie a été dissipée par les frottements de l'air ?",
+    "options": [
+      "\\qty{300}{\\joule}",
+      "\\qty{200}{\\joule}",
+      "\\qty{500}{\\joule}",
+      "\\qty{100}{\\joule}"
+    ],
+    "reponse_index": 0,
+    "explication": "L'énergie dissipée est la perte d'énergie mécanique :\n$E_{\\text{diss}}=E_m^{\\text{i}}-E_m^{\\text{f}}=mgh-\\tfrac12 m v^2=2\\times10\\times20-\\tfrac12\\times2\\times10^2=400-100=\\qty{300}{\\joule}$.",
+    "pieges": [
+      "B : facteur $\\tfrac12$ oublié dans l'énergie cinétique, $mgh-m v^2=400-200=\\qty{200}{\\joule}$.",
+      "C : addition au lieu de la soustraction, $mgh+\\tfrac12 m v^2=400+100=\\qty{500}{\\joule}$.",
+      "D : énergie dissipée confondue avec l'énergie cinétique finale, $\\tfrac12 m v^2=\\qty{100}{\\joule}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q09",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Conservation (choc sur un ressort)",
+    "difficulte": "concours",
+    "enonce": "Un palet de masse $m=\\qty{0.5}{\\kilogram}$ glisse sans frottement sur un plan horizontal à la vitesse\n$v=\\qty{4}{\\metre\\per\\second}$ et vient comprimer un ressort de raideur $k=\\qty{200}{\\newton\\per\\metre}$\nfixé à un mur. De combien le ressort se comprime-t-il au maximum ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1]\n  \\draw[black!70,line width=0.9pt] (-0.3,0)--(8.1,0);\n  \\foreach \\x in {-0.1,0.3,...,7.9} \\draw[black!45] (\\x,0)--(\\x-0.18,-0.2);\n  \\draw[black!70,line width=1.1pt] (8,0)--(8,2);\n  \\foreach \\y in {0,0.35,...,1.75} \\draw[black!45] (8,\\y)--(8.24,\\y+0.18);\n  \\draw[orange,line width=1pt] (8,1)--(6.7,1)\n     decorate[decoration={coil,aspect=0.5,segment length=5.5pt,amplitude=5.5pt}]{-- (5.2,1)} -- (4.9,1);\n  \\draw[fill=blue!15,draw=black!70,line width=0.7pt] (3.0,0.4) rectangle (4.2,1.6);\n  \\node at (3.6,1){\\small $m$};\n  \\draw[->,>=Stealth,line width=1.2pt,teal] (3.0,1.9)--(4.3,1.9) node[above,black]{\\small $\\vv v$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{0.040}{\\metre}",
+      "\\qty{0.10}{\\metre}",
+      "\\qty{0.14}{\\metre}",
+      "\\qty{0.20}{\\metre}"
+    ],
+    "reponse_index": 3,
+    "explication": "Au maximum de compression le palet est arrêté : toute l'énergie cinétique est devenue énergie\nélastique, $\\tfrac12 m v^2=\\tfrac12 k x^2$. Donc $x=v\\sqrt{\\dfrac{m}{k}}=4\\times\\sqrt{\\dfrac{0{,}5}{200}}=4\\times0{,}05=\\qty{0.20}{\\metre}$\n(vérification : $\\tfrac12\\times0{,}5\\times4^2=\\qty{4}{\\joule}=\\tfrac12\\times200\\times0{,}20^2$).",
+    "pieges": [
+      "A : élongation non élevée au carré côté ressort ($\\tfrac12 m v^2=\\tfrac12 k x$), $x=\\dfrac{m v^2}{k}=\\qty{0.040}{\\metre}$.",
+      "B : vitesse non élevée au carré ($\\tfrac12 m v=\\tfrac12 k x^2$), $x=\\sqrt{\\dfrac{m v}{k}}=\\qty{0.10}{\\metre}$.",
+      "C : un facteur $\\tfrac12$ oublié ($\\tfrac12 m v^2=k x^2$), $x=\\sqrt{\\dfrac{m v^2}{2k}}\\approx\\qty{0.14}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F05-Q10",
+    "matiere": "Physique",
+    "fiche": "05",
+    "theme": "Quantité de mouvement",
+    "difficulte": "concours",
+    "enonce": "Une balle de masse $m=\\qty{150}{\\gram}$ est lancée à la vitesse $v=\\qty{72}{\\kilo\\metre\\per\\hour}$.\nQuelle est la norme de sa quantité de mouvement ?",
+    "options": [
+      "\\qty{1.5}{\\kilogram\\metre\\per\\second}",
+      "\\qty{3.0}{\\kilogram\\metre\\per\\second}",
+      "\\qty{10.8}{\\kilogram\\metre\\per\\second}",
+      "\\qty{3000}{\\kilogram\\metre\\per\\second}"
+    ],
+    "reponse_index": 1,
+    "explication": "$p=mv$ avec $m=\\qty{150}{\\gram}=\\qty{0.15}{\\kilogram}$ et\n$v=\\qty{72}{\\kilo\\metre\\per\\hour}=\\qty{20}{\\metre\\per\\second}$ :\n$p=0{,}15\\times20=\\qty{3.0}{\\kilogram\\metre\\per\\second}$.",
+    "pieges": [
+      "A : facteur $\\tfrac12$ ($p=mv$ confondu avec $\\tfrac12 mv$), $\\tfrac12\\times0{,}15\\times20=\\qty{1.5}{\\kilogram\\metre\\per\\second}$.",
+      "C : \\si{\\kilo\\metre\\per\\hour} non convertie ($v=72$ utilisé), $0{,}15\\times72=\\qty{10.8}{\\kilogram\\metre\\per\\second}$.",
+      "D : \\si{\\gram} non convertie en \\si{\\kilogram} ($m=150$ utilisé), $150\\times20=\\qty{3000}{\\kilogram\\metre\\per\\second}$."
+    ]
+  }
+]

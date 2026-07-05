@@ -1,0 +1,235 @@
+% ===== PRÉAMBULE CANONIQUE QCM — MATHÉMATIQUES =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric,intersections,babel}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}\newcommand{\C}{\mathbb{C}}\newcommand{\ds}{\displaystyle}
+\newcommand{\vv}[1]{\vec{#1}}
+% ===================================================
+\begin{document}
+
+\noindent\textbf{MATH-F08-Q01 --- Écart-type : invariance par translation}\par
+Soit $x$ un nombre réel. On considère les deux séries statistiques suivantes, chacune composée de cinq valeurs :\\
+\textbf{Série 1} : $x-2$ ; $x-1$ ; $x$ ; $x+1$ ; $x+2$\\
+\textbf{Série 2} : $x+3$ ; $x+4$ ; $x+5$ ; $x+6$ ; $x+7$\\
+Parmi les affirmations suivantes, laquelle est vraie quel que soit $x$ ?
+\begin{enumerate}[label=\Alph*)]
+\item Les deux séries ont le même écart-type.
+\item L'écart-type de la série 2 est strictement supérieur à celui de la série 1.
+\item L'écart-type de la série 2 est égal à celui de la série 1 augmenté de $5$.
+\item On ne peut pas comparer les écarts-types sans connaître la valeur de $x$.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+La série 2 se déduit de la série 1 en ajoutant la même constante $5$ à chacune de ses valeurs (translation). Or une translation déplace la moyenne mais \emph{ne modifie pas} la dispersion : les écarts à la moyenne sont inchangés. Les deux séries étant cinq entiers consécutifs de pas $1$, elles ont exactement la même variance, donc le même écart-type. Le résultat ne dépend pas de $x$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : confond position et dispersion --- une série « plus grande » n'est pas plus dispersée.
+\item C : applique la translation $+5$ à l'écart-type comme s'il s'agissait de la moyenne ; l'écart-type est invariant par translation.
+\item D : croit que la dispersion dépend de la valeur de $x$, alors que $x$ disparaît dans les écarts à la moyenne.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q02 --- Écart-type : comparaison de séries}\par
+Trois séries statistiques ont le même effectif et la même moyenne, égale à $6$ :\\
+$S_1$ : 2 ; 4 ; 6 ; 8 ; 10 \qquad $S_2$ : 4 ; 5 ; 6 ; 7 ; 8 \qquad $S_3$ : 1 ; 3 ; 6 ; 9 ; 11\\
+Laquelle possède le plus petit écart-type ?
+\begin{enumerate}[label=\Alph*)]
+\item La série $S_1$.
+\item La série $S_2$.
+\item La série $S_3$.
+\item Les trois séries ont le même écart-type puisqu'elles ont la même moyenne.
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+L'écart-type mesure la dispersion \emph{autour de la moyenne}, indépendamment de sa valeur. En calculant la variance (moyenne des carrés des écarts à $6$) : $V(S_1)=\dfrac{16+4+0+4+16}{5}=8$, $V(S_2)=\dfrac{4+1+0+1+4}{5}=2$, $V(S_3)=\dfrac{25+9+0+9+25}{5}=13{,}6$. La série la plus resserrée autour de $6$ est $S_2$ : elle a le plus petit écart-type ($\sigma=\sqrt2\approx1{,}41$).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : a choisi $S_1$ « au milieu » sans calculer les écarts à la moyenne.
+\item C : a confondu « plus petit écart-type » et « plus grande étendue » ; $S_3$ est au contraire la plus étalée.
+\item D : croit à tort que des séries de même moyenne ont forcément le même écart-type.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q03 --- Écart-type : effet de l'ajout d'une valeur}\par
+On considère la série 3 ; 5 ; 7 ; 9, dont la moyenne est $6$. On ajoute à cette série une cinquième valeur. Parmi les valeurs proposées, laquelle fait \emph{diminuer} l'écart-type de la série ?
+\begin{enumerate}[label=\Alph*)]
+\item $0$
+\item $9$
+\item $12$
+\item $6$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+L'écart-type diminue lorsque la valeur ajoutée est proche de la moyenne (elle « resserre » la série) et augmente lorsqu'elle en est éloignée. La valeur $6$ est exactement la moyenne actuelle : en l'ajoutant, la variance passe de $V=\dfrac{9+1+1+9}{4}=5$ à $V=\dfrac{9+1+0+1+9}{5}=4$, donc $\sigma$ diminue. Les valeurs $0$, $9$ et $12$ sont plus éloignées de la moyenne et augmentent la dispersion.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : $0$ est loin de la moyenne $6$ : l'ajouter augmente l'écart-type au lieu de le diminuer.
+\item B : $9$ est une valeur extrême de la série ; l'ajouter (loin de la moyenne) accroît la dispersion.
+\item C : $12$ éloigne fortement la série de sa moyenne et augmente l'écart-type.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q04 --- Variance et écart-type : calcul}\par
+Une série statistique est composée des cinq valeurs 2 ; 3 ; 4 ; 5 ; 6. Quel est son écart-type ?
+\begin{enumerate}[label=\Alph*)]
+\item $2$
+\item $\sqrt{10}$
+\item $\sqrt{2}$
+\item $\dfrac{\sqrt{10}}{5}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+La moyenne vaut $m=\dfrac{2+3+4+5+6}{5}=4$. Les écarts à la moyenne sont $-2,\ -1,\ 0,\ 1,\ 2$, de carrés $4,\ 1,\ 0,\ 1,\ 4$ (somme $10$). La variance est $V=\dfrac{10}{5}=2$, et l'écart-type $\sigma=\sqrt{V}=\sqrt{2}\approx1{,}41$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : a donné la variance $V=2$ au lieu de l'écart-type $\sigma=\sqrt{V}$.
+\item B : a oublié de diviser la somme des carrés par l'effectif $N=5$ : $\sqrt{10}$ au lieu de $\sqrt{10/5}$.
+\item D : a divisé par $N$ \emph{après} avoir pris la racine : $\dfrac{\sqrt{10}}{5}$ au lieu de $\sqrt{\dfrac{10}{5}}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q05 --- Moyenne pondérée de deux groupes}\par
+À un examen, les 20 étudiants du groupe A ont obtenu une moyenne de $8/20$, et les 5 étudiants du groupe B une moyenne de $13/20$. Quelle est la moyenne générale des 25 étudiants ?
+\begin{enumerate}[label=\Alph*)]
+\item $9{,}0/20$
+\item $10{,}5/20$
+\item $12{,}0/20$
+\item $8{,}0/20$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+La moyenne générale est la moyenne \emph{pondérée} par les effectifs :
+\[ m=\dfrac{20\times 8 + 5\times 13}{20+5}=\dfrac{160+65}{25}=\dfrac{225}{25}=9{,}0. \]
+Le groupe A, plus nombreux, tire la moyenne vers sa propre valeur ($8$).\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : a fait la moyenne des deux moyennes $\dfrac{8+13}{2}=10{,}5$ sans pondérer par les effectifs.
+\item C : a interverti les effectifs des deux groupes : $\dfrac{5\times 8+20\times 13}{25}=12{,}0$.
+\item D : a donné la moyenne du seul groupe A (le plus nombreux) en négligeant le groupe B.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q06 --- Moyenne : problème inverse}\par
+Un étudiant a passé trois épreuves, de notes $a$, $b$ et $c$ (dans cet ordre). On sait que $b$ dépasse $a$ de $4$ points, que $c$ dépasse $b$ de $4$ points, et que la moyenne des trois notes vaut $12$. Quelles sont, dans l'ordre, les notes $a$, $b$, $c$ ?
+\begin{enumerate}[label=\Alph*)]
+\item 12 ; 16 ; 20
+\item 4 ; 8 ; 12
+\item 10 ; 12 ; 14
+\item 8 ; 12 ; 16
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+On a $b=a+4$ et $c=a+8$. La moyenne s'écrit $\dfrac{a+(a+4)+(a+8)}{3}=\dfrac{3a+12}{3}=a+4$. L'égalité $a+4=12$ donne $a=8$, d'où $b=12$ et $c=16$. Vérification : $\dfrac{8+12+16}{3}=12$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : a supposé que la première note vaut la moyenne ($a=12$), d'où 12 ; 16 ; 20.
+\item B : a supposé que la dernière note vaut la moyenne ($c=12$), d'où 4 ; 8 ; 12.
+\item C : a utilisé un écart de $2$ points au lieu de $4$ entre notes consécutives.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q07 --- Moyenne : linéarité}\par
+Les notes sur $20$ d'un groupe d'étudiants ont pour moyenne $8$. Le professeur souhaite porter cette moyenne à exactement $10$ en appliquant la même modification à toutes les notes. Quelle opération convient ?
+\begin{enumerate}[label=\Alph*)]
+\item Augmenter chaque note de $10\,\%$.
+\item Augmenter chaque note de $20\,\%$.
+\item Ajouter $2$ points à chaque note.
+\item Ajouter $4$ points à chaque note.
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+La moyenne est linéaire : ajouter une constante $\beta$ à toutes les notes augmente la moyenne de $\beta$ ; les multiplier par $\alpha$ multiplie la moyenne par $\alpha$. Pour passer de $8$ à $10$, ajouter $2$ points donne $8+2=10$. Augmenter de $10\,\%$ donne $8\times1{,}10=8{,}8$ ; de $20\,\%$ donne $9{,}6$ ; et ajouter $4$ points donne $12$ : aucune de ces trois opérations ne convient.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : $+10\,\%$ donne $8\times1{,}10=8{,}8$, insuffisant.
+\item B : $+20\,\%$ donne $8\times1{,}20=9{,}6$, insuffisant.
+\item D : $+4$ points donne $12$, valeur trop élevée.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q08 --- Lecture d'un diagramme en bâtons}\par
+Le diagramme en bâtons ci-dessous donne le nombre de patients admis aux urgences d'un hôpital selon le jour de la semaine.
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \draw[->,>=Stealth] (0,0)--(0,4.8) node[left,font=\scriptsize]{nombre};
+  \draw[->,>=Stealth] (0,0)--(9.4,0) node[right,font=\scriptsize]{jour};
+  \foreach \y/\v in {1.05/30,2.1/60,3.15/90,4.2/120}{\draw[black!12,dashed](0,\y)--(9,\y);\draw(0.05,\y)--(-0.05,\y) node[left,font=\tiny]{\v};}
+  \foreach \x/\h/\lab/\val in {1/1.4/Lun/40, 2.2/1.925/Mar/55, 3.4/1.05/Mer/30, 4.6/2.275/Jeu/65, 5.8/2.8/Ven/80, 7/4.2/Sam/120, 8.2/3.15/Dim/90}{
+    \fill[blue!55] (\x-0.32,0) rectangle (\x+0.32,\h);
+    \draw[blue!70!black] (\x-0.32,0) rectangle (\x+0.32,\h);
+    \node[below,font=\tiny] at (\x,0){\lab};
+    \node[above,font=\tiny] at (\x,\h){\val};}
+\end{tikzpicture}
+\end{center}
+Combien de patients ont été admis, au total, du \textbf{lundi au jeudi} inclus ?
+\begin{enumerate}[label=\Alph*)]
+\item $125$
+\item $190$
+\item $270$
+\item $150$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+On additionne les effectifs des quatre premiers jours : lundi $40$, mardi $55$, mercredi $30$, jeudi $65$, soit $40+55+30+65=190$ patients.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : s'est arrêté au mercredi : $40+55+30=125$.
+\item C : a inclus le vendredi (du lundi au vendredi) : $190+80=270$.
+\item D : a démarré au mardi : $55+30+65=150$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q09 --- Médiane d'une série discrète}\par
+Le nombre de gardes de nuit effectuées en un mois par 8 internes est : 12 ; 7 ; 15 ; 9 ; 20 ; 11 ; 8 ; 17. Quelle est la médiane de cette série ?
+\begin{enumerate}[label=\Alph*)]
+\item $11{,}5$
+\item $14{,}5$
+\item $11{,}0$
+\item $12{,}4$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+On range d'abord la série par ordre croissant : 7 ; 8 ; 9 ; 11 ; 12 ; 15 ; 17 ; 20. L'effectif $n=8$ étant pair, la médiane est la moyenne des valeurs de rang $4$ et $5$, soit $\dfrac{11+12}{2}=11{,}5$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : n'a pas trié la série et a fait la moyenne des $4^{\text{e}}$ et $5^{\text{e}}$ valeurs de la liste \emph{non ordonnée} ($9$ et $20$), soit $14{,}5$.
+\item C : a pris une seule valeur centrale (rang $4$) sans faire la moyenne des rangs $4$ et $5$.
+\item D : a calculé la moyenne arithmétique $\dfrac{99}{8}\approx12{,}4$ au lieu de la médiane.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F08-Q10 --- Diagramme circulaire : proportions}\par
+Le diagramme circulaire ci-dessous représente la répartition des $2000$ soignants d'un hôpital.
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \fill[blue!45]   (0,0) -- (90:2) arc (90:-90:2) -- cycle;
+  \fill[teal!40]   (0,0) -- (-90:2) arc (-90:-198:2) -- cycle;
+  \fill[orange!55] (0,0) -- (-198:2) arc (-198:-270:2) -- cycle;
+  \draw (0,0) circle (2);
+  \node at (1,0) {\scriptsize $50\,\%$};
+  \node at (-144:1.15) {\scriptsize $30\,\%$};
+  \node at (126:1.25) {\scriptsize $20\,\%$};
+  \node[right,font=\scriptsize] at (2.5,0.8){\textcolor{blue!45}{$\blacksquare$}~Infirmiers};
+  \node[right,font=\scriptsize] at (2.5,0.2){\textcolor{teal!40}{$\blacksquare$}~Aides-soignants};
+  \node[right,font=\scriptsize] at (2.5,-0.4){\textcolor{orange!55}{$\blacksquare$}~Médecins};
+\end{tikzpicture}
+\end{center}
+On recrute de nouveaux infirmiers, si bien que leur effectif augmente de moitié ; les effectifs des aides-soignants et des médecins restent inchangés. Quel pourcentage du personnel les infirmiers représentent-ils alors ?
+\begin{enumerate}[label=\Alph*)]
+\item $75\,\%$
+\item $60\,\%$
+\item $50\,\%$
+\item $40\,\%$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Effectifs initiaux : infirmiers $0{,}50\times2000=1000$, aides-soignants $600$, médecins $400$. Après une augmentation de moitié, les infirmiers sont $1000\times1{,}5=1500$, et le total devient $1500+600+400=2500$. Leur proportion est $\dfrac{1500}{2500}=0{,}60=60\,\%$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : a divisé le nouvel effectif $1500$ par l'\emph{ancien} total $2000$ sans réactualiser le total.
+\item C : a cru que la proportion reste $50\,\%$ sous prétexte que les autres effectifs ne changent pas.
+\item D : a gardé l'\emph{ancien} effectif $1000$ au numérateur en n'actualisant que le total : $\dfrac{1000}{2500}=40\,\%$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\end{document}

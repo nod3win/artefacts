@@ -1,0 +1,189 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+\noindent\textbf{CHIM-F07-Q01 --- Loi combinee (p,V,T) et conversion en kelvins}\par
+Une quantité fixe de gaz parfait occupe $\qty{6.0}{L}$ à $\qty{27}{\degreeCelsius}$ sous $\qty{2.0}{atm}$. On la comprime jusqu'à $\qty{2.0}{L}$ tout en portant sa température à $\qty{127}{\degreeCelsius}$. Quelle est la pression finale du gaz ?
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{8.0}{atm}$
+\item $\qty{6.0}{atm}$
+\item $\qty{4.5}{atm}$
+\item $\qty{28}{atm}$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+On applique la loi combinée $\dfrac{p_1V_1}{T_1}=\dfrac{p_2V_2}{T_2}$ avec $T_1=27+273=\qty{300}{K}$ et $T_2=127+273=\qty{400}{K}$. Ainsi $p_2=p_1\cdot\dfrac{V_1}{V_2}\cdot\dfrac{T_2}{T_1}=\num{2.0}\times\dfrac{6.0}{2.0}\times\dfrac{400}{300}=\qty{8.0}{atm}$ : la compression ($\times 3$) l'emporte sur l'échauffement ($\times\tfrac{4}{3}$).\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: $\qty{6.0}{atm}$ --- n'applique que la loi de Boyle-Mariotte ($p_1V_1=p_2V_2$) et oublie l'effet de la hausse de température.
+\item C: $\qty{4.5}{atm}$ --- inverse le rapport des températures ($T_1/T_2$ au lieu de $T_2/T_1$), comme si chauffer abaissait la pression.
+\item D: $\qty{28}{atm}$ --- ne convertit pas les températures en kelvins et utilise le rapport $127/27$ au lieu de $400/300$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q02 --- Combustion, reactif limitant et volume molaire aux CNTP}\par
+On brûle du propane selon $\ce{C3H8 + 5O2 -> 3CO2 + 4H2O}$. On introduit $\qty{8.8}{g}$ de $\ce{C3H8}$ et $\qty{16}{g}$ de $\ce{O2}$. Quel volume de $\ce{CO2}$, mesuré aux CNTP, se forme-t-il ? \textit{(Volume molaire aux CNTP : $\qty{22.4}{L/mol}$ ; $M(\ce{C3H8})=\qty{44}{g/mol}$, $M(\ce{O2})=\qty{32}{g/mol}$.)}
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{4.48}{L}$
+\item $\qty{6.72}{L}$
+\item $\qty{11.2}{L}$
+\item $\qty{13.4}{L}$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+$n(\ce{C3H8})=\num{8.8}/44=\qty{0.20}{mol}$ et $n(\ce{O2})=16/32=\qty{0.50}{mol}$. La combustion exige $\qty{5}{mol}$ de $\ce{O2}$ par mole de propane : $\qty{0.20}{mol}$ de propane en réclamerait $\num{1.0}$, or on n'a que $\qty{0.50}{mol}$, donc $\ce{O2}$ est le réactif limitant. D'où $n(\ce{CO2})=\tfrac{3}{5}\,n(\ce{O2})=\tfrac{3}{5}\times\num{0.50}=\qty{0.30}{mol}$, soit $V=\num{0.30}\times\num{22.4}=\qty{6.72}{L}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\qty{4.48}{L}$ --- prend le propane comme base avec un rapport 1:1 ($\num{0.20}\times\num{22.4}$), en ignorant à la fois le réactif limitant et le coefficient 3.
+\item C: $\qty{11.2}{L}$ --- identifie bien $\ce{O2}$ comme limitant mais oublie le rapport stœchiométrique $3/5$ ($\num{0.50}\times\num{22.4}$).
+\item D: $\qty{13.4}{L}$ --- calcule sur le propane (en excès) avec le coefficient 3 ($3\times\num{0.20}\times\num{22.4}$), sans voir que $\ce{O2}$ limite la réaction.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q03 --- Masse volumique et temperature a pression constante (Charles)}\par
+À pression constante, un gaz a une masse volumique $\rho_1=\qty{1.80}{g/L}$ à $\qty{27}{\degreeCelsius}$. On le chauffe jusqu'à $\qty{327}{\degreeCelsius}$. Quelle est alors sa masse volumique ?
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{0.15}{g/L}$
+\item $\qty{3.60}{g/L}$
+\item $\qty{0.90}{g/L}$
+\item $\qty{1.80}{g/L}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+À pression constante, $\rho=\dfrac{pM}{RT}$ montre que $\rho\propto\dfrac{1}{T}$. Avec $T_1=\qty{300}{K}$ et $T_2=\qty{600}{K}$, $\rho_2=\rho_1\cdot\dfrac{T_1}{T_2}=\num{1.80}\times\dfrac{300}{600}=\qty{0.90}{g/L}$ : en doublant la température absolue, on divise la masse volumique par deux.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\qty{0.15}{g/L}$ --- utilise le bon rapport $1/T$ mais sans convertir en kelvins ($27/327$ au lieu de $300/600$).
+\item B: $\qty{3.60}{g/L}$ --- inverse le sens de la proportionnalité et pose $\rho\propto T$ ($\times 600/300$) : la masse volumique augmenterait au lieu de diminuer.
+\item D: $\qty{1.80}{g/L}$ --- croit la masse volumique intrinsèque au gaz, donc indépendante de la température.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q04 --- Equation d'etat pV=nRT et coherence des unites}\par
+On enferme $\qty{0.50}{mol}$ de gaz parfait dans un récipient rigide de $\qty{2.0}{L}$ porté à $\qty{27}{\degreeCelsius}$. Quelle pression y règne-t-il ? \textit{(Constante des gaz $R=\num{0.082}\ \mathrm{atm\,L\,mol^{-1}\,K^{-1}}$.)}
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{0.55}{atm}$
+\item $\qty{5.6}{atm}$
+\item $\qty{12}{atm}$
+\item $\qty{6.2}{atm}$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+On isole $p=\dfrac{nRT}{V}$ avec $T=27+273=\qty{300}{K}$ : $p=\dfrac{\num{0.50}\times\num{0.082}\times300}{\num{2.0}}=\dfrac{\num{12.3}}{\num{2.0}}=\qty{6.2}{atm}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\qty{0.55}{atm}$ --- laisse la température en degrés Celsius ($T=27$ au lieu de $\qty{300}{K}$).
+\item B: $\qty{5.6}{atm}$ --- applique par réflexe $T=\qty{273}{K}$ (conditions normales) au lieu de la température réelle $\qty{300}{K}$.
+\item C: $\qty{12}{atm}$ --- oublie de diviser par le volume $V=\qty{2.0}{L}$ et donne simplement $nRT$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q05 --- Loi d'Avogadro : volumes de combinaison des gaz}\par
+On synthétise l'ammoniac selon $\ce{N2 + 3H2 -> 2NH3}$, tous les gaz étant mesurés dans les mêmes conditions de température et de pression. À partir de $\qty{30}{L}$ de $\ce{H2}$ et d'un excès de $\ce{N2}$, quel volume de $\ce{NH3}$ obtient-on ?
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{20}{L}$
+\item $\qty{30}{L}$
+\item $\qty{45}{L}$
+\item $\qty{10}{L}$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+D'après la loi d'Avogadro, à $T$ et $p$ fixés les volumes sont proportionnels aux quantités de matière : les coefficients stœchiométriques s'appliquent directement aux volumes. Ainsi $V(\ce{NH3})=\dfrac{2}{3}\,V(\ce{H2})=\dfrac{2}{3}\times30=\qty{20}{L}$ ($\ce{N2}$ étant en excès, $\ce{H2}$ fixe l'avancement).\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: $\qty{30}{L}$ --- applique un rapport 1:1 entre $\ce{H2}$ et $\ce{NH3}$, en ignorant les coefficients $3$ et $2$.
+\item C: $\qty{45}{L}$ --- inverse le rapport et utilise $\tfrac{3}{2}$ au lieu de $\tfrac{2}{3}$.
+\item D: $\qty{10}{L}$ --- n'utilise que le rapport $\tfrac{1}{3}$ (comme si $\ce{H2}$ ne donnait qu'une mole de $\ce{NH3}$), en oubliant le coefficient $2$ devant $\ce{NH3}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q06 --- Masse molaire d'un gaz a partir du volume molaire (CNTP)}\par
+Aux conditions normales (CNTP), $\qty{11.2}{L}$ d'un gaz pur ont une masse de $\qty{22}{g}$. Quelle est la masse molaire de ce gaz ? \textit{(Volume molaire aux CNTP : $\qty{22.4}{L/mol}$.)}
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{22}{g/mol}$
+\item $\qty{44}{g/mol}$
+\item $\qty{88}{g/mol}$
+\item $\qty{11}{g/mol}$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+$n=\dfrac{V}{V_{\mathrm{m}}}=\dfrac{\num{11.2}}{\num{22.4}}=\qty{0.50}{mol}$, puis $M=\dfrac{m}{n}=\dfrac{22}{\num{0.50}}=\qty{44}{g/mol}$ (par exemple $\ce{CO2}$).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\qty{22}{g/mol}$ --- croit que $\qty{11.2}{L}$ correspond à $\qty{1}{mol}$ (confusion avec le volume molaire) et pose $M=m$.
+\item C: $\qty{88}{g/mol}$ --- prend $n=\qty{0.25}{mol}$ (divise $\num{11.2}$ par $\num{44.8}$ au lieu de $\num{22.4}$).
+\item D: $\qty{11}{g/mol}$ --- multiplie $m$ par $n$ au lieu de diviser ($22\times\num{0.50}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q07 --- Loi de Dalton : pression partielle et fraction molaire}\par
+Un récipient contient $\qty{28}{g}$ de diazote $\ce{N2}$ et $\qty{16}{g}$ de dioxygène $\ce{O2}$ ; la pression totale vaut $\qty{3.0}{atm}$. Quelle est la pression partielle du dioxygène ? \textit{($M(\ce{N2})=\qty{28}{g/mol}$, $M(\ce{O2})=\qty{32}{g/mol}$.)}
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{1.1}{atm}$
+\item $\qty{1.5}{atm}$
+\item $\qty{1.0}{atm}$
+\item $\qty{2.0}{atm}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+$n(\ce{N2})=28/28=\qty{1.0}{mol}$ et $n(\ce{O2})=16/32=\qty{0.50}{mol}$, donc $n_{\text{tot}}=\qty{1.5}{mol}$. La fraction molaire $\chi(\ce{O2})=\dfrac{\num{0.50}}{\num{1.5}}=\dfrac{1}{3}$, d'où $p(\ce{O2})=\chi(\ce{O2})\times p_{\text{tot}}=\dfrac{1}{3}\times\num{3.0}=\qty{1.0}{atm}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\qty{1.1}{atm}$ --- utilise la fraction \emph{massique} ($16/44$) au lieu de la fraction molaire.
+\item B: $\qty{1.5}{atm}$ --- suppose un partage 50/50 entre les deux gaz ($\num{3.0}/2$), sans tenir compte des quantités de matière différentes.
+\item D: $\qty{2.0}{atm}$ --- applique au dioxygène la fraction molaire du diazote ($\num{1.0}/\num{1.5}=\tfrac{2}{3}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q08 --- Densite d'un gaz par rapport a l'air}\par
+La densité d'un gaz par rapport à l'air vaut $d=\num{1.5}$. Quelle est sa masse molaire ? \textit{(Masse molaire moyenne de l'air : $\qty{28.8}{g/mol}$.)}
+\begin{enumerate}[label=\Alph*)]
+\item $\qty{19.2}{g/mol}$
+\item $\qty{33.6}{g/mol}$
+\item $\qty{30.3}{g/mol}$
+\item $\qty{43.2}{g/mol}$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Par définition, $d=\dfrac{M_{\text{gaz}}}{M_{\text{air}}}$, donc $M_{\text{gaz}}=d\times M_{\text{air}}=\num{1.5}\times\num{28.8}=\qty{43.2}{g/mol}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\qty{19.2}{g/mol}$ --- inverse la relation et calcule $M_{\text{air}}/d$ ($\num{28.8}/\num{1.5}$).
+\item B: $\qty{33.6}{g/mol}$ --- multiplie $d$ par le volume molaire $\num{22.4}$ au lieu de la masse molaire de l'air $\num{28.8}$.
+\item C: $\qty{30.3}{g/mol}$ --- additionne $d$ et $M_{\text{air}}$ ($\num{28.8}+\num{1.5}$) au lieu de les multiplier.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q09 --- Lois historiques : sens des proportionnalites et kelvins}\par
+Parmi les affirmations suivantes concernant une quantité fixe de gaz parfait, laquelle est \textbf{exacte} ?
+\begin{enumerate}[label=\Alph*)]
+\item À volume constant, lorsque la température absolue passe de $\qty{200}{K}$ à $\qty{400}{K}$, la pression du gaz double.
+\item À température constante, doubler la pression d'un gaz double également son volume.
+\item À pression constante, chauffer un gaz de $\qty{20}{\degreeCelsius}$ à $\qty{40}{\degreeCelsius}$ double son volume.
+\item À pression constante, le volume d'un gaz est inversement proportionnel à sa température absolue.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+À volume et quantité de matière constants, $pV=nRT$ impose $\dfrac{p}{T}=\text{cste}$, soit $p\propto T$ (transformation isochore). En passant de $\qty{200}{K}$ à $\qty{400}{K}$, la température absolue double, donc la pression double : l'affirmation A est exacte.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: fausse --- à $T$ constante, la loi de Boyle-Mariotte donne $p\propto 1/V$ : doubler la pression \emph{divise} le volume par deux (proportionnalité inverse, non directe).
+\item C: fausse --- il faut raisonner en kelvins : $\qty{20}{\degreeCelsius}=\qty{293}{K}$ et $\qty{40}{\degreeCelsius}=\qty{313}{K}$, soit un volume multiplié par $313/293\approx\num{1.07}$, et non par deux.
+\item D: fausse --- à pression constante (loi de Charles), le volume est \emph{directement} proportionnel à la température absolue.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F07-Q10 --- Avogadro, volume molaire et comportement des gaz parfaits}\par
+Parmi les affirmations suivantes, laquelle est \textbf{exacte} ?
+\begin{enumerate}[label=\Alph*)]
+\item À mêmes température et pression, $\qty{1}{mol}$ de $\ce{O2}$ occupe un volume 16 fois plus grand que $\qty{1}{mol}$ de $\ce{H2}$.
+\item Aux CNTP, $\qty{1}{mol}$ de tout gaz parfait occupe $\qty{22.4}{L}$, quelle que soit la nature du gaz.
+\item La détente adiabatique d'un gaz s'accompagne d'une élévation de sa température.
+\item À pression et température fixées, la masse volumique d'un gaz parfait ne dépend pas de sa masse molaire.
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+C'est la conséquence directe de la loi d'Avogadro : aux CNTP ($\qty{1}{atm}$, $\qty{273}{K}$), une mole de n'importe quel gaz parfait occupe le volume molaire $\qty{22.4}{L}$, indépendamment de la nature du gaz. L'affirmation B est exacte.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: fausse --- d'après Avogadro, à mêmes $T$ et $p$, des quantités égales occupent des volumes \emph{égaux} : $\qty{1}{mol}$ de $\ce{O2}$ et $\qty{1}{mol}$ de $\ce{H2}$ occupent le même volume. Le facteur 16 est le rapport des masses molaires, pas des volumes.
+\item C: fausse --- une détente adiabatique s'accompagne au contraire d'un \emph{refroidissement} du gaz (il fournit un travail au détriment de son énergie interne).
+\item D: fausse --- $\rho=\dfrac{pM}{RT}$ : à $p$ et $T$ fixés, la masse volumique est \emph{proportionnelle} à la masse molaire $M$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\end{document}

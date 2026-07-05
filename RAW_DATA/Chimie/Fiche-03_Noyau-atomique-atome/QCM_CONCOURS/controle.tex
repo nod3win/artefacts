@@ -1,0 +1,221 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+
+\begin{center}
+{\Large\textbf{QCM type concours --- Chimie}}\\[2pt]
+{\large Fiche 03 --- Noyau atomique, atome}\\[2pt]
+{\small 10 questions niveau concours --- une seule réponse correcte sur quatre}
+\end{center}
+\vspace{6pt}\hrule\vspace{10pt}
+
+% ------------------------------------------------------------------ Q01
+\noindent\textbf{CHIM-F03-Q01 --- Composition d'un ion}\par
+Quelle est la composition de l'anion séléniure \ce{^{79}_{34}Se^{2-}} ?
+\begin{enumerate}[label=\Alph*)]
+\item \num{34} protons, \num{45} neutrons, \num{34} électrons
+\item \num{34} protons, \num{45} neutrons, \num{36} électrons
+\item \num{34} protons, \num{79} neutrons, \num{36} électrons
+\item \num{34} protons, \num{45} neutrons, \num{32} électrons
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Le numéro atomique $Z=34$ donne toujours \num{34} protons. Les neutrons se comptent par différence : $A - Z = 79 - 34 = 45$. L'anion \ce{^{79}_{34}Se^{2-}} a \emph{gagné} \num{2} électrons par rapport à l'atome neutre, d'où $Z + 2 = 34 + 2 = 36$ électrons.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: oubli de la charge de l'ion --- nombre d'électrons pris égal à $Z=34$ comme pour un atome neutre.
+\item C: neutrons comptés comme le nombre de masse $A$ ($=79$) au lieu de $A-Z$.
+\item D: erreur de signe sur la charge --- l'anion (gain de \num{2} électrons) traité comme un cation (perte), soit $34-2=32$ électrons.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q02
+\noindent\textbf{CHIM-F03-Q02 --- Identification d'un élément à partir d'un ion}\par
+Un anion $\mathrm{X}^{2-}$ possède \num{18} électrons, et son noyau compte \num{16} neutrons. Quel est cet élément, et quel est son nombre de masse $A$ ?
+\begin{enumerate}[label=\Alph*)]
+\item le soufre ($Z=16$), $A=32$
+\item l'argon ($Z=18$), $A=34$
+\item le calcium ($Z=20$), $A=36$
+\item le soufre ($Z=16$), $A=34$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+L'anion $\mathrm{X}^{2-}$ a gagné \num{2} électrons, donc $Z = 18 - 2 = 16$ : c'est le soufre. Le nombre de masse est $A = Z + N = 16 + 16 = 32$, en utilisant le nombre de \emph{protons} ($16$), pas celui des électrons.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: oubli de la charge --- numéro atomique pris égal au nombre d'électrons ($Z=18$, argon), d'où $A = 18+16 = 34$.
+\item C: erreur de signe --- pour un anion on \emph{retire} au lieu d'ajouter ($Z = 18+2 = 20$, calcium), d'où $A=36$.
+\item D: bon élément, mais $A$ calculé avec le nombre d'\emph{électrons} au lieu des protons ($18+16=34$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q03
+\noindent\textbf{CHIM-F03-Q03 --- Composition d'un cation et piège du noyau}\par
+Soit les trois propositions suivantes concernant le cation \ce{^{56}_{26}Fe^{3+}} :\par
+\textbf{P1} : son noyau est constitué de \num{26} protons et \num{30} neutrons ;\par
+\textbf{P2} : il possède \num{23} électrons ;\par
+\textbf{P3} : son noyau contient \num{3} électrons de moins que celui de l'atome de fer neutre.\par
+Combien de ces propositions sont exactes ?
+\begin{enumerate}[label=\Alph*)]
+\item Aucune
+\item Une
+\item Deux
+\item Trois
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+\textbf{P1} est vraie : $Z=26$ protons et $A-Z = 56-26 = 30$ neutrons. \textbf{P2} est vraie : le cation a perdu \num{3} électrons, $26-3 = 23$. \textbf{P3} est fausse : le noyau ne contient \emph{jamais} d'électrons ; les \num{3} électrons perdus proviennent du nuage électronique, et les deux noyaux (atome et ion) sont identiques. Il y a donc \textbf{deux} propositions exactes.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: rejette à tort P1 --- neutrons comptés comme le nombre de masse ($56$) au lieu de $A-Z$, et P2 également écartée.
+\item B: rejette à tort P2 --- mauvais décompte des électrons du cation (par exemple $26+3=29$, en croyant qu'un cation gagne des électrons).
+\item D: accepte à tort P3 --- n'a pas vu que le noyau ne contient que des nucléons (les électrons perdus viennent du nuage, pas du noyau).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q04
+\noindent\textbf{CHIM-F03-Q04 --- Masse atomique relative moyenne}\par
+Un élément possède deux isotopes : \ce{^{10}B} (abondance \qty{20}{\percent}) et \ce{^{11}B} (abondance \qty{80}{\percent}). Quelle est sa masse atomique relative moyenne ?
+\begin{enumerate}[label=\Alph*)]
+\item \num{10.5}
+\item \num{10.2}
+\item \num{11.0}
+\item \num{10.8}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La masse moyenne est la moyenne pondérée par les abondances : $\overline{A} = 0{,}20\times 10 + 0{,}80\times 11 = 2{,}0 + 8{,}8 = \num{10.8}$. Comme l'isotope \ce{^{11}B} domine (\qty{80}{\percent}), la moyenne penche vers $11$, ce qui confirme le résultat.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: moyenne arithmétique $(10+11)/2 = \num{10.5}$, abondances ignorées.
+\item B: interversion des abondances --- \qty{80}{\percent} attribué à \ce{^{10}B} et \qty{20}{\percent} à \ce{^{11}B} ($0{,}80\times 10 + 0{,}20\times 11 = \num{10.2}$).
+\item C: masse moyenne assimilée au nombre de masse de l'isotope le plus abondant (\ce{^{11}B} $\to \num{11.0}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q05
+\noindent\textbf{CHIM-F03-Q05 --- Abondance isotopique (masse moyenne inverse)}\par
+Un élément a deux isotopes, \ce{^{63}X} et \ce{^{65}X}, et une masse atomique relative moyenne de \num{63.5}. Quelle est l'abondance de l'isotope \ce{^{63}X} ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{75}{\percent}
+\item \qty{50}{\percent}
+\item \qty{49}{\percent}
+\item \qty{25}{\percent}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+En notant $p$ l'abondance de \ce{^{63}X}, celle de \ce{^{65}X} vaut $1-p$ : $63p + 65(1-p) = 63{,}5$, soit $65 - 2p = 63{,}5$, d'où $2p = 1{,}5$ et $p = 0{,}75 = \qty{75}{\percent}$. La moyenne \num{63.5} étant plus proche de $63$, l'isotope léger est bien majoritaire.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: abondances supposées égales (\qty{50}{\percent} chacune), ce qui donnerait une moyenne de $64$ et non \num{63.5}.
+\item C: pondération « au prorata des masses » $63/(63+65) \approx \qty{49}{\percent}$, au lieu de résoudre l'équation de la moyenne.
+\item D: abondance de l'\emph{autre} isotope \ce{^{65}X} calculée à la place ($1-0{,}75 = 0{,}25 \to \qty{25}{\percent}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q06
+\noindent\textbf{CHIM-F03-Q06 --- Configuration électronique en couches}\par
+Dans le modèle en couches (K, L, M, N\dots), quelle est la configuration électronique de l'atome de calcium ($Z=20$) ?
+\begin{enumerate}[label=\Alph*)]
+\item $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{10}$
+\item $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8(\mathrm{N})^2$
+\item $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^6(\mathrm{N})^4$
+\item $(\mathrm{K})^2(\mathrm{L})^{10}(\mathrm{M})^8$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+On remplit de l'intérieur vers l'extérieur : K$^2$, puis L$^8$ (total $10$). Il reste \num{10} électrons ; mais la couche externe ne peut dépasser \num{8}, donc M reçoit $8$ (total $18$) et les \num{2} derniers ouvrent la couche N. D'où $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^8(\mathrm{N})^2$ ; la somme $2+8+8+2 = 20 = Z$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: couche externe M remplie au-delà de \num{8} (règle « couche externe $\le 8$ » non respectée) : les \num{10} électrons restants placés sur M.
+\item C: couche N ouverte trop tôt, M laissée à \num{6} alors qu'elle peut recevoir \num{8} électrons en couche externe.
+\item D: capacité de la couche L dépassée (\num{10} au lieu du maximum \num{8}).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q07
+\noindent\textbf{CHIM-F03-Q07 --- Électrons de valence et familles}\par
+Parmi les numéros atomiques suivants, lequel désigne un atome possédant, comme le chlore, \num{7} électrons de valence ?
+\begin{enumerate}[label=\Alph*)]
+\item $Z=33$
+\item $Z=34$
+\item $Z=36$
+\item $Z=35$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Pour $Z=35$ : $(\mathrm{K})^2(\mathrm{L})^8(\mathrm{M})^{18}(\mathrm{N})^7$ --- la couche externe N porte \num{7} électrons de valence. C'est le brome, un halogène comme le chlore.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $Z=33$ donne $(\mathrm{N})^5$, soit \num{5} électrons de valence (arsenic, $Z$ trop petit de deux unités).
+\item B: $Z=34$ donne $(\mathrm{N})^6$, soit \num{6} électrons de valence (sélénium, $Z$ trop petit d'une unité).
+\item C: confusion avec le gaz noble voisin --- $Z=36$ (krypton) a une couche externe saturée à \num{8} électrons, pas \num{7}.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q08
+\noindent\textbf{CHIM-F03-Q08 --- Tendances périodiques : électronégativité}\par
+Classez les atomes $\mathrm{N}$ ($Z=7$), $\mathrm{F}$ ($Z=9$), $\mathrm{Na}$ ($Z=11$) et $\mathrm{S}$ ($Z=16$) par électronégativité \emph{décroissante}.
+\begin{enumerate}[label=\Alph*)]
+\item $\mathrm{F} > \mathrm{S} > \mathrm{N} > \mathrm{Na}$
+\item $\mathrm{Na} > \mathrm{S} > \mathrm{N} > \mathrm{F}$
+\item $\mathrm{F} > \mathrm{N} > \mathrm{S} > \mathrm{Na}$
+\item $\mathrm{F} > \mathrm{N} > \mathrm{Na} > \mathrm{S}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+L'électronégativité croît vers la droite d'une période et vers le haut d'une colonne. Le fluor (haut-droite) est le plus électronégatif ; le sodium (métal, à gauche) le moins. Entre les deux, l'azote (période 2) dépasse le soufre (période 3) : $\mathrm{F} > \mathrm{N} > \mathrm{S} > \mathrm{Na}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: interversion de N et S --- on suppose « l'électronégativité croît avec $Z$ » ($\mathrm{S}$, $Z=16$, placé avant $\mathrm{N}$, $Z=7$).
+\item B: ordre totalement inversé --- électronégativité \emph{décroissante} confondue avec croissante (ou électronégativité confondue avec le caractère métallique).
+\item D: le sodium (métal) placé avant le soufre --- électronégativité de $\mathrm{Na}$ surestimée au sein de la période 3.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q09
+\noindent\textbf{CHIM-F03-Q09 --- Tendances périodiques : rayon atomique}\par
+Parmi les atomes suivants, lequel possède le plus grand rayon atomique : le lithium ($Z=3$), le potassium ($Z=19$), le brome ($Z=35$) ou le fluor ($Z=9$) ?
+\begin{enumerate}[label=\Alph*)]
+\item le potassium ($Z=19$)
+\item le lithium ($Z=3$)
+\item le brome ($Z=35$)
+\item le fluor ($Z=9$)
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Le rayon atomique croît vers la \emph{gauche} et vers le \emph{bas} du tableau. Le potassium (période 4, groupe des alcalins, coin bas-gauche) est le plus gros. Le lithium (même famille mais période 2) est plus petit, et le fluor comme le brome, situés à droite, le sont davantage.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: sens vertical inversé --- on croit le rayon croissant vers le haut d'une colonne et on prend le sommet des alcalins (lithium).
+\item C: on suppose « le rayon croît avec $Z$ » et on prend le plus grand numéro atomique (brome, $Z=35$), pourtant à droite donc petit.
+\item D: confusion rayon / électronégativité --- on prend l'élément le plus électronégatif (fluor), qui est au contraire l'un des plus petits.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q10
+\noindent\textbf{CHIM-F03-Q10 --- Espèces isoélectroniques}\par
+Parmi les paires d'ions suivantes, laquelle est constituée de deux espèces \emph{isoélectroniques} (même nombre d'électrons) ?
+\begin{enumerate}[label=\Alph*)]
+\item \ce{Na+} et \ce{Cl-}
+\item \ce{O^{2-}} et \ce{Na+}
+\item \ce{Mg^{2+}} et \ce{Ca^{2+}}
+\item \ce{K+} et \ce{Br-}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+\ce{O^{2-}} possède $8+2 = 10$ électrons et \ce{Na+} en a $11-1 = 10$ : les deux ont \num{10} électrons (configuration du néon), ils sont donc isoélectroniques. Il faut comparer les \emph{nombres} d'électrons, pas seulement constater que chacun atteint « un » gaz noble.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on croit que « deux ions à configuration de gaz noble sont isoélectroniques », mais \ce{Na+} a celle du néon (\num{10}) et \ce{Cl-} celle de l'argon (\num{18}), différentes.
+\item C: on suppose que deux cations de même charge ($2+$) sont isoélectroniques --- \ce{Mg^{2+}} a \num{10} électrons et \ce{Ca^{2+}} en a \num{18}.
+\item D: même erreur « gaz noble $\Rightarrow$ isoélectronique » --- \ce{K+} (\num{18}, argon) et \ce{Br-} (\num{36}, krypton).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\end{document}

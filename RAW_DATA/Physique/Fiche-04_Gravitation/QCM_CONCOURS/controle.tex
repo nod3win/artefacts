@@ -1,0 +1,192 @@
+% ===== PRÉAMBULE CANONIQUE QCM — PHYSIQUE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : packages figés.
+% La bibliothèque TikZ "babel" est indispensable (conflit babel-french/circuitikz).
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,%
+  decorations.markings,intersections,babel}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% ==============================================
+\begin{document}
+\noindent\textbf{PHYS-F04-Q01 --- Loi de gravitation : effet des masses et de la distance}\par
+Deux corps $A$ et $B$ exercent l'un sur l'autre une force de gravitation d'intensité $F$. On multiplie la masse du corps $A$ par $8$ et la distance entre leurs centres par $2$. Par quel facteur l'intensité de la force de gravitation est-elle multipliée ?
+\begin{enumerate}[label=\Alph*)]
+\item $\times 4$
+\item $\times 32$
+\item $\times 2$
+\item $\times \dfrac{1}{2}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+L'intensité obéit à $F=\mathcal{G}\,\dfrac{m_A m_B}{d^2}$. En multipliant $m_A$ par $8$ et $d$ par $2$, le nouveau facteur vaut $\dfrac{8}{2^2}=\dfrac{8}{4}=2$ : la force est multipliée par $2$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: loi supposée en $1/d$ au lieu de $1/d^2$ : $8/2=4$.
+\item B: distance placée au numérateur (oubli du caractère inverse) : $8\times 2^2=32$.
+\item D: rôles de la masse et de la distance intervertis : $2^2/8=1/2$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q02 --- Distance au centre contre altitude}\par
+Au niveau du sol ($h=0$), la Terre exerce sur un satellite de masse $m$ une force d'attraction d'intensité $F_0$. On double la masse du satellite (elle devient $2m$) et on le place à l'altitude $h=R_T$, où $R_T$ est le rayon de la Terre. Quelle est la nouvelle intensité de la force d'attraction terrestre ?
+\begin{enumerate}[label=\Alph*)]
+\item $\dfrac{F_0}{2}$
+\item $2F_0$
+\item $\dfrac{F_0}{4}$
+\item $F_0$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Au sol, $F_0=\mathcal{G}\,\dfrac{M_T m}{R_T^2}$. À l'altitude $h=R_T$, la distance au centre vaut $d=R_T+h=2R_T$ et la masse est $2m$ : $F=\mathcal{G}\,\dfrac{M_T (2m)}{(2R_T)^2}=\dfrac{2}{4}\,F_0=\dfrac{F_0}{2}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: garde $d=R_T$ (confond altitude et distance au centre), seule la masse double : $2F_0$.
+\item C: oublie le doublement de la masse : $1/2^2=F_0/4$.
+\item D: oublie d'élever la distance au carré : $2/2=F_0$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q03 --- Variation de la pesanteur avec l'altitude}\par
+On donne l'intensité de pesanteur au sol $g_0=\qty{9.8}{\metre\per\second\squared}$ et le rayon terrestre $R_T=\qty{6400}{\kilo\metre}$. Quelle est l'intensité de pesanteur $g$ à l'altitude $h=\qty{6400}{\kilo\metre}$ ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{4.90}{\metre\per\second\squared}
+\item \qty{9.80}{\metre\per\second\squared}
+\item \qty{1.09}{\metre\per\second\squared}
+\item \qty{2.45}{\metre\per\second\squared}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+$g=\dfrac{\mathcal{G}M_T}{(R_T+h)^2}=\dfrac{\mathcal{G}M_T}{(2R_T)^2}=\dfrac{g_0}{4}=\qty{2.45}{\metre\per\second\squared}$, car $R_T+h=2R_T$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: oubli du carré (loi en $1/d$) : $g_0/2=\qty{4.90}{\metre\per\second\squared}$.
+\item B: confond altitude et distance au centre ($d=R_T$) : $g$ reste $g_0=\qty{9.80}{\metre\per\second\squared}$.
+\item C: utilise le diamètre $2R_T$ au lieu du rayon ($d=3R_T$) : $g_0/9=\qty{1.09}{\metre\per\second\squared}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q04 --- Pesanteur à la surface d'un autre astre}\par
+Une planète a une masse égale à $2$ fois celle de la Terre et un rayon égal à $2$ fois celui de la Terre. Sachant que $g_0=\qty{9.8}{\metre\per\second\squared}$ à la surface de la Terre, quelle est l'intensité de pesanteur à la surface de cette planète ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{2.45}{\metre\per\second\squared}
+\item \qty{4.90}{\metre\per\second\squared}
+\item \qty{9.80}{\metre\per\second\squared}
+\item \qty{19.6}{\metre\per\second\squared}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+$g=\dfrac{\mathcal{G}(2M_T)}{(2R_T)^2}=\dfrac{2}{4}\,g_0=\dfrac{g_0}{2}=\qty{4.90}{\metre\per\second\squared}$ : le facteur $2$ de masse est plus que compensé par le carré du rayon doublé.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: ne garde que l'effet du rayon (oubli du facteur de masse $2$) : $g_0/4=\qty{2.45}{\metre\per\second\squared}$.
+\item C: rayon non élevé au carré : $2/2=g_0=\qty{9.80}{\metre\per\second\squared}$.
+\item D: oubli de l'effet du rayon (garde seulement la masse $\times 2$) : $2g_0=\qty{19.6}{\metre\per\second\squared}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q05 --- Poids apparent dans un ascenseur}\par
+Une personne de masse $m=\qty{60}{\kilogram}$ est debout sur une balance, dans un ascenseur qui \textbf{monte en ralentissant}, avec une décélération de $\qty{2.0}{\metre\per\second\squared}$. On prend $g=\qty{10}{\metre\per\second\squared}$. Quelle valeur la balance indique-t-elle ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{720}{\newton}
+\item \qty{600}{\newton}
+\item \qty{480}{\newton}
+\item \qty{120}{\newton}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+L'ascenseur monte mais ralentit : le vecteur accélération est dirigé \emph{vers le bas}, donc $a=\qty{-2.0}{\metre\per\second\squared}$. La balance affiche le poids apparent $N=m(g+a)=60\times(10-2)=\qty{480}{\newton}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: « monte » interprété comme accélération vers le haut : $N=m(g+a)=60\times 12=\qty{720}{\newton}$.
+\item B: accélération ignorée, $N=mg=\qty{600}{\newton}$.
+\item D: ne garde que $N=ma=60\times 2=\qty{120}{\newton}$, en oubliant le poids.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q06 --- Poids apparent et impesanteur}\par
+Un astronaute flotte à l'intérieur de la Station spatiale internationale, en orbite circulaire à environ $\qty{400}{\kilo\metre}$ d'altitude, où l'intensité de pesanteur vaut encore $g\approx\qty{8.7}{\metre\per\second\squared}$. Parmi les affirmations suivantes, laquelle est \textbf{correcte} ?
+\begin{enumerate}[label=\Alph*)]
+\item L'astronaute et la station sont en chute libre permanente : le poids apparent est nul, mais le poids réel (de l'ordre de $m\times\qty{8.7}{\metre\per\second\squared}$) ne l'est pas.
+\item À cette altitude, la gravité terrestre est devenue nulle, ce qui provoque l'impesanteur.
+\item Le poids réel de l'astronaute est nul, car aucun support ne s'exerce sur lui.
+\item En orbite, la masse de l'astronaute a diminué, ce qui explique qu'il flotte.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+En orbite, la gravité joue le rôle de force centripète : la station et l'astronaute sont en chute libre permanente. Le poids apparent (force de contact) est nul, mais le poids réel $mg$ ne l'est pas, puisque $g\approx\qty{8.7}{\metre\per\second\squared}$, soit près de \qty{90}{\percent} de sa valeur au sol. La masse, elle, est invariable.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: idée fausse « plus de gravité en orbite » ; en réalité $g$ vaut encore $\approx\qty{8.7}{\metre\per\second\squared}$.
+\item C: confusion poids réel / poids apparent : seul le poids apparent (contact) est nul.
+\item D: confusion masse / poids : la masse est invariable, seul le poids apparent s'annule.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q07 --- Vitesse d'un satellite en orbite circulaire}\par
+Un satellite décrit une orbite circulaire à l'altitude $h=\qty{3600}{\kilo\metre}$. On donne le rayon terrestre $R_T=\qty{6400}{\kilo\metre}$ et $\mathcal{G}M_T=\num{4.0e14}$ (unités SI). Quelle est la vitesse orbitale du satellite ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{7.9e3}{\metre\per\second}
+\item \qty{6.3e3}{\metre\per\second}
+\item \qty{1.1e4}{\metre\per\second}
+\item \qty{8.9e3}{\metre\per\second}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Le rayon de l'orbite est $r=R_T+h=\qty{1.0e7}{\metre}$. La vitesse vaut $v=\sqrt{\dfrac{\mathcal{G}M_T}{r}}=\sqrt{\dfrac{\num{4.0e14}}{\num{1.0e7}}}=\sqrt{\num{4.0e7}}\approx\qty{6.3e3}{\metre\per\second}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: oubli de l'altitude ($r=R_T$) : $v=\sqrt{\mathcal{G}M_T/R_T}\approx\qty{7.9e3}{\metre\per\second}$.
+\item C: utilise l'altitude seule comme rayon d'orbite ($r=h$) : $v\approx\qty{1.1e4}{\metre\per\second}$.
+\item D: facteur $\sqrt{2}$ en trop (confusion avec la vitesse de libération) : $\approx\qty{8.9e3}{\metre\per\second}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q08 --- Troisième loi de Kepler}\par
+Deux satellites $A$ et $B$ décrivent des orbites circulaires autour de la Terre. Le rayon de l'orbite de $B$ est $4$ fois celui de $A$. D'après la 3\textsuperscript{e} loi de Kepler, que vaut le rapport $\dfrac{T_B}{T_A}$ des périodes de révolution ?
+\begin{enumerate}[label=\Alph*)]
+\item $4$
+\item $64$
+\item $2$
+\item $8$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La 3\textsuperscript{e} loi de Kepler donne $T^2\propto r^3$, donc $\dfrac{T_B}{T_A}=\left(\dfrac{r_B}{r_A}\right)^{3/2}=4^{3/2}=(\sqrt{4})^3=2^3=8$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: relation supposée linéaire $T\propto r$ : $4^1=4$.
+\item B: oubli de la racine carrée sur $T^2$ (relation lue $T\propto r^3$) : $4^3=64$.
+\item C: relation supposée $T\propto\sqrt{r}$ : $4^{1/2}=2$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q09 --- Satellite géostationnaire}\par
+Parmi les affirmations suivantes concernant un satellite \textbf{géostationnaire}, laquelle est \textbf{correcte} ?
+\begin{enumerate}[label=\Alph*)]
+\item Il a la même vitesse angulaire qu'un point situé sur l'équateur terrestre, mais une vitesse linéaire nettement plus grande.
+\item Il a la même vitesse linéaire qu'un point de l'équateur, puisqu'ils effectuent un tour dans le même temps.
+\item Sa période de révolution vaut environ $\qty{90}{\minute}$, comme celle de la Station spatiale internationale.
+\item On peut le placer à n'importe quelle altitude, pourvu qu'il reste au-dessus de l'équateur.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Un satellite géostationnaire a la même période que la Terre ($T\approx\qty{24}{\hour}$) : il partage donc la vitesse angulaire $\omega$ d'un point de l'équateur. Mais comme $v=\omega r$ et que son rayon d'orbite est bien plus grand, sa vitesse linéaire est nettement supérieure. Cette période impose une altitude \emph{unique}, $\approx\qty{35800}{\kilo\metre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: confond vitesse angulaire et vitesse linéaire ; $v=\omega r$ dépend du rayon.
+\item C: confond avec l'ISS ; le géostationnaire a $T\approx\qty{24}{\hour}$, pas $\qty{90}{\minute}$.
+\item D: ignore l'altitude unique ($\approx\qty{35800}{\kilo\metre}$) imposée par $T\approx\qty{24}{\hour}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F04-Q10 --- Énergie mécanique d'un satellite}\par
+Un satellite en orbite circulaire possède une énergie cinétique $E_c=\qty{2.0e10}{\joule}$. Que vaut son énergie mécanique totale $E_m$ sur cette orbite ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{-4.0e10}{\joule}
+\item \qty{0}{\joule}
+\item \qty{-2.0e10}{\joule}
+\item \qty{+2.0e10}{\joule}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Sur une orbite circulaire, $E_p=-2E_c$, donc $E_m=E_c+E_p=E_c-2E_c=-E_c=\qty{-2.0e10}{\joule}$. L'énergie mécanique d'un corps lié à la Terre est négative.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: confond $E_m$ avec $E_p=-2E_c=\qty{-4.0e10}{\joule}$.
+\item B: utilise $E_p=-E_c$ au lieu de $-2E_c$, d'où $E_m=0$.
+\item D: oubli du signe négatif : $E_m=+E_c=\qty{+2.0e10}{\joule}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\end{document}

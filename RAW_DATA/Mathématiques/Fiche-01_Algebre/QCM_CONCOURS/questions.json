@@ -1,0 +1,212 @@
+[
+  {
+    "id": "MATH-F01-Q01",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Logarithmes : piège $\\ln^2 x$ vs $\\ln x^2$",
+    "difficulte": "concours",
+    "enonce": "Parmi les expressions suivantes, laquelle est \\'egale \\`a $\\ds\\frac{\\ln^2(3)}{4}$ ?",
+    "options": [
+      "$\\ds\\frac{\\ln 3}{2}$",
+      "$\\ds\\frac{\\ln^2\\sqrt3}{2}$",
+      "$\\ln^2\\sqrt3$",
+      "$\\ds\\frac{\\ln^2 3}{2}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Rappel : $\\ln^2(3)=(\\ln 3)^2$. Comme $\\ln 3=2\\ln\\sqrt3$, on a $\\ln^2(3)=(2\\ln\\sqrt3)^2=4\\ln^2\\sqrt3$, donc $\\ds\\frac{\\ln^2(3)}{4}=\\frac{4\\ln^2\\sqrt3}{4}=\\ln^2\\sqrt3$.",
+    "pieges": [
+      "A : confond $\\ln^2 3=(\\ln 3)^2$ avec $\\ln(3^2)=2\\ln 3$, d'o\\`u $\\frac{2\\ln 3}{4}=\\frac{\\ln 3}{2}$.",
+      "B : \\'ecrit $\\ln^2 3=2\\ln^2\\sqrt3$ (oublie de mettre le facteur $2$ au carr\\'e), d'o\\`u $\\frac{\\ln^2\\sqrt3}{2}$.",
+      "D : \\guillemotleft{} simplifie \\guillemotright{} en divisant par $2$ au lieu de $4$."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q02",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Puissances : racines emboîtées et exposant fractionnaire",
+    "difficulte": "concours",
+    "enonce": "Pour $c>0$ et $n\\in\\N_0$, l'expression $\\ds\\sqrt[3]{\\sqrt{c^{\\,12n}}}$ est \\'egale \\`a :",
+    "options": [
+      "$c^{2n}$",
+      "$c^{10n}$",
+      "$c^{6n}$",
+      "$c^{4n}$"
+    ],
+    "reponse_index": 0,
+    "explication": "On convertit les racines en exposants et on \\emph{multiplie} les exposants emboîtés : $\\ds\\sqrt[3]{\\sqrt{c^{12n}}}=\\left(c^{12n}\\right)^{\\frac12\\cdot\\frac13}=c^{\\,12n/6}=c^{2n}$.",
+    "pieges": [
+      "B : \\emph{additionne} les indices $\\frac12+\\frac13=\\frac56$ au lieu de les multiplier : $12n\\cdot\\frac56=10n$.",
+      "C : n'applique que la racine carr\\'ee int\\'erieure : $12n\\cdot\\frac12=6n$.",
+      "D : n'applique que la racine cubique : $12n\\cdot\\frac13=4n$."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q03",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Racine d'un carré : $\\sqrt{A^2}=|A|$",
+    "difficulte": "concours",
+    "enonce": "Pour tout r\\'eel $x$, l'expression $\\sqrt{4x^{2}-12x+9}$ est \\'egale \\`a :",
+    "options": [
+      "$2x-3$",
+      "$3-2x$",
+      "$|2x-3|$",
+      "$2|x|-3$"
+    ],
+    "reponse_index": 2,
+    "explication": "Le radicande est un carr\\'e parfait : $4x^{2}-12x+9=(2x-3)^{2}$. Or $\\sqrt{A^{2}}=|A|$ pour tout r\\'eel $A$, donc $\\sqrt{(2x-3)^{2}}=|2x-3|$ (valable pour \\emph{tout} $x$, alors que $2x-3$ et $3-2x$ ne conviennent que sur une moiti\\'e de $\\R$).",
+    "pieges": [
+      "A : oublie la valeur absolue et \\'ecrit $\\sqrt{A^{2}}=A$ ; faux d\\`es que $2x-3<0$.",
+      "B : prend l'autre d\\'etermination du signe ($3-2x$), fausse d\\`es que $2x-3>0$.",
+      "D : distribue la racine sur la somme ($\\sqrt{4x^{2}}-\\sqrt{9}=2|x|-3$), ce qui est interdit."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q04",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Équation exponentielle : même base",
+    "difficulte": "concours",
+    "enonce": "L'unique solution r\\'eelle de l'\\'equation $\\ds\\frac{2^{\\,3x-1}}{4^{\\,x}}=8$ est :",
+    "options": [
+      "$x=2$",
+      "$x=4$",
+      "$x=3$",
+      "$x=9$"
+    ],
+    "reponse_index": 1,
+    "explication": "On ram\\`ene tout en base $2$ : $4^{x}=2^{2x}$ et $8=2^{3}$. Alors $\\ds\\frac{2^{3x-1}}{2^{2x}}=2^{(3x-1)-2x}=2^{\\,x-1}=2^{3}$, d'o\\`u $x-1=3$ et $x=4$.",
+    "pieges": [
+      "A : oublie que $4=2^2$ et traite $4^x$ comme $2^x$ : $2^{(3x-1)-x}=2^{2x-1}=2^3\\Rightarrow x=2$.",
+      "C : oublie le \\guillemotleft{} $-1$ \\guillemotright{} de l'exposant : $2^{3x-2x}=2^{x}=2^3\\Rightarrow x=3$.",
+      "D : ne convertit pas $8=2^3$ et pose $x-1=8\\Rightarrow x=9$."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q05",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Trinôme du second degré : discriminant paramétrique",
+    "difficulte": "concours",
+    "enonce": "Pour quelles valeurs du r\\'eel $m$ l'\\'equation $(m-2)x^{2}+2x+1=0$ admet-elle \\textbf{deux} racines r\\'eelles \\textbf{distinctes} ?",
+    "options": [
+      "$]-\\infty,\\ 3[$",
+      "$]-\\infty,\\ 2[\\,\\cup\\,]2,\\ 3]$",
+      "$]3,\\ +\\infty[$",
+      "$]-\\infty,\\ 2[\\,\\cup\\,]2,\\ 3[$"
+    ],
+    "reponse_index": 3,
+    "explication": "Il faut d'abord que l'\\'equation soit vraiment du second degr\\'e : $m-2\\neq 0$, soit $m\\neq 2$. Le discriminant vaut $\\Delta=2^{2}-4(m-2)(1)=12-4m$ ; deux racines distinctes exigent $\\Delta>0$, soit $m<3$. En croisant : $m<3$ et $m\\neq 2$, d'o\\`u $]-\\infty,\\ 2[\\,\\cup\\,]2,\\ 3[$.",
+    "pieges": [
+      "A : oublie la condition $m\\neq 2$ (le coefficient dominant doit \\^etre non nul) et donne $]-\\infty,\\ 3[$.",
+      "B : utilise $\\Delta\\ge 0$ au lieu de $\\Delta>0$ et inclut $m=3$, qui ne donne qu'une racine double.",
+      "C : inverse le sens en r\\'esolvant $\\Delta>0$ : $12-4m>0$ devient $m>3$."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q06",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Racine d'un polynôme et paramètre",
+    "difficulte": "concours",
+    "enonce": "Le polyn\\^ome $P(x)=x^{3}+ax^{2}-2x-8$ admet $2$ comme racine. Que vaut le r\\'eel $a$ ?",
+    "options": [
+      "$a=1$",
+      "$a=-1$",
+      "$a=2$",
+      "$a=0$"
+    ],
+    "reponse_index": 0,
+    "explication": "$2$ est racine $\\Leftrightarrow P(2)=0$ : $8+4a-4-8=4a-4=0$, donc $a=1$.",
+    "pieges": [
+      "B : erreur de signe en r\\'esolvant, $4a+4=0\\Rightarrow a=-1$.",
+      "C : calcule $a\\cdot x^2$ comme $a\\cdot x$ (soit $2a$ au lieu de $4a$) : $2a-4=0\\Rightarrow a=2$.",
+      "D : oublie le terme $-2x$ : $8+4a-8=4a=0\\Rightarrow a=0$."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q07",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Inéquation quotient : tableau de signes",
+    "difficulte": "concours",
+    "enonce": "Dans $\\R\\setminus\\{2\\}$, l'ensemble des solutions de $\\ds\\frac{(x+1)(3-x)}{x-2}\\ge 0$ est :",
+    "options": [
+      "$[-1,\\ 2[\\,\\cup\\,[3,\\ +\\infty[$",
+      "$]-\\infty,\\ -1]\\cup[2,\\ 3]$",
+      "$]-\\infty,\\ -1[\\,\\cup\\,]2,\\ 3[$",
+      "$]-\\infty,\\ -1]\\cup\\,]2,\\ 3]$"
+    ],
+    "reponse_index": 3,
+    "explication": "Valeurs critiques : $-1$, $2$ (p\\^ole), $3$. Le tableau de signes donne un quotient $\\ge 0$ sur $]-\\infty,\\ -1]$ et sur $]2,\\ 3]$. On inclut les racines $-1$ et $3$ (le quotient s'annule), on exclut le p\\^ole $2$. D'o\\`u $S=\\,]-\\infty,\\ -1]\\cup\\,]2,\\ 3]$.",
+    "pieges": [
+      "A : r\\'esout l'in\\'equation de sens contraire ($\\le 0$).",
+      "B : inclut le p\\^ole $x=2$ (croche fermante au lieu d'ouvrante).",
+      "C : utilise des crochets stricts et exclut \\`a tort les racines $-1$ et $3$ (oublie que $\\ge$ inclut l'\\'egalit\\'e)."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q08",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Décomposition en éléments simples (identification)",
+    "difficulte": "concours",
+    "enonce": "Pour tout $x\\in\\R\\setminus\\{0,3\\}$, on \\'ecrit $\\ds\\frac{6}{x^{2}-3x}=\\frac{a}{x-3}+\\frac{b}{x}$. Le couple $(a\\,;b)$ vaut :",
+    "options": [
+      "$(-2\\,;2)$",
+      "$(2\\,;-2)$",
+      "$(6\\,;0)$",
+      "$(-2\\,;-2)$"
+    ],
+    "reponse_index": 1,
+    "explication": "Comme $x^{2}-3x=x(x-3)$, on r\\'eduit au m\\^eme d\\'enominateur : $\\ds\\frac{a}{x-3}+\\frac{b}{x}=\\frac{ax+b(x-3)}{x(x-3)}=\\frac{(a+b)x-3b}{x(x-3)}$. Par identification avec $6$ : $a+b=0$ et $-3b=6$, donc $b=-2$ et $a=2$.",
+    "pieges": [
+      "A : inverse les signes ($-3b=6\\Rightarrow b=+2$, puis $a=-2$).",
+      "C : place le $6$ sur le coefficient de $x$ ($a+b=6$) et $-3b=0$, d'o\\`u $b=0$, $a=6$.",
+      "D : garde $b=-2$ mais suppose la relation sym\\'etrique $a=b=-2$."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q09",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Mise en système : problème de mélange (2 inconnues)",
+    "difficulte": "concours",
+    "enonce": "Un pr\\'eparateur m\\'elange une solution \\`a $5$ mg/mL et une solution \\`a $10$ mg/mL pour obtenir $50$ mL d'une solution \\`a $8$ mg/mL. Quel volume de la solution \\`a $10$ mg/mL doit-il utiliser ?",
+    "options": [
+      "$30$ mL",
+      "$20$ mL",
+      "$25$ mL",
+      "$40$ mL"
+    ],
+    "reponse_index": 0,
+    "explication": "Soit $x$ le volume (mL) \\`a $5$ mg/mL et $y$ celui \\`a $10$ mg/mL. On a $x+y=50$ (volumes) et $5x+10y=8\\times 50=400$ (masse de principe actif). De $x=50-y$ : $5(50-y)+10y=400\\Rightarrow 250+5y=400\\Rightarrow y=30$. Il faut donc $30$ mL de la solution \\`a $10$ mg/mL (et $20$ mL de l'autre).",
+    "pieges": [
+      "B : donne $x=20$ mL, le volume de \\emph{l'autre} solution (\\`a $5$ mg/mL), au lieu de $y$.",
+      "C : suppose un m\\'elange \\`a parts \\'egales et r\\'epond $50/2=25$ mL.",
+      "D : fait provenir toute la masse ($8\\times 50=400$ mg) de la seule solution \\`a $10$ mg/mL : $400/10=40$ mL (oublie l'apport de l'autre)."
+    ]
+  },
+  {
+    "id": "MATH-F01-Q10",
+    "matiere": "Mathématiques",
+    "fiche": "01",
+    "theme": "Mise en système : problème concret (3 inconnues)",
+    "difficulte": "concours",
+    "enonce": "Une jardinerie vend des sachets de graines en trois formats : petit ($2$ euros), moyen ($5$ euros), grand ($8$ euros). Un matin, elle vend $60$ sachets pour un total de $270$ euros, avec deux fois plus de petits que de grands. Combien de sachets \\textbf{moyens} ont \\'et\\'e vendus ?",
+    "options": [
+      "$20$",
+      "$30$",
+      "$10$",
+      "$40$"
+    ],
+    "reponse_index": 1,
+    "explication": "Soit $p$, $m$, $g$ les nombres de petits, moyens, grands. On a $p+m+g=60$, $2p+5m+8g=270$ et $p=2g$. En rempla\\c cant $p=2g$ : $3g+m=60$ (soit $m=60-3g$) et $12g+5m=270$. D'o\\`u $12g+5(60-3g)=270\\Rightarrow -3g=-30\\Rightarrow g=10$, puis $p=20$ et $m=30$. On v\\'erifie $2(20)+5(30)+8(10)=270$.",
+    "pieges": [
+      "A : r\\'epond $p=20$, le nombre de \\emph{petits} sachets, au lieu des moyens.",
+      "C : r\\'epond $g=10$, le nombre de \\emph{grands} sachets.",
+      "D : soustrait seulement les petits du total ($60-20=40$) en oubliant les grands."
+    ]
+  }
+]

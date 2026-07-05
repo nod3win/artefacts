@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F02-Q01",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Plan incline sans frottement",
+    "difficulte": "concours",
+    "enonce": "Un bloc de masse $m=\\qty{2.0}{\\kilogram}$ est lâché sans vitesse initiale sur un plan incliné \\emph{sans frottement}, faisant un angle $\\alpha=\\ang{30}$ avec l'horizontale. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. Quelle est l'accélération du bloc le long de la pente ?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.9,>=Stealth]\n\\coordinate (O) at (0,0);\\coordinate (B) at (5,0);\\coordinate (C) at (5,2.887);\n\\draw[thick,fill=black!6] (O)--(B)--(C)--cycle;\n\\draw pic[draw,angle radius=0.9cm,\"$\\alpha$\"]{angle=B--O--C};\n\\coordinate (P) at (2.6,1.5);\\fill[black] (P) circle (2.2pt);\n\\draw[->,thick,red] (P)--++(0,-1.6) node[below]{$\\vv G$};\n\\draw[->,thick,blue] (P)--++(120:1.3) node[above left]{$\\vv N$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{8.7}{\\metre\\per\\second\\squared}",
+      "\\qty{5.8}{\\metre\\per\\second\\squared}",
+      "\\qty{5.0}{\\metre\\per\\second\\squared}",
+      "\\qty{2.5}{\\metre\\per\\second\\squared}"
+    ],
+    "reponse_index": 2,
+    "explication": "Sur un plan lisse, le PFD projeté le long de la pente s'écrit $mg\\sin\\alpha=ma$, soit $a=g\\sin\\alpha$. La masse se simplifie : $a=10\\times\\num{0.5}=\\qty{5.0}{\\metre\\per\\second\\squared}$, indépendante de $m$.",
+    "pieges": [
+      "A : confusion $\\sin\\leftrightarrow\\cos$ dans la projection du poids, $a=g\\cos\\alpha=\\qty{8.7}{\\metre\\per\\second\\squared}$.",
+      "B : composante motrice prise en $g\\tan\\alpha$ au lieu de $g\\sin\\alpha$ : $\\qty{5.8}{\\metre\\per\\second\\squared}$.",
+      "D : division par la masse alors que $a$ en est indépendante, $g\\sin\\alpha/m=\\qty{2.5}{\\metre\\per\\second\\squared}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q02",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Plan incline avec frottement",
+    "difficulte": "concours",
+    "enonce": "Un bloc glisse vers le bas d'un plan incliné à $\\alpha=\\ang{30}$. Le coefficient de frottement cinétique entre le bloc et la pente vaut $\\mu_c=\\num{0.20}$. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. Déterminer l'accélération du bloc le long de la pente.\n\\begin{center}\n\\begin{tikzpicture}[scale=0.9,>=Stealth]\n\\coordinate (O) at (0,0);\\coordinate (B) at (5,0);\\coordinate (C) at (5,2.887);\n\\draw[thick,fill=black!6] (O)--(B)--(C)--cycle;\n\\draw pic[draw,angle radius=0.9cm,\"$\\alpha$\"]{angle=B--O--C};\n\\coordinate (P) at (2.6,1.5);\\fill[black] (P) circle (2.2pt);\n\\draw[->,thick,red] (P)--++(0,-1.6) node[below]{$\\vv G$};\n\\draw[->,thick,blue] (P)--++(120:1.3) node[above left]{$\\vv N$};\n\\draw[->,thick,orange] (P)--++(30:1.3) node[above right]{$\\vv{F_f}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{3.3}{\\metre\\per\\second\\squared}",
+      "\\qty{3.0}{\\metre\\per\\second\\squared}",
+      "\\qty{7.7}{\\metre\\per\\second\\squared}",
+      "\\qty{6.7}{\\metre\\per\\second\\squared}"
+    ],
+    "reponse_index": 0,
+    "explication": "PFD le long de la pente : $mg\\sin\\alpha-F_f=ma$ avec $F_f=\\mu_c N=\\mu_c mg\\cos\\alpha$. D'où $a=g(\\sin\\alpha-\\mu_c\\cos\\alpha)=10\\,(\\num{0.5}-\\num{0.20}\\times\\num{0.866})\\approx\\qty{3.3}{\\metre\\per\\second\\squared}$.",
+    "pieges": [
+      "B : frottement pris en $F_f=\\mu_c mg$ (oubli du $\\cos\\alpha$ dans $N$), $a=g(\\sin\\alpha-\\mu_c)=\\qty{3.0}{\\metre\\per\\second\\squared}$.",
+      "C : confusion $\\sin\\leftrightarrow\\cos$ sur la composante motrice, $a=g(\\cos\\alpha-\\mu_c\\sin\\alpha)=\\qty{7.7}{\\metre\\per\\second\\squared}$.",
+      "D : erreur de signe, frottement \\emph{ajouté} au lieu d'être retranché, $\\qty{6.7}{\\metre\\per\\second\\squared}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q03",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Frottement statique sur plan incline",
+    "difficulte": "concours",
+    "enonce": "Une caisse de masse $m=\\qty{40}{\\kilogram}$ repose, \\emph{immobile}, sur un plan incliné à $\\alpha=\\ang{20}$. Le coefficient de frottement statique vaut $\\mu_s=\\num{0.60}$. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. Quelle est l'intensité de la force de frottement qui s'exerce alors sur la caisse ?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.9,>=Stealth]\n\\coordinate (O) at (0,0);\\coordinate (B) at (5,0);\\coordinate (C) at (5,1.82);\n\\draw[thick,fill=black!6] (O)--(B)--(C)--cycle;\n\\draw pic[draw,angle radius=0.9cm,\"$\\alpha$\"]{angle=B--O--C};\n\\coordinate (P) at (2.82,1.03);\\fill[black] (P) circle (2.2pt);\n\\draw[->,thick,red] (P)--++(0,-1.5) node[below]{$\\vv G$};\n\\draw[->,thick,blue] (P)--++(110:1.25) node[above left]{$\\vv N$};\n\\draw[->,thick,orange] (P)--++(20:1.25) node[above right]{$\\vv{F_f}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{226}{\\newton}",
+      "\\qty{137}{\\newton}",
+      "\\qty{240}{\\newton}",
+      "\\qty{376}{\\newton}"
+    ],
+    "reponse_index": 1,
+    "explication": "La caisse étant immobile, le frottement statique équilibre exactement la composante motrice du poids : $F_f=mg\\sin\\alpha=40\\times10\\times\\num{0.342}\\approx\\qty{137}{\\newton}$. La quantité $\\mu_s N=\\qty{226}{\\newton}$ n'est que le \\emph{maximum} disponible ($137<226$, la caisse tient donc bien).",
+    "pieges": [
+      "A : application de $F_f=\\mu_s N=\\mu_s mg\\cos\\alpha$ (le maximum) au lieu du frottement réel, $\\qty{226}{\\newton}$.",
+      "C : oubli du $\\cos\\alpha$ dans la normale, $F_f=\\mu_s mg=\\qty{240}{\\newton}$.",
+      "D : confusion $\\sin\\leftrightarrow\\cos$, $mg\\cos\\alpha=\\qty{376}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q04",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Chute non libre",
+    "difficulte": "concours",
+    "enonce": "Une bille de masse $m=\\qty{2.0}{\\kilogram}$ tombe dans l'air. À un instant donné, la résistance de l'air qui s'oppose à la chute vaut $F_f=\\qty{5.0}{\\newton}$. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. Quelle est l'accélération de la bille à cet instant ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1,>=Stealth]\n\\fill[blue!55] (0,0) circle (0.28);\\node[white] at (0,0){$m$};\n\\draw[->,thick,orange] (0,0.28)--++(0,1.2) node[above]{$\\vv{F_f}$};\n\\draw[->,thick,red] (0,-0.28)--++(0,-1.3) node[below]{$\\vv G$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{5.0}{\\metre\\per\\second\\squared}",
+      "\\qty{2.5}{\\metre\\per\\second\\squared}",
+      "\\qty{12.5}{\\metre\\per\\second\\squared}",
+      "\\qty{7.5}{\\metre\\per\\second\\squared}"
+    ],
+    "reponse_index": 3,
+    "explication": "PFD dans le sens de la chute : $mg-F_f=ma$, d'où $a=g-\\dfrac{F_f}{m}=10-\\num{2.5}=\\qty{7.5}{\\metre\\per\\second\\squared}$ (on divise bien la seule force de frottement par la masse).",
+    "pieges": [
+      "A : frottement retranché directement à $g$ sans diviser par $m$, $g-F_f=\\qty{5.0}{\\metre\\per\\second\\squared}$.",
+      "B : division globale par la masse, $(g-F_f)/m=\\qty{2.5}{\\metre\\per\\second\\squared}$.",
+      "C : erreur de signe, frottement ajouté, $g+F_f/m=\\qty{12.5}{\\metre\\per\\second\\squared}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q05",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Vitesse limite",
+    "difficulte": "concours",
+    "enonce": "En chute dans l'air, une bille de masse $m=\\qty{2.0}{\\kilogram}$ subit une résistance de l'air $F_f=k\\,v$, proportionnelle à sa vitesse, avec $k=\\qty{2.0}{\\kilogram\\per\\second}$. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. Quelle est sa vitesse limite ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1,>=Stealth]\n\\fill[blue!55] (0,0) circle (0.28);\\node[white] at (0,0){$m$};\n\\draw[->,thick,orange] (0,0.28)--++(0,1.2) node[above]{$\\vv{F_f}=k\\,v$};\n\\draw[->,thick,red] (0,-0.28)--++(0,-1.3) node[below]{$\\vv G$};\n\\draw[->,thick,blue!70] (1.5,0.4)--++(0,-1.0) node[right]{$\\vv v$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{40}{\\metre\\per\\second}",
+      "\\qty{10}{\\metre\\per\\second}",
+      "\\qty{3.2}{\\metre\\per\\second}",
+      "\\qty{1.0}{\\metre\\per\\second}"
+    ],
+    "reponse_index": 1,
+    "explication": "À la vitesse limite l'accélération est nulle : la résistance de l'air équilibre le poids, $k\\,v_{\\lim}=mg$. Donc $v_{\\lim}=\\dfrac{mg}{k}=\\dfrac{20}{\\num{2.0}}=\\qty{10}{\\metre\\per\\second}$.",
+    "pieges": [
+      "A : $k$ multiplié au lieu d'être divisé, $v=mg\\cdot k=\\qty{40}{\\metre\\per\\second}$.",
+      "C : loi supposée en $F_f=k v^2$, d'où $v=\\sqrt{mg/k}\\approx\\qty{3.2}{\\metre\\per\\second}$.",
+      "D : masse utilisée à la place du poids, $v=m/k=\\qty{1.0}{\\metre\\per\\second}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q06",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Deuxieme loi de Newton (force inclinee)",
+    "difficulte": "concours",
+    "enonce": "Un bloc de masse $m=\\qty{4.0}{\\kilogram}$, posé sur un sol horizontal \\emph{sans frottement}, est tiré par une corde exerçant une force $F=\\qty{20}{\\newton}$ inclinée de \\ang{30} au-dessus de l'horizontale. Quelle est l'accélération horizontale du bloc ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1,>=Stealth]\n\\fill[pattern=north east lines] (-0.5,-0.25) rectangle (4.2,0);\n\\draw[thick] (-0.5,0)--(4.2,0);\n\\draw[thick,fill=black!12] (0.6,0) rectangle (1.6,0.8);\\node at (1.1,0.4){$m$};\n\\coordinate (K) at (1.6,0.5);\\coordinate (Kt) at (3.6,0.5);\\coordinate (Kf) at ($(K)+(30:2)$);\n\\draw[dashed,black!50] (K)--(Kt);\n\\draw[->,thick,blue] (K)--(Kf) node[above right]{$\\vv F$};\n\\draw pic[draw,angle radius=0.8cm,\"$30^\\circ$\"]{angle=Kt--K--Kf};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{5.0}{\\metre\\per\\second\\squared}",
+      "\\qty{2.5}{\\metre\\per\\second\\squared}",
+      "\\qty{4.3}{\\metre\\per\\second\\squared}",
+      "\\qty{2.9}{\\metre\\per\\second\\squared}"
+    ],
+    "reponse_index": 2,
+    "explication": "Le sol étant sans frottement, seule la composante horizontale de $F$ accélère le bloc : $F\\cos\\alpha=ma$, d'où $a=\\dfrac{F\\cos\\alpha}{m}=\\dfrac{20\\times\\num{0.866}}{\\num{4.0}}\\approx\\qty{4.3}{\\metre\\per\\second\\squared}$.",
+    "pieges": [
+      "A : force prise entièrement horizontale (pas de projection), $a=F/m=\\qty{5.0}{\\metre\\per\\second\\squared}$.",
+      "B : confusion $\\sin\\leftrightarrow\\cos$, $a=F\\sin\\alpha/m=\\qty{2.5}{\\metre\\per\\second\\squared}$.",
+      "D : projection en $\\tan\\alpha$, $a=F\\tan\\alpha/m=\\qty{2.9}{\\metre\\per\\second\\squared}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q07",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Poids apparent en ascenseur",
+    "difficulte": "concours",
+    "enonce": "Une personne de masse $m=\\qty{60}{\\kilogram}$ se tient sur un pèse-personne dans un ascenseur qui accélère \\emph{vers le haut} avec $a=\\qty{2.0}{\\metre\\per\\second\\squared}$. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. Quelle valeur (poids apparent) indique le pèse-personne ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1,>=Stealth]\n\\draw[thick] (0,0) rectangle (2.4,3.0);\n\\draw[thick,fill=black!10] (0.4,0) rectangle (2.0,0.35);\\node at (1.2,0.72){$m$};\n\\draw[->,thick,violet] (3.0,0.8)--(3.0,2.2) node[right]{$\\vv a$};\n\\node at (1.2,-0.5){\\footnotesize cabine};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{720}{\\newton}",
+      "\\qty{600}{\\newton}",
+      "\\qty{480}{\\newton}",
+      "\\qty{120}{\\newton}"
+    ],
+    "reponse_index": 0,
+    "explication": "Bilan vertical (axe orienté vers le haut) : $N-mg=ma$. Le pèse-personne indique la réaction $N=m(g+a)=60\\times(10+\\num{2.0})=\\qty{720}{\\newton}$.",
+    "pieges": [
+      "B : accélération oubliée, seul le poids $mg=\\qty{600}{\\newton}$ est compté.",
+      "C : erreur de signe, $N=m(g-a)=\\qty{480}{\\newton}$.",
+      "D : seule la résultante $ma=\\qty{120}{\\newton}$ est calculée (poids oublié)."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q08",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Equilibre : cables inclines",
+    "difficulte": "concours",
+    "enonce": "Une charge de masse $m=\\qty{10}{\\kilogram}$ est suspendue, en équilibre, à deux câbles symétriques faisant chacun un angle de \\ang{30} avec la verticale. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. Quelle est la tension dans chaque câble ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1,>=Stealth]\n\\fill[pattern=north east lines] (-1.6,2) rectangle (1.6,2.25);\n\\draw[thick] (-1.6,2)--(1.6,2);\n\\coordinate (K) at (0,0);\\coordinate (L) at (-1.155,2);\\coordinate (Rr) at (1.155,2);\\coordinate (Vt) at (0,2);\n\\draw[thick] (L)--(K);\\draw[thick] (Rr)--(K);\n\\draw[dashed,black!50] (K)--(Vt);\n\\draw[thick,fill=black!12] (-0.35,-0.75) rectangle (0.35,0);\\node at (0,-0.375){$m$};\n\\draw pic[draw,angle radius=0.9cm,\"$30^\\circ$\"]{angle=Rr--K--Vt};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{100}{\\newton}",
+      "\\qty{50}{\\newton}",
+      "\\qty{116}{\\newton}",
+      "\\qty{58}{\\newton}"
+    ],
+    "reponse_index": 3,
+    "explication": "L'équilibre vertical impose que les composantes verticales des deux tensions équilibrent le poids : $2T\\cos\\alpha=mg$ (angle mesuré depuis la verticale). D'où $T=\\dfrac{mg}{2\\cos\\alpha}=\\dfrac{100}{2\\times\\num{0.866}}\\approx\\qty{58}{\\newton}$.",
+    "pieges": [
+      "A : confusion $\\sin\\leftrightarrow\\cos$ (angle depuis la verticale), $T=mg/(2\\sin\\alpha)=\\qty{100}{\\newton}$.",
+      "B : poids simplement partagé en deux sans tenir compte de l'angle, $mg/2=\\qty{50}{\\newton}$.",
+      "C : oubli qu'il y a \\emph{deux} câbles, $T=mg/\\cos\\alpha=\\qty{116}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q09",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Interaction entre deux corps",
+    "difficulte": "concours",
+    "enonce": "Deux patineurs, initialement immobiles, se repoussent mutuellement sur une patinoire (frottements négligeables). Le patineur $A$ ($m_A=\\qty{50}{\\kilogram}$) acquiert une accélération $a_A=\\qty{3.0}{\\metre\\per\\second\\squared}$. Quelle est l'accélération du patineur $B$ ($m_B=\\qty{75}{\\kilogram}$) au même instant ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1,>=Stealth]\n\\fill[blue!55] (-1.1,0) circle (0.45);\\node[white] at (-1.1,0){$A$};\n\\fill[teal!65] (1.2,0) circle (0.6);\\node[white] at (1.2,0){$B$};\n\\draw[->,thick,violet] (-1.6,0)--++(-1.2,0) node[left]{$\\vv{a_A}$};\n\\draw[->,thick,violet] (1.85,0)--++(1.2,0) node[right]{$\\vv{a_B}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{4.5}{\\metre\\per\\second\\squared}",
+      "\\qty{3.0}{\\metre\\per\\second\\squared}",
+      "\\qty{2.0}{\\metre\\per\\second\\squared}",
+      "\\qty{1.2}{\\metre\\per\\second\\squared}"
+    ],
+    "reponse_index": 2,
+    "explication": "Par la 3\\textsuperscript{e} loi de Newton, les deux patineurs subissent une force de même intensité $F=m_A a_A=50\\times\\num{3.0}=\\qty{150}{\\newton}$. Pour $B$ : $a_B=\\dfrac{F}{m_B}=\\dfrac{150}{75}=\\qty{2.0}{\\metre\\per\\second\\squared}$ (le plus lourd accélère moins).",
+    "pieges": [
+      "A : rapport des masses inversé (le plus lourd accélérerait plus), $a_B=a_A m_B/m_A=\\qty{4.5}{\\metre\\per\\second\\squared}$.",
+      "B : accélérations supposées égales car la force est la même, $a_B=a_A=\\qty{3.0}{\\metre\\per\\second\\squared}$.",
+      "D : force divisée par la masse totale, $a_B=F/(m_A+m_B)=\\qty{1.2}{\\metre\\per\\second\\squared}$."
+    ]
+  },
+  {
+    "id": "PHYS-F02-Q10",
+    "matiere": "Physique",
+    "fiche": "02",
+    "theme": "Mouvement circulaire uniforme",
+    "difficulte": "concours",
+    "enonce": "Une pierre de masse $m=\\qty{0.20}{\\kilogram}$ décrit un mouvement circulaire uniforme au bout d'un fil de rayon $R=\\qty{0.40}{\\metre}$, à la vitesse linéaire $v=\\qty{4.0}{\\metre\\per\\second}$. Quelle est l'intensité de la force centripète exercée par le fil ?\n\\begin{center}\n\\begin{tikzpicture}[scale=1,>=Stealth]\n\\draw[thick] (0,0) circle (1.6);\n\\fill[black] (0,0) circle (1.3pt) node[below left]{$O$};\n\\coordinate (A) at (40:1.6);\\draw[black!55] (0,0)--(A);\n\\node[black!70] at (25:0.9){$R$};\n\\fill[black] (A) circle (2.6pt) node[above right]{$m$};\n\\draw[->,thick,orange] (A)--($(A)!0.55!(0,0)$) node[midway,below left]{$\\vv{F_c}$};\n\\draw[->,thick,blue] (A)--++(130:1.15) node[above]{$\\vv v$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{8.0}{\\newton}",
+      "\\qty{3.2}{\\newton}",
+      "\\qty{2.0}{\\newton}",
+      "\\qty{1.3}{\\newton}"
+    ],
+    "reponse_index": 0,
+    "explication": "La force centripète vaut $F_c=\\dfrac{mv^2}{R}=\\dfrac{\\num{0.20}\\times16}{\\num{0.40}}=\\qty{8.0}{\\newton}$, avec $v^2=(\\num{4.0})^2=16$. Doubler $v$ la multiplierait par $4$ (dépendance en $v^2$).",
+    "pieges": [
+      "B : oubli de diviser par $R$, $F_c=mv^2=\\qty{3.2}{\\newton}$.",
+      "C : vitesse non élevée au carré, $F_c=mv/R=\\qty{2.0}{\\newton}$.",
+      "D : rayon multiplié au lieu d'être divisé, $F_c=mv^2R=\\qty{1.3}{\\newton}$."
+    ]
+  }
+]

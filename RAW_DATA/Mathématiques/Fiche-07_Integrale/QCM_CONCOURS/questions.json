@@ -1,0 +1,212 @@
+[
+  {
+    "id": "MATH-F07-Q01",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Intégration par parties (polynôme × exponentielle)",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\int_{0}^{1} x\\,e^{2x}\\,\\mathrm{d}x$ ?",
+    "options": [
+      "$\\dfrac{3e^{2}-1}{4}$",
+      "$\\dfrac{e^{2}+1}{4}$",
+      "$\\dfrac{e^{2}-1}{4}$",
+      "$\\dfrac{e^{2}}{4}$"
+    ],
+    "reponse_index": 1,
+    "explication": "On pose $U=x$ (donc $\\mathrm{d}U=\\mathrm{d}x$) et $\\mathrm{d}V=e^{2x}\\,\\mathrm{d}x$ (donc $V=\\tfrac12 e^{2x}$). La formule $\\int U\\,\\mathrm{d}V=UV-\\int V\\,\\mathrm{d}U$ donne \\[ \\int_{0}^{1} x\\,e^{2x}\\,\\mathrm{d}x=\\Big[\\tfrac12 x\\,e^{2x}-\\tfrac14 e^{2x}\\Big]_{0}^{1}=\\Big(\\tfrac12 e^{2}-\\tfrac14 e^{2}\\Big)-\\Big(0-\\tfrac14\\Big)=\\dfrac{e^{2}+1}{4}. \\]",
+    "pieges": [
+      "A: signe $+$ au lieu de $-$ sur le terme $\\tfrac14 e^{2x}$ de l'IPP, d'où $\\tfrac34 e^{2}-\\tfrac14=\\tfrac{3e^{2}-1}{4}$.",
+      "C: erreur de signe à la borne inférieure ($F(0)$ pris égal à $+\\tfrac14$), d'où $\\tfrac14 e^{2}-\\tfrac14=\\tfrac{e^{2}-1}{4}$.",
+      "D: oubli d'évaluer la primitive en $0$ ($F(0)$ pris nul), d'où $\\tfrac14 e^{2}$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q02",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Intégration par parties (polynôme × trigonométrique)",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\int_{0}^{\\pi/2} x\\cos x\\,\\mathrm{d}x$ ?",
+    "options": [
+      "$\\dfrac{\\pi}{2}+1$",
+      "$\\dfrac{\\pi}{2}$",
+      "$\\dfrac{\\pi}{2}-1$",
+      "$1-\\dfrac{\\pi}{2}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Avec $U=x$ et $\\mathrm{d}V=\\cos x\\,\\mathrm{d}x$ (donc $V=\\sin x$) : \\[ \\int_{0}^{\\pi/2} x\\cos x\\,\\mathrm{d}x=\\big[x\\sin x+\\cos x\\big]_{0}^{\\pi/2}=\\Big(\\tfrac{\\pi}{2}\\cdot 1+0\\Big)-\\big(0+1\\big)=\\dfrac{\\pi}{2}-1. \\]",
+    "pieges": [
+      "A: signe erroné sur le terme $\\cos x$ de la primitive ($x\\sin x-\\cos x$), d'où $\\tfrac{\\pi}{2}+1$.",
+      "B: oubli complet du terme $\\cos x$ de la primitive (on ne garde que $x\\sin x$), d'où $\\tfrac{\\pi}{2}$.",
+      "D: bornes inversées (signe global changé), d'où $1-\\tfrac{\\pi}{2}$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q03",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Primitive par reconnaissance du dU (substitution)",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\int_{0}^{1} x\\sqrt{x^{2}+3}\\,\\mathrm{d}x$ ?",
+    "options": [
+      "$\\dfrac{8-3\\sqrt{3}}{3}$",
+      "$\\dfrac{8-3\\sqrt{3}}{2}$",
+      "$\\dfrac{16-6\\sqrt{3}}{3}$",
+      "$\\dfrac{8+3\\sqrt{3}}{3}$"
+    ],
+    "reponse_index": 0,
+    "explication": "On pose $U=x^{2}+3$, donc $\\mathrm{d}U=2x\\,\\mathrm{d}x$ et $x\\,\\mathrm{d}x=\\tfrac12\\,\\mathrm{d}U$ ; les bornes passent de $x\\in[0\\,;\\,1]$ à $U\\in[3\\,;\\,4]$ : \\[ \\int_{0}^{1} x\\sqrt{x^{2}+3}\\,\\mathrm{d}x=\\tfrac12\\int_{3}^{4} U^{1/2}\\,\\mathrm{d}U=\\tfrac12\\cdot\\Big[\\tfrac{2}{3}U^{3/2}\\Big]_{3}^{4}=\\tfrac13\\big(4^{3/2}-3^{3/2}\\big)=\\dfrac{8-3\\sqrt{3}}{3}. \\]",
+    "pieges": [
+      "B: en intégrant $U^{1/2}$, oubli de diviser par $n+1=\\tfrac32$ (on écrit $\\int\\sqrt{U}\\,\\mathrm{d}U=U^{3/2}$), d'où $\\tfrac12(8-3\\sqrt{3})=\\tfrac{8-3\\sqrt{3}}{2}$.",
+      "C: oubli du facteur $\\tfrac12$ issu de $\\mathrm{d}U=2x\\,\\mathrm{d}x$ (on prend $x\\,\\mathrm{d}x=\\mathrm{d}U$), d'où $\\tfrac{16-6\\sqrt{3}}{3}$.",
+      "D: erreur de signe sur la borne inférieure ($F(4)+F(3)$ au lieu de $F(4)-F(3)$), d'où $\\tfrac{8+3\\sqrt{3}}{3}$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q04",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Intégrale définie par substitution (U = ln x)",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\int_{1}^{e^{2}} \\dfrac{\\ln x}{x}\\,\\mathrm{d}x$ ?",
+    "options": [
+      "$4$",
+      "$\\dfrac{3}{2}$",
+      "$1$",
+      "$2$"
+    ],
+    "reponse_index": 3,
+    "explication": "On pose $U=\\ln x$, donc $\\mathrm{d}U=\\dfrac{\\mathrm{d}x}{x}$ ; une primitive est $\\dfrac{(\\ln x)^{2}}{2}$ : \\[ \\int_{1}^{e^{2}} \\dfrac{\\ln x}{x}\\,\\mathrm{d}x=\\left[\\dfrac{(\\ln x)^{2}}{2}\\right]_{1}^{e^{2}}=\\dfrac{(\\ln e^{2})^{2}}{2}-\\dfrac{(\\ln 1)^{2}}{2}=\\dfrac{2^{2}}{2}-0=2. \\]",
+    "pieges": [
+      "A: oubli de diviser par $2$ en intégrant ($\\int U\\,\\mathrm{d}U$ pris égal à $U^{2}$), d'où $2^{2}-0=4$.",
+      "B: valeur $\\ln 1=1$ au lieu de $0$ à la borne inférieure, d'où $\\tfrac{2^{2}-1^{2}}{2}=\\tfrac32$.",
+      "C: primitive prise égale à $\\dfrac{\\ln x}{2}$ (oubli du carré), d'où $\\tfrac12\\ln e^{2}=1$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q05",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Aire entre deux courbes",
+    "difficulte": "concours",
+    "enonce": "Quelle est l'aire de la région du plan délimitée par la parabole d'équation $y=x^{2}$ et la droite d'équation $y=x+2$ ?",
+    "options": [
+      "$\\dfrac{10}{3}$",
+      "$\\dfrac{7}{6}$",
+      "$\\dfrac{9}{2}$",
+      "$\\dfrac{3}{2}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Intersections : $x^{2}=x+2\\Leftrightarrow x^{2}-x-2=(x-2)(x+1)=0$, d'où $x=-1$ et $x=2$. Sur $[-1\\,;\\,2]$ la droite est au-dessus (en $x=0$ : $2>0$). Ainsi \\[ \\mathcal{A}=\\int_{-1}^{2}\\big[(x+2)-x^{2}\\big]\\,\\mathrm{d}x=\\left[\\dfrac{x^{2}}{2}+2x-\\dfrac{x^{3}}{3}\\right]_{-1}^{2}=\\dfrac{10}{3}-\\Big(-\\dfrac{7}{6}\\Big)=\\dfrac{9}{2}. \\]",
+    "pieges": [
+      "A: oubli de la racine négative (bornes prises $0$ à $2$), d'où $\\int_{0}^{2}(x+2-x^{2})\\,\\mathrm{d}x=\\tfrac{10}{3}$.",
+      "B: mauvaise factorisation du trinôme (racines prises $1$ et $2$), d'où $\\int_{1}^{2}(x+2-x^{2})\\,\\mathrm{d}x=\\tfrac{7}{6}$.",
+      "D: oubli du terme constant $+2$ dans la différence (on intègre $x-x^{2}$), d'où une aire $\\big|{-}\\tfrac32\\big|=\\tfrac32$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q06",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Lien primitive / dérivée (variations)",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ continue sur $[0\\,;\\,5]$, strictement positive sur $[0\\,;\\,2[$, nulle en $x=2$ et strictement négative sur $]2\\,;\\,5]$. Soit $F$ la primitive de $f$ vérifiant $F(0)=0$. Laquelle des affirmations suivantes est correcte ?",
+    "options": [
+      "$F$ admet un maximum en $x=2$.",
+      "$F$ admet un minimum en $x=2$.",
+      "$F$ est croissante sur $[2\\,;\\,5]$.",
+      "$F$ s'annule en $x=2$."
+    ],
+    "reponse_index": 0,
+    "explication": "Comme $F'=f$, $F$ croît là où $f>0$ (sur $[0\\,;\\,2[$) puis décroît là où $f<0$ (sur $]2\\,;\\,5]$) : $F$ passe donc par un maximum au point où $f$ change de signe, c'est-à-dire en $x=2$.",
+    "pieges": [
+      "B: confusion maximum / minimum (croît puis décroît donne un maximum, pas un minimum).",
+      "C: on suit le signe de $f$ à l'envers ; comme $f<0$ sur $]2\\,;\\,5]$, $F$ y est décroissante.",
+      "D: confusion entre « $f$ s'annule en $2$ » et « $F$ s'annule en $2$ » ; en fait $F(2)=\\int_{0}^{2} f>0$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q07",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Décomposition en fractions simples",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\int \\dfrac{5x+1}{(x-1)(x+2)}\\,\\mathrm{d}x$ (à une constante additive près) ?",
+    "options": [
+      "$3\\ln|x-1|+2\\ln|x+2|+C$",
+      "$2\\ln|x-1|+3\\ln|x+2|+C$",
+      "$2\\ln|x-1|-3\\ln|x+2|+C$",
+      "$\\ln|x-1|+\\ln|x+2|+C$"
+    ],
+    "reponse_index": 1,
+    "explication": "On décompose $\\dfrac{5x+1}{(x-1)(x+2)}=\\dfrac{A}{x-1}+\\dfrac{B}{x+2}$. Par la méthode « multiplier-évaluer » : \\[ A=\\left.\\dfrac{5x+1}{x+2}\\right|_{x=1}=\\dfrac{6}{3}=2,\\qquad B=\\left.\\dfrac{5x+1}{x-1}\\right|_{x=-2}=\\dfrac{-9}{-3}=3, \\] d'où $\\ds\\int\\Big(\\dfrac{2}{x-1}+\\dfrac{3}{x+2}\\Big)\\mathrm{d}x=2\\ln|x-1|+3\\ln|x+2|+C$.",
+    "pieges": [
+      "A: coefficients $A$ et $B$ intervertis ($A=3$, $B=2$).",
+      "C: erreur de signe sur $B$ (ou sur l'intégration de $\\tfrac{3}{x+2}$).",
+      "D: aucune décomposition effectuée, coefficients pris égaux à $1$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q08",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Primitive composée (compensation constante et signe)",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\int \\sin(2x+1)\\,\\mathrm{d}x$ (à une constante additive près) ?",
+    "options": [
+      "$-\\cos(2x+1)+C$",
+      "$\\dfrac{1}{2}\\cos(2x+1)+C$",
+      "$-2\\cos(2x+1)+C$",
+      "$-\\dfrac{1}{2}\\cos(2x+1)+C$"
+    ],
+    "reponse_index": 3,
+    "explication": "On pose $U=2x+1$, donc $\\mathrm{d}U=2\\,\\mathrm{d}x$ et $\\mathrm{d}x=\\tfrac12\\,\\mathrm{d}U$ : \\[ \\int \\sin(2x+1)\\,\\mathrm{d}x=\\tfrac12\\int \\sin U\\,\\mathrm{d}U=-\\tfrac12\\cos U+C=-\\dfrac{1}{2}\\cos(2x+1)+C. \\]",
+    "pieges": [
+      "A: oubli du facteur $\\tfrac12$ compensant la dérivée interne (règle de la chaîne).",
+      "B: oubli du signe « $-$ » ($\\int\\sin U\\,\\mathrm{d}U=-\\cos U$).",
+      "C: on multiplie par $2$ au lieu de diviser (compensation à l'envers)."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q09",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Primitive de l'exponentielle et simplification exp-log",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\int_{0}^{\\ln 2} e^{3x}\\,\\mathrm{d}x$ ?",
+    "options": [
+      "$7$",
+      "$\\dfrac{7}{3}$",
+      "$\\dfrac{5}{3}$",
+      "$\\dfrac{8}{3}$"
+    ],
+    "reponse_index": 1,
+    "explication": "Une primitive de $e^{3x}$ est $\\tfrac13 e^{3x}$, et $e^{3\\ln 2}=e^{\\ln 2^{3}}=2^{3}=8$ : \\[ \\int_{0}^{\\ln 2} e^{3x}\\,\\mathrm{d}x=\\Big[\\tfrac13 e^{3x}\\Big]_{0}^{\\ln 2}=\\tfrac13\\big(e^{3\\ln 2}-e^{0}\\big)=\\tfrac13(8-1)=\\dfrac{7}{3}. \\]",
+    "pieges": [
+      "A: oubli du facteur $\\tfrac13$ compensant la dérivée interne de $e^{3x}$, d'où $8-1=7$.",
+      "C: mauvaise simplification $e^{3\\ln 2}=6$ (au lieu de $2^{3}=8$), d'où $\\tfrac13(6-1)=\\tfrac53$.",
+      "D: valeur $e^{0}=0$ au lieu de $1$ à la borne inférieure, d'où $\\tfrac13(8-0)=\\tfrac83$."
+    ]
+  },
+  {
+    "id": "MATH-F07-Q10",
+    "matiere": "Mathématiques",
+    "fiche": "07",
+    "theme": "Aire et changement de signe (valeur absolue)",
+    "difficulte": "concours",
+    "enonce": "Quelle est l'aire comprise entre la courbe d'équation $y=x^{2}-1$, l'axe des abscisses et les droites $x=0$ et $x=2$ ?",
+    "options": [
+      "$\\dfrac{2}{3}$",
+      "$\\dfrac{4}{3}$",
+      "$2$",
+      "$\\dfrac{8}{3}$"
+    ],
+    "reponse_index": 2,
+    "explication": "La fonction $x^{2}-1$ s'annule en $x=1$ : elle est négative sur $[0\\,;\\,1]$ et positive sur $[1\\,;\\,2]$. Une primitive est $\\tfrac{x^{3}}{3}-x$. On découpe et on prend la valeur absolue de la partie négative : \\[ \\mathcal{A}=\\left|\\int_{0}^{1}(x^{2}-1)\\,\\mathrm{d}x\\right|+\\int_{1}^{2}(x^{2}-1)\\,\\mathrm{d}x=\\Big|-\\tfrac23\\Big|+\\tfrac43=\\tfrac23+\\tfrac43=2. \\]",
+    "pieges": [
+      "A: pas de découpage (on calcule l'intégrale algébrique $\\int_{0}^{2}(x^{2}-1)\\,\\mathrm{d}x=\\tfrac23$ au lieu de l'aire).",
+      "B: on ne compte que la partie positive sur $[1\\,;\\,2]$, d'où $\\tfrac43$.",
+      "D: primitive erronée $\\tfrac{x^{3}}{3}$ (terme $-x$ non intégré), d'où $\\tfrac13+\\tfrac73=\\tfrac83$."
+    ]
+  }
+]

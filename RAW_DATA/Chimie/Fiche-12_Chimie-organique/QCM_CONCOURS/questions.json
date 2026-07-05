@@ -1,0 +1,212 @@
+[
+  {
+    "id": "CHIM-F12-Q01",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Degré d'insaturation",
+    "difficulte": "concours",
+    "enonce": "La nicotine a pour formule brute \\ce{C10H14N2}. Son \\textbf{degré d'insaturation} (nombre de liaisons $\\pi$ additionnées du nombre de cycles) vaut :",
+    "options": [
+      "\\num{3}",
+      "\\num{4}",
+      "\\num{5}",
+      "\\num{6}"
+    ],
+    "reponse_index": 2,
+    "explication": "Pour \\ce{C_nH_mN_p}, l'indice de déficience en hydrogène est $I=\\dfrac{2n+2+p-m}{2}$. Ici $n=10$, $m=14$, $p=2$ : $I=\\dfrac{2\\times10+2+2-14}{2}=\\dfrac{10}{2}=5$. On les retrouve sur la structure réelle : cycle pyridine (3 liaisons $\\pi$ $+$ 1 cycle $=4$) et cycle pyrrolidine ($+1$), soit $5$.",
+    "pieges": [
+      "A: oubli du signe « $+$ » devant l'azote : $I=\\dfrac{20+2-2-14}{2}=3$.",
+      "B: azote négligé ($p=0$) : $I=\\dfrac{20+2-14}{2}=4$.",
+      "D: azote ajouté \\emph{après} la division au lieu d'entrer au numérateur : $\\dfrac{20+2-14}{2}+2=6$."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q02",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Hydrocarbures : formule générale et cycles",
+    "difficulte": "concours",
+    "enonce": "Le cyclohexane et l'hex-1-ène partagent la même formule brute \\ce{C6H12}. Quelle affirmation est \\textbf{exacte} ?",
+    "options": [
+      "Tous deux sont des alcènes, puisqu'ils répondent à la formule \\ce{C_nH_{2n}}.",
+      "Tous deux possèdent un degré d'insaturation $I=1$, dû à un cycle pour l'un et à une double liaison \\ce{C=C} pour l'autre.",
+      "Le cyclohexane, étant saturé, a un degré d'insaturation nul ($I=0$).",
+      "L'hex-1-ène possède deux degrés d'insaturation, une double liaison comptant pour deux."
+    ],
+    "reponse_index": 1,
+    "explication": "Le calcul $I=\\dfrac{2\\times6+2-12}{2}=1$ vaut pour les deux composés. Mais la formule \\ce{C_nH_{2n}} n'implique pas « alcène » : le cyclohexane est un \\textbf{cycloalcane saturé}, son unique insaturation provient de la \\emph{fermeture du cycle}, tandis que celle de l'hex-1-ène provient d'une double liaison \\ce{C=C}. Même formule brute, structures distinctes : ce sont des isomères.",
+    "pieges": [
+      "A: application aveugle « \\ce{C_nH_{2n}} donc alcène », en oubliant les cycloalcanes.",
+      "C: le cycle n'est pas compté ; or l'indice d'insaturation additionne liaisons $\\pi$ \\emph{et} cycles, donc le cycle donne $I=1$.",
+      "D: une double liaison \\ce{C=C} n'apporte qu'un seul degré d'insaturation (c'est la triple liaison qui en apporte deux)."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q03",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Classification des carbones",
+    "difficulte": "concours",
+    "enonce": "Le 2,2-diméthylpropane (néopentane), isomère le plus ramifié de \\ce{C5H12}, présente la répartition suivante de ses atomes de carbone :",
+    "options": [
+      "quatre carbones primaires et un carbone quaternaire ;",
+      "quatre carbones primaires et un carbone tertiaire ;",
+      "trois carbones primaires, un carbone secondaire et un carbone quaternaire ;",
+      "cinq carbones primaires."
+    ],
+    "reponse_index": 0,
+    "explication": "Dans le néopentane, un carbone central est relié aux \\textbf{quatre} autres carbones : lié à 4 C, c'est un \\textbf{carbone quaternaire} (donc sans aucun H). Les quatre \\ce{CH3} périphériques ne sont chacun liés qu'à \\emph{un seul} carbone : ce sont \\textbf{quatre carbones primaires}. Bilan : quatre primaires $+$ un quaternaire.",
+    "pieges": [
+      "B: le carbone central compté « tertiaire » (lié à 3 C) au lieu de quaternaire (lié à 4 C).",
+      "C: un \\ce{CH3} périphérique confondu avec un carbone secondaire.",
+      "D: tous les carbones supposés primaires, en oubliant le carbone central quaternaire."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q04",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Identification : alcool et acide",
+    "difficulte": "concours",
+    "enonce": "L'acide lactique, présent dans le lait fermenté, a la structure suivante :\n\\begin{center}\\chemfig{CH_3-[:30]CH(-[:90]OH)-[:-30]C(=[:90]O)-[:30]OH}\\end{center}\nQuelles fonctions y sont présentes ?",
+    "options": [
+      "un alcool primaire et un acide carboxylique ;",
+      "un alcool secondaire et un acide carboxylique ;",
+      "un alcool secondaire et un ester ;",
+      "un alcool secondaire et un aldéhyde."
+    ],
+    "reponse_index": 1,
+    "explication": "Le carbone central porte le groupe $-\\text{OH}$ : il est lié à \\emph{deux} autres carbones (le \\ce{CH3} et le carbone du $-\\text{COOH}$), c'est donc un \\textbf{alcool secondaire}. L'extrémité $-\\text{C(=O)}-\\text{OH}$ (carbonyle $+$ hydroxyle sur le même carbone) est un \\textbf{acide carboxylique}. La molécule est donc un $\\alpha$-hydroxyacide.",
+    "pieges": [
+      "A: carbone porteur du $-\\text{OH}$ mal classé « primaire » alors qu'il est lié à deux carbones (secondaire).",
+      "C: groupe $-\\text{COOH}$ pris pour un ester $-\\text{COOR}$ (il n'y a pas de chaîne alkyle sur l'oxygène).",
+      "D: carbonyle de l'acide confondu avec un aldéhyde $-\\text{CHO}$."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q05",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Ester ou éther ?",
+    "difficulte": "concours",
+    "enonce": "On considère la molécule ci-dessous :\n\\begin{center}\\chemfig{CH_3-[:30](=[:90]O)-[:-30]O-[:30]CH_3}\\end{center}\nQuelle est sa (ou ses) fonction(s) ?",
+    "options": [
+      "une fonction ester et une fonction éther ;",
+      "une fonction cétone et une fonction éther ;",
+      "une fonction ester uniquement ;",
+      "une fonction acide carboxylique."
+    ],
+    "reponse_index": 2,
+    "explication": "L'enchaînement $-\\text{C(=O)}-\\text{O}-\\text{CH}_3$ est l'archétype d'un \\textbf{ester} (éthanoate de méthyle). L'oxygène pontant $-\\text{O}-$ fait \\emph{partie intégrante} de la fonction ester : il ne constitue pas une fonction éther indépendante. Il n'y a donc \\textbf{qu'une} fonction, l'ester.",
+    "pieges": [
+      "A: le pont $-\\text{O}-$ de l'ester compté \\emph{en plus} comme un éther (l'erreur classique de l'aspirine).",
+      "B: carbonyle lu comme une cétone et pont $-\\text{O}-$ comme un éther, en ignorant qu'ils forment ensemble un ester.",
+      "D: présence de \\ce{C=O} et de \\ce{O} interprétée comme un acide carboxylique $-\\text{COOH}$."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q06",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Alcools : classification",
+    "difficulte": "concours",
+    "enonce": "Le glycérol (propane-1,2,3-triol), support des triglycérides, a la structure :\n\\begin{center}\\chemfig{HO-[:30]CH_2-[:-30]CH(-[:-90]OH)-[:30]CH_2-[:-30]OH}\\end{center}\nIl contient :",
+    "options": [
+      "deux alcools primaires et un alcool secondaire ;",
+      "trois alcools primaires ;",
+      "deux alcools primaires et un alcool tertiaire ;",
+      "un alcool primaire et deux alcools secondaires."
+    ],
+    "reponse_index": 0,
+    "explication": "Les deux carbones d'extrémité portant un $-\\text{OH}$ ne sont liés qu'à \\emph{un} autre carbone : ce sont deux \\textbf{alcools primaires}. Le carbone central portant le $-\\text{OH}$ est lié à \\emph{deux} autres carbones : c'est un \\textbf{alcool secondaire}. Bilan : trois fonctions alcool, dont deux primaires et une secondaire.",
+    "pieges": [
+      "B: fonctions comptées sans être classées, les trois supposées identiques (primaires).",
+      "C: carbone central (lié à 2 C) surclassé en tertiaire (lié à 3 C).",
+      "D: classes des carbones d'extrémité et du centre interverties."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q07",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Priorité des fonctions",
+    "difficulte": "concours",
+    "enonce": "Une molécule à chaîne ouverte porte simultanément un groupe $-\\text{COOH}$, un groupe $-\\text{OH}$ et une double liaison \\ce{C=C}. D'après l'ordre de priorité des fonctions, quel \\textbf{suffixe} termine son nom systématique ?",
+    "options": [
+      "le suffixe \\textit{-ol} ;",
+      "le suffixe \\textit{-ène} ;",
+      "le suffixe \\textit{-al} ;",
+      "le suffixe \\textit{-oïque} (préfixe « acide »)."
+    ],
+    "reponse_index": 3,
+    "explication": "L'échelle de priorité place l'acide carboxylique en tête : $-\\text{COOH} > -\\text{OH} > \\text{C=C}$. La \\textbf{fonction principale} est donc l'acide carboxylique, qui impose le préfixe « acide » et le suffixe \\textbf{\\textit{-oïque}}. Le $-\\text{OH}$ devient un préfixe « hydroxy- » et la double liaison un infixe « -èn- ».",
+    "pieges": [
+      "A: l'alcool choisi comme fonction principale, alors qu'il est moins prioritaire que l'acide.",
+      "B: l'insaturation \\ce{C=C} supposée prioritaire (elle est au contraire la moins prioritaire).",
+      "C: le carbonyle de l'acide confondu avec celui d'un aldéhyde (suffixe -al)."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q08",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Isomérie cis/trans",
+    "difficulte": "concours",
+    "enonce": "Parmi les molécules suivantes, une seule présente une \\textbf{stéréoisomérie} \\emph{cis}/\\emph{trans} (Z/E). Laquelle ?",
+    "options": [
+      "le but-1-ène \\ce{CH2=CH-CH2-CH3} ;",
+      "le but-2-ène \\ce{CH3-CH=CH-CH3} ;",
+      "le 2-méthylprop-1-ène \\ce{CH2=C(CH3)2} ;",
+      "le propène \\ce{CH3-CH=CH2}."
+    ],
+    "reponse_index": 1,
+    "explication": "L'isomérie \\emph{cis}/\\emph{trans} exige que \\emph{chacun} des deux carbones de la double liaison porte deux groupements \\emph{différents}. Seul le but-2-ène remplit la condition : chaque carbone $=\\text{CH}-$ porte un $\\text{H}$ et un \\ce{CH3}. Dans les trois autres, l'un des carbones de la double liaison porte deux atomes d'hydrogène identiques ($=\\text{CH}_2$), ce qui interdit la distinction \\emph{cis}/\\emph{trans}.",
+    "pieges": [
+      "A: toute double liaison supposée donner du \\emph{cis}/\\emph{trans}, or le carbone terminal $=\\text{CH}_2$ porte deux H identiques.",
+      "C: la ramification ne lève pas l'ambiguïté : le carbone $=\\text{CH}_2$ porte encore deux H identiques.",
+      "D: idem, le propène possède un carbone $=\\text{CH}_2$ terminal, sans stéréoisomérie."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q09",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Amine ou amide ?",
+    "difficulte": "concours",
+    "enonce": "Dans la molécule \\ce{CH3-CH2-CO-NH-CH3}, à quelle fonction appartient l'atome d'azote ?",
+    "options": [
+      "une amine secondaire ;",
+      "une amine primaire ;",
+      "une fonction amide ;",
+      "une fonction imine."
+    ],
+    "reponse_index": 2,
+    "explication": "L'azote est directement lié à un \\textbf{carbonyle} \\ce{C=O} : l'enchaînement $-\\text{C(=O)}-\\text{NH}-$ est une \\textbf{fonction amide}. Le critère décisif est la présence du carbonyle accolé à l'azote ; peu importe que l'azote porte par ailleurs un groupe alkyle.",
+    "pieges": [
+      "A: azote lié à deux carbones compté comme « amine secondaire », en ignorant le carbonyle voisin.",
+      "B: azote vu comme une amine primaire $\\text{R}-\\text{NH}_2$.",
+      "D: liaison $\\text{C}-\\text{N}$ confondue avec une double liaison $\\text{C=N}$ d'imine."
+    ]
+  },
+  {
+    "id": "CHIM-F12-Q10",
+    "matiere": "Chimie",
+    "fiche": "12",
+    "theme": "Masse molaire",
+    "difficulte": "concours",
+    "enonce": "Le paracétamol a pour formule brute \\ce{C8H9NO2}. En prenant $M(\\ce{C})=\\qty{12}{\\g\\per\\mole}$, $M(\\ce{H})=\\qty{1}{\\g\\per\\mole}$, $M(\\ce{N})=\\qty{14}{\\g\\per\\mole}$ et $M(\\ce{O})=\\qty{16}{\\g\\per\\mole}$, sa masse molaire vaut :",
+    "options": [
+      "\\qty{135}{\\g\\per\\mole} ;",
+      "\\qty{137}{\\g\\per\\mole} ;",
+      "\\qty{144}{\\g\\per\\mole} ;",
+      "\\qty{151}{\\g\\per\\mole}."
+    ],
+    "reponse_index": 3,
+    "explication": "$M=8\\times12+9\\times1+1\\times14+2\\times16=96+9+14+32=\\qty{151}{\\g\\per\\mole}$. (La \\emph{masse moléculaire relative} vaudrait le même nombre, $151$, mais \\textbf{sans unité}.)",
+    "pieges": [
+      "A: un seul atome d'oxygène compté ($+16$ au lieu de $+32$) : $96+9+14+16=135$.",
+      "B: azote oublié : $96+9+32=137$.",
+      "C: azote pris à $7$ (numéro atomique $Z$) au lieu de $14$ (masse molaire) : $96+9+7+32=144$."
+    ]
+  }
+]

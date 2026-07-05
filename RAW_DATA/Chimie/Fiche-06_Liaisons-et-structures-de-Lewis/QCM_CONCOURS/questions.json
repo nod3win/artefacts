@@ -1,0 +1,212 @@
+[
+  {
+    "id": "CHIM-F06-Q01",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Structure de Lewis : comptage électronique",
+    "difficulte": "concours",
+    "enonce": "En appliquant la méthode de comptage, déterminer le nombre \\emph{total} d'électrons de valence disponibles ($n_v$) dans l'ion sulfite \\ce{SO3^2-}. Données : \\ce{S} et \\ce{O} possèdent chacun 6 électrons de valence (16\\textsuperscript{e} colonne).",
+    "options": [
+      "\\num{22}",
+      "\\num{24}",
+      "\\num{26}",
+      "\\num{32}"
+    ],
+    "reponse_index": 2,
+    "explication": "$n_v = \\big(\\sum_i N_i^{\\text{val}}\\big) - q$. L'ion porte une charge $q=-2$ : on \\emph{ajoute} donc 2 électrons. $n_v = 6_{(\\ce{S})} + 3\\times 6_{(\\text{3\\,}\\ce{O})} + 2 = 6+18+2 = 26$. (À titre indicatif $n_{max}=8\\times4=32$ et le nombre de doublets vaut $n_v/2 = 13$.)",
+    "pieges": [
+      "A: charge soustraite au lieu d'être ajoutée ($6+18-2=22$) --- erreur de signe sur $q$ pour un anion.",
+      "B: charge oubliée, l'ion traité comme neutre ($6+18=24$).",
+      "D: confusion $n_v \\leftrightarrow n_{max}$ ; $8a+2b=32$ est le nombre \\emph{maximal}, pas le nombre disponible."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q02",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Liaisons sigma et pi",
+    "difficulte": "concours",
+    "enonce": "Dans la molécule de cyanure d'hydrogène \\ce{H-C#N}, combien de liaisons $\\sigma$ et de liaisons $\\pi$ dénombre-t-on au total ?",
+    "options": [
+      "\\num{4} liaisons $\\sigma$ et \\num{0} liaison $\\pi$",
+      "\\num{2} liaisons $\\sigma$ et \\num{2} liaisons $\\pi$",
+      "\\num{3} liaisons $\\sigma$ et \\num{1} liaison $\\pi$",
+      "\\num{1} liaison $\\sigma$ et \\num{2} liaisons $\\pi$"
+    ],
+    "reponse_index": 1,
+    "explication": "La liaison \\ce{C-H} est une liaison simple ($1\\,\\sigma$). La liaison triple \\ce{C#N} est faite de $1\\,\\sigma$ et $2\\,\\pi$. Total : $2\\,\\sigma$ et $2\\,\\pi$ (soit 4 doublets liants) ; l'azote garde en outre un doublet non liant.",
+    "pieges": [
+      "A: toutes les liaisons comptées comme simples, la multiplicité de la triple liaison ignorée ($4\\,\\sigma$, $0\\,\\pi$).",
+      "C: triple liaison décomposée à tort en $2\\,\\sigma+1\\,\\pi$ (au lieu de $1\\,\\sigma+2\\,\\pi$).",
+      "D: liaison \\ce{C-H} oubliée, seul le groupe \\ce{C#N} ($1\\,\\sigma+2\\,\\pi$) compté."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q03",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Charge formelle",
+    "difficulte": "concours",
+    "enonce": "On considère la structure de Lewis de l'ozone \\ce{O3} dans laquelle l'atome d'oxygène central porte \\textbf{un} doublet non liant, une liaison \\textbf{double} vers l'un des oxygènes et une liaison \\textbf{simple} vers l'autre. Quelle est la charge formelle de cet oxygène central ?",
+    "options": [
+      "$+1$",
+      "$-1$",
+      "$+3$",
+      "$-2$"
+    ],
+    "reponse_index": 0,
+    "explication": "$\\mathrm{C.F.} = N_v - \\big(n_{\\text{libres}} + \\tfrac12\\,n_{\\text{liants}}\\big)$. Ici $N_v=6$, $n_{\\text{libres}}=2$ (un doublet) et $n_{\\text{liants}}=6$ (double $+$ simple $=3$ liaisons $=6$ électrons) : $\\mathrm{C.F.} = 6-(2+3) = +1$.",
+    "pieges": [
+      "B: signe de la formule inversé, $(2+3)-6=-1$.",
+      "C: doublet non liant oublié, $6-(0+3)=+3$.",
+      "D: électrons liants comptés en entier (facteur $\\tfrac12$ oublié), $6-(2+6)=-2$."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q04",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "VSEPR : géométrie moléculaire",
+    "difficulte": "concours",
+    "enonce": "Quelle est la géométrie moléculaire de l'ion nitrate \\ce{NO3-} ? L'atome central est l'azote, lié aux trois oxygènes dont l'un par une liaison double.",
+    "options": [
+      "trigonale plane",
+      "pyramide à base triangulaire",
+      "tétraédrique",
+      "coudée (angulaire)"
+    ],
+    "reponse_index": 0,
+    "explication": "Méthode : $n_{max}=32$, $n_v=5+18+1=24$, $n_l=8$ soit 4 doublets liants (3 liaisons \\ce{N-O} dont une double). L'azote est lié à \\textbf{3} atomes et ne porte \\textbf{aucun} doublet non liant : type $\\mathrm{AX_3E_0}$. Une liaison multiple ne compte que pour \\emph{un} site de répulsion. Géométrie : \\textbf{trigonale plane}.",
+    "pieges": [
+      "B: doublet non liant attribué à tort à l'azote (type $\\mathrm{AX_3E_1}$, analogie \\ce{NH3}).",
+      "C: liaison double comptée comme deux sites de répulsion, d'où 4 domaines (tétraédrique).",
+      "D: seules deux directions de liaison retenues (type $\\mathrm{AX_2E_1}$)."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q05",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "VSEPR : édifice hypervalent",
+    "difficulte": "concours",
+    "enonce": "En appliquant la théorie VSEPR, quelle est la géométrie moléculaire du tétrafluorure de xénon \\ce{XeF4} ? Données : \\ce{Xe} possède 8 électrons de valence, \\ce{F} en possède 7.",
+    "options": [
+      "tétraédrique",
+      "à bascule (papillon)",
+      "octaédrique",
+      "plan carré"
+    ],
+    "reponse_index": 3,
+    "explication": "Autour du xénon : $8 + 4\\times7 = 36$ électrons, soit 18 doublets. 4 doublets liants (\\ce{Xe-F}) et $4\\times3=12$ doublets non liants sur les \\ce{F} laissent $18-4-12=2$ doublets non liants sur \\ce{Xe} : type $\\mathrm{AX_4E_2}$. Les deux doublets libres se placent en positions opposées : géométrie \\textbf{plane carrée}.",
+    "pieges": [
+      "A: les deux doublets non liants du xénon ignorés (type $\\mathrm{AX_4E_0}$, tétraédrique).",
+      "B: un seul doublet non liant pris en compte (type $\\mathrm{AX_4E_1}$, à bascule).",
+      "C: géométrie de \\emph{répulsion} (octaédrique, 6 domaines) donnée à la place de la géométrie \\emph{moléculaire}."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q06",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Angles de liaison (VSEPR)",
+    "difficulte": "concours",
+    "enonce": "Dans la molécule d'ammoniac \\ce{NH3} (type $\\mathrm{AX_3E_1}$), quelle est la valeur approchée de l'angle de liaison \\ce{H-N-H} ?",
+    "options": [
+      "\\ang{109.5}",
+      "\\ang{107}",
+      "\\ang{104.5}",
+      "\\ang{120}"
+    ],
+    "reponse_index": 1,
+    "explication": "\\ce{NH3} compte quatre domaines (figure de répulsion tétraédrique, \\ang{109.5} de référence). Le doublet non liant de l'azote repousse plus fort que les liaisons et \\emph{comprime} l'angle \\ce{H-N-H} jusqu'à environ \\ang{107}.",
+    "pieges": [
+      "A: compression due au doublet non liant oubliée, angle tétraédrique parfait (\\ang{109.5}) conservé.",
+      "C: confusion avec \\ce{H2O} (deux doublets non liants, \\ang{104.5}).",
+      "D: molécule supposée trigonale plane (\\ang{120}), doublet non liant ignoré."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q07",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Nature des liaisons (coordination)",
+    "difficulte": "concours",
+    "enonce": "L'ion ammonium \\ce{NH4+} se forme lorsque le doublet non liant de l'azote de \\ce{NH3} capte un proton \\ce{H+}. Que peut-on dire des quatre liaisons \\ce{N-H} de l'ion ainsi formé ?",
+    "options": [
+      "Elles sont rigoureusement identiques, bien que l'une provienne d'une liaison de coordination (dative).",
+      "Trois sont covalentes et la quatrième est ionique.",
+      "La liaison dative demeure plus longue et plus faible que les trois autres.",
+      "L'ion comporte une liaison ionique entre l'azote et le proton capté."
+    ],
+    "reponse_index": 0,
+    "explication": "Une liaison de coordination ne diffère des autres que par l'\\emph{origine} du doublet partagé (ici fourni par le seul azote). Une fois l'ion formé, rien ne la distingue : les quatre liaisons \\ce{N-H} sont \\textbf{identiques} et l'ion \\ce{NH4+} est parfaitement tétraédrique (l'azote ne porte alors aucun doublet non liant).",
+    "pieges": [
+      "B: liaison dative confondue avec une liaison ionique.",
+      "C: liaison de coordination supposée distincte (plus longue et plus faible) des liaisons ordinaires.",
+      "D: capture du proton décrite comme un transfert d'électron (liaison ionique) au lieu d'un partage de doublet."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q08",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Règle de l'octet : octet étendu",
+    "difficulte": "concours",
+    "enonce": "Parmi les édifices suivants, quel est celui dont l'atome \\textbf{central} présente un \\emph{octet étendu} (plus de 8 électrons autour de lui) ?",
+    "options": [
+      "\\ce{NH4+}",
+      "\\ce{CCl4}",
+      "\\ce{BF3}",
+      "\\ce{PCl5}"
+    ],
+    "reponse_index": 3,
+    "explication": "Dans \\ce{PCl5}, le phosphore (3\\textsuperscript{e} période) forme \\textbf{5} liaisons, soit \\textbf{10} électrons : l'octet est dépassé (octet étendu, permis par les orbitales $d$).",
+    "pieges": [
+      "A: dans \\ce{NH4+}, l'azote forme 4 liaisons --- mais $4\\times2=8$ électrons, c'est exactement l'octet, pas un dépassement.",
+      "B: \\ce{CCl4}, le carbone forme 4 liaisons $=8$ électrons (octet respecté).",
+      "C: \\ce{BF3}, le bore ne s'entoure que de 6 électrons --- octet \\emph{incomplet}, et non étendu."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q09",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Choix de la structure de Lewis",
+    "difficulte": "concours",
+    "enonce": "Pour établir la structure de Lewis correcte de l'acide nitrique \\ce{HNO3} (azote central lié à trois oxygènes), quelle affirmation est exacte ?",
+    "options": [
+      "L'atome d'hydrogène est lié directement à l'azote.",
+      "L'azote dépasse l'octet en formant 5 liaisons, afin d'annuler sa charge formelle.",
+      "L'azote (2\\textsuperscript{e} période) respecte impérativement l'octet : il forme 4 liaisons (dont une double \\ce{N=O}) et porte une charge formelle $+1$.",
+      "Les trois atomes d'oxygène sont équivalents et portent chacun une charge formelle nulle."
+    ],
+    "reponse_index": 2,
+    "explication": "L'azote appartient à la 2\\textsuperscript{e} période : il ne peut \\emph{jamais} dépasser l'octet. Sa meilleure structure comporte 4 liaisons (une double \\ce{N=O}), soit 8 électrons, avec $\\mathrm{C.F.}(\\ce{N})=5-4=+1$. L'hydrogène se fixe sur un oxygène (groupe \\ce{O-H}), pas sur l'azote.",
+    "pieges": [
+      "A: hydrogène placé sur l'azote --- or \\ce{H} se lie à un oxygène (groupe \\ce{O-H}).",
+      "B: azote autorisé à dépasser l'octet (5 liaisons) pour annuler sa charge --- interdit en 2\\textsuperscript{e} période.",
+      "D: les trois oxygènes supposés équivalents et neutres --- l'oxygène du groupe \\ce{O-H} diffère et la charge formelle de l'azote n'est pas nulle."
+    ]
+  },
+  {
+    "id": "CHIM-F06-Q10",
+    "matiere": "Chimie",
+    "fiche": "06",
+    "theme": "Résonance",
+    "difficulte": "concours",
+    "enonce": "L'ion carbonate \\ce{CO3^2-} est décrit par trois formes limites de résonance équivalentes. Quelle affirmation est \\emph{correcte} ?",
+    "options": [
+      "Seule la liaison \\ce{C=O} est réelle ; les deux liaisons \\ce{C-O} simples sont localisées et plus longues.",
+      "Les trois liaisons \\ce{C-O} sont rigoureusement identiques et la charge est délocalisée sur les trois oxygènes.",
+      "L'ion s'interconvertit rapidement entre trois formes réelles distinctes (équilibre chimique).",
+      "La géométrie de l'ion change selon la forme limite considérée."
+    ],
+    "reponse_index": 1,
+    "explication": "La molécule réelle est un \\textbf{hybride de résonance} : les électrons $\\pi$ et la charge sont \\textbf{délocalisés}. Les trois liaisons \\ce{C-O} sont donc identiques (longueur intermédiaire) et la charge $-2$ est répartie sur les trois oxygènes ($-\\tfrac{2}{3}$ chacun).",
+    "pieges": [
+      "A: une seule forme limite prise pour la réalité (délocalisation ignorée).",
+      "C: résonance confondue avec un équilibre --- la flèche $\\leftrightarrow$ n'est pas la double flèche d'équilibre $\\rightleftharpoons$ ; il n'existe qu'une seule espèce.",
+      "D: géométrie supposée modifiée par la résonance --- or seuls les électrons se déplacent, jamais les noyaux."
+    ]
+  }
+]

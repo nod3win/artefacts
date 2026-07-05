@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F01-Q01",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "Lecture graphique v(t) --- distance parcourue",
+    "difficulte": "concours",
+    "enonce": "La figure donne la vitesse $v(t)$ d'un mobile en mouvement rectiligne. Quelle est la distance totale parcourue entre \\qty{0}{\\second} et \\qty{10}{\\second} ?\n\\begin{center}\n\\begin{tikzpicture}\n\\begin{axis}[width=10.5cm,height=6cm,axis lines=middle,\n   xlabel={$t$ (s)},ylabel={$v$ (m\\,s$^{-1}$)},\n   xmin=0,xmax=11,ymin=-13,ymax=13,\n   xtick={2,4,6,8,10},ytick={-10,-5,5,10},\n   grid=both,grid style={black!12}]\n  \\addplot[teal,line width=1.3pt] coordinates {(0,10)(4,10)(6,0)(8,-10)(10,-10)};\n\\end{axis}\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{20}{\\metre}",
+      "\\qty{50}{\\metre}",
+      "\\qty{60}{\\metre}",
+      "\\qty{80}{\\metre}"
+    ],
+    "reponse_index": 3,
+    "explication": "L'aire algébrique sous $v(t)$ donne le déplacement ; la distance parcourue est la somme des aires en valeur absolue. Aires successives : $+\\qty{40}{\\metre}$ (0--4 s), $+\\qty{10}{\\metre}$ (4--6 s), $-\\qty{10}{\\metre}$ (6--8 s), $-\\qty{20}{\\metre}$ (8--10 s). Distance $=40+10+10+20=\\qty{80}{\\metre}$. Le déplacement, lui, vaut $40+10-10-20=\\qty{20}{\\metre}$.",
+    "pieges": [
+      "A: $40+10-10-20=\\qty{20}{\\metre}$ est le déplacement (somme algébrique), pas la distance parcourue.",
+      "B: $40+10=\\qty{50}{\\metre}$ ne compte que les phases où $v>0$, en oubliant le trajet de retour.",
+      "C: $40+10+10=\\qty{60}{\\metre}$ oublie la dernière portion (8--10 s), soit \\qty{20}{\\metre} de plus."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q02",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "Lecture graphique x(t) --- nature du mouvement",
+    "difficulte": "concours",
+    "enonce": "La figure donne la position $x(t)$ d'un mobile sur un axe $Ox$. Parmi les affirmations suivantes, laquelle est correcte ?\n\\begin{center}\n\\begin{tikzpicture}\n\\begin{axis}[width=9.5cm,height=6cm,axis lines=middle,\n   xlabel={$t$ (s)},ylabel={$x$ (m)},\n   xmin=0,xmax=7.4,ymin=-8,ymax=11,\n   xtick={1,2,3,4,5,6,7},ytick={-5,5,9},\n   grid=both,grid style={black!12}]\n  \\addplot[teal,line width=1.3pt,domain=0:7,samples=80]{-(x-3)^2+9};\n  \\addplot[only marks,mark=*,red,mark size=1.6pt] coordinates {(3,9)};\n\\end{axis}\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "À $t=\\qty{3}{\\second}$, l'accélération du mobile est nulle.",
+      "À $t=\\qty{3}{\\second}$, la vitesse du mobile est nulle.",
+      "Le mouvement est uniformément accéléré avec $a>0$.",
+      "Le mobile se déplace toujours dans le sens positif de $Ox$."
+    ],
+    "reponse_index": 1,
+    "explication": "La vitesse est la pente de $x(t)$ : au sommet de la parabole ($t=\\qty{3}{\\second}$), la tangente est horizontale, donc $v=0$. La concavité tournée vers le bas traduit une accélération constante \\emph{négative} (MRUD), non nulle. Après le sommet, $x$ décroît : le mobile repart dans le sens négatif.",
+    "pieges": [
+      "A: confond vitesse nulle au sommet et accélération nulle ; ici $a$ est constante et non nulle.",
+      "C: erreur de signe --- la concavité vers le bas impose $a<0$, ce n'est pas un mouvement à accélération positive.",
+      "D: oublie qu'après le sommet $x$ décroît ; le mobile change de sens (vitesse négative)."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q03",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "Lecture graphique v(t) --- aire et vitesse initiale",
+    "difficulte": "concours",
+    "enonce": "La figure donne la vitesse $v(t)$ d'un mobile en mouvement rectiligne. Quelle distance parcourt-il entre \\qty{0}{\\second} et \\qty{6}{\\second} ?\n\\begin{center}\n\\begin{tikzpicture}\n\\begin{axis}[width=9.5cm,height=6cm,axis lines=middle,\n   xlabel={$t$ (s)},ylabel={$v$ (m\\,s$^{-1}$)},\n   xmin=0,xmax=7,ymin=0,ymax=14,\n   xtick={1,2,3,4,5,6},ytick={4,8,12},\n   grid=both,grid style={black!12}]\n  \\addplot[fill=teal!12,draw=none] coordinates {(0,4)(6,12)} \\closedcycle;\n  \\addplot[teal,line width=1.4pt] coordinates {(0,4)(6,12)};\n\\end{axis}\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{48}{\\metre}",
+      "\\qty{36}{\\metre}",
+      "\\qty{72}{\\metre}",
+      "\\qty{24}{\\metre}"
+    ],
+    "reponse_index": 0,
+    "explication": "La distance est l'aire du trapèze sous $v(t)$ : $\\dfrac{(v_0+v_f)}{2}\\,\\Delta t=\\dfrac{(4+12)}{2}\\times 6=\\qty{48}{\\metre}$, c'est-à-dire le rectangle de base $4\\times 6=\\qty{24}{\\metre}$ plus le triangle $\\frac12\\times 6\\times 8=\\qty{24}{\\metre}$.",
+    "pieges": [
+      "B: $\\frac12\\times 6\\times 12=\\qty{36}{\\metre}$ suppose $v_0=0$ (triangle depuis l'origine) et oublie la vitesse initiale.",
+      "C: $12\\times 6=\\qty{72}{\\metre}$ n'utilise que la vitesse finale (aire d'un rectangle), comme si $v$ était constante.",
+      "D: $\\frac12\\times 6\\times(12-4)=\\qty{24}{\\metre}$ ne garde que le triangle d'accroissement et oublie le rectangle de base $v_0\\,\\Delta t$."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q04",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "MRUD --- distance de freinage (proportionnalité)",
+    "difficulte": "concours",
+    "enonce": "Roulant à \\qty{50}{\\kilo\\metre\\per\\hour}, une voiture s'arrête sur \\qty{25}{\\metre}. Pour un même freinage (même décélération), quelle sera sa distance d'arrêt à \\qty{70}{\\kilo\\metre\\per\\hour} ?",
+    "options": [
+      "\\qty{12.8}{\\metre}",
+      "\\qty{35}{\\metre}",
+      "\\qty{49}{\\metre}",
+      "\\qty{70}{\\metre}"
+    ],
+    "reponse_index": 2,
+    "explication": "La relation de Torricelli donne $d=\\dfrac{v^2}{2a}$, donc la distance de freinage est proportionnelle au \\emph{carré} de la vitesse : $d_2=d_1\\left(\\dfrac{v_2}{v_1}\\right)^2=25\\left(\\dfrac{70}{50}\\right)^2=25\\times 1{,}96=\\qty{49}{\\metre}$.",
+    "pieges": [
+      "A: $25\\left(\\frac{50}{70}\\right)^2=\\qty{12.8}{\\metre}$ inverse le rapport des vitesses.",
+      "B: $25\\times\\frac{70}{50}=\\qty{35}{\\metre}$ suppose une proportionnalité linéaire $d\\propto v$, sans élever au carré.",
+      "D: $25\\times(2\\times 1{,}4)=\\qty{70}{\\metre}$ double le rapport au lieu de l'élever au carré."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q05",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "MRUD --- décélération et relation de Torricelli",
+    "difficulte": "concours",
+    "enonce": "Un train roule à \\qty{30}{\\metre\\per\\second}. Le conducteur aperçoit un obstacle à \\qty{75}{\\metre}. Quelle décélération constante minimale lui permet de s'arrêter juste avant l'obstacle ?",
+    "options": [
+      "\\qty{0.2}{\\metre\\per\\second\\squared}",
+      "\\qty{3}{\\metre\\per\\second\\squared}",
+      "\\qty{12}{\\metre\\per\\second\\squared}",
+      "\\qty{6}{\\metre\\per\\second\\squared}"
+    ],
+    "reponse_index": 3,
+    "explication": "À l'arrêt, Torricelli s'écrit $0=v_0^2-2a\\,d$, d'où $a=\\dfrac{v_0^2}{2d}=\\dfrac{30^2}{2\\times 75}=\\qty{6}{\\metre\\per\\second\\squared}$.",
+    "pieges": [
+      "A: $\\frac{v_0}{2d}=\\frac{30}{150}=\\qty{0.2}{\\metre\\per\\second\\squared}$ oublie d'élever la vitesse au carré.",
+      "B: $\\frac{v_0^2}{4d}=\\qty{3}{\\metre\\per\\second\\squared}$ introduit un facteur $\\frac12$ superflu (confusion avec $x=\\frac12 a t^2$).",
+      "C: $\\frac{v_0^2}{d}=\\frac{900}{75}=\\qty{12}{\\metre\\per\\second\\squared}$ oublie le facteur 2 de la relation $v^2=2ad$."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q06",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "MRUA --- départ du repos et facteur un demi",
+    "difficulte": "concours",
+    "enonce": "Un mobile part du repos et se déplace en MRUA. Il parcourt \\qty{5}{\\metre} durant la première seconde. Quelle distance totale a-t-il parcourue au bout de \\qty{3}{\\second} ?",
+    "options": [
+      "\\qty{90}{\\metre}",
+      "\\qty{45}{\\metre}",
+      "\\qty{25}{\\metre}",
+      "\\qty{15}{\\metre}"
+    ],
+    "reponse_index": 1,
+    "explication": "La position vaut $x=\\frac12 a t^2$. Durant la première seconde : $\\frac12 a(1)^2=5\\Rightarrow a=\\qty{10}{\\metre\\per\\second\\squared}$. À $t=\\qty{3}{\\second}$ : $x=\\frac12\\times 10\\times 3^2=\\qty{45}{\\metre}$.",
+    "pieges": [
+      "A: $a\\,t^2=10\\times 9=\\qty{90}{\\metre}$ oublie le facteur $\\frac12$ dans $x=\\frac12 a t^2$.",
+      "C: $x(3)-x(2)=45-20=\\qty{25}{\\metre}$ calcule la distance de la seule 3\\textsuperscript{e} seconde, non la distance totale.",
+      "D: $5\\times 3=\\qty{15}{\\metre}$ suppose la distance proportionnelle au temps (comme un MRU)."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q07",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "Chute libre --- objet lâché avec vitesse initiale",
+    "difficulte": "concours",
+    "enonce": "Une montgolfière monte verticalement à la vitesse constante \\qty{10}{\\metre\\per\\second}. À l'altitude \\qty{120}{\\metre}, un sac de sable se détache. Quelle altitude maximale, par rapport au sol, le sac atteint-il ? On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$.",
+    "options": [
+      "\\qty{130}{\\metre}",
+      "\\qty{120}{\\metre}",
+      "\\qty{125}{\\metre}",
+      "\\qty{115}{\\metre}"
+    ],
+    "reponse_index": 2,
+    "explication": "Au lâcher, le sac possède la vitesse de la montgolfière, soit \\qty{10}{\\metre\\per\\second} vers le haut. Il monte donc encore de $\\Delta h=\\dfrac{v_0^2}{2g}=\\dfrac{100}{20}=\\qty{5}{\\metre}$. Altitude maximale $=120+5=\\qty{125}{\\metre}$.",
+    "pieges": [
+      "A: $120+\\frac{v_0^2}{g}=120+10=\\qty{130}{\\metre}$ oublie le facteur 2 ($\\Delta h=\\frac{v_0^2}{2g}$).",
+      "B: \\qty{120}{\\metre} néglige la vitesse initiale ascendante du sac au moment du lâcher.",
+      "D: $120-5=\\qty{115}{\\metre}$ : erreur de signe, soustrait la montée au lieu de l'ajouter."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q08",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "Tir horizontal --- temps de chute et portée",
+    "difficulte": "concours",
+    "enonce": "Une bille est lancée horizontalement depuis le bord d'une table de hauteur \\qty{45}{\\metre} avec une vitesse \\qty{8}{\\metre\\per\\second}. À quelle distance horizontale du pied de la table touche-t-elle le sol ? On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$, frottements négligés.\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=0.95]\n  \\draw[thick,fill=gray!15] (0,0) rectangle (1.4,3);\n  \\draw[pattern=north east lines,pattern color=gray!70] (-0.5,-0.35) rectangle (6.6,0);\n  \\draw[thick] (-0.5,0)--(6.6,0);\n  \\coordinate (L) at (1.4,3);\n  \\fill (L) circle (2pt);\n  \\draw[teal,line width=1.2pt,domain=1.4:6,smooth,variable=\\x]\n        plot ({\\x},{3-3/(4.6*4.6)*(\\x-1.4)*(\\x-1.4)});\n  \\draw[->,blue,line width=1pt] (L)--++(1.3,0) node[above]{$\\vv{v}_0$};\n  \\draw[<->,gray] (-0.28,0)--(-0.28,3) node[midway,left]{$h$};\n  \\draw[dashed,gray] (1.4,0)--(1.4,-0.55);\n  \\draw[dashed,gray] (6,0)--(6,-0.55);\n  \\draw[<->,gray] (1.4,-0.55)--(6,-0.55) node[midway,below]{portée};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{24}{\\metre}",
+      "\\qty{17}{\\metre}",
+      "\\qty{72}{\\metre}",
+      "\\qty{12}{\\metre}"
+    ],
+    "reponse_index": 0,
+    "explication": "Le mouvement vertical est une chute libre : $h=\\frac12 g t^2\\Rightarrow t=\\sqrt{\\dfrac{2h}{g}}=\\sqrt{\\dfrac{90}{10}}=\\qty{3}{\\second}$. Le mouvement horizontal est un MRU : portée $=v_0\\,t=8\\times 3=\\qty{24}{\\metre}$.",
+    "pieges": [
+      "B: $t=\\sqrt{h/g}\\approx\\qty{2.1}{\\second}$ puis $8\\times 2{,}1\\approx\\qty{17}{\\metre}$ oublie le facteur 2 sous la racine.",
+      "C: $v_0\\cdot\\frac{2h}{g}=8\\times 9=\\qty{72}{\\metre}$ oublie la racine carrée sur le temps de chute.",
+      "D: $v_0\\cdot\\frac{t}{2}=8\\times 1{,}5=\\qty{12}{\\metre}$ introduit un facteur $\\frac12$ (vitesse moyenne) injustifié pour un MRU."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q09",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "Tir oblique --- hauteur maximale",
+    "difficulte": "concours",
+    "enonce": "Un projectile est lancé du sol à \\qty{20}{\\metre\\per\\second} sous un angle de \\ang{30} au-dessus de l'horizontale. Quelle est la hauteur maximale atteinte ? On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$.\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=0.95]\n  \\draw[->] (-0.3,0)--(7.4,0) node[right]{$x$};\n  \\draw[->] (0,-0.3)--(0,3.8) node[above]{$y$};\n  \\draw[teal,line width=1.2pt,domain=0:6.5,smooth,variable=\\x]\n        plot ({\\x},{3-3/(3.25*3.25)*(\\x-3.25)*(\\x-3.25)});\n  \\draw[->,blue,line width=1.1pt] (0,0)--(1.7,1.35) node[above right]{$\\vv{v}_0$};\n  \\draw[->,blue!55] (0,0)--(1.7,0) node[midway,below]{$\\vv{v}_{0x}$};\n  \\draw[->,red!70] (0,0)--(0,1.35) node[midway,left]{$\\vv{v}_{0y}$};\n  \\draw[dashed,gray] (1.7,1.35)--(1.7,0);\n  \\draw (0.8,0) arc (0:38:0.8);\n  \\node at (1.02,0.27){$\\theta$};\n  \\draw[dashed,gray] (3.25,0)--(3.25,3);\n  \\node[teal] at (4.3,2.9){$y_{\\max}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{20}{\\metre}",
+      "\\qty{15}{\\metre}",
+      "\\qty{10}{\\metre}",
+      "\\qty{5}{\\metre}"
+    ],
+    "reponse_index": 3,
+    "explication": "La composante verticale initiale est $v_{0y}=v_0\\sin\\theta$, d'où $y_{\\max}=\\dfrac{v_0^2\\sin^2\\theta}{2g}=\\dfrac{20^2(\\sin\\ang{30})^2}{2\\times 10}=\\dfrac{400\\times 0{,}25}{20}=\\qty{5}{\\metre}$.",
+    "pieges": [
+      "A: $\\frac{v_0^2\\sin\\theta}{g}=\\frac{400\\times 0{,}5}{10}=\\qty{20}{\\metre}$ oublie le carré du sinus et le facteur 2.",
+      "B: $\\frac{v_0^2\\cos^2\\theta}{2g}=\\frac{400\\times 0{,}75}{20}=\\qty{15}{\\metre}$ confond $\\sin\\theta$ et $\\cos\\theta$ dans la projection verticale.",
+      "C: $\\frac{v_0^2\\sin\\theta}{2g}=\\frac{400\\times 0{,}5}{20}=\\qty{10}{\\metre}$ utilise $\\sin\\theta$ au lieu de $\\sin^2\\theta$."
+    ]
+  },
+  {
+    "id": "PHYS-F01-Q10",
+    "matiere": "Physique",
+    "fiche": "01",
+    "theme": "Composition des vitesses --- vecteurs perpendiculaires",
+    "difficulte": "concours",
+    "enonce": "Un nageur traverse une rivière en nageant perpendiculairement au courant à \\qty{3}{\\metre\\per\\second} par rapport à l'eau. Le courant a une vitesse de \\qty{4}{\\metre\\per\\second} par rapport à la rive. Quelle est la vitesse du nageur par rapport à la rive ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\coordinate (O) at (0,0);\n  \\draw[->,blue,line width=1.1pt] (O)--(0,3) node[midway,left]{$\\vv{v}_{n}=\\qty{3}{\\metre\\per\\second}$};\n  \\draw[->,red,line width=1.1pt] (O)--(4,0) node[midway,below]{$\\vv{v}_{c}=\\qty{4}{\\metre\\per\\second}$};\n  \\draw[->,red!45,dashed,line width=1pt] (0,3)--(4,3);\n  \\draw[->,teal,line width=1.4pt] (O)--(4,3) node[midway,above left]{$\\vv{v}$};\n  \\draw (0.32,0)|-(0,0.32);\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{7}{\\metre\\per\\second}",
+      "\\qty{5}{\\metre\\per\\second}",
+      "\\qty{1}{\\metre\\per\\second}",
+      "\\qty{2.6}{\\metre\\per\\second}"
+    ],
+    "reponse_index": 1,
+    "explication": "Les deux vitesses sont perpendiculaires ; la vitesse par rapport à la rive est leur somme vectorielle, de norme $v=\\sqrt{v_n^2+v_c^2}=\\sqrt{3^2+4^2}=\\sqrt{25}=\\qty{5}{\\metre\\per\\second}$ (théorème de Pythagore).",
+    "pieges": [
+      "A: $3+4=\\qty{7}{\\metre\\per\\second}$ additionne les normes comme si les vitesses étaient colinéaires.",
+      "C: $4-3=\\qty{1}{\\metre\\per\\second}$ soustrait les normes (vitesses supposées opposées).",
+      "D: $\\sqrt{4^2-3^2}=\\sqrt{7}\\approx\\qty{2.6}{\\metre\\per\\second}$ soustrait les carrés au lieu de les additionner."
+    ]
+  }
+]

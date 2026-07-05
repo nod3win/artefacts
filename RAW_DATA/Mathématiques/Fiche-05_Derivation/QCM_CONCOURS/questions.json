@@ -1,0 +1,212 @@
+[
+  {
+    "id": "MATH-F05-Q01",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Nombre dérivé : pente de la tangente",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ une fonction dérivable sur $\\R$ telle que $f(1)=2$. La tangente à la courbe de $f$ au point d'abscisse $x_0=1$ passe également par le point de coordonnées $(4;4)$. Quel est le nombre dérivé $f'(1)$ ?",
+    "options": [
+      "$\\dfrac{3}{2}$",
+      "$\\dfrac{4}{3}$",
+      "$\\dfrac{2}{3}$",
+      "$\\dfrac{1}{2}$"
+    ],
+    "reponse_index": 2,
+    "explication": "La tangente en $x_0=1$ a pour pente le nombre dérivé $f'(1)$. Elle passe par $\\big(1;f(1)\\big)=(1;2)$ et par $(4;4)$, donc $f'(1)=\\dfrac{4-2}{4-1}=\\dfrac{2}{3}$.",
+    "pieges": [
+      "A : pente inversée $\\dfrac{\\Delta x}{\\Delta y}=\\dfrac{4-1}{4-2}=\\dfrac{3}{2}$ (numérateur et dénominateur permutés).",
+      "B : oubli de soustraire $f(x_0)=2$, en calculant $\\dfrac{4}{4-1}=\\dfrac{4}{3}$.",
+      "D : oubli de soustraire $x_0=1$, en calculant $\\dfrac{4-2}{4}=\\dfrac{1}{2}$."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q02",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Dérivée d'un quotient avec logarithme",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $]0;+\\infty[$ par $f(x)=\\dfrac{\\ln x}{x}$. Parmi les expressions suivantes, laquelle définit correctement la dérivée $f'(x)$ ?",
+    "options": [
+      "$\\dfrac{1-\\ln x}{x^2}$",
+      "$\\dfrac{\\ln x-1}{x^2}$",
+      "$\\dfrac{1-\\ln x}{x}$",
+      "$\\dfrac{1+\\ln x}{x^2}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Avec $U=\\ln x$ ($U'=\\tfrac1x$) et $V=x$ ($V'=1$) : $f'=\\dfrac{U'V-UV'}{V^2}=\\dfrac{\\tfrac1x\\cdot x-\\ln x}{x^2}=\\dfrac{1-\\ln x}{x^2}$.",
+    "pieges": [
+      "B : ordre du numérateur inversé $\\dfrac{UV'-U'V}{V^2}=\\dfrac{\\ln x-1}{x^2}$.",
+      "C : dénominateur non élevé au carré, $\\dfrac{1-\\ln x}{x}$.",
+      "D : signe $+$ au lieu de $-$ au numérateur, $\\dfrac{1+\\ln x}{x^2}$."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q03",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Dérivée composée d'une racine",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $\\R$ par $f(x)=\\sqrt{x^2+1}$. Quelle est l'expression de $f'(x)$ ?",
+    "options": [
+      "$\\dfrac{2x}{\\sqrt{x^2+1}}$",
+      "$\\dfrac{x}{\\sqrt{x^2+1}}$",
+      "$\\dfrac{1}{2\\sqrt{x^2+1}}$",
+      "$x\\sqrt{x^2+1}$"
+    ],
+    "reponse_index": 1,
+    "explication": "En écrivant $f=(x^2+1)^{1/2}$, la règle $\\big(U^n\\big)'=n\\,U^{n-1}U'$ avec $U=x^2+1$, $U'=2x$ et $n=\\tfrac12$ donne $f'=\\tfrac12(x^2+1)^{-1/2}\\cdot 2x=\\dfrac{x}{\\sqrt{x^2+1}}$.",
+    "pieges": [
+      "A : facteur $\\tfrac12$ de la dérivée de la racine oublié, $\\dfrac{2x}{\\sqrt{x^2+1}}$.",
+      "C : facteur de chaîne $U'=2x$ oublié, $\\dfrac{1}{2\\sqrt{x^2+1}}$.",
+      "D : exposant non diminué de $1$, $\\tfrac12(x^2+1)^{1/2}\\cdot 2x=x\\sqrt{x^2+1}$."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q04",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Dérivée d'un produit avec exponentielle",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $\\R$ par $f(x)=x^2e^{-x}$. Quelle est l'expression de $f'(x)$ ?",
+    "options": [
+      "$(2x-x^2)e^{-x}$",
+      "$(2x+x^2)e^{-x}$",
+      "$-x^2e^{-x}$",
+      "$2x\\,e^{-x}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Produit $UV$ avec $U=x^2$ ($U'=2x$) et $V=e^{-x}$ ($V'=-e^{-x}$) : $f'=2x\\,e^{-x}+x^2(-e^{-x})=(2x-x^2)e^{-x}$.",
+    "pieges": [
+      "B : signe de $(e^{-x})'$ pris positif, $(2x+x^2)e^{-x}$.",
+      "C : premier terme $U'V$ oublié, $-x^2e^{-x}$.",
+      "D : second terme $UV'$ oublié, $2x\\,e^{-x}$."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q05",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Dérivée trigonométrique composée",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $\\R$ par $f(x)=\\cos(3x^2)$. Quelle est l'expression de $f'(x)$ ?",
+    "options": [
+      "$6x\\sin(3x^2)$",
+      "$-6x\\sin(3x^2)$",
+      "$-6x\\cos(3x^2)$",
+      "$-\\sin(3x^2)$"
+    ],
+    "reponse_index": 1,
+    "explication": "$\\big(\\cos U\\big)'=-U'\\sin U$ avec $U=3x^2$ et $U'=6x$ : $f'(x)=-6x\\sin(3x^2)$.",
+    "pieges": [
+      "A : signe $-$ de la dérivée du cosinus oublié, $6x\\sin(3x^2)$.",
+      "C : cosinus conservé au lieu de $-\\sin$, $-6x\\cos(3x^2)$.",
+      "D : facteur de chaîne $U'=6x$ oublié, $-\\sin(3x^2)$."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q06",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Sens de variation (signe de la dérivée)",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $\\R$ par $f(x)=x^3-12x$. Sur quel intervalle la fonction $f$ est-elle strictement décroissante ?",
+    "options": [
+      "$]-\\infty;-2[\\,\\cup\\,]2;+\\infty[$",
+      "$]-2;+\\infty[$",
+      "$]-\\infty;2[$",
+      "$]-2;2[$"
+    ],
+    "reponse_index": 3,
+    "explication": "$f'(x)=3x^2-12=3(x-2)(x+2)$ s'annule en $-2$ et $2$ ; le trinôme s'ouvrant vers le haut, $f'(x)<0$ (donc $f$ décroissante) exactement sur $]-2;2[$.",
+    "pieges": [
+      "A : intervalle où $f'>0$ (croissance) au lieu de $f'<0$ (décroissance).",
+      "B : inéquation du second degré traitée comme $x>-2$ seulement.",
+      "C : inéquation du second degré traitée comme $x<2$ seulement."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q07",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Extremums locaux (signe de la dérivée)",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $\\R$ par $f(x)=\\dfrac{x^4}{4}-2x^2$. Combien d'extremums locaux la fonction $f$ possède-t-elle ?",
+    "options": [
+      "$1$",
+      "$2$",
+      "$3$",
+      "$4$"
+    ],
+    "reponse_index": 2,
+    "explication": "$f'(x)=x^3-4x=x(x-2)(x+2)$ s'annule en $-2$, $0$ et $2$, en changeant de signe à chaque fois : $f$ possède 3 extremums locaux (un maximum en $0$, deux minimums en $-2$ et $2$).",
+    "pieges": [
+      "A : une seule racine retenue ($x=2$), en perdant $x=0$ et $x=-2$.",
+      "B : $f'$ simplifiée par $x$, la racine $x=0$ est perdue, d'où 2 extremums.",
+      "D : confusion avec les 4 intervalles de monotonie."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q08",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Dérivée seconde et point d'inflexion",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $\\R$ par $f(x)=x^3-6x^2+5$. En quelle abscisse la courbe de $f$ admet-elle un point d'inflexion ?",
+    "options": [
+      "$x=0$",
+      "$x=2$",
+      "$x=4$",
+      "$x=1$"
+    ],
+    "reponse_index": 1,
+    "explication": "$f'(x)=3x^2-12x$ puis $f''(x)=6x-12$ s'annule en $x=2$ en changeant de signe : la courbe y admet un point d'inflexion.",
+    "pieges": [
+      "A : $f'(x)=0$ résolue à la place de $f''$, racine $x=0$.",
+      "C : $f'(x)=0$ résolue à la place de $f''$, racine $x=4$.",
+      "D : dérivée seconde erronée $f''=6x-6$ (terme $-6x^2$ mal dérivé), $x=1$."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q09",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Équation de la tangente",
+    "difficulte": "concours",
+    "enonce": "Soit $f$ la fonction définie sur $\\R$ par $f(x)=x^2-4x+1$. Quelle est l'équation de la tangente à la courbe de $f$ au point d'abscisse $x_0=3$ ?",
+    "options": [
+      "$y=2x-2$",
+      "$y=6x-20$",
+      "$y=2x-4$",
+      "$y=2x-8$"
+    ],
+    "reponse_index": 3,
+    "explication": "$f(3)=9-12+1=-2$ et $f'(x)=2x-4$ donne $f'(3)=2$. Tangente : $y=(x-3)\\cdot 2+(-2)=2x-8$.",
+    "pieges": [
+      "A : décalage $(x-x_0)$ oublié, $y=f'(x_0)\\,x+f(x_0)=2x-2$.",
+      "B : pente $f'(3)=6$ (terme $-4$ de $f'=2x-4$ oublié), $y=6x-20$.",
+      "C : erreur de signe $f(3)=+2$, $y=2(x-3)+2=2x-4$."
+    ]
+  },
+  {
+    "id": "MATH-F05-Q10",
+    "matiere": "Mathématiques",
+    "fiche": "05",
+    "theme": "Lecture graphique de la dérivée",
+    "difficulte": "concours",
+    "enonce": "La courbe ci-dessous représente une fonction $f$ dérivable sur $\\R$, admettant un maximum local en $x=-2$ et un minimum local en $x=1$.\n\\begin{center}\n\\begin{tikzpicture}\n\\begin{axis}[width=8.5cm,height=5.6cm,axis lines=middle,xlabel={$x$},ylabel={$y$},\n   xtick={-2,1},ytick=\\empty,domain=-3.3:2.4,samples=80,\n   ymin=-2,ymax=4,clip=true,tick label style={font=\\footnotesize}]\n\\addplot[blue,line width=1.2pt]{x^3/3 + x^2/2 - 2*x};\n\\end{axis}\n\\end{tikzpicture}\n\\end{center}\nParmi les affirmations suivantes, laquelle est correcte ?",
+    "options": [
+      "$f'(-3)>0$",
+      "$f'(0)>0$",
+      "$f'(-2)<0$",
+      "$f'(1)<0$"
+    ],
+    "reponse_index": 0,
+    "explication": "Sur $]-\\infty;-2[$ la courbe monte, donc $f'>0$ et en particulier $f'(-3)>0$. Aux extremums $x=-2$ et $x=1$, la tangente est horizontale donc $f'=0$ ; sur $]-2;1[$ la courbe descend, donc $f'(0)<0$.",
+    "pieges": [
+      "B : $f'$ crue positive sur $]-2;1[$ alors que $f$ y décroît ($f'<0$).",
+      "C : dérivée crue négative au maximum, alors qu'un extremum donne $f'=0$.",
+      "D : dérivée crue négative au minimum, alors que $f'(1)=0$."
+    ]
+  }
+]

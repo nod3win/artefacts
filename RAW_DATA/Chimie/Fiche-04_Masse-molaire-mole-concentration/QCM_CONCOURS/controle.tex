@@ -1,0 +1,189 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+\noindent\textbf{CHIM-F04-Q01 --- Concentration des ions d'un electrolyte fort}\par
+On dissout \qty{3.42}{\gram} de sulfate d'aluminium \ce{Al2(SO4)3} (électrolyte fort, $M = \qty{342}{\gram\per\mole}$) dans l'eau pour obtenir \qty{250}{\milli\litre} de solution. Quelle est la concentration molaire en ions sulfate \ce{SO4^2-} ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.0400}{\mole\per\litre}
+\item \qty{0.0800}{\mole\per\litre}
+\item \qty{0.120}{\mole\per\litre}
+\item \qty{0.0300}{\mole\per\litre}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+La dissolution totale s'écrit \ce{Al2(SO4)3 -> 2 Al^3+ + 3 SO4^2-}. Quantité de soluté : $n = \frac{m}{M} = \frac{3{,}42}{342} = \qty{0.0100}{\mole}$, puis concentration du sel $C = \frac{n}{V} = \frac{0{,}0100}{0{,}250} = \qty{0.0400}{\mole\per\litre}$. Chaque unité libère \textbf{3} ions sulfate, donc $[\ce{SO4^2-}] = 3\,C = \qty{0.120}{\mole\per\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: dissociation oubliée --- la concentration du sel ($\qty{0.0400}{\mole\per\litre}$) est prise pour celle de l'ion.
+\item B: coefficient $2$ (indice du cation \ce{Al}) utilisé au lieu de $3$ : $2\times 0{,}0400 = \qty{0.0800}{\mole\per\litre}$.
+\item D: division par le volume oubliée --- $3\times n = 3\times 0{,}0100 = 0{,}0300$ pris comme concentration.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q02 --- Volume molaire d'un gaz aux CNTP}\par
+Aux conditions normales de température et de pression (CNTP : \qty{0}{\celsius}, \num{1}~atm), quel volume occupent \qty{8.80}{\gram} de dioxyde de carbone \ce{CO2} ? Données : $M(\ce{C}) = 12$, $M(\ce{O}) = \qty{16}{\gram\per\mole}$ ; $V_m = \qty{22.4}{\litre\per\mole}$ (CNTP) ou \qty{24.4}{\litre\per\mole} à \qty{25}{\celsius}.
+\begin{enumerate}[label=\Alph*)]
+\item \qty{4.48}{\litre}
+\item \qty{4.88}{\litre}
+\item \qty{7.04}{\litre}
+\item \qty{6.16}{\litre}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Masse molaire : $M(\ce{CO2}) = 12 + 2\times 16 = \qty{44}{\gram\per\mole}$. Quantité : $n = \frac{8{,}80}{44} = \qty{0.200}{\mole}$. Aux CNTP, $V_m = \qty{22.4}{\litre\per\mole}$, d'où $V = n\,V_m = 0{,}200\times 22{,}4 = \qty{4.48}{\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: volume molaire des conditions standard ($\qty{24.4}{\litre\per\mole}$, \qty{25}{\celsius}) utilisé au lieu de celui des CNTP : $0{,}200\times 24{,}4 = \qty{4.88}{\litre}$.
+\item C: masse molaire réduite à $\qty{28}{\gram\per\mole}$ (un seul \ce{O} compté, formule \ce{CO}) : $n = 8{,}80/28$, d'où $\qty{7.04}{\litre}$.
+\item D: masse molaire réduite à $\qty{32}{\gram\per\mole}$ (carbone oublié, deux \ce{O} seuls) : $n = 8{,}80/32$, d'où $\qty{6.16}{\litre}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q03 --- Dilution et volume d'eau ajoute}\par
+On souhaite préparer, par dilution d'une solution mère de glucose à \qty{1.50}{\mole\per\litre}, un volume de \qty{300}{\milli\litre} d'une solution à \qty{0.250}{\mole\per\litre}. Quel volume d'eau faut-il ajouter au volume de solution mère prélevé ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{50.0}{\milli\litre}
+\item \qty{250}{\milli\litre}
+\item \qty{300}{\milli\litre}
+\item \qty{350}{\milli\litre}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+La dilution conserve la quantité de soluté : $C_1V_1 = C_2V_2$ donne le volume de mère à prélever $V_1 = \frac{C_2V_2}{C_1} = \frac{0{,}250\times 0{,}300}{1{,}50} = \qty{0.0500}{\litre} = \qty{50.0}{\milli\litre}$. On complète ensuite jusqu'à \qty{300}{\milli\litre} : le volume d'eau ajouté est $V_2 - V_1 = 300 - 50{,}0 = \qty{250}{\milli\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on rend le volume de solution mère prélevé ($V_1 = \qty{50.0}{\milli\litre}$) au lieu du volume d'eau ajouté.
+\item C: tout le volume final ($V_2 = \qty{300}{\milli\litre}$) est pris pour de l'eau, en oubliant les \qty{50.0}{\milli\litre} de mère.
+\item D: on additionne $V_1$ au lieu de le soustraire : $300 + 50{,}0 = \qty{350}{\milli\litre}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q04 --- Molarite a partir de la masse volumique et du pourcentage massique}\par
+Une solution commerciale d'acide sulfurique \ce{H2SO4} titre \qty{49.0}{\percent} en masse et a une masse volumique $\rho = \qty{1.20}{\gram\per\milli\litre}$. On donne $M(\ce{H2SO4}) = \qty{98}{\gram\per\mole}$. Quelle est sa concentration molaire ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{5.00}{\mole\per\litre}
+\item \qty{6.24}{\mole\per\litre}
+\item \qty{6.00}{\mole\per\litre}
+\item \qty{12.2}{\mole\per\litre}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+On raisonne sur \qty{1}{\litre} de solution. Sa masse : $m_{\text{sol}} = \rho V = 1{,}20\times 1000 = \qty{1200}{\gram}$. La fraction massique \qty{49.0}{\percent} donne la masse d'acide pur : $m = 1200\times 0{,}490 = \qty{588}{\gram}$. Enfin $C = \frac{m/M}{V} = \frac{588/98}{1} = \qty{6.00}{\mole\per\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: masse volumique oubliée --- \qty{1}{\litre} supposé peser \qty{1000}{\gram} : $m = 1000\times 0{,}490 = \qty{490}{\gram}$, $C = 490/98 = 5{,}00$.
+\item B: pourcentage du solvant pris par erreur ($100-49 = \qty{51}{\percent}$) : $m = 1200\times 0{,}510 = \qty{612}{\gram}$, $C = 612/98 = 6{,}24$.
+\item D: pourcentage massique oublié --- toute la masse (\qty{1200}{\gram}) prise pour de l'acide pur : $C = 1200/98 = 12{,}2$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q05 --- Pourcentage massique d'un element}\par
+Quel est le pourcentage massique d'azote dans le nitrate d'ammonium \ce{NH4NO3} ? Données : $M(\ce{H}) = 1$, $M(\ce{N}) = 14$, $M(\ce{O}) = \qty{16}{\gram\per\mole}$.
+\begin{enumerate}[label=\Alph*)]
+\item \qty{35.0}{\percent}
+\item \qty{17.5}{\percent}
+\item \qty{36.8}{\percent}
+\item \qty{43.8}{\percent}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+$M(\ce{NH4NO3}) = 2\times 14 + 4\times 1 + 3\times 16 = \qty{80}{\gram\per\mole}$. La molécule contient \textbf{deux} atomes d'azote, de masse $2\times 14 = \qty{28}{\gram}$ par mole. D'où $\%\,\ce{N} = \frac{28}{80}\times 100 = \qty{35.0}{\percent}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: un seul atome d'azote compté ($14$ au lieu de $2\times 14 = 28$) : $14/80\times 100 = 17{,}5$.
+\item C: les quatre \ce{H} oubliés dans la masse molaire ($M = 76$ au lieu de $80$) : $28/76\times 100 = 36{,}8$.
+\item D: deux \ce{O} comptés au lieu de trois ($M = 64$) : $28/64\times 100 = 43{,}8$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q06 --- Fraction molaire d'un melange}\par
+Un mélange est constitué de \qty{46.0}{\gram} d'éthanol \ce{C2H6O} ($M = \qty{46.0}{\gram\per\mole}$) et de \qty{90.0}{\gram} d'eau ($M = \qty{18.0}{\gram\per\mole}$). Quelle est la fraction molaire de l'éthanol ?
+\begin{enumerate}[label=\Alph*)]
+\item \num{0.200}
+\item \num{0.167}
+\item \num{0.338}
+\item \num{0.833}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Quantités de matière : $n(\text{éthanol}) = \frac{46{,}0}{46{,}0} = \qty{1.00}{\mole}$ et $n(\text{eau}) = \frac{90{,}0}{18{,}0} = \qty{5.00}{\mole}$. La fraction molaire rapporte au total : $\chi_{\text{éthanol}} = \frac{n(\text{éthanol})}{n(\text{éthanol}) + n(\text{eau})} = \frac{1{,}00}{1{,}00 + 5{,}00} = \num{0.167}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: dénominateur limité à la quantité de l'autre constituant : $n_{\text{éthanol}}/n_{\text{eau}} = 1/5 = \num{0.200}$.
+\item C: fraction \emph{massique} calculée à la place de la molaire : $46/(46+90) = \num{0.338}$.
+\item D: fraction molaire de l'eau (l'autre constituant) rendue par inversion : $5/6 = \num{0.833}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q07 --- Nombre d'entites (Avogadro) et dissociation}\par
+Quel est le nombre total d'ions présents dans \qty{200}{\milli\litre} d'une solution de chlorure de magnésium \ce{MgCl2} (électrolyte fort) de concentration \qty{0.0500}{\mole\per\litre} ? On donne $N_A = \qty{6.02e23}{\per\mole}$.
+\begin{enumerate}[label=\Alph*)]
+\item \num{6.02e21} ions
+\item \num{1.20e22} ions
+\item \num{9.03e22} ions
+\item \num{1.81e22} ions
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Dissociation : \ce{MgCl2 -> Mg^2+ + 2 Cl-}, soit \textbf{3} ions par unité. Quantité de sel : $n = C\,V = 0{,}0500\times 0{,}200 = \qty{0.0100}{\mole}$. Quantité totale d'ions : $3\times 0{,}0100 = \qty{0.0300}{\mole}$. Nombre d'ions : $N = 0{,}0300\times 6{,}02\times 10^{23} = 1{,}81\times 10^{22}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: dissociation oubliée --- on compte les molécules de sel : $0{,}0100\times 6{,}02\times 10^{23} = 6{,}02\times 10^{21}$.
+\item B: deux ions seulement par unité (cation \ce{Mg^2+} oublié) : $0{,}0200\times 6{,}02\times 10^{23} = 1{,}20\times 10^{22}$.
+\item C: volume oublié --- la concentration \qty{0.0500}{\mole\per\litre} prise pour une quantité : $3\times 0{,}0500\times 6{,}02\times 10^{23} = 9{,}03\times 10^{22}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q08 --- Concentration des ions apres melange}\par
+On mélange \qty{100}{\milli\litre} de chlorure de sodium \ce{NaCl} à \qty{0.200}{\mole\per\litre} et \qty{100}{\milli\litre} de chlorure de calcium \ce{CaCl2} à \qty{0.300}{\mole\per\litre}. Le volume total est \qty{200}{\milli\litre}. Quelle est la concentration en ions chlorure \ce{Cl-} ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.250}{\mole\per\litre}
+\item \qty{0.400}{\mole\per\litre}
+\item \qty{0.500}{\mole\per\litre}
+\item \qty{0.800}{\mole\per\litre}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Ions chlorure apportés : par \ce{NaCl}, $n_1 = 0{,}200\times 0{,}100\times 1 = \qty{0.0200}{\mole}$ ; par \ce{CaCl2}, $n_2 = 0{,}300\times 0{,}100\times 2 = \qty{0.0600}{\mole}$ (deux \ce{Cl-} par unité). Sur le volume total \qty{200}{\milli\litre} : $[\ce{Cl-}] = \frac{0{,}0200 + 0{,}0600}{0{,}200} = \qty{0.400}{\mole\per\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: facteur $2$ de \ce{CaCl2} oublié (un seul \ce{Cl-} compté) : $(0{,}0200+0{,}0300)/0{,}200 = 0{,}250$.
+\item C: molarités simplement additionnées ($0{,}200 + 0{,}300$), sans dilution ni stœchiométrie : $0{,}500$.
+\item D: division par \qty{0.100}{\litre} (une seule prise) au lieu du volume total \qty{0.200}{\litre} : $0{,}0800/0{,}100 = 0{,}800$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q09 --- Masse volumique (pycnometre, eau etalon)}\par
+Un pycnomètre vide a une masse de \qty{24.50}{\gram}. Rempli d'eau ($\rho_{\text{eau}} = \qty{1.00}{\gram\per\milli\litre}$), il pèse \qty{49.50}{\gram} ; rempli d'un liquide inconnu, il pèse \qty{64.50}{\gram}. Quelle est la masse volumique de ce liquide ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{1.60}{\gram\per\milli\litre}
+\item \qty{2.58}{\gram\per\milli\litre}
+\item \qty{0.808}{\gram\per\milli\litre}
+\item \qty{0.625}{\gram\per\milli\litre}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+L'eau sert d'étalon de volume : masse d'eau $= 49{,}50 - 24{,}50 = \qty{25.00}{\gram}$, soit $V = \qty{25.00}{\milli\litre}$ (car $\rho_{\text{eau}} = \qty{1.00}{\gram\per\milli\litre}$). Masse du liquide inconnu : $64{,}50 - 24{,}50 = \qty{40.00}{\gram}$. D'où $\rho = \frac{m}{V} = \frac{40{,}00}{25{,}00} = \qty{1.60}{\gram\per\milli\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: masse du pycnomètre non soustraite pour le liquide ($\rho = 64{,}50/25{,}00 = 2{,}58$).
+\item C: volume pris à \qty{49.50}{\milli\litre} (récipient non déduit) : $40{,}00/49{,}50 = 0{,}808$.
+\item D: rapport inversé $V/m$ au lieu de $m/V$ : $25{,}00/40{,}00 = 0{,}625$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{CHIM-F04-Q10 --- Definitions et unites (conceptuel)}\par
+Parmi les affirmations suivantes concernant les grandeurs de la matière, laquelle est \textbf{exacte} ?
+\begin{enumerate}[label=\Alph*)]
+\item La masse molaire d'un composé s'exprime en unité de masse atomique (uma).
+\item La molalité d'une solution est le nombre de moles de soluté par litre de solution.
+\item Aux conditions standard (\qty{25}{\celsius}, \qty{1}{\bar}), une mole de gaz parfait occupe \qty{22.4}{\litre}.
+\item La concentration massique $C_m$ et la concentration molaire $C$ d'un soluté sont liées par $C_m = C\times M$.
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La relation $C_m = C\times M$ découle de $C_m = m/V$, $C = n/V$ et $n = m/M$ : elle relie la concentration massique (\si{\gram\per\litre}) et la molarité (\si{\mole\per\litre}). La masse molaire s'exprime en \si{\gram\per\mole} (jamais en uma) ; la molalité en \si{\mole\per\kilo\gram} de \emph{solvant} ; et aux conditions standard (\qty{25}{\celsius}) une mole de gaz occupe \qty{24.4}{\litre} (les \qty{22.4}{\litre} ne valent qu'aux CNTP, \qty{0}{\celsius}).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: confond l'unité de la masse molaire (\si{\gram\per\mole}) avec l'uma, qui sert à la masse d'un seul atome.
+\item B: définit la molalité comme une molarité (par litre de solution), alors qu'elle se rapporte au kilogramme de \emph{solvant}.
+\item C: applique \qty{22.4}{\litre\per\mole} (CNTP, \qty{0}{\celsius}) aux conditions standard, où le volume molaire vaut \qty{24.4}{\litre\per\mole}.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\end{document}

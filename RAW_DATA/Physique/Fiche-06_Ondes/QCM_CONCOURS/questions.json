@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F06-Q01",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Grandeurs caractéristiques : longueur d'onde",
+    "difficulte": "concours",
+    "enonce": "Une onde progressive se propage le long d'une corde élastique à la célérité $v = \\qty{72}{\\kilo\\metre\\per\\hour}$. Le graphe ci-dessous donne l'élongation $y$ d'un point de la corde en fonction du temps. La longueur d'onde de cette onde vaut :\n\\begin{center}\n\\begin{tikzpicture}\n\\begin{axis}[width=10cm,height=4.5cm,axis lines=middle,\n  xlabel={$t$~(s)},ylabel={$y$~(cm)},\n  xlabel style={below right},ylabel style={above left},\n  xmin=0,xmax=1.58,ymin=-3.8,ymax=3.8,\n  xtick={0.25,0.5,0.75,1,1.25,1.5},ytick={-3,3},\n  tick label style={font=\\footnotesize},grid=both,grid style={black!12},samples=200]\n\\addplot[blue,line width=1.1pt,domain=0:1.5]{3*sin(720*x)};\n\\end{axis}\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{36}{\\metre}",
+      "\\qty{5}{\\metre}",
+      "\\qty{10}{\\metre}",
+      "\\qty{20}{\\metre}"
+    ],
+    "reponse_index": 2,
+    "explication": "On lit la période sur le graphe : $T = \\qty{0.5}{\\second}$. On convertit la célérité : $v = \\qty{72}{\\kilo\\metre\\per\\hour} = \\qty{20}{\\metre\\per\\second}$. Puis $\\lambda = v\\,T = 20 \\times 0{,}5 = \\qty{10}{\\metre}$.",
+    "pieges": [
+      "A : garde $v = 72$ sans convertir les \\si{\\kilo\\metre\\per\\hour} en \\si{\\metre\\per\\second} : $72\\times0{,}5 = \\qty{36}{\\metre}$.",
+      "B : lit une demi-période ($T = \\qty{0.25}{\\second}$, de la crête au creux) : $20\\times0{,}25 = \\qty{5}{\\metre}$.",
+      "D : lit deux périodes comme une seule ($T = \\qty{1}{\\second}$) : $20\\times1 = \\qty{20}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q02",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Acoustique : écho et échographie",
+    "difficulte": "concours",
+    "enonce": "Lors d'une échographie, une sonde émet une brève salve d'ultrasons (célérité dans les tissus $v = \\qty{1500}{\\metre\\per\\second}$) et détecte l'écho renvoyé par un organe $\\qty{80}{\\micro\\second}$ plus tard. La profondeur de cet organe est :",
+    "options": [
+      "\\qty{6.0}{\\centi\\metre}",
+      "\\qty{12}{\\centi\\metre}",
+      "\\qty{3.0}{\\centi\\metre}",
+      "\\qty{24}{\\centi\\metre}"
+    ],
+    "reponse_index": 0,
+    "explication": "L'onde fait l'aller-retour sonde\\,$\\to$\\,organe\\,$\\to$\\,sonde : elle parcourt $2d$ pendant $\\Delta t$. Donc $d = \\dfrac{v\\,\\Delta t}{2} = \\dfrac{1500 \\times 80\\times10^{-6}}{2} = \\qty{6.0}{\\centi\\metre}$.",
+    "pieges": [
+      "B : oublie le facteur $\\tfrac12$ (ne tient pas compte de l'aller-retour) : $d = v\\,\\Delta t = \\qty{12}{\\centi\\metre}$.",
+      "C : applique le facteur $\\tfrac12$ deux fois : $d = v\\,\\Delta t/4 = \\qty{3.0}{\\centi\\metre}$.",
+      "D : multiplie par $2$ au lieu de diviser : $d = 2\\,v\\,\\Delta t = \\qty{24}{\\centi\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q03",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Changement de milieu",
+    "difficulte": "concours",
+    "enonce": "Un son de fréquence $f = \\qty{500}{\\hertz}$ se propage dans l'air (célérité $\\qty{340}{\\metre\\per\\second}$) puis pénètre dans l'eau, où sa célérité devient $v' = \\qty{1360}{\\metre\\per\\second}$. Sa longueur d'onde dans l'eau vaut :",
+    "options": [
+      "\\qty{0.68}{\\metre}",
+      "\\qty{2.04}{\\metre}",
+      "\\qty{0.17}{\\metre}",
+      "\\qty{2.72}{\\metre}"
+    ],
+    "reponse_index": 3,
+    "explication": "La fréquence est imposée par la source : elle ne change pas d'un milieu à l'autre. Seules $v$ et $\\lambda$ dépendent du milieu. Dans l'eau : $\\lambda' = \\dfrac{v'}{f} = \\dfrac{1360}{500} = \\qty{2.72}{\\metre}$.",
+    "pieges": [
+      "A : croit que $\\lambda$ ne change pas et garde la célérité de l'air : $\\lambda = 340/500 = \\qty{0.68}{\\metre}$.",
+      "B : utilise la différence des célérités : $(v'-v)/f = 1020/500 = \\qty{2.04}{\\metre}$.",
+      "C : inverse le rapport des célérités : $\\lambda_{\\text{air}}\\times v/v' = 0{,}68\\times0{,}25 = \\qty{0.17}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q04",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Lecture des graphes $y(t)$ et $y(x)$",
+    "difficulte": "concours",
+    "enonce": "Les deux graphes ci-dessous décrivent la même onde progressive : à gauche l'élongation d'un point en fonction du temps $y(t)$, à droite le profil de la corde en fonction de la position $y(x)$ à un instant donné. La célérité de l'onde vaut :\n\\begin{center}\n\\begin{minipage}{0.48\\textwidth}\\centering\n\\begin{tikzpicture}\n\\begin{axis}[width=6.4cm,height=3.9cm,axis lines=middle,\n  xlabel={$t$~(s)},ylabel={$y$~(cm)},xlabel style={below right},ylabel style={above left},\n  xmin=0,xmax=1.28,ymin=-2.6,ymax=2.6,xtick={0.2,0.4,0.6,0.8,1,1.2},ytick={-2,2},\n  tick label style={font=\\scriptsize},grid=both,grid style={black!12},samples=180]\n\\addplot[blue,line width=1pt,domain=0:1.2]{2*sin(900*x)};\n\\end{axis}\n\\end{tikzpicture}\n\\end{minipage}\\hfill\n\\begin{minipage}{0.48\\textwidth}\\centering\n\\begin{tikzpicture}\n\\begin{axis}[width=6.4cm,height=3.9cm,axis lines=middle,\n  xlabel={$x$~(m)},ylabel={$y$~(cm)},xlabel style={below right},ylabel style={above left},\n  xmin=0,xmax=6.4,ymin=-2.6,ymax=2.6,xtick={1,2,3,4,5,6},ytick={-2,2},\n  tick label style={font=\\scriptsize},grid=both,grid style={black!12},samples=180]\n\\addplot[orange,line width=1pt,domain=0:6]{2*sin(180*x)};\n\\end{axis}\n\\end{tikzpicture}\n\\end{minipage}\n\\end{center}",
+    "options": [
+      "\\qty{0.8}{\\metre\\per\\second}",
+      "\\qty{10}{\\metre\\per\\second}",
+      "\\qty{5}{\\metre\\per\\second}",
+      "\\qty{0.2}{\\metre\\per\\second}"
+    ],
+    "reponse_index": 2,
+    "explication": "Le graphe $y(t)$ donne la période $T = \\qty{0.4}{\\second}$ ; le graphe $y(x)$ donne la longueur d'onde $\\lambda = \\qty{2}{\\metre}$. La célérité vaut $v = \\dfrac{\\lambda}{T} = \\dfrac{2}{0{,}4} = \\qty{5}{\\metre\\per\\second}$.",
+    "pieges": [
+      "A : calcule $v = \\lambda\\,T = 2\\times0{,}4 = \\qty{0.8}{\\metre\\per\\second}$ (multiplie au lieu de diviser).",
+      "B : lit $T = \\qty{0.2}{\\second}$ (une demi-période) : $v = 2/0{,}2 = \\qty{10}{\\metre\\per\\second}$.",
+      "D : intervertit les deux graphes ($\\lambda$ lu sur $y(t)$, $T$ sur $y(x)$) : $v = 0{,}4/2 = \\qty{0.2}{\\metre\\per\\second}$."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q05",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Onde sinusoïdale : vitesse d'un point",
+    "difficulte": "concours",
+    "enonce": "Une onde sinusoïdale progressive a pour équation (unités SI) :\n\\[ y(x,t) = 0{,}05\\,\\sin\\!\\left(20\\pi\\,t - 4\\pi\\,x\\right). \\]\nLa vitesse maximale d'oscillation d'un point du milieu vaut :",
+    "options": [
+      "\\qty{3.14}{\\metre\\per\\second}",
+      "\\qty{5.00}{\\metre\\per\\second}",
+      "\\qty{0.50}{\\metre\\per\\second}",
+      "\\qty{0.63}{\\metre\\per\\second}"
+    ],
+    "reponse_index": 0,
+    "explication": "On identifie $A = \\qty{0.05}{\\metre}$, $\\omega = 20\\pi~\\si{\\radian\\per\\second}$ et $k = 4\\pi~\\si{\\radian\\per\\metre}$. La vitesse maximale d'un point est $v_{\\max} = A\\,\\omega = 0{,}05\\times20\\pi \\approx \\qty{3.14}{\\metre\\per\\second}$. À ne pas confondre avec la célérité de propagation $v = \\omega/k = \\qty{5}{\\metre\\per\\second}$.",
+    "pieges": [
+      "B : confond avec la célérité de propagation $v = \\omega/k = 20\\pi/4\\pi = \\qty{5.00}{\\metre\\per\\second}$.",
+      "C : utilise $A\\,f$ (confond $\\omega$ et $f$, oublie le facteur $2\\pi$) : $0{,}05\\times10 = \\qty{0.50}{\\metre\\per\\second}$.",
+      "D : utilise $A\\,k$ au lieu de $A\\,\\omega$ : $0{,}05\\times4\\pi \\approx \\qty{0.63}{\\metre\\per\\second}$."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q06",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Déphasage entre deux points",
+    "difficulte": "concours",
+    "enonce": "Une onde sinusoïdale de longueur d'onde $\\lambda = \\qty{0.80}{\\metre}$ se propage le long d'une corde. Deux points M et P de la corde sont distants de $d = \\qty{2.0}{\\metre}$. Le déphasage $\\Delta\\varphi = \\dfrac{2\\pi d}{\\lambda}$ entre ces deux points vaut :",
+    "options": [
+      "$2{,}5\\pi$~rad",
+      "$0{,}8\\pi$~rad",
+      "$3{,}2\\pi$~rad",
+      "$5\\pi$~rad"
+    ],
+    "reponse_index": 3,
+    "explication": "$\\Delta\\varphi = \\dfrac{2\\pi d}{\\lambda} = \\dfrac{2\\pi \\times 2{,}0}{0{,}80} = 5\\pi$~rad. Modulo $2\\pi$, cela équivaut à $\\pi$ : les deux points vibrent en opposition de phase.",
+    "pieges": [
+      "A : utilise $\\pi d/\\lambda$ (oubli du facteur $2$) : $2{,}5\\pi$~rad.",
+      "B : inverse le rapport, $2\\pi\\lambda/d = 2\\pi\\times0{,}4$ : $0{,}8\\pi$~rad.",
+      "C : multiplie par $\\lambda$ au lieu de diviser, $2\\pi d\\lambda$ : $3{,}2\\pi$~rad."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q07",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Ondes stationnaires : harmoniques",
+    "difficulte": "concours",
+    "enonce": "Une corde de longueur $L = \\qty{0.50}{\\metre}$, fixée à ses deux extrémités, est le siège d'ondes de célérité $c = \\qty{300}{\\metre\\per\\second}$. La fréquence de la 3\\textsuperscript{e} harmonique vaut :",
+    "options": [
+      "\\qty{300}{\\hertz}",
+      "\\qty{900}{\\hertz}",
+      "\\qty{1800}{\\hertz}",
+      "\\qty{450}{\\hertz}"
+    ],
+    "reponse_index": 1,
+    "explication": "Pour une corde fixée aux deux extrémités, $f_n = \\dfrac{n\\,c}{2L}$. Le fondamental vaut $f_1 = \\dfrac{300}{2\\times0{,}50} = \\qty{300}{\\hertz}$, donc la 3\\textsuperscript{e} harmonique $f_3 = 3f_1 = \\qty{900}{\\hertz}$.",
+    "pieges": [
+      "A : donne le fondamental $f_1 = \\qty{300}{\\hertz}$ (oublie le facteur $n = 3$).",
+      "C : utilise $3c/L$ (oublie le $2$ au dénominateur : $\\lambda_n = L/n$ au lieu de $2L/n$) : \\qty{1800}{\\hertz}.",
+      "D : applique $3c/4L$, formule de la corde à extrémité \\emph{libre} ($4L$) au lieu de $2L$ : \\qty{450}{\\hertz}."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q08",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Ondes stationnaires : nœuds et ventres",
+    "difficulte": "concours",
+    "enonce": "Une corde de longueur $L = \\qty{1.2}{\\metre}$, fixée à ses deux extrémités, vibre en régime stationnaire selon le mode ci-dessous (3 ventres). La longueur d'onde de cette onde stationnaire vaut :\n\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\\def\\Lh{9}\\def\\Ah{0.7}\n\\draw[green!55!black,line width=3pt] (0,-0.95)--(0,0.95);\n\\draw[green!55!black,line width=3pt] (\\Lh,-0.95)--(\\Lh,0.95);\n\\draw[blue,line width=1pt,domain=0:9,samples=150] plot (\\x,{\\Ah*sin(60*\\x)});\n\\draw[black,line width=1pt,domain=0:9,samples=150] plot (\\x,{-\\Ah*sin(60*\\x)});\n\\foreach \\k in {0,1,2,3}{\\fill (\\k*3,0) circle (2.4pt);}\n\\draw[<->,>=Stealth,dashed,black!70] (0,-1.35)--(\\Lh,-1.35) node[midway,fill=white,inner sep=1pt]{$L$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{0.40}{\\metre}",
+      "\\qty{0.60}{\\metre}",
+      "\\qty{0.80}{\\metre}",
+      "\\qty{1.60}{\\metre}"
+    ],
+    "reponse_index": 2,
+    "explication": "Une corde fixée aux deux bouts contient un nombre entier de fuseaux : $L = n\\,\\dfrac{\\lambda}{2}$, d'où $\\lambda = \\dfrac{2L}{n}$. Avec $n = 3$ ventres et $L = \\qty{1.2}{\\metre}$ : $\\lambda = \\dfrac{2\\times1{,}2}{3} = \\qty{0.80}{\\metre}$.",
+    "pieges": [
+      "A : utilise $L/n$ (oublie le facteur $2$ dans $\\lambda_n = 2L/n$) : $1{,}2/3 = \\qty{0.40}{\\metre}$.",
+      "B : compte les nœuds ($4$) au lieu des ventres ($3$) : $2L/(n{+}1) = 2{,}4/4 = \\qty{0.60}{\\metre}$.",
+      "D : applique $\\lambda = 4L/n$ (formule d'une extrémité libre) : $4{,}8/3 = \\qty{1.60}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q09",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Interférences de deux sources",
+    "difficulte": "concours",
+    "enonce": "Deux haut-parleurs $S_1$ et $S_2$ identiques, émettant \\emph{en phase} un son de fréquence $f = \\qty{680}{\\hertz}$ (célérité du son dans l'air $v = \\qty{340}{\\metre\\per\\second}$). Un microphone placé en M est tel que $S_1\\text{M} = \\qty{4.25}{\\metre}$ et $S_2\\text{M} = \\qty{2.00}{\\metre}$ (voir figure). Que capte le microphone en M ?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.85]\n\\coordinate (S1) at (0,0);\\coordinate (S2) at (0,2.3);\\coordinate (M) at (6,3.3);\n\\fill (S1) circle (2.4pt);\\fill (S2) circle (2.4pt);\\fill (M) circle (2.4pt);\n\\node[left] at (S1) {$S_1$};\\node[left] at (S2) {$S_2$};\\node[right] at (M) {M (micro)};\n\\draw[black,line width=0.8pt] (S1)--(M) node[midway,below,sloped,font=\\footnotesize]{$d_1$};\n\\draw[black,line width=0.8pt] (S2)--(M) node[midway,above,sloped,font=\\footnotesize]{$d_2$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "Un son d'intensité maximale (interférence constructive).",
+      "Un son d'intensité minimale (interférence destructive).",
+      "Un son d'intensité moyenne : deux haut-parleurs distincts ne peuvent pas interférer.",
+      "On ne peut pas conclure sans connaître la distance $S_1S_2$."
+    ],
+    "reponse_index": 1,
+    "explication": "$\\lambda = v/f = 340/680 = \\qty{0.5}{\\metre}$. La différence de marche vaut $\\delta = |d_1 - d_2| = 4{,}25 - 2{,}00 = \\qty{2.25}{\\metre} = 4{,}5\\,\\lambda = \\dfrac{9\\lambda}{2}$ : c'est un multiple impair de $\\lambda/2$, donc interférence destructive (son minimal).",
+    "pieges": [
+      "A : arrondit $\\delta/\\lambda = 4{,}5$ à un entier (ou inverse les conditions) et conclut à tort à une interférence constructive.",
+      "C : méconnaît la cohérence : de même fréquence et en phase, les deux sources \\emph{sont} cohérentes et interfèrent.",
+      "D : croit nécessaire la distance $S_1S_2$ alors que les deux longueurs de trajet $d_1$ et $d_2$ suffisent ($\\delta = d_1 - d_2$)."
+    ]
+  },
+  {
+    "id": "PHYS-F06-Q10",
+    "matiere": "Physique",
+    "fiche": "06",
+    "theme": "Fentes de Young : interfrange",
+    "difficulte": "concours",
+    "enonce": "Une lumière monochromatique éclaire deux fentes de Young distantes de $a = \\qty{0.24}{\\milli\\metre}$. Sur un écran placé à $D = \\qty{2.0}{\\metre}$, la distance entre la 1\\textsuperscript{re} et la 5\\textsuperscript{e} frange brillante est de $\\qty{20}{\\milli\\metre}$ (voir figure). La longueur d'onde de cette lumière vaut :\n\\begin{center}\n\\begin{tikzpicture}[scale=0.85]\n\\draw[black,line width=1pt] (0,-1.6)--(0,1.6);\\node[left,font=\\footnotesize] at (0,0){$S$};\n\\draw[black,line width=1.4pt] (2,-1.6)--(2,-0.5);\n\\draw[black,line width=1.4pt] (2,-0.3)--(2,0.3);\n\\draw[black,line width=1.4pt] (2,0.5)--(2,1.6);\n\\node[right,font=\\footnotesize] at (2.05,0.4){$F_2$};\\node[right,font=\\footnotesize] at (2.05,-0.4){$F_1$};\n\\draw[<->,>=Stealth] (2.55,-0.4)--(2.55,0.4) node[midway,right,font=\\footnotesize]{$a$};\n\\draw[black,line width=1.4pt] (6.4,-1.9)--(6.4,1.9);\\node[right,font=\\footnotesize] at (6.4,1.7){écran};\n\\draw[<->,>=Stealth] (2,-1.85)--(6.4,-1.85) node[midway,below,font=\\footnotesize]{$D$};\n\\foreach \\y in {-1,-0.5,0,0.5,1}{\\fill[orange] (6.4,\\y) circle (1.7pt);}\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "\\qty{600}{\\nano\\metre}",
+      "\\qty{480}{\\nano\\metre}",
+      "\\qty{1200}{\\nano\\metre}",
+      "\\qty{2400}{\\nano\\metre}"
+    ],
+    "reponse_index": 0,
+    "explication": "Entre la 1\\textsuperscript{re} et la 5\\textsuperscript{e} frange brillante, il y a $5-1 = 4$ interfranges : $i = 20/4 = \\qty{5}{\\milli\\metre}$. Alors $\\lambda = \\dfrac{i\\,a}{D} = \\dfrac{5\\times10^{-3}\\times0{,}24\\times10^{-3}}{2{,}0} = \\qty{600}{\\nano\\metre}$.",
+    "pieges": [
+      "B : divise l'écart par le nombre de franges ($5$) au lieu du nombre d'intervalles ($4$) : $i = \\qty{4}{\\milli\\metre}$, $\\lambda = \\qty{480}{\\nano\\metre}$.",
+      "C : ne compte que $2$ intervalles entre les franges extrêmes : $i = \\qty{10}{\\milli\\metre}$, $\\lambda = \\qty{1200}{\\nano\\metre}$.",
+      "D : prend l'écart total ($\\qty{20}{\\milli\\metre}$) comme interfrange, sans diviser : $\\lambda = \\qty{2400}{\\nano\\metre}$."
+    ]
+  }
+]

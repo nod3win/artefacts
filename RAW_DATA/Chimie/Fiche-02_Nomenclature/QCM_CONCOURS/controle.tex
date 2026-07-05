@@ -1,0 +1,217 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+
+\begin{center}
+{\Large\bfseries QCM type concours --- Chimie}\\[2pt]
+{\large Fiche 02 --- Notions de nomenclature chimique (composés inorganiques)}\\[2pt]
+\textit{10 questions, niveau concours. Une seule proposition correcte parmi quatre.}
+\end{center}
+\vspace{6pt}\hrule\vspace{10pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q01 --- Nombre d'oxydation}\par
+Quel est le nombre d'oxydation du chlore dans l'ion chlorate \ce{ClO3-} ? (l'oxygène est au degré $-\mathrm{II}$)
+\begin{enumerate}[label=\Alph*)]
+\item $+\mathrm{II}$
+\item $+\mathrm{VI}$
+\item $+\mathrm{V}$
+\item $+\mathrm{VII}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+L'ion \ce{ClO3-} porte une charge globale $-1$. La somme des nombres d'oxydation égale cette charge : $x + 3\times(-2) = -1$, soit $x - 6 = -1$ et donc $x = +5$, c'est-à-dire $+\mathrm{V}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $+\mathrm{II}$ --- oxygène pris à $-\mathrm{I}$ (confusion avec un peroxyde) : $x - 3 = -1 \Rightarrow x = +\mathrm{II}$.
+\item B: $+\mathrm{VI}$ --- ion traité comme une molécule neutre (charge globale oubliée) : $x - 6 = 0 \Rightarrow x = +\mathrm{VI}$.
+\item D: $+\mathrm{VII}$ --- signe de la charge inversé ($+1$ au lieu de $-1$) : $x - 6 = +1 \Rightarrow x = +\mathrm{VII}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q02 --- Neutralité électrique et croisement des valences}\par
+Quelle est la formule brute du sulfate d'aluminium ? (ions \ce{Al^3+} et \ce{SO4^2-})
+\begin{enumerate}[label=\Alph*)]
+\item \ce{AlSO4}
+\item \ce{Al2(SO4)3}
+\item \ce{Al3(SO4)2}
+\item \ce{Al2(SO3)3}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+On croise les valences : celle de l'anion (2) devient l'indice du cation, celle du cation (3) devient l'indice de l'anion, d'où \ce{Al2(SO4)3}. Vérification de la neutralité : $2\times(+3) = +6$ et $3\times(-2) = -6$, somme nulle.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: \ce{AlSO4} --- association 1:1 sans croiser les valences (composé non neutre : $+3 \neq -2$).
+\item C: \ce{Al3(SO4)2} --- croisement inversé : la valence de chaque ion placée comme son propre indice.
+\item D: \ce{Al2(SO3)3} --- croisement correct, mais anion sulfite \ce{SO3^2-} au lieu du sulfate \ce{SO4^2-}.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q03 --- Oxacides et anhydrides (oxyde acide)}\par
+Le permanganate d'hydrogène \ce{HMnO4} est un oxacide. Quel est son anhydride, c'est-à-dire l'oxyde acide qui, additionné d'eau, le régénère ?
+\begin{enumerate}[label=\Alph*)]
+\item \ce{MnO2}
+\item \ce{MnO4}
+\item \ce{Mn2O5}
+\item \ce{Mn2O7}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+L'anhydride s'obtient en retirant une molécule d'eau à deux molécules d'acide : $2\,\ce{HMnO4} \rightarrow \ce{H2O} + \ce{Mn2O7}$. Le degré du manganèse est conservé : $+\mathrm{VII}$ dans \ce{HMnO4} ($x - 8 = -1$) comme dans \ce{Mn2O7} ($2x - 14 = 0 \Rightarrow x = +7$).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: \ce{MnO2} --- manganèse ramené à $+\mathrm{IV}$ (oxyde usuel du manganèse), degré d'oxydation non conservé.
+\item B: \ce{MnO4} --- seul le \ce{H} est retiré (\ce{HMnO4} $-\,\ce{H}$), sans le bilan d'eau sur deux acides.
+\item C: \ce{Mn2O5} --- manganèse à $+\mathrm{V}$ (erreur d'arithmétique sur l'anhydride).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q04 --- Appariement nom / formule}\par
+Parmi les associations formule--nom suivantes, laquelle est \textbf{incorrecte} ?
+\begin{enumerate}[label=\Alph*)]
+\item \ce{Na2CO3} : carbonate de sodium
+\item \ce{CuO} : oxyde de cuivre(I)
+\item \ce{HClO3} : chlorate d'hydrogène
+\item \ce{Mg(OH)2} : hydroxyde de magnésium
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Dans \ce{CuO}, l'oxygène est $-\mathrm{II}$ et le composé est neutre, donc le cuivre est $+\mathrm{II}$ : c'est l'oxyde de cuivre(\textbf{II}). L'oxyde de cuivre(I) serait \ce{Cu2O}. L'association B est donc fausse.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: \ce{Na2CO3} = carbonate de sodium est \emph{correct} (croisement \ce{Na+}/\ce{CO3^2-}) ; on pourrait douter à tort de l'indice 2 du sodium.
+\item C: \ce{HClO3} = chlorate d'hydrogène est \emph{correct} (convention « [anion] + d'hydrogène », \ce{ClO3-} = chlorate) ; on le croit faux en cherchant « acide chlorique ».
+\item D: \ce{Mg(OH)2} = hydroxyde de magnésium est \emph{correct} (Mg divalent, deux \ce{OH-}) ; l'indice 2 fait douter à tort.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q05 --- Oxydes non métalliques et préfixes multiplicateurs}\par
+Le composé \ce{N2O5} est un oxyde non métallique. Quel est son nom systématique ?
+\begin{enumerate}[label=\Alph*)]
+\item hémipentoxyde d'azote
+\item pentoxyde d'azote
+\item sesquioxyde d'azote
+\item hémipentoxyde de diazote
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Pour un oxyde non métallique, le préfixe traduit le rapport O/X. Ici $\mathrm{O}/\mathrm{N} = 5/2$, qui correspond au préfixe \emph{hémipent} : \ce{N2O5} est l'hémipentoxyde d'azote.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: pentoxyde d'azote --- seul le nombre d'oxygènes (5) est lu, sans le rapporter aux 2 atomes d'azote (rapport $5/2$).
+\item C: sesquioxyde d'azote --- c'est le nom de \ce{N2O3} (rapport $3/2$), confusion d'oxyde.
+\item D: hémipentoxyde de diazote --- préfixe multiplicateur appliqué à tort au second élément (l'azote).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q06 --- Suffixes -eux / -ite (de l'acide à l'anion)}\par
+Quelle est la formule de l'anion obtenu par déprotonation totale de l'acide sulfureux \ce{H2SO3} ?
+\begin{enumerate}[label=\Alph*)]
+\item \ce{SO3^2-}
+\item \ce{SO4^2-}
+\item \ce{S2O3^2-}
+\item \ce{HSO3-}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Un acide en \emph{-eux} donne un anion en \emph{-ite} : l'acide sulfur\emph{eux} \ce{H2SO3}, privé de ses deux \ce{H+}, conduit au sulf\emph{ite} \ce{SO3^2-}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: \ce{SO4^2-} --- suffixe \emph{-eux} converti à tort en \emph{-ate} : c'est le sulfate, issu de l'acide sulfur\emph{ique} \ce{H2SO4}.
+\item C: \ce{S2O3^2-} --- thiosulfate, confondu avec le sulfite (un atome de soufre en plus).
+\item D: \ce{HSO3-} --- déprotonation \emph{partielle} (un seul \ce{H+} perdu) : c'est l'hydrogénosulfite, non l'anion final.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q07 --- Sels acides (préfixe hydrogéno-)}\par
+Quelle est la formule du dihydrogénophosphate de calcium ? (cation \ce{Ca^2+}, anion \ce{H2PO4-})
+\begin{enumerate}[label=\Alph*)]
+\item \ce{CaH2PO4}
+\item \ce{CaHPO4}
+\item \ce{Ca3(PO4)2}
+\item \ce{Ca(H2PO4)2}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+L'anion dihydrogénophosphate \ce{H2PO4-} est monovalent et le calcium est divalent : on croise les valences, soit deux anions pour un \ce{Ca^2+}, d'où \ce{Ca(H2PO4)2}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: \ce{CaH2PO4} --- association 1:1, la valence 2 du calcium n'est pas prise en compte (composé non neutre).
+\item B: \ce{CaHPO4} --- anion monohydrogénophosphate \ce{HPO4^2-} (un seul \ce{H}) au lieu du dihydrogénophosphate.
+\item C: \ce{Ca3(PO4)2} --- les deux \ce{H} de l'anion supprimés : c'est le phosphate (neutre) de calcium.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q08 --- Coefficient stœchiométrique et indices}\par
+Combien d'atomes d'oxygène compte-t-on au total dans \ce{2 Fe(NO3)3} ?
+\begin{enumerate}[label=\Alph*)]
+\item \num{9}
+\item \num{6}
+\item \num{18}
+\item \num{3}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Un motif \ce{Fe(NO3)3} contient $3\times 3 = 9$ atomes d'oxygène ; le coefficient 2 multiplie tout le motif : $2\times 9 = 18$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: \num{9} --- coefficient 2 oublié (un seul motif compté).
+\item B: \num{6} --- indice 3 de \ce{(NO3)3} oublié : $3\ \text{O}\times 2 = 6$.
+\item D: \num{3} --- un seul groupe \ce{NO3} lu (coefficient et indice ignorés).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q09 --- Hydrates (eau de cristallisation)}\par
+Quelle est la masse molaire du sulfate de cuivre(II) pentahydraté \ce{CuSO4 * 5 H2O} ? (en \unit{\gram\per\mole} : \ce{Cu}~\num{63.5}, \ce{S}~\num{32}, \ce{O}~\num{16}, \ce{H}~\num{1})
+\begin{enumerate}[label=\Alph*)]
+\item \qty{159.5}{\gram\per\mole}
+\item \qty{177.5}{\gram\per\mole}
+\item \qty{239.5}{\gram\per\mole}
+\item \qty{249.5}{\gram\per\mole}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La partie anhydre \ce{CuSO4} pèse $63{,}5 + 32 + 4\times 16 = 159{,}5$~\unit{\gram\per\mole} ; les cinq molécules d'eau ajoutent $5\times 18 = 90$~\unit{\gram\per\mole}, soit un total de \qty{249.5}{\gram\per\mole}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: \qty{159.5}{\gram\per\mole} --- eau de cristallisation oubliée (masse du sel anhydre \ce{CuSO4} seul).
+\item B: \qty{177.5}{\gram\per\mole} --- une seule molécule d'eau comptée ($+18$) au lieu de cinq.
+\item C: \qty{239.5}{\gram\per\mole} --- eau comptée comme \qty{16}{\gram\per\mole} (oxygène seul) : $5\times 16 = 80$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% ---------------------------------------------------------------------
+\noindent\textbf{CHIM-F02-Q10 --- Nomenclature de Stock (métal à valence variable)}\par
+Selon les règles de la fiche, comment nomme-t-on l'oxyde \ce{PbO2} ? (le plomb est un métal)
+\begin{enumerate}[label=\Alph*)]
+\item dioxyde de plomb
+\item oxyde de plomb(IV)
+\item oxyde de plomb(II)
+\item peroxyde de plomb
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Le plomb est un \emph{métal} : on n'emploie pas de préfixe multiplicateur, mais on précise sa valence. L'oxygène est $-\mathrm{II}$ ; dans \ce{PbO2} neutre, $x + 2\times(-2) = 0$ donne le plomb au degré $+\mathrm{IV}$ : oxyde de plomb(IV).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: dioxyde de plomb --- préfixe multiplicateur (réservé aux non-métaux) appliqué à tort à un métal.
+\item C: oxyde de plomb(II) --- valence usuelle \ce{Pb^2+} supposée sans calcul (ce serait \ce{PbO}).
+\item D: peroxyde de plomb --- les deux O lus comme un ion peroxyde \ce{O2^2-}, ce qui ramènerait le plomb à $+\mathrm{II}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\end{document}

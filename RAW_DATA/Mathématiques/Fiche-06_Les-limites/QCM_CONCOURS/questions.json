@@ -1,0 +1,212 @@
+[
+  {
+    "id": "MATH-F06-Q01",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Limite en un point : forme $\\frac00$ par factorisation",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to 3}\\frac{x^{2}-9}{x^{3}-27}$ ?",
+    "options": [
+      "$\\dfrac{1}{3}$",
+      "$\\dfrac{2}{9}$",
+      "$\\dfrac{2}{3}$",
+      "$\\dfrac{1}{9}$"
+    ],
+    "reponse_index": 1,
+    "explication": "La forme directe est $\\frac00$. On factorise avec $a^{2}-b^{2}$ et $a^{3}-b^{3}$ : $x^{2}-9=(x-3)(x+3)$ et $x^{3}-27=(x-3)(x^{2}+3x+9)$. Après simplification de $(x-3)$, \\[ \\lim_{x\\to 3}\\frac{x^{2}-9}{x^{3}-27}=\\lim_{x\\to 3}\\frac{x+3}{x^{2}+3x+9}=\\frac{6}{9+9+9}=\\frac{6}{27}=\\frac{2}{9}. \\]",
+    "pieges": [
+      "A : applique la règle du terme dominant ($x^{2}/x^{3}=1/x\\to 1/3$) comme à l'infini, alors qu'on est en un point fini.",
+      "C : factorise le dénominateur avec un mauvais signe ($x^{2}-3x+9$), d'où $6/(9-9+9)=2/3$.",
+      "D : simplifie $6/27$ en $1/9$ (dénominateur doublé par erreur)."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q02",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Asymptote verticale : règle $a/0^{\\pm}$ (limite latérale)",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to 1^{+}}\\frac{x^{2}-3x}{x^{2}-1}$ ?",
+    "options": [
+      "$-\\infty$",
+      "$+\\infty$",
+      "$\\dfrac{1}{2}$",
+      "$1$"
+    ],
+    "reponse_index": 0,
+    "explication": "Le numérateur tend vers $1-3=-2\\neq 0$. Le dénominateur $x^{2}-1=(x-1)(x+1)$ s'annule en $1$ : quand $x\\to 1^{+}$, $(x-1)\\to 0^{+}$ et $(x+1)\\to 2$, donc $x^{2}-1\\to 0^{+}$. Par la règle des signes, \\[ \\lim_{x\\to 1^{+}}\\frac{x^{2}-3x}{x^{2}-1}=\\frac{-2}{0^{+}}=-\\infty. \\]",
+    "pieges": [
+      "B : confond le côté (à gauche $x^{2}-1\\to 0^{-}$ donnerait $+\\infty$) ou oublie que le numérateur est négatif.",
+      "C : « simplifie » abusivement $\\dfrac{x(x-3)}{(x-1)(x+1)}$ en $\\dfrac{x}{x+1}$ puis remplace $x=1$.",
+      "D : confond avec la limite à l'infini (degrés égaux $x^{2}/x^{2}\\to 1$)."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q03",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Asymptote verticale : limite bilatérale inexistante",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to 2}\\frac{x^{2}-3x}{x^{2}-4}$ ?",
+    "options": [
+      "$+\\infty$",
+      "$-\\infty$",
+      "La limite n'existe pas",
+      "$1$"
+    ],
+    "reponse_index": 2,
+    "explication": "Le numérateur tend vers $4-6=-2\\neq 0$ ; le dénominateur $(x-2)(x+2)$ s'annule en $2$. Il faut étudier les deux côtés : \\[ \\lim_{x\\to 2^{-}}\\frac{x^{2}-3x}{x^{2}-4}=\\frac{-2}{0^{-}}=+\\infty,\\qquad \\lim_{x\\to 2^{+}}\\frac{x^{2}-3x}{x^{2}-4}=\\frac{-2}{0^{+}}=-\\infty. \\] Les deux limites latérales sont opposées : la limite (bilatérale) \\textbf{n'existe pas}.",
+    "pieges": [
+      "A : ne considère que la limite à gauche ($x\\to 2^{-}$ : $-2/0^{-}=+\\infty$).",
+      "B : ne considère que la limite à droite ($x\\to 2^{+}$ : $-2/0^{+}=-\\infty$).",
+      "D : calcule la limite à l'infini (degrés égaux $x^{2}/x^{2}\\to 1$) au lieu de la limite en $2$."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q04",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Fonction rationnelle à l'infini : degrés égaux",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to +\\infty}\\frac{9x^{4}-2x^{2}+x}{-6x^{4}+5x-3}$ ?",
+    "options": [
+      "$\\dfrac{3}{2}$",
+      "$-\\dfrac{2}{3}$",
+      "$-2$",
+      "$-\\dfrac{3}{2}$"
+    ],
+    "reponse_index": 3,
+    "explication": "À l'infini, la limite d'une fonction rationnelle est celle du rapport des termes de plus haut degré : \\[ \\lim_{x\\to +\\infty}\\frac{9x^{4}-2x^{2}+x}{-6x^{4}+5x-3}=\\lim_{x\\to +\\infty}\\frac{9x^{4}}{-6x^{4}}=\\frac{9}{-6}=-\\frac{3}{2}. \\]",
+    "pieges": [
+      "A : oublie le signe $-$ du terme dominant du dénominateur ($-6x^{4}$).",
+      "B : inverse le rapport ($b_m/a_n=-6/9=-2/3$ au lieu de $a_n/b_m$).",
+      "C : « somme tous les coefficients » comme si l'on remplaçait $x=1$ : $(9-2+1)/(-6+5-3)=8/(-4)=-2$."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q05",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Fonction rationnelle à l'infini : degrés différents",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to -\\infty}\\frac{-x^{4}+2x}{x^{3}-5}$ ?",
+    "options": [
+      "$-\\infty$",
+      "$+\\infty$",
+      "$-1$",
+      "$0$"
+    ],
+    "reponse_index": 1,
+    "explication": "On garde les termes dominants : $\\dfrac{-x^{4}}{x^{3}}=-x$. Or, quand $x\\to -\\infty$, $-x\\to +\\infty$. Donc \\[ \\lim_{x\\to -\\infty}\\frac{-x^{4}+2x}{x^{3}-5}=\\lim_{x\\to -\\infty}(-x)=+\\infty. \\]",
+    "pieges": [
+      "A : erreur de double signe --- écrit $-x$ puis conclut $-\\infty$, en oubliant que $-(-\\infty)=+\\infty$.",
+      "C : croit les degrés égaux et prend le rapport des coefficients dominants $-1/1=-1$.",
+      "D : croit le degré du numérateur inférieur à celui du dénominateur (limite nulle)."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q06",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Asymptotes horizontale et verticale : point d'intersection",
+    "difficulte": "concours",
+    "enonce": "La courbe représentative de $f(x)=\\dfrac{2x+4}{x-3}$ admet une asymptote verticale et une asymptote horizontale. Quelles sont les coordonnées de leur point d'intersection ?",
+    "options": [
+      "$(3\\,;\\,2)$",
+      "$(-3\\,;\\,2)$",
+      "$(2\\,;\\,3)$",
+      "$\\left(3\\,;\\,\\dfrac{1}{2}\\right)$"
+    ],
+    "reponse_index": 0,
+    "explication": "\\textbf{Asymptote verticale} : le dénominateur s'annule en $x=3$ (le numérateur y vaut $10\\neq 0$), donc $x=3$. \\textbf{Asymptote horizontale} : $\\ds\\lim_{x\\to\\pm\\infty}\\frac{2x+4}{x-3}=\\frac{2x}{x}=2$, donc $y=2$. Le point d'intersection des deux droites $x=3$ et $y=2$ est $(3\\,;\\,2)$.",
+    "pieges": [
+      "B : résout $x-3=0$ en $x=-3$ (erreur de signe sur l'asymptote verticale).",
+      "C : intervertit l'abscisse et l'ordonnée du point.",
+      "D : prend l'asymptote horizontale comme le rapport dominant inversé $\\tfrac12$ au lieu de $2$."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q07",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Limite à l'infini d'une somme de termes",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to +\\infty}\\left(\\frac{6x^{2}+1}{2x^{2}-x}-\\frac{4}{x}+1\\right)$ ?",
+    "options": [
+      "$3$",
+      "$\\dfrac{4}{3}$",
+      "$0$",
+      "$4$"
+    ],
+    "reponse_index": 3,
+    "explication": "On calcule la limite de chaque terme séparément : \\[ \\frac{6x^{2}+1}{2x^{2}-x}\\to\\frac{6x^{2}}{2x^{2}}=3,\\qquad \\frac{4}{x}\\to 0,\\qquad 1\\to 1. \\] D'où $\\ds\\lim_{x\\to +\\infty}\\left(\\frac{6x^{2}+1}{2x^{2}-x}-\\frac{4}{x}+1\\right)=3-0+1=4.$",
+    "pieges": [
+      "A : oublie le terme $+1$ et ne garde que la limite de la fraction ($=3$).",
+      "B : inverse le rapport dominant ($\\tfrac{2}{6}=\\tfrac13$), d'où $\\tfrac13-0+1=\\tfrac43$.",
+      "C : croit que $\\tfrac{4}{x}\\to 4$ au lieu de $0$, d'où $3-4+1=0$."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q08",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Radical en un point : forme $\\frac00$ (quantité conjuguée)",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to 1}\\frac{\\sqrt{x+3}-2}{x-1}$ ?",
+    "options": [
+      "$\\dfrac{1}{2}$",
+      "$0$",
+      "$\\dfrac{1}{4}$",
+      "$\\dfrac{1}{8}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Forme $\\frac00$. On multiplie haut et bas par le conjugué $\\sqrt{x+3}+2$ : \\[ \\frac{\\sqrt{x+3}-2}{x-1}=\\frac{(x+3)-4}{(x-1)\\bigl(\\sqrt{x+3}+2\\bigr)}=\\frac{x-1}{(x-1)\\bigl(\\sqrt{x+3}+2\\bigr)}=\\frac{1}{\\sqrt{x+3}+2}. \\] Le facteur $(x-1)$ se simplifie, donc $\\ds\\lim_{x\\to 1}\\frac{\\sqrt{x+3}-2}{x-1}=\\frac{1}{\\sqrt{4}+2}=\\frac{1}{4}.$",
+    "pieges": [
+      "A : par l'Hospital, dérive $\\sqrt{x+3}$ en $\\dfrac{1}{\\sqrt{x+3}}$ (oubli du $\\frac12$), d'où $1/\\sqrt{4}=1/2$.",
+      "B : conclut $0$ pour la forme $\\frac00$ sans rationaliser.",
+      "D : évalue $\\dfrac{1}{2\\sqrt{x+3}}$ en remplaçant $\\sqrt{x+3}$ par $x+3=4$, soit $1/8$."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q09",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Forme $\\frac00$ : factorisation d'une somme de cubes",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to -2}\\frac{x^{3}+8}{x^{2}-4}$ ?",
+    "options": [
+      "$-3$",
+      "$-1$",
+      "$-2$",
+      "$3$"
+    ],
+    "reponse_index": 0,
+    "explication": "Forme $\\frac00$. On factorise avec $a^{3}+b^{3}$ et $a^{2}-b^{2}$ : $x^{3}+8=(x+2)(x^{2}-2x+4)$ et $x^{2}-4=(x-2)(x+2)$. Après simplification de $(x+2)$, \\[ \\lim_{x\\to -2}\\frac{x^{3}+8}{x^{2}-4}=\\lim_{x\\to -2}\\frac{x^{2}-2x+4}{x-2}=\\frac{4+4+4}{-4}=\\frac{12}{-4}=-3. \\]",
+    "pieges": [
+      "B : mauvais signe dans le facteur ($x^{2}+2x+4$ au lieu de $x^{2}-2x+4$), d'où $4/(-4)=-1$.",
+      "C : applique la règle du terme dominant $x^{3}/x^{2}=x\\to -2$ au lieu de factoriser.",
+      "D : erreur de signe final ($12/4=3$ en oubliant que le dénominateur vaut $-4$)."
+    ]
+  },
+  {
+    "id": "MATH-F06-Q10",
+    "matiere": "Mathématiques",
+    "fiche": "06",
+    "theme": "Limite trigonométrique remarquable",
+    "difficulte": "concours",
+    "enonce": "Que vaut $\\ds\\lim_{x\\to 0}\\frac{\\sin(7x)}{2x}$ ?",
+    "options": [
+      "$\\dfrac{1}{2}$",
+      "$\\dfrac{7}{2}$",
+      "$\\dfrac{2}{7}$",
+      "$7$"
+    ],
+    "reponse_index": 1,
+    "explication": "On fait apparaître la limite de référence $\\dfrac{\\sin u}{u}\\to 1$ en multipliant et divisant par $7x$ : \\[ \\frac{\\sin(7x)}{2x}=\\underbrace{\\frac{\\sin(7x)}{7x}}_{\\to\\,1}\\times\\frac{7x}{2x}=\\frac{\\sin(7x)}{7x}\\times\\frac{7}{2}\\ \\xrightarrow[x\\to 0]{}\\ 1\\times\\frac{7}{2}=\\frac{7}{2}. \\]",
+    "pieges": [
+      "A : approxime $\\sin(7x)\\approx x$ en oubliant le facteur $7$ interne, d'où $x/(2x)=1/2$.",
+      "C : inverse le rapport ($2/7$ au lieu de $7/2$).",
+      "D : oublie le $2$ du dénominateur ($\\sin(7x)\\approx 7x$, puis $7x/x=7$)."
+    ]
+  }
+]

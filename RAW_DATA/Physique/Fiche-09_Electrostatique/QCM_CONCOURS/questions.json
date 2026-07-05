@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F09-Q01",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Loi de Coulomb : force résultante nulle",
+    "difficulte": "concours",
+    "enonce": "Deux charges ponctuelles fixes $q_A=+\\qty{1}{\\micro\\coulomb}$ (en A) et $q_B=+\\qty{9}{\\micro\\coulomb}$ (en B) sont séparées de $\\qty{40}{\\centi\\metre}$. En quel point P de la droite $(AB)$ une charge test serait-elle en équilibre (force électrostatique résultante nulle) ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth]\n  \\draw[thick] (0,0)--(8,0);\n  \\filldraw[red] (0,0) circle (2.5pt);\n  \\node[above=2pt] at (0,0){$q_A=+\\qty{1}{\\micro\\coulomb}$};\n  \\node[below=3pt] at (0,0){A};\n  \\filldraw[red] (8,0) circle (2.5pt);\n  \\node[above=2pt] at (8,0){$q_B=+\\qty{9}{\\micro\\coulomb}$};\n  \\node[below=3pt] at (8,0){B};\n  \\filldraw[black] (2.4,0) circle (2pt);\n  \\node[above=2pt] at (2.4,0){P\\,?};\n  \\draw[<->] (0,-0.9)--(8,-0.9) node[midway,fill=white]{\\qty{40}{\\centi\\metre}};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "à \\qty{4}{\\centi\\metre} de A",
+      "à \\qty{10}{\\centi\\metre} de A",
+      "à \\qty{13}{\\centi\\metre} de A",
+      "à \\qty{30}{\\centi\\metre} de A"
+    ],
+    "reponse_index": 1,
+    "explication": "Les deux charges étant de même signe, le point d'équilibre est entre elles, plus près de la plus faible ($q_A$). En notant $x$ la distance à A~: $\\dfrac{Kq_A}{x^{2}}=\\dfrac{Kq_B}{(d-x)^{2}}$, soit $\\dfrac{\\sqrt{q_A}}{x}=\\dfrac{\\sqrt{q_B}}{d-x}$, d'où $\\dfrac{1}{x}=\\dfrac{3}{40-x}$ et $x=\\qty{10}{\\centi\\metre}$ (donc à \\qty{30}{\\centi\\metre} de B).",
+    "pieges": [
+      "A: équilibre écrit avec $q/d$ au lieu de $q/d^{2}$ (racine oubliée) : $1/x=9/(40-x)\\Rightarrow x=\\qty{4}{\\centi\\metre}$.",
+      "C: rapport $\\sqrt{q_A/q_B}$ appliqué à $d$ au lieu de $(d-x)$ : $x=40/3\\approx\\qty{13}{\\centi\\metre}$.",
+      "D: rapport inversé, point rapproché de la grosse charge : $x=40\\cdot 3/4=\\qty{30}{\\centi\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q02",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Loi de Coulomb : influence des charges et de la distance",
+    "difficulte": "concours",
+    "enonce": "Deux charges ponctuelles exercent l'une sur l'autre une force d'intensité $F_0$. On triple \\emph{simultanément} la valeur de chacune des deux charges \\emph{et} la distance qui les sépare. La nouvelle intensité de la force vaut :",
+    "options": [
+      "$F_0$ (inchangée)",
+      "$9\\,F_0$",
+      "$F_0/9$",
+      "$3\\,F_0$"
+    ],
+    "reponse_index": 0,
+    "explication": "$F=\\dfrac{K q_1 q_2}{d^{2}}$. Tripler chaque charge multiplie le numérateur par $3\\times 3=9$~; tripler la distance divise par $3^{2}=9$. Bilan : $F=\\dfrac{9}{9}\\,F_0=F_0$, l'intensité est \\textbf{inchangée}.",
+    "pieges": [
+      "B: effet des charges seul pris en compte ($\\times 9$), variation de distance oubliée.",
+      "C: effet de la distance seul ($\\div 9$), variation des charges oubliée.",
+      "D: distance traitée linéairement ($\\div 3$ au lieu de $\\div 9$) : $9/3=3$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q03",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Loi de Coulomb : direction de la résultante (carré)",
+    "difficulte": "concours",
+    "enonce": "Trois charges identiques $+q$ occupent les sommets A, B et C d'un carré ; une quatrième charge $+q$ est placée au sommet D (charge étudiée). Dans quelle direction pointe la force électrostatique résultante subie par la charge en D ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.4]\n  \\coordinate (A) at (0,2); \\coordinate (B) at (2,2);\n  \\coordinate (C) at (2,0); \\coordinate (D) at (0,0);\n  \\draw[gray,dashed] (A)--(B)--(C)--(D)--cycle;\n  \\draw[gray,dashed] (B)--(D);\n  \\filldraw[red] (A) circle (2.5pt) node[above left]{$+q$ (A)};\n  \\filldraw[red] (B) circle (2.5pt) node[above right]{$+q$ (B)};\n  \\filldraw[red] (C) circle (2.5pt) node[below right]{$+q$ (C)};\n  \\filldraw[teal] (D) circle (2.5pt) node[below left]{$+q$ (D)};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "verticalement, vers le bas",
+      "horizontalement, vers la gauche",
+      "selon la diagonale $(BD)$, vers l'extérieur du carré",
+      "selon la diagonale $(BD)$, vers le centre du carré"
+    ],
+    "reponse_index": 2,
+    "explication": "Les trois charges sont positives : chacune \\emph{repousse} la charge en D. La charge A pousse D vers le bas, la charge C pousse D vers la gauche (mêmes intensités, distances égales à un côté), la charge B (diagonale) pousse D vers le bas-gauche. Par symétrie, la résultante est portée par la diagonale $(BD)$ et dirigée vers l'extérieur du carré (elle s'éloigne du centre).",
+    "pieges": [
+      "A: seule la charge A (au-dessus) prise en compte : force verticale vers le bas.",
+      "B: seule la charge C (à droite) prise en compte : force horizontale vers la gauche.",
+      "D: sens inversé (attraction supposée) : diagonale dirigée vers le centre."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q04",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Loi de Coulomb : superposition (triangle équilatéral)",
+    "difficulte": "concours",
+    "enonce": "Trois charges identiques $+q$ sont placées aux sommets d'un triangle équilatéral de côté $a$. L'intensité de la force électrostatique résultante subie par l'une quelconque de ces charges vaut :\n\\begin{center}\n\\begin{tikzpicture}[scale=1.5]\n  \\coordinate (S) at (90:1.15);\n  \\coordinate (L) at (210:1.15);\n  \\coordinate (Rr) at (330:1.15);\n  \\draw[gray] (S)--(L)--(Rr)--cycle;\n  \\filldraw[red] (S) circle (2pt) node[above]{$+q$};\n  \\filldraw[red] (L) circle (2pt) node[below left]{$+q$};\n  \\filldraw[red] (Rr) circle (2pt) node[below right]{$+q$};\n  \\node at (0,-1.35){côté $a$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$F=2\\,\\dfrac{Kq^{2}}{a^{2}}$",
+      "$F=\\dfrac{Kq^{2}}{a^{2}}$",
+      "$F=\\sqrt{2}\\,\\dfrac{Kq^{2}}{a^{2}}$",
+      "$F=\\sqrt{3}\\,\\dfrac{Kq^{2}}{a^{2}}$"
+    ],
+    "reponse_index": 3,
+    "explication": "Chaque charge subit deux forces de même intensité $F_1=\\dfrac{Kq^{2}}{a^{2}}$, faisant entre elles l'angle du sommet, soit \\ang{60}. La résultante vaut $F=2F_1\\cos\\!\\left(\\ang{30}\\right)=2F_1\\cdot\\dfrac{\\sqrt{3}}{2}=\\sqrt{3}\\,\\dfrac{Kq^{2}}{a^{2}}$.",
+    "pieges": [
+      "A: les deux forces sommées comme si elles étaient colinéaires ($2F_1$).",
+      "B: une seule interaction prise en compte, superposition oubliée ($F_1$).",
+      "C: angle traité comme droit (\\ang{90}), théorème de Pythagore : $\\sqrt{2}\\,F_1$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q05",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Champ électrique : relation $\\vv F=q\\vv E$ (charge négative)",
+    "difficulte": "concours",
+    "enonce": "Dans une région où règne un champ électrique uniforme $\\vv E$ d'intensité $E=\\qty{5.0}{\\kilo\\volt\\per\\metre}$ orienté vers la droite, on abandonne un électron (charge $-e$, avec $e=\\qty{1.6e-19}{\\coulomb}$). La force électrique subie par l'électron a pour intensité et sens :",
+    "options": [
+      "$\\qty{8.0e-16}{\\newton}$, dans le sens opposé à $\\vv E$ (vers la gauche)",
+      "$\\qty{8.0e-16}{\\newton}$, dans le sens de $\\vv E$ (vers la droite)",
+      "$\\qty{8.0e-19}{\\newton}$, dans le sens opposé à $\\vv E$",
+      "$\\qty{1.6e-19}{\\newton}$, dans le sens opposé à $\\vv E$"
+    ],
+    "reponse_index": 0,
+    "explication": "$\\vv F=q\\vv E$ avec $q=-e$. Intensité : $F=eE=\\num{1.6e-19}\\times\\num{5.0e3}=\\qty{8.0e-16}{\\newton}$. La charge étant négative, $\\vv F$ est de sens \\emph{opposé} à $\\vv E$, donc vers la gauche.",
+    "pieges": [
+      "B: intensité correcte mais signe de la charge oublié (force dans le sens de $\\vv E$).",
+      "C: préfixe kilo négligé ($E=\\qty{5.0}{\\volt\\per\\metre}$) : $F=\\qty{8.0e-19}{\\newton}$.",
+      "D: champ oublié, la charge elle-même reportée comme une force : $\\qty{1.6e-19}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q06",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Champ électrique créé par une charge ponctuelle",
+    "difficulte": "concours",
+    "enonce": "Une charge ponctuelle $Q=+\\qty{5.0}{\\micro\\coulomb}$ crée, en un point M situé à $r=\\qty{0.30}{\\metre}$, un champ électrique dont l'intensité vaut ($K=\\qty{9.0e9}{\\newton\\metre\\squared\\per\\coulomb\\squared}$) :",
+    "options": [
+      "$\\qty{5.0e1}{\\newton\\per\\coulomb}$",
+      "$\\qty{4.5e4}{\\newton\\per\\coulomb}$",
+      "$\\qty{1.5e5}{\\newton\\per\\coulomb}$",
+      "$\\qty{5.0e5}{\\newton\\per\\coulomb}$"
+    ],
+    "reponse_index": 3,
+    "explication": "$E=\\dfrac{KQ}{r^{2}}=\\dfrac{\\num{9.0e9}\\times\\num{5.0e-6}}{(0{,}30)^{2}}=\\dfrac{\\num{4.5e4}}{0{,}09}=\\qty{5.0e5}{\\newton\\per\\coulomb}$.",
+    "pieges": [
+      "A: distance laissée en centimètres et élevée au carré ($30^{2}=900$) : $\\qty{5.0e1}{\\newton\\per\\coulomb}$.",
+      "B: division par la distance oubliée (numérateur $KQ$ seul) : $\\qty{4.5e4}{\\newton\\per\\coulomb}$.",
+      "C: division par $r$ au lieu de $r^{2}$ : $\\qty{4.5e4}{}/0{,}30=\\qty{1.5e5}{\\newton\\per\\coulomb}$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q07",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Condensateur plan : champ uniforme $E=U/d$",
+    "difficulte": "concours",
+    "enonce": "Un condensateur plan est formé de deux disques de rayon $R=\\qty{5.0}{\\centi\\metre}$ séparés d'une distance $d=\\qty{4.0}{\\milli\\metre}$. Une tension $U=\\qty{200}{\\volt}$ est appliquée entre les armatures. L'intensité du champ électrique uniforme entre les armatures vaut :\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth]\n  \\draw[thick,red] (0,1.4)--(3.2,1.4);\n  \\node[red,left] at (0,1.4){$+$};\n  \\draw[thick,blue] (0,0)--(3.2,0);\n  \\node[blue,left] at (0,0){$-$};\n  \\foreach \\x in {0.5,1.1,1.7,2.3,2.9} \\draw[->,teal] (\\x,1.3)--(\\x,0.1);\n  \\draw[<->] (3.6,0)--(3.6,1.4) node[midway,right]{$d$};\n  \\node at (1.6,1.85){rayon $R=\\qty{5.0}{\\centi\\metre}$};\n  \\node at (1.6,-0.5){$U=\\qty{200}{\\volt}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{5.0e1}{\\volt\\per\\metre}$",
+      "$\\qty{4.0e3}{\\volt\\per\\metre}$",
+      "$\\qty{5.0e4}{\\volt\\per\\metre}$",
+      "$\\qty{8.0e-1}{\\volt\\per\\metre}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Entre les armatures le champ est uniforme et vaut $E=\\dfrac{U}{d}=\\dfrac{200}{\\num{4.0e-3}}=\\qty{5.0e4}{\\volt\\per\\metre}$. Le rayon $R$ des disques n'intervient pas.",
+    "pieges": [
+      "A: distance $d$ laissée en millimètres ($E=200/4$) : $\\qty{5.0e1}{\\volt\\per\\metre}$.",
+      "B: rayon $R=\\qty{5.0}{\\centi\\metre}$ utilisé comme distance : $200/0{,}05=\\qty{4.0e3}{\\volt\\per\\metre}$.",
+      "D: produit $U\\times d$ au lieu du quotient : $200\\times\\num{4.0e-3}=\\qty{8.0e-1}{\\volt\\per\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q08",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Travail de la force électrique (champ uniforme)",
+    "difficulte": "concours",
+    "enonce": "Dans un champ électrique uniforme $E=\\qty{2.0e3}{\\volt\\per\\metre}$ orienté selon $+x$, une charge $q=+\\qty{5.0}{\\micro\\coulomb}$ est déplacée de $d=\\qty{0.20}{\\metre}$ dans le sens $-x$ (c'est-à-dire contre le champ). Le travail de la force électrique lors de ce déplacement vaut :",
+    "options": [
+      "$+\\qty{2.0e-3}{\\joule}$",
+      "$-\\qty{2.0e-3}{\\joule}$",
+      "$-\\qty{1.0e-2}{\\joule}$",
+      "$-\\qty{2.0e-1}{\\joule}$"
+    ],
+    "reponse_index": 1,
+    "explication": "La force est $F=qE=\\num{5.0e-6}\\times\\num{2.0e3}=\\qty{1.0e-2}{\\newton}$, orientée selon $+x$ ($q>0$). Le déplacement se fait selon $-x$ : $W=F\\,d\\cos\\ang{180}=-\\num{1.0e-2}\\times 0{,}20=-\\qty{2.0e-3}{\\joule}$ (travail résistant, négatif).",
+    "pieges": [
+      "A: signe oublié, déplacement supposé dans le sens de la force ($\\cos\\ang{0}$).",
+      "C: multiplication par $d$ oubliée, la force reportée comme un travail : $-\\qty{1.0e-2}{\\joule}$.",
+      "D: distance laissée en centimètres ($d=20$) : $-\\num{1.0e-2}\\times 20=-\\qty{2.0e-1}{\\joule}$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q09",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Équilibre d'une gouttelette chargée (lévitation)",
+    "difficulte": "concours",
+    "enonce": "Une gouttelette de masse $m=\\qty{3.2e-15}{\\kilogram}$ reste immobile entre deux plaques horizontales distantes de $d=\\qty{2.0}{\\centi\\metre}$, soumises à une tension $U=\\qty{400}{\\volt}$. On prend $g=\\qty{10}{\\metre\\per\\second\\squared}$. La valeur absolue de la charge portée par la gouttelette vaut :\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth]\n  \\draw[thick,red] (0,1.6)--(3.2,1.6);\n  \\draw[thick,blue] (0,0)--(3.2,0);\n  \\filldraw[gray] (1.6,0.8) circle (3pt);\n  \\draw[->,teal,thick] (1.6,0.8)--(1.6,1.45) node[right]{$\\vv F$};\n  \\draw[->,orange,thick] (1.6,0.8)--(1.6,0.15) node[right]{$\\vv P$};\n  \\node[left] at (1.5,0.8){$m,\\,q$};\n  \\draw[<->] (3.6,0)--(3.6,1.6) node[midway,right]{$d$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{1.6e-18}{\\coulomb}$",
+      "$\\qty{1.6e-16}{\\coulomb}$",
+      "$\\qty{1.6e-19}{\\coulomb}$",
+      "$\\qty{4.0e-15}{\\coulomb}$"
+    ],
+    "reponse_index": 0,
+    "explication": "À l'équilibre la force électrique compense le poids : $|q|E=mg$ avec $E=\\dfrac{U}{d}=\\dfrac{400}{0{,}020}=\\qty{2.0e4}{\\volt\\per\\metre}$. D'où $|q|=\\dfrac{mg}{E}=\\dfrac{\\num{3.2e-15}\\times 10}{\\num{2.0e4}}=\\qty{1.6e-18}{\\coulomb}$.",
+    "pieges": [
+      "B: distance laissée en centimètres ($E=400/2=\\qty{200}{\\volt\\per\\metre}$) : $|q|=\\qty{1.6e-16}{\\coulomb}$.",
+      "C: poids confondu avec la masse ($|q|=m/E$, facteur $g$ oublié) : $\\qty{1.6e-19}{\\coulomb}$.",
+      "D: $E=U\\times d$ au lieu de $U/d$ : $|q|=mg/(U d)=\\qty{4.0e-15}{\\coulomb}$."
+    ]
+  },
+  {
+    "id": "PHYS-F09-Q10",
+    "matiere": "Physique",
+    "fiche": "09",
+    "theme": "Quantification de la charge : nombre d'électrons",
+    "difficulte": "concours",
+    "enonce": "Un corps porte une charge électrique négative de valeur absolue $|q|=\\qty{4.8e-9}{\\coulomb}$. Sachant que $e=\\qty{1.6e-19}{\\coulomb}$, le nombre d'électrons en excès portés par ce corps est :",
+    "options": [
+      "$\\num{3.0e-28}$",
+      "$\\num{3.0e-10}$",
+      "$\\num{3.0e10}$",
+      "$\\num{3.0e28}$"
+    ],
+    "reponse_index": 2,
+    "explication": "La charge est un multiple entier de la charge élémentaire : $|q|=N e$, donc $N=\\dfrac{|q|}{e}=\\dfrac{\\num{4.8e-9}}{\\num{1.6e-19}}=\\num{3.0e10}$ électrons. (Mantisse : $4{,}8/1{,}6=3{,}0$ ; exposant : $-9-(-19)=+10$.)",
+    "pieges": [
+      "A: charges multipliées au lieu d'être divisées ($|q|\\times e$), exposants additionnés.",
+      "B: division inversée $e/|q|$ (exposant $-19-(-9)=-10$).",
+      "D: exposants additionnés en valeur absolue lors de la division ($9+19=28$)."
+    ]
+  }
+]

@@ -1,0 +1,200 @@
+% ===== PRÉAMBULE CANONIQUE QCM — MATHÉMATIQUES =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric,intersections,babel}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}\newcommand{\C}{\mathbb{C}}\newcommand{\ds}{\displaystyle}
+\newcommand{\vv}[1]{\vec{#1}}
+% ===================================================
+\begin{document}
+
+\noindent\textbf{MATH-F03-Q01 --- Angles associés : réduction et valeurs remarquables}\par
+Sans calculatrice, que vaut $\tan\!\left(\dfrac{2\pi}{3}\right)$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $-\sqrt{3}$
+\item $\sqrt{3}$
+\item $-\dfrac{\sqrt{3}}{3}$
+\item $\dfrac{\sqrt{3}}{3}$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+L'angle $\dfrac{2\pi}{3}$ (soit \ang{120}) est dans le deuxième quadrant, entre $\dfrac{\pi}{2}$ et $\pi$, où la tangente est \emph{négative}. Son angle de référence est $\pi-\dfrac{2\pi}{3}=\dfrac{\pi}{3}$, et $\tan\dfrac{\pi}{3}=\sqrt{3}$. On recolle le signe : $\tan\dfrac{2\pi}{3}=-\sqrt{3}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: signe oublié --- on garde le signe $+$ de $\tan\dfrac{\pi}{3}$ sans tenir compte du deuxième quadrant.
+\item C: mauvais angle de référence --- on utilise $\dfrac{\pi}{6}$ (dont $\tan=\dfrac{\sqrt3}{3}$) au lieu de $\dfrac{\pi}{3}$.
+\item D: cumul des deux erreurs (référence $\dfrac{\pi}{6}$ et signe positif).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q02 --- Angles associés dans un triangle}\par
+Dans un triangle quelconque $ABC$, les angles vérifient $\widehat{A}+\widehat{B}+\widehat{C}=\pi$. Parmi les égalités suivantes, laquelle est \textbf{toujours} vraie ?
+\begin{enumerate}[label=\Alph*)]
+\item $\cos\widehat{B}=\cos\!\left(\widehat{A}+\widehat{C}\right)$
+\item $\sin\widehat{B}=\sin\!\left(\widehat{A}+\widehat{C}\right)$
+\item $\sin\widehat{B}=-\sin\!\left(\widehat{A}+\widehat{C}\right)$
+\item $\sin\widehat{B}=\cos\!\left(\widehat{A}+\widehat{C}\right)$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Puisque $\widehat{A}+\widehat{B}+\widehat{C}=\pi$, on a $\widehat{B}=\pi-\left(\widehat{A}+\widehat{C}\right)$ : les angles $\widehat{B}$ et $\widehat{A}+\widehat{C}$ sont \emph{supplémentaires}. Or $\sin(\pi-x)=\sin x$, donc $\sin\widehat{B}=\sin\!\left(\widehat{A}+\widehat{C}\right)$. Leurs cosinus, eux, sont opposés.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on oublie que deux angles supplémentaires ont des cosinus \emph{opposés} : $\cos(\pi-x)=-\cos x$.
+\item C: signe erroné --- on applique par erreur $\sin(\pi-x)=-\sin x$.
+\item D: confusion sinus/cosinus pour des angles supplémentaires.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q03 --- Relation fondamentale et signe selon le quadrant}\par
+$\alpha$ est un angle du \emph{deuxième} quadrant tel que $\tan\alpha=-\dfrac{4}{3}$. Que vaut $\cos\alpha$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $\dfrac{3}{5}$
+\item $-\dfrac{4}{5}$
+\item $-\dfrac{3}{5}$
+\item $\dfrac{4}{5}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+De $1+\tan^2\alpha=\dfrac{1}{\cos^2\alpha}$ on tire $\dfrac{1}{\cos^2\alpha}=1+\dfrac{16}{9}=\dfrac{25}{9}$, d'où $\cos^2\alpha=\dfrac{9}{25}$ et $\cos\alpha=\pm\dfrac{3}{5}$. Au deuxième quadrant le cosinus est négatif : $\cos\alpha=-\dfrac{3}{5}$. (Triangle $3$-$4$-$5$ : $\tan\alpha=-\dfrac43$ donne $|\text{opp}|=4$, $|\text{adj}|=3$, $\text{hyp}=5$ ; le cosinus est bâti sur l'adjacent.)\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\dfrac35$ --- bon module mais signe du quadrant oublié (le cosinus est négatif au deuxième quadrant).
+\item B: $-\dfrac45$ --- confusion sinus/cosinus (on prend l'opposé $4$ au lieu de l'adjacent $3$).
+\item D: $\dfrac45$ --- confusion sinus/cosinus \emph{et} signe oublié.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q04 --- Formules de duplication (angle double)}\par
+$\alpha$ est un angle du premier quadrant tel que $\cos\alpha=\dfrac{3}{5}$. Que vaut $\cos(2\alpha)$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $\dfrac{24}{25}$
+\item $-\dfrac{24}{25}$
+\item $\dfrac{7}{25}$
+\item $-\dfrac{7}{25}$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+$\cos(2\alpha)=2\cos^2\alpha-1=2\cdot\dfrac{9}{25}-1=\dfrac{18}{25}-\dfrac{25}{25}=-\dfrac{7}{25}$. (De façon équivalente, $\sin^2\alpha=1-\dfrac{9}{25}=\dfrac{16}{25}$ et $\cos(2\alpha)=\cos^2\alpha-\sin^2\alpha=\dfrac{9}{25}-\dfrac{16}{25}=-\dfrac{7}{25}$.)\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\dfrac{24}{25}$ --- on a calculé $\sin(2\alpha)=2\sin\alpha\cos\alpha$ au lieu de $\cos(2\alpha)$.
+\item B: $-\dfrac{24}{25}$ --- $\sin(2\alpha)$ avec en plus une erreur de signe.
+\item C: $\dfrac{7}{25}$ --- signe inversé : on a écrit $\sin^2\alpha-\cos^2\alpha$ au lieu de $\cos^2\alpha-\sin^2\alpha$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q05 --- Trigonométrie du triangle rectangle (SOH-CAH-TOA)}\par
+Un triangle $ABC$ est rectangle en $B$. Son hypoténuse mesure $AC=\qty{8}{\centi\metre}$ et l'angle $\widehat{A}=\ang{30}$. Quelle est l'aire du triangle ?
+\begin{enumerate}[label=\Alph*)]
+\item $8\sqrt{3}$~\si{\centi\metre\squared}
+\item $16\sqrt{3}$~\si{\centi\metre\squared}
+\item $16$~\si{\centi\metre\squared}
+\item $8$~\si{\centi\metre\squared}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Les cathètes se déduisent de l'hypoténuse : $BC=AC\sin\widehat{A}=8\sin 30^\circ=8\cdot\dfrac12=4$ et $AB=AC\cos\widehat{A}=8\cos 30^\circ=8\cdot\dfrac{\sqrt3}{2}=4\sqrt3$. L'aire vaut $\dfrac12\,AB\cdot BC=\dfrac12\cdot4\sqrt3\cdot4=8\sqrt3$~\si{\centi\metre\squared}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: $16\sqrt3$ --- facteur $\dfrac12$ oublié (produit des deux cathètes $AB\cdot BC$ sans le diviser par $2$).
+\item C: $16$ --- on a pris l'hypoténuse pour une cathète ($\dfrac12\,AC\cdot BC$ au lieu de $\dfrac12\,AB\cdot BC$).
+\item D: $8$ --- on a utilisé $\sin 30^\circ$ pour les deux côtés (deux cathètes égales à $4$), d'où $\dfrac12\cdot4\cdot4$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q06 --- Équation trigonométrique avec contrainte de quadrant}\par
+$x$ est un angle du \emph{troisième} quadrant vérifiant $2\cos x+\sqrt{2}=0$. Que vaut $x$ (en radians) ?
+\begin{enumerate}[label=\Alph*)]
+\item $\dfrac{3\pi}{4}$
+\item $\dfrac{7\pi}{6}$
+\item $\dfrac{5\pi}{4}$
+\item $\dfrac{4\pi}{3}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+$2\cos x+\sqrt2=0\iff\cos x=-\dfrac{\sqrt2}{2}$. La valeur $\dfrac{\sqrt2}{2}$ a pour angle de référence $\dfrac{\pi}{4}$, d'où les solutions $x=\dfrac{3\pi}{4}$ (deuxième quadrant) et $x=\dfrac{5\pi}{4}$ (troisième quadrant). Comme $x$ est au troisième quadrant, $x=\dfrac{5\pi}{4}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $\dfrac{3\pi}{4}$ --- bonne valeur de cosinus mais mauvais quadrant (solution du deuxième quadrant).
+\item B: $\dfrac{7\pi}{6}$ --- mauvais angle de référence : on a lu $-\dfrac{\sqrt2}{2}$ comme $-\dfrac{\sqrt3}{2}$ (référence $\dfrac{\pi}{6}$).
+\item D: $\dfrac{4\pi}{3}$ --- mauvais angle de référence : on a lu la valeur comme $-\dfrac12$ (référence $\dfrac{\pi}{3}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q07 --- Cercle trigonométrique : signes et comparaison selon le quadrant}\par
+Un angle $\alpha$ vérifie $\dfrac{3\pi}{2}<\alpha<\dfrac{7\pi}{4}$. Parmi les combinaisons suivantes, laquelle est correcte ?
+\begin{enumerate}[label=\Alph*)]
+\item $\cos\alpha<0$ et $|\sin\alpha|<|\cos\alpha|$
+\item $\cos\alpha<0$ et $|\sin\alpha|>|\cos\alpha|$
+\item $\sin\alpha<0$ et $|\sin\alpha|<|\cos\alpha|$
+\item $\sin\alpha<0$ et $|\sin\alpha|>|\cos\alpha|$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+L'intervalle $\left]\dfrac{3\pi}{2}\,;\,\dfrac{7\pi}{4}\right[$ est dans le quatrième quadrant (entre \ang{270} et \ang{315}), où le cosinus est \emph{positif} et le sinus \emph{négatif}. L'angle étant plus proche de $\dfrac{3\pi}{2}$ (où $\sin=-1$, $\cos=0$) que de la bissectrice $\dfrac{7\pi}{4}$ (où $|\sin|=|\cos|$), on a $|\sin\alpha|>|\cos\alpha|$. Seule la proposition D réunit les deux conditions.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: « $\cos\alpha<0$ » est faux au quatrième quadrant (le cosinus y est positif).
+\item B: même erreur de signe sur le cosinus (positif au quatrième quadrant), même si la comparaison des modules est exacte.
+\item C: bon signe du sinus, mais mauvaise comparaison : près de $\dfrac{3\pi}{2}$, c'est $|\sin\alpha|$ qui domine.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q08 --- Loi des cosinus (Al-Kashi) : calcul d'un côté}\par
+Dans un triangle $ABC$, $AB=\qty{4}{\centi\metre}$, $AC=\qty{6}{\centi\metre}$ et l'angle $\widehat{A}=\ang{60}$. Quelle est la longueur $BC$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $2\sqrt{13}$~\si{\centi\metre}
+\item $2\sqrt{19}$~\si{\centi\metre}
+\item $2\sqrt{10}$~\si{\centi\metre}
+\item $2\sqrt{7}$~\si{\centi\metre}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Loi des cosinus : $BC^2=AB^2+AC^2-2\cdot AB\cdot AC\cdot\cos\widehat{A}=16+36-2\cdot4\cdot6\cdot\cos 60^\circ=52-48\cdot\dfrac12=52-24=28$. Donc $BC=\sqrt{28}=2\sqrt{7}$~\si{\centi\metre}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $2\sqrt{13}$ --- on a oublié le terme $-2\cdot AB\cdot AC\cdot\cos\widehat{A}$ (simple Pythagore, $\sqrt{52}$).
+\item B: $2\sqrt{19}$ --- erreur de signe : on a additionné le terme au lieu de le soustraire ($\sqrt{76}$).
+\item C: $2\sqrt{10}$ --- on a oublié le facteur $2$ devant $AB\cdot AC$ ($\sqrt{40}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q09 --- Loi des cosinus : calcul d'un angle}\par
+Un triangle $ABC$ a pour côtés $a=7$, $b=5$ et $c=8$ ($a$, $b$, $c$ opposés respectivement à $\widehat{A}$, $\widehat{B}$, $\widehat{C}$). Que vaut l'angle $\widehat{A}$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $\ang{60}$
+\item $\ang{120}$
+\item $\ang{90}$
+\item $\ang{30}$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Loi des cosinus réarrangée : $\cos\widehat{A}=\dfrac{b^2+c^2-a^2}{2bc}=\dfrac{25+64-49}{2\cdot5\cdot8}=\dfrac{40}{80}=\dfrac12$. Or $\cos\widehat{A}=\dfrac12$ correspond à $\widehat{A}=\ang{60}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: \ang{120} --- erreur de signe/ordre dans la formule (numérateur $a^2-b^2-c^2$, d'où $\cos\widehat{A}=-\dfrac12$).
+\item C: \ang{90} --- on a supposé un triangle rectangle en $A$ ($\cos\widehat{A}=0$) sans le vérifier.
+\item D: \ang{30} --- confusion : $\dfrac12$ est le \emph{sinus} de \ang{30}, pas son cosinus ($\cos\ang{30}=\dfrac{\sqrt3}{2}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{MATH-F03-Q10 --- Aire par le sinus (parallélogramme)}\par
+$ABCD$ est un parallélogramme tel que $AB=\qty{8}{\centi\metre}$, $AD=\qty{5}{\centi\metre}$ et l'angle en $A$ mesure \ang{30}. Quelle est son aire ?
+\begin{enumerate}[label=\Alph*)]
+\item $10$~\si{\centi\metre\squared}
+\item $20$~\si{\centi\metre\squared}
+\item $20\sqrt{3}$~\si{\centi\metre\squared}
+\item $40$~\si{\centi\metre\squared}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+L'aire d'un parallélogramme de côtés $a$ et $b$ formant un angle $\theta$ vaut $a\,b\,\sin\theta$ (\emph{sans} le facteur $\dfrac12$, contrairement au triangle). Ici : $8\cdot5\cdot\sin 30^\circ=40\cdot\dfrac12=20$~\si{\centi\metre\squared}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: $10$ --- on a appliqué à tort le facteur $\dfrac12$ de l'aire du triangle au parallélogramme.
+\item C: $20\sqrt3$ --- on a utilisé $\sin 30^\circ=\dfrac{\sqrt3}{2}$ au lieu de $\dfrac12$.
+\item D: $40$ --- on a ignoré le sinus de l'angle (aire d'un rectangle $AB\cdot AD$, cas $\theta=\ang{90}$).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\end{document}

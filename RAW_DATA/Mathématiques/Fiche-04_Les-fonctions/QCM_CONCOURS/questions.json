@@ -1,0 +1,212 @@
+[
+  {
+    "id": "MATH-F04-Q01",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Domaine de définition (logarithme d'un trinôme)",
+    "difficulte": "concours",
+    "enonce": "On considère la fonction $f$ définie par $f(x)=\\ln(x^2-2x-3)$. Quel est son domaine de définition $D_f$ ?",
+    "options": [
+      "$]-\\infty, -1[\\cup]3, +\\infty[$",
+      "$]-1, 3[$",
+      "$]-\\infty, -1]\\cup[3, +\\infty[$",
+      "$\\R\\setminus\\{-1\\,;3\\}$"
+    ],
+    "reponse_index": 0,
+    "explication": "L'argument du logarithme doit être strictement positif : $x^2-2x-3>0$, soit $(x-3)(x+1)>0$. Le trinôme (de coefficient dominant positif) est positif à l'\\emph{extérieur} de ses racines $-1$ et $3$. D'où $D_f=]-\\infty, -1[\\cup]3, +\\infty[$ (bornes ouvertes, argument $>0$).",
+    "pieges": [
+      "B: inégalité inversée ($x^2-2x-3<0$) $\\Rightarrow$ intervalle \\emph{entre} les racines.",
+      "C: bornes fermées ; l'argument du logarithme a été pris $\\geq 0$ au lieu de $>0$.",
+      "D: condition $x^2-2x-3\\neq 0$ appliquée (le logarithme traité comme un simple dénominateur)."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q02",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Domaine de définition (arc sinus composé)",
+    "difficulte": "concours",
+    "enonce": "On considère la fonction $f$ définie par $f(x)=\\arcsin\\!\\left(\\dfrac{x-1}{2}\\right)$. Quel est son domaine de définition $D_f$ ?",
+    "options": [
+      "$[-1, 1]$",
+      "$[-3, 1]$",
+      "$[-1, 3]$",
+      "$]-1, 3[$"
+    ],
+    "reponse_index": 2,
+    "explication": "La fonction $\\arcsin$ n'est définie que sur $[-1, 1]$. Il faut donc $-1\\leq\\dfrac{x-1}{2}\\leq 1$, soit (en multipliant par $2$) $-2\\leq x-1\\leq 2$, puis (en ajoutant $1$) $-1\\leq x\\leq 3$. D'où $D_f=[-1, 3]$ (bornes fermées, car $\\arcsin$ existe en $\\pm 1$).",
+    "pieges": [
+      "A: on a écrit directement l'ensemble $[-1, 1]$ (domaine de $\\arcsin$) sans résoudre pour $x$.",
+      "B: erreur de signe : de $-2\\leq x-1\\leq 2$ on a \\emph{soustrait} $1$ au lieu d'en ajouter, donnant $[-3, 1]$.",
+      "D: bornes ouvertes ; or $\\arcsin$ est définie en $\\pm 1$, les crochets sont fermés."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q03",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Droites perpendiculaires et intersection avec un axe",
+    "difficulte": "concours",
+    "enonce": "La droite $d_1$ a pour équation $y=2x+1$. La droite $d_2$, perpendiculaire à $d_1$, coupe $d_1$ au point d'abscisse $3$. Quelle est l'ordonnée à l'origine de $d_2$ (son point d'intersection avec l'axe $Oy$) ?",
+    "options": [
+      "$1$",
+      "$\\dfrac{17}{2}$",
+      "$13$",
+      "$\\dfrac{11}{2}$"
+    ],
+    "reponse_index": 1,
+    "explication": "Le point commun aux deux droites est sur $d_1$ à l'abscisse $3$ : $P(3\\,;7)$ car $y=2\\cdot 3+1=7$. La pente de $d_2$ est l'opposé de l'inverse de $2$, soit $-\\dfrac{1}{2}$. Par $P$ : $7=-\\dfrac{1}{2}\\cdot 3+b\\Rightarrow b=7+\\dfrac{3}{2}=\\dfrac{17}{2}$. L'intersection avec $Oy$ est $\\left(0\\,;\\dfrac{17}{2}\\right)$.",
+    "pieges": [
+      "A: pente de $d_1$ ($2$) conservée (aucune perpendiculaire) : on retombe sur l'ordonnée à l'origine de $d_1$, soit $1$.",
+      "C: pente prise égale à $-2$ (opposé de la pente, mais pas de l'inverse) : $b=7+6=13$.",
+      "D: pente prise égale à $+\\dfrac{1}{2}$ (inverse sans changer le signe) : $b=7-\\dfrac{3}{2}=\\dfrac{11}{2}$."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q04",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Droites parallèles et intersection avec un axe",
+    "difficulte": "concours",
+    "enonce": "Dans un repère orthonormé, la droite $d$ passe par le point $P(2\\,;6)$ et est parallèle à la droite passant par les points $A(0\\,;8)$ et $B(4\\,;0)$. Quelle est l'abscisse du point d'intersection de $d$ avec l'axe des abscisses $Ox$ ?",
+    "options": [
+      "$5$",
+      "$-1$",
+      "$1$",
+      "$10$"
+    ],
+    "reponse_index": 0,
+    "explication": "La pente de $(AB)$ vaut $\\dfrac{0-8}{4-0}=-2$ ; $d$ étant parallèle, elle a la même pente : $y=-2x+b$. Par $P(2\\,;6)$ : $6=-2\\cdot 2+b\\Rightarrow b=10$, donc $d:\\ y=-2x+10$. Sur $Ox$, $y=0$ : $0=-2x+10\\Rightarrow x=5$.",
+    "pieges": [
+      "B: pente prise $+2$ au lieu de $-2$ (erreur de signe) : $y=2x+2$, d'où $x=-1$.",
+      "C: ordonnée à l'origine mal résolue ($6-4=2$ au lieu de $6+4=10$) : $y=-2x+2$, d'où $x=1$.",
+      "D: on a donné l'ordonnée à l'origine $b=10$ au lieu de l'abscisse sur $Ox$ (intersection avec le mauvais axe)."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q05",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Distance d'un point à une droite",
+    "difficulte": "concours",
+    "enonce": "Dans un repère orthonormé, quelle est la distance du point $P(3\\,;-2)$ à la droite $d$ d'équation $4x-3y+1=0$ ?",
+    "options": [
+      "$\\dfrac{19}{25}$",
+      "$\\dfrac{7}{5}$",
+      "$\\dfrac{18}{5}$",
+      "$\\dfrac{19}{5}$"
+    ],
+    "reponse_index": 3,
+    "explication": "On applique $\\operatorname{dist}(P,d)=\\dfrac{|a x_P+b y_P+c|}{\\sqrt{a^2+b^2}}$ avec $a=4,\\ b=-3,\\ c=1$ : le numérateur vaut $|4\\cdot 3-3\\cdot(-2)+1|=|12+6+1|=19$ et le dénominateur $\\sqrt{4^2+3^2}=\\sqrt{25}=5$. D'où $\\operatorname{dist}(P,d)=\\dfrac{19}{5}$.",
+    "pieges": [
+      "A: dénominateur pris égal à $a^2+b^2=25$ au lieu de $\\sqrt{a^2+b^2}=5$.",
+      "B: erreur de signe sur $y_P$ ($+2$ au lieu de $-2$) : $|12-6+1|=7$, d'où $\\dfrac{7}{5}$.",
+      "C: terme constant $c=+1$ oublié : $|12+6|=18$, d'où $\\dfrac{18}{5}$."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q06",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Discriminant paramétrique",
+    "difficulte": "concours",
+    "enonce": "Pour quelles valeurs du réel $m$ l'équation $(m-2)x^2+2x+1=0$ admet-elle \\textbf{deux racines réelles distinctes} ?",
+    "options": [
+      "$]-\\infty, 3[$",
+      "$]-\\infty, 2[\\cup]2, 3[$",
+      "$]3, +\\infty[$",
+      "$]-\\infty, 3]$"
+    ],
+    "reponse_index": 1,
+    "explication": "Il faut d'abord que l'équation soit du \\emph{second} degré : $m-2\\neq 0$, soit $m\\neq 2$ (sinon elle devient $2x+1=0$, une seule racine). Ensuite $\\Delta=2^2-4(m-2)(1)=12-4m>0\\Leftrightarrow m<3$. La conjonction donne $m\\in]-\\infty, 2[\\cup]2, 3[$.",
+    "pieges": [
+      "A: condition $m\\neq 2$ oubliée ; on garde tout $m<3$ (mais en $m=2$ l'équation n'est plus du second degré).",
+      "C: inégalité inversée : $12-4m>0$ résolu en $m>3$ (division par $-4$ sans changer le sens).",
+      "D: $\\Delta\\geq 0$ utilisé (la racine double $m=3$ incluse à tort) et $m\\neq 2$ oublié."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q07",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Sommet d'une parabole",
+    "difficulte": "concours",
+    "enonce": "Quelles sont les coordonnées du sommet de la parabole d'équation $f(x)=-2x^2+8x-3$ ?",
+    "options": [
+      "$(-2\\,;5)$",
+      "$(4\\,;-3)$",
+      "$(2\\,;5)$",
+      "$(2\\,;-5)$"
+    ],
+    "reponse_index": 2,
+    "explication": "Avec $a=-2,\\ b=8,\\ c=-3$ : l'abscisse du sommet est $-\\dfrac{b}{2a}=-\\dfrac{8}{-4}=2$. Le discriminant vaut $\\Delta=b^2-4ac=64-4(-2)(-3)=64-24=40$, donc l'ordonnée est $-\\dfrac{\\Delta}{4a}=-\\dfrac{40}{-8}=5$. Le sommet est $(2\\,;5)$ (un maximum, car $a<0$).",
+    "pieges": [
+      "A: erreur de signe sur l'abscisse ($-\\tfrac{b}{2a}$ calculé $-\\tfrac{8}{4}=-2$ en oubliant le signe de $a$).",
+      "B: le « $2$ » du dénominateur oublié ($-\\tfrac{b}{a}=4$), puis ordonnée $f(4)=-3$.",
+      "D: ordonnée calculée avec $+\\tfrac{\\Delta}{4a}=-5$ au lieu de $-\\tfrac{\\Delta}{4a}=5$."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q08",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Signe du trinôme et position de la parabole",
+    "difficulte": "concours",
+    "enonce": "Que peut-on dire de la parabole d'équation $y=x^2-4x+5$ vis-à-vis de l'axe des abscisses ?",
+    "options": [
+      "Elle coupe l'axe des abscisses en deux points distincts.",
+      "Elle ne coupe pas l'axe des abscisses et reste entièrement au-dessus.",
+      "Elle est tangente à l'axe des abscisses en un point.",
+      "Elle ne coupe pas l'axe des abscisses et reste entièrement en dessous."
+    ],
+    "reponse_index": 1,
+    "explication": "Le discriminant vaut $\\Delta=b^2-4ac=(-4)^2-4\\cdot 1\\cdot 5=16-20=-4<0$ : aucune racine réelle, la parabole ne coupe pas l'axe des $x$. Comme $a=1>0$, elle est ouverte vers le haut et reste entièrement au-dessus de l'axe (son minimum vaut $-\\tfrac{\\Delta}{4a}=1>0$).",
+    "pieges": [
+      "A: erreur de signe sur $\\Delta$ ($16-20$ pris positif, ou $\\Delta=b^2+4ac$) conduisant à deux racines.",
+      "C: $\\Delta$ trouvé nul (par ex. $16-16$ en prenant $c=4$) $\\Rightarrow$ tangence.",
+      "D: on a oublié que $a>0$ impose une parabole au-dessus de l'axe (position en dessous supposée à tort)."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q09",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Propriétés du logarithme",
+    "difficulte": "concours",
+    "enonce": "Pour tout réel $x$, l'expression $f(x)=\\ln\\!\\left(e^{2x}+2e^{x}+1\\right)$ est égale à :",
+    "options": [
+      "$\\big(\\ln(e^{x}+1)\\big)^2$",
+      "$\\ln(e^{x}+1)$",
+      "$3x+\\ln 2$",
+      "$2\\ln(e^{x}+1)$"
+    ],
+    "reponse_index": 3,
+    "explication": "On reconnaît un carré parfait : $e^{2x}+2e^{x}+1=(e^{x}+1)^2$. Donc $f(x)=\\ln\\!\\big((e^{x}+1)^2\\big)=2\\ln(e^{x}+1)$ (l'argument $e^{x}+1$ est strictement positif).",
+    "pieges": [
+      "A: $\\ln(A^2)$ transformé en $(\\ln A)^2$ (le carré sorti hors du logarithme).",
+      "B: exposant $2$ oublié : $\\ln(A^2)=\\ln A$ au lieu de $2\\ln A$.",
+      "C: règle du produit confondue avec $\\ln(a+b+c)=\\ln a+\\ln b+\\ln c$ : $\\ln e^{2x}+\\ln(2e^{x})+\\ln 1=2x+(x+\\ln 2)+0=3x+\\ln 2$."
+    ]
+  },
+  {
+    "id": "MATH-F04-Q10",
+    "matiere": "Mathématiques",
+    "fiche": "04",
+    "theme": "Formule de duplication",
+    "difficulte": "concours",
+    "enonce": "On suppose que $x$ est un angle du premier quadrant vérifiant $\\sin x=\\dfrac{3}{5}$. Quelle est la valeur de $\\sin(2x)$ ?",
+    "options": [
+      "$\\dfrac{24}{25}$",
+      "$\\dfrac{12}{25}$",
+      "$\\dfrac{6}{5}$",
+      "$\\dfrac{7}{25}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Dans le premier quadrant $\\cos x>0$, donc $\\cos x=\\sqrt{1-\\sin^2 x}=\\sqrt{1-\\tfrac{9}{25}}=\\dfrac{4}{5}$. La formule de duplication donne $\\sin(2x)=2\\sin x\\cos x=2\\cdot\\dfrac{3}{5}\\cdot\\dfrac{4}{5}=\\dfrac{24}{25}$.",
+    "pieges": [
+      "B: facteur $2$ oublié : $\\sin x\\cos x=\\dfrac{12}{25}$.",
+      "C: formule tronquée en $\\sin(2x)=2\\sin x=\\dfrac{6}{5}$ (facteur $\\cos x$ oublié).",
+      "D: on a calculé $\\cos(2x)=1-2\\sin^2 x=\\dfrac{7}{25}$ au lieu de $\\sin(2x)$."
+    ]
+  }
+]

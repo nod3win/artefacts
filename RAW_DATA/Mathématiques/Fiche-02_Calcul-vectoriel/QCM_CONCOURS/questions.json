@@ -1,0 +1,212 @@
+[
+  {
+    "id": "MATH-F02-Q01",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Composantes et norme d'un vecteur",
+    "difficulte": "concours",
+    "enonce": "Dans un repère orthonormé gradué en centimètres, on donne $A\\,(-1\\,;4)$ et $B\\,(4\\,;-8)$. On pose $\\vv{w}=-2\\,\\vv{BA}$. Que vaut la norme de $\\vv{w}$\\,?",
+    "options": [
+      "$\\qty{13}{\\centi\\metre}$",
+      "$\\qty{26}{\\centi\\metre}$",
+      "$\\qty{34}{\\centi\\metre}$",
+      "$\\qty{52}{\\centi\\metre}$"
+    ],
+    "reponse_index": 1,
+    "explication": "On a $\\vv{BA}=A-B=(-1-4\\,;\\,4-(-8))=(-5\\,;12)$, donc $\\|\\vv{BA}\\|=\\sqrt{(-5)^2+12^2}=\\sqrt{25+144}=13$. Comme $\\|k\\,\\vv{BA}\\|=|k|\\,\\|\\vv{BA}\\|$, il vient $\\|\\vv{w}\\|=|-2|\\times 13=\\qty{26}{\\centi\\metre}$.",
+    "pieges": [
+      "A : a ignoré le coefficient $-2$, prenant $\\|-2\\,\\vv{BA}\\|=\\|\\vv{BA}\\|=13$ (oubli du facteur $|k|$).",
+      "C : a calculé la norme comme $|-5|+|12|=17$ (distance de Manhattan au lieu de Pythagore), puis $\\times 2=34$.",
+      "D : a multiplié la norme par $k^2=4$ au lieu de $|k|=2$, d'où $4\\times 13=52$."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q02",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Égalité vectorielle et produit par un réel",
+    "difficulte": "concours",
+    "enonce": "Dans un repère orthonormé, on considère les points $A\\,(2\\,;1)$, $B\\,(x\\,;5)$ et $C\\,(14\\,;y)$ tels que $3\\,\\vv{AB}=\\vv{BC}$. Que vaut le couple $(x\\,;y)$\\,?",
+    "options": [
+      "$(4\\,;17)$",
+      "$(-4\\,;-7)$",
+      "$(5\\,;17)$",
+      "$(8\\,;9)$"
+    ],
+    "reponse_index": 2,
+    "explication": "On a $\\vv{AB}=(x-2\\,;4)$ et $\\vv{BC}=(14-x\\,;y-5)$. L'égalité $3\\,\\vv{AB}=\\vv{BC}$ donne, composante par composante, $3(x-2)=14-x$ soit $3x-6=14-x$, d'où $4x=20$ et $x=5$ ; puis $3\\times 4=y-5$ soit $y=17$. Donc $(x\\,;y)=(5\\,;17)$.",
+    "pieges": [
+      "A : a mal distribué le facteur $3$, écrivant $3x-2=14-x$ au lieu de $3x-6=14-x$, d'où $x=4$ (le $y=17$ restant juste).",
+      "B : a remplacé $\\vv{BC}$ par $\\vv{CB}$ (sens inversé) : $3(x-2)=x-14$ donne $x=-4$, et $12=5-y$ donne $y=-7$.",
+      "D : a oublié le facteur $3$ (a résolu $\\vv{AB}=\\vv{BC}$) : $x-2=14-x$ donne $x=8$, et $4=y-5$ donne $y=9$."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q03",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Règle du parallélogramme (quatrième sommet)",
+    "difficulte": "concours",
+    "enonce": "Dans un repère orthonormé, $ABCD$ est un parallélogramme dont les sommets sont nommés dans cet ordre, avec $A\\,(1\\,;2)$, $B\\,(5\\,;3)$ et $C\\,(6\\,;7)$. Quelles sont les coordonnées de $D$\\,?",
+    "options": [
+      "$(2\\,;6)$",
+      "$(0\\,;-2)$",
+      "$(2\\,;-2)$",
+      "$(10\\,;8)$"
+    ],
+    "reponse_index": 0,
+    "explication": "Dans le parallélogramme $ABCD$, $\\vv{AB}=\\vv{DC}$, c'est-à-dire $B-A=C-D$, d'où $D=A-B+C=(1-5+6\\,;\\,2-3+7)=(2\\,;6)$. Contrôle : $\\vv{AB}=(4\\,;1)$ et $\\vv{DC}=C-D=(4\\,;1)$.",
+    "pieges": [
+      "B : a posé $\\vv{AD}=\\vv{CB}$ au lieu de $\\vv{AD}=\\vv{BC}$, d'où $D=A+B-C=(0\\,;-2)$.",
+      "C : abscisse correcte ($1-5+6=2$) mais faute de signe sur l'ordonnée en prenant $2+3-7=-2$.",
+      "D : a posé $\\vv{AB}=\\vv{CD}$ au lieu de $\\vv{AB}=\\vv{DC}$, d'où $D=B+C-A=(10\\,;8)$."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q04",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Produit scalaire (lecture sur une figure)",
+    "difficulte": "concours",
+    "enonce": "$ABCD$ est un carré de côté $3$, ses sommets étant nommés dans l'ordre direct (voir la figure). Que vaut le produit scalaire $\\vv{AB}\\cdot\\vv{CA}$\\,?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.9,>=Stealth]\n  \\coordinate (A) at (0,0); \\coordinate (B) at (3,0);\n  \\coordinate (C) at (3,3); \\coordinate (D) at (0,3);\n  \\draw[thick] (A)--(B)--(C)--(D)--cycle;\n  \\draw[->,very thick,blue] (A)--(B);\n  \\draw[->,very thick,red]  (C)--(A);\n  \\node[below left]  at (A) {$A$};\n  \\node[below right] at (B) {$B$};\n  \\node[above right] at (C) {$C$};\n  \\node[above left]  at (D) {$D$};\n  \\node[below] at (1.5,-0.05) {$3$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$-18$",
+      "$0$",
+      "$-9$",
+      "$9$"
+    ],
+    "reponse_index": 2,
+    "explication": "En prenant $A\\,(0;0)$, $B\\,(3;0)$, $C\\,(3;3)$, on a $\\vv{AB}=(3\\,;0)$ et $\\vv{CA}=A-C=(-3\\,;-3)$, donc $\\vv{AB}\\cdot\\vv{CA}=3\\times(-3)+0\\times(-3)=-9$. (De façon intrinsèque : $\\vv{AB}\\cdot\\vv{CA}=-\\,\\vv{AB}\\cdot\\vv{AC}=-\\|\\vv{AB}\\|\\,\\|\\vv{AC}\\|\\cos 45^\\circ=-3\\times 3\\sqrt2\\times\\tfrac{\\sqrt2}{2}=-9$.)",
+    "pieges": [
+      "A : a pris pour $\\vv{AB}$ la diagonale $\\vv{AC}=(3\\,;3)$ (mauvaise lecture du carré) : $(3;3)\\cdot(-3;-3)=-18$.",
+      "B : a confondu $\\vv{CA}$ avec un côté orthogonal à $\\vv{AB}$, calculant $\\vv{AB}\\cdot\\vv{AD}=0$.",
+      "D : a inversé le vecteur, calculant $\\vv{AB}\\cdot\\vv{AC}$ au lieu de $\\vv{AB}\\cdot\\vv{CA}$ : $(3;0)\\cdot(3;3)=9$."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q05",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Angle entre deux vecteurs (cosinus)",
+    "difficulte": "concours",
+    "enonce": "Dans un repère orthonormé, on donne $A\\,(5\\,;4)$, $B\\,(2\\,;3)$ et $C\\,(3\\,;6)$. Que vaut le cosinus de l'angle $\\widehat{ABC}$\\,?",
+    "options": [
+      "$-\\dfrac{3}{5}$",
+      "$\\dfrac{3}{5}$",
+      "$\\dfrac{4}{5}$",
+      "$0$"
+    ],
+    "reponse_index": 1,
+    "explication": "L'angle $\\widehat{ABC}$ est l'angle entre $\\vv{BA}$ et $\\vv{BC}$. On a $\\vv{BA}=A-B=(3\\,;1)$ et $\\vv{BC}=C-B=(1\\,;3)$, donc $\\vv{BA}\\cdot\\vv{BC}=3\\times 1+1\\times 3=6$, avec $\\|\\vv{BA}\\|=\\|\\vv{BC}\\|=\\sqrt{10}$. Ainsi $\\cos\\widehat{ABC}=\\dfrac{6}{\\sqrt{10}\\times\\sqrt{10}}=\\dfrac{6}{10}=\\dfrac{3}{5}$.",
+    "pieges": [
+      "A : a utilisé $\\vv{AB}$ au lieu de $\\vv{BA}$ (mauvaise orientation au sommet $B$), obtenant $\\cos=-\\dfrac{6}{10}=-\\dfrac{3}{5}$.",
+      "C : a confondu le cosinus et le sinus de l'angle ($\\sin\\widehat{ABC}=\\dfrac{4}{5}$).",
+      "D : a perdu un terme du produit scalaire ($3\\times 1-1\\times 3=0$) et conclu à tort à la perpendicularité."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q06",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Identités remarquables vectorielles",
+    "difficulte": "concours",
+    "enonce": "Soient deux vecteurs $\\vv{u}$ et $\\vv{v}$ tels que $\\|\\vv{u}\\|=4$, $\\|\\vv{v}\\|=7$ et $\\vv{u}\\cdot\\vv{v}=-10$. Que vaut $\\|\\vv{u}+\\vv{v}\\|^2$\\,?",
+    "options": [
+      "$45$",
+      "$55$",
+      "$65$",
+      "$85$"
+    ],
+    "reponse_index": 0,
+    "explication": "L'identité remarquable vectorielle donne $\\|\\vv{u}+\\vv{v}\\|^2=\\|\\vv{u}\\|^2+\\|\\vv{v}\\|^2+2\\,\\vv{u}\\cdot\\vv{v}=16+49+2\\times(-10)=65-20=45$.",
+    "pieges": [
+      "B : a oublié le facteur $2$ du double produit ($16+49-10=55$).",
+      "C : a omis le double produit $2\\,\\vv{u}\\cdot\\vv{v}$ ($16+49=65$).",
+      "D : faute de signe sur le double produit (a compté $+20$ au lieu de $-20$) : $65+20=85$."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q07",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Orthogonalité (construction d'un vecteur)",
+    "difficulte": "concours",
+    "enonce": "On donne le vecteur $\\vv{u}\\,(-3\\,;2)$. Un vecteur $\\vv{v}$ est orthogonal à $\\vv{u}$, de même norme que $\\vv{u}$, et sa première composante est négative. Quelles sont les composantes de $\\vv{v}$\\,?",
+    "options": [
+      "$(3\\,;2)$",
+      "$(-2\\,;3)$",
+      "$(2\\,;3)$",
+      "$(-2\\,;-3)$"
+    ],
+    "reponse_index": 3,
+    "explication": "Les vecteurs orthogonaux à $\\vv{u}\\,(-3\\,;2)$ et de même norme $\\sqrt{13}$ s'obtiennent en échangeant les composantes et en changeant un signe : ce sont $(2\\,;3)$ et $(-2\\,;-3)$. La condition « première composante négative » sélectionne $\\vv{v}=(-2\\,;-3)$. Vérification : $\\vv{u}\\cdot\\vv{v}=(-3)(-2)+2(-3)=6-6=0$ et $\\|\\vv{v}\\|=\\sqrt{4+9}=\\sqrt{13}=\\|\\vv{u}\\|$.",
+    "pieges": [
+      "A : a « permuté les composantes » pour rendre le vecteur orthogonal, en oubliant de changer un signe : $\\vv{u}\\cdot(3;2)=-5\\neq 0$, $(3;2)$ n'est pas orthogonal.",
+      "B : est parti de $(2;3)$ puis n'a inversé que le signe de $x$ pour obtenir $x<0$, sans inverser aussi $y$ : $\\vv{u}\\cdot(-2;3)=12\\neq 0$.",
+      "C : a trouvé un vecteur orthogonal de même norme mais a ignoré la condition « première composante négative » ($x=2>0$)."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q08",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Relation de Chasles (combinaison linéaire)",
+    "difficulte": "concours",
+    "enonce": "$ABCD$ est un parallélogramme. $M$ est le milieu de $[AB]$ et $N$ est le milieu de $[AD]$ (voir la figure). Exprimé à l'aide de $\\vv{AB}$ et $\\vv{AD}$, le vecteur $2\\,\\vv{MN}$ est égal à\\,:\n\\begin{center}\n\\begin{tikzpicture}[scale=0.9,>=Stealth]\n  \\coordinate (A) at (0,0); \\coordinate (B) at (4,0);\n  \\coordinate (C) at (5,2); \\coordinate (D) at (1,2);\n  \\coordinate (M) at (2,0); \\coordinate (N) at (0.5,1);\n  \\draw[thick] (A)--(B)--(C)--(D)--cycle;\n  \\draw[->,very thick,red] (M)--(N);\n  \\filldraw (M) circle (1.4pt); \\filldraw (N) circle (1.4pt);\n  \\node[below left]  at (A) {$A$};\n  \\node[below right] at (B) {$B$};\n  \\node[above right] at (C) {$C$};\n  \\node[above left]  at (D) {$D$};\n  \\node[below] at (M) {$M$};\n  \\node[left]  at (N) {$N$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\vv{AB}+\\vv{AD}$",
+      "$\\vv{AB}-\\vv{AD}$",
+      "$-\\vv{AB}+\\vv{AD}$",
+      "$-\\vv{AB}-\\vv{AD}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Par la relation de Chasles, $\\vv{MN}=\\vv{AN}-\\vv{AM}=\\tfrac12\\vv{AD}-\\tfrac12\\vv{AB}$, car $M$ et $N$ sont les milieux de $[AB]$ et $[AD]$. En multipliant par $2$ : $2\\,\\vv{MN}=\\vv{AD}-\\vv{AB}=-\\vv{AB}+\\vv{AD}$.",
+    "pieges": [
+      "A : a écrit $\\vv{MN}=\\vv{AM}+\\vv{AN}$ (addition au lieu de la différence $\\vv{AN}-\\vv{AM}$).",
+      "B : a calculé $\\vv{MN}$ dans le mauvais sens, $\\vv{AM}-\\vv{AN}$, d'où $\\vv{AB}-\\vv{AD}$.",
+      "D : cumul des deux fautes (sens inversé et addition) : $-(\\vv{AM}+\\vv{AN})$ donne $-\\vv{AB}-\\vv{AD}$."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q09",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Colinéarité (déterminant)",
+    "difficulte": "concours",
+    "enonce": "Pour quelle valeur du réel $m$ les vecteurs $\\vv{u}\\,(m\\,;\\,m+2)$ et $\\vv{v}\\,(3\\,;4)$ sont-ils colinéaires\\,?",
+    "options": [
+      "$m=-6$",
+      "$m=0$",
+      "$m=3$",
+      "$m=6$"
+    ],
+    "reponse_index": 3,
+    "explication": "Deux vecteurs sont colinéaires si et seulement si leur déterminant est nul : $\\det(\\vv{u},\\vv{v})=m\\times 4-3\\times(m+2)=4m-3m-6=m-6$. On a $m-6=0$, donc $m=6$. (On vérifie alors $\\vv{u}=(6\\,;8)=2\\,\\vv{v}$.)",
+    "pieges": [
+      "A : faute de signe dans le déterminant ($4m-3m+6=0$ au lieu de $4m-3m-6=0$), d'où $m=-6$.",
+      "B : a oublié le « $+2$ » de la seconde composante, résolvant $4m-3m=0$.",
+      "C : a cru que « colinéaires » signifie $\\vv{u}=\\vv{v}$ et a identifié la première composante, $m=3$."
+    ]
+  },
+  {
+    "id": "MATH-F02-Q10",
+    "matiere": "Mathématiques",
+    "fiche": "02",
+    "theme": "Norme d'une combinaison de vecteurs",
+    "difficulte": "concours",
+    "enonce": "On donne $\\vv{u}\\,(1\\,;2)$ et $\\vv{v}\\,(3\\,;-2)$. Que vaut $\\|\\,2\\,\\vv{u}-\\vv{v}\\,\\|$\\,?",
+    "options": [
+      "$\\sqrt{37}$",
+      "$\\sqrt{29}$",
+      "$\\sqrt{20}$",
+      "$\\sqrt{80}$"
+    ],
+    "reponse_index": 0,
+    "explication": "On calcule d'abord $2\\,\\vv{u}=(2\\,;4)$, puis $2\\,\\vv{u}-\\vv{v}=(2-3\\,;\\,4-(-2))=(-1\\,;6)$. D'où $\\|2\\,\\vv{u}-\\vv{v}\\|=\\sqrt{(-1)^2+6^2}=\\sqrt{1+36}=\\sqrt{37}$.",
+    "pieges": [
+      "B : a calculé $\\|2\\,\\vv{u}+\\vv{v}\\|$ (a additionné $\\vv{v}$ au lieu de le soustraire) : $(5\\,;2)$, norme $\\sqrt{29}$.",
+      "C : a oublié de doubler $\\vv{u}$ (a calculé $\\|\\vv{u}-\\vv{v}\\|$) : $(-2\\,;4)$, norme $\\sqrt{20}$.",
+      "D : a doublé les deux vecteurs (a calculé $\\|2\\,\\vv{u}-2\\,\\vv{v}\\|$) : $(-4\\,;8)$, norme $\\sqrt{80}$."
+    ]
+  }
+]

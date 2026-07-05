@@ -1,0 +1,189 @@
+% ===== PRÉAMBULE CANONIQUE QCM — MATHÉMATIQUES =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric,intersections,babel}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}\newcommand{\C}{\mathbb{C}}\newcommand{\ds}{\displaystyle}
+\newcommand{\vv}[1]{\vec{#1}}
+% ===================================================
+\begin{document}
+\noindent\textbf{MATH-F01-Q01 --- Logarithmes : piège $\ln^2 x$ vs $\ln x^2$}\par
+Parmi les expressions suivantes, laquelle est \'egale \`a $\ds\frac{\ln^2(3)}{4}$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $\ds\frac{\ln 3}{2}$
+\item $\ds\frac{\ln^2\sqrt3}{2}$
+\item $\ln^2\sqrt3$
+\item $\ds\frac{\ln^2 3}{2}$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Rappel : $\ln^2(3)=(\ln 3)^2$. Comme $\ln 3=2\ln\sqrt3$, on a $\ln^2(3)=(2\ln\sqrt3)^2=4\ln^2\sqrt3$, donc $\ds\frac{\ln^2(3)}{4}=\frac{4\ln^2\sqrt3}{4}=\ln^2\sqrt3$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : confond $\ln^2 3=(\ln 3)^2$ avec $\ln(3^2)=2\ln 3$, d'o\`u $\frac{2\ln 3}{4}=\frac{\ln 3}{2}$.
+\item B : \'ecrit $\ln^2 3=2\ln^2\sqrt3$ (oublie de mettre le facteur $2$ au carr\'e), d'o\`u $\frac{\ln^2\sqrt3}{2}$.
+\item D : \guillemotleft{} simplifie \guillemotright{} en divisant par $2$ au lieu de $4$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q02 --- Puissances : racines emboîtées et exposant fractionnaire}\par
+Pour $c>0$ et $n\in\N_0$, l'expression $\ds\sqrt[3]{\sqrt{c^{\,12n}}}$ est \'egale \`a :
+\begin{enumerate}[label=\Alph*)]
+\item $c^{2n}$
+\item $c^{10n}$
+\item $c^{6n}$
+\item $c^{4n}$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+On convertit les racines en exposants et on \emph{multiplie} les exposants emboîtés : $\ds\sqrt[3]{\sqrt{c^{12n}}}=\left(c^{12n}\right)^{\frac12\cdot\frac13}=c^{\,12n/6}=c^{2n}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : \emph{additionne} les indices $\frac12+\frac13=\frac56$ au lieu de les multiplier : $12n\cdot\frac56=10n$.
+\item C : n'applique que la racine carr\'ee int\'erieure : $12n\cdot\frac12=6n$.
+\item D : n'applique que la racine cubique : $12n\cdot\frac13=4n$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q03 --- Racine d'un carré : $\sqrt{A^2}=|A|$}\par
+Pour tout r\'eel $x$, l'expression $\sqrt{4x^{2}-12x+9}$ est \'egale \`a :
+\begin{enumerate}[label=\Alph*)]
+\item $2x-3$
+\item $3-2x$
+\item $|2x-3|$
+\item $2|x|-3$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Le radicande est un carr\'e parfait : $4x^{2}-12x+9=(2x-3)^{2}$. Or $\sqrt{A^{2}}=|A|$ pour tout r\'eel $A$, donc $\sqrt{(2x-3)^{2}}=|2x-3|$ (valable pour \emph{tout} $x$, alors que $2x-3$ et $3-2x$ ne conviennent que sur une moiti\'e de $\R$).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oublie la valeur absolue et \'ecrit $\sqrt{A^{2}}=A$ ; faux d\`es que $2x-3<0$.
+\item B : prend l'autre d\'etermination du signe ($3-2x$), fausse d\`es que $2x-3>0$.
+\item D : distribue la racine sur la somme ($\sqrt{4x^{2}}-\sqrt{9}=2|x|-3$), ce qui est interdit.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q04 --- Équation exponentielle : même base}\par
+L'unique solution r\'eelle de l'\'equation $\ds\frac{2^{\,3x-1}}{4^{\,x}}=8$ est :
+\begin{enumerate}[label=\Alph*)]
+\item $x=2$
+\item $x=4$
+\item $x=3$
+\item $x=9$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+On ram\`ene tout en base $2$ : $4^{x}=2^{2x}$ et $8=2^{3}$. Alors $\ds\frac{2^{3x-1}}{2^{2x}}=2^{(3x-1)-2x}=2^{\,x-1}=2^{3}$, d'o\`u $x-1=3$ et $x=4$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oublie que $4=2^2$ et traite $4^x$ comme $2^x$ : $2^{(3x-1)-x}=2^{2x-1}=2^3\Rightarrow x=2$.
+\item C : oublie le \guillemotleft{} $-1$ \guillemotright{} de l'exposant : $2^{3x-2x}=2^{x}=2^3\Rightarrow x=3$.
+\item D : ne convertit pas $8=2^3$ et pose $x-1=8\Rightarrow x=9$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q05 --- Trinôme du second degré : discriminant paramétrique}\par
+Pour quelles valeurs du r\'eel $m$ l'\'equation $(m-2)x^{2}+2x+1=0$ admet-elle \textbf{deux} racines r\'eelles \textbf{distinctes} ?
+\begin{enumerate}[label=\Alph*)]
+\item $]-\infty,\ 3[$
+\item $]-\infty,\ 2[\,\cup\,]2,\ 3]$
+\item $]3,\ +\infty[$
+\item $]-\infty,\ 2[\,\cup\,]2,\ 3[$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Il faut d'abord que l'\'equation soit vraiment du second degr\'e : $m-2\neq 0$, soit $m\neq 2$. Le discriminant vaut $\Delta=2^{2}-4(m-2)(1)=12-4m$ ; deux racines distinctes exigent $\Delta>0$, soit $m<3$. En croisant : $m<3$ et $m\neq 2$, d'o\`u $]-\infty,\ 2[\,\cup\,]2,\ 3[$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oublie la condition $m\neq 2$ (le coefficient dominant doit \^etre non nul) et donne $]-\infty,\ 3[$.
+\item B : utilise $\Delta\ge 0$ au lieu de $\Delta>0$ et inclut $m=3$, qui ne donne qu'une racine double.
+\item C : inverse le sens en r\'esolvant $\Delta>0$ : $12-4m>0$ devient $m>3$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q06 --- Racine d'un polynôme et paramètre}\par
+Le polyn\^ome $P(x)=x^{3}+ax^{2}-2x-8$ admet $2$ comme racine. Que vaut le r\'eel $a$ ?
+\begin{enumerate}[label=\Alph*)]
+\item $a=1$
+\item $a=-1$
+\item $a=2$
+\item $a=0$
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+$2$ est racine $\Leftrightarrow P(2)=0$ : $8+4a-4-8=4a-4=0$, donc $a=1$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : erreur de signe en r\'esolvant, $4a+4=0\Rightarrow a=-1$.
+\item C : calcule $a\cdot x^2$ comme $a\cdot x$ (soit $2a$ au lieu de $4a$) : $2a-4=0\Rightarrow a=2$.
+\item D : oublie le terme $-2x$ : $8+4a-8=4a=0\Rightarrow a=0$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q07 --- Inéquation quotient : tableau de signes}\par
+Dans $\R\setminus\{2\}$, l'ensemble des solutions de $\ds\frac{(x+1)(3-x)}{x-2}\ge 0$ est :
+\begin{enumerate}[label=\Alph*)]
+\item $[-1,\ 2[\,\cup\,[3,\ +\infty[$
+\item $]-\infty,\ -1]\cup[2,\ 3]$
+\item $]-\infty,\ -1[\,\cup\,]2,\ 3[$
+\item $]-\infty,\ -1]\cup\,]2,\ 3]$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Valeurs critiques : $-1$, $2$ (p\^ole), $3$. Le tableau de signes donne un quotient $\ge 0$ sur $]-\infty,\ -1]$ et sur $]2,\ 3]$. On inclut les racines $-1$ et $3$ (le quotient s'annule), on exclut le p\^ole $2$. D'o\`u $S=\,]-\infty,\ -1]\cup\,]2,\ 3]$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : r\'esout l'in\'equation de sens contraire ($\le 0$).
+\item B : inclut le p\^ole $x=2$ (croche fermante au lieu d'ouvrante).
+\item C : utilise des crochets stricts et exclut \`a tort les racines $-1$ et $3$ (oublie que $\ge$ inclut l'\'egalit\'e).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q08 --- Décomposition en éléments simples (identification)}\par
+Pour tout $x\in\R\setminus\{0,3\}$, on \'ecrit $\ds\frac{6}{x^{2}-3x}=\frac{a}{x-3}+\frac{b}{x}$. Le couple $(a\,;b)$ vaut :
+\begin{enumerate}[label=\Alph*)]
+\item $(-2\,;2)$
+\item $(2\,;-2)$
+\item $(6\,;0)$
+\item $(-2\,;-2)$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Comme $x^{2}-3x=x(x-3)$, on r\'eduit au m\^eme d\'enominateur : $\ds\frac{a}{x-3}+\frac{b}{x}=\frac{ax+b(x-3)}{x(x-3)}=\frac{(a+b)x-3b}{x(x-3)}$. Par identification avec $6$ : $a+b=0$ et $-3b=6$, donc $b=-2$ et $a=2$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : inverse les signes ($-3b=6\Rightarrow b=+2$, puis $a=-2$).
+\item C : place le $6$ sur le coefficient de $x$ ($a+b=6$) et $-3b=0$, d'o\`u $b=0$, $a=6$.
+\item D : garde $b=-2$ mais suppose la relation sym\'etrique $a=b=-2$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q09 --- Mise en système : problème de mélange (2 inconnues)}\par
+Un pr\'eparateur m\'elange une solution \`a $5$ mg/mL et une solution \`a $10$ mg/mL pour obtenir $50$ mL d'une solution \`a $8$ mg/mL. Quel volume de la solution \`a $10$ mg/mL doit-il utiliser ?
+\begin{enumerate}[label=\Alph*)]
+\item $30$ mL
+\item $20$ mL
+\item $25$ mL
+\item $40$ mL
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Soit $x$ le volume (mL) \`a $5$ mg/mL et $y$ celui \`a $10$ mg/mL. On a $x+y=50$ (volumes) et $5x+10y=8\times 50=400$ (masse de principe actif). De $x=50-y$ : $5(50-y)+10y=400\Rightarrow 250+5y=400\Rightarrow y=30$. Il faut donc $30$ mL de la solution \`a $10$ mg/mL (et $20$ mL de l'autre).\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : donne $x=20$ mL, le volume de \emph{l'autre} solution (\`a $5$ mg/mL), au lieu de $y$.
+\item C : suppose un m\'elange \`a parts \'egales et r\'epond $50/2=25$ mL.
+\item D : fait provenir toute la masse ($8\times 50=400$ mg) de la seule solution \`a $10$ mg/mL : $400/10=40$ mL (oublie l'apport de l'autre).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{MATH-F01-Q10 --- Mise en système : problème concret (3 inconnues)}\par
+Une jardinerie vend des sachets de graines en trois formats : petit ($2$ euros), moyen ($5$ euros), grand ($8$ euros). Un matin, elle vend $60$ sachets pour un total de $270$ euros, avec deux fois plus de petits que de grands. Combien de sachets \textbf{moyens} ont \'et\'e vendus ?
+\begin{enumerate}[label=\Alph*)]
+\item $20$
+\item $30$
+\item $10$
+\item $40$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Soit $p$, $m$, $g$ les nombres de petits, moyens, grands. On a $p+m+g=60$, $2p+5m+8g=270$ et $p=2g$. En rempla\c cant $p=2g$ : $3g+m=60$ (soit $m=60-3g$) et $12g+5m=270$. D'o\`u $12g+5(60-3g)=270\Rightarrow -3g=-30\Rightarrow g=10$, puis $p=20$ et $m=30$. On v\'erifie $2(20)+5(30)+8(10)=270$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : r\'epond $p=20$, le nombre de \emph{petits} sachets, au lieu des moyens.
+\item C : r\'epond $g=10$, le nombre de \emph{grands} sachets.
+\item D : soustrait seulement les petits du total ($60-20=40$) en oubliant les grands.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\end{document}

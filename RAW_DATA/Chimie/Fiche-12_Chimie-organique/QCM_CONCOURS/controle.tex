@@ -1,0 +1,223 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+
+\begin{center}
+{\Large\bfseries QCM type concours --- Chimie}\\[2pt]
+{\large Fiche 12 --- Chimie organique : les groupements fonctionnels}\\[2pt]
+{\itshape 10 questions, 4 propositions, une seule correcte --- niveau concours}
+\end{center}
+\vspace{6pt}\hrule\vspace{10pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q01 --- Degré d'insaturation}\par
+La nicotine a pour formule brute \ce{C10H14N2}. Son \textbf{degré d'insaturation} (nombre de liaisons $\pi$ additionnées du nombre de cycles) vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \num{3}
+\item \num{4}
+\item \num{5}
+\item \num{6}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Pour \ce{C_nH_mN_p}, l'indice de déficience en hydrogène est $I=\dfrac{2n+2+p-m}{2}$. Ici $n=10$, $m=14$, $p=2$ : $I=\dfrac{2\times10+2+2-14}{2}=\dfrac{10}{2}=5$. On les retrouve sur la structure réelle : cycle pyridine (3 liaisons $\pi$ $+$ 1 cycle $=4$) et cycle pyrrolidine ($+1$), soit $5$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: oubli du signe « $+$ » devant l'azote : $I=\dfrac{20+2-2-14}{2}=3$.
+\item B: azote négligé ($p=0$) : $I=\dfrac{20+2-14}{2}=4$.
+\item D: azote ajouté \emph{après} la division au lieu d'entrer au numérateur : $\dfrac{20+2-14}{2}+2=6$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q02 --- Hydrocarbures : formule générale et cycles}\par
+Le cyclohexane et l'hex-1-ène partagent la même formule brute \ce{C6H12}. Quelle affirmation est \textbf{exacte} ?
+\begin{enumerate}[label=\Alph*)]
+\item Tous deux sont des alcènes, puisqu'ils répondent à la formule \ce{C_nH_{2n}}.
+\item Tous deux possèdent un degré d'insaturation $I=1$, dû à un cycle pour l'un et à une double liaison \ce{C=C} pour l'autre.
+\item Le cyclohexane, étant saturé, a un degré d'insaturation nul ($I=0$).
+\item L'hex-1-ène possède deux degrés d'insaturation, une double liaison comptant pour deux.
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Le calcul $I=\dfrac{2\times6+2-12}{2}=1$ vaut pour les deux composés. Mais la formule \ce{C_nH_{2n}} n'implique pas « alcène » : le cyclohexane est un \textbf{cycloalcane saturé}, son unique insaturation provient de la \emph{fermeture du cycle}, tandis que celle de l'hex-1-ène provient d'une double liaison \ce{C=C}. Même formule brute, structures distinctes : ce sont des isomères.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: application aveugle « \ce{C_nH_{2n}} donc alcène », en oubliant les cycloalcanes.
+\item C: le cycle n'est pas compté ; or l'indice d'insaturation additionne liaisons $\pi$ \emph{et} cycles, donc le cycle donne $I=1$.
+\item D: une double liaison \ce{C=C} n'apporte qu'un seul degré d'insaturation (c'est la triple liaison qui en apporte deux).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q03 --- Classification des carbones}\par
+Le 2,2-diméthylpropane (néopentane), isomère le plus ramifié de \ce{C5H12}, présente la répartition suivante de ses atomes de carbone :
+\begin{enumerate}[label=\Alph*)]
+\item quatre carbones primaires et un carbone quaternaire ;
+\item quatre carbones primaires et un carbone tertiaire ;
+\item trois carbones primaires, un carbone secondaire et un carbone quaternaire ;
+\item cinq carbones primaires.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Dans le néopentane, un carbone central est relié aux \textbf{quatre} autres carbones : lié à 4 C, c'est un \textbf{carbone quaternaire} (donc sans aucun H). Les quatre \ce{CH3} périphériques ne sont chacun liés qu'à \emph{un seul} carbone : ce sont \textbf{quatre carbones primaires}. Bilan : quatre primaires $+$ un quaternaire.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: le carbone central compté « tertiaire » (lié à 3 C) au lieu de quaternaire (lié à 4 C).
+\item C: un \ce{CH3} périphérique confondu avec un carbone secondaire.
+\item D: tous les carbones supposés primaires, en oubliant le carbone central quaternaire.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q04 --- Identification : alcool et acide}\par
+L'acide lactique, présent dans le lait fermenté, a la structure suivante :
+\begin{center}\chemfig{CH_3-[:30]CH(-[:90]OH)-[:-30]C(=[:90]O)-[:30]OH}\end{center}
+Quelles fonctions y sont présentes ?
+\begin{enumerate}[label=\Alph*)]
+\item un alcool primaire et un acide carboxylique ;
+\item un alcool secondaire et un acide carboxylique ;
+\item un alcool secondaire et un ester ;
+\item un alcool secondaire et un aldéhyde.
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Le carbone central porte le groupe $-\text{OH}$ : il est lié à \emph{deux} autres carbones (le \ce{CH3} et le carbone du $-\text{COOH}$), c'est donc un \textbf{alcool secondaire}. L'extrémité $-\text{C(=O)}-\text{OH}$ (carbonyle $+$ hydroxyle sur le même carbone) est un \textbf{acide carboxylique}. La molécule est donc un $\alpha$-hydroxyacide.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: carbone porteur du $-\text{OH}$ mal classé « primaire » alors qu'il est lié à deux carbones (secondaire).
+\item C: groupe $-\text{COOH}$ pris pour un ester $-\text{COOR}$ (il n'y a pas de chaîne alkyle sur l'oxygène).
+\item D: carbonyle de l'acide confondu avec un aldéhyde $-\text{CHO}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q05 --- Ester ou éther ?}\par
+On considère la molécule ci-dessous :
+\begin{center}\chemfig{CH_3-[:30](=[:90]O)-[:-30]O-[:30]CH_3}\end{center}
+Quelle est sa (ou ses) fonction(s) ?
+\begin{enumerate}[label=\Alph*)]
+\item une fonction ester et une fonction éther ;
+\item une fonction cétone et une fonction éther ;
+\item une fonction ester uniquement ;
+\item une fonction acide carboxylique.
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+L'enchaînement $-\text{C(=O)}-\text{O}-\text{CH}_3$ est l'archétype d'un \textbf{ester} (éthanoate de méthyle). L'oxygène pontant $-\text{O}-$ fait \emph{partie intégrante} de la fonction ester : il ne constitue pas une fonction éther indépendante. Il n'y a donc \textbf{qu'une} fonction, l'ester.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: le pont $-\text{O}-$ de l'ester compté \emph{en plus} comme un éther (l'erreur classique de l'aspirine).
+\item B: carbonyle lu comme une cétone et pont $-\text{O}-$ comme un éther, en ignorant qu'ils forment ensemble un ester.
+\item D: présence de \ce{C=O} et de \ce{O} interprétée comme un acide carboxylique $-\text{COOH}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q06 --- Alcools : classification}\par
+Le glycérol (propane-1,2,3-triol), support des triglycérides, a la structure :
+\begin{center}\chemfig{HO-[:30]CH_2-[:-30]CH(-[:-90]OH)-[:30]CH_2-[:-30]OH}\end{center}
+Il contient :
+\begin{enumerate}[label=\Alph*)]
+\item deux alcools primaires et un alcool secondaire ;
+\item trois alcools primaires ;
+\item deux alcools primaires et un alcool tertiaire ;
+\item un alcool primaire et deux alcools secondaires.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Les deux carbones d'extrémité portant un $-\text{OH}$ ne sont liés qu'à \emph{un} autre carbone : ce sont deux \textbf{alcools primaires}. Le carbone central portant le $-\text{OH}$ est lié à \emph{deux} autres carbones : c'est un \textbf{alcool secondaire}. Bilan : trois fonctions alcool, dont deux primaires et une secondaire.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: fonctions comptées sans être classées, les trois supposées identiques (primaires).
+\item C: carbone central (lié à 2 C) surclassé en tertiaire (lié à 3 C).
+\item D: classes des carbones d'extrémité et du centre interverties.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q07 --- Priorité des fonctions}\par
+Une molécule à chaîne ouverte porte simultanément un groupe $-\text{COOH}$, un groupe $-\text{OH}$ et une double liaison \ce{C=C}. D'après l'ordre de priorité des fonctions, quel \textbf{suffixe} termine son nom systématique ?
+\begin{enumerate}[label=\Alph*)]
+\item le suffixe \textit{-ol} ;
+\item le suffixe \textit{-ène} ;
+\item le suffixe \textit{-al} ;
+\item le suffixe \textit{-oïque} (préfixe « acide »).
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+L'échelle de priorité place l'acide carboxylique en tête : $-\text{COOH} > -\text{OH} > \text{C=C}$. La \textbf{fonction principale} est donc l'acide carboxylique, qui impose le préfixe « acide » et le suffixe \textbf{\textit{-oïque}}. Le $-\text{OH}$ devient un préfixe « hydroxy- » et la double liaison un infixe « -èn- ».\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: l'alcool choisi comme fonction principale, alors qu'il est moins prioritaire que l'acide.
+\item B: l'insaturation \ce{C=C} supposée prioritaire (elle est au contraire la moins prioritaire).
+\item C: le carbonyle de l'acide confondu avec celui d'un aldéhyde (suffixe -al).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q08 --- Isomérie cis/trans}\par
+Parmi les molécules suivantes, une seule présente une \textbf{stéréoisomérie} \emph{cis}/\emph{trans} (Z/E). Laquelle ?
+\begin{enumerate}[label=\Alph*)]
+\item le but-1-ène \ce{CH2=CH-CH2-CH3} ;
+\item le but-2-ène \ce{CH3-CH=CH-CH3} ;
+\item le 2-méthylprop-1-ène \ce{CH2=C(CH3)2} ;
+\item le propène \ce{CH3-CH=CH2}.
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+L'isomérie \emph{cis}/\emph{trans} exige que \emph{chacun} des deux carbones de la double liaison porte deux groupements \emph{différents}. Seul le but-2-ène remplit la condition : chaque carbone $=\text{CH}-$ porte un $\text{H}$ et un \ce{CH3}. Dans les trois autres, l'un des carbones de la double liaison porte deux atomes d'hydrogène identiques ($=\text{CH}_2$), ce qui interdit la distinction \emph{cis}/\emph{trans}.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: toute double liaison supposée donner du \emph{cis}/\emph{trans}, or le carbone terminal $=\text{CH}_2$ porte deux H identiques.
+\item C: la ramification ne lève pas l'ambiguïté : le carbone $=\text{CH}_2$ porte encore deux H identiques.
+\item D: idem, le propène possède un carbone $=\text{CH}_2$ terminal, sans stéréoisomérie.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q09 --- Amine ou amide ?}\par
+Dans la molécule \ce{CH3-CH2-CO-NH-CH3}, à quelle fonction appartient l'atome d'azote ?
+\begin{enumerate}[label=\Alph*)]
+\item une amine secondaire ;
+\item une amine primaire ;
+\item une fonction amide ;
+\item une fonction imine.
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+L'azote est directement lié à un \textbf{carbonyle} \ce{C=O} : l'enchaînement $-\text{C(=O)}-\text{NH}-$ est une \textbf{fonction amide}. Le critère décisif est la présence du carbonyle accolé à l'azote ; peu importe que l'azote porte par ailleurs un groupe alkyle.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: azote lié à deux carbones compté comme « amine secondaire », en ignorant le carbonyle voisin.
+\item B: azote vu comme une amine primaire $\text{R}-\text{NH}_2$.
+\item D: liaison $\text{C}-\text{N}$ confondue avec une double liaison $\text{C=N}$ d'imine.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =====================================================================
+\noindent\textbf{CHIM-F12-Q10 --- Masse molaire}\par
+Le paracétamol a pour formule brute \ce{C8H9NO2}. En prenant $M(\ce{C})=\qty{12}{\g\per\mole}$, $M(\ce{H})=\qty{1}{\g\per\mole}$, $M(\ce{N})=\qty{14}{\g\per\mole}$ et $M(\ce{O})=\qty{16}{\g\per\mole}$, sa masse molaire vaut :
+\begin{enumerate}[label=\Alph*)]
+\item \qty{135}{\g\per\mole} ;
+\item \qty{137}{\g\per\mole} ;
+\item \qty{144}{\g\per\mole} ;
+\item \qty{151}{\g\per\mole}.
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+$M=8\times12+9\times1+1\times14+2\times16=96+9+14+32=\qty{151}{\g\per\mole}$. (La \emph{masse moléculaire relative} vaudrait le même nombre, $151$, mais \textbf{sans unité}.)\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: un seul atome d'oxygène compté ($+16$ au lieu de $+32$) : $96+9+14+16=135$.
+\item B: azote oublié : $96+9+32=137$.
+\item C: azote pris à $7$ (numéro atomique $Z$) au lieu de $14$ (masse molaire) : $96+9+7+32=144$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\end{document}

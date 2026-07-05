@@ -1,0 +1,212 @@
+[
+  {
+    "id": "CHIM-F02-Q01",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Nombre d'oxydation",
+    "difficulte": "concours",
+    "enonce": "Quel est le nombre d'oxydation du chlore dans l'ion chlorate \\ce{ClO3-} ? (l'oxygène est au degré $-\\mathrm{II}$)",
+    "options": [
+      "$+\\mathrm{II}$",
+      "$+\\mathrm{VI}$",
+      "$+\\mathrm{V}$",
+      "$+\\mathrm{VII}$"
+    ],
+    "reponse_index": 2,
+    "explication": "L'ion \\ce{ClO3-} porte une charge globale $-1$. La somme des nombres d'oxydation égale cette charge : $x + 3\\times(-2) = -1$, soit $x - 6 = -1$ et donc $x = +5$, c'est-à-dire $+\\mathrm{V}$.",
+    "pieges": [
+      "A: $+\\mathrm{II}$ --- oxygène pris à $-\\mathrm{I}$ (confusion avec un peroxyde) : $x - 3 = -1 \\Rightarrow x = +\\mathrm{II}$.",
+      "B: $+\\mathrm{VI}$ --- ion traité comme une molécule neutre (charge globale oubliée) : $x - 6 = 0 \\Rightarrow x = +\\mathrm{VI}$.",
+      "D: $+\\mathrm{VII}$ --- signe de la charge inversé ($+1$ au lieu de $-1$) : $x - 6 = +1 \\Rightarrow x = +\\mathrm{VII}$."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q02",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Neutralité électrique et croisement des valences",
+    "difficulte": "concours",
+    "enonce": "Quelle est la formule brute du sulfate d'aluminium ? (ions \\ce{Al^3+} et \\ce{SO4^2-})",
+    "options": [
+      "\\ce{AlSO4}",
+      "\\ce{Al2(SO4)3}",
+      "\\ce{Al3(SO4)2}",
+      "\\ce{Al2(SO3)3}"
+    ],
+    "reponse_index": 1,
+    "explication": "On croise les valences : celle de l'anion (2) devient l'indice du cation, celle du cation (3) devient l'indice de l'anion, d'où \\ce{Al2(SO4)3}. Vérification de la neutralité : $2\\times(+3) = +6$ et $3\\times(-2) = -6$, somme nulle.",
+    "pieges": [
+      "A: \\ce{AlSO4} --- association 1:1 sans croiser les valences (composé non neutre : $+3 \\neq -2$).",
+      "C: \\ce{Al3(SO4)2} --- croisement inversé : la valence de chaque ion placée comme son propre indice.",
+      "D: \\ce{Al2(SO3)3} --- croisement correct, mais anion sulfite \\ce{SO3^2-} au lieu du sulfate \\ce{SO4^2-}."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q03",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Oxacides et anhydrides (oxyde acide)",
+    "difficulte": "concours",
+    "enonce": "Le permanganate d'hydrogène \\ce{HMnO4} est un oxacide. Quel est son anhydride, c'est-à-dire l'oxyde acide qui, additionné d'eau, le régénère ?",
+    "options": [
+      "\\ce{MnO2}",
+      "\\ce{MnO4}",
+      "\\ce{Mn2O5}",
+      "\\ce{Mn2O7}"
+    ],
+    "reponse_index": 3,
+    "explication": "L'anhydride s'obtient en retirant une molécule d'eau à deux molécules d'acide : $2\\,\\ce{HMnO4} \\rightarrow \\ce{H2O} + \\ce{Mn2O7}$. Le degré du manganèse est conservé : $+\\mathrm{VII}$ dans \\ce{HMnO4} ($x - 8 = -1$) comme dans \\ce{Mn2O7} ($2x - 14 = 0 \\Rightarrow x = +7$).",
+    "pieges": [
+      "A: \\ce{MnO2} --- manganèse ramené à $+\\mathrm{IV}$ (oxyde usuel du manganèse), degré d'oxydation non conservé.",
+      "B: \\ce{MnO4} --- seul le \\ce{H} est retiré (\\ce{HMnO4} $-\\,\\ce{H}$), sans le bilan d'eau sur deux acides.",
+      "C: \\ce{Mn2O5} --- manganèse à $+\\mathrm{V}$ (erreur d'arithmétique sur l'anhydride)."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q04",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Appariement nom / formule",
+    "difficulte": "concours",
+    "enonce": "Parmi les associations formule--nom suivantes, laquelle est \\textbf{incorrecte} ?",
+    "options": [
+      "\\ce{Na2CO3} : carbonate de sodium",
+      "\\ce{CuO} : oxyde de cuivre(I)",
+      "\\ce{HClO3} : chlorate d'hydrogène",
+      "\\ce{Mg(OH)2} : hydroxyde de magnésium"
+    ],
+    "reponse_index": 1,
+    "explication": "Dans \\ce{CuO}, l'oxygène est $-\\mathrm{II}$ et le composé est neutre, donc le cuivre est $+\\mathrm{II}$ : c'est l'oxyde de cuivre(\\textbf{II}). L'oxyde de cuivre(I) serait \\ce{Cu2O}. L'association B est donc fausse.",
+    "pieges": [
+      "A: \\ce{Na2CO3} = carbonate de sodium est \\emph{correct} (croisement \\ce{Na+}/\\ce{CO3^2-}) ; on pourrait douter à tort de l'indice 2 du sodium.",
+      "C: \\ce{HClO3} = chlorate d'hydrogène est \\emph{correct} (convention « [anion] + d'hydrogène », \\ce{ClO3-} = chlorate) ; on le croit faux en cherchant « acide chlorique ».",
+      "D: \\ce{Mg(OH)2} = hydroxyde de magnésium est \\emph{correct} (Mg divalent, deux \\ce{OH-}) ; l'indice 2 fait douter à tort."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q05",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Oxydes non métalliques et préfixes multiplicateurs",
+    "difficulte": "concours",
+    "enonce": "Le composé \\ce{N2O5} est un oxyde non métallique. Quel est son nom systématique ?",
+    "options": [
+      "hémipentoxyde d'azote",
+      "pentoxyde d'azote",
+      "sesquioxyde d'azote",
+      "hémipentoxyde de diazote"
+    ],
+    "reponse_index": 0,
+    "explication": "Pour un oxyde non métallique, le préfixe traduit le rapport O/X. Ici $\\mathrm{O}/\\mathrm{N} = 5/2$, qui correspond au préfixe \\emph{hémipent} : \\ce{N2O5} est l'hémipentoxyde d'azote.",
+    "pieges": [
+      "B: pentoxyde d'azote --- seul le nombre d'oxygènes (5) est lu, sans le rapporter aux 2 atomes d'azote (rapport $5/2$).",
+      "C: sesquioxyde d'azote --- c'est le nom de \\ce{N2O3} (rapport $3/2$), confusion d'oxyde.",
+      "D: hémipentoxyde de diazote --- préfixe multiplicateur appliqué à tort au second élément (l'azote)."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q06",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Suffixes -eux / -ite (de l'acide à l'anion)",
+    "difficulte": "concours",
+    "enonce": "Quelle est la formule de l'anion obtenu par déprotonation totale de l'acide sulfureux \\ce{H2SO3} ?",
+    "options": [
+      "\\ce{SO3^2-}",
+      "\\ce{SO4^2-}",
+      "\\ce{S2O3^2-}",
+      "\\ce{HSO3-}"
+    ],
+    "reponse_index": 0,
+    "explication": "Un acide en \\emph{-eux} donne un anion en \\emph{-ite} : l'acide sulfur\\emph{eux} \\ce{H2SO3}, privé de ses deux \\ce{H+}, conduit au sulf\\emph{ite} \\ce{SO3^2-}.",
+    "pieges": [
+      "B: \\ce{SO4^2-} --- suffixe \\emph{-eux} converti à tort en \\emph{-ate} : c'est le sulfate, issu de l'acide sulfur\\emph{ique} \\ce{H2SO4}.",
+      "C: \\ce{S2O3^2-} --- thiosulfate, confondu avec le sulfite (un atome de soufre en plus).",
+      "D: \\ce{HSO3-} --- déprotonation \\emph{partielle} (un seul \\ce{H+} perdu) : c'est l'hydrogénosulfite, non l'anion final."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q07",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Sels acides (préfixe hydrogéno-)",
+    "difficulte": "concours",
+    "enonce": "Quelle est la formule du dihydrogénophosphate de calcium ? (cation \\ce{Ca^2+}, anion \\ce{H2PO4-})",
+    "options": [
+      "\\ce{CaH2PO4}",
+      "\\ce{CaHPO4}",
+      "\\ce{Ca3(PO4)2}",
+      "\\ce{Ca(H2PO4)2}"
+    ],
+    "reponse_index": 3,
+    "explication": "L'anion dihydrogénophosphate \\ce{H2PO4-} est monovalent et le calcium est divalent : on croise les valences, soit deux anions pour un \\ce{Ca^2+}, d'où \\ce{Ca(H2PO4)2}.",
+    "pieges": [
+      "A: \\ce{CaH2PO4} --- association 1:1, la valence 2 du calcium n'est pas prise en compte (composé non neutre).",
+      "B: \\ce{CaHPO4} --- anion monohydrogénophosphate \\ce{HPO4^2-} (un seul \\ce{H}) au lieu du dihydrogénophosphate.",
+      "C: \\ce{Ca3(PO4)2} --- les deux \\ce{H} de l'anion supprimés : c'est le phosphate (neutre) de calcium."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q08",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Coefficient stœchiométrique et indices",
+    "difficulte": "concours",
+    "enonce": "Combien d'atomes d'oxygène compte-t-on au total dans \\ce{2 Fe(NO3)3} ?",
+    "options": [
+      "\\num{9}",
+      "\\num{6}",
+      "\\num{18}",
+      "\\num{3}"
+    ],
+    "reponse_index": 2,
+    "explication": "Un motif \\ce{Fe(NO3)3} contient $3\\times 3 = 9$ atomes d'oxygène ; le coefficient 2 multiplie tout le motif : $2\\times 9 = 18$.",
+    "pieges": [
+      "A: \\num{9} --- coefficient 2 oublié (un seul motif compté).",
+      "B: \\num{6} --- indice 3 de \\ce{(NO3)3} oublié : $3\\ \\text{O}\\times 2 = 6$.",
+      "D: \\num{3} --- un seul groupe \\ce{NO3} lu (coefficient et indice ignorés)."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q09",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Hydrates (eau de cristallisation)",
+    "difficulte": "concours",
+    "enonce": "Quelle est la masse molaire du sulfate de cuivre(II) pentahydraté \\ce{CuSO4 * 5 H2O} ? (en \\unit{\\gram\\per\\mole} : \\ce{Cu}~\\num{63.5}, \\ce{S}~\\num{32}, \\ce{O}~\\num{16}, \\ce{H}~\\num{1})",
+    "options": [
+      "\\qty{159.5}{\\gram\\per\\mole}",
+      "\\qty{177.5}{\\gram\\per\\mole}",
+      "\\qty{239.5}{\\gram\\per\\mole}",
+      "\\qty{249.5}{\\gram\\per\\mole}"
+    ],
+    "reponse_index": 3,
+    "explication": "La partie anhydre \\ce{CuSO4} pèse $63{,}5 + 32 + 4\\times 16 = 159{,}5$~\\unit{\\gram\\per\\mole} ; les cinq molécules d'eau ajoutent $5\\times 18 = 90$~\\unit{\\gram\\per\\mole}, soit un total de \\qty{249.5}{\\gram\\per\\mole}.",
+    "pieges": [
+      "A: \\qty{159.5}{\\gram\\per\\mole} --- eau de cristallisation oubliée (masse du sel anhydre \\ce{CuSO4} seul).",
+      "B: \\qty{177.5}{\\gram\\per\\mole} --- une seule molécule d'eau comptée ($+18$) au lieu de cinq.",
+      "C: \\qty{239.5}{\\gram\\per\\mole} --- eau comptée comme \\qty{16}{\\gram\\per\\mole} (oxygène seul) : $5\\times 16 = 80$."
+    ]
+  },
+  {
+    "id": "CHIM-F02-Q10",
+    "matiere": "Chimie",
+    "fiche": "02",
+    "theme": "Nomenclature de Stock (métal à valence variable)",
+    "difficulte": "concours",
+    "enonce": "Selon les règles de la fiche, comment nomme-t-on l'oxyde \\ce{PbO2} ? (le plomb est un métal)",
+    "options": [
+      "dioxyde de plomb",
+      "oxyde de plomb(IV)",
+      "oxyde de plomb(II)",
+      "peroxyde de plomb"
+    ],
+    "reponse_index": 1,
+    "explication": "Le plomb est un \\emph{métal} : on n'emploie pas de préfixe multiplicateur, mais on précise sa valence. L'oxygène est $-\\mathrm{II}$ ; dans \\ce{PbO2} neutre, $x + 2\\times(-2) = 0$ donne le plomb au degré $+\\mathrm{IV}$ : oxyde de plomb(IV).",
+    "pieges": [
+      "A: dioxyde de plomb --- préfixe multiplicateur (réservé aux non-métaux) appliqué à tort à un métal.",
+      "C: oxyde de plomb(II) --- valence usuelle \\ce{Pb^2+} supposée sans calcul (ce serait \\ce{PbO}).",
+      "D: peroxyde de plomb --- les deux O lus comme un ion peroxyde \\ce{O2^2-}, ce qui ramènerait le plomb à $+\\mathrm{II}$."
+    ]
+  }
+]

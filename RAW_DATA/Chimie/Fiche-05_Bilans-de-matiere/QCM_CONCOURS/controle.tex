@@ -1,0 +1,237 @@
+% ===== PRÉAMBULE CANONIQUE QCM — CHIMIE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : noms et packages figés.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage[version=4]{mhchem}          % \ce{...} : équations & formules
+\usepackage{siunitx}\sisetup{locale=FR} % \qty{}{}, \si{}, \ang{}
+\usepackage{chemfig}                    % \chemfig{...} : structures développées
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,backgrounds,shapes.geometric}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}\newcommand{\ds}{\displaystyle}
+% ============================================
+\begin{document}
+
+\begin{center}
+{\Large\bfseries QCM concours --- Chimie}\\[2pt]
+{\large Fiche 05 --- Bilans de matière (stœchiométrie)}\\[2pt]
+\textit{10 questions, niveau concours difficile --- une seule réponse correcte sur quatre.}
+\end{center}
+\vspace{6pt}\hrule\vspace{10pt}
+
+% ------------------------------------------------------------------ Q1
+\noindent\textbf{CHIM-F05-Q01 --- Pondération et somme des coefficients}\par
+La combustion complète du propane s'écrit
+\[\ce{C3H8 + O2 -> CO2 + H2O}\qquad\text{(non pondérée).}\]
+Une fois l'équation pondérée avec les plus petits coefficients entiers, quelle est la somme de tous les coefficients stœchiométriques (réactifs et produits) ?
+\begin{enumerate}[label=\Alph*)]
+\item \num{11}
+\item \num{12}
+\item \num{13}
+\item \num{14}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Pondération : $\ce{C3H8 + 5 O2 -> 3 CO2 + 4 H2O}$. Carbone : \num{3} atomes $\Rightarrow$ \num{3} \ce{CO2} ; hydrogène : \num{8} $\Rightarrow$ \num{4} \ce{H2O} ; oxygène : à droite $\num{3}\times\num{2}+\num{4}=\num{10}$ atomes, soit \num{5} \ce{O2}. Somme $=\num{1}+\num{5}+\num{3}+\num{4}=\num{13}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : coefficient de \ce{O2} calculé sur les seuls oxygènes de \ce{CO2} (\num{3} \ce{O2}), en oubliant l'oxygène de l'eau : $\num{1}+\num{3}+\num{3}+\num{4}=\num{11}$.
+\item B : oubli du coefficient \num{1} implicite devant \ce{C3H8} (somme $\num{5}+\num{3}+\num{4}$ seulement).
+\item D : double comptage d'un atome d'oxygène (\num{12} au lieu de \num{10}) menant à \num{6} \ce{O2} : $\num{1}+\num{6}+\num{3}+\num{4}=\num{14}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q2
+\noindent\textbf{CHIM-F05-Q02 --- Réactif limitant et masse de produit}\par
+On fait réagir \qty{4.6}{\gram} de sodium (\qty{23}{\gram\per\mole}) avec \qty{10.65}{\gram} de dichlore (\qty{71}{\gram\per\mole}) selon
+\[\ce{2 Na + Cl2 -> 2 NaCl}.\]
+Quelle masse de chlorure de sodium (\qty{58.5}{\gram\per\mole}) se forme si la réaction est totale ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{11.7}{\gram}
+\item \qty{17.55}{\gram}
+\item \qty{5.85}{\gram}
+\item \qty{7.1}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+$n(\ce{Na})=\num{4.6}/\num{23}=\num{0.20}~\si{\mole}$ et $n(\ce{Cl2})=\num{10.65}/\num{71}=\num{0.15}~\si{\mole}$. Rapports $n/\nu$ : \ce{Na} $\to\num{0.20}/\num{2}=\num{0.10}$ ; \ce{Cl2} $\to\num{0.15}/\num{1}=\num{0.15}$. Le plus petit désigne le sodium comme limitant (bien qu'il y en ait plus de moles). $\xi_{\max}=\num{0.10}$, $n(\ce{NaCl})=\num{2}\times\num{0.10}=\num{0.20}~\si{\mole}$, $m=\num{0.20}\times\num{58.5}=\qty{11.7}{\gram}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : limitant mal identifié — on compare les quantités brutes et l'on prend \ce{Cl2} (moins de moles), d'où $n(\ce{NaCl})=\num{0.30}$ et $m=\qty{17.55}{\gram}$.
+\item C : coefficient \num{2} de \ce{NaCl} oublié (rapport \num{1}:\num{1}) : $n(\ce{NaCl})=\xi_{\max}=\num{0.10}$, $m=\qty{5.85}{\gram}$.
+\item D : masse molaire du sel prise égale à celle du chlore seul (\qty{35.5}{\gram\per\mole}) : $m=\num{0.20}\times\num{35.5}=\qty{7.1}{\gram}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q3
+\noindent\textbf{CHIM-F05-Q03 --- Rendement d'une synthèse}\par
+On fait réagir \qty{5}{\mole} de dihydrogène avec un excès de diazote selon
+\[\ce{N2 + 3 H2 -> 2 NH3}.\]
+Le rendement de la synthèse est de \qty{60}{\percent}. Quelle masse d'ammoniac (\qty{17}{\gram\per\mole}) obtient-on ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{56.7}{\gram}
+\item \qty{34}{\gram}
+\item \qty{17}{\gram}
+\item \qty{28}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+\ce{H2} est limitant (\ce{N2} en excès). Quantité théorique : $n_{\text{th}}(\ce{NH3})=\tfrac{2}{3}\times\num{5}=\tfrac{10}{3}~\si{\mole}$. Le rendement donne $n_{\text{réel}}=\num{0.60}\times\tfrac{10}{3}=\num{2}~\si{\mole}$, soit $m=\num{2}\times\num{17}=\qty{34}{\gram}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : oubli du rendement — on donne la masse théorique (rendement \qty{100}{\percent}) : $\tfrac{10}{3}\times\num{17}\approx\qty{56.7}{\gram}$.
+\item C : coefficient de \ce{NH3} pris égal à \num{1} (rapport \num{3} \ce{H2} pour \num{1} \ce{NH3}) : $n_{\text{réel}}=\num{0.60}\times\tfrac{5}{3}=\num{1}~\si{\mole}$, soit \qty{17}{\gram}.
+\item D : masse molaire de \ce{NH3} prise à \qty{14}{\gram\per\mole} (azote seul) : $m=\num{2}\times\num{14}=\qty{28}{\gram}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q4
+\noindent\textbf{CHIM-F05-Q04 --- Volume de gaz aux conditions TPN}\par
+La décomposition thermique du chlorate de potassium s'écrit
+\[\ce{2 KClO3 -> 2 KCl + 3 O2}.\]
+On décompose totalement \qty{0.40}{\mole} de \ce{KClO3}. Quel volume de dioxygène, mesuré aux conditions TPN (volume molaire \qty{22.4}{\litre\per\mole}), obtient-on ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{8.96}{\litre}
+\item \qty{5.97}{\litre}
+\item \qty{26.88}{\litre}
+\item \qty{13.44}{\litre}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Proportion \num{2} \ce{KClO3} pour \num{3} \ce{O2} : $n(\ce{O2})=\tfrac{3}{2}\times\num{0.40}=\num{0.60}~\si{\mole}$. Aux TPN : $V=\num{0.60}\times\num{22.4}=\qty{13.44}{\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : rapport pris à \num{1}:\num{1} (coefficients ignorés), $n(\ce{O2})=\num{0.40}$, $V=\qty{8.96}{\litre}$.
+\item B : rapport stœchiométrique inversé ($\tfrac{2}{3}$ au lieu de $\tfrac{3}{2}$), $n(\ce{O2})\approx\num{0.267}$, $V=\qty{5.97}{\litre}$.
+\item C : coefficient \num{3} appliqué directement ($n(\ce{O2})=\num{3}\times\num{0.40}=\num{1.2}$), $V=\qty{26.88}{\litre}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q5
+\noindent\textbf{CHIM-F05-Q05 --- Titrage et relation à l'équivalence}\par
+On dose \qty{20}{\milli\litre} d'une solution de \ce{Fe^2+} de concentration inconnue par une solution de permanganate à \qty{0.020}{\mole\per\litre}, selon
+\[\ce{MnO4^- + 5 Fe^2+ + 8 H^+ -> Mn^2+ + 5 Fe^3+ + 4 H2O}.\]
+L'équivalence est atteinte pour \qty{10}{\milli\litre} de permanganate versé. Quelle est la concentration en \ce{Fe^2+} ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.01}{\mole\per\litre}
+\item \qty{0.05}{\mole\per\litre}
+\item \qty{0.002}{\mole\per\litre}
+\item \qty{0.1}{\mole\per\litre}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+À l'équivalence, $\tfrac{n(\ce{MnO4^-})}{1}=\tfrac{n(\ce{Fe^2+})}{5}$. Or $n(\ce{MnO4^-})=\num{0.020}\times\num{0.010}=\num{2e-4}~\si{\mole}$, donc $n(\ce{Fe^2+})=\num{5}\times\num{2e-4}=\num{1e-3}~\si{\mole}$. D'où $[\ce{Fe^2+}]=\num{1e-3}/\num{0.020}=\qty{0.05}{\mole\per\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : coefficient \num{5} oublié (rapport \num{1}:\num{1}), $n(\ce{Fe^2+})=\num{2e-4}$, $[\ce{Fe^2+}]=\qty{0.01}{\mole\per\litre}$.
+\item C : rapport inversé (division par \num{5}), $n(\ce{Fe^2+})=\num{4e-5}$, $[\ce{Fe^2+}]=\qty{0.002}{\mole\per\litre}$.
+\item D : volume du dosé confondu avec celui du titrant (\qty{10}{\milli\litre}) : $[\ce{Fe^2+}]=\num{1e-3}/\num{0.010}=\qty{0.1}{\mole\per\litre}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q6
+\noindent\textbf{CHIM-F05-Q06 --- Confusion mole et gramme}\par
+On introduit \qty{0.30}{\mole} d'aluminium dans un excès d'acide sulfurique :
+\[\ce{2 Al + 3 H2SO4 -> Al2(SO4)3 + 3 H2}.\]
+Quelle masse de sulfate d'aluminium (\qty{342}{\gram\per\mole}) obtient-on si la réaction est totale ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{51.3}{\gram}
+\item \qty{102.6}{\gram}
+\item \qty{0.15}{\gram}
+\item \qty{22.5}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Rapport \num{2} \ce{Al} pour \num{1} \ce{Al2(SO4)3} : $n(\ce{Al2(SO4)3})=\tfrac{1}{2}\times\num{0.30}=\num{0.15}~\si{\mole}$. Masse : $m=\num{0.15}\times\num{342}=\qty{51.3}{\gram}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : rapport \ce{Al} vers le sel pris à \num{1}:\num{1} (coefficient \num{2} oublié) : $n=\num{0.30}$, $m=\qty{102.6}{\gram}$.
+\item C : confusion mole/gramme — la quantité \num{0.15}~\si{\mole} est annoncée directement en grammes, sans multiplier par la masse molaire.
+\item D : masse molaire du sel mal calculée (\qty{150}{\gram\per\mole}, facteur \num{3} sur \ce{SO4} oublié) : $m=\num{0.15}\times\num{150}=\qty{22.5}{\gram}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q7
+\noindent\textbf{CHIM-F05-Q07 --- Chaîne masse $\to$ mole $\to$ volume}\par
+On brûle complètement \qty{4.0}{\gram} de méthane (\qty{16}{\gram\per\mole}) :
+\[\ce{CH4 + 2 O2 -> CO2 + 2 H2O}.\]
+Quel volume de dioxyde de carbone, aux conditions TPN (volume molaire \qty{22.4}{\litre\per\mole}), recueille-t-on ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{11.2}{\litre}
+\item \qty{7.47}{\litre}
+\item \qty{5.6}{\litre}
+\item \qty{2.8}{\litre}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+$n(\ce{CH4})=\num{4.0}/\num{16}=\num{0.25}~\si{\mole}$. Le rapport \ce{CH4}:\ce{CO2} vaut \num{1}:\num{1}, donc $n(\ce{CO2})=\num{0.25}~\si{\mole}$ et $V=\num{0.25}\times\num{22.4}=\qty{5.6}{\litre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : coefficient \num{2} (celui de \ce{O2} et \ce{H2O}) appliqué à tort au \ce{CO2} : $n(\ce{CO2})=\num{0.50}$, $V=\qty{11.2}{\litre}$.
+\item B : masse molaire du méthane prise à \qty{12}{\gram\per\mole} (carbone seul) : $n(\ce{CH4})\approx\num{0.33}$, $V=\qty{7.47}{\litre}$.
+\item D : rapport inversé (\num{2} \ce{CH4} pour \num{1} \ce{CO2}) : $n(\ce{CO2})=\num{0.125}$, $V=\qty{2.8}{\litre}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q8
+\noindent\textbf{CHIM-F05-Q08 --- Réactif limitant avec données mixtes}\par
+On introduit \qty{2.8}{\gram} de fer (\qty{56}{\gram\per\mole}) dans \qty{40}{\milli\litre} d'acide chlorhydrique à \qty{2.0}{\mole\per\litre} :
+\[\ce{Fe + 2 HCl -> FeCl2 + H2}.\]
+Quelle masse de chlorure de fer(II) (\qty{127}{\gram\per\mole}) se forme ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{6.35}{\gram}
+\item \qty{10.16}{\gram}
+\item \qty{2.24}{\gram}
+\item \qty{5.08}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+$n(\ce{Fe})=\num{2.8}/\num{56}=\num{0.050}~\si{\mole}$ ; $n(\ce{HCl})=\num{2.0}\times\num{0.040}=\num{0.080}~\si{\mole}$. Rapports $n/\nu$ : \ce{Fe} $\to\num{0.050}$ ; \ce{HCl} $\to\num{0.040}$. \ce{HCl} est limitant (bien qu'en plus grande quantité que le fer). $n(\ce{FeCl2})=n(\ce{HCl})/\num{2}=\num{0.040}$, $m=\num{0.040}\times\num{127}=\qty{5.08}{\gram}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : limitant mal choisi — le fer (moins de moles) est pris pour limitant : $n(\ce{FeCl2})=\num{0.050}$, $m=\qty{6.35}{\gram}$.
+\item B : coefficient \num{2} de \ce{HCl} oublié (rapport \num{1}:\num{1}) : $n(\ce{FeCl2})=\num{0.080}$, $m=\qty{10.16}{\gram}$.
+\item C : masse molaire de \ce{FeCl2} prise à \qty{56}{\gram\per\mole} (fer seul) : $m=\num{0.040}\times\num{56}=\qty{2.24}{\gram}$.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q9
+\noindent\textbf{CHIM-F05-Q09 --- Conservation de la masse (Lavoisier)}\par
+On brûle \qty{4.86}{\gram} de magnésium, qui consomment \qty{3.20}{\gram} de dioxygène :
+\[\ce{2 Mg + O2 -> 2 MgO}.\]
+La réaction étant totale, quelle masse d'oxyde de magnésium obtient-on ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{8.06}{\gram}
+\item \qty{1.66}{\gram}
+\item \qty{4.86}{\gram}
+\item \qty{3.20}{\gram}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Conservation de la masse : $m(\ce{MgO})=m(\ce{Mg})+m(\ce{O2})=\num{4.86}+\num{3.20}=\qty{8.06}{\gram}$. Tous les atomes des réactifs se retrouvent dans le produit.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : soustraction au lieu d'addition des masses : $\num{4.86}-\num{3.20}=\qty{1.66}{\gram}$.
+\item C : masse du dioxygène (gaz) négligée, comme si seul le métal comptait : \qty{4.86}{\gram}.
+\item D : masse du produit confondue avec la seule masse de dioxygène consommé : \qty{3.20}{\gram}.
+\end{itemize}
+\vspace{6pt}\hrule\vspace{8pt}
+
+% ------------------------------------------------------------------ Q10
+\noindent\textbf{CHIM-F05-Q10 --- Tableau d'avancement et avancement maximal}\par
+Pour la réaction
+\[\ce{2 SO2 + O2 -> 2 SO3},\]
+on part de \qty{0.50}{\mole} de \ce{SO2} et \qty{0.30}{\mole} de \ce{O2}. Quel est l'avancement maximal $\xi_{\max}$ de la réaction ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.30}{\mole}
+\item \qty{0.50}{\mole}
+\item \qty{0.25}{\mole}
+\item \qty{0.05}{\mole}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+$\xi_{\max}=\min\!\left(\dfrac{n_0(\ce{SO2})}{2},\ \dfrac{n_0(\ce{O2})}{1}\right)=\min\!\left(\dfrac{\num{0.50}}{2},\ \dfrac{\num{0.30}}{1}\right)=\min(\num{0.25},\num{0.30})=\qty{0.25}{\mole}$. C'est \ce{SO2} qui s'annule le premier : il est limitant.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : coefficient \num{2} de \ce{SO2} oublié — on compare \num{0.50} et \num{0.30}, d'où $\xi_{\max}=\num{0.30}$ (\ce{O2} jugé limitant à tort).
+\item B : quantité de produit $n(\ce{SO3})=\num{2}\xi_{\max}=\num{0.50}$ confondue avec l'avancement lui-même.
+\item D : quantité de \ce{O2} restante ($\num{0.30}-\num{0.25}=\num{0.05}$) confondue avec l'avancement maximal.
+\end{itemize}
+\vspace{6pt}\hrule
+
+\end{document}

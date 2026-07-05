@@ -1,0 +1,212 @@
+[
+  {
+    "id": "CHIM-F09-Q01",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Produit de solubilité : expression littérale",
+    "difficulte": "concours",
+    "enonce": "Le phosphate de calcium \\ce{Ca3(PO4)2}, minéral de l'os, se dissout selon \\[\\ce{Ca3(PO4)2(s) <=> 3 Ca^{2+}(aq) + 2 PO4^{3-}(aq)}.\\] Quelle est l'expression correcte de son produit de solubilité $K_{\\mathrm{ps}}$ ?",
+    "options": [
+      "$K_{\\mathrm{ps}} = [\\ce{Ca^{2+}}]^{2}\\,[\\ce{PO4^{3-}}]^{3}$",
+      "$K_{\\mathrm{ps}} = 3\\,[\\ce{Ca^{2+}}]\\times 2\\,[\\ce{PO4^{3-}}]$",
+      "$K_{\\mathrm{ps}} = [\\ce{Ca^{2+}}]^{3}\\,[\\ce{PO4^{3-}}]^{2}$",
+      "$K_{\\mathrm{ps}} = [\\ce{Ca^{2+}}]\\,[\\ce{PO4^{3-}}]$"
+    ],
+    "reponse_index": 2,
+    "explication": "L'exposant de chaque concentration est le coefficient stœchiométrique de l'ion dans l'équation de dissolution : $3$ pour \\ce{Ca^{2+}}, $2$ pour \\ce{PO4^{3-}}. D'où $K_{\\mathrm{ps}} = [\\ce{Ca^{2+}}]^{3}[\\ce{PO4^{3-}}]^{2}$.",
+    "pieges": [
+      "A : exposants pris égaux aux charges des ions ($2$ et $3$) au lieu des coefficients stœchiométriques ($3$ et $2$).",
+      "B : coefficients placés comme facteurs multiplicatifs devant les concentrations au lieu d'exposants.",
+      "D : coefficients stœchiométriques oubliés — aucun exposant."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q02",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Relation Kps-solubilité (sel de type 2:1)",
+    "difficulte": "concours",
+    "enonce": "Le chromate d'argent \\ce{Ag2CrO4} se dissout selon $\\ce{Ag2CrO4(s) <=> 2 Ag^{+}(aq) + CrO4^{2-}(aq)}$. En notant $s$ sa solubilité molaire dans l'eau pure, quelle est l'expression de son produit de solubilité en fonction de $s$ ?",
+    "options": [
+      "$K_{\\mathrm{ps}} = 4s^{3}$",
+      "$K_{\\mathrm{ps}} = 2s^{3}$",
+      "$K_{\\mathrm{ps}} = s^{3}$",
+      "$K_{\\mathrm{ps}} = 4s^{2}$"
+    ],
+    "reponse_index": 0,
+    "explication": "À l'équilibre $[\\ce{Ag+}] = 2s$ et $[\\ce{CrO4^{2-}}] = s$, donc $K_{\\mathrm{ps}} = [\\ce{Ag+}]^{2}[\\ce{CrO4^{2-}}] = (2s)^{2}(s) = 4s^{3}$.",
+    "pieges": [
+      "B : le facteur $2$ n'a pas été élevé au carré ($(2s)^{2}$ traité comme $2s^{2}$), d'où $2s^{3}$.",
+      "C : coefficient $2$ oublié ($[\\ce{Ag+}]$ pris égal à $s$), d'où $(s)^{2}(s) = s^{3}$.",
+      "D : le terme du chromate est omis, seul $[\\ce{Ag+}]^{2} = (2s)^{2} = 4s^{2}$ est conservé."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q03",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Solubilité à partir du Kps (racine et notation scientifique)",
+    "difficulte": "concours",
+    "enonce": "Le carbonate de strontium \\ce{SrCO3} est un sel peu soluble de type $1{:}1$. On suppose son produit de solubilité égal à $K_{\\mathrm{ps}} = \\num{1.0e-9}$ à \\qty{25}{\\degreeCelsius}. Quelle est sa solubilité molaire $s$ dans l'eau pure ?",
+    "options": [
+      "$s = \\qty{1.0e-5}{\\mole\\per\\litre}$",
+      "$s = \\qty{3.2e-5}{\\mole\\per\\litre}$",
+      "$s = \\qty{1.0e-9}{\\mole\\per\\litre}$",
+      "$s = \\qty{5.0e-10}{\\mole\\per\\litre}$"
+    ],
+    "reponse_index": 1,
+    "explication": "Type $1{:}1$ : $K_{\\mathrm{ps}} = s^{2}$, donc $s = \\sqrt{K_{\\mathrm{ps}}} = \\sqrt{\\num{1.0e-9}}$. En écrivant $\\num{1.0e-9} = \\num{10e-10}$, on obtient $s = \\sqrt{10}\\times 10^{-5} \\approx \\qty{3.2e-5}{\\mole\\per\\litre}$.",
+    "pieges": [
+      "A : exposant impair mal géré — $\\sqrt{\\num{1.0e-9}}$ pris pour $\\num{1.0e-5}$, en « oubliant » le facteur $\\sqrt{10}$.",
+      "C : racine oubliée, $s$ pris égal à $K_{\\mathrm{ps}}$.",
+      "D : racine carrée confondue avec une division par $2$ ($K_{\\mathrm{ps}}/2$)."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q04",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Solubilité massique et Kps (sel de type 1:2)",
+    "difficulte": "concours",
+    "enonce": "Le chlorure de plomb(II) \\ce{PbCl2} ($\\ce{PbCl2(s) <=> Pb^{2+}(aq) + 2 Cl^{-}(aq)}$) a une solubilité massique notée $s_m$ (en \\si{\\gram\\per\\litre}) ; sa masse molaire est $M$ (en \\si{\\gram\\per\\mole}). Quelle est l'expression de son produit de solubilité ?",
+    "options": [
+      "$K_{\\mathrm{ps}} = 2\\left(\\dfrac{s_m}{M}\\right)^{3}$",
+      "$K_{\\mathrm{ps}} = 4\\left(s_m\\,M\\right)^{3}$",
+      "$K_{\\mathrm{ps}} = \\left(\\dfrac{s_m}{M}\\right)^{2}$",
+      "$K_{\\mathrm{ps}} = 4\\left(\\dfrac{s_m}{M}\\right)^{3}$"
+    ],
+    "reponse_index": 3,
+    "explication": "Solubilité molaire $s = s_m/M$. Type $1{:}2$ : $K_{\\mathrm{ps}} = [\\ce{Pb^{2+}}][\\ce{Cl-}]^{2} = (s)(2s)^{2} = 4s^{3}$. En reportant $s = s_m/M$ : $K_{\\mathrm{ps}} = 4\\left(s_m/M\\right)^{3}$.",
+    "pieges": [
+      "A : facteur du type $1{:}2$ pris égal à $2$ au lieu de $4$ ($(2s)^{2}$ réduit à $2s^{2}$).",
+      "B : conversion inversée, $s = s_m\\times M$ au lieu de $s_m/M$ (confusion masse $\\leftrightarrow$ quantité de matière).",
+      "C : sel traité comme type $1{:}1$, $K_{\\mathrm{ps}} = s^{2}$."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q05",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Quotient réactionnel et précipitation après mélange",
+    "difficulte": "concours",
+    "enonce": "Pour prévoir l'apparition d'un précipité de \\ce{AgCl} ($K_{\\mathrm{ps}} = \\num{1.8e-10}$), on mélange \\qty{20}{\\milli\\litre} d'une solution de \\ce{AgNO3} à $[\\ce{Ag+}] = \\qty{1.0e-3}{\\mole\\per\\litre}$ avec \\qty{80}{\\milli\\litre} d'une solution de \\ce{NaCl} à $[\\ce{Cl-}] = \\qty{1.0e-3}{\\mole\\per\\litre}$. Quelle est la valeur du produit ionique $Q$ juste après le mélange, avant toute précipitation ?",
+    "options": [
+      "$Q = \\num{1.6e-7}$",
+      "$Q = \\num{1.0e-6}$",
+      "$Q = \\num{2.5e-7}$",
+      "$Q = \\num{1.6e-9}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Le volume total est \\qty{100}{\\milli\\litre}, chaque solution est donc diluée : $[\\ce{Ag+}] = \\num{1.0e-3}\\times\\frac{20}{100} = \\num{2.0e-4}$ et $[\\ce{Cl-}] = \\num{1.0e-3}\\times\\frac{80}{100} = \\num{8.0e-4}$. D'où $Q = [\\ce{Ag+}][\\ce{Cl-}] = \\num{2.0e-4}\\times\\num{8.0e-4} = \\num{1.6e-7}$ (et $Q \\gg K_{\\mathrm{ps}}$ : précipitation).",
+    "pieges": [
+      "B : dilution oubliée, $Q$ calculé avec les concentrations initiales, $(\\num{1.0e-3})^{2}$.",
+      "C : dilution supposée $\\times\\tfrac{1}{2}$ pour chaque solution (cas des volumes égaux), $(\\num{5.0e-4})^{2}$.",
+      "D : quantités de matière (mol) utilisées à la place des concentrations, $(\\num{2.0e-5})\\times(\\num{8.0e-5})$."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q06",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Effet d'ion commun",
+    "difficulte": "concours",
+    "enonce": "Le fluorure de calcium \\ce{CaF2} ($K_{\\mathrm{ps}} = \\num{4.0e-11}$) est dissous dans une solution de fluorure de sodium où la concentration en ions fluorure est imposée à $[\\ce{F-}] = \\qty{2.0e-2}{\\mole\\per\\litre}$ (très supérieure à sa solubilité dans l'eau pure). Quelle est la nouvelle solubilité $s'$ de \\ce{CaF2} ?",
+    "options": [
+      "$s' = \\qty{2.0e-9}{\\mole\\per\\litre}$",
+      "$s' = \\qty{2.2e-4}{\\mole\\per\\litre}$",
+      "$s' = \\qty{1.0e-7}{\\mole\\per\\litre}$",
+      "$s' = \\qty{2.5e-8}{\\mole\\per\\litre}$"
+    ],
+    "reponse_index": 2,
+    "explication": "L'ion \\ce{F-} étant apporté en excès par la solution, $K_{\\mathrm{ps}} = [\\ce{Ca^{2+}}][\\ce{F-}]^{2} \\approx s'\\,C^{2}$ avec $C = [\\ce{F-}]$. Donc $s' = K_{\\mathrm{ps}}/C^{2} = \\num{4.0e-11}/(\\num{2.0e-2})^{2} = \\num{4.0e-11}/\\num{4.0e-4} = \\qty{1.0e-7}{\\mole\\per\\litre}$.",
+    "pieges": [
+      "A : carré oublié sur l'ion commun, $s' = K_{\\mathrm{ps}}/C$ au lieu de $K_{\\mathrm{ps}}/C^{2}$.",
+      "B : effet d'ion commun ignoré, solubilité de l'eau pure calculée $s = \\sqrt[3]{K_{\\mathrm{ps}}/4}$.",
+      "D : concentration de l'ion commun doublée à tort ($[\\ce{F-}] = 2C$), $s' = K_{\\mathrm{ps}}/(2C)^{2}$."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q07",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "pH de début de précipitation d'un hydroxyde",
+    "difficulte": "concours",
+    "enonce": "On extrait le magnésium de l'eau de mer en précipitant \\ce{Mg(OH)2} ($K_{\\mathrm{ps}} = \\num{1.0e-11}$). Dans une solution où $[\\ce{Mg^{2+}}] = \\qty{0.10}{\\mole\\per\\litre}$, à partir de quel pH (à \\qty{25}{\\degreeCelsius}, $[\\ce{OH-}] = 10^{\\,\\mathrm{pH}-14}$) l'hydroxyde commence-t-il à précipiter ?",
+    "options": [
+      "$\\mathrm{pH} = \\num{4.0}$",
+      "$\\mathrm{pH} = \\num{9.0}$",
+      "$\\mathrm{pH} = \\num{5.0}$",
+      "$\\mathrm{pH} = \\num{10.7}$"
+    ],
+    "reponse_index": 1,
+    "explication": "La précipitation débute quand $Q = K_{\\mathrm{ps}}$ : $[\\ce{OH-}] = \\sqrt{K_{\\mathrm{ps}}/[\\ce{Mg^{2+}}]} = \\sqrt{\\num{1.0e-11}/\\num{0.10}} = \\sqrt{\\num{1.0e-10}} = \\num{1.0e-5}$. D'où $\\mathrm{pH} = 14 + \\log(\\num{1.0e-5}) = 14 - 5 = \\num{9.0}$.",
+    "pieges": [
+      "A : racine oubliée, $[\\ce{OH-}] = K_{\\mathrm{ps}}/[\\ce{Mg^{2+}}] = \\num{1.0e-10}$, d'où $\\mathrm{pH} = 4$.",
+      "C : c'est le pOH ($-\\log[\\ce{OH-}] = 5$) qui a été donné au lieu du pH.",
+      "D : racine cubique employée (\\ce{Mg(OH)2} traité comme un hydroxyde \\ce{M(OH)3}), $[\\ce{OH-}] = \\sqrt[3]{\\num{1.0e-10}}$."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q08",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Comparaison de solubilités (types différents)",
+    "difficulte": "concours",
+    "enonce": "On donne deux sels d'argent : \\ce{AgCl} (type $1{:}1$, $K_{\\mathrm{ps}} = \\num{1.0e-10}$) et \\ce{Ag2CrO4} (type $2{:}1$, $K_{\\mathrm{ps}} = \\num{3.2e-11}$). Lequel est le plus soluble dans l'eau pure ?",
+    "options": [
+      "\\ce{AgCl}, car $K_{\\mathrm{ps}}(\\ce{AgCl}) = \\num{1.0e-10}$ est supérieur à $K_{\\mathrm{ps}}(\\ce{Ag2CrO4}) = \\num{3.2e-11}$.",
+      "\\ce{AgCl}, car $s(\\ce{Ag2CrO4}) = \\sqrt{K_{\\mathrm{ps}}} = \\qty{5.7e-6}{\\mole\\per\\litre}$ est inférieur à $s(\\ce{AgCl}) = \\qty{1.0e-5}{\\mole\\per\\litre}$.",
+      "Les deux ont la même solubilité, car leurs $K_{\\mathrm{ps}}$ sont du même ordre de grandeur.",
+      "\\ce{Ag2CrO4}, car $s(\\ce{Ag2CrO4}) = \\qty{2.0e-4}{\\mole\\per\\litre}$ dépasse $s(\\ce{AgCl}) = \\qty{1.0e-5}{\\mole\\per\\litre}$."
+    ],
+    "reponse_index": 3,
+    "explication": "$s(\\ce{AgCl}) = \\sqrt{K_{\\mathrm{ps}}} = \\sqrt{\\num{1.0e-10}} = \\num{1.0e-5}$. Pour \\ce{Ag2CrO4} (type $2{:}1$), $K_{\\mathrm{ps}} = 4s^{3}$ donc $s = \\sqrt[3]{K_{\\mathrm{ps}}/4} = \\sqrt[3]{\\num{8.0e-12}} = \\num{2.0e-4}$. Malgré un $K_{\\mathrm{ps}}$ plus petit, \\ce{Ag2CrO4} est le plus soluble : on ne compare pas directement des $K_{\\mathrm{ps}}$ de types différents.",
+    "pieges": [
+      "A : comparaison directe des $K_{\\mathrm{ps}}$, illégitime entre sels de types différents.",
+      "B : \\ce{Ag2CrO4} (type $2{:}1$) traité comme un $1{:}1$, $s = \\sqrt{K_{\\mathrm{ps}}}$ au lieu de $\\sqrt[3]{K_{\\mathrm{ps}}/4}$.",
+      "C : ordre de grandeur du $K_{\\mathrm{ps}}$ assimilé à tort à celui de la solubilité."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q09",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Influence du pH sur la solubilité",
+    "difficulte": "concours",
+    "enonce": "Parmi ces sels peu solubles, pour lequel la solubilité augmente-t-elle nettement lorsqu'on diminue le pH (milieu acide) ?",
+    "options": [
+      "\\ce{CaF2}",
+      "\\ce{AgCl}",
+      "\\ce{BaSO4}",
+      "\\ce{AgBr}"
+    ],
+    "reponse_index": 0,
+    "explication": "L'ion \\ce{F-} est la base conjuguée de l'acide faible \\ce{HF}. En milieu acide, $\\ce{F- + H3O+ -> HF + H2O}$ consomme les ions fluorure, ce qui déplace l'équilibre de dissolution vers la droite : la solubilité de \\ce{CaF2} augmente.",
+    "pieges": [
+      "B : \\ce{Cl-} est la base conjuguée de \\ce{HCl}, acide fort : il ne réagit pas avec \\ce{H3O+}, solubilité indépendante du pH.",
+      "C : \\ce{SO4^{2-}} est issu de l'acide fort \\ce{H2SO4} : la solubilité de \\ce{BaSO4} est essentiellement indépendante du pH.",
+      "D : \\ce{Br-} est la base conjuguée de l'acide fort \\ce{HBr} : \\ce{AgBr} n'est pas sensible au pH."
+    ]
+  },
+  {
+    "id": "CHIM-F09-Q10",
+    "matiere": "Chimie",
+    "fiche": "09",
+    "theme": "Propriétés du produit de solubilité",
+    "difficulte": "concours",
+    "enonce": "Une seule des affirmations suivantes est correcte. Laquelle ?",
+    "options": [
+      "La solubilité $s$ d'un sel est une constante à température fixée, indépendante des autres ions présents en solution.",
+      "Le produit de solubilité est une grandeur sans unité, dont la valeur dépend de la température.",
+      "L'ajout d'un ion commun diminue la valeur du produit de solubilité $K_{\\mathrm{ps}}$ du sel.",
+      "Le produit de solubilité de \\ce{Pb3(PO4)2} s'exprime en $\\mathrm{mol^{5}\\cdot L^{-5}}$."
+    ],
+    "reponse_index": 1,
+    "explication": "$K_{\\mathrm{ps}}$ est une constante d'équilibre : elle est sans dimension et, comme toute constante d'équilibre, elle dépend de la température.",
+    "pieges": [
+      "A : c'est $K_{\\mathrm{ps}}$ (et non $s$) qui est constant ; la solubilité $s$ chute en présence d'un ion commun.",
+      "C : l'ion commun ne modifie pas $K_{\\mathrm{ps}}$ (constante à $T$ fixée) ; il fait chuter la solubilité.",
+      "D : bien que l'analyse dimensionnelle « suggère » $\\mathrm{mol^{5}\\,L^{-5}}$, $K_{\\mathrm{ps}}$ est une constante d'équilibre, donc sans unité."
+    ]
+  }
+]

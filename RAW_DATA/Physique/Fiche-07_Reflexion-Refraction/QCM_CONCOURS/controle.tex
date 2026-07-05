@@ -1,0 +1,306 @@
+% ===== PRÉAMBULE CANONIQUE QCM — PHYSIQUE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : packages figés.
+% La bibliothèque TikZ "babel" est indispensable (conflit babel-french/circuitikz).
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,%
+  decorations.markings,intersections,babel}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% ==============================================
+\begin{document}
+\begin{center}\Large\bfseries QCM type concours --- Physique, Fiche 7 : lois de la réflexion et de la réfraction\end{center}
+\vspace{4pt}\hrule\vspace{10pt}
+
+\noindent\textbf{PHYS-F07-Q01 --- Réflexion totale : indice minimal d'un prisme}\par
+Un prisme en verre, dont la section droite est un triangle rectangle isocèle ($45^\circ$--$45^\circ$--$90^\circ$), est plongé dans l'air. Un rayon entre perpendiculairement à une petite face et frappe l'hypoténuse sous une incidence de $45^\circ$. Quelle condition sur l'indice $n$ du verre garantit une réflexion totale sur l'hypoténuse ?
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\coordinate (A) at (0,0); \coordinate (B) at (0,2.4); \coordinate (C) at (2.4,0);
+\fill[gray!18] (A)--(B)--(C)--cycle;
+\draw[thick] (A)--(B)--(C)--cycle;
+\draw (0.22,0)--(0.22,0.22)--(0,0.22);
+\node[above left] at (B) {\footnotesize $45^\circ$};
+\node[below right] at (C) {\footnotesize $45^\circ$};
+\node at (0.78,0.62) {\footnotesize $n$};
+\coordinate (M) at (0,1.4); \coordinate (N) at (1.0,1.4); \coordinate (P) at (1.0,0);
+\node[left] at (-1.35,1.4) {\footnotesize rayon};
+\draw[->,>=Stealth,thick,red] (-1.35,1.4)--(M);
+\draw[thick,red] (M)--(N);
+\draw[dashed] ($(N)+(0.55,0.55)$)--($(N)-(0.55,0.55)$);
+\draw[red,line width=0.4pt] ($(N)+(0.4,0)$) arc (0:45:0.4);
+\node at (1.7,1.6) {\footnotesize $45^\circ$};
+\draw[thick,red] (N)--(P);
+\draw[->,>=Stealth,thick,red] (P)--(1.0,-1.15);
+\node[below] at (1.0,-1.15) {\footnotesize émergent};
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\Alph*)]
+\item $n > \dfrac{\sqrt{2}}{2}$
+\item $n > 1$
+\item $n > \sqrt{2}$
+\item $n > 2$
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+La réflexion totale a lieu si l'angle d'incidence dépasse l'angle limite $i_{\text{lim}}=\arcsin(1/n)$, soit ici $45^\circ > \arcsin(1/n)$. Cela équivaut à $\sin 45^\circ > \dfrac{1}{n}$, d'où $n > \dfrac{1}{\sin 45^\circ}=\dfrac{1}{\sqrt{2}/2}=\sqrt{2}\approx 1{,}41$. C'est le résultat classique du prisme à réflexion totale.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: inversion de la relation, on pose $n=\sin 45^\circ=\dfrac{\sqrt{2}}{2}$ au lieu de $n=\dfrac{1}{\sin 45^\circ}$ (valeur inférieure à $1$, donc impossible pour un verre).
+\item B: on prend $\tan 45^\circ=1$ au lieu de $\sin 45^\circ$, ou l'on croit qu'il suffit que le verre soit « plus réfringent que l'air ».
+\item D: on lit l'angle sur l'hypoténuse comme $30^\circ$ au lieu de $45^\circ$ : $n>1/\sin 30^\circ = 2$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q02 --- Condition d'existence de la réflexion totale}\par
+On donne les indices $n_{\text{air}}=1$, $n_{\text{eau}}=1{,}33$, $n_{\text{verre}}=1{,}5$ et $n_{\text{diamant}}=2{,}42$. La réflexion totale n'est possible qu'à certaines conditions. Parmi les situations suivantes, laquelle peut effectivement donner lieu à une réflexion totale ?
+\begin{enumerate}[label=\Alph*)]
+\item Passage du diamant vers l'air, si $i > \arcsin\!\left(\dfrac{1}{2{,}42}\right)$.
+\item Passage de l'air vers l'eau, si $i > \arcsin\!\left(\dfrac{1}{1{,}33}\right)$.
+\item Passage du verre vers le diamant, si $i > \arcsin\!\left(\dfrac{1{,}5}{2{,}42}\right)$.
+\item Passage du diamant vers l'air, si $i < \arcsin\!\left(\dfrac{1}{2{,}42}\right)$.
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+La réflexion totale exige deux conditions : partir du milieu \emph{le plus} réfringent vers le \emph{moins} réfringent, \emph{et} un angle d'incidence \emph{supérieur} à l'angle limite $i_{\text{lim}}=\arcsin(n_2/n_1)$. Le passage diamant $\to$ air ($2{,}42 \to 1$) avec $i>\arcsin(1/2{,}42)\approx 24{,}4^\circ$ remplit exactement ces deux conditions.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: on croit la réflexion totale possible en \emph{entrant} dans un milieu plus réfringent (air $\to$ eau) : le mauvais sens, la réfraction y a toujours lieu.
+\item C: même erreur de sens, verre $\to$ diamant se fait vers un milieu \emph{plus} réfringent.
+\item D: bon sens mais condition inversée : $i<i_{\text{lim}}$ donne une réfraction, pas une réflexion totale.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q03 --- Snell--Descartes et angle mesuré par rapport à la surface}\par
+Un rayon se propage dans l'air ($n=1$) et atteint la surface d'un lac ($n_{\text{eau}}=1{,}33$) en faisant un angle de $30^\circ$ avec la \textbf{surface} de l'eau. Quelle est l'expression de l'angle de réfraction $r$ (mesuré par rapport à la normale) dans l'eau ?
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\fill[blue!10] (-3,-1.4) rectangle (3,0);
+\draw[thick] (-3,0)--(3,0);
+\node[right] at (3,0) {\footnotesize surface};
+\draw[dashed] (0,-1.4)--(0,1.7);
+\node[above] at (0,1.7) {\footnotesize normale};
+\node at (-2.3,0.5) {\footnotesize air};
+\node at (-2.05,-0.7) {\footnotesize eau ($n=1{,}33$)};
+\draw[->,>=Stealth,thick,red] (-2.6,{2.6*tan(30)})--(0,0);
+\draw[red,line width=0.4pt] (-1.4,0) arc (180:150:1.4);
+\node at (-1.6,0.32) {\footnotesize $30^\circ$};
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\Alph*)]
+\item $\arcsin\!\left(\dfrac{\sin 30^\circ}{1{,}33}\right)$
+\item $\arcsin\!\left(\dfrac{\sin 60^\circ}{1{,}33}\right)$
+\item $90^\circ-\arcsin\!\left(\dfrac{\sin 60^\circ}{1{,}33}\right)$
+\item $\arcsin\!\left(\dfrac{\sin 60^\circ}{1{,}5}\right)$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+L'angle d'incidence se mesure \emph{par rapport à la normale}, or l'énoncé donne l'angle par rapport à la surface : $i = 90^\circ - 30^\circ = 60^\circ$. Snell--Descartes donne $1\times\sin 60^\circ = 1{,}33\times\sin r$, soit $r=\arcsin\!\left(\dfrac{\sin 60^\circ}{1{,}33}\right)\approx 40{,}6^\circ$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on oublie la conversion et on garde $30^\circ$ au lieu de $i=60^\circ$.
+\item C: on donne l'angle par rapport à la \emph{surface} ($90^\circ-r$) au lieu de l'angle par rapport à la normale.
+\item D: on utilise l'indice du verre $1{,}5$ au lieu de celui de l'eau $1{,}33$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q04 --- Chaîne des rapports : longueur d'onde dans le verre}\par
+Une lumière monochromatique de longueur d'onde $\lambda_{\text{air}}=\qty{600}{\nano\metre}$ passe de l'air ($n=1$) au verre ($n=1{,}5$). Quelle est sa longueur d'onde dans le verre ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{451}{\nano\metre}
+\item \qty{600}{\nano\metre}
+\item \qty{900}{\nano\metre}
+\item \qty{400}{\nano\metre}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La fréquence est imposée par la source et ne change pas. Avec $\lambda=c_i/f$ et $c_i=c/n$, on a $\dfrac{\lambda_{\text{verre}}}{\lambda_{\text{air}}}=\dfrac{c_{\text{verre}}}{c_{\text{air}}}=\dfrac{n_{\text{air}}}{n_{\text{verre}}}=\dfrac{1}{1{,}5}$, d'où $\lambda_{\text{verre}}=\dfrac{600}{1{,}5}=\qty{400}{\nano\metre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on divise par l'indice de l'eau $1{,}33$ ($600/1{,}33\approx 451$) au lieu de celui du verre.
+\item B: on croit la longueur d'onde inchangée, en la confondant avec la fréquence (qui, elle, est constante).
+\item C: rapport inversé, on multiplie par $1{,}5$ ($600\times1{,}5=900$) au lieu de diviser.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q05 --- Ce qui change lors d'un changement de milieu}\par
+Une lumière monochromatique passe de l'air dans l'eau ($n_{\text{eau}}=1{,}33$). Parmi les affirmations suivantes, laquelle est \textbf{correcte} ?
+\begin{enumerate}[label=\Alph*)]
+\item Sa longueur d'onde reste inchangée ; seule sa vitesse diminue.
+\item Sa fréquence diminue, ce qui modifie la couleur de la lumière.
+\item Sa fréquence reste inchangée, tandis que sa vitesse et sa longueur d'onde diminuent.
+\item Sa vitesse augmente, car l'eau est plus réfringente que l'air.
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+La fréquence est fixée par la source : elle est la seule grandeur invariante. En entrant dans un milieu plus réfringent, la lumière ralentit ($v=c/n$ diminue) et, comme $\lambda=v/f$ avec $f$ constante, la longueur d'onde diminue elle aussi.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on confond la grandeur invariante ; c'est la fréquence, et non la longueur d'onde, qui ne change pas.
+\item B: on croit que la fréquence change, alors qu'elle est imposée par la source (la couleur perçue ne change pas).
+\item D: mauvais sens ; un milieu plus réfringent ralentit la lumière ($v=c/n$), la vitesse diminue.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q06 --- Dispersion de la lumière blanche par un prisme}\par
+Un faisceau de lumière blanche passe de l'air dans un prisme de verre, milieu dispersif (rappel : $\lambda_{\text{rouge}}>\lambda_{\text{verte}}>\lambda_{\text{bleue}}$). Parmi les propositions suivantes, laquelle est \textbf{exacte} ?
+\begin{enumerate}[label=\Alph*)]
+\item La lumière rouge est la plus déviée et se propage le plus lentement dans le verre.
+\item Les trois radiations gardent la même vitesse dans le verre ; seules leurs directions diffèrent.
+\item La lumière rouge est la plus proche de la normale, car sa longueur d'onde est la plus grande.
+\item La lumière bleue est la plus déviée (la plus proche de la normale) et se propage le plus lentement dans le verre.
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+Dans un milieu dispersif, l'indice croît quand la longueur d'onde décroît : $n_{\text{bleu}}>n_{\text{vert}}>n_{\text{rouge}}$. Le bleu a donc l'indice le plus grand : il est le plus dévié (le plus proche de la normale) et le plus lent ($v=c/n$). Le rouge, lui, est le moins dévié et le plus rapide.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on inverse tout ; c'est le bleu, et non le rouge, qui est le plus dévié et le plus lent.
+\item B: on ignore la dispersion ; comme $n$ dépend de $\lambda$, les vitesses $v=c/n$ diffèrent d'une couleur à l'autre.
+\item C: on inverse la déviation ; le rouge est le \emph{moins} dévié, donc le plus \emph{éloigné} de la normale.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q07 --- Système de deux miroirs plans}\par
+Deux miroirs plans $M_1$ et $M_2$ forment entre eux un angle de $50^\circ$. Un rayon frappe $M_1$ sous un angle d'incidence $i_1=20^\circ$ (mesuré par rapport à la normale à $M_1$), se réfléchit, puis frappe $M_2$. Quel est l'angle d'incidence $i_2$ sur $M_2$ ?
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\coordinate (O) at (0,0);
+\draw[thick] (O)--(3.6,0) node[right]{\footnotesize $M_1$};
+\draw[thick] (O)--(2.314,2.758) node[above right]{\footnotesize $M_2$};
+\draw[line width=0.4pt] (0.8,0) arc (0:50:0.8);
+\node at (1.06,0.42) {\footnotesize $50^\circ$};
+\coordinate (P) at (2.4,0); \coordinate (Q) at (1.55,1.85);
+\draw[dashed] (P)--(2.4,1.3);
+\draw[->,>=Stealth,thick,red] (3.15,1.75)--(P);
+\draw[->,>=Stealth,thick,red] (P)--(Q);
+\draw[dashed] (Q)--(2.39,1.14);
+\draw[line width=0.4pt] (2.4,0.7) arc (90:112:0.7);
+\node at (2.14,0.88) {\footnotesize $20^\circ$};
+\node at (1.9,1.48) {\footnotesize $i_2=?$};
+\fill (P) circle (1.2pt); \fill (Q) circle (1.2pt);
+\node[below right] at (2.9,1.4) {\footnotesize \itshape (schéma non à l'échelle)};
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\Alph*)]
+\item $\ang{20}$
+\item $\ang{30}$
+\item $\ang{50}$
+\item $\ang{70}$
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Dans le triangle formé par le sommet des deux miroirs et les deux points d'impact, le rayon fait un angle $90^\circ-i_1$ avec $M_1$ et $90^\circ-i_2$ avec $M_2$. La somme des angles vaut $180^\circ$ : $50^\circ+(90^\circ-i_1)+(90^\circ-i_2)=180^\circ$, d'où $i_2=50^\circ-i_1=50^\circ-20^\circ=\ang{30}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on croit l'angle d'incidence conservé d'un miroir à l'autre, $i_2=i_1=\ang{20}$.
+\item C: on croit $i_2$ égal à l'angle entre les deux miroirs, $\ang{50}$.
+\item D: on additionne au lieu de soustraire, $i_2=\alpha+i_1=\ang{70}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q08 --- Profondeur apparente}\par
+Un caillou repose au fond d'un bassin, à la profondeur réelle $h=\qty{1.20}{\metre}$. On l'observe presque à la verticale, depuis l'air ($n=1$), à travers l'eau ($n_{\text{eau}}=1{,}33$). À quelle profondeur apparente $h'$ le caillou semble-t-il se trouver ? On rappelle $h'=\dfrac{n_2}{n_1}\,h$ (milieu de l'objet $\to$ milieu de l'observateur).
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.90}{\metre}
+\item \qty{0.80}{\metre}
+\item \qty{1.20}{\metre}
+\item \qty{1.60}{\metre}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+L'objet est dans l'eau ($n_1=1{,}33$), l'observateur dans l'air ($n_2=1$). D'où $h'=\dfrac{n_2}{n_1}\,h=\dfrac{1}{1{,}33}\times 1{,}20\approx\qty{0.90}{\metre}$ : le caillou paraît remonté d'environ $\qty{30}{\centi\metre}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: on utilise l'indice du verre $1{,}5$ au lieu de celui de l'eau ($1{,}20/1{,}5=\qty{0.80}{\metre}$).
+\item C: on croit la profondeur inchangée par la réfraction.
+\item D: rapport inversé, $h'=n_{\text{eau}}\,h=1{,}33\times1{,}20\approx\qty{1.60}{\metre}$ (le caillou paraîtrait plus profond, ce qui est faux).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q09 --- Lame de verre à faces parallèles}\par
+Un rayon arrive sous une incidence de $40^\circ$ sur une lame de verre ($n=1{,}5$) à \textbf{faces parallèles}, entourée d'air. Sous quel angle (par rapport à la normale) le rayon émerge-t-il de la lame, et dans quelle direction ?
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\fill[gray!18] (-2.6,-0.55) rectangle (2.6,0.55);
+\draw[thick] (-2.6,0.55)--(2.6,0.55);
+\draw[thick] (-2.6,-0.55)--(2.6,-0.55);
+\node at (0,0) {\footnotesize verre ($n=1{,}5$)};
+\node at (-2.0,0.9) {\footnotesize air};
+\node at (2.0,-0.9) {\footnotesize air};
+\draw[<->] (-2.85,-0.55)--(-2.85,0.55); \node[left] at (-2.85,0){\footnotesize $a$};
+\coordinate (E) at (-0.9,0.55); \coordinate (Sx) at (0.3,-0.55);
+\draw[->,>=Stealth,thick,red] (-1.9,1.2)--(E);
+\draw[thick,red] (E)--(Sx);
+\draw[->,>=Stealth,thick,red] (Sx)--(1.3,-1.2);
+\draw[dashed] (E)--(-0.9,1.2); \draw[dashed] (E)--(-0.9,0.05);
+\node at (-0.58,0.92) {\footnotesize $40^\circ$};
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\Alph*)]
+\item $\ang{0}$ : la lame ne dévie pas, le rayon la traverse en ligne droite le long de la normale.
+\item $\ang{25.4}$ : le rayon émerge rapproché de la normale.
+\item $\ang{40}$ : le rayon émerge parallèle au rayon incident.
+\item $\ang{74.6}$ : le rayon émerge éloigné de la normale.
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+À l'entrée (air $\to$ verre) : $\sin 40^\circ = 1{,}5\sin\hat r$. À la sortie (verre $\to$ air), les faces étant parallèles, l'angle interne est encore $\hat r$ : $1{,}5\sin\hat r = \sin\hat i{\,}'$. En combinant, $\sin\hat i{\,}'=\sin 40^\circ$, donc $\hat i{\,}'=\ang{40}$. Le rayon émerge \emph{parallèle} à l'incident, simplement décalé latéralement.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on croit qu'une lame à faces parallèles supprime toute déviation \emph{et} tout changement de direction, d'où un trajet rectiligne.
+\item B: on donne l'angle réfracté \emph{interne} $\arcsin(\sin 40^\circ/1{,}5)\approx\ang{25.4}$, en oubliant la seconde réfraction à la sortie qui restitue $\ang{40}$.
+\item D: on applique Snell à l'envers à la sortie, $\sin r = 1{,}5\sin 40^\circ$, d'où $\approx\ang{74.6}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\noindent\textbf{PHYS-F07-Q10 --- Prisme à réflexion totale immergé dans un liquide}\par
+Le prisme précédent ($45^\circ$--$45^\circ$--$90^\circ$, verre $n=1{,}5$, rayon frappant l'hypoténuse sous $45^\circ$) est maintenant plongé dans un liquide transparent d'indice $n'$. Pour quelle condition sur $n'$ la réflexion totale sur l'hypoténuse est-elle \textbf{encore} assurée ?
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+\fill[blue!10] (-1.6,-1.35) rectangle (3.0,2.7);
+\node at (-0.85,2.35) {\footnotesize liquide $n'$};
+\coordinate (A) at (0,0); \coordinate (B) at (0,2.4); \coordinate (C) at (2.4,0);
+\fill[gray!25] (A)--(B)--(C)--cycle;
+\draw[thick] (A)--(B)--(C)--cycle;
+\draw (0.22,0)--(0.22,0.22)--(0,0.22);
+\node[above left] at (B) {\footnotesize $45^\circ$};
+\node[below right] at (C) {\footnotesize $45^\circ$};
+\node at (0.72,0.6) {\footnotesize $n=1{,}5$};
+\coordinate (M) at (0,1.4); \coordinate (N) at (1.0,1.4); \coordinate (P) at (1.0,0);
+\draw[->,>=Stealth,thick,red] (-1.4,1.4)--(M);
+\draw[thick,red] (M)--(N);
+\draw[dashed] ($(N)+(0.5,0.5)$)--($(N)-(0.5,0.5)$);
+\draw[red,line width=0.4pt] ($(N)+(0.38,0)$) arc (0:45:0.38);
+\node at (1.64,1.58) {\footnotesize $45^\circ$};
+\draw[thick,red] (N)--(P);
+\draw[->,>=Stealth,thick,red] (P)--(1.0,-1.15);
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\Alph*)]
+\item $n' < 2{,}12$
+\item $n' < 0{,}75$
+\item $n' < 1{,}50$
+\item $n' < 1{,}06$
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La réflexion totale à l'interface verre/liquide exige $45^\circ > \arcsin\!\left(\dfrac{n'}{n}\right)$, soit $\dfrac{n'}{n}<\sin 45^\circ$, d'où $n' < n\sin 45^\circ = 1{,}5\times\dfrac{\sqrt{2}}{2}\approx 1{,}06$. Immerger le prisme dans un liquide relève l'indice extérieur et menace la réflexion totale au-delà de cette valeur.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: on divise au lieu de multiplier, $n'<1{,}5/\sin 45^\circ\approx 2{,}12$.
+\item B: on lit l'angle sur l'hypoténuse comme $30^\circ$, $n'<1{,}5\sin 30^\circ=0{,}75$.
+\item C: on croit qu'il suffit que le liquide soit moins réfringent que le verre ($n'<1{,}5$), en oubliant la condition d'angle.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\end{document}

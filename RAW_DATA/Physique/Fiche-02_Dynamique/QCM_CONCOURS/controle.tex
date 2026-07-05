@@ -1,0 +1,288 @@
+% ===== PRÉAMBULE CANONIQUE QCM — PHYSIQUE =====
+% Sert à compiler controle.tex ET à la revalidation automatique du JSON
+% (valider_qcm.py). NE PAS MODIFIER : packages figés.
+% La bibliothèque TikZ "babel" est indispensable (conflit babel-french/circuitikz).
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,%
+  decorations.markings,intersections,babel}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% ==============================================
+\begin{document}
+\noindent\textbf{PHYS-F02-Q01 --- Plan incline sans frottement}\par
+Un bloc de masse $m=\qty{2.0}{\kilogram}$ est lâché sans vitesse initiale sur un plan incliné \emph{sans frottement}, faisant un angle $\alpha=\ang{30}$ avec l'horizontale. On prend $g=\qty{10}{\metre\per\second\squared}$. Quelle est l'accélération du bloc le long de la pente ?
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+\coordinate (O) at (0,0);\coordinate (B) at (5,0);\coordinate (C) at (5,2.887);
+\draw[thick,fill=black!6] (O)--(B)--(C)--cycle;
+\draw pic[draw,angle radius=0.9cm,"$\alpha$"]{angle=B--O--C};
+\coordinate (P) at (2.6,1.5);\fill[black] (P) circle (2.2pt);
+\draw[->,thick,red] (P)--++(0,-1.6) node[below]{$\vv G$};
+\draw[->,thick,blue] (P)--++(120:1.3) node[above left]{$\vv N$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{8.7}{\metre\per\second\squared}
+\item \qty{5.8}{\metre\per\second\squared}
+\item \qty{5.0}{\metre\per\second\squared}
+\item \qty{2.5}{\metre\per\second\squared}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Sur un plan lisse, le PFD projeté le long de la pente s'écrit $mg\sin\alpha=ma$, soit $a=g\sin\alpha$. La masse se simplifie : $a=10\times\num{0.5}=\qty{5.0}{\metre\per\second\squared}$, indépendante de $m$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : confusion $\sin\leftrightarrow\cos$ dans la projection du poids, $a=g\cos\alpha=\qty{8.7}{\metre\per\second\squared}$.
+\item B : composante motrice prise en $g\tan\alpha$ au lieu de $g\sin\alpha$ : $\qty{5.8}{\metre\per\second\squared}$.
+\item D : division par la masse alors que $a$ en est indépendante, $g\sin\alpha/m=\qty{2.5}{\metre\per\second\squared}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q02 --- Plan incline avec frottement}\par
+Un bloc glisse vers le bas d'un plan incliné à $\alpha=\ang{30}$. Le coefficient de frottement cinétique entre le bloc et la pente vaut $\mu_c=\num{0.20}$. On prend $g=\qty{10}{\metre\per\second\squared}$. Déterminer l'accélération du bloc le long de la pente.
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+\coordinate (O) at (0,0);\coordinate (B) at (5,0);\coordinate (C) at (5,2.887);
+\draw[thick,fill=black!6] (O)--(B)--(C)--cycle;
+\draw pic[draw,angle radius=0.9cm,"$\alpha$"]{angle=B--O--C};
+\coordinate (P) at (2.6,1.5);\fill[black] (P) circle (2.2pt);
+\draw[->,thick,red] (P)--++(0,-1.6) node[below]{$\vv G$};
+\draw[->,thick,blue] (P)--++(120:1.3) node[above left]{$\vv N$};
+\draw[->,thick,orange] (P)--++(30:1.3) node[above right]{$\vv{F_f}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{3.3}{\metre\per\second\squared}
+\item \qty{3.0}{\metre\per\second\squared}
+\item \qty{7.7}{\metre\per\second\squared}
+\item \qty{6.7}{\metre\per\second\squared}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+PFD le long de la pente : $mg\sin\alpha-F_f=ma$ avec $F_f=\mu_c N=\mu_c mg\cos\alpha$. D'où $a=g(\sin\alpha-\mu_c\cos\alpha)=10\,(\num{0.5}-\num{0.20}\times\num{0.866})\approx\qty{3.3}{\metre\per\second\squared}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : frottement pris en $F_f=\mu_c mg$ (oubli du $\cos\alpha$ dans $N$), $a=g(\sin\alpha-\mu_c)=\qty{3.0}{\metre\per\second\squared}$.
+\item C : confusion $\sin\leftrightarrow\cos$ sur la composante motrice, $a=g(\cos\alpha-\mu_c\sin\alpha)=\qty{7.7}{\metre\per\second\squared}$.
+\item D : erreur de signe, frottement \emph{ajouté} au lieu d'être retranché, $\qty{6.7}{\metre\per\second\squared}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q03 --- Frottement statique sur plan incline}\par
+Une caisse de masse $m=\qty{40}{\kilogram}$ repose, \emph{immobile}, sur un plan incliné à $\alpha=\ang{20}$. Le coefficient de frottement statique vaut $\mu_s=\num{0.60}$. On prend $g=\qty{10}{\metre\per\second\squared}$. Quelle est l'intensité de la force de frottement qui s'exerce alors sur la caisse ?
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+\coordinate (O) at (0,0);\coordinate (B) at (5,0);\coordinate (C) at (5,1.82);
+\draw[thick,fill=black!6] (O)--(B)--(C)--cycle;
+\draw pic[draw,angle radius=0.9cm,"$\alpha$"]{angle=B--O--C};
+\coordinate (P) at (2.82,1.03);\fill[black] (P) circle (2.2pt);
+\draw[->,thick,red] (P)--++(0,-1.5) node[below]{$\vv G$};
+\draw[->,thick,blue] (P)--++(110:1.25) node[above left]{$\vv N$};
+\draw[->,thick,orange] (P)--++(20:1.25) node[above right]{$\vv{F_f}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{226}{\newton}
+\item \qty{137}{\newton}
+\item \qty{240}{\newton}
+\item \qty{376}{\newton}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+La caisse étant immobile, le frottement statique équilibre exactement la composante motrice du poids : $F_f=mg\sin\alpha=40\times10\times\num{0.342}\approx\qty{137}{\newton}$. La quantité $\mu_s N=\qty{226}{\newton}$ n'est que le \emph{maximum} disponible ($137<226$, la caisse tient donc bien).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : application de $F_f=\mu_s N=\mu_s mg\cos\alpha$ (le maximum) au lieu du frottement réel, $\qty{226}{\newton}$.
+\item C : oubli du $\cos\alpha$ dans la normale, $F_f=\mu_s mg=\qty{240}{\newton}$.
+\item D : confusion $\sin\leftrightarrow\cos$, $mg\cos\alpha=\qty{376}{\newton}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q04 --- Chute non libre}\par
+Une bille de masse $m=\qty{2.0}{\kilogram}$ tombe dans l'air. À un instant donné, la résistance de l'air qui s'oppose à la chute vaut $F_f=\qty{5.0}{\newton}$. On prend $g=\qty{10}{\metre\per\second\squared}$. Quelle est l'accélération de la bille à cet instant ?
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth]
+\fill[blue!55] (0,0) circle (0.28);\node[white] at (0,0){$m$};
+\draw[->,thick,orange] (0,0.28)--++(0,1.2) node[above]{$\vv{F_f}$};
+\draw[->,thick,red] (0,-0.28)--++(0,-1.3) node[below]{$\vv G$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{5.0}{\metre\per\second\squared}
+\item \qty{2.5}{\metre\per\second\squared}
+\item \qty{12.5}{\metre\per\second\squared}
+\item \qty{7.5}{\metre\per\second\squared}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+PFD dans le sens de la chute : $mg-F_f=ma$, d'où $a=g-\dfrac{F_f}{m}=10-\num{2.5}=\qty{7.5}{\metre\per\second\squared}$ (on divise bien la seule force de frottement par la masse).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : frottement retranché directement à $g$ sans diviser par $m$, $g-F_f=\qty{5.0}{\metre\per\second\squared}$.
+\item B : division globale par la masse, $(g-F_f)/m=\qty{2.5}{\metre\per\second\squared}$.
+\item C : erreur de signe, frottement ajouté, $g+F_f/m=\qty{12.5}{\metre\per\second\squared}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q05 --- Vitesse limite}\par
+En chute dans l'air, une bille de masse $m=\qty{2.0}{\kilogram}$ subit une résistance de l'air $F_f=k\,v$, proportionnelle à sa vitesse, avec $k=\qty{2.0}{\kilogram\per\second}$. On prend $g=\qty{10}{\metre\per\second\squared}$. Quelle est sa vitesse limite ?
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth]
+\fill[blue!55] (0,0) circle (0.28);\node[white] at (0,0){$m$};
+\draw[->,thick,orange] (0,0.28)--++(0,1.2) node[above]{$\vv{F_f}=k\,v$};
+\draw[->,thick,red] (0,-0.28)--++(0,-1.3) node[below]{$\vv G$};
+\draw[->,thick,blue!70] (1.5,0.4)--++(0,-1.0) node[right]{$\vv v$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{40}{\metre\per\second}
+\item \qty{10}{\metre\per\second}
+\item \qty{3.2}{\metre\per\second}
+\item \qty{1.0}{\metre\per\second}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+À la vitesse limite l'accélération est nulle : la résistance de l'air équilibre le poids, $k\,v_{\lim}=mg$. Donc $v_{\lim}=\dfrac{mg}{k}=\dfrac{20}{\num{2.0}}=\qty{10}{\metre\per\second}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : $k$ multiplié au lieu d'être divisé, $v=mg\cdot k=\qty{40}{\metre\per\second}$.
+\item C : loi supposée en $F_f=k v^2$, d'où $v=\sqrt{mg/k}\approx\qty{3.2}{\metre\per\second}$.
+\item D : masse utilisée à la place du poids, $v=m/k=\qty{1.0}{\metre\per\second}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q06 --- Deuxieme loi de Newton (force inclinee)}\par
+Un bloc de masse $m=\qty{4.0}{\kilogram}$, posé sur un sol horizontal \emph{sans frottement}, est tiré par une corde exerçant une force $F=\qty{20}{\newton}$ inclinée de \ang{30} au-dessus de l'horizontale. Quelle est l'accélération horizontale du bloc ?
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth]
+\fill[pattern=north east lines] (-0.5,-0.25) rectangle (4.2,0);
+\draw[thick] (-0.5,0)--(4.2,0);
+\draw[thick,fill=black!12] (0.6,0) rectangle (1.6,0.8);\node at (1.1,0.4){$m$};
+\coordinate (K) at (1.6,0.5);\coordinate (Kt) at (3.6,0.5);\coordinate (Kf) at ($(K)+(30:2)$);
+\draw[dashed,black!50] (K)--(Kt);
+\draw[->,thick,blue] (K)--(Kf) node[above right]{$\vv F$};
+\draw pic[draw,angle radius=0.8cm,"$30^\circ$"]{angle=Kt--K--Kf};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{5.0}{\metre\per\second\squared}
+\item \qty{2.5}{\metre\per\second\squared}
+\item \qty{4.3}{\metre\per\second\squared}
+\item \qty{2.9}{\metre\per\second\squared}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Le sol étant sans frottement, seule la composante horizontale de $F$ accélère le bloc : $F\cos\alpha=ma$, d'où $a=\dfrac{F\cos\alpha}{m}=\dfrac{20\times\num{0.866}}{\num{4.0}}\approx\qty{4.3}{\metre\per\second\squared}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : force prise entièrement horizontale (pas de projection), $a=F/m=\qty{5.0}{\metre\per\second\squared}$.
+\item B : confusion $\sin\leftrightarrow\cos$, $a=F\sin\alpha/m=\qty{2.5}{\metre\per\second\squared}$.
+\item D : projection en $\tan\alpha$, $a=F\tan\alpha/m=\qty{2.9}{\metre\per\second\squared}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q07 --- Poids apparent en ascenseur}\par
+Une personne de masse $m=\qty{60}{\kilogram}$ se tient sur un pèse-personne dans un ascenseur qui accélère \emph{vers le haut} avec $a=\qty{2.0}{\metre\per\second\squared}$. On prend $g=\qty{10}{\metre\per\second\squared}$. Quelle valeur (poids apparent) indique le pèse-personne ?
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth]
+\draw[thick] (0,0) rectangle (2.4,3.0);
+\draw[thick,fill=black!10] (0.4,0) rectangle (2.0,0.35);\node at (1.2,0.72){$m$};
+\draw[->,thick,violet] (3.0,0.8)--(3.0,2.2) node[right]{$\vv a$};
+\node at (1.2,-0.5){\footnotesize cabine};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{720}{\newton}
+\item \qty{600}{\newton}
+\item \qty{480}{\newton}
+\item \qty{120}{\newton}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Bilan vertical (axe orienté vers le haut) : $N-mg=ma$. Le pèse-personne indique la réaction $N=m(g+a)=60\times(10+\num{2.0})=\qty{720}{\newton}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : accélération oubliée, seul le poids $mg=\qty{600}{\newton}$ est compté.
+\item C : erreur de signe, $N=m(g-a)=\qty{480}{\newton}$.
+\item D : seule la résultante $ma=\qty{120}{\newton}$ est calculée (poids oublié).
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q08 --- Equilibre : cables inclines}\par
+Une charge de masse $m=\qty{10}{\kilogram}$ est suspendue, en équilibre, à deux câbles symétriques faisant chacun un angle de \ang{30} avec la verticale. On prend $g=\qty{10}{\metre\per\second\squared}$. Quelle est la tension dans chaque câble ?
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth]
+\fill[pattern=north east lines] (-1.6,2) rectangle (1.6,2.25);
+\draw[thick] (-1.6,2)--(1.6,2);
+\coordinate (K) at (0,0);\coordinate (L) at (-1.155,2);\coordinate (Rr) at (1.155,2);\coordinate (Vt) at (0,2);
+\draw[thick] (L)--(K);\draw[thick] (Rr)--(K);
+\draw[dashed,black!50] (K)--(Vt);
+\draw[thick,fill=black!12] (-0.35,-0.75) rectangle (0.35,0);\node at (0,-0.375){$m$};
+\draw pic[draw,angle radius=0.9cm,"$30^\circ$"]{angle=Rr--K--Vt};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{100}{\newton}
+\item \qty{50}{\newton}
+\item \qty{116}{\newton}
+\item \qty{58}{\newton}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+L'équilibre vertical impose que les composantes verticales des deux tensions équilibrent le poids : $2T\cos\alpha=mg$ (angle mesuré depuis la verticale). D'où $T=\dfrac{mg}{2\cos\alpha}=\dfrac{100}{2\times\num{0.866}}\approx\qty{58}{\newton}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : confusion $\sin\leftrightarrow\cos$ (angle depuis la verticale), $T=mg/(2\sin\alpha)=\qty{100}{\newton}$.
+\item B : poids simplement partagé en deux sans tenir compte de l'angle, $mg/2=\qty{50}{\newton}$.
+\item C : oubli qu'il y a \emph{deux} câbles, $T=mg/\cos\alpha=\qty{116}{\newton}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q09 --- Interaction entre deux corps}\par
+Deux patineurs, initialement immobiles, se repoussent mutuellement sur une patinoire (frottements négligeables). Le patineur $A$ ($m_A=\qty{50}{\kilogram}$) acquiert une accélération $a_A=\qty{3.0}{\metre\per\second\squared}$. Quelle est l'accélération du patineur $B$ ($m_B=\qty{75}{\kilogram}$) au même instant ?
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth]
+\fill[blue!55] (-1.1,0) circle (0.45);\node[white] at (-1.1,0){$A$};
+\fill[teal!65] (1.2,0) circle (0.6);\node[white] at (1.2,0){$B$};
+\draw[->,thick,violet] (-1.6,0)--++(-1.2,0) node[left]{$\vv{a_A}$};
+\draw[->,thick,violet] (1.85,0)--++(1.2,0) node[right]{$\vv{a_B}$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{4.5}{\metre\per\second\squared}
+\item \qty{3.0}{\metre\per\second\squared}
+\item \qty{2.0}{\metre\per\second\squared}
+\item \qty{1.2}{\metre\per\second\squared}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Par la 3\textsuperscript{e} loi de Newton, les deux patineurs subissent une force de même intensité $F=m_A a_A=50\times\num{3.0}=\qty{150}{\newton}$. Pour $B$ : $a_B=\dfrac{F}{m_B}=\dfrac{150}{75}=\qty{2.0}{\metre\per\second\squared}$ (le plus lourd accélère moins).\par
+\textit{Pièges :}
+\begin{itemize}
+\item A : rapport des masses inversé (le plus lourd accélérerait plus), $a_B=a_A m_B/m_A=\qty{4.5}{\metre\per\second\squared}$.
+\item B : accélérations supposées égales car la force est la même, $a_B=a_A=\qty{3.0}{\metre\per\second\squared}$.
+\item D : force divisée par la masse totale, $a_B=F/(m_A+m_B)=\qty{1.2}{\metre\per\second\squared}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\noindent\textbf{PHYS-F02-Q10 --- Mouvement circulaire uniforme}\par
+Une pierre de masse $m=\qty{0.20}{\kilogram}$ décrit un mouvement circulaire uniforme au bout d'un fil de rayon $R=\qty{0.40}{\metre}$, à la vitesse linéaire $v=\qty{4.0}{\metre\per\second}$. Quelle est l'intensité de la force centripète exercée par le fil ?
+\begin{center}
+\begin{tikzpicture}[scale=1,>=Stealth]
+\draw[thick] (0,0) circle (1.6);
+\fill[black] (0,0) circle (1.3pt) node[below left]{$O$};
+\coordinate (A) at (40:1.6);\draw[black!55] (0,0)--(A);
+\node[black!70] at (25:0.9){$R$};
+\fill[black] (A) circle (2.6pt) node[above right]{$m$};
+\draw[->,thick,orange] (A)--($(A)!0.55!(0,0)$) node[midway,below left]{$\vv{F_c}$};
+\draw[->,thick,blue] (A)--++(130:1.15) node[above]{$\vv v$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{8.0}{\newton}
+\item \qty{3.2}{\newton}
+\item \qty{2.0}{\newton}
+\item \qty{1.3}{\newton}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+La force centripète vaut $F_c=\dfrac{mv^2}{R}=\dfrac{\num{0.20}\times16}{\num{0.40}}=\qty{8.0}{\newton}$, avec $v^2=(\num{4.0})^2=16$. Doubler $v$ la multiplierait par $4$ (dépendance en $v^2$).\par
+\textit{Pièges :}
+\begin{itemize}
+\item B : oubli de diviser par $R$, $F_c=mv^2=\qty{3.2}{\newton}$.
+\item C : vitesse non élevée au carré, $F_c=mv/R=\qty{2.0}{\newton}$.
+\item D : rayon multiplié au lieu d'être divisé, $F_c=mv^2R=\qty{1.3}{\newton}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+\end{document}

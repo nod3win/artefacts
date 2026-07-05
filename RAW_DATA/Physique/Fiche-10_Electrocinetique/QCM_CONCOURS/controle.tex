@@ -1,0 +1,317 @@
+% ===== CONTROLE QCM CONCOURS — PHYSIQUE FICHE 10 : ELECTROCINETIQUE =====
+% Preambule canonique COLLE VERBATIM depuis RAW_DATA/Physique/_qcm/_preambule.tex
+% Le corps reproduit EXACTEMENT le rendu par-question du validateur
+% (valider_qcm.py) : \noindent\textbf{id --- theme} + enonce + enumerate[\Alph*)]
+% + Bonne reponse + explication + Pieges. Ainsi controle.tex et le round-trip
+% JSON partagent la meme pagination (0 overfull garanti des deux cotes).
+% =======================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,mathtools}\usepackage{icomma}
+\usepackage{siunitx}\sisetup{locale=FR}
+\usepackage{xcolor}\usepackage{colortbl}
+\usepackage{tikz}\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[siunitx,europeanresistors]{circuitikz}
+\usepackage{enumitem}\usepackage{array,booktabs}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usetikzlibrary{arrows.meta,calc,angles,quotes,positioning,patterns,%
+  backgrounds,shapes.geometric,decorations.pathmorphing,%
+  decorations.markings,intersections,babel}
+\newcommand{\vv}[1]{\vec{#1}}\newcommand{\ds}{\displaystyle}
+\newcommand{\R}{\mathbb{R}}\newcommand{\N}{\mathbb{N}}\newcommand{\Z}{\mathbb{Z}}
+% ==============================================
+\begin{document}
+
+% =======================================================================
+% Q01
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q01 --- Associations série-parallèle}\par
+Un générateur idéal de tension $E = \qty{24}{\volt}$ alimente le montage suivant : une résistance $R_0 = \qty{40}{\ohm}$ est placée en série avec un bloc de trois résistances identiques $R = \qty{60}{\ohm}$ associées en parallèle. Quelle est l'intensité $I$ débitée par le générateur ?
+\begin{center}
+\begin{circuitikz}
+\draw (0,0) to[battery1,l=$E$] (0,3);
+\draw (0,3) to[R,l=$R_0$] (2.4,3) -- (6.4,3);
+\draw (2.4,3) to[R,l=$R$] (2.4,0);
+\draw (4.4,3) to[R,l=$R$] (4.4,0);
+\draw (6.4,3) to[R,l=$R$] (6.4,0);
+\draw (0,0) -- (6.4,0);
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.40}{\ampere}
+\item \qty{1.20}{\ampere}
+\item \qty{0.24}{\ampere}
+\item \qty{0.11}{\ampere}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Le bloc de trois résistances identiques en parallèle vaut $R/3 = \qty{60}{\ohm}/3 = \qty{20}{\ohm}$. En série avec $R_0$ : $R_{\mathrm{eq}} = R_0 + R/3 = 40 + 20 = \qty{60}{\ohm}$. La loi d'Ohm donne $I = E/R_{\mathrm{eq}} = 24/60 = \qty{0.40}{\ampere}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: oublie la résistance série $R_0$ et calcule $I = E/(R/3) = 24/20 = \qty{1.20}{\ampere}$.
+\item C: oublie de diviser le bloc parallèle par 3 et prend $R_{\mathrm{eq}} = R_0 + R = \qty{100}{\ohm}$, d'où $I = 24/100 = \qty{0.24}{\ampere}$.
+\item D: traite les trois $R$ en série au lieu de parallèle, $R_{\mathrm{eq}} = R_0 + 3R = \qty{220}{\ohm}$, d'où $I \approx \qty{0.11}{\ampere}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q02
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q02 --- Diviseur de courant}\par
+Au n\oe{}ud $N$, un courant principal d'intensité $I = \qty{6.0}{\ampere}$ se partage entre deux résistances montées en parallèle, $R_1 = \qty{20}{\ohm}$ et $R_2 = \qty{60}{\ohm}$. Quelle est l'intensité $I_1$ qui traverse $R_1$ ?
+\begin{center}
+\begin{circuitikz}
+\draw[-latex,thick] (-1.7,0) -- (-0.15,0) node[midway,above]{$I$};
+\draw (0,0) -- (0,1.3) to[R,l=$R_1$] (3.6,1.3) -- (3.6,0);
+\draw (0,0) -- (0,-1.3) to[R,l_=$R_2$] (3.6,-1.3) -- (3.6,0);
+\fill (0,0) circle (2pt) node[below left]{$N$};
+\fill (3.6,0) circle (2pt) node[below right]{$M$};
+\draw (3.6,0) -- (4.7,0);
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{3.0}{\ampere}
+\item \qty{2.0}{\ampere}
+\item \qty{1.5}{\ampere}
+\item \qty{4.5}{\ampere}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+En parallèle, les deux branches ont la même tension. La formule du diviseur de courant donne $I_1 = I\,\dfrac{R_2}{R_1+R_2} = 6.0\times\dfrac{60}{20+60} = 6.0\times\dfrac{60}{80} = \qty{4.5}{\ampere}$. La plus petite résistance ($R_1$) capte le plus de courant.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: partage le courant en deux parts égales $I/2 = \qty{3.0}{\ampere}$ en ignorant les valeurs des résistances.
+\item B: applique un rapport erroné $I_1 = I\,R_1/R_2 = 6.0\times20/60 = \qty{2.0}{\ampere}$.
+\item C: inverse le diviseur, $I_1 = I\,R_1/(R_1+R_2) = 6.0\times20/80 = \qty{1.5}{\ampere}$, croyant que la plus grande résistance capte le plus de courant.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q03
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q03 --- Puissance dans un réseau}\par
+Un générateur idéal $U = \qty{24}{\volt}$ alimente $R_1 = \qty{8}{\ohm}$ en série avec l'association parallèle de $R_2 = \qty{12}{\ohm}$ et $R_3 = \qty{24}{\ohm}$. Quelle est la puissance dissipée dans $R_1$ ?
+\begin{center}
+\begin{circuitikz}
+\draw (0,0) to[battery1,l=$U$] (0,3);
+\draw (0,3) to[R,l=$R_1$] (2.6,3) -- (5.2,3);
+\draw (2.6,3) to[R,l=$R_2$] (2.6,0);
+\draw (5.2,3) to[R,l_=$R_3$] (5.2,0);
+\draw (0,0) -- (5.2,0);
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{72}{\watt}
+\item \qty{18}{\watt}
+\item \qty{36}{\watt}
+\item \qty{2.4}{\watt}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Le bloc parallèle vaut $R_2\parallel R_3 = \dfrac{12\times24}{12+24} = \dfrac{288}{36} = \qty{8}{\ohm}$, en série avec $R_1$ : $R_{\mathrm{eq}} = 8+8 = \qty{16}{\ohm}$. Le courant commun est $I = U/R_{\mathrm{eq}} = 24/16 = \qty{1.5}{\ampere}$. La puissance dans $R_1$ vaut $P_1 = R_1 I^2 = 8\times1.5^2 = \qty{18}{\watt}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: applique toute la tension du générateur à $R_1$, $P_1 = U^2/R_1 = 576/8 = \qty{72}{\watt}$.
+\item C: calcule la puissance totale $P = UI = 24\times1.5 = \qty{36}{\watt}$ et l'attribue à $R_1$.
+\item D: additionne $R_2$ et $R_3$ (série) au lieu de les associer en parallèle, $R_{\mathrm{eq}} = \qty{44}{\ohm}$, $I \approx \qty{0.55}{\ampere}$, $P_1 = R_1 I^2 \approx \qty{2.4}{\watt}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q04
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q04 --- Loi d'Ohm et caractéristique U(I)}\par
+On relève la caractéristique tension-intensité $U = f(I)$ de trois dipôles : (a) et (b) sont des droites passant par l'origine, (c) est une courbe. La droite (a), la plus inclinée, passe par le point $(I = \qty{2}{\ampere},\ U = \qty{4}{\volt})$. Quelle est la résistance du dipôle ohmique correspondant à (a) ?
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=9cm,height=6cm,axis lines=middle,xlabel={$I$ (A)},ylabel={$U$ (V)},
+  xmin=0,xmax=3.4,ymin=0,ymax=7,xtick={0,1,2,3},ytick={0,2,4,6},
+  every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+  every axis y label/.style={at={(current axis.above origin)},anchor=south}]
+\addplot[thick,domain=0:3,samples=2]{2*x};
+\addplot[thick,domain=0:3,samples=2]{x};
+\addplot[thick,domain=0:3,samples=60]{1.0*x*(1+0.18*x)};
+\node at (axis cs:2.75,6.2){(a)};
+\node at (axis cs:3.1,3.15){(b)};
+\node at (axis cs:2.9,4.35){(c)};
+\draw[dashed] (axis cs:2,0) -- (axis cs:2,4) -- (axis cs:0,4);
+\fill (axis cs:2,4) circle (2pt);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{0.50}{\ohm}
+\item \qty{1.0}{\ohm}
+\item \qty{2.0}{\ohm}
+\item \qty{8.0}{\ohm}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+Un conducteur ohmique a une caractéristique $U = f(I)$ linéaire passant par l'origine, de pente $R$. Pour la droite (a) : $R = \dfrac{\Delta U}{\Delta I} = \dfrac{4}{2} = \qty{2.0}{\ohm}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: calcule l'inverse de la pente $\Delta I/\Delta U = 2/4 = \qty{0.50}{\ohm}$.
+\item B: lit la pente de la droite (b), moins inclinée (qui passe par $(2,2)$), au lieu de (a).
+\item D: multiplie les coordonnées du point, $U\times I = 4\times2 = \qty{8.0}{\ohm}$, au lieu de diviser.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q05
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q05 --- Loi des mailles}\par
+Un chargeur, assimilé à une source de f.é.m. $E_1 = \qty{15}{\volt}$, recharge une batterie de f.é.m. $E_2 = \qty{5}{\volt}$ montée \emph{en opposition}. Le circuit comporte en série les résistances $R_1 = \qty{2}{\ohm}$ et $R_2 = \qty{3}{\ohm}$. Quelle est l'intensité $I$ du courant de charge ?
+\begin{center}
+\begin{circuitikz}
+\draw (0,0) to[battery1,l=$E_1$] (0,2.4);
+\draw (0,2.4) -- (0.8,2.4) to[R,l=$R_1$] (2.8,2.4) -- (3.6,2.4);
+\draw (3.6,2.4) to[battery1,l=$E_2$,invert] (3.6,0);
+\draw (3.6,0) -- (2.8,0) to[R,l_=$R_2$] (0.8,0) -- (0,0);
+\draw[-latex,thick] (0.2,2.72) -- (0.75,2.72) node[midway,above]{$I$};
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{2.0}{\ampere}
+\item \qty{3.0}{\ampere}
+\item \qty{4.0}{\ampere}
+\item \qty{5.0}{\ampere}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+Le générateur $E_1$ charge la batterie $E_2$ montée en opposition. La loi des mailles donne $E_1 - E_2 - (R_1+R_2)I = 0$, d'où $I = \dfrac{E_1-E_2}{R_1+R_2} = \dfrac{15-5}{2+3} = \dfrac{10}{5} = \qty{2.0}{\ampere}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: néglige la f.é.m. $E_2$ de la batterie chargée, $I = E_1/(R_1+R_2) = 15/5 = \qty{3.0}{\ampere}$.
+\item C: additionne les deux f.é.m. au lieu de les soustraire (erreur de signe), $I = (E_1+E_2)/(R_1+R_2) = 20/5 = \qty{4.0}{\ampere}$.
+\item D: n'utilise qu'une seule résistance, $I = (E_1-E_2)/R_1 = 10/2 = \qty{5.0}{\ampere}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q06
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q06 --- Loi des n\oe{}uds}\par
+En un n\oe{}ud $N$ d'un circuit arrivent deux courants, $I_1 = \qty{2.5}{\ampere}$ et $I_2 = \qty{1.5}{\ampere}$, et en repartent deux courants, $I_3 = \qty{3.2}{\ampere}$ et $I_4$ (inconnu). Quelle est l'intensité $I_4$ ?
+\begin{center}
+\begin{tikzpicture}[>=Latex]
+\coordinate (N) at (0,0);
+\draw[->,thick] (-2.4,1.2) -- (N) node[pos=0.35,above]{$I_1$};
+\draw[->,thick] (-2.4,-1.2) -- (N) node[pos=0.35,below]{$I_2$};
+\draw[->,thick] (N) -- (2.4,1.2) node[pos=0.65,above]{$I_3$};
+\draw[->,thick] (N) -- (2.4,-1.2) node[pos=0.65,below]{$I_4$};
+\fill (N) circle (2.5pt); \node[above=2pt] at (N){$N$};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{7.2}{\ampere}
+\item \qty{4.0}{\ampere}
+\item \qty{1.7}{\ampere}
+\item \qty{0.8}{\ampere}
+\end{enumerate}
+\textit{Bonne réponse : D}\par
+La loi des n\oe{}uds impose $\sum I_{\text{arrivant}} = \sum I_{\text{partant}}$, soit $I_1 + I_2 = I_3 + I_4$. D'où $I_4 = I_1 + I_2 - I_3 = 2.5 + 1.5 - 3.2 = \qty{0.8}{\ampere}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: compte $I_3$ comme un courant entrant (erreur de signe), $I_4 = I_1 + I_2 + I_3 = \qty{7.2}{\ampere}$.
+\item B: oublie le courant sortant $I_3$, $I_4 = I_1 + I_2 = \qty{4.0}{\ampere}$.
+\item C: bilan incomplet, ne retient qu'un seul courant entrant, $I_4 = I_3 - I_2 = 3.2 - 1.5 = \qty{1.7}{\ampere}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q07
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q07 --- Loi de Joule et énergie}\par
+Deux résistances $R_1 = \qty{20}{\ohm}$ et $R_2 = \qty{30}{\ohm}$ sont montées en série sous une tension constante $U = \qty{100}{\volt}$ pendant $t = \qty{2}{\minute}$. Quelle est l'énergie thermique dissipée par $R_2$ ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{40.0}{\kilo\joule}
+\item \qty{14.4}{\kilo\joule}
+\item \qty{7.2}{\kilo\joule}
+\item \qty{0.24}{\kilo\joule}
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+En série, l'intensité est commune : $I = U/(R_1+R_2) = 100/50 = \qty{2}{\ampere}$. La puissance dissipée dans $R_2$ vaut $P_2 = R_2 I^2 = 30\times2^2 = \qty{120}{\watt}$. Avec $t = \qty{2}{\minute} = \qty{120}{\second}$, l'énergie de Joule est $W = P_2\,t = 120\times120 = \qty{14400}{\joule} = \qty{14.4}{\kilo\joule}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: applique toute la tension à $R_2$, $P_2 = U^2/R_2 = 10000/30 \approx \qty{333}{\watt}$, d'où $W \approx \qty{40.0}{\kilo\joule}$.
+\item C: oublie le carré de l'intensité, $P_2 = R_2 I = \qty{60}{\watt}$, d'où $W = \qty{7.2}{\kilo\joule}$.
+\item D: ne convertit pas la durée ($t = \qty{2}{\second}$ au lieu de \qty{120}{\second}), d'où $W = \qty{0.24}{\kilo\joule}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q08
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q08 --- Générateur réel}\par
+Une pile de force électromotrice $E = \qty{12}{\volt}$ et de résistance interne $r = \qty{0.5}{\ohm}$ débite dans une résistance externe $R = \qty{5.5}{\ohm}$. Quelle est la tension $U$ disponible aux bornes de la pile ?
+\begin{center}
+\begin{circuitikz}
+\draw (0,0) to[battery1,l=$E$] (0,2.4) to[R,l=$r$] (2.2,2.4);
+\draw (2.2,2.4) -- (3.8,2.4) to[R,l=$R$] (3.8,0) -- (0,0);
+\draw[dashed] (-0.8,-0.45) rectangle (1.2,2.95);
+\node[font=\footnotesize] at (0.2,-0.75){générateur réel};
+\draw[-latex,thick] (2.6,2.4) -- (3.2,2.4) node[midway,above]{$I$};
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item \qty{12}{\volt}
+\item \qty{13}{\volt}
+\item \qty{11}{\volt}
+\item \qty{10.8}{\volt}
+\end{enumerate}
+\textit{Bonne réponse : C}\par
+La pile et $R$ forment une maille : $I = E/(R+r) = 12/(5.5+0.5) = 12/6 = \qty{2}{\ampere}$. La tension aux bornes vaut $U = E - rI = 12 - 0.5\times2 = \qty{11}{\volt}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: néglige la résistance interne et prend $U = E = \qty{12}{\volt}$.
+\item B: applique la formule du moteur $U = E + rI$ (mauvais signe), $U = 12 + 1 = \qty{13}{\volt}$.
+\item D: prend $R - r$ pour la résistance totale, $I = 12/5 = \qty{2.4}{\ampere}$, d'où $U = 12 - 0.5\times2.4 = \qty{10.8}{\volt}$.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q09
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q09 --- Loi de Pouillet}\par
+Un fil de cuivre a une résistance $R = \qty{6.0}{\ohm}$. On le remplace par un second fil de cuivre, de \emph{longueur double} et de \emph{diamètre double}. Quelle est la résistance du nouveau fil ?
+\begin{enumerate}[label=\Alph*)]
+\item \qty{3.0}{\ohm}
+\item \qty{6.0}{\ohm}
+\item \qty{12}{\ohm}
+\item \qty{1.5}{\ohm}
+\end{enumerate}
+\textit{Bonne réponse : A}\par
+La loi de Pouillet $R = \rho L/S$ avec une section $S \propto d^2$. En doublant la longueur ($L' = 2L$) et le diamètre ($d' = 2d$, donc $S' = 4S$) : $R' = R\,\dfrac{L'/L}{S'/S} = R\,\dfrac{2}{4} = R/2 = \qty{3.0}{\ohm}$.\par
+\textit{Pièges :}
+\begin{itemize}
+\item B: oublie que la section varie comme le carré du diamètre ($S\propto d$ au lieu de $d^2$), d'où $R' = R\times2/2 = \qty{6.0}{\ohm}$.
+\item C: ne tient compte que du doublement de la longueur ($R' = 2R$), en oubliant la section, d'où \qty{12}{\ohm}.
+\item D: ne tient compte que de la section ($R' = R/4$), en oubliant la longueur, d'où \qty{1.5}{\ohm}.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+% =======================================================================
+% Q10
+% =======================================================================
+\noindent\textbf{PHYS-F10-Q10 --- Association série de lampes}\par
+Deux lampes supposées ohmiques, $L_1$ (\qty{60}{\watt}) et $L_2$ (\qty{100}{\watt}), prévues pour fonctionner chacune seule sous $U = \qty{230}{\volt}$, sont associées \emph{en série} puis branchées ensemble sous cette même tension $U$. Laquelle brille le plus (dissipe la plus grande puissance) ?
+\begin{center}
+\begin{circuitikz}
+\draw (0,0) to[battery1,l=$U$] (0,2.4);
+\draw (0,2.4) to[lamp,l=$L_1$] (3,2.4) to[lamp,l=$L_2$] (5.6,2.4);
+\draw (5.6,2.4) -- (5.6,0) -- (0,0);
+\end{circuitikz}
+\end{center}
+\begin{enumerate}[label=\Alph*)]
+\item $L_2$ (\qty{100}{\watt}), car c'est la lampe la plus puissante.
+\item $L_1$ (\qty{60}{\watt}), car elle a la plus grande résistance et $P = RI^2$ à courant commun.
+\item Les deux lampes brillent de la même façon, car elles sont parcourues par le même courant.
+\item $L_2$ (\qty{100}{\watt}), car sa résistance plus faible y laisse passer un courant plus intense.
+\end{enumerate}
+\textit{Bonne réponse : B}\par
+Seule sous $U$, chaque lampe vérifie $P = U^2/R$, donc $R_1 = U^2/60 > R_2 = U^2/100$ : la lampe la \emph{moins} puissante ($L_1$) est la \emph{plus} résistante. En série, le courant $I$ est commun et $P = RI^2$ : c'est donc $L_1$ (plus grande résistance) qui dissipe la plus grande puissance et brille le plus.\par
+\textit{Pièges :}
+\begin{itemize}
+\item A: suppose que les puissances nominales se conservent ($L_2$ reste la plus puissante), en oubliant que le changement de montage modifie le régime de fonctionnement.
+\item C: confond même courant (série) et même puissance, alors que $P = RI^2$ dépend de la résistance.
+\item D: croit qu'une plus faible résistance laisse passer un courant plus intense, alors qu'en série le courant est commun aux deux lampes.
+\end{itemize}
+\vspace{8pt}\hrule\vspace{8pt}
+
+\end{document}

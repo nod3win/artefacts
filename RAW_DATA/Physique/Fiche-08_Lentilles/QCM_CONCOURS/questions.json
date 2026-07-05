@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F08-Q01",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Relation de conjugaison : déterminer $f$",
+    "difficulte": "concours",
+    "enonce": "Un objet réel lumineux est placé à $u=\\qty{24}{\\centi\\metre}$ devant une lentille mince convergente.\nUne image nette est recueillie sur un écran situé à $v=\\qty{8}{\\centi\\metre}$ derrière la lentille\n(schéma sans échelle). Quelle est la distance focale $f$ de la lentille ?\n\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,line cap=round,scale=0.9]\n  \\draw[gray!60,dashed] (-4.2,0) -- (3.2,0);\n  \\draw[blue!70,line width=1.3pt,<->] (0,-1.7) -- (0,1.7);\n  \\node[blue!70,above] at (0,1.7) {\\footnotesize L};\n  \\fill (0,0) circle (1.1pt) node[below right] {\\footnotesize $O$};\n  \\draw[red!75,line width=1.4pt,->] (-3,0) -- (-3,1.1);\n  \\node[red!75,above] at (-3,1.1) {\\footnotesize $B$};\n  \\node[red!75,below] at (-3,0) {\\footnotesize $A$};\n  \\draw[black,line width=2pt] (1,-1.3) -- (1,1.3);\n  \\node[below] at (1,-1.3) {\\footnotesize écran};\n  \\draw[<->,gray] (-3,-2.05) -- (0,-2.05);\n  \\node[gray,below] at (-1.5,-2.05) {\\footnotesize $u=24$ cm};\n  \\draw[<->,gray] (0,-2.05) -- (1,-2.05);\n  \\node[gray,below] at (0.5,-2.05) {\\footnotesize $v=8$ cm};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{8}{\\centi\\metre}$",
+      "$\\qty{12}{\\centi\\metre}$",
+      "$\\qty{6}{\\centi\\metre}$",
+      "$\\qty{16}{\\centi\\metre}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Objet et image réels : $\\dfrac1f=\\dfrac1u+\\dfrac1v=\\dfrac1{24}+\\dfrac18=\\dfrac{1}{24}+\\dfrac{3}{24}\n=\\dfrac{4}{24}=\\dfrac16$, donc $f=\\qty{6}{\\centi\\metre}$. Cohérent : $u=\\qty{24}{\\centi\\metre}>2f=\\qty{12}{\\centi\\metre}$,\nl'image est réelle et réduite ($\\gamma=-v/u=-1/3$), régime de l'objectif photographique.",
+    "pieges": [
+      "A: a négligé le terme $1/u$ (objet supposé lointain), d'où $f\\approx v=\\qty{8}{\\centi\\metre}$.",
+      "B: a soustrait au lieu d'additionner, $\\dfrac1f=\\dfrac1v-\\dfrac1u=\\dfrac{1}{12}$, soit $\\qty{12}{\\centi\\metre}$ ($=2f$).",
+      "D: a pris la moyenne $(u+v)/2=\\qty{16}{\\centi\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q02",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Nature de l'image par la position de l'objet",
+    "difficulte": "concours",
+    "enonce": "Une lentille convergente donne, d'un objet réel, une image \\textbf{réelle et plus grande} que l'objet.\nDans quelle zone se situe l'objet ?",
+    "options": [
+      "au-delà de $2F$ (soit $u>2f$)",
+      "entre $F$ et $2F$ (soit $f<u<2f$)",
+      "entre le centre optique $O$ et $F$ (soit $u<f$)",
+      "exactement au foyer objet $F$ (soit $u=f$)"
+    ],
+    "reponse_index": 1,
+    "explication": "Une image \\textbf{réelle} d'un objet réel impose $u>f$ (l'objet est au-delà du foyer). Une image\n\\textbf{agrandie} ($|\\gamma|>1$) impose de plus $u<2f$. Les deux conditions donnent $f<u<2f$ : l'image\nest alors réelle, renversée, agrandie et située au-delà de $2F'$ (régime du projecteur).",
+    "pieges": [
+      "A: $u>2f$ donne bien une image réelle mais \\textbf{réduite} (objectif photo), pas agrandie.",
+      "C: $u<f$ donne une image \\textbf{virtuelle} agrandie (loupe), donc non réelle.",
+      "D: $u=f$ envoie l'image à l'infini (les rayons émergents sont parallèles)."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q03",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Lentille divergente et grandissement",
+    "difficulte": "concours",
+    "enonce": "Une lentille divergente de distance focale $f=\\qty{-20}{\\centi\\metre}$ donne, d'un objet réel, une image\ndroite \\textbf{trois fois plus petite} que l'objet. À quelle distance $u$ de la lentille l'objet est-il placé ?",
+    "options": [
+      "$\\qty{40}{\\centi\\metre}$",
+      "$\\qty{60}{\\centi\\metre}$",
+      "$\\qty{20}{\\centi\\metre}$",
+      "$\\qty{80}{\\centi\\metre}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Une divergente donne toujours une image virtuelle, droite et réduite : ici $\\gamma=+\\tfrac13$.\nOr $\\gamma=-\\dfrac{v}{u}=+\\dfrac13\\Rightarrow v=-\\dfrac{u}{3}$. La conjugaison donne\n$\\dfrac1f=\\dfrac1u+\\dfrac1v=\\dfrac1u-\\dfrac3u=-\\dfrac2u$, d'où $u=-2f=-2\\times(-20)=\\qty{40}{\\centi\\metre}$.",
+    "pieges": [
+      "B: a écrit directement $u=3|f|=\\qty{60}{\\centi\\metre}$ (confusion « trois fois plus petite » $\\to$ « objet à $3f$ »).",
+      "C: a placé l'objet au foyer, $u=|f|=\\qty{20}{\\centi\\metre}$.",
+      "D: a oublié que $v<0$ (a pris $v=+u/3$), d'où $u=4|f|=\\qty{80}{\\centi\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q04",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Vergence et piège des unités",
+    "difficulte": "concours",
+    "enonce": "Quelle est la vergence d'une lentille convergente de distance focale $f=\\qty{20}{\\centi\\metre}$ ?",
+    "options": [
+      "$\\qty{0.05}{\\per\\metre}$",
+      "$\\qty{0.2}{\\per\\metre}$",
+      "$\\qty{50}{\\per\\metre}$",
+      "$\\qty{5}{\\per\\metre}$"
+    ],
+    "reponse_index": 3,
+    "explication": "La vergence $C=1/f$ n'est valable que si $f$ est exprimée \\textbf{en mètres} : $f=\\qty{0.20}{\\metre}$, donc\n$C=\\dfrac{1}{0{,}20}=\\qty{5}{\\per\\metre}$ (soit $+5$ dioptries), lentille convergente.",
+    "pieges": [
+      "A: a oublié la conversion en mètres, $1/20=\\qty{0.05}{\\per\\metre}$.",
+      "B: a donné $f$ (en mètres) au lieu de $1/f$.",
+      "C: conversion erronée, $f$ pris à $\\qty{0.020}{\\metre}$ (comme si \\qty{20}{\\centi\\metre} valait \\qty{20}{\\milli\\metre}), $1/0{,}02=\\qty{50}{\\per\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q05",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Lentilles minces accolées",
+    "difficulte": "concours",
+    "enonce": "On accole (centres optiques confondus) une lentille convergente de vergence $C_1=+\\qty{8}{\\per\\metre}$ et une\nlentille divergente de distance focale $f_2=\\qty{-50}{\\centi\\metre}$. Quelle est la distance focale\n$f_{\\text{éq}}$ du système équivalent ?",
+    "options": [
+      "$\\qty{-37.5}{\\centi\\metre}$",
+      "$\\qty{12.5}{\\centi\\metre}$",
+      "$\\qty{16.7}{\\centi\\metre}$",
+      "$\\qty{10}{\\centi\\metre}$"
+    ],
+    "reponse_index": 2,
+    "explication": "Pour des lentilles accolées les vergences s'ajoutent. $C_2=\\dfrac{1}{f_2}=\\dfrac{1}{-0{,}50}=\\qty{-2}{\\per\\metre}$,\ndonc $C_{\\text{éq}}=C_1+C_2=8-2=\\qty{6}{\\per\\metre}$, et $f_{\\text{éq}}=\\dfrac16\\,\\text{m}\\approx\\qty{16.7}{\\centi\\metre}$\n(système convergent).",
+    "pieges": [
+      "A: a additionné les distances focales $f_1+f_2$ (avec $f_1=1/8=\\qty{12.5}{\\centi\\metre}$), $12{,}5-50=\\qty{-37.5}{\\centi\\metre}$.",
+      "B: a oublié de convertir $f_2$ (\\qty{-50}{\\centi\\metre} traité comme $C_2\\approx0$), d'où $f_{\\text{éq}}\\approx f_1=\\qty{12.5}{\\centi\\metre}$.",
+      "D: a oublié le signe de la divergente ($C_2=+2$), $C_{\\text{éq}}=\\qty{10}{\\per\\metre}\\Rightarrow f=\\qty{10}{\\centi\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q06",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "L'\\oe il : vergence en accommodation",
+    "difficulte": "concours",
+    "enonce": "L'\\oe il normal est modélisé par une lentille convergente qui forme l'image sur la rétine, située à\n$\\qty{17}{\\milli\\metre}$ du centre optique. L'\\oe il accommode sur un objet placé à $\\qty{17}{\\centi\\metre}$.\nEn appliquant $\\dfrac1f=\\dfrac1u+\\dfrac1v$, quelle est la vergence $C=1/f$ de l'\\oe il dans cet état ?",
+    "options": [
+      "$\\qty{58.8}{\\per\\metre}$",
+      "$\\qty{52.9}{\\per\\metre}$",
+      "$\\qty{5.9}{\\per\\metre}$",
+      "$\\qty{64.7}{\\per\\metre}$"
+    ],
+    "reponse_index": 3,
+    "explication": "L'image se forme sur la rétine ($v=\\qty{0.017}{\\metre}$, réelle) pour un objet à $u=\\qty{0.17}{\\metre}$ :\n$C=\\dfrac{1}{u}+\\dfrac{1}{v}=\\dfrac{1}{0{,}17}+\\dfrac{1}{0{,}017}=5{,}88+58{,}82\\approx\\qty{64.7}{\\per\\metre}$\n(64,7 dioptries).",
+    "pieges": [
+      "A: n'a gardé que le terme image $1/v=1/0{,}017\\approx\\qty{58.8}{\\per\\metre}$ (oubli de l'objet).",
+      "B: a soustrait, $1/v-1/u=58{,}82-5{,}88\\approx\\qty{52.9}{\\per\\metre}$ (au lieu d'additionner).",
+      "C: n'a gardé que le terme objet $1/u=1/0{,}17\\approx\\qty{5.9}{\\per\\metre}$ (oubli de l'image)."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q07",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Correction de la myopie",
+    "difficulte": "concours",
+    "enonce": "Une personne myope ne voit pas nettement au-delà de $\\qty{90}{\\centi\\metre}$ (punctum remotum). Pour voir\nnettement un objet situé \\textbf{à l'infini}, on place au contact de l'\\oe il un verre correcteur. Quelle est\nsa distance focale ?",
+    "options": [
+      "$\\qty{-90}{\\centi\\metre}$",
+      "$\\qty{90}{\\centi\\metre}$",
+      "$\\qty{-45}{\\centi\\metre}$",
+      "$\\qty{-180}{\\centi\\metre}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Le verre doit donner de l'objet à l'infini une image virtuelle située au punctum remotum, à\n$v=\\qty{-0.90}{\\metre}$. Avec $u\\to\\infty$ : $\\dfrac1f=0+\\dfrac{1}{-0{,}90}\\Rightarrow f=\\qty{-90}{\\centi\\metre}$ :\nlentille \\textbf{divergente} ($C\\approx-1{,}1$ dioptrie). Un myope porte des verres divergents.",
+    "pieges": [
+      "B: a choisi une lentille \\textbf{convergente} ($+90$), qui corrige l'hypermétrope, pas le myope.",
+      "C: a placé l'image à la moitié du punctum remotum, $\\qty{-45}{\\centi\\metre}$.",
+      "D: a doublé le punctum remotum, $\\qty{-180}{\\centi\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q08",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "La loupe : position de l'image",
+    "difficulte": "concours",
+    "enonce": "Une loupe (lentille convergente) a une distance focale $f=\\qty{5}{\\centi\\metre}$. On place un petit objet à\n$u=\\qty{4}{\\centi\\metre}$ de la loupe (schéma sans échelle). Où se forme l'image, comptée algébriquement\ndepuis la loupe ?\n\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,line cap=round,scale=0.9]\n  \\draw[gray!60,dashed] (-4,0) -- (3.2,0);\n  \\draw[blue!70,line width=1.3pt,<->] (0,-1.6) -- (0,1.6);\n  \\fill (0,0) circle (1.1pt) node[below right] {\\footnotesize $O$};\n  \\fill (-2,0) circle (1.3pt) node[below] {\\footnotesize $F$};\n  \\fill (2,0) circle (1.3pt) node[below] {\\footnotesize $F'$};\n  \\draw[red!75,line width=1.4pt,->] (-1.6,0) -- (-1.6,0.9);\n  \\node[red!75,above] at (-1.6,0.9) {\\footnotesize objet};\n  \\draw[<->,gray] (-2,-1.9) -- (0,-1.9);\n  \\node[gray,below] at (-1,-1.9) {\\footnotesize $f=5$ cm};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{20}{\\centi\\metre}$",
+      "$\\qty{-20}{\\centi\\metre}$",
+      "$\\qty{-2.2}{\\centi\\metre}$",
+      "$\\qty{-5}{\\centi\\metre}$"
+    ],
+    "reponse_index": 1,
+    "explication": "$\\dfrac1v=\\dfrac1f-\\dfrac1u=\\dfrac15-\\dfrac14=\\dfrac{4-5}{20}=-\\dfrac{1}{20}\\Rightarrow v=\\qty{-20}{\\centi\\metre}$.\nLe signe négatif confirme une image \\textbf{virtuelle}, à \\qty{20}{\\centi\\metre} devant la loupe, du même côté\nque l'objet ; elle est droite et agrandie ($\\gamma=-v/u=+5$).",
+    "pieges": [
+      "A: erreur de signe, image déclarée réelle ($v=+\\qty{20}{\\centi\\metre}$) alors qu'une loupe donne une image virtuelle.",
+      "C: a additionné, $\\dfrac{1}{|v|}=\\dfrac1f+\\dfrac1u=\\dfrac{9}{20}$, d'où $\\qty{-2.2}{\\centi\\metre}$.",
+      "D: a pris $|v|=f$ (image supposée au foyer), $\\qty{-5}{\\centi\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q09",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Rayon particulier sur une lentille divergente",
+    "difficulte": "concours",
+    "enonce": "Un rayon incident, parallèle à l'axe optique, frappe une lentille \\textbf{divergente} (schéma). Quelle est la\ntrajectoire du rayon émergent ?\n\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,line cap=round,scale=0.9]\n  \\draw[gray!60,dashed] (-4.2,0) -- (3.2,0);\n  \\draw[blue!70,line width=1.3pt,>-<] (0,-1.6) -- (0,1.6);\n  \\fill (0,0) circle (1.1pt) node[below right] {\\footnotesize $O$};\n  \\fill (-1.6,0) circle (1.3pt) node[below] {\\footnotesize $F'$};\n  \\fill (1.6,0) circle (1.3pt) node[below] {\\footnotesize $F$};\n  \\draw[red!75,line width=1pt,->] (-4,0.9) -- (0,0.9);\n  \\node[red!75,above] at (-3,0.9) {\\footnotesize rayon incident};\n  \\node[blue!70,below] at (0,-1.9) {\\footnotesize lentille divergente};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "Il émerge en passant par le foyer image $F'$ situé de l'autre côté de la lentille (après elle).",
+      "Il traverse la lentille sans être dévié et poursuit parallèlement à l'axe.",
+      "Il émerge en s'écartant de l'axe, son prolongement passant par le foyer image $F'$ situé du côté de l'objet (avant la lentille).",
+      "Il émerge en passant par le foyer objet $F$."
+    ],
+    "reponse_index": 2,
+    "explication": "Pour une lentille divergente, un faisceau incident parallèle à l'axe émerge en s'écartant : les rayons\némergents \\emph{semblent provenir} du foyer image $F'$, lequel est situé \\textbf{du côté de l'objet}\n(à gauche de $O$). C'est donc le \\emph{prolongement} du rayon émergent qui passe par $F'$.",
+    "pieges": [
+      "A: décrit le comportement d'une \\textbf{convergente} ($F'$ réel, après la lentille), pas d'une divergente.",
+      "B: seul le rayon passant par le centre optique $O$ n'est pas dévié ; un rayon parallèle à l'axe est nécessairement dévié.",
+      "D: confond foyer image et foyer objet ; c'est un rayon passant \\emph{par} $F$ qui ressort parallèle (situation inverse)."
+    ]
+  },
+  {
+    "id": "PHYS-F08-Q10",
+    "matiere": "Physique",
+    "fiche": "08",
+    "theme": "Système afocal de deux lentilles",
+    "difficulte": "concours",
+    "enonce": "Un système afocal est formé de deux lentilles convergentes de distances focales $f_1=\\qty{20}{\\centi\\metre}$ et\n$f_2=\\qty{5}{\\centi\\metre}$, alignées sur le même axe, de sorte qu'un faisceau incident parallèle à l'axe\nressorte parallèle (image finale à l'infini). Quelle doit être la distance $d$ entre les deux lentilles ?\n\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,line cap=round,scale=0.85]\n  \\draw[gray!60,dashed] (-1.3,0) -- (6.3,0);\n  \\draw[blue!70,line width=1.3pt,<->] (0,-1.5) -- (0,1.5);\n  \\node[blue!70,above] at (0,1.5) {\\footnotesize $L_1$};\n  \\draw[blue!70,line width=1.3pt,<->] (4,-1.2) -- (4,1.2);\n  \\node[blue!70,above] at (4,1.2) {\\footnotesize $L_2$};\n  \\draw[red!70,->] (-1.3,0.8) -- (0,0.8);\n  \\draw[red!70] (0,0.8) -- (2.4,0);\n  \\fill (2.4,0) circle (1.1pt);\n  \\node[below] at (2.4,-0.05) {\\footnotesize $F'_1=F_2$};\n  \\draw[red!70,->] (2.4,0) -- (4,0.55);\n  \\draw[red!70,->] (4,0.55) -- (6.1,0.55);\n  \\draw[<->,gray] (0,-1.75) -- (4,-1.75);\n  \\node[gray,below] at (2,-1.75) {\\footnotesize $d = ?$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{25}{\\centi\\metre}$",
+      "$\\qty{15}{\\centi\\metre}$",
+      "$\\qty{4}{\\centi\\metre}$",
+      "$\\qty{100}{\\centi\\metre}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Le faisceau parallèle converge au foyer image $F'_1$ de la première lentille, à $f_1$ derrière $L_1$. Pour\nressortir parallèle, ce point doit coïncider avec le foyer objet $F_2$ de la seconde, à $f_2$ devant $L_2$.\nLes foyers sont donc confondus : $d=f_1+f_2=20+5=\\qty{25}{\\centi\\metre}$.",
+    "pieges": [
+      "B: a soustrait les focales, $f_1-f_2=\\qty{15}{\\centi\\metre}$.",
+      "C: a appliqué la formule des lentilles \\textbf{accolées} $\\dfrac{f_1 f_2}{f_1+f_2}=\\qty{4}{\\centi\\metre}$ (valable seulement centres confondus, $d=0$).",
+      "D: a multiplié les focales, $f_1\\times f_2=\\qty{100}{\\centi\\metre}$ (sans diviser)."
+    ]
+  }
+]

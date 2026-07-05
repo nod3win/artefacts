@@ -1,0 +1,212 @@
+[
+  {
+    "id": "CHIM-F11-Q01",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Nombre d'oxydation d'un atome dans un ion polyatomique",
+    "difficulte": "concours",
+    "enonce": "Quel est le nombre d'oxydation du manganèse dans l'ion permanganate \\ce{MnO4^-} ? On rappelle que $\\mathrm{n.o.}(\\ce{O})=-\\mathrm{II}$ et que la somme des nombres d'oxydation d'une espèce est égale à sa charge globale.",
+    "options": [
+      "$+\\mathrm{III}$",
+      "$+\\mathrm{VI}$",
+      "$+\\mathrm{VII}$",
+      "$+\\mathrm{VIII}$"
+    ],
+    "reponse_index": 2,
+    "explication": "L'ion \\ce{MnO4^-} porte la charge $-1$. En posant $x=\\mathrm{n.o.}(\\ce{Mn})$ et $\\mathrm{n.o.}(\\ce{O})=-\\mathrm{II}$ pour les quatre oxygènes : $x+4\\times(-2)=-1$, soit $x-8=-1$, d'où $x=+7=+\\mathrm{VII}$. C'est le degré d'oxydation maximal du manganèse (élément du groupe 7).",
+    "pieges": [
+      "A: règle des peroxydes appliquée à tort, $\\mathrm{n.o.}(\\ce{O})=-\\mathrm{I}$ : $x-4=-1$ donne $+\\mathrm{III}$.",
+      "B: charge de l'ion prise à $-2$ (confusion avec \\ce{SO4^{2-}}) : $x-8=-2$ donne $+\\mathrm{VI}$.",
+      "D: charge de l'ion oubliée (somme mise à $0$) : $x-8=0$ donne $+\\mathrm{VIII}$, degré pourtant impossible pour \\ce{Mn}."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q02",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Reconnaître une réaction d'oxydo-réduction",
+    "difficulte": "concours",
+    "enonce": "Parmi les réactions suivantes (toutes équilibrées), laquelle n'est \\textbf{pas} une réaction d'oxydo-réduction ?",
+    "options": [
+      "\\ce{CaO + CO2 -> CaCO3}",
+      "\\ce{2 H2 + O2 -> 2 H2O}",
+      "\\ce{Cl2 + H2O -> HCl + HClO}",
+      "\\ce{Cl2 + 2 KBr -> 2 KCl + Br2}"
+    ],
+    "reponse_index": 0,
+    "explication": "Une réaction est redox si et seulement si au moins un élément change de nombre d'oxydation. Dans \\ce{CaO + CO2 -> CaCO3}, on a $\\mathrm{n.o.}(\\ce{Ca})=+\\mathrm{II}$, $\\mathrm{n.o.}(\\ce{C})=+\\mathrm{IV}$ et $\\mathrm{n.o.}(\\ce{O})=-\\mathrm{II}$ des deux côtés : aucun degré ne varie. C'est une réaction acide-base entre oxydes (combinaison), sans transfert d'électrons.",
+    "pieges": [
+      "B: synthèse à partir des corps simples \\ce{H2} et \\ce{O2}, prise pour « non redox » alors que \\ce{H} passe de $0$ à $+\\mathrm{I}$ et \\ce{O} de $0$ à $-\\mathrm{II}$.",
+      "C: dismutation du chlore prise pour une simple dissolution ; \\ce{Cl} passe simultanément de $0$ à $-\\mathrm{I}$ (dans \\ce{HCl}) et à $+\\mathrm{I}$ (dans \\ce{HClO}).",
+      "D: réaction vue comme un simple échange d'ions, en oubliant que \\ce{Cl} passe de $0$ à $-\\mathrm{I}$ et \\ce{Br} de $-\\mathrm{I}$ à $0$."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q03",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Équilibrage redox : somme des coefficients stœchiométriques",
+    "difficulte": "concours",
+    "enonce": "En milieu acide, l'ion permanganate oxyde l'ion fer(II) : \\ce{MnO4^- + Fe^{2+} + H+ -> Mn^{2+} + Fe^{3+} + H2O}. Une fois l'équation correctement équilibrée, que vaut la somme de tous les coefficients stœchiométriques (les « 1 » compris) ?",
+    "options": [
+      "$16$",
+      "$20$",
+      "$22$",
+      "$24$"
+    ],
+    "reponse_index": 3,
+    "explication": "Demi-équations : \\ce{MnO4^- + 8 H+ + 5 e^- -> Mn^{2+} + 4 H2O} ($\\mathrm{n.o.}(\\ce{Mn})$ : $+\\mathrm{VII}\\to+\\mathrm{II}$, 5 électrons) et \\ce{Fe^{2+} -> Fe^{3+} + e^-}. On multiplie la seconde par 5, d'où \\ce{MnO4^- + 5 Fe^{2+} + 8 H+ -> Mn^{2+} + 5 Fe^{3+} + 4 H2O}. Somme $=1+5+8+1+5+4=24$.",
+    "pieges": [
+      "A: électrons non égalisés, coefficient $1$ devant \\ce{Fe^{2+}}/\\ce{Fe^{3+}} au lieu de $5$ : $1+1+8+1+1+4=16$.",
+      "B: nombre de \\ce{H+} pris égal au nombre de \\ce{H2O} ($4$) au lieu du double ($8$) : $1+5+4+1+5+4=20$.",
+      "C: seuls les coefficients explicites (supérieurs à $1$) comptés, les « 1 » implicites oubliés : $5+8+5+4=22$."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q04",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Équilibrage : nombre d'électrons d'une demi-équation (dichromate)",
+    "difficulte": "concours",
+    "enonce": "En milieu acide, l'ion dichromate \\ce{Cr2O7^{2-}} est réduit en ion chrome(III) \\ce{Cr^{3+}}. Combien d'électrons sont échangés dans cette demi-équation ?",
+    "options": [
+      "$3$",
+      "$4$",
+      "$6$",
+      "$8$"
+    ],
+    "reponse_index": 2,
+    "explication": "Dans \\ce{Cr2O7^{2-}}, $2x+7\\times(-2)=-2$ donne $x=+\\mathrm{VI}$ ; dans \\ce{Cr^{3+}}, $\\mathrm{n.o.}=+\\mathrm{III}$. Chaque atome de chrome gagne $6-3=3$ électrons, mais le dichromate en contient \\textbf{deux} : $2\\times3=6$ électrons. La demi-équation est \\ce{Cr2O7^{2-} + 14 H+ + 6 e^- -> 2 Cr^{3+} + 7 H2O}.",
+    "pieges": [
+      "A: $\\Delta\\mathrm{n.o.}=3$ calculé pour un seul \\ce{Cr}, sans multiplier par les deux atomes du dichromate.",
+      "B: $\\mathrm{n.o.}(\\ce{Cr})$ pris à $+\\mathrm{VII}$ (charge $-2$ de l'ion oubliée) puis $\\Delta=7-3=4$, sans le facteur 2.",
+      "D: même erreur $\\mathrm{n.o.}(\\ce{Cr})=+\\mathrm{VII}$ mais avec le facteur 2 : $(7-3)\\times2=8$."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q05",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Équilibrage d'une demi-équation en milieu basique",
+    "difficulte": "concours",
+    "enonce": "En milieu \\textbf{basique}, l'ion permanganate \\ce{MnO4^-} est réduit en dioxyde de manganèse \\ce{MnO2}. Parmi les demi-équations suivantes, laquelle est correctement équilibrée en masse \\emph{et} en charge, dans ce milieu ?",
+    "options": [
+      "\\ce{MnO4^- + 4 H+ + 3 e^- -> MnO2 + 2 H2O}",
+      "\\ce{MnO4^- + 2 H2O + 5 e^- -> MnO2 + 4 OH^-}",
+      "\\ce{MnO4^- + 4 H2O + 3 e^- -> MnO2 + 8 OH^-}",
+      "\\ce{MnO4^- + 2 H2O + 3 e^- -> MnO2 + 4 OH^-}"
+    ],
+    "reponse_index": 3,
+    "explication": "\\ce{Mn} passe de $+\\mathrm{VII}$ à $+\\mathrm{IV}$ : $3$ électrons. En milieu basique on n'écrit pas de \\ce{H+}. Pour \\ce{MnO4^- + 2 H2O + 3 e^- -> MnO2 + 4 OH^-} : oxygène $4+2=6=2+4$ ; hydrogène $4=4$ ; charge $-1+0-3=-4=4\\times(-1)$. Tout est conservé.",
+    "pieges": [
+      "A: demi-équation écrite en milieu acide (présence de \\ce{H+}), interdite en milieu basique.",
+      "B: produit \\ce{MnO2} confondu avec \\ce{Mn^{2+}}, d'où $5$ électrons ($+\\mathrm{VII}\\to+\\mathrm{II}$) au lieu de $3$ ; la charge n'est plus équilibrée.",
+      "C: \\ce{H2O} et \\ce{OH^-} ajoutés en double : l'oxygène n'est plus conservé ($10$ à droite contre $8$ à gauche)."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q06",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Prévision d'une réaction spontanée par les potentiels standard",
+    "difficulte": "concours",
+    "enonce": "On donne les potentiels standard de réduction (en volt) : \\ce{Ag+}/\\ce{Ag} : \\num{+0.80} ; \\ce{Fe^{3+}}/\\ce{Fe^{2+}} : \\num{+0.77} ; \\ce{I2}/\\ce{I^-} : \\num{+0.54} ; \\ce{Cu^{2+}}/\\ce{Cu} : \\num{+0.34} ; \\ce{Zn^{2+}}/\\ce{Zn} : \\num{-0.76}. Quelle réaction est thermodynamiquement spontanée dans le sens direct (conditions standard) ?",
+    "options": [
+      "\\ce{Cu^{2+} + 2 Ag -> Cu + 2 Ag+}",
+      "\\ce{2 Fe^{3+} + Cu -> 2 Fe^{2+} + Cu^{2+}}",
+      "\\ce{2 Fe^{2+} + I2 -> 2 Fe^{3+} + 2 I^-}",
+      "\\ce{Zn^{2+} + Cu -> Zn + Cu^{2+}}"
+    ],
+    "reponse_index": 1,
+    "explication": "Une réaction a lieu si l'oxydant appartient au couple de potentiel le plus élevé (règle du $\\gamma$, $\\Delta E^\\circ>0$). Pour \\ce{2 Fe^{3+} + Cu -> 2 Fe^{2+} + Cu^{2+}} : \\ce{Fe^{3+}} ($+0{,}77$) oxyde \\ce{Cu} (couple \\ce{Cu^{2+}}/\\ce{Cu} à $+0{,}34$), soit $\\Delta E^\\circ=0{,}77-0{,}34=+0{,}43$~V $>0$.",
+    "pieges": [
+      "A: règle du $\\gamma$ inversée — \\ce{Cu^{2+}} ($+0{,}34$) ne peut pas oxyder \\ce{Ag} (couple à $+0{,}80$, situé plus haut).",
+      "C: on suppose qu'un halogène \\ce{I2} oxyde toujours ; or \\ce{I2}/\\ce{I^-} ($+0{,}54$) est sous \\ce{Fe^{3+}}/\\ce{Fe^{2+}} ($+0{,}77$), la réaction est impossible.",
+      "D: \\ce{Zn^{2+}} ($-0{,}76$) pris pour un oxydant du cuivre, alors que ce couple est le plus bas de la liste."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q07",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Formule de Nernst : potentiel d'une demi-pile",
+    "difficulte": "concours",
+    "enonce": "Une électrode d'argent est plongée dans une solution où la concentration en ions \\ce{Ag+} est \\qty{e-3}{\\mole\\per\\litre}, à \\qty{25}{\\celsius}. Le potentiel standard $E^\\circ_{\\mathrm{r}}(\\ce{Ag+}/\\ce{Ag})$ vaut \\qty{+0.80}{\\volt}. En utilisant $E=E^\\circ_{\\mathrm{r}}+\\frac{0{,}06}{n}\\log[\\ce{Ox}]$, quel est le potentiel de cette demi-pile ?",
+    "options": [
+      "\\qty{0.62}{\\volt}",
+      "\\qty{0.71}{\\volt}",
+      "\\qty{0.80}{\\volt}",
+      "\\qty{0.98}{\\volt}"
+    ],
+    "reponse_index": 0,
+    "explication": "Pour \\ce{Ag+ + e^- <=> Ag}, $n=1$ et le métal \\ce{Ag} a une activité $1$. Nernst : $E=0{,}80+\\frac{0{,}06}{1}\\log(10^{-3})=0{,}80+0{,}06\\times(-3)=0{,}80-0{,}18=0{,}62$~V. Diluer la forme oxydée abaisse le potentiel.",
+    "pieges": [
+      "B: $n=2$ utilisé au lieu de $n=1$ pour \\ce{Ag+}/\\ce{Ag} : $0{,}80+\\frac{0{,}06}{2}\\times(-3)=0{,}71$~V.",
+      "C: correction de Nernst oubliée, on garde $E=E^\\circ_{\\mathrm{r}}=0{,}80$~V.",
+      "D: erreur de signe sur le logarithme ($\\log 10^{-3}$ compté $+3$) : $0{,}80+0{,}18=0{,}98$~V."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q08",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Force électromotrice standard d'une pile",
+    "difficulte": "concours",
+    "enonce": "Pour la pile Daniell \\ce{Zn|Zn^{2+}||Cu^{2+}|Cu} en conditions standard, on donne $E^\\circ_{\\mathrm{r}}(\\ce{Cu^{2+}}/\\ce{Cu})=+0{,}34$~V et $E^\\circ_{\\mathrm{r}}(\\ce{Zn^{2+}}/\\ce{Zn})=-0{,}76$~V. Que vaut sa force électromotrice standard $\\Delta E^\\circ$ ?",
+    "options": [
+      "\\qty{-1.10}{\\volt}",
+      "\\qty{0.42}{\\volt}",
+      "\\qty{1.10}{\\volt}",
+      "\\qty{2.20}{\\volt}"
+    ],
+    "reponse_index": 2,
+    "explication": "Le cuivre (potentiel le plus élevé) est la cathode, le zinc l'anode. $\\Delta E^\\circ=E^\\circ_{\\mathrm{r}}(\\text{cathode})-E^\\circ_{\\mathrm{r}}(\\text{anode})=0{,}34-(-0{,}76)=+1{,}10$~V, valeur positive : la pile débite spontanément.",
+    "pieges": [
+      "A: f.é.m. calculée « anode $-$ cathode » : $-0{,}76-0{,}34=-1{,}10$~V.",
+      "B: erreur de signe, potentiel du zinc compté $+0{,}76$ : $0{,}34-0{,}76=-0{,}42$~V (valeur absolue $0{,}42$).",
+      "D: $\\Delta E^\\circ$ multipliée par le nombre d'électrons $n=2$ (confusion avec une grandeur extensive) : $2{,}20$~V."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q09",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Fonctionnement d'une pile galvanique (anode, cathode, porteurs)",
+    "difficulte": "concours",
+    "enonce": "Une pile associe les couples \\ce{Zn^{2+}}/\\ce{Zn} et \\ce{Ag+}/\\ce{Ag}, reliés par un pont salin. Données : $E^\\circ_{\\mathrm{r}}(\\ce{Ag+}/\\ce{Ag})$ vaut \\qty{+0.80}{\\volt} et $E^\\circ_{\\mathrm{r}}(\\ce{Zn^{2+}}/\\ce{Zn})$ vaut \\qty{-0.76}{\\volt}. Parmi les affirmations suivantes, laquelle est \\textbf{correcte} ?",
+    "options": [
+      "L'électrode d'argent (cathode, pôle $+$) voit sa masse augmenter, car \\ce{Ag+ + e^- -> Ag}.",
+      "Dans le fil, les électrons circulent de l'argent vers le zinc.",
+      "Le zinc est la cathode, puisqu'il y est le siège d'une oxydation.",
+      "Dans le pont salin, les cations migrent vers le compartiment du zinc."
+    ],
+    "reponse_index": 0,
+    "explication": "Le couple \\ce{Ag+}/\\ce{Ag} ($+0{,}80$) a le potentiel le plus élevé : l'argent est la cathode (pôle $+$, réduction \\ce{Ag+ + e^- -> Ag}), son électrode s'épaissit. Le zinc ($-0{,}76$) est l'anode (pôle $-$, oxydation \\ce{Zn -> Zn^{2+} + 2 e^-}) et se dissout.",
+    "pieges": [
+      "B: sens des électrons inversé — ils vont de l'anode (\\ce{Zn}) vers la cathode (\\ce{Ag}) ; c'est le courant conventionnel qui va en sens inverse.",
+      "C: confusion anode/cathode — l'oxydation a lieu à l'\\textbf{anode} (pôle $-$), le zinc n'est donc pas la cathode.",
+      "D: migration ionique inversée — les cations migrent vers la cathode (\\ce{Ag}), les anions vers l'anode (\\ce{Zn})."
+    ]
+  },
+  {
+    "id": "CHIM-F11-Q10",
+    "matiere": "Chimie",
+    "fiche": "11",
+    "theme": "Loi de Faraday : masse déposée par électrolyse",
+    "difficulte": "concours",
+    "enonce": "On électrolyse une solution de sulfate de cuivre \\ce{CuSO4} avec une intensité $I=\\qty{2.0}{A}$ pendant $t=\\qty{45}{min}$. À la cathode : \\ce{Cu^{2+} + 2 e^- -> Cu}. Données : $M(\\ce{Cu})=\\qty{63.5}{\\gram\\per\\mole}$, $F=\\qty{96500}{\\coulomb\\per\\mole}$. Quelle masse de cuivre se dépose ?",
+    "options": [
+      "\\qty{0.030}{\\gram}",
+      "\\qty{1.78}{\\gram}",
+      "\\qty{3.55}{\\gram}",
+      "\\qty{7.11}{\\gram}"
+    ],
+    "reponse_index": 1,
+    "explication": "Loi de Faraday : $m=\\dfrac{M\\,I\\,t}{n\\,F}$ avec $n=2$ et $t=45\\times60=\\qty{2700}{s}$. $m=\\dfrac{63{,}5\\times2{,}0\\times2700}{2\\times96500}=\\dfrac{342900}{193000}\\simeq 1{,}78$~g.",
+    "pieges": [
+      "A: durée laissée en minutes ($t=45$ au lieu de \\qty{2700}{s}) : $m\\simeq 0{,}030$~g.",
+      "C: on oublie que \\ce{Cu^{2+}} capte $2$ électrons (on prend $n=1$) : $m=\\dfrac{342900}{96500}\\simeq 3{,}55$~g.",
+      "D: le facteur $n$ placé au numérateur ($m=\\frac{M\\,I\\,t\\,n}{F}$) au lieu du dénominateur : $m\\simeq 7{,}11$~g."
+    ]
+  }
+]

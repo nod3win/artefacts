@@ -1,0 +1,212 @@
+[
+  {
+    "id": "MATH-F03-Q01",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Angles associés : réduction et valeurs remarquables",
+    "difficulte": "concours",
+    "enonce": "Sans calculatrice, que vaut $\\tan\\!\\left(\\dfrac{2\\pi}{3}\\right)$ ?",
+    "options": [
+      "$-\\sqrt{3}$",
+      "$\\sqrt{3}$",
+      "$-\\dfrac{\\sqrt{3}}{3}$",
+      "$\\dfrac{\\sqrt{3}}{3}$"
+    ],
+    "reponse_index": 0,
+    "explication": "L'angle $\\dfrac{2\\pi}{3}$ (soit \\ang{120}) est dans le deuxième quadrant, entre $\\dfrac{\\pi}{2}$ et $\\pi$, où la tangente est \\emph{négative}. Son angle de référence est $\\pi-\\dfrac{2\\pi}{3}=\\dfrac{\\pi}{3}$, et $\\tan\\dfrac{\\pi}{3}=\\sqrt{3}$. On recolle le signe : $\\tan\\dfrac{2\\pi}{3}=-\\sqrt{3}$.",
+    "pieges": [
+      "B: signe oublié --- on garde le signe $+$ de $\\tan\\dfrac{\\pi}{3}$ sans tenir compte du deuxième quadrant.",
+      "C: mauvais angle de référence --- on utilise $\\dfrac{\\pi}{6}$ (dont $\\tan=\\dfrac{\\sqrt3}{3}$) au lieu de $\\dfrac{\\pi}{3}$.",
+      "D: cumul des deux erreurs (référence $\\dfrac{\\pi}{6}$ et signe positif)."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q02",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Angles associés dans un triangle",
+    "difficulte": "concours",
+    "enonce": "Dans un triangle quelconque $ABC$, les angles vérifient $\\widehat{A}+\\widehat{B}+\\widehat{C}=\\pi$. Parmi les égalités suivantes, laquelle est \\textbf{toujours} vraie ?",
+    "options": [
+      "$\\cos\\widehat{B}=\\cos\\!\\left(\\widehat{A}+\\widehat{C}\\right)$",
+      "$\\sin\\widehat{B}=\\sin\\!\\left(\\widehat{A}+\\widehat{C}\\right)$",
+      "$\\sin\\widehat{B}=-\\sin\\!\\left(\\widehat{A}+\\widehat{C}\\right)$",
+      "$\\sin\\widehat{B}=\\cos\\!\\left(\\widehat{A}+\\widehat{C}\\right)$"
+    ],
+    "reponse_index": 1,
+    "explication": "Puisque $\\widehat{A}+\\widehat{B}+\\widehat{C}=\\pi$, on a $\\widehat{B}=\\pi-\\left(\\widehat{A}+\\widehat{C}\\right)$ : les angles $\\widehat{B}$ et $\\widehat{A}+\\widehat{C}$ sont \\emph{supplémentaires}. Or $\\sin(\\pi-x)=\\sin x$, donc $\\sin\\widehat{B}=\\sin\\!\\left(\\widehat{A}+\\widehat{C}\\right)$. Leurs cosinus, eux, sont opposés.",
+    "pieges": [
+      "A: on oublie que deux angles supplémentaires ont des cosinus \\emph{opposés} : $\\cos(\\pi-x)=-\\cos x$.",
+      "C: signe erroné --- on applique par erreur $\\sin(\\pi-x)=-\\sin x$.",
+      "D: confusion sinus/cosinus pour des angles supplémentaires."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q03",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Relation fondamentale et signe selon le quadrant",
+    "difficulte": "concours",
+    "enonce": "$\\alpha$ est un angle du \\emph{deuxième} quadrant tel que $\\tan\\alpha=-\\dfrac{4}{3}$. Que vaut $\\cos\\alpha$ ?",
+    "options": [
+      "$\\dfrac{3}{5}$",
+      "$-\\dfrac{4}{5}$",
+      "$-\\dfrac{3}{5}$",
+      "$\\dfrac{4}{5}$"
+    ],
+    "reponse_index": 2,
+    "explication": "De $1+\\tan^2\\alpha=\\dfrac{1}{\\cos^2\\alpha}$ on tire $\\dfrac{1}{\\cos^2\\alpha}=1+\\dfrac{16}{9}=\\dfrac{25}{9}$, d'où $\\cos^2\\alpha=\\dfrac{9}{25}$ et $\\cos\\alpha=\\pm\\dfrac{3}{5}$. Au deuxième quadrant le cosinus est négatif : $\\cos\\alpha=-\\dfrac{3}{5}$. (Triangle $3$-$4$-$5$ : $\\tan\\alpha=-\\dfrac43$ donne $|\\text{opp}|=4$, $|\\text{adj}|=3$, $\\text{hyp}=5$ ; le cosinus est bâti sur l'adjacent.)",
+    "pieges": [
+      "A: $\\dfrac35$ --- bon module mais signe du quadrant oublié (le cosinus est négatif au deuxième quadrant).",
+      "B: $-\\dfrac45$ --- confusion sinus/cosinus (on prend l'opposé $4$ au lieu de l'adjacent $3$).",
+      "D: $\\dfrac45$ --- confusion sinus/cosinus \\emph{et} signe oublié."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q04",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Formules de duplication (angle double)",
+    "difficulte": "concours",
+    "enonce": "$\\alpha$ est un angle du premier quadrant tel que $\\cos\\alpha=\\dfrac{3}{5}$. Que vaut $\\cos(2\\alpha)$ ?",
+    "options": [
+      "$\\dfrac{24}{25}$",
+      "$-\\dfrac{24}{25}$",
+      "$\\dfrac{7}{25}$",
+      "$-\\dfrac{7}{25}$"
+    ],
+    "reponse_index": 3,
+    "explication": "$\\cos(2\\alpha)=2\\cos^2\\alpha-1=2\\cdot\\dfrac{9}{25}-1=\\dfrac{18}{25}-\\dfrac{25}{25}=-\\dfrac{7}{25}$. (De façon équivalente, $\\sin^2\\alpha=1-\\dfrac{9}{25}=\\dfrac{16}{25}$ et $\\cos(2\\alpha)=\\cos^2\\alpha-\\sin^2\\alpha=\\dfrac{9}{25}-\\dfrac{16}{25}=-\\dfrac{7}{25}$.)",
+    "pieges": [
+      "A: $\\dfrac{24}{25}$ --- on a calculé $\\sin(2\\alpha)=2\\sin\\alpha\\cos\\alpha$ au lieu de $\\cos(2\\alpha)$.",
+      "B: $-\\dfrac{24}{25}$ --- $\\sin(2\\alpha)$ avec en plus une erreur de signe.",
+      "C: $\\dfrac{7}{25}$ --- signe inversé : on a écrit $\\sin^2\\alpha-\\cos^2\\alpha$ au lieu de $\\cos^2\\alpha-\\sin^2\\alpha$."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q05",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Trigonométrie du triangle rectangle (SOH-CAH-TOA)",
+    "difficulte": "concours",
+    "enonce": "Un triangle $ABC$ est rectangle en $B$. Son hypoténuse mesure $AC=\\qty{8}{\\centi\\metre}$ et l'angle $\\widehat{A}=\\ang{30}$. Quelle est l'aire du triangle ?",
+    "options": [
+      "$8\\sqrt{3}$~\\si{\\centi\\metre\\squared}",
+      "$16\\sqrt{3}$~\\si{\\centi\\metre\\squared}",
+      "$16$~\\si{\\centi\\metre\\squared}",
+      "$8$~\\si{\\centi\\metre\\squared}"
+    ],
+    "reponse_index": 0,
+    "explication": "Les cathètes se déduisent de l'hypoténuse : $BC=AC\\sin\\widehat{A}=8\\sin 30^\\circ=8\\cdot\\dfrac12=4$ et $AB=AC\\cos\\widehat{A}=8\\cos 30^\\circ=8\\cdot\\dfrac{\\sqrt3}{2}=4\\sqrt3$. L'aire vaut $\\dfrac12\\,AB\\cdot BC=\\dfrac12\\cdot4\\sqrt3\\cdot4=8\\sqrt3$~\\si{\\centi\\metre\\squared}.",
+    "pieges": [
+      "B: $16\\sqrt3$ --- facteur $\\dfrac12$ oublié (produit des deux cathètes $AB\\cdot BC$ sans le diviser par $2$).",
+      "C: $16$ --- on a pris l'hypoténuse pour une cathète ($\\dfrac12\\,AC\\cdot BC$ au lieu de $\\dfrac12\\,AB\\cdot BC$).",
+      "D: $8$ --- on a utilisé $\\sin 30^\\circ$ pour les deux côtés (deux cathètes égales à $4$), d'où $\\dfrac12\\cdot4\\cdot4$."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q06",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Équation trigonométrique avec contrainte de quadrant",
+    "difficulte": "concours",
+    "enonce": "$x$ est un angle du \\emph{troisième} quadrant vérifiant $2\\cos x+\\sqrt{2}=0$. Que vaut $x$ (en radians) ?",
+    "options": [
+      "$\\dfrac{3\\pi}{4}$",
+      "$\\dfrac{7\\pi}{6}$",
+      "$\\dfrac{5\\pi}{4}$",
+      "$\\dfrac{4\\pi}{3}$"
+    ],
+    "reponse_index": 2,
+    "explication": "$2\\cos x+\\sqrt2=0\\iff\\cos x=-\\dfrac{\\sqrt2}{2}$. La valeur $\\dfrac{\\sqrt2}{2}$ a pour angle de référence $\\dfrac{\\pi}{4}$, d'où les solutions $x=\\dfrac{3\\pi}{4}$ (deuxième quadrant) et $x=\\dfrac{5\\pi}{4}$ (troisième quadrant). Comme $x$ est au troisième quadrant, $x=\\dfrac{5\\pi}{4}$.",
+    "pieges": [
+      "A: $\\dfrac{3\\pi}{4}$ --- bonne valeur de cosinus mais mauvais quadrant (solution du deuxième quadrant).",
+      "B: $\\dfrac{7\\pi}{6}$ --- mauvais angle de référence : on a lu $-\\dfrac{\\sqrt2}{2}$ comme $-\\dfrac{\\sqrt3}{2}$ (référence $\\dfrac{\\pi}{6}$).",
+      "D: $\\dfrac{4\\pi}{3}$ --- mauvais angle de référence : on a lu la valeur comme $-\\dfrac12$ (référence $\\dfrac{\\pi}{3}$)."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q07",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Cercle trigonométrique : signes et comparaison selon le quadrant",
+    "difficulte": "concours",
+    "enonce": "Un angle $\\alpha$ vérifie $\\dfrac{3\\pi}{2}<\\alpha<\\dfrac{7\\pi}{4}$. Parmi les combinaisons suivantes, laquelle est correcte ?",
+    "options": [
+      "$\\cos\\alpha<0$ et $|\\sin\\alpha|<|\\cos\\alpha|$",
+      "$\\cos\\alpha<0$ et $|\\sin\\alpha|>|\\cos\\alpha|$",
+      "$\\sin\\alpha<0$ et $|\\sin\\alpha|<|\\cos\\alpha|$",
+      "$\\sin\\alpha<0$ et $|\\sin\\alpha|>|\\cos\\alpha|$"
+    ],
+    "reponse_index": 3,
+    "explication": "L'intervalle $\\left]\\dfrac{3\\pi}{2}\\,;\\,\\dfrac{7\\pi}{4}\\right[$ est dans le quatrième quadrant (entre \\ang{270} et \\ang{315}), où le cosinus est \\emph{positif} et le sinus \\emph{négatif}. L'angle étant plus proche de $\\dfrac{3\\pi}{2}$ (où $\\sin=-1$, $\\cos=0$) que de la bissectrice $\\dfrac{7\\pi}{4}$ (où $|\\sin|=|\\cos|$), on a $|\\sin\\alpha|>|\\cos\\alpha|$. Seule la proposition D réunit les deux conditions.",
+    "pieges": [
+      "A: « $\\cos\\alpha<0$ » est faux au quatrième quadrant (le cosinus y est positif).",
+      "B: même erreur de signe sur le cosinus (positif au quatrième quadrant), même si la comparaison des modules est exacte.",
+      "C: bon signe du sinus, mais mauvaise comparaison : près de $\\dfrac{3\\pi}{2}$, c'est $|\\sin\\alpha|$ qui domine."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q08",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Loi des cosinus (Al-Kashi) : calcul d'un côté",
+    "difficulte": "concours",
+    "enonce": "Dans un triangle $ABC$, $AB=\\qty{4}{\\centi\\metre}$, $AC=\\qty{6}{\\centi\\metre}$ et l'angle $\\widehat{A}=\\ang{60}$. Quelle est la longueur $BC$ ?",
+    "options": [
+      "$2\\sqrt{13}$~\\si{\\centi\\metre}",
+      "$2\\sqrt{19}$~\\si{\\centi\\metre}",
+      "$2\\sqrt{10}$~\\si{\\centi\\metre}",
+      "$2\\sqrt{7}$~\\si{\\centi\\metre}"
+    ],
+    "reponse_index": 3,
+    "explication": "Loi des cosinus : $BC^2=AB^2+AC^2-2\\cdot AB\\cdot AC\\cdot\\cos\\widehat{A}=16+36-2\\cdot4\\cdot6\\cdot\\cos 60^\\circ=52-48\\cdot\\dfrac12=52-24=28$. Donc $BC=\\sqrt{28}=2\\sqrt{7}$~\\si{\\centi\\metre}.",
+    "pieges": [
+      "A: $2\\sqrt{13}$ --- on a oublié le terme $-2\\cdot AB\\cdot AC\\cdot\\cos\\widehat{A}$ (simple Pythagore, $\\sqrt{52}$).",
+      "B: $2\\sqrt{19}$ --- erreur de signe : on a additionné le terme au lieu de le soustraire ($\\sqrt{76}$).",
+      "C: $2\\sqrt{10}$ --- on a oublié le facteur $2$ devant $AB\\cdot AC$ ($\\sqrt{40}$)."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q09",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Loi des cosinus : calcul d'un angle",
+    "difficulte": "concours",
+    "enonce": "Un triangle $ABC$ a pour côtés $a=7$, $b=5$ et $c=8$ ($a$, $b$, $c$ opposés respectivement à $\\widehat{A}$, $\\widehat{B}$, $\\widehat{C}$). Que vaut l'angle $\\widehat{A}$ ?",
+    "options": [
+      "$\\ang{60}$",
+      "$\\ang{120}$",
+      "$\\ang{90}$",
+      "$\\ang{30}$"
+    ],
+    "reponse_index": 0,
+    "explication": "Loi des cosinus réarrangée : $\\cos\\widehat{A}=\\dfrac{b^2+c^2-a^2}{2bc}=\\dfrac{25+64-49}{2\\cdot5\\cdot8}=\\dfrac{40}{80}=\\dfrac12$. Or $\\cos\\widehat{A}=\\dfrac12$ correspond à $\\widehat{A}=\\ang{60}$.",
+    "pieges": [
+      "B: \\ang{120} --- erreur de signe/ordre dans la formule (numérateur $a^2-b^2-c^2$, d'où $\\cos\\widehat{A}=-\\dfrac12$).",
+      "C: \\ang{90} --- on a supposé un triangle rectangle en $A$ ($\\cos\\widehat{A}=0$) sans le vérifier.",
+      "D: \\ang{30} --- confusion : $\\dfrac12$ est le \\emph{sinus} de \\ang{30}, pas son cosinus ($\\cos\\ang{30}=\\dfrac{\\sqrt3}{2}$)."
+    ]
+  },
+  {
+    "id": "MATH-F03-Q10",
+    "matiere": "Mathématiques",
+    "fiche": "03",
+    "theme": "Aire par le sinus (parallélogramme)",
+    "difficulte": "concours",
+    "enonce": "$ABCD$ est un parallélogramme tel que $AB=\\qty{8}{\\centi\\metre}$, $AD=\\qty{5}{\\centi\\metre}$ et l'angle en $A$ mesure \\ang{30}. Quelle est son aire ?",
+    "options": [
+      "$10$~\\si{\\centi\\metre\\squared}",
+      "$20$~\\si{\\centi\\metre\\squared}",
+      "$20\\sqrt{3}$~\\si{\\centi\\metre\\squared}",
+      "$40$~\\si{\\centi\\metre\\squared}"
+    ],
+    "reponse_index": 1,
+    "explication": "L'aire d'un parallélogramme de côtés $a$ et $b$ formant un angle $\\theta$ vaut $a\\,b\\,\\sin\\theta$ (\\emph{sans} le facteur $\\dfrac12$, contrairement au triangle). Ici : $8\\cdot5\\cdot\\sin 30^\\circ=40\\cdot\\dfrac12=20$~\\si{\\centi\\metre\\squared}.",
+    "pieges": [
+      "A: $10$ --- on a appliqué à tort le facteur $\\dfrac12$ de l'aire du triangle au parallélogramme.",
+      "C: $20\\sqrt3$ --- on a utilisé $\\sin 30^\\circ=\\dfrac{\\sqrt3}{2}$ au lieu de $\\dfrac12$.",
+      "D: $40$ --- on a ignoré le sinus de l'angle (aire d'un rectangle $AB\\cdot AD$, cas $\\theta=\\ang{90}$)."
+    ]
+  }
+]

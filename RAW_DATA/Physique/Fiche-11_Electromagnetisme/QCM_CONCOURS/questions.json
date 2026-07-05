@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PHYS-F11-Q01",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Superposition des champs magnétiques",
+    "difficulte": "concours",
+    "enonce": "En un point $M$, deux sources créent deux champs magnétiques $\\vv{B_1}$ et $\\vv{B_2}$ de \\emph{même intensité} $B=\\qty{3.0e-4}{\\tesla}$ et de directions \\textbf{perpendiculaires} l'une à l'autre. Quelle est l'intensité du champ magnétique résultant en $M$ ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\coordinate (M) at (0,0);\n  \\fill (M) circle (1.6pt) node[below left]{$M$};\n  \\draw[->,blue,line width=1.2pt] (M) -- (2,0) node[right]{$\\vv{B_1}$};\n  \\draw[->,red,line width=1.2pt] (M) -- (0,2) node[above]{$\\vv{B_2}$};\n  \\draw[->,black!45,dashed,line width=1pt] (M) -- (2,2) node[above right]{$\\vv{B}_{\\text{tot}}$};\n  \\draw (0.35,0) arc (0:90:0.35);\n  \\node at (0.62,0.62) {\\footnotesize $90^\\circ$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{6.0e-4}{\\tesla}$",
+      "$\\qty{3.0e-4}{\\tesla}$",
+      "$\\qty{4.2e-4}{\\tesla}$",
+      "$\\qty{2.1e-4}{\\tesla}$"
+    ],
+    "reponse_index": 2,
+    "explication": "La superposition est une somme \\textbf{vectorielle}. Les deux champs étant orthogonaux et de même norme, on applique le théorème de Pythagore : $B_{\\text{tot}}=\\sqrt{B_1^{2}+B_2^{2}}=\\sqrt{B^{2}+B^{2}}=B\\sqrt{2}$. Numériquement $B_{\\text{tot}}=\\num{3.0e-4}\\times\\sqrt{2}\\approx\\qty{4.2e-4}{\\tesla}$ (la résultante est la diagonale du carré, à $45^\\circ$ des deux champs).",
+    "pieges": [
+      "A: champs additionnés comme des scalaires ($B_1+B_2=2B$), en oubliant le caractère vectoriel et la perpendicularité.",
+      "B: une seule des deux contributions retenue (on garde $B$ en pensant qu'un champ « domine »).",
+      "D: division par $\\sqrt{2}$ au lieu de multiplication ($B/\\sqrt{2}$ au lieu de $B\\sqrt{2}$)."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q02",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Champ créé par un fil rectiligne (Biot et Savart)",
+    "difficulte": "concours",
+    "enonce": "Un long fil rectiligne est parcouru par un courant continu $I=\\qty{20}{\\ampere}$. On rappelle $B=\\dfrac{\\mu_0 I}{2\\pi d}=\\dfrac{2\\times10^{-7}\\,I}{d}$. Quelle est l'intensité du champ magnétique en un point $M$ situé à la distance $d=\\qty{5.0}{\\centi\\metre}$ du fil ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[red,line width=2.2pt] (0,-1.5) -- (0,1.5);\n  \\draw[->,red,line width=1pt] (0,0.35) -- (0,0.95) node[left]{$I$};\n  \\fill (1.7,0) circle (1.6pt) node[below]{$M$};\n  \\draw[<->,gray] (0,-0.95) -- (1.7,-0.95) node[midway,below]{$d$};\n  \\draw[->,blue,line width=1.2pt] (1.7,0) -- (1.7,0.9) node[right]{$\\vv{B}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{8.0e-5}{\\tesla}$",
+      "$\\qty{5.0e-4}{\\tesla}$",
+      "$\\qty{4.0e-5}{\\tesla}$",
+      "$\\qty{8.0e-7}{\\tesla}$"
+    ],
+    "reponse_index": 0,
+    "explication": "$B=\\dfrac{2\\times10^{-7}\\times I}{d}=\\dfrac{2\\times10^{-7}\\times 20}{0{,}05}=2\\times10^{-7}\\times 400=\\qty{8.0e-5}{\\tesla}$.",
+    "pieges": [
+      "B: $\\mu_0$ utilisé sans diviser par $2\\pi$ (calcul de $\\mu_0 I/d=4\\pi\\times10^{-7}\\times400\\approx\\qty{5.0e-4}{\\tesla}$).",
+      "C: facteur $2$ omis ($10^{-7}$ pris à la place de $2\\times10^{-7}$) : $10^{-7}\\times400=\\qty{4.0e-5}{\\tesla}$.",
+      "D: distance laissée en centimètres ($d=5{,}0$ au lieu de $\\qty{0.05}{\\metre}$) : $2\\times10^{-7}\\times20/5=\\qty{8.0e-7}{\\tesla}$."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q03",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Champ à l'intérieur d'un solénoïde",
+    "difficulte": "concours",
+    "enonce": "Un solénoïde long comporte $N=500$ spires réparties sur une longueur $L=\\qty{25}{\\centi\\metre}$ et est parcouru par un courant $I=\\qty{4.0}{\\ampere}$. On donne $\\mu_0=4\\pi\\times10^{-7}$~SI. Quelle est l'intensité du champ magnétique uniforme à l'intérieur ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[gray] (-2.1,0.55) -- (2.1,0.55);\n  \\draw[gray] (-2.1,-0.55) -- (2.1,-0.55);\n  \\foreach \\x in {-1.9,-1.5,...,1.9}\n    {\\draw[orange!80!black,line width=0.9pt] (\\x,-0.55) .. controls (\\x+0.18,0.75) and (\\x+0.30,0.75) .. (\\x+0.18,-0.55);}\n  \\foreach \\y in {-0.22,0,0.22}{\\draw[->,blue,line width=1pt] (-1.0,\\y) -- (1.0,\\y);}\n  \\node[blue] at (1.35,0) {$\\vv{B}$};\n  \\draw[<->,gray] (-2.1,-0.95) -- (2.1,-0.95) node[midway,below]{$L$};\n  \\node at (0,1.15) {\\footnotesize $N$ spires};\n  \\draw[->,red,line width=1pt] (-2.5,-0.55) -- (-2.15,-0.55) node[left]{$I$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{8.0e-4}{\\tesla}$",
+      "$\\qty{2.0e-5}{\\tesla}$",
+      "$\\qty{1.0e-4}{\\tesla}$",
+      "$\\qty{1.0e-2}{\\tesla}$"
+    ],
+    "reponse_index": 3,
+    "explication": "$B=\\dfrac{\\mu_0 N I}{L}=\\dfrac{4\\pi\\times10^{-7}\\times 500\\times 4{,}0}{0{,}25}\\approx\\dfrac{2{,}51\\times10^{-3}}{0{,}25}\\approx\\qty{1.0e-2}{\\tesla}$ (soit $\\qty{10}{\\milli\\tesla}$).",
+    "pieges": [
+      "A: $\\mu_0$ pris égal à $10^{-7}$ au lieu de $4\\pi\\times10^{-7}$ : $10^{-7}\\times2000/0{,}25=\\qty{8.0e-4}{\\tesla}$.",
+      "B: nombre de spires $N$ oublié ($B=\\mu_0 I/L$) : $4\\pi\\times10^{-7}\\times4/0{,}25\\approx\\qty{2.0e-5}{\\tesla}$.",
+      "C: longueur laissée en centimètres ($L=25$ au lieu de $\\qty{0.25}{\\metre}$) : résultat divisé par $100$, $\\qty{1.0e-4}{\\tesla}$."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q04",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Loi de Laplace : intensité de la force",
+    "difficulte": "concours",
+    "enonce": "Un conducteur rectiligne de longueur $L=\\qty{10}{\\centi\\metre}$, parcouru par un courant $I=\\qty{5.0}{\\ampere}$, est placé dans un champ magnétique uniforme $B=\\qty{0.40}{\\tesla}$. Le conducteur fait un angle $\\theta=\\ang{30}$ avec les lignes de champ. Quelle est l'intensité de la force de Laplace ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[->,red,line width=2pt] (-2.2,0) -- (2.2,0) node[right]{$I$};\n  \\draw[->,blue,line width=1.2pt] (0,0) -- ({2.2*cos(30)},{2.2*sin(30)}) node[above right]{$\\vv{B}$};\n  \\draw (0.8,0) arc (0:30:0.8);\n  \\node at (1.12,0.24) {\\footnotesize $\\theta$};\n  \\draw[<->,gray] (-2.2,-0.5) -- (2.2,-0.5) node[midway,below]{$L$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{0.17}{\\newton}$",
+      "$\\qty{0.10}{\\newton}$",
+      "$\\qty{0.20}{\\newton}$",
+      "$\\qty{10}{\\newton}$"
+    ],
+    "reponse_index": 1,
+    "explication": "$F=B\\,I\\,L\\,\\sin\\theta=0{,}40\\times5{,}0\\times0{,}10\\times\\sin\\ang{30}=0{,}20\\times0{,}5=\\qty{0.10}{\\newton}$.",
+    "pieges": [
+      "A: $\\cos\\theta$ employé au lieu de $\\sin\\theta$ : $0{,}20\\times\\cos\\ang{30}\\approx\\qty{0.17}{\\newton}$.",
+      "C: angle négligé (on prend $\\sin\\ang{90}=1$, comme si $I\\perp B$) : $F=B\\,I\\,L=\\qty{0.20}{\\newton}$.",
+      "D: longueur laissée en centimètres ($L=10$ au lieu de $\\qty{0.10}{\\metre}$) : $0{,}40\\times5{,}0\\times10\\times0{,}5=\\qty{10}{\\newton}$."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q05",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Loi de Laplace : sens de la force (règle de la main droite)",
+    "difficulte": "concours",
+    "enonce": "Dans le plan de la figure, un conducteur horizontal est parcouru par un courant $I$ orienté vers la droite. Il règne un champ magnétique uniforme $\\vv{B}$, également \\emph{dans le plan de la figure}, orienté vers le haut. Quelle est la direction et le sens de la force de Laplace $\\vv{F}$ qui s'exerce sur le conducteur ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[->,red,line width=2pt] (-2.2,0) -- (2.2,0) node[right]{$I$};\n  \\draw[->,blue,line width=1.2pt] (0,-1.5) -- (0,1.5) node[above]{$\\vv{B}$};\n  \\node at (1.3,-1.15) {\\footnotesize $\\vv{F}=\\;?$};\n  \\draw[gray,dashed] (-2.4,-1.7) rectangle (2.6,1.7);\n  \\node[gray] at (1.9,1.45) {\\footnotesize plan de la figure};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "Perpendiculaire à la figure, dirigée vers le lecteur (elle sort du plan)",
+      "Perpendiculaire à la figure, dirigée vers l'arrière (elle entre dans le plan)",
+      "Dans le plan, dirigée vers le haut (même sens que $\\vv{B}$)",
+      "Dans le plan, dirigée vers la droite (même sens que $I$)"
+    ],
+    "reponse_index": 0,
+    "explication": "$I$ et $\\vv{B}$ sont perpendiculaires, donc $F=BIL$ est non nulle et $\\vv{F}$ est \\textbf{perpendiculaire au plan} formé par le conducteur et $\\vv{B}$. Règle de la main droite (pouce $=I$ vers la droite, index $=\\vv{B}$ vers le haut, majeur $=\\vv{F}$) : la force \\textbf{sort} du plan, vers le lecteur.",
+    "pieges": [
+      "B: règle appliquée avec la main gauche (ou orientation du courant inversée) : le sens obtenu est l'opposé, $\\vv{F}$ entrant dans le plan.",
+      "C: on croit à tort que $\\vv{F}$ est colinéaire à $\\vv{B}$ (alors que $\\vv{F}\\perp\\vv{B}$).",
+      "D: on croit à tort que $\\vv{F}$ est colinéaire au courant $I$ (alors que $\\vv{F}\\perp$ conducteur)."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q06",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Interaction entre deux fils parallèles",
+    "difficulte": "concours",
+    "enonce": "Deux fils rectilignes parallèles, distants de $d=\\qty{4.0}{\\centi\\metre}$, sont parcourus par des courants de \\textbf{même sens} $I_1=\\qty{6.0}{\\ampere}$ et $I_2=\\qty{3.0}{\\ampere}$. On rappelle $\\dfrac{F}{L}=\\dfrac{\\mu_0 I_1 I_2}{2\\pi d}=\\dfrac{2\\times10^{-7}\\,I_1 I_2}{d}$. Que valent l'intensité de la force par unité de longueur et la nature de l'interaction ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\draw[red,line width=2.2pt] (0,-1.3) -- (0,1.3);\n  \\draw[->,red,line width=1pt] (0,0.35) -- (0,0.95) node[left]{$I_1$};\n  \\draw[red,line width=2.2pt] (2.2,-1.3) -- (2.2,1.3);\n  \\draw[->,red,line width=1pt] (2.2,0.35) -- (2.2,0.95) node[right]{$I_2$};\n  \\draw[<->,gray] (0,-1.6) -- (2.2,-1.6) node[midway,below]{$d$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{9.0e-5}{\\newton\\per\\metre}$, répulsion",
+      "$\\qty{4.5e-5}{\\newton\\per\\metre}$, attraction",
+      "$\\qty{9.0e-5}{\\newton\\per\\metre}$, attraction",
+      "$\\qty{9.0e-7}{\\newton\\per\\metre}$, attraction"
+    ],
+    "reponse_index": 2,
+    "explication": "$\\dfrac{F}{L}=\\dfrac{2\\times10^{-7}\\times6{,}0\\times3{,}0}{0{,}04}=\\dfrac{2\\times10^{-7}\\times18}{0{,}04}=\\qty{9.0e-5}{\\newton\\per\\metre}$. Deux courants de \\textbf{même sens} correspondent à une \\textbf{attraction}.",
+    "pieges": [
+      "A: bonne valeur mais règle des sens inversée (on croit que deux courants de même sens se repoussent).",
+      "B: facteur $2$ omis ($\\mu_0/2\\pi$ pris égal à $10^{-7}$ au lieu de $2\\times10^{-7}$) : $\\qty{4.5e-5}{\\newton\\per\\metre}$.",
+      "D: distance laissée en centimètres ($d=4{,}0$ au lieu de $\\qty{0.04}{\\metre}$) : $\\qty{9.0e-7}{\\newton\\per\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q07",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Force de Lorentz : rayon de la trajectoire circulaire",
+    "difficulte": "concours",
+    "enonce": "Un proton ($m=\\qty{1.6e-27}{\\kilogram}$, $q=+e=\\qty{1.6e-19}{\\coulomb}$) pénètre avec une vitesse $v=\\qty{2.0e6}{\\metre\\per\\second}$ \\textbf{perpendiculairement} à un champ magnétique uniforme $B=\\qty{0.50}{\\tesla}$. Il décrit alors un cercle de rayon $R=\\dfrac{m v}{|q|\\,B}$. Que vaut ce rayon ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\foreach \\x in {0,0.55,...,3.0}\n    \\foreach \\y in {0,0.55,...,2.2}\n      {\\node[gray] at (\\x,\\y) {\\tiny $\\otimes$};}\n  \\node[gray] at (2.5,2.65) {\\footnotesize $\\vv{B}$ (entrant)};\n  \\draw[->,orange!90!black,line width=1.2pt] (-0.9,1.1) -- (0.15,1.1) node[midway,above]{$\\vv{v}$};\n  \\draw[->,black,dashed,line width=0.9pt] (0.2,1.1) arc (90:-40:0.85);\n  \\fill[blue] (0.2,1.1) circle (2pt);\n  \\node[blue,above right] at (0.2,1.1) {\\footnotesize $+$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{1.0e-2}{\\metre}$",
+      "$\\qty{2.0e-2}{\\metre}$",
+      "$\\qty{4.0e-2}{\\metre}$",
+      "$\\qty{8.0e-2}{\\metre}$"
+    ],
+    "reponse_index": 2,
+    "explication": "$R=\\dfrac{m v}{|q|\\,B}=\\dfrac{1{,}6\\times10^{-27}\\times2{,}0\\times10^{6}}{1{,}6\\times10^{-19}\\times0{,}50}=\\dfrac{3{,}2\\times10^{-21}}{8{,}0\\times10^{-20}}=\\qty{4.0e-2}{\\metre}$ (soit $\\qty{4.0}{\\centi\\metre}$).",
+    "pieges": [
+      "A: $B$ placé au numérateur ($R=mvB/|q|$) : $3{,}2\\times10^{-21}\\times0{,}5/1{,}6\\times10^{-19}=\\qty{1.0e-2}{\\metre}$.",
+      "B: champ $B$ oublié au dénominateur ($R=mv/|q|$) : $3{,}2\\times10^{-21}/1{,}6\\times10^{-19}=\\qty{2.0e-2}{\\metre}$.",
+      "D: diamètre donné à la place du rayon ($2R$) : $\\qty{8.0e-2}{\\metre}$."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q08",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Force de Lorentz : propriétés (force nulle, ne travaille pas)",
+    "difficulte": "concours",
+    "enonce": "Une particule chargée se déplace dans une région où règne un champ magnétique uniforme. Parmi les affirmations suivantes, laquelle est \\textbf{correcte} ?",
+    "options": [
+      "Un électron immobile placé dans ce champ est mis en mouvement par la force magnétique.",
+      "La valeur de la vitesse reste constante, car la force magnétique, perpendiculaire à $\\vv{v}$, ne travaille pas.",
+      "Si $\\vv{v}$ est parallèle à $\\vv{B}$, la particule décrit une trajectoire circulaire.",
+      "La force magnétique est colinéaire au vecteur vitesse de la particule."
+    ],
+    "reponse_index": 1,
+    "explication": "La force de Lorentz $F=B|q|v\\sin\\alpha$ est toujours \\textbf{perpendiculaire} à $\\vv{v}$ : elle ne travaille pas, donc elle ne modifie pas l'énergie cinétique ni la \\emph{valeur} de la vitesse ; elle ne change que la direction du mouvement.",
+    "pieges": [
+      "A: on oublie que $v=0\\Rightarrow F=0$ : une particule immobile ne subit aucune force magnétique.",
+      "C: on oublie que $\\vv{v}\\parallel\\vv{B}\\Rightarrow\\sin\\alpha=0\\Rightarrow F=0$ : le mouvement est alors rectiligne, pas circulaire.",
+      "D: confusion de direction : $\\vv{F}$ est perpendiculaire (et non colinéaire) à $\\vv{v}$."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q09",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Flux magnétique phi = B S cos alpha",
+    "difficulte": "concours",
+    "enonce": "Une spire circulaire de rayon $r=\\qty{10}{\\centi\\metre}$ est plongée dans un champ magnétique uniforme $B=\\qty{0.20}{\\tesla}$. Le \\textbf{plan de la spire} fait un angle de $\\ang{30}$ avec les lignes de champ. Quel est le flux magnétique $\\phi=B\\,S\\,\\cos\\alpha$ à travers la spire ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.05]\n  \\foreach \\y in {-0.8,-0.4,0,0.4,0.8}{\\draw[blue!55,->,line width=0.8pt] (-2.5,\\y) -- (-1.5,\\y);}\n  \\node[blue] at (-2.7,0) {$\\vv{B}$};\n  \\draw[blue!45,line width=0.7pt] (-1.3,0) -- (1.3,0);\n  \\draw[orange!85!black,line width=1.7pt] (-1.3,{-1.3*tan(30)}) -- (1.3,{1.3*tan(30)});\n  \\node[orange!85!black] at (1.9,0.95) {\\footnotesize plan de la spire};\n  \\draw (0.85,0) arc (0:30:0.85);\n  \\node at (1.08,0.2) {\\footnotesize $30^\\circ$};\n  \\draw[->,black,dashed,line width=0.9pt] (0,0) -- ({1.25*cos(120)},{1.25*sin(120)}) node[above left]{$\\vv{S}$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{5.4e-3}{\\weber}$",
+      "$\\qty{6.3e-3}{\\weber}$",
+      "$\\qty{7.9e-4}{\\weber}$",
+      "$\\qty{3.1e-3}{\\weber}$"
+    ],
+    "reponse_index": 3,
+    "explication": "L'angle $\\alpha$ de la formule est celui entre $\\vv{B}$ et la \\textbf{normale} $\\vv{S}$, et non le plan : si $\\vv{B}$ fait $\\ang{30}$ avec le plan, alors $\\alpha=\\ang{90}-\\ang{30}=\\ang{60}$. Avec $S=\\pi r^{2}=\\pi(0{,}10)^{2}\\approx\\qty{3.14e-2}{\\metre\\squared}$ : $\\phi=B\\,S\\,\\cos\\ang{60}=0{,}20\\times3{,}14\\times10^{-2}\\times0{,}5\\approx\\qty{3.1e-3}{\\weber}$.",
+    "pieges": [
+      "A: angle de $\\ang{30}$ pris directement comme angle avec la normale ($\\cos\\ang{30}$ au lieu de $\\cos\\ang{60}$) : $\\approx\\qty{5.4e-3}{\\weber}$.",
+      "B: angle négligé, flux maximal $\\phi=B\\,S$ : $\\approx\\qty{6.3e-3}{\\weber}$.",
+      "C: rayon confondu avec le diamètre ($r=\\qty{5}{\\centi\\metre}$, surface divisée par $4$) : $\\approx\\qty{7.9e-4}{\\weber}$."
+    ]
+  },
+  {
+    "id": "PHYS-F11-Q10",
+    "matiere": "Physique",
+    "fiche": "11",
+    "theme": "Loi de Lenz-Faraday : f.é.m. induite",
+    "difficulte": "concours",
+    "enonce": "Une bobine plate de $N=200$ spires, de surface $S=\\qty{50}{\\centi\\metre\\squared}$, est placée perpendiculairement à un champ magnétique uniforme. Ce champ décroît de $B_1=\\qty{0.30}{\\tesla}$ à $B_2=\\qty{0.10}{\\tesla}$ en $\\Delta t=\\qty{0.20}{\\second}$. Quelle est la valeur absolue de la force électromotrice induite $\\left|e\\right|=N\\left|\\dfrac{\\Delta\\phi}{\\Delta t}\\right|$ ?\n\\begin{center}\n\\begin{tikzpicture}[>=Stealth,scale=1.0]\n  \\foreach \\x in {0,0.28,...,1.5}{\\draw[orange!80!black,line width=0.9pt] (\\x,0) ellipse (0.12 and 0.62);}\n  \\draw[->,blue,line width=1.2pt] (-0.7,0) -- (2.15,0) node[right]{$\\vv{B}$};\n  \\node at (0.75,1.05) {\\footnotesize bobine $N$ spires};\n  \\node at (0.75,-1.05) {\\footnotesize $B:\\ 0{,}30\\to0{,}10$~T en $\\Delta t$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "$\\qty{5.0e-3}{\\volt}$",
+      "$\\qty{0.20}{\\volt}$",
+      "$\\qty{0.50}{\\volt}$",
+      "$\\qty{1.0}{\\volt}$"
+    ],
+    "reponse_index": 3,
+    "explication": "Le champ étant perpendiculaire à la spire, $\\phi=B\\,S$. La variation de flux par spire est $\\left|\\Delta\\phi\\right|=S\\left|\\Delta B\\right|=50\\times10^{-4}\\times(0{,}30-0{,}10)=5{,}0\\times10^{-3}\\times0{,}20=\\qty{1.0e-3}{\\weber}$. D'où $\\left|e\\right|=N\\dfrac{\\left|\\Delta\\phi\\right|}{\\Delta t}=200\\times\\dfrac{1{,}0\\times10^{-3}}{0{,}20}=\\qty{1.0}{\\volt}$.",
+    "pieges": [
+      "A: nombre de spires $N$ oublié ($\\left|e\\right|=\\left|\\Delta\\phi\\right|/\\Delta t=\\qty{5.0e-3}{\\volt}$).",
+      "B: division par $\\Delta t$ oubliée (on calcule $N\\,\\left|\\Delta\\phi\\right|=200\\times1{,}0\\times10^{-3}=\\qty{0.20}{\\volt}$).",
+      "C: $B_2=\\qty{0.10}{\\tesla}$ (valeur finale) utilisé à la place de $\\left|\\Delta B\\right|=\\qty{0.20}{\\tesla}$ : $\\qty{0.50}{\\volt}$."
+    ]
+  }
+]
